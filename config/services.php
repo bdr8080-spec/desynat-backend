@@ -40,7 +40,11 @@ return [
 
     'google_map_key'=>[
         'key'=>env('GOOGLE_MAP_KEY')??'AIzaSyB5LK7zzKS4q9ov0R4LFLgaRyPZdZsTKz4'
-    ]
+    ],
 
-
+    'agora' => [
+    'app_id' => env('AGORA_APP_ID'),
+    'app_certificate' => env('AGORA_APP_CERTIFICATE'),
+    ],
+    
 ];

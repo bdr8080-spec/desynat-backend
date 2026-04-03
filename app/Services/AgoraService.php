@@ -2,58 +2,30 @@
 
 namespace App\Services;
 
-// use App\Services\Agora\RtcTokenBuilder;
+use App\Services\Agora\RtcTokenBuilder;
 
-// use Agora\RtcTokenBuilder\RtcTokenBuilder;
-
-use App\Helpers\RtcTokenBuilder;
-
-
-// class AgoraService
-// {
-    // public static function generateToken($channelName, $uid = 0)
-    // {
-
-    //     // dd(class_exists(\App\Services\Agora\RtcTokenBuilder::class));
-
-    //     $appID = env('AGORA_APP_ID');
-    //     $appCertificate = env('AGORA_APP_CERTIFICATE');
-
-    //     $role = RtcTokenBuilder::RoleAttendee;
-
-    //     $expireTimeInSeconds = 3600;
-    //     $currentTimestamp = now()->timestamp;
-    //     $privilegeExpiredTs = $currentTimestamp + $expireTimeInSeconds;
-
-    //     return RtcTokenBuilder::buildTokenWithUid(
-    //         $appID,
-    //         $appCertificate,
-    //         $channelName,
-    //         $uid,
-    //         $role,
-    //         $privilegeExpiredTs
-    //     );
-    // }
-// 
-// 
-// }
 
 class AgoraService
 {
-    public static function generateToken($channelName, $uid = 0)
+    protected $appId;
+    protected $appCertificate;
+
+    public function __construct()
     {
-        $appId = env('AGORA_APP_ID');
-        $appCertificate = env('AGORA_APP_CERTIFICATE');
+        $this->appId = config('services.agora.app_id');
+        $this->appCertificate = config('services.agora.app_certificate');
+    }
 
-        $role = RtcTokenBuilder::RolePublisher;
-        $expireTimeInSeconds = 3600;
+    public function generateRtcToken($channelName, $uid = 0, $role = 1)
+    {
 
-        $currentTimestamp = time();
+        $expireTimeInSeconds = 3600; // 1 hour
+        $currentTimestamp = now()->timestamp;
         $privilegeExpiredTs = $currentTimestamp + $expireTimeInSeconds;
 
         return RtcTokenBuilder::buildTokenWithUid(
-            $appId,
-            $appCertificate,
+            $this->appId,
+            $this->appCertificate,
             $channelName,
             $uid,
             $role,
