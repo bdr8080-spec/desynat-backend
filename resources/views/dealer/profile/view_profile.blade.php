@@ -82,6 +82,7 @@
     background: linear-gradient(90deg, #b8864b, #d6b58d);
     color: #fff;
 }
+
 </style>
 
 
@@ -167,7 +168,7 @@
                     </a>
                 </div>
                 @foreach($highlights as $index => $highlight)
-                    <div class="product-item" onclick='openSellerHighlightViewer(@json($highlight))'>
+                    <div class="product-item" data-highlight='@json($highlight)'>
                         @php
                             $extension = pathinfo($highlight->file, PATHINFO_EXTENSION);
                         @endphp
@@ -182,6 +183,9 @@
                         @endif
 
                         <small>{{ $highlight->title ?? '' }}</small>
+                        <span class="deleteHighlightBtn" data-id="{{ $highlight->id }}">
+                            <i class="bi bi-trash" style="color:red; cursor:pointer;"></i>
+                        </span>
                     </div>
                 @endforeach
 
@@ -1399,6 +1403,60 @@ function closeSellerStoryViewer() {
 }
 </script>
 
+<script>
+document.body.addEventListener('click', function(e) {
+
+    // --- Delete Highlight ---
+    const deleteBtn = e.target.closest('.deleteHighlightBtn');
+    if (deleteBtn) {
+        e.stopPropagation(); // 
+        const highlightId = deleteBtn.getAttribute('data-id');
+        if (!highlightId) return;
+
+       // if (!confirm("Are you sure you want to delete this highlight?")) return;
+
+        const originalHTML = deleteBtn.innerHTML;
+       // deleteBtn.innerHTML = "Deleting...";
+        deleteBtn.style.pointerEvents = "none";
+
+        fetch(`/seller/delete_highlight/${highlightId}`, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                "Accept": "application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            deleteBtn.innerHTML = originalHTML;
+            deleteBtn.style.pointerEvents = "auto";
+
+            if (data.status === "success") {
+                toastr.success(data.message || "Highlight deleted");
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                toastr.error(data.message || "Failed to delete highlight");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            deleteBtn.innerHTML = originalHTML;
+            deleteBtn.style.pointerEvents = "auto";
+            toastr.error("Something went wrong");
+        });
+
+        return; // stop further processing
+    }
+
+    // --- Open Viewer ---
+    const item = e.target.closest('.product-item');
+    if (item) {
+        const highlight = JSON.parse(item.getAttribute('data-highlight'));
+        openSellerHighlightViewer(highlight);
+    }
+
+});
+</script>
 
 
 @include('dealer.layout.footer')

@@ -876,6 +876,27 @@ $seller_id=Auth::guard('seller')->user()->id;
         ], 200);
     }
 
+    public function delete_highlight($id)
+    {
+        $request_data = (object) [
+            'highlight_id' => $id
+        ];
+
+        $result = $this->StoryManagementService->deleteSellerHighlight($request_data);
+
+        if (isset($result['status']) && $result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
       
 
       
