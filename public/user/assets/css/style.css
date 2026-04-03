@@ -3417,3 +3417,8 @@ img.img-fluid.circle-image {
     font-size: 12px;
     margin-bottom: 0px;
 }
+.caption-share {
+    position: absolute;
+    bottom: 10%;
+    right: 20px;
+}
