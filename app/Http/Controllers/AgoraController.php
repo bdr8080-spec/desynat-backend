@@ -29,6 +29,10 @@ class AgoraController extends Controller
 
       $livechat_details=  LiveRequest::where('id',$request->id)->first();
 
+       $uid=rand(00000000,999999999);
+        $livechat_details->update(['uid'=>$uid]);
+
+
         $channelName = $livechat_details->channel_id;
         $uid = $livechat_details->uid ?? 0;
 
@@ -81,10 +85,12 @@ class AgoraController extends Controller
     {
 
     $id=$request->id??43;
-
+    
+    $uid=rand(00000000,999999999);
 
     $livechat_details=  LiveRequest::where('id',$id)->first();
-    
+    $livechat_details->update(['uid'=>$uid]);
+
 
     return view('agora',compact('livechat_details'));
     }

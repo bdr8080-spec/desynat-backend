@@ -18,7 +18,7 @@
     <div id="remote"></div>
 
     <script>
-    const APP_ID = "{{ env('AGORA_APP_ID') }}";
+    const APP_ID = "{{env('AGORA_APP_ID')}}";
 
     const CHANNEL = "{{$livechat_details->channel_id}}";
 
@@ -27,7 +27,8 @@
         codec: "vp8"
     });
     let localTracks = [];
-    let uid = "{{$livechat_details->uid}}";;
+    let uid = "{{$livechat_details->uid}}";
+    // let uid = 41261702;
 
     async function getToken() {
         const res = await fetch(`api/agora/tokenWeb?channel_name=${CHANNEL}`);
@@ -38,6 +39,11 @@
         const data = await getToken();
         uid = data.uid;
 
+        console.log("APP ID:", APP_ID);
+        console.log("TOKEN:", data.token);
+        console.log("CHANNEL:", CHANNEL);
+        console.log("UID:", uid);
+
         await client.setClientRole("host");
         await client.join(APP_ID, CHANNEL, data.token, uid);
 
@@ -47,6 +53,8 @@
         await client.publish(localTracks);
 
         console.log("Host joined");
+
+
     }
 
     async function joinAsAudience() {

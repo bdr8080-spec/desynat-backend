@@ -224,9 +224,34 @@ class LiveRequestController extends Controller
 
 
 
-    
+    public function adminAllLiveRequest(Request $request)
+    {
+        // $validate = Validator::make($request->all(), [
+        //     'request_id' => 'required|exists:live_requests,id',
+        //     'reject_reason' => 'required',
+        // ]);
 
-    
+        // if ($validate->fails()) {
+        //     return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        // }
+
+        try {
+
+            $result = $this->LiveRequestService->LiveStreminigRequest($request);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+
+
 
 
       
