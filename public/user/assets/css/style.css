@@ -1653,6 +1653,7 @@ h3.mid-headng {
 .reels_content .product-img {
     height: 500px !important;
     border-radius: 15px;
+    border: 1px solid #ddd;
 }
 
 .reels_content .product-img img {
