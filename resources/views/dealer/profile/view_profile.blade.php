@@ -116,7 +116,7 @@
                                     <img src="{{$seller_details->profile_pic}}" class="img-fluid">
                                 </div>
                                 <a href="{{route('seller.add_story')}}" class="addic">
-                                    <img src="{{asset('dealer/assets/img/add.svg')}}" class="img-fluid">
+                                    <img src="{{asset('dealer/assets/img/add.svg')}}" class="img-fluid" onclick='openSellerStoryViewer(@json($stories), 0)'>
                                 </a>
                             </div>
 
@@ -562,6 +562,33 @@
         <div class="dashboard-button mt-4 logostatus bgwhite">
             <button type="button" class="btn add-fillbtn w-100" onclick="updateReelSubmit()">Update</button>
         </div>
+    </div>
+</div>
+
+<!-- story viewer -->
+ <div class="status-viewer bgwhite" id="sellerStoryViewer" style="display:none;">
+    <div class="container highlightStatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeSellerStoryViewer()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="logostatus">
+            <!-- Progress bar container -->
+            <div id="sellerStoryProgressContainer" class="progress-container"></div>
+            
+            <div class="status-img">
+                <!-- Image & Video -->
+                <img id="sellerStoryImage" class="img-fluid" style="display:none;" />
+                
+                <video id="sellerStoryVideo"
+                       style="width:100%; height:100%; object-fit:contain; display:none;"
+                       controls autoplay muted>
+                </video>
+            </div>
+        </div>    
     </div>
 </div>
 

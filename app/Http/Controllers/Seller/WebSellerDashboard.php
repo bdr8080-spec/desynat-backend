@@ -266,8 +266,9 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
       $highlights=  $this->StoryManagementService->getSellerHighlights($request_data)['data'];
 
       $stories=  $this->StoryManagementService->getSellerStoryOnUser($request_data)['data'];
+     // dd($stories);
 
-      return view('dealer.profile.view_profile',compact('seller_details','reels','highlights'));
+      return view('dealer.profile.view_profile',compact('seller_details','reels','highlights','stories'));
       }
 
 

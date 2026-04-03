@@ -336,7 +336,7 @@ class SellerDashboardController extends Controller
     public function add_reels(Request $request){
 
       $validate = Validator::make($request->all(), [
-        'file' => 'required|mimes:mp4,mov,avi,mkv|max:5120',
+        'file' => 'required',
         'caption' => 'required',
         ]);
     
@@ -449,7 +449,7 @@ class SellerDashboardController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'reel_id' => 'required|exists:reels,id',
-            'file' => 'required|mimes:mp4,mov,avi,mkv|max:5120',
+            'file' => 'required',
             'caption' => 'required',
         ]);
 
