@@ -3404,3 +3404,16 @@ img.img-fluid.circle-image {
     right: 0;
     left: auto;
 }
+
+.add-caption {
+    background: #00000078;
+    padding: 9px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
+}
+.add-caption p {
+    font-size: 13px;
+    margin-bottom: 0px;
+}

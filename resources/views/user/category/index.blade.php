@@ -603,6 +603,11 @@
                 <img id="reelImage" class="img-fluid" style="display:none;" />
                 <video id="reelVideo" style="width:100%; height:100%; object-fit:contain; display:none;" controls autoplay muted></video>
             </div>
+
+            <div class="add-caption">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam iure enim laudantium labore veniam necessitatibus illo alias aperiam harum</p>
+            </div>
+
         </div>    
     </div>
 </div>
