@@ -25,8 +25,8 @@ class AgoraController extends Controller
     {
 
           $validate = Validator::make($request->all(), [
-           'id'=>'required|exists:live_requests,id'
-
+           'id'=>'required|exists:live_requests,id',
+           'role'=>'required|in:1,2' // 1 view 2 broadcast
             ]);
             
        if($validate->fails()){
@@ -50,8 +50,9 @@ class AgoraController extends Controller
         // ]);
 
         $token = $this->agora->generateRtcToken(
-            $request->channel,
-            $uid ?? 0
+            $channelName,
+            $uid ?? 0,
+            $request->role
         );
         
        $token_record=  [
