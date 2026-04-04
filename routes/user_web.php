@@ -32,7 +32,7 @@ Route::get('/live', function () {
     return view('agora');
 });
 
-Route::match(['get', 'post'], '/agora/token', [AgoraController::class, 'generateToken']);
+Route::match(['get', 'post'], '/agora/token', [AgoraController::class, 'generateTokenWeb']);
   
 
 Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
