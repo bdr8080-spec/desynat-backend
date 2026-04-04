@@ -931,7 +931,7 @@ h3.mid-headng {
 .suggestedStore_img {
     width: 160px;
     height: 160px;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     border-radius: 50%;
     background: linear-gradient(#fff, #fff) padding-box,
         linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
@@ -1497,6 +1497,11 @@ h3.mid-headng {
     border: 1px solid transparent;
     background: linear-gradient(#fff, #fff) padding-box,
         linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+}
+
+.story-active{
+    border: 4px solid transparent;
+    background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
 }
 
 .storeClient_profile_img img {

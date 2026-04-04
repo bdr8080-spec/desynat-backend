@@ -1364,7 +1364,7 @@ label {
   overflow-x: hidden;
 }
 
-storeClient_profile_img {
+.storeClient_profile_img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -1372,6 +1372,11 @@ storeClient_profile_img {
   border: 1px solid transparent;
   background: linear-gradient(#fff, #fff) padding-box,
     linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+}
+
+.story-active{
+  border: 4px solid transparent !important;
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
 }
 
 .storeClient_profile_img img {

@@ -1387,3 +1387,7 @@ table.dataTable td.dt-type-date {
 .add-caption h6 {
     font-size: 14px;
 }
+.story-active{
+    border: 4px solid transparent !important;
+    background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+  }
