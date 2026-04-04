@@ -13,13 +13,14 @@
       border: 1px solid #ddd;
       padding: 10px;
       word-break: break-all;
+      font-size: 0.75rem;
     }
 
     body {
       font-family: Arial, Helvetica, sans-serif;
       margin: 0;
       padding: 0;
-      font-size: 14px;
+      font-size: 0.75rem;
     }
     @media print {
       @page {
@@ -30,7 +31,7 @@
     }
 
     .h4-14 h4 {
-      font-size: 12px;
+      font-size: 0.75rem;
       margin-top: 0;
       margin-bottom: 5px;
     }
@@ -46,18 +47,21 @@
       width: 100%;
       border-collapse: collapse;
       padding: 1px;
+      font-size: 0.75rem;
     }
 
     .hm-p p {
       text-align: left;
       padding: 1px;
       padding: 5px 4px;
+      font-size: 0.75rem;
     }
 
     td,
     th {
       text-align: left;
       padding: 4px 6px;
+      font-size: 0.75rem;
     }
 
     .table-b td,
@@ -66,7 +70,7 @@
     }
 
     th {
-      font-size: 14px;
+      font-size: 0.75rem;
       text-align: center;
     }
 
@@ -99,11 +103,11 @@
     .table-bordered th {
       border: 1px solid #ddd;
       padding: 10px;
-      font-size: 14px;
+      font-size: 0.75rem;
     }
 
     .invoice-items {
-      font-size: 14px;
+      font-size: 0.75rem;
       border-top: 1px dashed #ddd;
     }
 
