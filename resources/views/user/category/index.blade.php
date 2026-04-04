@@ -1,6 +1,25 @@
 @extends('user.layout.app')
 
 @section('content')
+
+<style>
+.share-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+    width: 32px;
+    color: var(--secondry2-color);
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 15;
+}
+</style>
 <div class="customContainer">
     <div>
         <div>
@@ -605,11 +624,11 @@
             </div>
 
             <div class="add-caption">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam iure enim laudantium labore veniam necessitatibus illo alias aperiam harum</p>
+                <p id="reelCaption"></p>
             </div>
             <div class="caption-share">
-                <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                <button class="wishlist-btn reply-ic"><i class="bi bi-reply"></i></button>
+                <button class="wishlist-btn" id="viewerWishlistBtn" data-reel-id=""><i class="fa-regular fa-heart"></i></button>
+                <button class="share-btn reply-ic" id="shareReelBtn"><i class="bi bi-reply"></i></button>
             </div>
         </div>    
     </div>
@@ -831,6 +850,17 @@ function loadSellerStories(openIndex = 0) {
                 sellerStories = res.data.data;
             } else {
                 sellerStories = [];
+            }
+            var profileDiv = document.querySelector('.storeClient_profile_img');
+
+            if (sellerStories.length > 0) {
+                if(profileDiv){
+                    profileDiv.classList.add('story-active');
+                }
+            } else {
+                if(profileDiv){
+                    profileDiv.classList.remove('story-active');
+                }
             }
 
             // If stories exist → open gallery
@@ -1104,6 +1134,7 @@ function closeHighlightViewer() {
 </script>
 
 <!-- reel -->
+
 <script>
 let reelTimer = null;
 let reelDuration = 3000;
@@ -1153,6 +1184,22 @@ function openReelViewer(reel){
         startReelProgress(progressFill, reelDuration, closeReelViewer);
     }
 
+    // ✅ SET CAPTION
+    document.getElementById("reelCaption").innerText = reel.caption ?? '';
+
+    // ✅ SET WISHLIST BUTTON DATA + STATE
+    const wishlistBtn = document.getElementById("viewerWishlistBtn");
+    wishlistBtn.setAttribute("data-reel-id", reel.id);
+
+    if(reel.is_whishlisted == 1){
+        wishlistBtn.innerHTML = '<img src="/user/assets/images/reels_check.svg" class="img-fluid" alt="check" />';
+    } else {
+        wishlistBtn.innerHTML = '<i class="fa-regular fa-heart"></i>';
+    }
+
+    // ✅ SET SHARE FILE
+    document.getElementById("shareReelBtn").setAttribute("data-file", reel.file);
+
     document.getElementById("reelViewer").style.display = "block";
 }
 
@@ -1173,12 +1220,15 @@ function startReelProgress(progressEl, duration, callback){
 // CLOSE VIEWER
 function closeReelViewer(){
     clearTimeout(reelTimer);
+
     const imageEl = document.getElementById("reelImage");
     const videoEl = document.getElementById("reelVideo");
     const progressFill = document.getElementById("reelProgressFill");
 
     document.getElementById("reelViewer").style.display = "none";
+
     imageEl.style.display = "none";
+
     videoEl.pause();
     videoEl.style.display = "none";
 
@@ -1192,14 +1242,16 @@ $(document).ready(function(){
 
     // CLICK ON REEL (IGNORE WISHLIST BUTTON)
     $(document).on('click', '.product-img', function(e){
-        if($(e.target).closest('.wishlist-btn').length) return; // ignore wishlist
+        if($(e.target).closest('.wishlist-btn').length) return;
+
         const reel = JSON.parse($(this).attr('data-reel'));
         openReelViewer(reel);
     });
 
-    // WISHLIST AJAX
+    // WISHLIST AJAX (UNCHANGED)
     $(document).on('click', '.wishlist-btn', function(e){
-        e.stopPropagation(); // important: prevent viewer
+        e.stopPropagation();
+
         const button = $(this);
         const reelId = button.data('reel-id');
 
@@ -1215,15 +1267,40 @@ $(document).ready(function(){
                         button.html('<i class="fa-regular fa-heart"></i>');
                     }
                     toastr.success(response.message);
+                    setTimeout(function(){
+                        location.reload();
+                    }, 1000);
                 } else {
                     toastr.error(response.message || 'Something went wrong');
                 }
             },
             error: function(xhr){
                 var msg = 'Something went wrong';
-                if(xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
+                if(xhr.responseJSON && xhr.responseJSON.message){
+                    msg = xhr.responseJSON.message;
+                }
                 toastr.error(msg);
             }
+        });
+    });
+
+    // ✅ SHARE BUTTON (COPY LINK)
+    $(document).on('click', '#shareReelBtn', function(e){
+        e.stopPropagation();
+
+        const file = $(this).attr('data-file');
+
+        if(!file){
+            toastr.error('No link found');
+            return;
+        }
+
+        navigator.clipboard.writeText(file)
+        .then(function(){
+            toastr.success('Link copied to clipboard');
+        })
+        .catch(function(){
+            toastr.error('Failed to copy link');
         });
     });
 

@@ -1,10 +1,33 @@
 @include('dealer.layout.header')
 
+<style>
+.deleteStoryBtn {
+    background: linear-gradient(135deg, #ff4d4d, #cc0000);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.deleteStoryBtn:hover {
+    background: linear-gradient(135deg, #e60000, #990000);
+    transform: scale(1.05);
+}
+
+button.deleteStoryBtn {
+    margin-left: 90px;
+    margin-bottom: 50px;
+}
+</style>
+
 <div class="onepage-2">
     <div class="customContainer position-relative">
         <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
             <div class="title24">
-                <a href="{{route('seller.dashboard')}}" style="color:rgb(57, 55, 55)">
+                <a href="{{route('seller.view_profile')}}" style="color:rgb(57, 55, 55)">
                     <i class="bi bi-chevron-left"></i> Add Story
                 </a>
             </div>
@@ -57,6 +80,9 @@
                             @endif
                         </div>
                     </div>
+                    <button class="deleteStoryBtn" data-id="{{ $story->id }}">
+                        Delete
+                    </button>
                 </div>
             @endforeach
         </div>
@@ -279,6 +305,56 @@ document.querySelector('.add-fillbtn').addEventListener('click', async function 
         toastr.error('Something went wrong');
         console.error(error);
     }
+});
+</script>
+
+<!-- delete story -->
+<script>
+document.body.addEventListener('click', function(e) {
+
+    // --- Delete Highlight ---
+    const deleteBtn = e.target.closest('.deleteStoryBtn');
+    if (deleteBtn) {
+        e.stopPropagation(); // 
+        const storyId = deleteBtn.getAttribute('data-id');
+        if (!storyId) return;
+
+       // if (!confirm("Are you sure you want to delete this highlight?")) return;
+
+        const originalHTML = deleteBtn.innerHTML;
+       // deleteBtn.innerHTML = "Deleting...";
+        deleteBtn.style.pointerEvents = "none";
+
+        fetch(`/seller/delete_story/${storyId}`, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                "Accept": "application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            deleteBtn.innerHTML = originalHTML;
+            deleteBtn.style.pointerEvents = "auto";
+
+            if (data.status === "success") {
+                toastr.success(data.message || "Highlight deleted");
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                toastr.error(data.message || "Failed to delete highlight");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            deleteBtn.innerHTML = originalHTML;
+            deleteBtn.style.pointerEvents = "auto";
+            toastr.error("Something went wrong");
+        });
+
+        return; // stop further processing
+    }
+
+
 });
 </script>
 

@@ -1811,7 +1811,9 @@ public function View_seller_profile($request){
         
             if($store_information){
                 $store_details = sellerStoreInformation::where('seller_id', $request->user_id)->first();
+                //dd($store_details);
                 $storeName = $store_details->store_name ?? '';
+                //dd($storeName);
     
             //   seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
             CreateNotification([
@@ -1822,7 +1824,7 @@ public function View_seller_profile($request){
                     'receiver_type' => 3, 
 
                     'title_english' => 'Store Info',
-                    'description_english' => "Your store {$store_deatils->store_name} bank details has been updated",
+                    'description_english' => "Your store {$storeName} bank details has been updated",
 
                     'notification_type' => 'store_bank_details_update'
                 ]);

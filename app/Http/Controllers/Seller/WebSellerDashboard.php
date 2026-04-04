@@ -265,7 +265,10 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
       //sdd($reels);
       $highlights=  $this->StoryManagementService->getSellerHighlights($request_data)['data'];
 
-      return view('dealer.profile.view_profile',compact('seller_details','reels','highlights'));
+      $stories=  $this->StoryManagementService->getSellerStoryOnUser($request_data)['data'];
+     // dd($stories);
+
+      return view('dealer.profile.view_profile',compact('seller_details','reels','highlights','stories'));
       }
 
 
@@ -859,6 +862,48 @@ $seller_id=Auth::guard('seller')->user()->id;
         ];
 
         $result = $this->StoryManagementService->updateSellerReelStatus($request_data);
+
+        if (isset($result['status']) && $result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function delete_highlight($id)
+    {
+        $request_data = (object) [
+            'highlight_id' => $id
+        ];
+
+        $result = $this->StoryManagementService->deleteSellerHighlight($request_data);
+
+        if (isset($result['status']) && $result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function delete_story($id)
+    {
+        $request_data = (object) [
+            'story_id' => $id
+        ];
+
+        $result = $this->StoryManagementService->deleteSellerStory($request_data);
 
         if (isset($result['status']) && $result['status'] === 'error') {
             return response()->json([

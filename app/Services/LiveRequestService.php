@@ -474,6 +474,7 @@ $limit = isset($request_data->limit) ? (int)$request_data->limit : 10;
 $baseQuery = LiveRequest::with([
     'timeslot_details',
     'timeslot_details.country_info',
+    'seller_details',
 ])
 ->where('admin_verify', '1');
 
@@ -536,7 +537,7 @@ if ($current_requests->isEmpty()) {
     return [
         'status' => 'success',
         'message' => 'No Request found',
-        'data' => (object)[]
+        'data' => []
     ];
 }
 

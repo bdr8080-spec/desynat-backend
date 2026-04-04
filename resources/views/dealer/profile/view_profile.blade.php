@@ -82,6 +82,15 @@
     background: linear-gradient(90deg, #b8864b, #d6b58d);
     color: #fff;
 }
+
+#storyvideo2 {
+    pointer-events: none;
+}
+
+#storyimg2 {
+    pointer-events: none;
+}
+
 </style>
 
 
@@ -112,8 +121,8 @@
                     <div class="col-md-8">
                         <div class="user_view">
                             <div class="position-relative">
-                                <div class="addprofile">
-                                    <img src="{{$seller_details->profile_pic}}" class="img-fluid">
+                                <div class="{{ !empty($stories) && count($stories) > 0 ? 'addprofile story-active' : 'addprofile' }}">
+                                    <img src="{{$seller_details->profile_pic}}" class="img-fluid" onclick='openSellerStoryViewer(@json($stories), 0)'>
                                 </div>
                                 <a href="{{route('seller.add_story')}}" class="addic">
                                     <img src="{{asset('dealer/assets/img/add.svg')}}" class="img-fluid">
@@ -419,7 +428,7 @@
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                         style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
                     <div class="py-2" style="color:#875C3A">
-                        Upload Image/Video
+                        Upload Video
                     </div>
                 </div>
 
@@ -430,7 +439,7 @@
                 </div>
 
                 <!-- File Input -->
-                <input type="file" id="storyUpload" accept="image/*,video/*" class="storyUpload" />
+                <input type="file" id="storyUpload" accept="video/*" class="storyUpload" />
 
                 <!-- File Error -->
                 <div id="fileError" style="color:red; font-size:0.9rem; margin-top:0.5rem;"></div>
@@ -478,13 +487,6 @@
         </div>
 
         <div class="dashboard-button mt-4 logostatus bgwhite d-flex justify-content-center gap-4" id="reelActions">
-            <!-- Active
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" checked="">
-                <label class="form-check-label" for="switchCheckDefault"></label>
-            </div>
-            <a href="#" class="pencil-btn-2 btn-red"><i class="bi bi-trash3"></i> </a>
-            <a href="javascript:void(0)" class="pencil-btn-2 edt-btn" onclick='updateReels(@json($reel))'><i class="bi bi-pencil"></i> </a> -->
         </div>
     </div>
 </div>
@@ -542,7 +544,7 @@
                 <div id="bannerhide2" class="text-center">
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                         style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
-                    <div class="py-2" style="color:#875C3A">Upload Image/Video</div>
+                    <div class="py-2" style="color:#875C3A">Upload Video</div>
                 </div>
 
                 <!-- Preview -->
@@ -552,7 +554,7 @@
                 </div>
 
                 <!-- File Input -->
-                <input type="file" id="storyUpload2" accept="image/*,video/*" class="storyUpload" />
+                <input type="file" id="storyUpload2" accept="video/*" class="storyUpload" />
                 <div id="fileError2" style="color:red; font-size:0.9rem;"></div>
             </label>
             <input type="hidden" id="existing_file2" value="">
@@ -569,6 +571,33 @@
         <div class="dashboard-button mt-4 logostatus bgwhite">
             <button type="button" class="btn add-fillbtn w-100" onclick="updateReelSubmit()">Update</button>
         </div>
+    </div>
+</div>
+
+<!-- story viewer -->
+ <div class="status-viewer bgwhite" id="sellerStoryViewer" style="display:none;">
+    <div class="container highlightStatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeSellerStoryViewer()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="logostatus">
+            <!-- Progress bar container -->
+            <div id="sellerStoryProgressContainer" class="progress-container"></div>
+            
+            <div class="status-img">
+                <!-- Image & Video -->
+                <img id="sellerStoryImage" class="img-fluid" style="display:none;" />
+                
+                <video id="sellerStoryVideo"
+                       style="width:100%; height:100%; object-fit:contain; display:none;"
+                       controls autoplay muted>
+                </video>
+            </div>
+        </div>    
     </div>
 </div>
 
@@ -717,19 +746,6 @@ function closeStatus2() {
     }
 }
 
-// // Example functions for buttons (replace with your AJAX)
-// function deleteReel(reelId) {
-//     if (confirm("Are you sure you want to delete this reel?")) {
-//         console.log("Delete reel:", reelId);
-//         // TODO: AJAX call to delete
-//     }
-// }
-
-// function toggleReelStatus(reelId) {
-//     var isActive = $("#switchReelStatus").is(":checked");
-//     console.log("Toggle reel status:", reelId, isActive);
-//     // TODO: AJAX call to update status
-// }
 
 function updateReels(index) {
     var reel = reels[index];
@@ -1241,6 +1257,146 @@ function closeSellerHighlightViewer() {
     }
 }
 </script>
+
+<script>
+let sellerStories = [];
+let sellerStoryIndex = 0;
+let sellerStoryTimer = null;
+let sellerStoryDuration = 3000;
+
+// OPEN VIEWER
+function openSellerStoryViewer(stories, startIndex = 0) {
+    clearTimeout(sellerStoryTimer);
+
+    sellerStories = stories;
+    sellerStoryIndex = startIndex;
+
+    document.getElementById("sellerStoryViewer").style.display = "block";
+
+    renderProgressBars(); // ✅ create all bars once
+    showSellerStory(sellerStoryIndex);
+}
+
+// CREATE ALL PROGRESS BARS
+function renderProgressBars() {
+    const container = document.getElementById("sellerStoryProgressContainer");
+    container.innerHTML = '';
+
+    sellerStories.forEach((_, i) => {
+        container.innerHTML += `
+            <div style="flex:1; margin:2px; background:#ddd; height:4px;">
+                <div id="progress_${i}" 
+                     style="width:0%; height:100%; background:#007bff;"></div>
+            </div>
+        `;
+    });
+}
+
+// SHOW STORY
+function showSellerStory(index) {
+    clearTimeout(sellerStoryTimer);
+
+    if (index >= sellerStories.length) {
+        closeSellerStoryViewer();
+        return;
+    }
+
+    const story = sellerStories[index];
+    const imageEl = document.getElementById("sellerStoryImage");
+    const videoEl = document.getElementById("sellerStoryVideo");
+
+    // RESET MEDIA
+    imageEl.style.display = "none";
+    videoEl.style.display = "none";
+    videoEl.pause();
+    videoEl.src = "";
+
+    // UPDATE PROGRESS BARS
+    sellerStories.forEach((_, i) => {
+        const bar = document.getElementById(`progress_${i}`);
+        if (!bar) return;
+
+        if (i < index) {
+            bar.style.width = "100%";
+        } else {
+            bar.style.width = "0%";
+        }
+    });
+
+    const currentBar = document.getElementById(`progress_${index}`);
+
+    const file = story.file;
+    const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+    if (isVideo) {
+        videoEl.src = file;
+        videoEl.style.display = "block";
+
+        videoEl.onloadedmetadata = function () {
+            sellerStoryDuration = videoEl.duration * 1000;
+            animateProgress(currentBar, sellerStoryDuration);
+        };
+
+        videoEl.onended = function () {
+            nextSellerStory();
+        };
+
+    } else {
+        imageEl.src = file;
+        imageEl.style.display = "block";
+
+        sellerStoryDuration = 3000;
+        animateProgress(currentBar, sellerStoryDuration);
+    }
+}
+
+// PROGRESS ANIMATION
+function animateProgress(progressEl, duration) {
+    clearTimeout(sellerStoryTimer);
+
+    progressEl.style.transition = "none";
+    progressEl.style.width = "0%";
+
+    setTimeout(() => {
+        progressEl.style.transition = `width ${duration}ms linear`;
+        progressEl.style.width = "100%";
+    }, 50);
+
+    sellerStoryTimer = setTimeout(() => {
+        nextSellerStory();
+    }, duration);
+}
+
+// NEXT STORY
+function nextSellerStory() {
+    sellerStoryIndex++;
+
+    if (sellerStoryIndex >= sellerStories.length) {
+        closeSellerStoryViewer();
+    } else {
+        showSellerStory(sellerStoryIndex);
+    }
+}
+
+// CLOSE VIEWER
+function closeSellerStoryViewer() {
+    clearTimeout(sellerStoryTimer);
+
+    const imageEl = document.getElementById("sellerStoryImage");
+    const videoEl = document.getElementById("sellerStoryVideo");
+
+    document.getElementById("sellerStoryViewer").style.display = "none";
+
+    imageEl.style.display = "none";
+
+    videoEl.pause();
+    videoEl.style.display = "none";
+    videoEl.src = "";
+}
+</script>
+
+
+
 
 
 

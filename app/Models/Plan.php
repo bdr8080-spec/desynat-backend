@@ -27,6 +27,9 @@ class Plan extends Model
         'commission',
         'commission_percentage',
         'status',
+        'product_type',
+        'is_free_months',
+        'no_of_free_months'
     ];
 
     protected $casts = [
