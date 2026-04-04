@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Services\agora2\RtcTokenBuilder2;
 
 
+
 class AgoraService
 {
     protected $appId;

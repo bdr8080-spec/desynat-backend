@@ -28,11 +28,11 @@ use App\Http\Controllers\AgoraController;
 // Save User firebase Token 
 Route::get('user-save-token', [SaveFirebaseToken::class, 'saveUserToken']);
 
-// 
-// Route::get('/agora', function () {
-//     return view('agora');
-// });
-  Route::match(['get', 'post'], '/agora', [AgoraController::class, 'agoraViewPageWeb']);
+Route::get('/live', function () {
+    return view('agora');
+});
+
+Route::match(['get', 'post'], '/agora/token', [AgoraController::class, 'generateToken']);
   
 
 Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');

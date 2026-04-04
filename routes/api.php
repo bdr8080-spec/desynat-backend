@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Artisan;
 
 Route::match(['get','post'],'/agora/token', [AgoraController::class, 'generateToken']);
 
-Route::match(['get','post'],'/agora/tokenWeb', [AgoraController::class, 'generateTokenWeb']);
+// Route::match(['get','post'],'/agora/tokenWeb', [AgoraController::class, 'generateTokenWeb']);
 
 
 Route::get('optimize',function(){
