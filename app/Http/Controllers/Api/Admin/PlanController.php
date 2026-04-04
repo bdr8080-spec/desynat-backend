@@ -115,8 +115,14 @@ class PlanController extends Controller
             'commission' => 'required|in:0,1',
             'commission_percentage' => 'required_if:commission,1|nullable|numeric|min:0',
             'is_free_months' => 'required|in:0,1',
-            'no_of_free_months' => 'required_if:is_free_months,1|nullable|integer|min:1|max:11',
-        ]);
+            'no_of_free_months' => [
+                'nullable',
+                'required_if:is_free_months,1',
+                'integer',
+                'min:1',
+                'max:11'
+            ],
+         ]);
 
         if ($validate->fails()) {
             return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
