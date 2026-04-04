@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Services\Agora\RtcTokenBuilder;
+// use App\Services\Agora\RtcTokenBuilder;
+use App\Services\agora2\RtcTokenBuilder2;
 
 
 class AgoraService
@@ -23,7 +24,7 @@ class AgoraService
         $currentTimestamp = now()->timestamp;
         $privilegeExpiredTs = $currentTimestamp + $expireTimeInSeconds;
 
-        return RtcTokenBuilder::buildTokenWithUid(
+        return RtcTokenBuilder2::buildTokenWithUid(
             $this->appId,
             $this->appCertificate,
             $channelName,

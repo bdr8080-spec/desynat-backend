@@ -51,8 +51,8 @@ class AgoraController extends Controller
 
         $token = $this->agora->generateRtcToken(
             $channelName,
-            $uid ?? 0,
-            $request->role
+            $uid ?? 0
+            // $request->role
         );
         
        $token_record=  [
@@ -72,4 +72,55 @@ class AgoraController extends Controller
             return ApiResponse::generateResponse('success','agora token generate',$token_record, 200);
 
     }
+
+
+
+     public function generateTokenWeb(Request $request)
+    {
+        $request->validate([
+            // 'id'=>'required|exists:live_requests,id'
+            'channel_name' => 'required|string',
+            'uid' => 'nullable|integer'
+        ]);
+
+        $channelName = $request->channel_id;
+        $uid = $request->uid ?? 0;
+
+     $livechat_details=LiveRequest::where('channel_id',$request->channel_name)->first();
+
+     if($livechat_details){
+         $uid = $livechat_details->uid ;
+     }
+
+    $token = AgoraService::generateToken($channelName, $uid);
+
+    return response()->json([
+        'token' => $token,
+        'uid' => $uid
+    ]);
+
+        // return response()->json([
+        //     'status' => true,
+        //     'token' => $token,
+        //     'channel' => $channelName,
+        //     'uid' => $uid
+        // ]);
+    }
+
+     public function agoraViewPageWeb(Request $request)
+    {
+
+    $id=$request->id??43;
+    
+    $uid=rand(00000000,999999999);
+
+    $livechat_details=  LiveRequest::where('id',$id)->first();
+    $livechat_details->update(['uid'=>$uid]);
+
+
+    return view('agora',compact('livechat_details'));
+    }
+
+
+    
 }
