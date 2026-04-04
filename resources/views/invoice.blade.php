@@ -132,7 +132,7 @@
             font-weight: bold;
             color: #000;
             margin-top: 5px;
-            font-size: 14px;
+               font-size: 0.75rem;
           ">
         multi-vendor fashion platform
       </p>
@@ -341,7 +341,7 @@
     </table>
 
     <hr style="border: 1px dashed rgb(131, 131, 131); margin: 10px auto" />
-    <div style="text-align: center; font-weight: 600;">This invoice is generated electronically by DESYNAT and does not require
+    <div style="text-align: center; font-weight: 600; font-size: 0.75rem;">This invoice is generated electronically by DESYNAT and does not require
       a signature.</div>
 
 
