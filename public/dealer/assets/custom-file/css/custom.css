@@ -449,7 +449,7 @@ table.dataTable {
     background: #333;
     border-radius: 50%;
     overflow: hidden;
-    outline: 2px solid #a7825b;
+    outline: 1px solid #ddd;
 }
 
 .addprofile img {
