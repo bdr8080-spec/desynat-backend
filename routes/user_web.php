@@ -32,6 +32,14 @@ Route::get('/live', function () {
     return view('agora');
 });
 
+
+Route::get('/agoraOnlyStream', function () {
+    return view('agoraOnlyStream');
+});
+
+
+
+
 Route::match(['get', 'post'], '/agora/token', [AgoraController::class, 'generateTokenWeb']);
   
 
