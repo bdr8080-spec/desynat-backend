@@ -233,6 +233,11 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
+Route::match(['get', 'post'], '/support', function () {
+     return view('user.support.index');
+
+})->name('user.support');
+
 // Route::match(['get', 'post'], '/my-wallet', function () {
 //      return view('user.mywallet.wallet');
 

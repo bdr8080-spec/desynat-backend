@@ -197,7 +197,7 @@
                                                     Exchange Policy
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
-                                            <li><a href="">
+                                            <li><a href="/support">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/support.svg')}}" />
                                                     Support
