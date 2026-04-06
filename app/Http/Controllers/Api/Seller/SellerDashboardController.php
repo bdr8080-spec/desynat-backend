@@ -617,7 +617,7 @@ class SellerDashboardController extends Controller
     }
 
 
-public function get_admin_stories(Request $request){
+public function SellerSide_get_admin_stories(Request $request){
 
     $data=$this->StoryManagementService->getAdminStoryOnSeller($request);
 

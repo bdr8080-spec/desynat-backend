@@ -157,6 +157,9 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
   Route::get('/live_room_records', [SellerLiveRequestController::class,'live_room_records']);
 
+   Route::get('/get_Seller_admin_stories', [SellerDashboardController::class,'SellerSide_get_admin_stories']);
+   
+
 
 });
 
