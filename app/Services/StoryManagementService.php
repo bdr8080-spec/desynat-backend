@@ -251,6 +251,45 @@ class StoryManagementService
     }
 
 
+
+    public function getAdminStoryOnSeller($request)
+    {
+        try {
+            $query = Story::query();
+
+            $query->where('type', '1');
+
+            //  Only last 24 hours stories
+            $query->where('created_at', '>=', Carbon::now()->subDay());
+            $query->where('status', '1');
+
+            $query->orderBy('id', 'desc');
+
+            $story_details = $query->get();
+
+            if ($story_details->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Story found',
+                    'data' => []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Admin Stories fetched successfully',
+                'data' => $story_details
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch story: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
     // public function getSellerReelOnUser($request)
     // {
     //     try {

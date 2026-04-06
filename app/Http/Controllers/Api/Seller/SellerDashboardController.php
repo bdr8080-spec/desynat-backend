@@ -616,6 +616,20 @@ class SellerDashboardController extends Controller
 
     }
 
+
+public function get_admin_stories(Request $request){
+
+    $data=$this->StoryManagementService->getAdminStoryOnSeller($request);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
     
 
     
