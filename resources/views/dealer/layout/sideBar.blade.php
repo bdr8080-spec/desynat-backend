@@ -66,6 +66,13 @@
                     <span>Subscription Plans</span>
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20" href="/index">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/plan.svg" alt="icon" class="asideicon">
+                    <span>Ticket Management </span>
+                </a>
+            </li>
 
             <!-- <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">

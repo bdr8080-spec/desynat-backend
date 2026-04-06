@@ -220,6 +220,11 @@ Route::match(['get', 'post'], '/add-products', function () {
 })->name('dealer.add-products');
 
 
+Route::match(['get', 'post'], '/index', function () {
+    return view('dealer.ticket-mgt.index');
+
+})->name('dealer.index');
+
 
 // Route::match(['get', 'post'], '/subscription-plans', function () {
 //     return view('dealer.plans.index');
