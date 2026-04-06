@@ -113,13 +113,16 @@ class StoryManagementService
 
 
 
-    public function addStory(Request $request)
+    public function addStory($request)
     {
 
+
         try {
+
             $story = Story::create([
                 'file' => $request->file,
                 'thumbnail' => $request->thumbnail??null,
+                'type'=>'1'
             ]);
 
             return [
@@ -131,7 +134,7 @@ class StoryManagementService
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to add story',
+                'message' => $e->getMessage(),
                 'data' => []
             ];
         }

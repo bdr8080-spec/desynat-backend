@@ -69,6 +69,7 @@ class StoryController extends Controller
                 'file'=>$request->file,
                 'thumbnail' => $request->thumbnail??null,
             ];
+            
             $result = $this->StoryManagementService->addStory($request_data);
 
             if ($result['status'] === 'error') {
