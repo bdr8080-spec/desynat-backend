@@ -13,10 +13,10 @@
             </div>
             <button type="submit" class="btn btn-success searchlin"> Search </button>
         </div>
-        <img src="{{ asset('user') }}/assets/images/add-icon.svg" alt="add icon">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#ticketModal"><img src="{{ asset('user') }}/assets/images/add-icon.svg" alt="add icon"></a>
     </div>
 
-
+ 
     <div class="ticket-pnl mt-5">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between">
@@ -56,6 +56,58 @@
 
 </section>
 
+
+<!-- Success Modal -->
+<div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Ticket deatils </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+           
+            <div class="modal-body">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Ticket Type</label>
+                    </div>
+                    <select class="form-select form-control" aria-label="Default select example">
+                        <option type="1">Ticket 1</option>
+                        <option type="2">Ticket 2</option>
+                    </select>
+                </div>
+
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Title</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter Product name">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Description</label>
+                    </div>
+                    <textarea class="form-control" rows="4" placeholder="Enter description"></textarea>
+                </div>
+
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Upload attachment (if any)</label>
+                    </div>
+                   
+                </div>
+
+
+
+                <div class="cmn-btn mt-4">
+                    <button type="submit" class="btn add-fillbtn w-100">Submit </button>
+                </div>
+
+            </div>
+           
+        </div>
+    </div>
+</div>
 
 
 
