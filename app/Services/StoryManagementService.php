@@ -722,11 +722,24 @@ class StoryManagementService
             }
 
             if ($stories->isEmpty()) {
+             
+            if (!empty($request_data->limit)) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No highlights found',
+                    'data' =>[]
+                ];
+            }else{
                 return [
                     'status' => 'success',
                     'message' => 'No highlights found',
                     'data' => (object)[]
                 ];
+
+            }
+
+
+
             }
 
             return [
