@@ -225,6 +225,10 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
     // m11 Api 
     Route::get('/show-all-live-streaming-request', [UserDashboardController::class,'live_room_records']);
+
+    //m12
+    Route::post('/raise_ticket', [UserDashboardController::class,'raise_ticket']);
+    Route::get('/get_raised_tickets', [UserDashboardController::class,'get_raised_tickets']);
   
 });
 
@@ -298,6 +302,10 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
   //M11
 
   Route::get('/get_affiliate_dashboard_data', [UserAffiliatedProductController::class,'get_affiliate_dashboard_data']);
+
+  //M12
+  Route::post('/raise_ticket', [UserAffilatedControlller::class,'raise_ticket']);
+  Route::get('/get_raised_tickets', [UserAffilatedControlller::class,'get_raised_tickets']);
   
 
 
@@ -344,3 +352,4 @@ Route::get('all-brand',[CommonController::class, 'get_brand']);
 
 Route::get('all-color',[CommonController::class, 'get_color']);
 Route::get('all-size',[CommonController::class, 'get_size']);
+Route::get('ticket_types',[CommonController::class, 'ticket_types']);

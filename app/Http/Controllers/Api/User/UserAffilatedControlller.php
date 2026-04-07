@@ -12,15 +12,17 @@ use Illuminate\Validation\Rule;
 
 use App\Services\UserAffilatedAuthService;
 use App\Services\UserOrderService;
+use App\Services\TicketService;
 
 
 class UserAffilatedControlller extends Controller
 {
 
-    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService)
+    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, TicketService $TicketService)
     {
         $this->UserAffilatedAuthService = $UserAffilatedAuthService;
         $this->UserOrderService = $UserOrderService;
+        $this->TicketService = $TicketService;
     }
 
 
@@ -974,6 +976,64 @@ public function affiliate_all_withdraw_request(Request $request)
             'data' => []
         ];
     }
+}
+
+public function raise_ticket(Request $request){
+  
+    $validate = Validator::make($request->all(), [
+        'ticket_type_id' => 'required|integer|exists:ticket_types,id',
+        'title' => 'required',
+        'description' => 'required',
+        ]);
+    
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+    $user_id=$request->user()->id;
+    $request_data=(object)[
+        'sender_id'=>$user_id,
+        'sender_type'=> 3,
+        'file'=>$request->file??null,
+        'ticket_type_id'=>$request->ticket_type_id,
+        'title'=>$request->title,
+        'description'=>$request->description,
+
+        ];
+
+    $data=$this->TicketService->raiseTicket($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+public function get_raised_tickets(Request $request){
+  
+
+    $user_id=$request->user()->id;
+    $request_data=(object)[
+        'sender_id'=>$user_id,
+        'sender_type'=> 3,
+        'sender_id'=>$user_id,
+        'limit'=>$request->limit??null,
+        'search'=>$request->search??null,
+
+        ];
+
+    $data=$this->TicketService->getTickets($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
 }
 
 

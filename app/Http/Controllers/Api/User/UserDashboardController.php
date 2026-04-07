@@ -10,6 +10,7 @@ use Validator;
 
 use App\Services\UserDashboardService;
 use App\Services\StoryManagementService;
+use App\Services\TicketService;
 
 use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan };
 
@@ -17,9 +18,10 @@ use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan }
 class UserDashboardController extends Controller
 {
 
-    public function __Construct(UserDashboardService $UserDashboardService, StoryManagementService $StoryManagementService){
+    public function __Construct(UserDashboardService $UserDashboardService, StoryManagementService $StoryManagementService, TicketService $TicketService){
         $this->UserDashboardService=$UserDashboardService;
         $this->StoryManagementService=$StoryManagementService;
+        $this->TicketService=$TicketService;
     }
 
 
@@ -440,6 +442,64 @@ public function get_whishlisted_reel(Request $request){
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
     }
+
+public function raise_ticket(Request $request){
+  
+    $validate = Validator::make($request->all(), [
+        'ticket_type_id' => 'required|integer|exists:ticket_types,id',
+        'title' => 'required',
+        'description' => 'required',
+        ]);
+    
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+    $user_id=$request->user()->id;
+    $request_data=(object)[
+        'sender_id'=>$user_id,
+        'sender_type'=> 1,
+        'file'=>$request->file??null,
+        'ticket_type_id'=>$request->ticket_type_id,
+        'title'=>$request->title,
+        'description'=>$request->description,
+
+        ];
+
+    $data=$this->TicketService->raiseTicket($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+public function get_raised_tickets(Request $request){
+  
+
+    $user_id=$request->user()->id;
+    $request_data=(object)[
+        'sender_id'=>$user_id,
+        'sender_type'=> 1,
+        'sender_id'=>$user_id,
+        'limit'=>$request->limit??null,
+        'search'=>$request->search??null,
+
+        ];
+
+    $data=$this->TicketService->getTickets($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
 
 
 
