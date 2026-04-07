@@ -83,7 +83,7 @@ class StoryManagementService
             // }
 
             $query->where('type', '1');
-            $query->orderBy('id', 'desc');
+            // $query->orderBy('id', 'desc');
 
             $story_details = $query->paginate($limit);
 

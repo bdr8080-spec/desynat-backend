@@ -217,7 +217,6 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
     //M11
     Route::get('/get_seller_stories', [UserDashboardController::class,'get_seller_stories']);
-    Route::get('/get_admin_stories', [UserDashboardController::class,'get_admin_stories']);
     Route::get('/get_seller_reels', [UserDashboardController::class,'get_seller_reels']);
     Route::get('/get_seller_highlights', [UserDashboardController::class,'get_seller_highlights']);
     Route::post('/add_remove_reel_to_whislist', [UserDashboardController::class,'add_remove_reel_to_whislist']);
@@ -231,13 +230,17 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     Route::post('/raise_ticket', [UserDashboardController::class,'raise_ticket']);
     Route::get('/get_raised_tickets', [UserDashboardController::class,'get_raised_tickets']);
   
-
 });
+
+    Route::get('/user/get_admin_stories', [UserDashboardController::class,'get_admin_stories']);
+
    
-
-
   Route::Post('/scanner-Seller-details', [UserDashboardController::class,'ScannerSellerdetails']);
 
+  Route::get('user/suggest-store', [UserDashboardController::class,'suggestStore']); // m12 Api 
+  Route::get('user/best-selling-product', [UserDashboardController::class,'bestSellingProduct']); // m12 Api 
+  Route::get('user/top-rating-product', [UserDashboardController::class,'TopRatingProduct']); // m12 Api 
+Route::get('user/newest-product', [UserDashboardController::class,'newestProduct']); // m12 Api 
 
    
 
