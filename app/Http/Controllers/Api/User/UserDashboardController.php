@@ -424,8 +424,6 @@ public function get_whishlisted_reel(Request $request){
 
 
 // user Live Streming Chats
-
-
  public function live_room_records(Request $request)
     {
 
@@ -442,6 +440,60 @@ public function get_whishlisted_reel(Request $request){
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
     }
+
+
+
+
+
+public function suggestStore(Request $request){
+
+
+    $data=$this->UserDashboardService->UsersuggestStore();
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+
+
+
+public function bestSellingProduct(Request $request){
+
+
+    $data=$this->UserDashboardService->bestSellingProduct();
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+
+public function TopRatingProduct(Request $request){
+
+    $data=$this->UserDashboardService->TopRatingProduct();
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+
+
+
+
 
 
 

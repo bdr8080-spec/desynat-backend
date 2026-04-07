@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 use App\Helpers\ApiResponse;
-use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand,User,all_countrie,FullBanner,sellerBanner,Deal,LiveRequest};
+use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand,User,all_countrie,FullBanner,sellerBanner,Deal,LiveRequest,orderdetail,Order,productRatings};
 
 
 use Carbon\Carbon;
@@ -627,6 +627,115 @@ return [
             ];
         }
     }
+
+
+
+
+
+public function UsersuggestStore()
+    {
+        try {
+
+  $stores = sellerStoreInformation::orderBy('store_name', 'desc')->limit(10)->get();
+
+return [
+    'status'  => 'success',
+    'message' => 'All Suggest Store fetch Successfully',
+    'data'    => $stores
+];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
+
+
+
+public function bestSellingProduct()
+    {
+try {
+
+//   $bestSeller = orderdetail::where('payment_status','1')->pluck('product_id')->unique();
+
+
+  $bestSeller = orderdetail::where('payment_status','1')
+    ->pluck('product_id')
+    ->unique()
+    ->values(); // 🔥 reindex keys
+
+if($bestSeller){
+ $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])->whereIn('id',$bestSeller)->limit(10)
+ ->inRandomOrder()
+ ->get();
+}else{
+$all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])->limit(10)
+->inRandomOrder()
+->get();
+
+}
+
+return [
+    'status'  => 'success',
+    'message' => 'All Best sellering product fetch Successfully',
+    'data'    => $all_product_fetch
+];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
+
+public function TopRatingProduct()
+    {
+try {
+
+//   $bestSeller = orderdetail::where('payment_status','1')->pluck('product_id')->unique();
+
+
+  $bestSeller = productRatings::pluck('product_id')
+    ->unique()
+    ->values(); // 🔥 reindex keys
+
+if($bestSeller){
+ $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])->whereIn('id',$bestSeller)->limit(10)
+ ->inRandomOrder()
+ ->get();
+ 
+
+}else{
+$all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])->limit(10)
+->inRandomOrder()
+->get();
+
+}
+
+return [
+    'status'  => 'success',
+    'message' => 'Top rating product fetch Successfully',
+    'data'    => $all_product_fetch
+];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
 
 
 }
