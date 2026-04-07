@@ -217,7 +217,6 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
     //M11
     Route::get('/get_seller_stories', [UserDashboardController::class,'get_seller_stories']);
-    Route::get('/get_admin_stories', [UserDashboardController::class,'get_admin_stories']);
     Route::get('/get_seller_reels', [UserDashboardController::class,'get_seller_reels']);
     Route::get('/get_seller_highlights', [UserDashboardController::class,'get_seller_highlights']);
     Route::post('/add_remove_reel_to_whislist', [UserDashboardController::class,'add_remove_reel_to_whislist']);
@@ -227,8 +226,10 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     // m11 Api 
     Route::get('/show-all-live-streaming-request', [UserDashboardController::class,'live_room_records']);
   
-
 });
+
+    Route::get('/user/get_admin_stories', [UserDashboardController::class,'get_admin_stories']);
+
    
   Route::Post('/scanner-Seller-details', [UserDashboardController::class,'ScannerSellerdetails']);
 
