@@ -417,7 +417,7 @@ class SellerAuthService
 
                 if ($plan_data->duration_type == '1') {
                     // Monthly
-                    $amount = $plan_data->price;
+                    $amount = $plan_data->price * $plan_data->duration;
                 } else {
                     // Yearly
                     if (!empty($plan_data->no_of_free_months) && $plan_data->no_of_free_months > 0) {
@@ -612,7 +612,7 @@ class SellerAuthService
 
               if ($plan_data->duration_type == '1') {
                     // Monthly
-                    $amount = $plan_data->price;
+                    $amount = $plan_data->price * $plan_data->duration;
                 } else {
                     // Yearly
                     if (!empty($plan_data->no_of_free_months) && $plan_data->no_of_free_months > 0) {
