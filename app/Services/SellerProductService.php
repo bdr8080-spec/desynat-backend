@@ -10,8 +10,10 @@ use Hash;
 use App\Models\{ seller,sellerStoreInformation,Bankdetails};
 use App\Models\color;
 use App\Models\Brand;
+use App\Models\SellerSubcriptionPlanBuy;
 
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 
@@ -35,6 +37,32 @@ $seller_details=seller::with('store_info','subcription_plan')->where('id',$reque
     if($seller_details->admin_verify!=='2'){
         return ['status'=>'error','message'=>"You store Didn't Accept or reject By Admin",'data'=>[]];    
     }
+
+    $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request->seller_id)
+            ->where('payment_status', '1')
+            ->where('is_expired', '0')
+            ->where('plan_end_date', '>=', Carbon::today())
+            ->first();
+
+        if (!$subscription) {
+            return [
+                'status' => 'error',
+                'message' => "You have no active plan",
+                'data' => []
+            ];
+        }
+
+        //  CHECK PRODUCT LIMIT
+        if ($subscription->product_type == '0') {
+
+            if ($subscription->no_of_products <= '0') {
+                return [
+                    'status' => 'error',
+                    'message' => "Your monthly limit for product addition has reached, you can't add more products this month",
+                    'data' => []
+                ];
+            }
+        }
 
 
 $product=[
@@ -126,6 +154,10 @@ if($request->category_id==2){
 
     $product_data=  ProductVariant::create($variation_array);
 }
+
+if ($subscription->product_type == '0') {
+            $subscription->decrement('no_of_products');
+        }
 
 
 // if ($product->isEmpty()) {

@@ -5,6 +5,7 @@ use App\Models\Story;
 use App\Models\Reel;
 use App\Models\Highlight;
 use App\Models\WhislistReel;
+use App\Models\SellerSubcriptionPlanBuy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Carbon\Carbon;
@@ -460,17 +461,75 @@ class StoryManagementService
         }
     }
 
+    // public function addSellerReel($request_data)
+    // {
+
+    //     try {
+    //         $story = Reel::create([
+    //             'file' => $request_data->file,
+    //             'type' => 2,
+    //             'seller_id' => $request_data->seller_id,
+    //             'caption' => $request_data->caption,
+    //             'thumbnail' => $request_data->thumbnail??null,
+    //         ]);
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Reel added successfully',
+    //             'data' => $story
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to add reel',
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
+    
+
     public function addSellerReel($request_data)
     {
-
         try {
+
+            $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request_data->seller_id)
+                ->where('payment_status', '1')
+                ->where('status', '1')
+                ->whereDate('plan_end_date', '>=', Carbon::today())
+                ->first();
+
+            if (!$subscription) {
+                return [
+                    'status' => 'error',
+                    'message' => 'You have no active plan',
+                    'data' => []
+                ];
+            }
+
+            if ($subscription->no_of_videos !== null) {
+
+                if ($subscription->no_of_videos <= '0') {
+                    return [
+                        'status' => 'error',
+                        'message' => "Your reel upload limit of this month has been reached, you can't add more reels",
+                        'data' => []
+                    ];
+                }
+            }
+
             $story = Reel::create([
                 'file' => $request_data->file,
                 'type' => 2,
                 'seller_id' => $request_data->seller_id,
                 'caption' => $request_data->caption,
-                'thumbnail' => $request_data->thumbnail??null,
+                'thumbnail' => $request_data->thumbnail ?? null,
             ]);
+
+            if ($subscription->no_of_videos !== null) {
+                $subscription->decrement('no_of_videos');
+            }
 
             return [
                 'status' => 'success',
@@ -482,22 +541,76 @@ class StoryManagementService
             return [
                 'status' => 'error',
                 'message' => 'Failed to add reel',
-                'data' => []
+                'data' => $e->getMessage()
             ];
         }
     }
 
+    // public function addSellerHighlight($request_data)
+    // {
+
+    //     try {
+    //         $story = Highlight::create([
+    //             'file' => $request_data->file,
+    //             'type' => 2,
+    //             'seller_id' => $request_data->seller_id,
+    //             'title' => $request_data->title,
+    //             'thumbnail' => $request_data->thumbnail??null,
+    //         ]);
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Highlight added successfully',
+    //             'data' => $story
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to add highlight',
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
+
     public function addSellerHighlight($request_data)
     {
-
         try {
+
+            $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request_data->seller_id)
+                ->where('payment_status', '1')
+                ->where('status', '1')
+                ->whereDate('plan_end_date', '>=', Carbon::today())
+                ->first();
+
+            if (!$subscription) {
+                return [
+                    'status' => 'error',
+                    'message' => 'You have no active plan',
+                    'data' => []
+                ];
+            }
+
+            if ($subscription->no_of_highlights !== null && $subscription->no_of_highlights <= '0') {
+                return [
+                    'status' => 'error',
+                    'message' => "Your highlight limit of this month has been reached, you can't add more highlights",
+                    'data' => []
+                ];
+            }
+
             $story = Highlight::create([
                 'file' => $request_data->file,
                 'type' => 2,
                 'seller_id' => $request_data->seller_id,
                 'title' => $request_data->title,
-                'thumbnail' => $request_data->thumbnail??null,
+                'thumbnail' => $request_data->thumbnail ?? null,
             ]);
+
+            if ($subscription->no_of_highlights !== null) {
+                $subscription->decrement('no_of_highlights');
+            }
 
             return [
                 'status' => 'success',
@@ -509,7 +622,7 @@ class StoryManagementService
             return [
                 'status' => 'error',
                 'message' => 'Failed to add highlight',
-                'data' => []
+                'data' => $e->getMessage()
             ];
         }
     }

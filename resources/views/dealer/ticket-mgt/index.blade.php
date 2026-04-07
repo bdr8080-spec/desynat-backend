@@ -45,9 +45,6 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
 
 
@@ -94,6 +91,19 @@
                     <div class="label-flex">
                         <label>Upload attachment (if any)</label>
                     </div>
+                    <div class="upload-image w-100 mt-2">
+                        <label class="uploadLabel" style="cursor:pointer;text-align:center;">
+                            <img src="{{ asset('user/assets/images/upload-icon.svg') }}">
+                            <div class="text-color-upload">Upload profile image</div>
+                            <input type="file" accept="image/*" name="image" enctype="multipart/form-data" hidden
+                                onchange="showPreview(event)">
+                        </label>
+                        <div class="imgshow">
+                            <img class="preview" style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
+                            <span class="removeIcon" style="display:none;cursor:pointer;font-size:24px;color:red;"
+                                onclick="removeImg()">&times;</span>
+                        </div>
+                    </div>
                    
                 </div>
 
@@ -114,3 +124,25 @@
 
 @include('dealer.layout.footer');
 @include('dealer.product.ajax.datatablejs');
+
+<script>
+    function showPreview(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(x) {
+                $('.preview').attr('src', x.target.result).show();
+                $('.removeIcon').show();
+                $('.uploadLabel').hide();
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function removeImg() {
+        $('.preview').attr('src', '').hide();
+        $('.removeIcon').hide();
+        $('.uploadLabel').show();
+    }
+
+</script>
