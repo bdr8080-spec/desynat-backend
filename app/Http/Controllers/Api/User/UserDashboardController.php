@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Helpers\ApiResponse;
 use Validator;
+use Auth;
 
 use App\Services\UserDashboardService;
 use App\Services\StoryManagementService;
@@ -306,7 +307,8 @@ public function get_seller_reels(Request $request){
     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
     }
 
-     $user_id=$request->user()->id;
+    $user_id=isset($request->user()->id);
+    
     $request_data=(object)[
     'seller_id'=>$request->seller_id,
     'user_id'=>$user_id,
