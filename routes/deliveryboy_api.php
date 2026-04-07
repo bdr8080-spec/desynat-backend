@@ -50,6 +50,10 @@ Route::group(['prefix' => 'deliveryboy'], function () {
     Route::post('/driver_mark_all_notification_as_read',[NotificationController::class,'driver_mark_all_notification_as_read']);
     Route::get('/get_notifications_count',[NotificationController::class,'get_notifications_count']);
 
+    //m12
+    Route::post('/raise_ticket', [DeliveryBoyDashboardController::class,'raise_ticket']);
+    Route::get('/get_raised_tickets', [DeliveryBoyDashboardController::class,'get_raised_tickets']);
+
     });
 
 

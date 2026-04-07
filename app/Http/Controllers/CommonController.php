@@ -18,6 +18,7 @@ use App\Models\SubCategory;
 use App\Models\Brand;
 use App\Models\color;
 use App\Models\size;
+use App\Models\TicketType;
 
 
 
@@ -312,6 +313,19 @@ class CommonController extends Controller
             400
         );
     }
+
+    public function ticket_types(Request $request)
+     {
+
+         $data = TicketType::all();
+ 
+         if ($data->isEmpty()) {
+             return ApiResponse::generateResponse('success', 'No ticket type found', [], 200);
+         }
+         
+        return ApiResponse::generateResponse('success', 'ticket type list fetched successfully', $data, 200);
+      
+     }
 
 
 
