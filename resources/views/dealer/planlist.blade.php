@@ -88,9 +88,38 @@
                                     {{ $item->plan_name_english }}
 
                                 </div>
-                                <div class="plan-content text-center plan-shadow">
+                                <!-- <div class="plan-content text-center plan-shadow">
                                     <h4> {{ $item->price }} KD </h4>
                                     <div>for {{ $item->duration }} @if ($item->duration_type == '1')
+                                            Month
+                                        @else
+                                            Year
+                                        @endif
+                                    </div>
+                                </div> -->
+                                @php
+                                    if ($item->duration_type == '1') {
+                                        // Monthly
+                                        $amount = $item->price;
+                                    } else {
+                                        // Yearly
+                                        if (!empty($item->no_of_free_months) && $item->no_of_free_months > 0) {
+                                            $paidMonths = 12 - $item->no_of_free_months;
+                                            $amount = $paidMonths * $item->price;
+                                        } else {
+                                            $amount = 12 * $item->price;
+                                        }
+                                    }
+
+                                    $amount = round($amount, 2);
+                                @endphp
+
+                                <div class="plan-content text-center plan-shadow">
+                                    <h4>{{ number_format($amount, 2) }} KD</h4>
+
+                                    <div>
+                                        for {{ $item->duration }}
+                                        @if ($item->duration_type == '1')
                                             Month
                                         @else
                                             Year
@@ -129,6 +158,12 @@
                                         @if ($item->commission == '1')
                                             <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Commission :
                                                 <span class="font-600">{{ $item->commission_percentage }} %</span>
+                                            </li>
+                                        @endif
+
+                                        @if (!empty($item->no_of_free_months))
+                                            <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">No Of free Months :
+                                                <span class="font-600">{{ $item->no_of_free_months }} </span>
                                             </li>
                                         @endif
 

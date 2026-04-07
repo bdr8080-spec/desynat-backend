@@ -39,13 +39,28 @@
                                     <div class="plan-header {{ $headerClass }} text-center">
                                         {{ $plan->plan_name_english }}
                                     </div>
-                                    <div class="plan-content text-center plan-shadow">
-                                        <h4>KD {{ number_format($plan->price, 2) }}</h4>
-                                        <div>
-                                            for {{ $plan->duration }}
-                                            {{ $plan->duration_type == 1 ? 'Month' : 'Year' }}
-                                        </div>
+                                    @php
+                                    if ($plan->duration_type == '1') {
+                                        $amount = $plan->price;
+                                    } else {
+                                        if (!empty($plan->no_of_free_months) && $plan->no_of_free_months > 0) {
+                                            $paidMonths = 12 - $plan->no_of_free_months;
+                                            $amount = $paidMonths * $plan->price;
+                                        } else {
+                                            $amount = 12 * $plan->price;
+                                        }
+                                    }
+
+                                    $amount = round($amount, 2);
+                                @endphp
+
+                                <div class="plan-content text-center plan-shadow">
+                                    <h4>KD {{ number_format($amount, 2) }}</h4>
+                                    <div>
+                                        for {{ $plan->duration }}
+                                        {{ $plan->duration_type == 1 ? 'Month' : 'Year' }}
                                     </div>
+                                </div>
                                     <div class="plan-body p-3">
                                         <ul class="list-inline">
                                             <li>
@@ -85,6 +100,11 @@
                                                     {{ $plan->commission == 1 ? $plan->commission_percentage . '%' : '0%' }}
                                                 </span>
                                             </li>
+                                            @if (!empty($plan->no_of_free_months))
+                                                <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">No Of free Months :
+                                                    <span>{{ $plan->no_of_free_months }} </span>
+                                                </li>
+                                            @endif
                                         </ul>
                                         <div class="py-3">
                                             @if($activePlan && $activePlan->plan_id == $plan->id)
