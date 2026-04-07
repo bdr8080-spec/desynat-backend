@@ -439,6 +439,29 @@ class StoryManagementService
     {
 
         try {
+
+            $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request_data->seller_id)
+                ->where('payment_status', '1')
+                ->where('status', '1')
+                ->whereDate('plan_end_date', '>=', Carbon::today())
+                ->first();
+
+            if (!$subscription) {
+                return [
+                    'status' => 'error',
+                    'message' => 'You have no active plan',
+                    'data' => []
+                ];
+            }
+
+            if ($subscription->stories !== '1') {
+                return [
+                    'status' => 'error',
+                    'message' => "You can't add stories as per your active plan.",
+                    'data' => []
+                ];
+            }
+
             $story = Story::create([
                 'file' => $request_data->file,
                 'type' => 2,

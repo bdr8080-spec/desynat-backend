@@ -447,6 +447,7 @@ class SellerAuthService
                   'no_of_highlights'   => $plan_data->no_of_highlights,
                   'no_of_employee'     => $plan_data->no_of_employee,
                   'no_of_videos'       => $plan_data->no_of_videos,
+                  'stories'       => $plan_data->stories,
                   ];
 
 
@@ -640,6 +641,7 @@ class SellerAuthService
               'no_of_highlights'   => $plan_data->no_of_highlights,
               'no_of_employee'     => $plan_data->no_of_employee,
               'no_of_videos'       => $plan_data->no_of_videos,
+              'stories'       => $plan_data->stories,
           ];
 
           $newSubscription = SellerSubcriptionPlanBuy::create($array_data);
