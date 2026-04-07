@@ -2139,9 +2139,9 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* saved address end */
-.modal-body .customBtn {
+/* .modal-body .customBtn {
     color: var(--third-color) !important;
-}
+} */
 
 .category_filter h3 {
     font-weight: 500 !important;
@@ -3432,4 +3432,11 @@ img.img-fluid.circle-image {
 }
 .wishlist-btn.reply-ic {
     transform: translateY(50px);
+}
+.giftinfo-2 p {
+    margin-bottom: 0px;
+}
+.giftinfo-2 a {
+    color: #6E4527;
+    text-decoration: none;
 }
