@@ -83,7 +83,7 @@ class StoryManagementService
             // }
 
             $query->where('type', '1');
-            // $query->orderBy('id', 'desc');
+            $query->orderBy('id', 'desc');
 
             $story_details = $query->paginate($limit);
 
@@ -225,8 +225,8 @@ class StoryManagementService
             //  Only last 24 hours stories
             $query->where('created_at', '>=', Carbon::now()->subDay());
             $query->where('status', '1');
-
-            $query->orderBy('id', 'desc');
+            
+            // $query->orderBy('id', 'desc');
 
             $story_details = $query->get();
 
