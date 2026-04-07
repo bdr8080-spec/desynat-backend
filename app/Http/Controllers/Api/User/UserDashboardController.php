@@ -491,6 +491,20 @@ public function TopRatingProduct(Request $request){
 }
 
 
+public function newestProduct(Request $request){
+
+    $data=$this->UserDashboardService->userNewestProduct();
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+
 
 
 

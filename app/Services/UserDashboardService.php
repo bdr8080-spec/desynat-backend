@@ -737,5 +737,30 @@ return [
     }
 
 
+    
+public function userNewestProduct()
+    {
+try {
+$all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+->orderBy('created_at','desc')
+->limit(10)
+->get();
+
+return [
+    'status'  => 'success',
+    'message' => 'Newest product fetch Successfully',
+    'data'    => $all_product_fetch
+];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
 
 }
