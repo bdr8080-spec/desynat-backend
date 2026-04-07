@@ -388,6 +388,7 @@ class SellerAuthService
 
 
               public function create_Subcription_Order($request){
+                //dd($request->all());
 
                 // convert start and exprire date from the  table
                 $plan_data= Plan::where('id',$request->plan_id)->first();
@@ -414,6 +415,21 @@ class SellerAuthService
                  return ['status'=>'error','message'=>"seller Already Have Active Plan",'data'=>(object)[]]; 
                 }
 
+                if ($plan_data->duration_type == '1') {
+                    // Monthly
+                    $amount = $plan_data->price;
+                } else {
+                    // Yearly
+                    if (!empty($plan_data->no_of_free_months) && $plan_data->no_of_free_months > 0) {
+                        $paidMonths = 12 - $plan_data->no_of_free_months;
+                        $amount = $paidMonths * $plan_data->price;
+                    } else {
+                        $amount = 12 * $plan_data->price;
+                    }
+                }
+
+                $amount = round($amount, 2);
+
 
 
                 $array_data=[
@@ -425,7 +441,12 @@ class SellerAuthService
                   'plan_start_date'=>$currentDateTime??null,
                   'plan_end_date'=>$newDateTime??null,
                   'payment_method'=>$request->payment_method,
-                  'amount' =>$plan_data->price
+                  'amount' =>$amount,
+                  'product_type'       => $plan_data->product_type,
+                  'no_of_products'     => $plan_data->no_of_products,
+                  'no_of_highlights'   => $plan_data->no_of_highlights,
+                  'no_of_employee'     => $plan_data->no_of_employee,
+                  'no_of_videos'       => $plan_data->no_of_videos,
                   ];
 
 
@@ -588,6 +609,21 @@ class SellerAuthService
               $activePlan->update(['is_expired' => '1']);
           }
 
+              if ($plan_data->duration_type == '1') {
+                    // Monthly
+                    $amount = $plan_data->price;
+                } else {
+                    // Yearly
+                    if (!empty($plan_data->no_of_free_months) && $plan_data->no_of_free_months > 0) {
+                        $paidMonths = 12 - $plan_data->no_of_free_months;
+                        $amount = $paidMonths * $plan_data->price;
+                    } else {
+                        $amount = 12 * $plan_data->price;
+                    }
+                }
+
+                $amount = round($amount, 2);
+
           // Prepare new subscription record
           $array_data = [
               'transaction_id' => $request->transaction_id,
@@ -598,7 +634,12 @@ class SellerAuthService
               'plan_start_date'=> $currentDateTime,
               'plan_end_date'  => $newEndDate,
               'payment_method' => $request->payment_method,
-              'amount'         => $plan_data->price,
+              'amount'         => $amount,
+              'product_type'       => $plan_data->product_type,
+              'no_of_products'     => $plan_data->no_of_products,
+              'no_of_highlights'   => $plan_data->no_of_highlights,
+              'no_of_employee'     => $plan_data->no_of_employee,
+              'no_of_videos'       => $plan_data->no_of_videos,
           ];
 
           $newSubscription = SellerSubcriptionPlanBuy::create($array_data);

@@ -51,7 +51,8 @@
                                     <h6>Package Name</h6>
                                     <h6 class="font-600">{{ $plans->plan_name_english }}</h6>
                                 </div>
-                                <div class="pkg-list">
+                                
+                                <!-- <div class="pkg-list">
                                     <h6>Price</h6>
                                     <h6 class="font-600">{{ $plans->price }}  KD  </h6>
                                 </div>
@@ -63,7 +64,38 @@
                                             Year
                                         @endif
                                     </h6>
-                                </div>
+                                </div> -->
+                                @php
+                                if ($plans->duration_type == '1') {
+                                    $amount = $plans->price;
+                                } else {
+                                    if (!empty($plans->no_of_free_months) && $plans->no_of_free_months > 0) {
+                                        $paidMonths = 12 - $plans->no_of_free_months;
+                                        $amount = $paidMonths * $plans->price;
+                                    } else {
+                                        $amount = 12 * $plans->price;
+                                    }
+                                }
+
+                                $amount = round($amount, 2);
+                            @endphp
+
+                            <div class="pkg-list">
+                                <h6>Price</h6>
+                                <h6 class="font-600">{{ number_format($amount, 2) }} KD</h6>
+                            </div>
+
+                            <div class="pkg-list">
+                                <h6>Duration</h6>
+                                <h6 class="font-600">
+                                    {{ $plans->duration }}
+                                    @if ($plans->duration_type == '1')
+                                        Month
+                                    @else
+                                        Year
+                                    @endif
+                                </h6>
+                            </div>
                             </div>
 
                             <div class="plan-body p-3">
@@ -77,13 +109,23 @@
                                         Highlights:
                                         <span class="font-600">{{ $plans->no_of_highlights }}</span>
                                     </li>
-                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">15 stories within 24
-                                        hours</li>
-                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">5 Store Employees
+                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">No of Stories:
+                                    <span class="font-600">Unlimited</span
+                                        </li>
+                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">No of Employees:
+                                    <span class="font-600">{{ $plans->no_of_employee }}</span
                                     </li>
+                                    @if ($plans->commission == '1')
                                     <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Commission :
-                                        <span class="font-600">2.5%</span>
+                                        <span class="font-600">{{ $plans->commission_percentage }}%</span>
                                     </li>
+                                    @endif
+                                    @if (!empty($plans->no_of_free_months))
+                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">No Of free Months :
+                                            <span class="font-600">{{ $plans->no_of_free_months }} </span>
+                                        </li>
+                                    @endif
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -115,11 +157,24 @@
                                     @error('payment_method')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
+                                    @php
+                                        if ($plans->duration_type == '1') {
+                                            $amount = $plans->price;
+                                        } else {
+                                            if (!empty($plans->no_of_free_months) && $plans->no_of_free_months > 0) {
+                                                $paidMonths = 12 - $plans->no_of_free_months;
+                                                $amount = $paidMonths * $plans->price;
+                                            } else {
+                                                $amount = 12 * $plans->price;
+                                            }
+                                        }
 
+                                        $amount = round($amount, 2);
+                                    @endphp
 
                                     <div class="total-pnl mt-4">
                                         <div class="tamount">Total Amount</div>
-                                        <div class="price-kd"> {{ $plans->price }} KD</div>
+                                        <div class="price-kd"> {{ $amount }} KD</div>
                                     </div>
 
 

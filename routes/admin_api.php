@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\Admin\ProductManagementController;
 use App\Http\Controllers\Api\Admin\WithdrawRequestController;
 use App\Http\Controllers\Api\Admin\CMSController;
 use App\Http\Controllers\Api\Admin\NotificationController;
+use App\Http\Controllers\Api\Admin\TicketController;
 
 
 // Admin APi M1
@@ -267,6 +268,13 @@ Route::group(['prefix' => 'admin'], function () {
      
 
     Route::get('/admin-all-live-request',[LiveRequestController::class,'adminAllLiveRequest']);
+
+    //m12
+
+    Route::get('/get_new_tickets', [TicketController::class,'get_new_tickets']);
+    Route::get('/get_ongoing_tickets', [TicketController::class,'get_ongoing_tickets']);
+    Route::get('/get_resolved_tickets', [TicketController::class,'get_resolved_tickets']);
+    Route::post('/update_ticket_status', [TicketController::class,'update_ticket_status']);
 
 
 
