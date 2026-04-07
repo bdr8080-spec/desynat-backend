@@ -213,13 +213,9 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     
 
 
-    Route::Post('/user-get-deals', [UserDashboardController::class,'UserHomescreenDeals']);
 
     //M11
-    Route::get('/get_seller_stories', [UserDashboardController::class,'get_seller_stories']);
-    Route::get('/get_seller_reels', [UserDashboardController::class,'get_seller_reels']);
-    Route::get('/get_seller_highlights', [UserDashboardController::class,'get_seller_highlights']);
-    Route::post('/add_remove_reel_to_whislist', [UserDashboardController::class,'add_remove_reel_to_whislist']);
+   Route::post('/add_remove_reel_to_whislist', [UserDashboardController::class,'add_remove_reel_to_whislist']);
     Route::get('/share_reel', [UserDashboardController::class,'share_reel']);
     Route::get('/get_whishlisted_reel', [UserDashboardController::class,'get_whishlisted_reel']);
 
@@ -232,8 +228,12 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   
 });
 
+    Route::Post('/user/user-get-deals', [UserDashboardController::class,'UserHomescreenDeals']);
+    Route::get('/user/get_seller_stories', [UserDashboardController::class,'get_seller_stories']);
+    Route::get('/get_seller_reels', [UserDashboardController::class,'get_seller_reels']);
+    Route::get('/user/get_seller_highlights', [UserDashboardController::class,'get_seller_highlights']);
     Route::get('/user/get_admin_stories', [UserDashboardController::class,'get_admin_stories']);
-
+    
    
   Route::Post('/scanner-Seller-details', [UserDashboardController::class,'ScannerSellerdetails']);
 
