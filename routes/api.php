@@ -230,7 +230,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
     Route::Post('/user/user-get-deals', [UserDashboardController::class,'UserHomescreenDeals']);
     Route::get('/user/get_seller_stories', [UserDashboardController::class,'get_seller_stories']);
-    Route::get('/get_seller_reels', [UserDashboardController::class,'get_seller_reels']);
+    Route::get('/user/get_seller_reels', [UserDashboardController::class,'get_seller_reels']);
     Route::get('/user/get_seller_highlights', [UserDashboardController::class,'get_seller_highlights']);
     Route::get('/user/get_admin_stories', [UserDashboardController::class,'get_admin_stories']);
     
