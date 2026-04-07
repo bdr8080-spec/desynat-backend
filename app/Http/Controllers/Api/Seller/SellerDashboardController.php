@@ -522,6 +522,25 @@ class SellerDashboardController extends Controller
         return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
     }
 
+     public function get_my_stories_today(Request $request)
+    {
+
+        $user_details = $request->user();
+
+        $request_data = (object)[
+            'seller_id' => $user_details->id,
+            'limit' => $request->limit??null,
+        ];
+
+        $data = $this->StoryManagementService->getSellerStoryOnUser($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
+
       public function get_my_reels(Request $request)
     {
 

@@ -147,6 +147,7 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::post('/update_reel', [SellerDashboardController::class,'update_reel']);
     Route::post('/update_reel_status', [SellerDashboardController::class,'update_reel_status']);
     Route::get('/get_my_stories', [SellerDashboardController::class,'get_my_stories']);
+    Route::get('/get_my_stories_today', [SellerDashboardController::class,'get_my_stories_today']);
     Route::get('/get_my_reels', [SellerDashboardController::class,'get_my_reels']);
     Route::get('/get_my_highlights', [SellerDashboardController::class,'get_my_highlights']);
     Route::post('/upload_story_from_gallery', [SellerDashboardController::class,'upload_story_from_gallery']);
