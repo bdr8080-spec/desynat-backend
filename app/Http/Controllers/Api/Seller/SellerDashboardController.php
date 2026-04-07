@@ -529,7 +529,7 @@ class SellerDashboardController extends Controller
 
         $request_data = (object)[
             'seller_id' => $user_details->id,
-            'limit' => $request->limit??null,
+           // 'limit' => $request->limit??null,
         ];
 
         $data = $this->StoryManagementService->getSellerStoryOnUser($request_data);
