@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AffiliateWithdrawController;
 use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\TicketController;
 
 use App\Http\Controllers\SaveFirebaseToken;
 
@@ -237,6 +238,10 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/notification-management', [NotificationController::class, 'notificationManagement'])->name('admin.notificationManagement');
         Route::get('/send-notification', [NotificationController::class, 'sendNotification'])->name('admin.sendNotification');
         Route::post('/send_notification', [NotificationController::class, 'send_notification'])->name('admin.send_notification');
+
+        //ticket management
+        Route::get('/ticket-management', [TicketController::class, 'ticketManagement'])->name('admin.ticketManagement');
+        Route::post('/update_ticket_status', [TicketController::class, 'update_ticket_status'])->name('admin.update_ticket_status');
             
         
 
