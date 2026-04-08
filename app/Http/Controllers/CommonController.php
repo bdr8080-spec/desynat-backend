@@ -57,7 +57,9 @@ class CommonController extends Controller
                 }
 
                 // Generate the URL for the uploaded file
-                $url = Storage::disk('s3')->url($path);
+                // $url = Storage::disk('s3')->url($path);
+                $cloudfrontBase = 'https://d79swovq1y56s.cloudfront.net';
+                $url = $cloudfrontBase . '/' . $path; 
 
                 // Return the URL in the response
                 return ApiResponse::generateResponse('success', 'File uploaded successfully.', ['url' => $url], 200);
@@ -200,7 +202,9 @@ class CommonController extends Controller
                     return ApiResponse::generateResponse('error', 'Failed to upload file.', null, 500);
                 }
 
-                $url = Storage::disk('s3')->url($path);
+                // $url = Storage::disk('s3')->url($path);
+                $cloudfrontBase = 'https://d79swovq1y56s.cloudfront.net';
+                $url = $cloudfrontBase . '/' . $path; 
 
                 return ApiResponse::generateResponse('success', 'File uploaded successfully.', ['url' => $url], 200);
 
@@ -284,7 +288,9 @@ class CommonController extends Controller
                     );
                 }
 
-                $url = Storage::disk('s3')->url($path);
+                // $url = Storage::disk('s3')->url($path);
+                $cloudfrontBase = 'https://d79swovq1y56s.cloudfront.net';
+                $url = $cloudfrontBase . '/' . $path; 
 
                 return ApiResponse::generateResponse(
                     'success',
