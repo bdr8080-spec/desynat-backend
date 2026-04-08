@@ -111,7 +111,7 @@
                                 <th scope="col"> Submitted by</th>
                                 <th scope="col">Raised Date & Time</th>
                                 <th scope="col"> User name</th>
-                                <th scope="col">View Reason & Attachment</th>
+                                <th scope="col">View Details & Attachment</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Update Status</th>
 
@@ -239,7 +239,7 @@
                                 <th scope="col"> Submitted by</th>
                                 <th scope="col">Raised Date & Time</th>
                                 <th scope="col"> User name</th>
-                                <th scope="col">View Reason & Attachment</th>
+                                <th scope="col">View Details & Attachment</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Update Status</th>
 
@@ -369,7 +369,7 @@
                                 <th scope="col"> Submitted by</th>
                                 <th scope="col">Raised Date & Time</th>
                                 <th scope="col"> User name</th>
-                                <th scope="col">View Reason & Attachment</th>
+                                <th scope="col">View Details & Attachment</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Update Status</th>
 
