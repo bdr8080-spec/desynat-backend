@@ -76,7 +76,7 @@
                 </div>
             @endforelse
 
-                @if($tickets->count() > 0)
+                @if(!empty($tickets) && $tickets instanceof \Illuminate\Pagination\LengthAwarePaginator && $tickets->count() > 0)
                     <div class="mt-3 d-flex justify-content-center">
                         {{ $tickets->links('pagination::bootstrap-5') }}
                     </div>

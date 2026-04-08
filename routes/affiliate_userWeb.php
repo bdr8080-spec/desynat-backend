@@ -103,6 +103,10 @@ Route::post('/affiliate/affiliate_submit_withdraw_request', [UserAffilatedContro
 //m10
 Route::post('/mark_notification_as_read', [UserAffilatedController::class, 'mark_notification_as_read'])->name('affiliate.mark_notification_as_read');
 
+//m12
+Route::get('/ticket-management', [UserAffilatedController::class, 'ticket_management'])->name('affiliate.ticket_management');
+Route::post('/raise_ticket', [UserAffilatedController::class, 'raise_ticket'])->name('affiliate.raise_ticket');
+
 // });
 
 
