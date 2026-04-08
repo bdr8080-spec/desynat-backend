@@ -88,7 +88,7 @@
 
             <div class="tab-pane fade" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab" tabindex="0">
                 <form method="GET" action="{{ route('affiliate.ticket_management') }}">
-                    <div class="giftsearch py-3 d-flex w-100 gap-0">
+                    <div class="search-field py-3 d-flex w-100 gap-0">
                         <form action="#" method="GET" class="w-100 d-flex gap-0">
                             <div class="form-group w-100 d-flex">
                                 <div class="searchicon"><i class="bi bi-search"></i></div>
@@ -97,7 +97,7 @@
                             <button type="submit" class="btn btnsearch">Search</button>
                         </form>
 
-                        <a href="javascript:void(0)" class="add-icon" data-bs-toggle="modal" data-bs-target="#ticketModal">
+                        <a href="javascript:void(0)" class="add-icon2" data-bs-toggle="modal" data-bs-target="#ticketModal">
                             <img src="{{ asset('user/assets/images/add-icon.svg') }}" alt="add" class="img-fluid">
                         </a>
                     </div>
