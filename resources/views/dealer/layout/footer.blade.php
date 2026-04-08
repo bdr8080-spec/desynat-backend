@@ -88,7 +88,7 @@
     </div>
 </div>
 
-<!-- Seller story section -->
+<!-- Seller story section
 <div class="status-viewer bgwhite" id="statusViewer">
     <div class="container">
         <div class="story-header d-flex justify-content-between py-4">
@@ -99,6 +99,25 @@
             <div id="progressContainer" class="progress-container"></div>
             <div class="status-img">
                 <img id="statusImage" class="img-fluid" alt="status" />
+            </div>
+        </div>    
+    </div>
+</div> -->
+
+  <!-- Admin logo story section -->
+<div class="status-viewer bgwhite" id="statusAdmin">
+    <div class="container adminstatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeStatus()"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <div class="logostatus">
+            <div id="progressContainer" class="progress-container"></div>
+            
+            <div class="status-img">
+                <img id="statusImage" class="img-fluid" alt="status" />
+                <video id="statusVideo" style="max-width: 100%; max-height: 400px; display: none;" controls></video>
             </div>
         </div>    
     </div>
@@ -122,28 +141,142 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-<script>
-var images = [
-    "{{asset('user')}}/assets/images/store1.jpg",
-    "{{asset('user')}}/assets/images/item-1.svg",
-    "{{asset('user')}}/assets/images/item-2.svg",
-];
 
+<script>
+var stories = null;   
 var currentIndex = 0;
 var timer = null;
 var duration = 3000;
+var redirected = false;  
 
-function openGallery(index) {
-    currentIndex = index;
-    document.getElementById("statusViewer").style.display = "block";
-    generateProgressBars();
-    showImage();
+
+function loadAdminStories(openIndex = 0, callback) {
+    //console.log("[DEBUG] loadAdminStories called, openIndex:", openIndex);
+
+    // Avoid multiple calls if stories already loaded or redirect happened
+    if (stories !== null || redirected) {
+        //console.log("[DEBUG] Stories already loaded or redirected, skipping API call");
+        if (callback) callback();
+        return;
+    }
+
+    // Ensure jQuery is loaded
+    if (typeof $ === "undefined") {
+        //console.error("[ERROR] jQuery is not loaded!");
+        return;
+    }
+
+    $.ajax({
+        url: "{{ route('seller.get_admin_story') }}",  // Blade route
+        type: "GET",
+        dataType: "json",
+        success: function (res) {
+            //console.log("[DEBUG] API RESPONSE:", res);
+
+            if (res.status === "success" && Array.isArray(res.data.data)) {
+                stories = res.data.data;
+            } else {
+                stories = [];
+            }
+
+            // var profileDiv = document.querySelector('.storeClient_profile_img');
+
+            // if (sellerStories.length > 0) {
+            //     if(profileDiv){
+            //         profileDiv.classList.add('story-active');
+            //     }
+            // } else {
+            //     if(profileDiv){
+            //         profileDiv.classList.remove('story-active');
+            //     }
+            // }
+
+            var areaEl = document.getElementById('adminStoryArea');
+            //console.log(areaEl);
+            if (areaEl) {
+                areaEl.classList.toggle('story-active', stories.length > 0);
+            }
+            //console.log(areaEl.className);
+
+            if (stories.length === 0) {
+                redirected = true;
+               // console.log("[INFO] No stories found, redirecting to dashboard");
+                //window.location.href = "{{ route('dashboard') }}";
+                return;  // Stop further execution
+            }
+
+            // Stories loaded successfully
+            if (callback) callback();
+        },
+        error: function (err) {
+           // console.error("[ERROR] AJAX failed:", err);
+            stories = [];  // Set empty to avoid retrying infinitely
+            if (callback) callback();
+        }
+    });
 }
 
+// call this on icon click
+function onAdminIconClick(index = 0) {
+   // console.log("[DEBUG] onAdminIconClick, index:", index);
+
+    if (redirected) {
+       // console.log("[DEBUG] Already redirected, ignoring click");
+        return;
+    }
+
+    if (stories === null) {
+        // Stories not loaded, load from API, then open gallery if stories present
+        loadAdminStories(index, function() {
+            if (!redirected && stories.length > 0) {
+                openGallery(index);
+            }
+        });
+    } else if (stories.length > 0) {
+        // Stories already loaded, open gallery directly
+        openGallery(index);
+    } else {
+        // Stories empty, redirect immediately
+        redirected = true;
+        //console.log("[INFO] No stories present, redirecting to dashboard");
+        //window.location.href = "{{ route('dashboard') }}";
+    }
+}
+
+// ✅ OPEN VIEWER
+function openGallery(index) {
+    currentIndex = index;
+    console.log("[DEBUG] openGallery called, index:", currentIndex);
+
+    if (!stories || stories.length === 0) {
+        //console.log("[INFO] No stories found, redirecting to dashboard");
+        //window.location.href = "{{ route('dashboard') }}";
+        return;
+    }
+
+    var statusAdmin = document.getElementById("statusAdmin");
+    if (!statusAdmin) {
+        //console.error("[ERROR] #statusAdmin element not found!");
+        return;
+    }
+
+    statusAdmin.style.display = "block";
+
+    generateProgressBars();
+    showStory();
+}
+
+//  GENERATE PROGRESS BARS
 function generateProgressBars() {
     const container = document.getElementById("progressContainer");
+    if (!container) {
+        console.error("[ERROR] #progressContainer element not found!");
+        return;
+    }
+
     container.innerHTML = "";
-    images.forEach((img, i) => {
+
+    stories.forEach((s, i) => {
         container.innerHTML += `
             <div class="progress-bar">
                 <div class="progress-fill" id="bar${i}"></div>
@@ -152,22 +285,70 @@ function generateProgressBars() {
     });
 }
 
-function showImage() {
-    document.getElementById("statusImage").src = images[currentIndex];
-    startProgress();
+//  SHOW STORY
+function showStory() {
+    let story = stories[currentIndex];
+    //console.log("[DEBUG] showStory, currentIndex:", currentIndex, story);
+
+    if (!story) {
+        //console.warn("[WARN] No story at index", currentIndex);
+        closeStatus();
+        return;
+    }
+
+    let img = document.getElementById("statusImage");
+    let video = document.getElementById("statusVideo");
+
+    if (!img || !video) {
+       // console.error("[ERROR] #statusImage or #statusVideo not found!");
+        return;
+    }
+
+    img.style.display = "none";
+    video.style.display = "none";
+    video.pause();
+    video.currentTime = 0;
+
+    let file = story.file;
+
+    if (!file) {
+        //console.warn("[WARN] Story has no file, skipping:", story);
+        showNext();
+        return;
+    }
+
+    if (file.match(/\.(mp4|webm|ogg)$/i)) {
+        video.src = file;
+        video.style.display = "block";
+
+        video.onloadedmetadata = function () {
+            duration = (video.duration * 1000) || 3000;
+            startProgress();
+            video.play();
+        };
+    } else {
+        img.src = file;
+        img.style.display = "block";
+        duration = 3000;
+        startProgress();
+    }
 }
 
+// START PROGRESS
 function startProgress() {
     clearTimeout(timer);
-    // Reset all bars
+
     document.querySelectorAll(".progress-fill").forEach(bar => {
         bar.style.width = "0%";
         bar.style.transition = "none";
     });
+
     setTimeout(() => {
         let bar = document.getElementById("bar" + currentIndex);
-        bar.style.transition = `${duration}ms linear`;
-        bar.style.width = "100%";
+        if (bar) {
+            bar.style.transition = `${duration}ms linear`;
+            bar.style.width = "100%";
+        }
     }, 10);
 
     timer = setTimeout(() => {
@@ -175,27 +356,39 @@ function startProgress() {
     }, duration);
 }
 
+//  NEXT STORY
 function showNext() {
-    if (currentIndex < images.length - 1) {
+    if (currentIndex < stories.length - 1) {
         currentIndex++;
-        showImage();
+        showStory();
     } else {
-        closeStatus(); 
+        closeStatus();
     }
 }
 
+//  PREVIOUS STORY
 function showPrev() {
     if (currentIndex > 0) {
         currentIndex--;
-        showImage();
+        showStory();
     }
 }
 
+// CLOSE VIEWER
 function closeStatus() {
     clearTimeout(timer);
-    document.getElementById("statusViewer").style.display = "none";
-}
 
+    let video = document.getElementById("statusVideo");
+    if (video) {
+        video.pause();
+        video.currentTime = 0;
+    }
+
+    let statusAdmin = document.getElementById("statusAdmin");
+    if (statusAdmin) {
+        statusAdmin.style.display = "none";
+    }
+}
 </script>
 
 

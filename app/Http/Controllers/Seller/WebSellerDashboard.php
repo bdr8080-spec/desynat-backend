@@ -917,7 +917,36 @@ $seller_id=Auth::guard('seller')->user()->id;
             'message' => $result['message']
         ], 200);
     }
+ 
+    public function get_admin_story(Request $request)
+    {
 
+        try {
+
+            // $user=  $request->user();
+            // $request_data = (object)[
+            //         'user_id' =>  $user->id,
+            //     ];
+
+            $data = $this->StoryManagementService->getAdminStoryOnUser($request);
+            //dd($data);
+            
+            $message = $data['message'];
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to get story',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
       
 
       

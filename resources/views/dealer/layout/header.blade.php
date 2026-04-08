@@ -53,7 +53,7 @@
                 <img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image" class="img-fluid" usemap="#logoMap">
             </a>
             <map name="logoMap">
-                <area shape="rect" coords="0,0,50,50" href="javascript:void(0)" onclick="openGallery(0)">
+                <area shape="rect" id="adminStoryArea" coords="0,0,50,50" href="javascript:void(0)" onclick="onAdminIconClick(0)">
                 <area shape="rect" coords="60,0,200,50" href="{{ route('seller.dashboard') }}">
             </map>
 
