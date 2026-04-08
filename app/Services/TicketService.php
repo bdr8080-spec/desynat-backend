@@ -148,6 +148,14 @@ class TicketService
                 $query->whereDate('created_at', Carbon::today());
             }
 
+            if (!empty($request->ticket_type_filter)) {
+                $query->where('ticket_type_id', $request->ticket_type_filter);
+            }
+
+            if (!empty($request->sender_type_filter)) {
+                $query->where('sender_type', $request->sender_type_filter);
+            }
+
             $query->where('status', '0');
             $query->orderBy('id', 'desc');
 
@@ -227,6 +235,14 @@ class TicketService
                 $query->whereDate('created_at', '>=', $request->from_date);
             } elseif (!empty($request->to_date)) {
                 $query->whereDate('created_at', '<=', $request->to_date);
+            }
+
+            if (!empty($request->ticket_type_filter)) {
+                $query->where('ticket_type_id', $request->ticket_type_filter);
+            }
+
+            if (!empty($request->sender_type_filter)) {
+                $query->where('sender_type', $request->sender_type_filter);
             }
 
 
@@ -310,6 +326,14 @@ class TicketService
                 $query->whereDate('created_at', '>=', $request->from_date);
             } elseif (!empty($request->to_date)) {
                 $query->whereDate('created_at', '<=', $request->to_date);
+            }
+
+            if (!empty($request->ticket_type_filter)) {
+                $query->where('ticket_type_id', $request->ticket_type_filter);
+            }
+
+            if (!empty($request->sender_type_filter)) {
+                $query->where('sender_type', $request->sender_type_filter);
             }
 
 

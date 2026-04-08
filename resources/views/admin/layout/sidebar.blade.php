@@ -155,8 +155,8 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="/ticket-mgt">
+    <li class="nav-item {{ Request::routeIs('admin.ticketManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.ticketManagement') }}">
             <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
             Ticket Management
         </a>

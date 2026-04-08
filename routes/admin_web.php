@@ -250,10 +250,6 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
-Route::match(['get', 'post'], '/ticket-mgt', function () {
-    return view('admin.ticket-mgt.index');
-
-})->name('admin.ticket-mgt');
 
 Route::match(['get', 'post'], '/payment', function () {
     return view('admin.payment.index');
