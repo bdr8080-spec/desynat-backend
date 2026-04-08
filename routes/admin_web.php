@@ -245,6 +245,22 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
+Route::match(['get', 'post'], '/ticket-mgt', function () {
+    return view('admin.ticket-mgt.index');
+
+})->name('admin.ticket-mgt');
+
+Route::match(['get', 'post'], '/payment', function () {
+    return view('admin.payment.index');
+
+})->name('admin.payment');
+
+Route::match(['get', 'post'], '/support', function () {
+    return view('admin.support.index');
+
+})->name('admin.support');
+
+
 
 
 Route::fallback(function (Request $request) {

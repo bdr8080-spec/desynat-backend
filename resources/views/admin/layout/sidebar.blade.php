@@ -154,6 +154,27 @@
             Notification Management
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/ticket-mgt">
+            <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
+            Ticket Management
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/payment">
+            <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
+            Payment Management
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/support">
+            <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
+            Support Chat
+        </a>
+    </li>
      
     <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">
