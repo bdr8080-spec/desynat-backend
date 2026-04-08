@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="border-1">
-                                <div class="d-flex gap-3">
+                                <div class="d-flex gap-3 align-items-center">
                                     <div class="sup-icon">
                                         <img src="{{ asset('user/assets/images/order-ic/email.svg') }}">
                                     </div>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="border-1">
-                                <div class="d-flex gap-3">
+                                <div class="d-flex gap-3 align-items-center">
                                     <div class="sup-icon">
                                         <img src="{{ asset('user/assets/images/order-ic/call.svg') }}">
                                     </div>
@@ -56,7 +56,7 @@
 
                         <div class="col-lg-6">
                             <div class="border-1 mt-3">
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <div class="giftinfo-2">
                                         <p>Chat on Whatsapp</p>
                                     </div>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="border-1 mt-3">
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <div class="giftinfo-2">
                                         <p>Chat with the Support Team</p>
                                     </div>
@@ -81,8 +81,6 @@
 
                     </div>
                 </div>   
-
-
             </div>
 
 
@@ -94,7 +92,7 @@
                                 <div class="searchicon"><i class="bi bi-search"></i></div>
                                 <input type="search" name="search"  class="form-control giftcontrol" placeholder="Search" value="{{ request('search') }}">
                             </div>
-                            <button type="submit" class="btn btnsearch">Search</button>
+                            <button type="submit" class="btn btn-success searchlin">Search</button>
                         </form>
 
                         <a href="javascript:void(0)" class="add-icon2" data-bs-toggle="modal" data-bs-target="#ticketModal">
