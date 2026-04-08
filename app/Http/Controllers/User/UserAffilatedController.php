@@ -19,16 +19,19 @@ use App\Services\UserAffilatedAuthService;
 use App\Services\UserOrderService;
 use App\Services\NotificationManagementService;
 use App\Services\UserAffiliatedProductService;
+use App\Services\TicketService;
+use App\Http\Controllers\CommonController;
 
 class UserAffilatedController extends Controller
 {
 
-    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, NotificationManagementService $NotificationManagementService, UserAffiliatedProductService $UserAffiliatedProductService)
+    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, NotificationManagementService $NotificationManagementService, UserAffiliatedProductService $UserAffiliatedProductService, TicketService $TicketService)
     {
         $this->UserAffilatedAuthService = $UserAffilatedAuthService;
         $this->UserOrderService = $UserOrderService;
         $this->NotificationManagementService = $NotificationManagementService;
         $this->UserAffiliatedProductService = $UserAffiliatedProductService;
+        $this->TicketService = $TicketService;
     }
 
 
@@ -1149,6 +1152,73 @@ public function affiliate_submit_withdraw_request(Request $request){
     }
 
 }
+
+public function ticket_management(REQUEST $request){
+
+        $affilatedUser=Auth::guard('affilated_user')->user();
+        $user = $affilatedUser->id;
+
+        $request_data=(object) [
+        'sender_id'=>$user,
+        'sender_type'=>3,
+        'search'=>$request->search??null,
+        'limit'=>10,
+        ];
+
+        $tickets =  $this->TicketService->getTickets($request_data)['data'];
+        //dd($tickets);
+        $commonController = new CommonController();
+        $ticketTypesResponse = $commonController->ticket_types($request);
+        $ticketTypes = $ticketTypesResponse->original['data'];
+        //dd($ticketTypes);
+
+        return view('affiliatedUser.support.index',compact('tickets','ticketTypes'));
+    }
+
+    public function raise_ticket(REQUEST $request){
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5120',
+        ], [
+            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG format',
+            'file.max' => 'Image size should not exceed 5MB',
+        ]);
+
+        $affilatedUser=Auth::guard('affilated_user')->user();
+        $user = $affilatedUser->id;
+
+        if($request->hasFile('file')){
+            $commonController = new CommonController();
+            $uploadResult = $commonController->uploadFile($request);
+            $uploadResultArray = $uploadResult->getData(true); 
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+           // dd($imageUrl);
+        }
+        
+
+        $request_data=(object) [
+        'sender_id'=>$user,
+        'sender_type'=>3,
+        'file'=>$imageUrl??null,
+        'ticket_type_id'=>$request->ticket_type_id,
+        'title'=>$request->title,
+        'description'=>$request->description,
+        ];
+
+        $data=  $this->TicketService->raiseTicket($request_data);
+        //dd($stories);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    }
 
 
 

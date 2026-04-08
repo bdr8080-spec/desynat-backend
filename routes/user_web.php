@@ -166,6 +166,10 @@ Route::match(['post'],'/redeem-giftCard-in-User', [WalletController::class,'rede
 
 Route::post('/mark_notification_as_read', [DashBoardController::class, 'mark_notification_as_read'])->name('user.mark_notification_as_read');
 
+//m12
+Route::get('/support', [DashBoardController::class, 'support'])->name('user.support');
+Route::post('/raise_ticket', [DashBoardController::class, 'raise_ticket'])->name('user.raise_ticket');
+
 
 });
 
@@ -233,10 +237,10 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
-Route::match(['get', 'post'], '/support', function () {
-     return view('user.support.index');
+// Route::match(['get', 'post'], '/support', function () {
+//      return view('user.support.index');
 
-})->name('user.support');
+// })->name('user.support');
 
 // Route::match(['get', 'post'], '/my-wallet', function () {
 //      return view('user.mywallet.wallet');

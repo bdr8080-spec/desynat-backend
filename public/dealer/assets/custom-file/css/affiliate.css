@@ -333,9 +333,16 @@
     right: 0;
     left: auto;
 }
-
-
-
+.add-icon2 img{
+    width: 90%;
+}
+.giftinfo-2 p{
+    margin-bottom: 0px;
+}
+.giftinfo-2 a {
+    color: #6E4527;
+    font-size: 16px;
+}
 
 
 @media(max-width:641px){
