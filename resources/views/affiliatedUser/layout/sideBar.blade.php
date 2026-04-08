@@ -45,7 +45,7 @@
             
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/ticket-management') ? 'sidebar-active' : '' }}" href="{{route('affiliate.ticket_management')}}">
-                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/terms.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/star.svg" alt="icon" class="asideicon">
                     <span>Support </span>
                 </a>
             </li> 

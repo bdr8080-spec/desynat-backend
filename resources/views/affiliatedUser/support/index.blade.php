@@ -86,10 +86,10 @@
 
             <div class="tab-pane fade" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab" tabindex="0">
                 <form method="GET" action="{{ route('affiliate.ticket_management') }}">
-                    <div class="search-field py-3 d-flex w-100 gap-0">
-                        <form action="#" method="GET" class="w-100 d-flex gap-0">
-                            <div class="form-group w-100 d-flex">
-                                <div class="searchicon"><i class="bi bi-search"></i></div>
+                    <div class="search-field py-3 d-flex w-100 gap-3">
+                        <form action="#" method="GET" class="w-100 d-flex gap-3">
+                            <div class="form-group w-100 d-flex position-relative">
+                                <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon2">
                                 <input type="search" name="search"  class="form-control giftcontrol" placeholder="Search" value="{{ request('search') }}">
                             </div>
                             <button type="submit" class="btn btn-success searchlin">Search</button>
@@ -232,7 +232,7 @@
                     </div>
 
                     <div class="cmn-btn mt-4">
-                        <button type="button" id="submitTicket" class="customBtn customBtn5 mt-5">Submit</button>
+                        <button type="button" id="submitTicket" class="btn btn-success mt-2 w-100">Submit</button>
                     </div>
                 </div>
             </form>
