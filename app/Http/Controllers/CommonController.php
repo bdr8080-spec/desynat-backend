@@ -23,7 +23,6 @@ use App\Models\TicketType;
 
 
 
-
 class CommonController extends Controller
 {
     
@@ -43,32 +42,77 @@ class CommonController extends Controller
             $filename = Str::random(10) . '.' . $image->getClientOriginalExtension();
             
 
-            try {
-                // Print the S3 configuration for debugging
-                Log::info('S3 Configuration:', config('filesystems.disks.s3'));
+            // try {
+            //     // Print the S3 configuration for debugging
+            //     Log::info('S3 Configuration:', config('filesystems.disks.s3'));
 
-                // Attempt to store the file in S3
-                $path = $image->storeAs('images', $filename, 's3');
+            //     // Attempt to store the file in S3
+            //     $path = $image->storeAs('images', $filename, 's3');
 
-                if (!$path) {
-                    // Log an error if storeAs fails
-                    Log::error('File upload failed: storeAs returned false');
-                    return ApiResponse::generateResponse('error', 'Failed to upload file.', null, 500);
-                }
+            //     if (!$path) {
+            //         // Log an error if storeAs fails
+            //         Log::error('File upload failed: storeAs returned false');
+            //         return ApiResponse::generateResponse('error', 'Failed to upload file.', null, 500);
+            //     }
 
-                // Generate the URL for the uploaded file
-                // $url = Storage::disk('s3')->url($path);
-                $cloudfrontBase = env('CLOUDFRONT_URL', 'https://d79swovq1y56s.cloudfront.net');
-                $url = $cloudfrontBase . '/' . $path; 
+            //     // Generate the URL for the uploaded file
+            //     // $url = Storage::disk('s3')->url($path);
+            //     $cloudfrontBase = env('CLOUDFRONT_URL', 'https://d79swovq1y56s.cloudfront.net');
+            //     $url = $cloudfrontBase . '/' . $path; 
 
-                // Return the URL in the response
-                return ApiResponse::generateResponse('success', 'File uploaded successfully.', ['url' => $url], 200);
-            } catch (\Exception $e) {
-                // Log any exceptions thrown during the file upload
-                Log::error('File upload failed: ' . $e->getMessage());
-                Log::error('Exception Trace: ' . $e->getTraceAsString());
-                return ApiResponse::generateResponse('error', 'Failed to upload file.', null, 500);
-            }
+            //     // Return the URL in the response
+            //     return ApiResponse::generateResponse('success', 'File uploaded successfully.', ['url' => $url], 200);
+            // } catch (\Exception $e) {
+            //     // Log any exceptions thrown during the file upload
+            //     Log::error('File upload failed: ' . $e->getMessage());
+            //     Log::error('Exception Trace: ' . $e->getTraceAsString());
+            //     return ApiResponse::generateResponse('error', 'Failed to upload file.', null, 500);
+            // }
+
+    try {
+    $file = $request->file('file');
+
+    if (!$file) {
+        return ApiResponse::generateResponse('error', 'No file provided.', null, 400);
+    }
+
+    // Get original extension & mime type
+    $extension = $file->getClientOriginalExtension();
+    $mimeType = $file->getMimeType();
+
+    // Generate unique filename
+    $filename = 'uploads/' . Str::random(20) . '.' . $extension;
+
+    // S3 client
+    $client = Storage::disk('s3')->getClient();
+
+    // Create command
+    $cmd = $client->getCommand('PutObject', [
+        'Bucket' => env('AWS_BUCKET'),
+        'Key' => $filename,
+        'ContentType' => $mimeType, // dynamic type
+    ]);
+
+    // Generate pre-signed URL (10 minutes)
+    $requestUrl = $client->createPresignedRequest($cmd, '+10 minutes');
+
+    $presignedUrl = (string) $requestUrl->getUri();
+
+    // CloudFront URL
+    $cloudfrontBase = env('CLOUDFRONT_URL', 'https://d79swovq1y56s.cloudfront.net');
+    $fileUrl = $cloudfrontBase . '/' . $filename;
+
+    return ApiResponse::generateResponse('success', 'Upload URL generated.', [
+        'upload_url' => $presignedUrl,
+        'file_url' => $fileUrl,
+        'type' => $mimeType
+    ], 200);
+
+} catch (\Exception $e) {
+    Log::error('Upload URL error: ' . $e->getMessage());
+    return ApiResponse::generateResponse('error', 'Failed to generate upload URL.', null, 500);
+}
+
         }
 
         // Return an error response if the file upload is invalid
