@@ -1172,7 +1172,7 @@ public function ticket_management(REQUEST $request){
         $ticketTypes = $ticketTypesResponse->original['data'];
         //dd($ticketTypes);
 
-        return view('dealer.ticket-mgt.index',compact('tickets','ticketTypes'));
+        return view('affiliatedUser.support.index',compact('tickets','ticketTypes'));
     }
 
     public function raise_ticket(REQUEST $request){
