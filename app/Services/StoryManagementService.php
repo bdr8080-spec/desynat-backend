@@ -188,7 +188,7 @@ class StoryManagementService
             $query->where('type', '2');
             $query->where('seller_id', $request->seller_id);
             $query->where('status', '1');
-            $query->orderBy('id', 'desc');
+            $query->orderBy('id', 'asc');
 
             $story_details = $query->get();
 
@@ -227,7 +227,7 @@ class StoryManagementService
             $query->where('created_at', '>=', Carbon::now()->subDay());
             $query->where('status', '1');
             
-            // $query->orderBy('id', 'desc');
+            // $query->orderBy('id', 'asc');
 
             $story_details = $query->get();
 
@@ -267,7 +267,7 @@ class StoryManagementService
             $query->where('created_at', '>=', Carbon::now()->subDay());
             $query->where('status', '1');
 
-            $query->orderBy('id', 'desc');
+            $query->orderBy('id', 'asc');
 
             $story_details = $query->get();
 
@@ -815,7 +815,7 @@ class StoryManagementService
         try {
             $query = Story::where('seller_id', $request_data->seller_id)
                         ->where('type', '2')
-                        ->orderBy('id', 'desc');
+                        ->orderBy('id', 'asc');
 
             // Paginate if limit provided, else fetch all
             if (!empty($request_data->limit)) {
