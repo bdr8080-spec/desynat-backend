@@ -104,6 +104,7 @@ class TicketService
             }
 
             $data->status = $request_data->status;
+            $data->updated_at = now();
             $data->save();
 
 
