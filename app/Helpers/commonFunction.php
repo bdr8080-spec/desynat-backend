@@ -16,7 +16,8 @@ use App\Models\{seller};
 
     $resp =  Storage::disk('s3')->put($filepath, file_get_contents($file));
  
-    $image_url = 'https://desynat-bucket.s3.me-south-1.amazonaws.com/' . $filepath;
+    // $image_url = 'https://desynat-bucket.s3.me-south-1.amazonaws.com/' . $filepath;
+    $image_url = 'https://d79swovq1y56s.cloudfront.net/' . $filepath;
 
     return  $image_url;
 }
@@ -26,7 +27,8 @@ use App\Models\{seller};
         $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         $filePath = $dir . '/' . $fileName;
         $resp = Storage::disk('s3')->put($filePath, file_get_contents($file));
-        $image_url = 'https://desynat-bucket.s3.me-south-1.amazonaws.com/' . $filePath;
+        // $image_url = 'https://desynat-bucket.s3.me-south-1.amazonaws.com/' . $filePath;
+        $image_url = 'https://d79swovq1y56s.cloudfront.net/' . $filepath;
         return $image_url;
     }
 
