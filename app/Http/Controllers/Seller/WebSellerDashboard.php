@@ -18,6 +18,7 @@ use App\Services\SellerAuthService;
 
 use App\Services\SellerProductService;
 use App\Services\StoryManagementService;
+use App\Services\TicketService;
 
 
 use App\Helpers\ApiResponse;
@@ -28,10 +29,11 @@ use App\Http\Controllers\CommonController;
 class WebSellerDashboard extends Controller
 {
 
-    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService){
+    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService){
         $this->SellerAuthService=$SellerAuthService;
        $this->SellerProductService=$SellerProductService;
        $this->StoryManagementService=$StoryManagementService;
+       $this->TicketService=$TicketService;
 
     }
 
@@ -946,6 +948,73 @@ $seller_id=Auth::guard('seller')->user()->id;
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function ticket_management(REQUEST $request){
+
+        $seller_id=Auth::guard('seller')->user()->id;
+        //dd($seller_id);
+
+        $request_data=(object) [
+        'sender_id'=>$seller_id,
+        'sender_type'=>2,
+        'search'=>$request->search??null,
+        'limit'=>10,
+        ];
+
+        $tickets =  $this->TicketService->getTickets($request_data)['data'];
+        //dd($tickets);
+        $commonController = new CommonController();
+        $ticketTypesResponse = $commonController->ticket_types($request);
+        $ticketTypes = $ticketTypesResponse->original['data'];
+        //dd($ticketTypes);
+
+        return view('dealer.ticket-mgt.index',compact('tickets','ticketTypes'));
+    }
+
+    public function raise_ticket(REQUEST $request){
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5120',
+        ], [
+            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG format',
+            'file.max' => 'Image size should not exceed 5MB',
+        ]);
+
+        $seller_id=Auth::guard('seller')->user()->id;
+        //dd($seller_id);
+
+        if($request->hasFile('file')){
+            $commonController = new CommonController();
+            $uploadResult = $commonController->uploadFile($request);
+            $uploadResultArray = $uploadResult->getData(true); 
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+           // dd($imageUrl);
+        }
+        
+
+        $request_data=(object) [
+        'sender_id'=>$seller_id,
+        'sender_type'=>2,
+        'file'=>$imageUrl??null,
+        'ticket_type_id'=>$request->ticket_type_id,
+        'title'=>$request->title,
+        'description'=>$request->description,
+        ];
+
+        $data=  $this->TicketService->raiseTicket($request_data);
+        //dd($stories);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     }
       
 

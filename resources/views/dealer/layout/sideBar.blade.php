@@ -68,7 +68,7 @@
             </li>
             
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="/index">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/ticket-management')? 'sidebar-active' : ''}} " href="{{ route('seller.ticket_management') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/plan.svg" alt="icon" class="asideicon">
                     <span>Ticket Management </span>
                 </a>

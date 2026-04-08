@@ -199,6 +199,11 @@ Route::group(['prefix' => 'seller'], function () {
     Route::post('/delete_story/{id}', [WebSellerDashboard::class,'delete_story'])->name('seller.delete_story');
     Route::get('/get_admin_story', [WebSellerDashboard::class, 'get_admin_story'])->name('seller.get_admin_story');
 
+    //M12
+    Route::get('/ticket-management', [WebSellerDashboard::class, 'ticket_management'])->name('seller.ticket_management');
+    Route::post('/raise_ticket', [WebSellerDashboard::class, 'raise_ticket'])->name('seller.raise_ticket');
+    
+
     });
 
 });
@@ -221,10 +226,10 @@ Route::match(['get', 'post'], '/add-products', function () {
 })->name('dealer.add-products');
 
 
-Route::match(['get', 'post'], '/index', function () {
-    return view('dealer.ticket-mgt.index');
+// Route::match(['get', 'post'], '/index', function () {
+//     return view('dealer.ticket-mgt.index');
 
-})->name('dealer.index');
+// })->name('dealer.index');
 
 
 // Route::match(['get', 'post'], '/subscription-plans', function () {
