@@ -1,6 +1,6 @@
 @include('affiliatedUser.layout.header')
 
-<div class="my-profile-2 customContainer my-lg-5 my-2 mb-4">
+<div class="my-profile-2 customContainer my-lg-1 my-2 mb-4">
     <div class="page-wapper dashboard-pnl">
         <div class="title24">Support </div>
     </div>
