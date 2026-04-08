@@ -8,19 +8,22 @@ use Illuminate\Support\Facades\Http;
 use App\Services\UserDashboardService;
 use App\Services\NotificationManagementService;
 use App\Services\StoryManagementService;
+use App\Services\TicketService;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\ApiResponse;
 use Validator;
+use App\Http\Controllers\CommonController;
 
 
 class DashBoardController extends Controller
 {
 
-    public function __construct(UserDashboardService $UserDashboardService,NotificationManagementService $NotificationManagementService, StoryManagementService $StoryManagementService)
+    public function __construct(UserDashboardService $UserDashboardService,NotificationManagementService $NotificationManagementService, StoryManagementService $StoryManagementService, TicketService $TicketService)
     {
         $this->UserDashboardService = $UserDashboardService;
         $this->NotificationManagementService = $NotificationManagementService;
         $this->StoryManagementService = $StoryManagementService;
+        $this->TicketService = $TicketService;
     }
 
 
@@ -322,6 +325,72 @@ class DashBoardController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function support(REQUEST $request){
+       // dd(123);
+
+        $user = $request->user();
+
+        $request_data=(object) [
+        'sender_id'=>$user->id,
+        'sender_type'=>1,
+        'search'=>$request->search??null,
+        'limit'=>10,
+        ];
+
+        $tickets =  $this->TicketService->getTickets($request_data)['data'];
+        //dd($tickets);
+        $commonController = new CommonController();
+        $ticketTypesResponse = $commonController->ticket_types($request);
+        $ticketTypes = $ticketTypesResponse->original['data'];
+        //dd($ticketTypes);
+
+        return view('user.support.index',compact('tickets','ticketTypes'));
+    }
+
+    public function raise_ticket(REQUEST $request){
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5120',
+        ], [
+            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG format',
+            'file.max' => 'Image size should not exceed 5MB',
+        ]);
+
+        $user = $request->user();
+
+        if($request->hasFile('file')){
+            $commonController = new CommonController();
+            $uploadResult = $commonController->uploadFile($request);
+            $uploadResultArray = $uploadResult->getData(true); 
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+           // dd($imageUrl);
+        }
+        
+
+        $request_data=(object) [
+        'sender_id'=>$user->id,
+        'sender_type'=>1,
+        'file'=>$imageUrl??null,
+        'ticket_type_id'=>$request->ticket_type_id,
+        'title'=>$request->title,
+        'description'=>$request->description,
+        ];
+
+        $data=  $this->TicketService->raiseTicket($request_data);
+        //dd($stories);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     }
 
 
