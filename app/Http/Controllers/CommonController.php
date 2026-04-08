@@ -33,7 +33,7 @@ class CommonController extends Controller
         // Validate the request
         $request->validate([
             // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:5120',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:512000',
         ]);
 
         // Check if the request has a valid file
@@ -180,9 +180,9 @@ class CommonController extends Controller
      public function uploadFile(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:5120',
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:512000',
         ], [
-            'file.max' => 'Please upload a file upto 5 MB.',
+            'file.max' => 'Please upload a file upto 500 MB.',
         ]);
 
         if ($validator->fails()) {
