@@ -46,7 +46,7 @@ $seller_details=seller::with('store_info','subcription_plan')->where('id',$reque
 
         if (!$subscription) {
             return [
-                'status' => 'error',
+                'status' => 'failed',
                 'message' => "You have no active plan",
                 'data' => []
             ];

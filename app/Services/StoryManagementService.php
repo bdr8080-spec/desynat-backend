@@ -448,7 +448,7 @@ class StoryManagementService
 
             if (!$subscription) {
                 return [
-                    'status' => 'error',
+                    'status' => 'failed',
                     'message' => 'You have no active plan',
                     'data' => []
                 ];
@@ -525,7 +525,7 @@ class StoryManagementService
 
             if (!$subscription) {
                 return [
-                    'status' => 'error',
+                    'status' => 'failed',
                     'message' => 'You have no active plan',
                     'data' => []
                 ];
@@ -609,7 +609,7 @@ class StoryManagementService
 
             if (!$subscription) {
                 return [
-                    'status' => 'error',
+                    'status' => 'failed',
                     'message' => 'You have no active plan',
                     'data' => []
                 ];

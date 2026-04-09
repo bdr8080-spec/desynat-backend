@@ -648,7 +648,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
 try{
 
-     $orders = OrderDetail::with([
+     $orders = orderdetail::with([
         'order.delivery_details',
         'product_details.brand',
         'product_details.category',

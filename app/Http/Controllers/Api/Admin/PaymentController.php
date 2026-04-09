@@ -30,6 +30,7 @@ class PaymentController extends Controller
             'country'=>$request->country??null,
             'from_date'=>$request->from_date??null,
             'to_date'=>$request->to_date??null,
+            'country_id'=>$request->country_id??null,
             ];
 
         $data=$this->PaymentService->getOrderPaymentData($request_data);
@@ -39,7 +40,12 @@ class PaymentController extends Controller
 
         }
 
-        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+        return ApiResponse::generateResponse('success', $data['message'], [
+            'orders' => $data['data'],
+            'total_revenue' => $data['total_revenue'],
+            'total_custom_order_revenue' => $data['total_custom_order_revenue'],
+            'total_commission' => $data['total_commission'],
+        ], 200);
 
     }
 
