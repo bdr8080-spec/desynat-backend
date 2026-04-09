@@ -154,79 +154,80 @@
         <div class="specifications-pnl">
             <div class="append-panel">
                 <div class="specifications-row">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Name</label>
-                                <span>In English</span>
-                            </div>
-                            <input type="text"
-                                oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                                class="form-control" placeholder="Enter product name" value="" name="product_spe_en[]">
-
-                            <p id="error-product_spe_en_0" class="text-danger"></p>
-
-                        </div>
-
-
-                    </div>
-
-                    <div class="col-lg-6 col-md-6">
-                        <div class="append-flex">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>Name</label>
-                                    <span>In Arabic</span>
+                                    <span>In English</span>
                                 </div>
                                 <input type="text"
-                                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                                    class="form-control" placeholder="Enter product name" name="product_spe_ar[]"
-                                    value="">
-                                <p class="text-danger" id="error-product_spe_ar_0"></p>
+                                    oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                                    class="form-control" placeholder="Enter product name" value=""
+                                    name="product_spe_en[]">
+
+                                <p id="error-product_spe_en_0" class="text-danger"></p>
 
                             </div>
 
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Feature</label>
-                                <span>In English</span>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="append-flex">
+                                <div class="sub-form">
+                                    <div class="label-flex">
+                                        <label>Name</label>
+                                        <span>In Arabic</span>
+                                    </div>
+                                    <input type="text"
+                                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                        class="form-control" placeholder="Enter product name" name="product_spe_ar[]"
+                                        value="">
+                                    <p class="text-danger" id="error-product_spe_ar_0"></p>
+
+                                </div>
+
                             </div>
-                            <input type="text"
-                                oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                                class="form-control" placeholder="Enter product feature" name="product_spe_feature_en[]"
-                                value="">
-                            <p class="text-danger" id="error-product_spe_feature_en_0"></p>
-
                         </div>
-
                     </div>
 
-                    <div class="col-lg-6 col-md-6">
-                        <div class="append-flex">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>Feature</label>
-                                    <span>In Arabic</span>
+                                    <span>In English</span>
                                 </div>
                                 <input type="text"
-                                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                    oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
                                     class="form-control" placeholder="Enter product feature"
-                                    name="product_spe_feature_ar[]" value="">
-                                <p class="text-danger" id="error-product_spe_feature_ar_0"></p>
+                                    name="product_spe_feature_en[]" value="">
+                                <p class="text-danger" id="error-product_spe_feature_en_0"></p>
 
                             </div>
 
                         </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="append-flex">
+                                <div class="sub-form">
+                                    <div class="label-flex">
+                                        <label>Feature</label>
+                                        <span>In Arabic</span>
+                                    </div>
+                                    <input type="text"
+                                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                        class="form-control" placeholder="Enter product feature"
+                                        name="product_spe_feature_ar[]" value="">
+                                    <p class="text-danger" id="error-product_spe_feature_ar_0"></p>
+
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
             </div>
 
@@ -1034,7 +1035,7 @@ $(document).on("click", ".remove-btn", function() {
 
 // remove After refresh error code 
 function refreshSpecificationIndexes() {
-    $(".specifications-row").each(function (index) {
+    $(".specifications-row").each(function(index) {
 
         $(this).find("p[id^='error-product_spe_en_']")
             .attr("id", "error-product_spe_en_" + index);
@@ -1052,9 +1053,6 @@ function refreshSpecificationIndexes() {
     // update global counter
     specification_count = $(".specifications-row").length;
 }
-
-
-
 </script>
 
 
@@ -1326,7 +1324,7 @@ $(document).on("click", ".removerow", function() {
 // refresh variation code 
 function refreshVariantIndexes() {
 
-    $(".variant-panel-bg").each(function (variantIndex) {
+    $(".variant-panel-bg").each(function(variantIndex) {
 
         // IMAGE SECTION
         $(this).find(".product-pnls")
@@ -1342,12 +1340,12 @@ function refreshVariantIndexes() {
         $(this).find("[id^='previewContainer']")
             .attr("id", "previewContainer" + variantIndex);
 
-            
+
         // UPDATE addmoreVariation REL
         $(this).find(".addmoreVariation")
             .attr("rel", variantIndex);
 
-               // 🔹 UPDATE PRICE FIELD IDS
+        // 🔹 UPDATE PRICE FIELD IDS
         $(this).find("[id^='actualprice_']")
             .attr("id", `actualprice_${variantIndex}_0`);
 
@@ -1366,7 +1364,7 @@ function refreshVariantIndexes() {
             .attr("id", "error-color_id_" + variantIndex);
 
         // ALL INPUTS WITH ARRAY INDEX
-        $(this).find("input, select").each(function () {
+        $(this).find("input, select").each(function() {
 
             let name = $(this).attr("name");
             if (!name) return;
@@ -1376,14 +1374,14 @@ function refreshVariantIndexes() {
         });
 
         // ERROR MESSAGE IDS
-        $(this).find("p[id^='error-']").each(function () {
+        $(this).find("p[id^='error-']").each(function() {
             let newId = $(this).attr("id")
                 .replace(/\_\d+(\_\d+)?$/, `_${variantIndex}_0`);
             $(this).attr("id", newId);
         });
 
         // DISCOUNT RADIO BUTTONS
-        $(this).find("input[type='radio']").each(function () {
+        $(this).find("input[type='radio']").each(function() {
             let id = $(this).attr("id");
             if (id) {
                 id = id.replace(/\_\d+\_\d+$/, `_${variantIndex}_0`);
@@ -1402,7 +1400,7 @@ function refreshVariantIndexes() {
     // RESET GLOBAL COUNT
     product_Variation_count = $(".variant-panel-bg").length - 1;
 
-    
+
     console.log(product_Variation_count);
 }
 
@@ -1500,10 +1498,10 @@ $(document).on('submit', 'form#addproduct', function(event) {
         cache: false,
         contentType: false,
         processData: false,
-         beforeSend: function() {
-        //     // Show loader
+        beforeSend: function() {
+            //     // Show loader
             $('#loader').show();
-         },
+        },
         success: function(response) {
             console.log(response);
 
@@ -1523,6 +1521,11 @@ $(document).on('submit', 'form#addproduct', function(event) {
             }
         },
         error: function(xhr) {
+
+            if (xhr.status == '400') {
+                toastr.error(xhr.responseJSON.message)
+            }
+
             $('.text-danger').empty(); // Clear previous errors
 
             let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
@@ -1560,8 +1563,7 @@ $(document).on('submit', 'form#addproduct', function(event) {
                     $("#error-" + field).html(messages[0]);
                 }
             });
-        }
-        ,
+        },
         complete: function() {
             // Hide loader (after success or error)
             $('#loader').hide();
