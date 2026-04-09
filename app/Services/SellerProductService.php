@@ -1210,6 +1210,32 @@ public function AddProduct_web($request){
         if($seller_details->admin_verify!=='2'){
             return ['status'=>'error','message'=>"You store Didn't Accept or reject By Admin",'data'=>[]];    
         }
+
+        $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request->seller_id)
+            ->where('payment_status', '1')
+            ->where('is_expired', '0')
+            ->where('plan_end_date', '>=', Carbon::today())
+            ->first();
+
+        if (!$subscription) {
+            return [
+                'status' => 'failed',
+                'message' => "You have no active plan",
+                'data' => []
+            ];
+        }
+
+        //  CHECK PRODUCT LIMIT
+        if ($subscription->product_type == '0') {
+
+            if ($subscription->no_of_products <= '0') {
+                return [
+                    'status' => 'error',
+                    'message' => "Your monthly limit for product addition has reached, you can't add more products this month",
+                    'data' => []
+                ];
+            }
+        }
     
 
 

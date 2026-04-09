@@ -26,9 +26,10 @@ use App\Models\{seller};
     {
         $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         $filePath = $dir . '/' . $fileName;
+        //dd($filePath);
         $resp = Storage::disk('s3')->put($filePath, file_get_contents($file));
         // $image_url = 'https://desynat-bucket.s3.me-south-1.amazonaws.com/' . $filePath;
-        $image_url = 'https://d79swovq1y56s.cloudfront.net/' . $filepath;
+        $image_url = 'https://d79swovq1y56s.cloudfront.net/' . $filePath;
         return $image_url;
     }
 
