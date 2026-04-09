@@ -10,7 +10,9 @@ body {
     display: flex;
     flex-direction: column;
 }
-
+.blacktitle a {
+    color: #333;
+} 
 ::placeholder {
     font-size: 15px;
 }
