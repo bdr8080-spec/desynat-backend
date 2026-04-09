@@ -72,13 +72,13 @@
                             </div>
                         </div>
                         <div class="col-lg-3 ">
-                            <div class="d-flex gap-3 justify-content-end" >
-                                <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn"
-                                    style="margin-top: 60px">
+                            <div class="d-flex gap-3 mt-5" >
+                                <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn mt-2"
+                                    >
                                     <span>Reset</span>
                                 </a>
                         
-                                <a class="btn btn-dark customBtn " style="margin-top: 60px">
+                                <a class="btn btn-dark customBtn mt-2">
                                     <span>Export</span>
                                 </a>
                             </div>
@@ -228,12 +228,12 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-12 col-12">
-                                    <div class="d-flex gap-3 justify-content-end" >
-                                        <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn "
-                                            style="margin-top: 70px">
+                                    <div class="d-flex gap-3 mt-5" >
+                                        <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn mt-2"
+                                           >
                                             <span>Reset</span>
                                         </a>
-                                        <a class="btn btn-dark customBtn " style="margin-top: 70px">
+                                        <a class="btn btn-dark customBtn mt-2" >
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -387,12 +387,12 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-12 col-12">
-                                    <div class="d-flex gap-3 justify-content-end" style="text-align: end">
-                                        <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn"
-                                            style="margin-top: 70px">
+                                    <div class="d-flex gap-3 mt-5" >
+                                        <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn mt-2"
+                                            >
                                             <span>Reset</span>
                                         </a>
-                                          <a class="btn btn-dark customBtn " style="margin-top: 70px">
+                                          <a class="btn btn-dark customBtn mt-2">
                                             <span>Export</span>
                                         </a>
                                     </div>

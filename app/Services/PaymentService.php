@@ -14,6 +14,8 @@ use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,
 use DB;
 use App\Models\WithdrawRequest;
 use App\Models\sellerStoreInformation;
+use App\Models\SellerSubcriptionPlanBuy;
+
 
 class PaymentService
 {
@@ -121,6 +123,249 @@ class PaymentService
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch order details: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function getPlanPaymentData($request)
+    {
+        try {
+
+            $query = SellerSubcriptionPlanBuy::with([
+                'plan_info',
+                'seller_details.store_info.country_info',
+            ])
+            ->where('payment_status', '1');    
+
+            if (!empty($request->search)) {
+                $query->where(function ($sub) use ($request) {
+                    // Search transaction_id
+                    $sub->where('transaction_id', 'like', '%' . $request->search . '%');
+
+                    // Search seller first_name or last_name
+                    $sub->orWhereHas('seller_details', function ($seller) use ($request) {
+                        $seller->where('first_name', 'like', '%' . $request->search . '%')
+                            ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    });
+
+                    // Search plan name
+                    $sub->orWhereHas('plan_info', function ($plan) use ($request) {
+                        $plan->where('plan_name_english', $request->search);
+                    });
+                });
+            }
+
+            if (!empty($request->country_id)) {
+                $query->whereHas('seller_details.store_info.country_info', function ($country) use ($request) {
+                    $country->where('id', $request->country_id);
+                });
+            }
+
+            if (!empty($request->from_date) && !empty($request->to_date)) {
+                $query->whereBetween('created_at', [
+                    $request->from_date . ' 00:00:00',
+                    $request->to_date . ' 23:59:59'
+                ]);
+            } elseif (!empty($request->from_date)) {
+                $query->whereDate('created_at', '>=', $request->from_date);
+            } elseif (!empty($request->to_date)) {
+                $query->whereDate('created_at', '<=', $request->to_date);
+            }
+
+            $totalQuery = clone $query;
+            $total_revenue = round($totalQuery->sum('amount'), 2);
+
+            $query->orderBy('id', 'desc');
+
+            if (!empty($request->limit)) {
+                $orders = $query->paginate($request->limit);
+                $collection = $orders->getCollection();
+            } else {
+                $orders = $query->get();
+                $collection = $orders;
+            }
+
+            if ($collection->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No plan payments found',
+                    'data' => (object)[],
+                    'total_revenue' => 0,
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'All plan payment details fetched successfully',
+                'total_revenue' => $total_revenue,
+                'data' => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch plan payment details: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function getGiftCardPaymentData($request)
+    {
+        try {
+
+            $query = UserGiftCards::with([
+                'gift_details',
+                'user_details.country_info',
+            ])
+            ->where('payment_status', '1');    
+
+            if (!empty($request->search)) {
+                $query->where(function ($sub) use ($request) {
+                    // Search order_id (exact match or partial match depending on requirement)
+                    $sub->where('order_id', 'like', '%' . $request->search . '%');
+
+                    // Search transaction_id
+                    $sub->orWhere('transaction_id', 'like', '%' . $request->search . '%');
+
+                    // Search user full name
+                    $sub->orWhereHas('user_details', function ($user) use ($request) {
+                        $user->where('full_name', 'like', '%' . $request->search . '%');
+                    });
+
+                    // Search gift name (exact match)
+                    $sub->orWhereHas('gift_details', function ($gift) use ($request) {
+                        $gift->where('name_english', 'like', '%' . $request->search . '%');
+                    });
+                });
+            }
+            if (!empty($request->country_id)) {
+                $query->whereHas('user_details.country_info', function ($country) use ($request) {
+                    $country->where('id', $request->country_id);
+                });
+            }
+
+            if (!empty($request->from_date) && !empty($request->to_date)) {
+                $query->whereBetween('created_at', [
+                    $request->from_date . ' 00:00:00',
+                    $request->to_date . ' 23:59:59'
+                ]);
+            } elseif (!empty($request->from_date)) {
+                $query->whereDate('created_at', '>=', $request->from_date);
+            } elseif (!empty($request->to_date)) {
+                $query->whereDate('created_at', '<=', $request->to_date);
+            }
+
+            $total_revenue = round((clone $query)->sum('amount'), 2);
+
+            $query->orderBy('id', 'desc');
+            if (!empty($request->limit)) {
+                $orders = $query->paginate($request->limit);
+                $collection = $orders->getCollection();
+            } else {
+                $orders = $query->get();
+                $collection = $orders;
+            }
+
+            if ($collection->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No gift card payments found',
+                    'data' => (object)[],
+                    'total_revenue' => 0,
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'All gift card payment details fetched successfully',
+                'total_revenue' => $total_revenue,
+                'data' => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch gift card payment details: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function getBannerPaymentData($request)
+    {
+        try {
+
+            $query = sellerBanner::with([
+                'seller_details.store_info.country_info',
+            ])
+            ->where('payment_status', '1');    
+
+            if (!empty($request->search)) {
+                $query->where(function ($sub) use ($request) {
+                    // Search order_id (exact match or partial match depending on requirement)
+                    $sub->where('order_id', 'like', '%' . $request->search . '%');
+
+                    // Search transaction_id
+                    $sub->orWhere('transaction_id', 'like', '%' . $request->search . '%');
+
+                    // Search seller  name
+                    $sub->orWhereHas('seller_details', function ($seller) use ($request) {
+                        $seller->where('first_name', 'like', '%' . $request->search . '%')
+                            ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    });
+
+                });
+            }
+            if (!empty($request->country_id)) {
+                $query->whereHas('seller_details.store_info.country_info', function ($country) use ($request) {
+                    $country->where('id', $request->country_id);
+                });
+            }
+
+            if (!empty($request->from_date) && !empty($request->to_date)) {
+                $query->whereBetween('created_at', [
+                    $request->from_date . ' 00:00:00',
+                    $request->to_date . ' 23:59:59'
+                ]);
+            } elseif (!empty($request->from_date)) {
+                $query->whereDate('created_at', '>=', $request->from_date);
+            } elseif (!empty($request->to_date)) {
+                $query->whereDate('created_at', '<=', $request->to_date);
+            }
+
+            $total_revenue = round((clone $query)->sum('price'), 2);
+
+            $query->orderBy('id', 'desc');
+            if (!empty($request->limit)) {
+                $orders = $query->paginate($request->limit);
+                $collection = $orders->getCollection();
+            } else {
+                $orders = $query->get();
+                $collection = $orders;
+            }
+
+            if ($collection->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No banner payments found',
+                    'data' => (object)[],
+                    'total_revenue' => 0,
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'All banner payment details fetched successfully',
+                'total_revenue' => $total_revenue,
+                'data' => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch banner payment details: ' . $e->getMessage(),
                 'data' => []
             ];
         }

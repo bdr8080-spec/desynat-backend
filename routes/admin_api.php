@@ -278,6 +278,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/update_ticket_status', [TicketController::class,'update_ticket_status']);
 
     Route::get('/get_order_payments', [PaymentController::class,'get_order_payments']);
+    Route::get('/get_plan_payments', [PaymentController::class,'get_plan_payments']);
+    Route::get('/get_giftcard_payments', [PaymentController::class,'get_giftcard_payments']);
+   Route::get('/get_banner_payments', [PaymentController::class,'get_banner_payments']);
 
 
 

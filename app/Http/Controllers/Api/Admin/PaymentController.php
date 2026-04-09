@@ -27,7 +27,6 @@ class PaymentController extends Controller
         $request_data=(object)[
             'limit'=>$request->limit??null,
             'search'=>$request->search??null,
-            'country'=>$request->country??null,
             'from_date'=>$request->from_date??null,
             'to_date'=>$request->to_date??null,
             'country_id'=>$request->country_id??null,
@@ -45,6 +44,78 @@ class PaymentController extends Controller
             'total_revenue' => $data['total_revenue'],
             'total_custom_order_revenue' => $data['total_custom_order_revenue'],
             'total_commission' => $data['total_commission'],
+        ], 200);
+
+    }
+
+    public function get_plan_payments(Request $request){
+    
+        $request_data=(object)[
+            'limit'=>$request->limit??null,
+            'search'=>$request->search??null,
+            'from_date'=>$request->from_date??null,
+            'to_date'=>$request->to_date??null,
+            'country_id'=>$request->country_id??null,
+            ];
+
+        $data=$this->PaymentService->getPlanPaymentData($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], [
+            'orders' => $data['data'],
+            'total_revenue' => $data['total_revenue'],
+        ], 200);
+
+    }
+
+    public function get_giftcard_payments(Request $request){
+    
+        $request_data=(object)[
+            'limit'=>$request->limit??null,
+            'search'=>$request->search??null,
+            'from_date'=>$request->from_date??null,
+            'to_date'=>$request->to_date??null,
+            'country_id'=>$request->country_id??null,
+            ];
+
+        $data=$this->PaymentService->getGiftCardPaymentData($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], [
+            'orders' => $data['data'],
+            'total_revenue' => $data['total_revenue'],
+        ], 200);
+
+    }
+
+    public function get_banner_payments(Request $request){
+    
+        $request_data=(object)[
+            'limit'=>$request->limit??null,
+            'search'=>$request->search??null,
+            'from_date'=>$request->from_date??null,
+            'to_date'=>$request->to_date??null,
+            'country_id'=>$request->country_id??null,
+            ];
+
+        $data=$this->PaymentService->getBannerPaymentData($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], [
+            'orders' => $data['data'],
+            'total_revenue' => $data['total_revenue'],
         ], 200);
 
     }
