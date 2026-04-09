@@ -94,8 +94,8 @@
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-12 col-12">
-                            <div class="d-dlex justify-content-end" style="text-align: end">
-                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                            <div class="d-dlex justify-content-end mt-5">
+                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
                                     <span>Reset</span></a>
                             </div>
                         </div>
@@ -222,8 +222,8 @@
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-12 col-12">
-                            <div class="d-dlex justify-content-end" style="text-align: end">
-                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                            <div class="d-dlex justify-content-end mt-5">
+                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
                                     <span>Reset</span></a>
                             </div>
                         </div>
@@ -352,8 +352,8 @@
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-12 col-12">
-                            <div class="d-dlex justify-content-end" style="text-align: end">
-                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                            <div class="d-dlex justify-content-end mt-5">
+                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
                                     <span>Reset</span></a>
                             </div>
                         </div>

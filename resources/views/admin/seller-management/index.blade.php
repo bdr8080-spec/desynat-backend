@@ -77,13 +77,12 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 ">
-                                    <div class="d-flex gap-3 justify-content-end" >
-                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn"
-                                            style="margin-top: 60px">
+                                    <div class="d-flex gap-3 mt-5">
+                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn mt-2">
                                             <span>Reset</span>
                                         </a>
                                 
-                                        <a class="btn btn-dark customBtn " style="margin-top: 60px">
+                                        <a class="btn btn-dark customBtn mt-2">
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -239,7 +238,7 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                                                                <label for="to" class="form-label">Select Country</label>
+                                        <label for="to" class="form-label">Select Country</label>
 
                                         <select name="country_id1" id="country_id"
                                             class="form-select form-select-lg "
@@ -255,12 +254,11 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-12 col-12">
-                                    <div class="d-flex gap-3 justify-content-end" >
-                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn "
-                                            style="margin-top: 70px">
+                                    <div class="d-flex gap-3 mt-5" >
+                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn mt-2">
                                             <span>Reset</span>
                                         </a>
-                                        <a class="btn btn-dark customBtn " style="margin-top: 70px">
+                                        <a class="btn btn-dark customBtn mt-2">
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -462,12 +460,12 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-12 col-12">
-                                    <div class="d-flex gap-3 justify-content-end" style="text-align: end">
-                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn"
-                                            style="margin-top: 70px">
+                                    <div class="d-flex gap-3 mt-5">
+                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn mt-2"
+                                            >
                                             <span>Reset</span>
                                         </a>
-                                          <a class="btn btn-dark customBtn " style="margin-top: 70px">
+                                          <a class="btn btn-dark customBtn mt-2" >
                                             <span>Export</span>
                                         </a>
                                     </div>
