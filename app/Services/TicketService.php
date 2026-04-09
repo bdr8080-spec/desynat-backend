@@ -161,13 +161,7 @@ class TicketService
 
             $tickets = $limit ? $query->paginate($limit) : $query->get();
 
-            if ($tickets->isEmpty()) {
-                return [
-                    'status' => 'success',
-                    'message' => 'No Tickets found',
-                    'data' => (object)[]
-                ];
-            }
+            
 
             if (!empty($search)) {
                 $tickets = $tickets->filter(function ($ticket) use ($search) {
@@ -196,6 +190,14 @@ class TicketService
 
                     return stripos($name, $search) !== false;
                 })->values();
+            }
+
+            if ($tickets->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Tickets found',
+                    'data' => (object)[]
+                ];
             }
 
             // Append sender details
@@ -252,14 +254,6 @@ class TicketService
 
             $tickets = $limit ? $query->paginate($limit) : $query->get();
 
-            if ($tickets->isEmpty()) {
-                return [
-                    'status' => 'success',
-                    'message' => 'No Tickets found',
-                    'data' => (object)[]
-                ];
-            }
-
             if (!empty($search)) {
                 $tickets = $tickets->filter(function ($ticket) use ($search) {
                     // Check ticket_id first
@@ -287,6 +281,14 @@ class TicketService
 
                     return stripos($name, $search) !== false;
                 })->values();
+            }
+
+            if ($tickets->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Tickets found',
+                    'data' => (object)[]
+                ];
             }
 
             // Append sender details
@@ -342,13 +344,7 @@ class TicketService
 
             $tickets = $limit ? $query->paginate($limit) : $query->get();
 
-            if ($tickets->isEmpty()) {
-                return [
-                    'status' => 'success',
-                    'message' => 'No Tickets found',
-                    'data' => (object)[]
-                ];
-            }
+            
 
             if (!empty($search)) {
                 $tickets = $tickets->filter(function ($ticket) use ($search) {
@@ -377,6 +373,14 @@ class TicketService
 
                     return stripos($name, $search) !== false;
                 })->values();
+            }
+
+            if ($tickets->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Tickets found',
+                    'data' => (object)[]
+                ];
             }
 
             // Append sender details
