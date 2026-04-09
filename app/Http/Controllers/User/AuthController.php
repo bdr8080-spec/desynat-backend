@@ -617,9 +617,23 @@ class AuthController extends Controller
           $homeDealBanner=$homeDealBanner1['data'];
 
           // dd($homeDealBanner);
-          
 
-        return view('user.dashboard.dashboard', compact('subCategory','stores','banners','topBanners','bottomBanners','homeDealBanner'));
+        // best Selling products
+
+        $bestSellingProduct=$this->UserDashboardService->bestSellingProduct();
+        $bestSellingProduct=$bestSellingProduct['data'];
+
+        // Top rating products
+
+        $TopRatingProduct=$this->UserDashboardService->TopRatingProduct();
+        $TopRatingProduct=$TopRatingProduct['data'];
+
+        // New Arrival products
+        $userNewestProduct=$this->UserDashboardService->userNewestProduct();
+        $userNewestProduct=$userNewestProduct['data'];
+
+
+        return view('user.dashboard.dashboard', compact('subCategory','stores','banners','topBanners','bottomBanners','homeDealBanner','bestSellingProduct','TopRatingProduct','userNewestProduct'));
     }
 
     public function updateBannerView(Request $request)

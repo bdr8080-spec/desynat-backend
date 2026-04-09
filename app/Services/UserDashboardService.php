@@ -670,11 +670,17 @@ try {
     ->values(); // 🔥 reindex keys
 
 if($bestSeller){
- $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])->whereIn('id',$bestSeller)->limit(10)
+ $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+  ->withAvg('review as product_avg_rating', 'product_rating')
+  ->withCount('review')
+ ->whereIn('id',$bestSeller)->limit(10)
  ->inRandomOrder()
  ->get();
 }else{
-$all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])->limit(10)
+$all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+->withAvg('review as product_avg_rating', 'product_rating')
+->withCount('review') 
+->limit(10)
 ->inRandomOrder()
 ->get();
 
@@ -709,13 +715,19 @@ try {
     ->values(); // 🔥 reindex keys
 
 if($bestSeller){
- $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])->whereIn('id',$bestSeller)->limit(10)
+ $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])->whereIn('id',$bestSeller)
+ ->withAvg('review as product_avg_rating', 'product_rating')
+  ->withCount('review')
+ ->limit(10)
  ->inRandomOrder()
  ->get();
  
 
 }else{
-$all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])->limit(10)
+$all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+->withAvg('review as product_avg_rating', 'product_rating')
+->withCount('review')
+->limit(10)
 ->inRandomOrder()
 ->get();
 
@@ -742,6 +754,8 @@ public function userNewestProduct()
     {
 try {
 $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+->withAvg('review as product_avg_rating', 'product_rating')
+->withCount('review') 
 ->orderBy('created_at','desc')
 ->limit(10)
 ->get();
