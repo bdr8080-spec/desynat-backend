@@ -600,7 +600,6 @@ class AuthController extends Controller
                 ];
 
             $topBanners= $this->UserDashboardService->HomeScreenBanner($request_data);
-            //dd($topBanners);
 
             $request_data1 = (object)[
                     'type'        => '2',
@@ -610,6 +609,7 @@ class AuthController extends Controller
             //dd($bottomBanners);
 
             $request_data2=(object) [
+            'type'        => '3',
             'category'=>$request->category??null,   
             ];
 
