@@ -905,13 +905,13 @@ class StoryManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No highlights found',
-                    'data' =>[]
+                    'data' =>(object)[]
                 ];
             }else{
                 return [
                     'status' => 'success',
                     'message' => 'No highlights found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
 
             }
