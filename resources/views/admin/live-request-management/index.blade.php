@@ -238,9 +238,7 @@
                                                 </td>
                                             </tr>
                                             @empty
-                                                <tr>
-                                                    <td colspan="6" class="text-center">No data found</td>
-                                                </tr>
+
                                             @endforelse
                                         </tbody>
                                     </table>
@@ -311,9 +309,7 @@
                                                 <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}</td>
                                             </tr>
                                             @empty
-                                                <tr>
-                                                    <td colspan="6" class="text-center">No data found</td>
-                                                </tr>
+
                                             @endforelse
                                         </tbody>
                                     </table>
@@ -387,9 +383,7 @@
                                                 <td>{{ $data['reject_reason'] }}</td>
                                             </tr>
                                             @empty
-                                                <tr>
-                                                    <td colspan="6" class="text-center">No data found</td>
-                                                </tr>
+  
                                             @endforelse
                                         </tbody>
                                     </table>

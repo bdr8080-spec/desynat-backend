@@ -159,9 +159,7 @@
                                 </td>
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="11" class="text-center">No Data Found</td>
-                                </tr>
+
                             @endforelse
                         </tbody>
                     </table>
@@ -250,9 +248,7 @@
                                 <td>{{ $payment->amount }} KD</td>
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="11" class="text-center">No Data Found</td>
-                                </tr>
+
                             @endforelse
                         </tbody>
                     </table>
@@ -343,9 +339,7 @@
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="11" class="text-center">No Data Found</td>
-                                </tr>
+
                             @endforelse
                         </tbody>
                     </table>
@@ -434,9 +428,7 @@
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="11" class="text-center">No Data Found</td>
-                                </tr>
+
                             @endforelse
                         </tbody>
                     </table>

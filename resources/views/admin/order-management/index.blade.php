@@ -232,9 +232,7 @@
                                 </td>
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="12" class="text-center">No data found</td>
-                                </tr>
+ 
                             @endforelse
                         </tbody>
                     </table>
@@ -462,9 +460,7 @@
                                 </td>
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="12" class="text-center">No data found</td>
-                                </tr>
+
                             @endforelse
                         </tbody>
                     </table>
@@ -630,9 +626,7 @@
                                 </td>
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="12" class="text-center">No data found</td>
-                                </tr>
+
                             @endforelse
                         </tbody>
                     </table>
@@ -782,9 +776,7 @@
                                 <td>{{ $data['cancel_reason'] ?? 'N/A' }}</td>
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="12" class="text-center">No data found</td>
-                                </tr>
+
                             @endforelse
                         </tbody>
                     </table>
