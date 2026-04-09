@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\Admin\WithdrawRequestController;
 use App\Http\Controllers\Api\Admin\CMSController;
 use App\Http\Controllers\Api\Admin\NotificationController;
 use App\Http\Controllers\Api\Admin\TicketController;
+use App\Http\Controllers\Api\Admin\PaymentController;
 
 
 // Admin APi M1
@@ -275,6 +276,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/get_ongoing_tickets', [TicketController::class,'get_ongoing_tickets']);
     Route::get('/get_resolved_tickets', [TicketController::class,'get_resolved_tickets']);
     Route::post('/update_ticket_status', [TicketController::class,'update_ticket_status']);
+
+    Route::get('/get_order_payments', [PaymentController::class,'get_order_payments']);
 
 
 
