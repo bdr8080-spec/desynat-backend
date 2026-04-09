@@ -233,8 +233,8 @@
         @foreach($bestSellingProduct as $key=>$item)
 
         <div class="item">
-            <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
-                <div class="product-card">
+            <div class="product-card">
+                <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                     <div class="product-img">
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
                         @if ($key != 0)
@@ -286,8 +286,8 @@
                             </span>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
 
         @endforeach
@@ -363,8 +363,8 @@
         @foreach($TopRatingProduct as $key=>$item)
 
         <div class="item">
+            <div class="product-card">
             <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
-                <div class="product-card">
                     <div class="product-img">
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
                         @if ($key != 0)
@@ -416,8 +416,8 @@
                             </span>
                         </div>
                     </div>
+                </a>
                 </div>
-            </a>
         </div>
 
         @endforeach
@@ -458,8 +458,8 @@
         @foreach($userNewestProduct as $key=>$item)
 
         <div class="col-lg-3 col-md-4 col-6 my-3">
+            <div class="product-card">
             <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
-                <div class="product-card">
                     <div class="product-img">
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
                         @if ($key != 0)
@@ -511,8 +511,8 @@
                             </span>
                         </div>
                     </div>
+                </a>
                 </div>
-            </a>
         </div>
 
         @endforeach
