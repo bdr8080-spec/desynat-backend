@@ -162,8 +162,8 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="/payment">
+    <li class="nav-item {{ Request::routeIs('admin.paymentManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.paymentManagement') }}">
             <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
             Payment Management
         </a>

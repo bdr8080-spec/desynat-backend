@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\AffiliateWithdrawController;
 use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\TicketController;
+use App\Http\Controllers\Admin\PaymentController;
 
 use App\Http\Controllers\SaveFirebaseToken;
 
@@ -242,6 +243,7 @@ Route::group(['prefix'=>'admin'], function(){
         //ticket management
         Route::get('/ticket-management', [TicketController::class, 'ticketManagement'])->name('admin.ticketManagement');
         Route::post('/update_ticket_status', [TicketController::class, 'update_ticket_status'])->name('admin.update_ticket_status');
+        Route::get('/payment-management', [PaymentController::class, 'paymentManagement'])->name('admin.paymentManagement');
             
         
 
@@ -251,10 +253,7 @@ Route::group(['prefix'=>'admin'], function(){
 
 
 
-Route::match(['get', 'post'], '/payment', function () {
-    return view('admin.payment.index');
 
-})->name('admin.payment');
 
 Route::match(['get', 'post'], '/support', function () {
     return view('admin.support.index');
