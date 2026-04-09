@@ -47,7 +47,7 @@
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
                 <form method="GET" action="{{ route('admin.ticketManagement') }}" id="filterForm">
                     <div class="row">
-                        <div class="col-lg-3 col-md-4 col-12">
+                        <div class="col-lg-2 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from_date" class="form-label">From:</label>
                                 <input type="date" id="from_date" name="from_date" class="form-control"
@@ -56,7 +56,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-4 col-12">
+                        <div class="col-lg-2 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date" class="form-label">To:</label>
                                 <input type="date" id="to_date" name="to_date" class="form-control"
@@ -93,7 +93,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-12 col-12">
+                        <div class="col-lg-2 col-md-12 col-12">
                             <div class="d-dlex justify-content-end" style="text-align: end">
                                 <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                     <span>Reset</span></a>
@@ -175,7 +175,7 @@
                 tabindex="0">
                 <form method="GET" action="{{ route('admin.ticketManagement') }}" id="filterForm1">
                     <div class="row">
-                        <div class="col-lg-3 col-md-4 col-12">
+                    <div class="col-lg-2 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from_date1" class="form-label">From:</label>
                                 <input type="date" id="from_date1" name="from_date1" class="form-control"
@@ -184,7 +184,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-4 col-12">
+                        <div class="col-lg-2 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date1" class="form-label">To:</label>
                                 <input type="date" id="to_date1" name="to_date1" class="form-control"
@@ -192,7 +192,7 @@
                                     onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-3 col-12">
+                        <div class="col-lg-2 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Ticket type</label>
 
@@ -207,7 +207,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-3 col-12">
+                        <div class="col-lg-2 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Submitted by</label>
 
@@ -221,7 +221,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-12 col-12">
+                        <div class="col-lg-2 col-md-12 col-12">
                             <div class="d-dlex justify-content-end" style="text-align: end">
                                 <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                     <span>Reset</span></a>
@@ -305,7 +305,7 @@
                 tabindex="0">
                 <form method="GET" action="{{ route('admin.ticketManagement') }}" id="filterForm2">
                     <div class="row">
-                        <div class="col-lg-3 col-md-4 col-12">
+                    <div class="col-lg-2 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from_date2" class="form-label">From:</label>
                                 <input type="date" id="from_date2" name="from_date2" class="form-control"
@@ -314,7 +314,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-4 col-12">
+                        <div class="col-lg-2 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date2" class="form-label">To:</label>
                                 <input type="date" id="to_date2" name="to_date2" class="form-control"
@@ -322,7 +322,7 @@
                                     onchange="updateToDate2(); document.getElementById('filterForm2').submit();" />
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-3 col-12">
+                        <div class="col-lg-2 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Ticket type</label>
 
@@ -337,7 +337,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-3 col-12">
+                        <div class="col-lg-2 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Submitted by</label>
 
@@ -351,7 +351,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-12 col-12">
+                        <div class="col-lg-2 col-md-12 col-12">
                             <div class="d-dlex justify-content-end" style="text-align: end">
                                 <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                     <span>Reset</span></a>
