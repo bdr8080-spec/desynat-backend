@@ -1556,6 +1556,10 @@ $request_data=(object) [
       return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
   }
 
+  if(isset($data['status']) && $data['status']=='failed' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
   return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
   
   }

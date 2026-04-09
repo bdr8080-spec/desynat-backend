@@ -649,6 +649,10 @@ $seller_id=Auth::guard('seller')->user()->id;
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
+        if(isset($data['status']) && $data['status']=='failed' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     }
 
@@ -709,6 +713,10 @@ $seller_id=Auth::guard('seller')->user()->id;
         //dd($stories);
 
         if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        if(isset($data['status']) && $data['status']=='failed' ){
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
@@ -775,6 +783,10 @@ $seller_id=Auth::guard('seller')->user()->id;
         //dd($stories);
 
         if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        if(isset($data['status']) && $data['status']=='failed' ){
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
