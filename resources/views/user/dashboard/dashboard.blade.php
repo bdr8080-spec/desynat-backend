@@ -4,13 +4,13 @@
 <div class="customContainer">
     <div class="owl-carousel owl-theme customOwlcarousel2 storeBanner">
         @if(empty($topBanners['data']) || count($topBanners['data']) == 0)
-    <div class="item">
-        <div class="Bannerstores">
-            <img src="{{ asset('user/assets/images/active-banner.png') }}" alt="banner" class="img-fluid" />
+        <div class="item">
+            <div class="Bannerstores">
+                <img src="{{ asset('user/assets/images/active-banner.png') }}" alt="banner" class="img-fluid" />
+            </div>
         </div>
-    </div>
-@else
-    @foreach($topBanners['data'] as $banner)
+        @else
+        @foreach($topBanners['data'] as $banner)
         <div class="item">
             <div class="Bannerstores">
                 <a href="{{ url('user/store-details/' . ($banner->seller_details->store_info->id ?? '')) }}">
@@ -18,8 +18,8 @@
                 </a>
             </div>
         </div>
-    @endforeach
-@endif
+        @endforeach
+        @endif
 
 
     </div>
@@ -229,7 +229,70 @@
 <section class="bestSelling customContainer">
     <h3 class="mid-headng mb-3">Best Selling</h3>
     <div class="owl-carousel bestSellingCarousel">
+
+        @foreach($bestSellingProduct as $key=>$item)
+
         <div class="item">
+            <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+                <div class="product-card">
+                    <div class="product-img">
+                        @foreach ($item->product_variants[0]->variant_image as $key => $val1)
+                        @if ($key != 0)
+                        @php break @endphp
+                        @endif
+                        <img src="{{ $val1 }}" alt="Product">
+                        @endforeach
+
+                        @if (Auth::guard('web')->user())
+                        <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $item->id }}"
+                                class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                                onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
+                        @else
+                        <a class="wishlist-btn text-decoration-underline" href="{{route('userLogin')}}">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
+                        @endif
+
+                        <button class="share-btn"><img
+                                src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
+                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                    </div>
+                    <div class="product-content">
+                        <h5>{{ $item->product_name_en }}</h5>
+                        <div class="rating">
+                            <!-- star rating Show Code  -->
+                            @php
+                            $rating = $item->product_avg_rating;
+                            $fullStars = floor($rating);
+                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                            @endphp
+
+                            {{-- Full Stars --}}
+                            @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
+                                @endfor
+
+                                {{-- Half Star --}}
+                                @if($hasHalfStar)
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                                @endif
+                                <!-- star rating code end here  -->
+                                <span>({{ $item->review_count }})</span>
+                        </div>
+                        <div class="price">
+                            <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
+                            <span class="old-price">KD {{ $item->product_variants[0]->actual_price }}</span>
+                            <span class="discount"> {{ $item->product_variants[0]->discount_value }}
+                                {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        @endforeach
+
+        <!-- <div class="item">
             <div class="product-card">
                 <div class="product-img">
                     <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
@@ -253,126 +316,7 @@
                 </div>
             </div>
         </div>
-        <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+   -->
     </div>
 </section>
 
@@ -391,7 +335,7 @@
         <div class="item">
             <div class="premiumImg">
                 <a href="{{ url('user/store-details/' . ($banner->seller_details->store_info->id ?? '')) }}">
-                <img src="{{ $banner->upload_banner }}" class="img-fluid" />
+                    <img src="{{ $banner->upload_banner }}" class="img-fluid" />
                 </a>
             </div>
         </div>
@@ -415,144 +359,69 @@
 <section class="bestSelling customContainer mt-3">
     <h3 class="mid-headng mb-3">Top Rated</h3>
     <div class="owl-carousel topRatedCarousel">
+
+        @foreach($TopRatingProduct as $key=>$item)
+
         <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
+            <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+                <div class="product-card">
+                    <div class="product-img">
+                        @foreach ($item->product_variants[0]->variant_image as $key => $val1)
+                        @if ($key != 0)
+                        @php break @endphp
+                        @endif
+                        <img src="{{ $val1 }}" alt="Product">
+                        @endforeach
+
+                        @if (Auth::guard('web')->user())
+                        <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $item->id }}"
+                                class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                                onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
+                        @else
+                        <a class="wishlist-btn text-decoration-underline" href="{{route('userLogin')}}">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
+                        @endif
+
+                        <button class="share-btn"><img
+                                src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
+                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
+                    <div class="product-content">
+                        <h5>{{ $item->product_name_en }}</h5>
+                        <div class="rating">
+                            <!-- star rating Show Code  -->
+                            @php
+                            $rating = $item->product_avg_rating;
+                            $fullStars = floor($rating);
+                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                            @endphp
+
+                            {{-- Full Stars --}}
+                            @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
+                                @endfor
+
+                                {{-- Half Star --}}
+                                @if($hasHalfStar)
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                                @endif
+                                <!-- star rating code end here  -->
+                                <span>({{ $item->review_count }})</span>
+                        </div>
+                        <div class="price">
+                            <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
+                            <span class="old-price">KD {{ $item->product_variants[0]->actual_price }}</span>
+                            <span class="discount"> {{ $item->product_variants[0]->discount_value }}
+                                {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
-        <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        @endforeach
+
     </div>
 </section>
 
@@ -569,8 +438,9 @@
         @foreach($homeDealBanner as $key=>$val)
         <div class="item">
             <div class="premiumImg ">
-                <a href="{{ url('user/store-details/' . ($val->sellerDealrecord->first()->product_details->store_id ?? '')) }}">
-                <img src="{{$val->image}}" class="img-fluid" />
+                <a
+                    href="{{ url('user/store-details/' . ($val->sellerDealrecord->first()->product_details->store_id ?? '')) }}">
+                    <img src="{{$val->image}}" class="img-fluid" />
                 </a>
             </div>
         </div>
@@ -584,174 +454,70 @@
 <section class="customContainer mt-3">
     <h3 class="mid-headng mb-0">Newest Products</h3>
     <div class="row">
+
+        @foreach($userNewestProduct as $key=>$item)
+
         <div class="col-lg-3 col-md-4 col-6 my-3">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
+            <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+                <div class="product-card">
+                    <div class="product-img">
+                        @foreach ($item->product_variants[0]->variant_image as $key => $val1)
+                        @if ($key != 0)
+                        @php break @endphp
+                        @endif
+                        <img src="{{ $val1 }}" alt="Product">
+                        @endforeach
+
+                        @if (Auth::guard('web')->user())
+                        <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $item->id }}"
+                                class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                                onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
+                        @else
+                        <a class="wishlist-btn text-decoration-underline" href="{{route('userLogin')}}">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
+                        @endif
+
+                        <button class="share-btn"><img
+                                src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
+                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
+                    <div class="product-content">
+                        <h5>{{ $item->product_name_en }}</h5>
+                        <div class="rating">
+                            <!-- star rating Show Code  -->
+                            @php
+                            $rating = $item->product_avg_rating;
+                            $fullStars = floor($rating);
+                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                            @endphp
+
+                            {{-- Full Stars --}}
+                            @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
+                                @endfor
+
+                                {{-- Half Star --}}
+                                @if($hasHalfStar)
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                                @endif
+                                <!-- star rating code end here  -->
+                                <span>({{ $item->review_count }})</span>
+                        </div>
+                        <div class="price">
+                            <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
+                            <span class="old-price">KD {{ $item->product_variants[0]->actual_price }}</span>
+                            <span class="discount"> {{ $item->product_variants[0]->discount_value }}
+                                {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
-        <div class="col-lg-3 col-md-4 col-6 my-3">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6 my-3">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6 my-3">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6 my-3">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6 my-3">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-6 my-3">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        @endforeach
+
+
     </div>
 </section>
 
