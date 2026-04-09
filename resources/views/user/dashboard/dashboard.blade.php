@@ -233,7 +233,7 @@
         @foreach($bestSellingProduct as $key=>$item)
 
         <div class="item">
-            <div class="product-card">
+            <div class="product-card blacktitle">
                 <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                     <div class="product-img">
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
@@ -363,7 +363,7 @@
         @foreach($TopRatingProduct as $key=>$item)
 
         <div class="item">
-            <div class="product-card">
+            <div class="product-card blacktitle">
             <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                     <div class="product-img">
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
@@ -458,7 +458,7 @@
         @foreach($userNewestProduct as $key=>$item)
 
         <div class="col-lg-3 col-md-4 col-6 my-3">
-            <div class="product-card">
+            <div class="product-card blacktitle">
             <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                     <div class="product-img">
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
