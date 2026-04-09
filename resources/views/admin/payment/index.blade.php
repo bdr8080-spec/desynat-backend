@@ -145,7 +145,7 @@
                                 </td>
                                 <td>{{ $payment->gift_card_details->name_english ?? 'No' }}</td>
                                 <td>{{$payment->total_discount}}</td>
-                                <td>{{$payment->affiliate_admin_commission ?? 'N/A'}}</td>
+                                <td>{{$payment->affiliate_admin_commission ?? '0'}}</td>
                                 <td>
                                     @if($payment->order?->payment_method == 1)
                                         Online
