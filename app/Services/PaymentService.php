@@ -3,6 +3,7 @@ namespace App\Services;
 use App\Helpers\ApiResponse;
 use App\Models\User;
 use App\Models\seller;
+use App\Models\sellerBanner;
 use App\Models\size;
 use App\Models\color;
 use App\Models\ProductVariant;
