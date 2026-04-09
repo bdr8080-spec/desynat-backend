@@ -45,9 +45,12 @@ function Generate_SellerQrCode($seller_id,$store_id){
         ->size(300)
         ->generate($qrSellerCode);
     // Upload directly to S3 (NO local file needed)
-    Storage::disk('s3')->put($fileName, $svg, 'QR_Code');
+     Storage::disk('s3')->put($fileName, $svg, 'QR_Code');
     // Get correct S3 URL
     $image_url = Storage::disk('s3')->url($fileName);
+
+    $image_url = 'https://d79swovq1y56s.cloudfront.net/' . $fileName;
+
 
     seller::where('id',$seller_id)->update(['profile_qr'=>$image_url,'qrSellerUrl'=>$qrSellerCode]);
 
