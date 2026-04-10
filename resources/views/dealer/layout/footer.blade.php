@@ -151,18 +151,14 @@ var redirected = false;
 
 
 function loadAdminStories(openIndex = 0, callback) {
-    //console.log("[DEBUG] loadAdminStories called, openIndex:", openIndex);
 
-    // Avoid multiple calls if stories already loaded or redirect happened
     if (stories !== null || redirected) {
-        //console.log("[DEBUG] Stories already loaded or redirected, skipping API call");
         if (callback) callback();
         return;
     }
 
     // Ensure jQuery is loaded
     if (typeof $ === "undefined") {
-        //console.error("[ERROR] jQuery is not loaded!");
         return;
     }
 
@@ -171,7 +167,6 @@ function loadAdminStories(openIndex = 0, callback) {
         type: "GET",
         dataType: "json",
         success: function (res) {
-            //console.log("[DEBUG] API RESPONSE:", res);
 
             if (res.status === "success" && Array.isArray(res.data.data)) {
                 stories = res.data.data;
@@ -192,71 +187,56 @@ function loadAdminStories(openIndex = 0, callback) {
             // }
 
             var areaEl = document.getElementById('adminStoryArea');
-            //console.log(areaEl);
             if (areaEl) {
                 areaEl.classList.toggle('story-active', stories.length > 0);
             }
-            //console.log(areaEl.className);
 
             if (stories.length === 0) {
                 redirected = true;
-               // console.log("[INFO] No stories found, redirecting to dashboard");
                 //window.location.href = "{{ route('dashboard') }}";
-                return;  // Stop further execution
+                return;  
             }
 
-            // Stories loaded successfully
             if (callback) callback();
         },
         error: function (err) {
-           // console.error("[ERROR] AJAX failed:", err);
-            stories = [];  // Set empty to avoid retrying infinitely
+            stories = [];  
             if (callback) callback();
         }
     });
 }
 
-// call this on icon click
 function onAdminIconClick(index = 0) {
-   // console.log("[DEBUG] onAdminIconClick, index:", index);
 
     if (redirected) {
-       // console.log("[DEBUG] Already redirected, ignoring click");
         return;
     }
 
     if (stories === null) {
-        // Stories not loaded, load from API, then open gallery if stories present
         loadAdminStories(index, function() {
             if (!redirected && stories.length > 0) {
                 openGallery(index);
             }
         });
     } else if (stories.length > 0) {
-        // Stories already loaded, open gallery directly
         openGallery(index);
     } else {
-        // Stories empty, redirect immediately
         redirected = true;
-        //console.log("[INFO] No stories present, redirecting to dashboard");
         //window.location.href = "{{ route('dashboard') }}";
     }
 }
 
-// ✅ OPEN VIEWER
+// OPEN VIEWER
 function openGallery(index) {
     currentIndex = index;
-    console.log("[DEBUG] openGallery called, index:", currentIndex);
 
     if (!stories || stories.length === 0) {
-        //console.log("[INFO] No stories found, redirecting to dashboard");
         //window.location.href = "{{ route('dashboard') }}";
         return;
     }
 
     var statusAdmin = document.getElementById("statusAdmin");
     if (!statusAdmin) {
-        //console.error("[ERROR] #statusAdmin element not found!");
         return;
     }
 
@@ -288,10 +268,8 @@ function generateProgressBars() {
 //  SHOW STORY
 function showStory() {
     let story = stories[currentIndex];
-    //console.log("[DEBUG] showStory, currentIndex:", currentIndex, story);
 
     if (!story) {
-        //console.warn("[WARN] No story at index", currentIndex);
         closeStatus();
         return;
     }
@@ -300,7 +278,6 @@ function showStory() {
     let video = document.getElementById("statusVideo");
 
     if (!img || !video) {
-       // console.error("[ERROR] #statusImage or #statusVideo not found!");
         return;
     }
 
@@ -312,7 +289,6 @@ function showStory() {
     let file = story.file;
 
     if (!file) {
-        //console.warn("[WARN] Story has no file, skipping:", story);
         showNext();
         return;
     }

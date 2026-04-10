@@ -262,7 +262,6 @@ document.querySelector('.add-fillbtn').addEventListener('click', async function 
     const video = document.getElementById('storyvideo12');
     const loader = document.getElementById('loader');
 
-    // 1️⃣ Get the full file URL from preview
     let fileUrl = null;
 
     if (img.style.display !== 'none' && img.src) {
@@ -277,10 +276,8 @@ document.querySelector('.add-fillbtn').addEventListener('click', async function 
     }
 
     try {
-        // 2️⃣ Show loader
         if (loader) loader.style.display = 'block';
 
-        // 3️⃣ Send URL to backend
         const formData = new FormData();
         formData.append('file', fileUrl);
 
@@ -294,10 +291,8 @@ document.querySelector('.add-fillbtn').addEventListener('click', async function 
 
         const data = await response.json();
 
-        // 4️⃣ Hide loader
         if (loader) loader.style.display = 'none';
 
-        // 5️⃣ Handle response
         if (response.status === 422) {
             toastr.error(data.message || 'Validation error');
             return;
@@ -329,7 +324,6 @@ document.querySelector('.add-fillbtn').addEventListener('click', async function 
 <script>
 document.body.addEventListener('click', function(e) {
 
-    // --- Delete Highlight ---
     const deleteBtn = e.target.closest('.deleteStoryBtn');
     if (deleteBtn) {
         e.stopPropagation(); // 
@@ -368,7 +362,7 @@ document.body.addEventListener('click', function(e) {
             toastr.error("Something went wrong");
         });
 
-        return; // stop further processing
+        return; 
     }
 
 
