@@ -389,6 +389,69 @@ return [
 
 
 
+ public function otherSellerLiveRoomRecords($request_data)
+    {
+try {
+          
+$baseQuery = LiveRequest::with([
+    'seller_details',
+    'timeslot_details',
+    'timeslot_details.country_info',
+])
+->where('admin_verify', '1')
+->where('seller_id','!=',$request_data->seller_id);
+
+// 🔍 Search
+if (!empty($request_data->search)) {
+    $baseQuery->where('order_id', 'like', '%' . $request_data->search . '%');
+}
+
+$today = Carbon::today()->toDateString();
+$currentTime = Carbon::now()->format('H:i:s'); // 24-hour format
+
+/**
+ * ✅ Current (Today)
+ */
+$currentQuery = clone $baseQuery;
+$currentQuery->whereHas('timeslot_details', function ($q) use ($today,$currentTime) {
+    $q->whereDate('date', $today)
+    ->whereRaw("STR_TO_DATE(`from`, '%h:%i %p') < ?", [$currentTime])
+    ->whereRaw("STR_TO_DATE(`to`, '%h:%i %p') > ?", [$currentTime]);
+    // ->where('to','>', )
+
+});
+
+$current_requests = $currentQuery->get();
+
+// ❌ If both empty
+if ($current_requests->isEmpty()) {
+    return [
+        'status' => 'success',
+        'message' => 'No Request found',
+        'data' => []
+    ];
+}
+
+// ✅ Final response
+return [
+    'status' => 'success',
+    'message' => 'Requests fetched successfully',
+    'data' => 
+         $current_requests
+];
+
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch request: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+
 
 
 

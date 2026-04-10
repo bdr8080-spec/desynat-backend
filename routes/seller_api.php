@@ -157,6 +157,8 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     // m11 Apis
 
   Route::get('/live_room_records', [SellerLiveRequestController::class,'live_room_records']);
+  Route::get('/other-seller-live-room-records', [SellerLiveRequestController::class,'otherSellerLiveRoomRecords']);
+
 
    Route::get('/get_Seller_admin_stories', [SellerDashboardController::class,'SellerSide_get_admin_stories']);
 
