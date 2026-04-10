@@ -41,6 +41,8 @@ class AgoraController extends Controller
         $livechat_details->update(['uid'=>$uid]);
       }
 
+      $livechat_details->update(['live_user'=> $livechat_details->live_user+1]);
+
         $channelName = $livechat_details->channel_id;
         $uid = $livechat_details->uid ?? 0;
 
