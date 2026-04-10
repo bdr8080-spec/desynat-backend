@@ -311,15 +311,16 @@ class SellerLiveRequestService
     }
 
 
-public function live_room_records($request_data)
-{
 
-try {    
+
+    public function live_room_records($request_data)
+    {
+        try {
+          
  
 $limit = isset($request_data->limit) ? (int)$request_data->limit : 10;
 
 $baseQuery = LiveRequest::with([
-    'seller_details',
     'timeslot_details',
     'timeslot_details.country_info',
 ])
@@ -332,8 +333,7 @@ if (!empty($request_data->search)) {
 }
 
 $today = Carbon::today()->toDateString();
-// $currentTime = Carbon::now()->format('H:i:s'); // 24-hour format
-$currentTime = Carbon::now()->format('h:i A');
+$currentTime = Carbon::now()->format('H:i:s'); // 24-hour format
 
 
 /**
@@ -342,8 +342,7 @@ $currentTime = Carbon::now()->format('h:i A');
 $currentQuery = clone $baseQuery;
 $currentQuery->whereHas('timeslot_details', function ($q) use ($today,$currentTime) {
     $q->whereDate('date', $today)
-    //  ->whereRaw("STR_TO_DATE(`to`, '%h:%i %p') > ?", [$currentTime]);
-    ->whereRaw("STR_TO_DATE(`to`, '%h:%i %p') > STR_TO_DATE(?, '%h:%i %p')", [$currentTime]);
+     ->whereRaw("STR_TO_DATE(`to`, '%h:%i %p') > ?", [$currentTime]);
 });
 
 $current_requests = $currentQuery->get();
@@ -358,10 +357,11 @@ $futureQuery->whereHas('timeslot_details', function ($q) use ($today) {
 
 $future_requests = $futureQuery->get();
 
+
 // ❌ If both empty
 if ($current_requests->isEmpty() && $future_requests->isEmpty()) {
     return [
-        'status' => 'error',
+        'status' => 'success',
         'message' => 'No Request found',
         'data' => (object)[]
     ];
@@ -392,7 +392,7 @@ return [
  public function otherSellerLiveRoomRecords($request_data)
     {
 try {
-
+          
 $baseQuery = LiveRequest::with([
     'seller_details',
     'timeslot_details',
@@ -422,7 +422,6 @@ $currentQuery->whereHas('timeslot_details', function ($q) use ($today,$currentTi
 });
 
 $current_requests = $currentQuery->get();
-
 
 // ❌ If both empty
 if ($current_requests->isEmpty()) {
