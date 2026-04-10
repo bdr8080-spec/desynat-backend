@@ -815,7 +815,7 @@ class StoryManagementService
     public function getSellerStories($request_data)
     {
         try {
-            $query = Story::with('comment_details.user_details','comment_details.admin_details')->where('seller_id', $request_data->seller_id)
+            $query = Story::where('seller_id', $request_data->seller_id)
                         ->where('type', '2')
                         ->orderBy('id', 'asc');
 
