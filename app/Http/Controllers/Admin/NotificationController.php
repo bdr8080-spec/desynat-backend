@@ -50,13 +50,13 @@ class NotificationController extends Controller
 
             $sentNotifications = $this->NotificationManagementService->GetSendNotificationListWeb($request_data1)['data'];
            // dd($sentNotifications);
-            foreach ($sentNotifications as &$notification) {
-                $notification['created_at_formatted'] = \Carbon\Carbon::parse($notification['created_at'])->format('d/m/y \a\t h:i A');
-            }
+            // foreach ($sentNotifications as &$notification) {
+            //     $notification['created_at_formatted'] = \Carbon\Carbon::parse($notification['created_at'])->format('d/m/y \a\t h:i A');
+            // }
 
-            if ($request->ajax()) {
-                return response()->json(['sentNotifications' => $sentNotifications]);
-            }
+            // if ($request->ajax()) {
+            //     return response()->json(['sentNotifications' => $sentNotifications]);
+            // }
         return view('admin.notification.notification',compact('myNotifications','sentNotifications'));
     }
 

@@ -114,6 +114,7 @@ button.deleteStoryBtn {
 
 <script>
     var stories = @json($stories);
+    //console.log(stories);
 </script>
 
 <script>
@@ -150,6 +151,7 @@ button.deleteStoryBtn {
         }
     }
 
+
     function closeStatus1() {
         document.getElementById("Addstory").style.display = "none";
 
@@ -159,6 +161,7 @@ button.deleteStoryBtn {
         video.src = "";
     }
 </script>
+
 
 <!-- add story -->
 <script>
@@ -233,8 +236,15 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
             setTimeout(() => {
                 location.reload();
             }, 1500);
-        } else {
+        } else if (body.status === 'failed') {
             toastr.error(body.message || 'Upload failed');
+
+            setTimeout(() => {
+                window.location.href = "{{ route('seller.all_plans') }}";
+            }, 1500);
+
+        } else {
+            toastr.error(body.message || 'Something went wrong');
         }
     })
     .catch(error => {
@@ -296,8 +306,15 @@ document.querySelector('.add-fillbtn').addEventListener('click', async function 
         if (data.status === 'success') {
             toastr.success(data.message || 'Story added successfully');
             setTimeout(() => location.reload(), 1500);
+        } else if (data.status === 'failed') {
+            toastr.error(data.message || 'Upload failed');
+
+            setTimeout(() => {
+                window.location.href = "{{ route('seller.all_plans') }}";
+            }, 1500);
+
         } else {
-            toastr.error(data.message || 'Failed to add story');
+            toastr.error(data.message || 'Something went wrong');
         }
 
     } catch (error) {

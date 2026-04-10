@@ -220,13 +220,16 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     Route::get('/get_whishlisted_reel', [UserDashboardController::class,'get_whishlisted_reel']);
 
     // m11 Api 
-    Route::get('/show-all-live-streaming-request', [UserDashboardController::class,'live_room_records']);
+    
 
     //m12
     Route::post('/raise_ticket', [UserDashboardController::class,'raise_ticket']);
     Route::get('/get_raised_tickets', [UserDashboardController::class,'get_raised_tickets']);
+    Route::Post('/add_story_comment', [UserDashboardController::class,'add_story_comment']);
   
 });
+
+    Route::get('/user/show-all-live-streaming-request', [UserDashboardController::class,'live_room_records']);
 
     Route::Post('/user/user-get-deals', [UserDashboardController::class,'UserHomescreenDeals']);
     Route::get('/user/get_seller_stories', [UserDashboardController::class,'get_seller_stories']);

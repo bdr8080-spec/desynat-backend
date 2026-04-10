@@ -110,6 +110,7 @@
                                 <label for="from" class="form-label">From:</label>
                                 <input type="date" id="from" name="from_date" class="form-control"
                                     value="{{ request()->from_date }}"
+                                    onchange="updateToDate(); document.getElementById('filterForm').submit();"
                                      />
                             </div>
                         </div>
@@ -120,6 +121,7 @@
                                 <label for="to" class="form-label">To:</label>
                                 <input type="date" id="to" name="to_date" class="form-control"
                                     value="{{ request()->to_date }}"
+                                    onchange="updateToDate(); document.getElementById('filterForm').submit();"
                                      />
                             </div>
                         </div>
@@ -411,7 +413,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-<script>
+<!-- <script>
 document.addEventListener('DOMContentLoaded', function () {
     const fromInput = document.getElementById('from');
     const toInput = document.getElementById('to');
@@ -475,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(err => console.error(err));
     }
 });
-</script>
+</script> -->
 
 
 

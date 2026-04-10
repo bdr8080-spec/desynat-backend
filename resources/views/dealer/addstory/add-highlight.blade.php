@@ -265,8 +265,15 @@ document.querySelector('.add-fillbtn-abc').addEventListener('click', async funct
         if (data.status === 'success') {
             toastr.success(data.message || 'Highlight added successfully');
             setTimeout(() => location.reload(), 1500);
+        } else if (data.status === 'failed') {
+            toastr.error(data.message || 'Upload failed');
+
+            setTimeout(() => {
+                window.location.href = "{{ route('seller.all_plans') }}";
+            }, 1500);
+
         } else {
-            toastr.error(data.message || 'Failed to add highlight');
+            toastr.error(data.message || 'Something went wrong');
         }
 
     } catch (error) {
@@ -409,6 +416,13 @@ submitBtn.addEventListener('click', async function() {
         if (data.status === 'success') {
             toastr.success(data.message || 'Highlight added successfully');
             setTimeout(() => location.reload(), 1500);
+        } else if (data.status === 'failed') {
+            toastr.error(data.message || 'Upload failed');
+
+            setTimeout(() => {
+                window.location.href = "{{ route('seller.all_plans') }}";
+            }, 1500);
+
         } else {
             toastr.error(data.message || 'Something went wrong');
         }

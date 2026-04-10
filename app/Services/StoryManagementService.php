@@ -5,6 +5,7 @@ use App\Models\Story;
 use App\Models\Reel;
 use App\Models\Highlight;
 use App\Models\WhislistReel;
+use App\Models\StoriesComment;
 use App\Models\SellerSubcriptionPlanBuy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
@@ -22,7 +23,8 @@ class StoryManagementService
 
             $query = Story::with([
                 'seller_details',
-                'seller_details.store_info.country_info'
+                'seller_details.store_info.country_info',
+                'comment_details'
             ]);
 
             if ($request->filled('search')) {
@@ -1008,6 +1010,28 @@ class StoryManagementService
     public function uploadStoryFromGallery($request_data)
     {
         try {
+            $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request_data->seller_id)
+                ->where('payment_status', '1')
+                ->where('status', '1')
+                ->whereDate('plan_end_date', '>=', Carbon::today())
+                ->first();
+
+            if (!$subscription) {
+                return [
+                    'status' => 'failed',
+                    'message' => 'You have no active plan',
+                    'data' => []
+                ];
+            }
+
+            if ($subscription->stories !== '1') {
+                return [
+                    'status' => 'error',
+                    'message' => "You can't add stories as per your active plan.",
+                    'data' => []
+                ];
+            }
+            
             $story = new Story();
             $story->seller_id = $request_data->seller_id;
             $story->file = $request_data->file;
@@ -1033,6 +1057,29 @@ class StoryManagementService
     public function uploadHighlightFromGallery($request_data)
     {
         try {
+
+            $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request_data->seller_id)
+                ->where('payment_status', '1')
+                ->where('status', '1')
+                ->whereDate('plan_end_date', '>=', Carbon::today())
+                ->first();
+
+            if (!$subscription) {
+                return [
+                    'status' => 'failed',
+                    'message' => 'You have no active plan',
+                    'data' => []
+                ];
+            }
+
+            if ($subscription->no_of_highlights !== null && $subscription->no_of_highlights <= '0') {
+                return [
+                    'status' => 'error',
+                    'message' => "Your highlight limit of this month has been reached, you can't add more highlights",
+                    'data' => []
+                ];
+            }
+            
             $story = new Highlight();
             $story->seller_id = $request_data->seller_id;
             $story->file = $request_data->file;
@@ -1081,6 +1128,32 @@ class StoryManagementService
                 'status' => 'error',
                 'message' => 'Failed to fetch reel',
                 'data' => (object)[]
+            ];
+        }
+    }
+
+    public function addCommentOnSellerStory($request_data)
+    {
+        try {
+            $storyComment = new StoriesComment();
+            $storyComment->story_id = $request_data->story_id;
+            $storyComment->comment = $request_data->comment;
+            $storyComment->user_id = $request_data->user_id;
+            $storyComment->user_type = $request_data->user_type;
+
+            $storyComment->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Comment added successfully',
+                'data' => $storyComment
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to add comment: ' . $e->getMessage(),
+                'data' => []
             ];
         }
     }
