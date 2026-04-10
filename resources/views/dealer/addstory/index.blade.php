@@ -62,7 +62,7 @@ button.deleteStoryBtn {
     <div class="title24">Select From gallary</div>
     <div class="reels-wrapper mt-4">
         <div class="row">
-            @foreach($stories as $index => $story)
+            @foreach($sellerStories as $index => $story)
                 <div class="col-lg-3 col-md-3">
                     <div class="reels-grid" onclick="addSeller({{ $index }})">
                         <div class="reel-card">
@@ -91,7 +91,7 @@ button.deleteStoryBtn {
 </div>
 
 <!-- Seller story section -->
-<div class="status-viewer bgwhite" id="Addstory">
+<div class="status-viewer bgwhite" id="Addstory12">
     <div class="container">
         <div class="story-header d-flex justify-content-between py-4">
             <h3>Add Story </h3>
@@ -99,8 +99,8 @@ button.deleteStoryBtn {
         </div>
         <div class="logostatus">
             <div class="status-img">
-                <img id="storyimg" class="img-fluid" alt="status" />
-                <video id="storyvideo" class="img-fluid" controls style="display:none;"></video>
+                <img id="storyimg12" class="img-fluid" alt="status" />
+                <video id="storyvideo12" class="img-fluid" controls style="display:none;"></video>
             </div>
         </div>   
 
@@ -113,7 +113,7 @@ button.deleteStoryBtn {
 
 
 <script>
-    var stories = @json($stories);
+    var sellerStories = @json($sellerStories);
     //console.log(stories);
 </script>
 
@@ -123,16 +123,16 @@ button.deleteStoryBtn {
     function addSeller(index) {
         currentIndex = index;
 
-        document.getElementById("Addstory").style.display = "block";
+        document.getElementById("Addstory12").style.display = "block";
         loadStory();
     }
 
     function loadStory() {
-        var story = stories[currentIndex];
+        var story = sellerStories[currentIndex];
         var file = story.file;
 
-        var img = document.getElementById("storyimg");
-        var video = document.getElementById("storyvideo");
+        var img = document.getElementById("storyimg12");
+        var video = document.getElementById("storyvideo12");
 
         // Reset both
         img.style.display = "none";
@@ -153,10 +153,10 @@ button.deleteStoryBtn {
 
 
     function closeStatus1() {
-        document.getElementById("Addstory").style.display = "none";
+        document.getElementById("Addstory12").style.display = "none";
 
         // Stop video on close
-        var video = document.getElementById("storyvideo");
+        var video = document.getElementById("storyvideo12");
         video.pause();
         video.src = "";
     }
@@ -258,8 +258,8 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 <!-- upload from gallery -->
 <script>
 document.querySelector('.add-fillbtn').addEventListener('click', async function () {
-    const img = document.getElementById('storyimg');
-    const video = document.getElementById('storyvideo');
+    const img = document.getElementById('storyimg12');
+    const video = document.getElementById('storyvideo12');
     const loader = document.getElementById('loader');
 
     // 1️⃣ Get the full file URL from preview

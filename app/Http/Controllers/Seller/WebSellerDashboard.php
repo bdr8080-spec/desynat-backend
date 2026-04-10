@@ -591,10 +591,10 @@ $seller_id=Auth::guard('seller')->user()->id;
         'seller_id'=>$seller_id,
         ];
 
-        $stories=  $this->StoryManagementService->getSellerStories($request_data)['data'];
+        $sellerStories=  $this->StoryManagementService->getSellerStories($request_data)['data'];
         //dd($stories);
 
-        return view('dealer.addstory.index',compact('stories'));
+        return view('dealer.addstory.index',compact('sellerStories'));
     }
 
     public function add_highlight(REQUEST $request){
