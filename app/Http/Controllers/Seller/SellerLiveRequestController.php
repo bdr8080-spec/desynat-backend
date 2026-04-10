@@ -168,6 +168,49 @@ class SellerLiveRequestController extends Controller
 
     
 
+      public function seller_live(Request $request)
+    {
+     
+        $seller_details=  Auth::guard('seller')->user();
+    
+        $request_data=(object )[
+            'seller_id' => $seller_details->id, 
+        ];
+
+        $result = $this->SellerLiveRequestService->live_room_records($request_data);
+
+        if ($result['status'] === 'error') {
+
+            $liverequest['current_requests']=[];
+            $liverequest['future_requests']=[];
+
+        }else{
+
+        $liverequest=$result['data'];
+
+        }
+        
+        return view('dealer/liverequest/LiveJoin' ,compact('liverequest'));
+        
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => $result['message']
+        // ], 200);
+    }
+
+
+
+      public function sellerliveview(Request $request)
+    {
+        
+        return view('dealer/liverequest/Live');
+        
+    }
+
+
+    
+    
+
 
 
     

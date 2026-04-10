@@ -311,16 +311,15 @@ class SellerLiveRequestService
     }
 
 
+public function live_room_records($request_data)
+{
 
-
-    public function live_room_records($request_data)
-    {
-        try {
-          
+try {    
  
 $limit = isset($request_data->limit) ? (int)$request_data->limit : 10;
 
 $baseQuery = LiveRequest::with([
+    'seller_details',
     'timeslot_details',
     'timeslot_details.country_info',
 ])
@@ -359,11 +358,10 @@ $futureQuery->whereHas('timeslot_details', function ($q) use ($today) {
 
 $future_requests = $futureQuery->get();
 
-
 // ❌ If both empty
 if ($current_requests->isEmpty() && $future_requests->isEmpty()) {
     return [
-        'status' => 'success',
+        'status' => 'error',
         'message' => 'No Request found',
         'data' => (object)[]
     ];
@@ -394,7 +392,7 @@ return [
  public function otherSellerLiveRoomRecords($request_data)
     {
 try {
-          
+
 $baseQuery = LiveRequest::with([
     'seller_details',
     'timeslot_details',
@@ -424,6 +422,7 @@ $currentQuery->whereHas('timeslot_details', function ($q) use ($today,$currentTi
 });
 
 $current_requests = $currentQuery->get();
+
 
 // ❌ If both empty
 if ($current_requests->isEmpty()) {
