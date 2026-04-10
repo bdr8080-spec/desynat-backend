@@ -203,6 +203,16 @@ Route::group(['prefix' => 'seller'], function () {
     Route::get('/ticket-management', [WebSellerDashboard::class, 'ticket_management'])->name('seller.ticket_management');
     Route::post('/raise_ticket', [WebSellerDashboard::class, 'raise_ticket'])->name('seller.raise_ticket');
     
+    Route::get('/seller-live', [SellerLiveRequestController::class, 'seller_live']);
+
+    Route::get('/seller-live-view', [SellerLiveRequestController::class, 'sellerliveview'])->name('sellerLive');
+
+
+
+
+
+
+
 
     });
 
