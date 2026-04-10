@@ -5,6 +5,7 @@ use App\Models\Story;
 use App\Models\Reel;
 use App\Models\Highlight;
 use App\Models\WhislistReel;
+use App\Models\StoriesComment;
 use App\Models\SellerSubcriptionPlanBuy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
@@ -22,7 +23,8 @@ class StoryManagementService
 
             $query = Story::with([
                 'seller_details',
-                'seller_details.store_info.country_info'
+                'seller_details.store_info.country_info',
+                'comment_details'
             ]);
 
             if ($request->filled('search')) {
@@ -813,7 +815,7 @@ class StoryManagementService
     public function getSellerStories($request_data)
     {
         try {
-            $query = Story::where('seller_id', $request_data->seller_id)
+            $query = Story::with('comment_details.user_details','comment_details.admin_details')->where('seller_id', $request_data->seller_id)
                         ->where('type', '2')
                         ->orderBy('id', 'asc');
 
@@ -1081,6 +1083,32 @@ class StoryManagementService
                 'status' => 'error',
                 'message' => 'Failed to fetch reel',
                 'data' => (object)[]
+            ];
+        }
+    }
+
+    public function addCommentOnSellerStory($request_data)
+    {
+        try {
+            $storyComment = new StoriesComment();
+            $storyComment->story_id = $request_data->story_id;
+            $storyComment->comment = $request_data->comment;
+            $storyComment->user_id = $request_data->user_id;
+            $storyComment->user_type = $request_data->user_type;
+
+            $storyComment->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Comment added successfully',
+                'data' => $storyComment
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to add comment: ' . $e->getMessage(),
+                'data' => []
             ];
         }
     }

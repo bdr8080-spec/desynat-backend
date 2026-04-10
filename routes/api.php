@@ -225,6 +225,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     //m12
     Route::post('/raise_ticket', [UserDashboardController::class,'raise_ticket']);
     Route::get('/get_raised_tickets', [UserDashboardController::class,'get_raised_tickets']);
+    Route::Post('/add_story_comment', [UserDashboardController::class,'add_story_comment']);
   
 });
 

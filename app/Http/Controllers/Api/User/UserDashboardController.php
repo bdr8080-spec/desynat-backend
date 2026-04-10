@@ -566,6 +566,39 @@ public function newestProduct(Request $request){
 
 }
 
+    public function add_story_comment(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'story_id' => 'required|exists:stories,id',
+            'comment' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 400);
+        }
+
+        try {
+            $user_id=$request->user()->id;
+            $request_data=(object )[
+                'story_id'=>$request->story_id,
+                'comment' => $request->comment,
+                'user_id' => $user_id,
+                'user_type' => 2,
+            ];
+            
+            $result = $this->StoryManagementService->addCommentOnSellerStory($request_data);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 

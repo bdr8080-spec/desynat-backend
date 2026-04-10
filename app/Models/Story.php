@@ -16,4 +16,9 @@ class Story extends Model
     {
         return $this->belongsTo(seller::class, 'seller_id');
     }
+
+    public function comment_details()
+    {
+        return $this->hasMany(StoriesComment::class, 'story_id');
+    }
 }
