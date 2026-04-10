@@ -1057,6 +1057,29 @@ class StoryManagementService
     public function uploadHighlightFromGallery($request_data)
     {
         try {
+
+            $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request_data->seller_id)
+                ->where('payment_status', '1')
+                ->where('status', '1')
+                ->whereDate('plan_end_date', '>=', Carbon::today())
+                ->first();
+
+            if (!$subscription) {
+                return [
+                    'status' => 'failed',
+                    'message' => 'You have no active plan',
+                    'data' => []
+                ];
+            }
+
+            if ($subscription->no_of_highlights !== null && $subscription->no_of_highlights <= '0') {
+                return [
+                    'status' => 'error',
+                    'message' => "Your highlight limit of this month has been reached, you can't add more highlights",
+                    'data' => []
+                ];
+            }
+            
             $story = new Highlight();
             $story->seller_id = $request_data->seller_id;
             $story->file = $request_data->file;
