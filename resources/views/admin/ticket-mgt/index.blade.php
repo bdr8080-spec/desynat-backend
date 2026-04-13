@@ -563,6 +563,9 @@ $(document).ready(function() {
                     toastr.success(res.message);
                     // Keep selected value
                     selectEl.val(status);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
                 } else {
                     toastr.error(res.message || 'Failed to update status');
                 }
