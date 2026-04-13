@@ -180,14 +180,14 @@ class SellerLiveRequestController extends Controller
         $result = $this->SellerLiveRequestService->live_room_records($request_data);
 
         if ($result['status'] === 'error') {
+        $liverequest['current_requests']=[];
+        $liverequest['future_requests']=[];
 
-            $liverequest['current_requests']=[];
-            $liverequest['future_requests']=[];
-
+        }elseif(empty($result['data'])){
+           $liverequest['current_requests']=[];
+           $liverequest['future_requests']=[];
         }else{
-
         $liverequest=$result['data'];
-
         }
         
         return view('dealer/liverequest/LiveJoin' ,compact('liverequest'));
