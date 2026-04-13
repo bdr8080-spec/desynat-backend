@@ -243,9 +243,9 @@
                                 <td>#{{ $payment->transaction_id }}</td>
                                 <td>{{ $payment->seller_details->first_name }} {{ $payment->seller_details->last_name }}</td>
                                 <td>{{ $payment->seller_details->store_info->country_info->name }}</td>
-                                <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
-                                <td>{{ $payment->plan_info->plan_name_english }}</td>
                                 <td>{{ $payment->amount }} KD</td>
+                                <td>{{ $payment->plan_info->plan_name_english }}</td>                           
+                                <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                             </tr>
                             @empty
 
