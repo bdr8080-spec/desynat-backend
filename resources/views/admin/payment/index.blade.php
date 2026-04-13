@@ -139,12 +139,12 @@
                                 <td>{{$payment->product_details->seller_details->first_name}} {{$payment->product_details->seller_details->last_name}}</td>
                                 <td>#{{$payment->id}}</td>
                                 <td>{{$payment->user_details->country_info->name}}</td>
-                                <td>{{$payment->amount}}</td>
+                                <td>{{$payment->amount}} KD</td>
                                 <td>
                                     {{ $payment->promocode_details->name_english ?? 'No' }}
                                 </td>
                                 <td>{{ $payment->gift_card_details->name_english ?? 'No' }}</td>
-                                <td>{{$payment->total_discount}}</td>
+                                <td>{{$payment->total_discount}} KD</td>
                                 <td>{{$payment->affiliate_admin_commission ?? '0'}}</td>
                                 <td>
                                     @if($payment->order?->payment_method == 1)
