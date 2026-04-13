@@ -23,10 +23,13 @@ use App\Http\Controllers\SaveFirebaseToken;
 
 // Save Admin firebase Token 
 
+
+
 Route::get('seller-save-token', [SaveFirebaseToken::class, 'saveSellerToken']);
 
 
 Route::group(['prefix' => 'seller'], function () {
+    route::Match(['get','post'],'/chat-bot/{id}',[WebSellerDashboard::class,'chatbot'])->name('seller.chatbot');
 
 
     Route::middleware(['is_seller','prevent-back-history','LowerUrl'])->group(function(){
@@ -41,6 +44,7 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/reset_password/{id}',[LoginController::class,'reset_password'])->name('seller.create_password');
 
     });
+    
  
 
 
@@ -53,6 +57,7 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/logout',[LoginController::class,'logout'])->name('seller.logout');    
 
     route::Match(['get','post'],'/dashboard',[WebSellerDashboard::class,'seller_dashboard'])->name('seller.dashboard');
+    
 
     route::Match(['get','post'],'/all-plans',[WebSellerDashboard::class,'all_plans'])->name('seller.all_plans');
     route::Match(['get','post'],'/single-plans/{id}',[WebSellerDashboard::class,'single_plans'])->name('seller.single_plans');

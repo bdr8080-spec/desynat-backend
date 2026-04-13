@@ -1035,6 +1035,12 @@ $seller_id=Auth::guard('seller')->user()->id;
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     }
+
+     public function chatbot(Request $request,$id){
+        $seller_details=seller::where('id',$id)->first();
+
+          return view('dealer.chatbot',compact('seller_details'));
+      }
       
 
       

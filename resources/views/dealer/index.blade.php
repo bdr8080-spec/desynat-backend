@@ -415,10 +415,8 @@ document.addEventListener("tidioChat-ready", function () {
     const role = "{{ $role }}";
     const fullName = "{{ $fullName }}";
 
-    // IMPORTANT: force unique session identity per user
     const uniqueId = role + "_" + email;
 
-    console.log("Setting Tidio user:", uniqueId);
 
     window.tidioChatApi.setVisitorData({
         name: fullName,
@@ -428,11 +426,9 @@ document.addEventListener("tidioChat-ready", function () {
     });
 
     window.tidioChatApi.on("messageFromVisitor", function (event) {
-        console.log("User Sent:", event);
     });
 
     window.tidioChatApi.on("messageFromOperator", function (event) {
-        console.log("Bot Reply:", event);
     });
 
 });
