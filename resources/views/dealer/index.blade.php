@@ -299,8 +299,8 @@
   </div>
 </div>
 
-<div id="tidio-like-btn">
-</div>
+<!-- <div id="tidio-like-btn">
+</div> -->
 
 
 <!-- Chat Box -->
@@ -397,41 +397,51 @@
 
 <!-- tidio chatbot -->
 <!-- <script src="//code.tidio.co/{{ env('TIDIO_KEY') }}.js" async></script> -->
- <script src="//code.tidio.co/na5y0weklpcd9uxhccfezplsfg0fggvk.js" async></script>
+<script src="//code.tidio.co/na5y0weklpcd9uxhccfezplsfg0fggvk.js" async></script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("tidioChat-ready", function () {
 
-    function waitForTidio() {
-        if (window.tidioChatApi) {
+    console.log("Tidio Loaded ✅");
 
-            // Set user data
-            // window.tidioChatApi.setVisitorData({
-            //     name: "{{ auth()->user()->name ?? 'Guest' }}",
-            //     email: "{{ auth()->user()->email ?? '' }}",
-            //     role: "{{ auth()->user()->role ?? 'guest' }}"
-            // });
+    @if(Auth::guard('seller')->check())
+        let fullName = "{{ Auth::guard('seller')->user()->first_name }} {{ Auth::guard('seller')->user()->last_name }}";
+        let email = "{{ Auth::guard('seller')->user()->email }}";
+        let role = "seller";
+    @else
+        let fullName = "Guest";
+        let email = "";
+        let role = "guest";
+    @endif
 
-            // Button click
-            var btn = document.getElementById('tidio-like-btn');
-            if (btn) {
-                btn.addEventListener('click', function () {
-                    window.tidioChatApi.open();
-                });
-            }
+    if (window.tidioChatApi) {
 
-        } else {
-            // Retry after 500ms
-            setTimeout(waitForTidio, 500);
-        }
+        console.log("Setting Visitor:", fullName, email, role);
+
+        window.tidioChatApi.setVisitorData({
+            name: fullName,
+            email: email,
+            role: role
+        });
+
+        // Detect message sent
+        window.tidioChatApi.on("messageFromVisitor", function (event) {
+            console.log("User Sent:", event);
+        });
+
+        // Detect operator / bot response
+        window.tidioChatApi.on("messageFromOperator", function (event) {
+            console.log("Bot/Operator Reply:", event);
+        });
+
+        // Detect when chat opens
+        window.tidioChatApi.on("open", function () {
+            console.log("Chat opened");
+        });
+
+    } else {
+        console.log("Tidio API not found ❌");
     }
-
-    waitForTidio();
 
 });
 </script>
 
-
-
-<script>
-
-</script>
