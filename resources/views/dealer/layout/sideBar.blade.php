@@ -52,6 +52,13 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/seller-live')? 'sidebar-active' : ''}} "
+                    href="{{ route('sellerLiveRequest') }}">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/live-send.svg" alt="icon" class="asideicon">
+                    <span>Live</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/live-request')? 'sidebar-active' : ''}} "
                     href="{{ route('seller.liveRequests') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/live-send.svg" alt="icon" class="asideicon">
@@ -61,14 +68,15 @@
 
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/subscription-plans')? 'sidebar-active' : ''}} "
-                href="{{ route('seller.subscriptionPlan') }}">
+                    href="{{ route('seller.subscriptionPlan') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/plan.svg" alt="icon" class="asideicon">
                     <span>Subscription Plans</span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/ticket-management')? 'sidebar-active' : ''}} " href="{{ route('seller.ticket_management') }}">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/ticket-management')? 'sidebar-active' : ''}} "
+                    href="{{ route('seller.ticket_management') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/plan.svg" alt="icon" class="asideicon">
                     <span>Ticket Management </span>
                 </a>
