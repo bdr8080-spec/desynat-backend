@@ -81,6 +81,7 @@ class CartController extends Controller
                 'user_id' => $user->id,
                 'promo_id' => $request->promo_id,
                 'amount' =>  $request->amount,
+                'search' =>  $request->search??null,
             ];
 
             $data = $this->UserOrderService->User_Apply_PromoCode($request_data);
