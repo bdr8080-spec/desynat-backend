@@ -1,5 +1,62 @@
 @include('dealer.layout.header')
 
+<style>
+ #tidio-like-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #6a5cff, #46c2ff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    cursor: pointer;
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+#tidio-like-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Icon style */
+.chat-icon {
+    font-size: 26px;
+    color: #fff;
+}
+
+/* Pulse animation (Tidio style) */
+#tidio-like-btn::after {
+    content: "";
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(106, 92, 255, 0.4);
+    animation: pulse 1.8s infinite;
+    z-index: -1;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    70% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}   
+</style>
+
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl">
         <div class="title24">Dashboard
@@ -221,9 +278,9 @@
 </section>
 
 <!-- support chat -->
-<div class="support-chat-btn" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+<!-- <div class="support-chat-btn" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
     <button><img src="/dealer/assets/img/Frame.svg" width="50px" /></button>
-</div>
+</div> -->
 
 
 <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
@@ -240,6 +297,12 @@
     </div>
 
   </div>
+</div>
+
+<div id="tidio-like-btn">
+    <div class="chat-icon">
+        💬
+    </div>
 </div>
 
 
@@ -333,6 +396,41 @@
 
 
     }
+</script>
+
+<!-- tidio chatbot -->
+<!-- <script src="//code.tidio.co/{{ env('TIDIO_KEY') }}.js" async></script> -->
+ <script src="//code.tidio.co/na5y0weklpcd9uxhccfezplsfg0fggvk.js" async></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    function waitForTidio() {
+        if (window.tidioChatApi) {
+
+            // Set user data
+            // window.tidioChatApi.setVisitorData({
+            //     name: "{{ auth()->user()->name ?? 'Guest' }}",
+            //     email: "{{ auth()->user()->email ?? '' }}",
+            //     role: "{{ auth()->user()->role ?? 'guest' }}"
+            // });
+
+            // Button click
+            var btn = document.getElementById('tidio-like-btn');
+            if (btn) {
+                btn.addEventListener('click', function () {
+                    window.tidioChatApi.open();
+                });
+            }
+
+        } else {
+            // Retry after 500ms
+            setTimeout(waitForTidio, 500);
+        }
+    }
+
+    waitForTidio();
+
+});
 </script>
 
 
