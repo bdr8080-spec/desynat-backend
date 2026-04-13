@@ -300,9 +300,6 @@
 </div>
 
 <div id="tidio-like-btn">
-    <div class="chat-icon">
-        💬
-    </div>
 </div>
 
 
