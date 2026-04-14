@@ -191,6 +191,8 @@ async function leaveStream() {
 
         console.log("🚪 Left stream");
 
+        window.location.href='/user/get-live-seller-records';
+
     } catch (err) {
         console.error("❌ Leave Error:", err);
     }
