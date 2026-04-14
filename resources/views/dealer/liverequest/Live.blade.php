@@ -1,202 +1,219 @@
 @include('dealer.layout.header')
 
 <section class="section dashboard">
-    <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Live Join Requests</div>
-    </div>
 
-    <!-- Agora SDK -->
-    <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
+<div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
+    <div class="title24">Live Join Requests</div>
+</div>
 
-    <style>
+<!-- Agora SDK -->
+<script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
 
-    .video-box {
-        width:600px;
-        height: 450px;
-        background: black;
-        border-radius: 8px;
-        overflow: hidden;
-    }
+<style>
+.video-box {
+    width: 600px;
+    height: 450px;
+    background: black;
+    border-radius: 8px;
+    overflow: hidden;
+}
 
-    #video-container {
+#video-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: center;   /* ✅ horizontal center */
-    align-items: center;       /* ✅ vertical align (if height available) */
+    justify-content: center;
+    align-items: center;
 }
+</style>
 
-    </style>
+<h2>🎥 Auto Live Streaming</h2>
 
-    <h2>🎥 Auto Live Streaming</h2>
+<!-- Channel -->
+<input type="hidden" id="channel" value="{{ request()->channel_id }}">
 
-    <!-- Channel -->
-    <input type="hidden" id="channel" value="{{ request()->channel_id }}">
+<!-- Controls -->
+<button onclick="leaveStream()">🚪 Leave</button>
+<button onclick="toggleMute()" id="mute-btn">🎤 Mute</button>
 
-    <!-- Controls -->
-    <button onclick="leaveStream()">🚪 Leave</button>
+<h3>👥 Live Users: <span id="user-count">0</span></h3>
 
-    <h3>👥 Live Users: <span id="user-count">0</span></h3>
+<!-- Video Container -->
+<div id="video-container"></div>
 
-    <!-- Video Container -->
-    <div id="video-container"></div>
+<script>
+let client;
+let localTracks = [];
+let users = {};
+let localUid = {{$liveRequest->uid ?? 0}};
 
-    <script>
-    let client;
-    let localTracks = [];
-    let users = {};
-    let localUid = {{$liveRequest->uid}};
+let micTrack = null;
+let micMuted = false;
 
-    // ✅ AUTO GO LIVE ON PAGE LOAD
-    window.addEventListener("load", async () => {
+// 🚀 AUTO START
+window.addEventListener("load", async () => {
 
-        const channel = document.getElementById('channel').value;
+    const channel = document.getElementById('channel').value;
 
-        if (!channel) {
-            alert("Channel missing");
-            return;
-        }
+    if (!channel) {
+        alert("Channel missing");
+        return;
+    }
 
-        try {
-            console.log("🚀 Auto starting LIVE...");
+    try {
 
-            // 🔹 FETCH TOKEN
-            const res = await fetch('/agora/token', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    channel
-                })
-            });
+        console.log("🚀 Starting LIVE...");
 
-            const data = await res.json();
+        // GET TOKEN
+        const res = await fetch('/agora/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ channel })
+        });
 
-            const appId = data.appId;
-            const token = data.token;
-            const uid = data.uid;
+        const data = await res.json();
 
-            if (!appId) throw new Error("Missing App ID");
+        const appId = data.appId;
+        const token = data.token;
+        const uid = data.uid;
 
-            // 🔹 CREATE CLIENT
-            client = AgoraRTC.createClient({
-                mode: "live",
-                codec: "vp8"
-            });
+        // CREATE CLIENT
+        client = AgoraRTC.createClient({
+            mode: "live",
+            codec: "vp8"
+        });
 
-            registerEvents();
+        registerEvents();
 
-            // 🔹 SET HOST ROLE
-            await client.setClientRole("host");
+        await client.setClientRole("host");
 
-            // 🔹 JOIN CHANNEL
-            localUid = await client.join(appId, channel, token, uid);
+        // JOIN CHANNEL
+        localUid = await client.join(appId, channel, token, uid);
 
-            console.log("✅ Joined as HOST:", localUid);
+        console.log("✅ Joined:", localUid);
 
-            // 🔹 CREATE CAMERA + MIC
-            localTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+        // 🎤 CREATE MIC + CAMERA
+        const [mic, cam] = await AgoraRTC.createMicrophoneAndCameraTracks();
 
-            // 🔹 PUBLISH STREAM
-            await client.publish(localTracks);
+        micTrack = mic;
+        localTracks = [mic, cam];
 
-            console.log("🎥 LIVE STARTED");
+        // PUBLISH
+        await client.publish(localTracks);
 
-            // 🔹 SHOW LOCAL VIDEO
+        console.log("🎥 LIVE STARTED");
+
+        // LOCAL VIDEO
+        const player = document.createElement("div");
+        player.id = "user-" + localUid;
+        player.className = "video-box";
+
+        document.getElementById("video-container").appendChild(player);
+
+        cam.play(player.id);
+
+        updateUserCount();
+
+    } catch (err) {
+        console.error("❌ ERROR:", err);
+        alert("Camera/Mic issue or token error");
+    }
+});
+
+
+// 🎧 EVENTS
+function registerEvents() {
+
+    client.on("user-joined", (user) => {
+        users[user.uid] = user;
+        updateUserCount();
+    });
+
+    client.on("user-left", (user) => {
+        delete users[user.uid];
+
+        const el = document.getElementById("user-" + user.uid);
+        if (el) el.remove();
+
+        updateUserCount();
+    });
+
+    client.on("user-published", async (user, mediaType) => {
+
+        await client.subscribe(user, mediaType);
+
+        if (mediaType === "video" && user.videoTrack) {
+
             const player = document.createElement("div");
-            player.id = "user-" + localUid;
+            player.id = "user-" + user.uid;
             player.className = "video-box";
 
             document.getElementById("video-container").appendChild(player);
 
-            localTracks[1].play(player.id);
-
-            updateUserCount();
-
-        } catch (err) {
-            console.error("❌ AUTO LIVE ERROR:", err);
-
-            alert("Camera/Mic permission OR Token issue");
-
-            // 👉 fallback (user interaction required)
-            document.body.addEventListener("click", () => {
-                location.reload();
-            });
+            user.videoTrack.play(player.id);
         }
+
+        if (mediaType === "audio" && user.audioTrack) {
+            user.audioTrack.play();
+        }
+
+        users[user.uid] = user;
+        updateUserCount();
     });
+}
 
-    // ✅ EVENTS
-    function registerEvents() {
 
-        client.on("user-joined", (user) => {
-            users[user.uid] = user;
-            updateUserCount();
-        });
+// 👥 USER COUNT
+function updateUserCount() {
+    const count = Object.keys(users).length + 1;
+    document.getElementById("user-count").innerText = count;
+}
 
-        client.on("user-left", (user) => {
-            delete users[user.uid];
 
-            const el = document.getElementById("user-" + user.uid);
-            if (el) el.remove();
+// 🎤 MUTE / UNMUTE
+function toggleMute() {
 
-            updateUserCount();
-        });
+    if (!micTrack) return;
 
-        client.on("user-published", async (user, mediaType) => {
+    micMuted = !micMuted;
 
-            await client.subscribe(user, mediaType);
-
-            if (mediaType === "video") {
-
-                const player = document.createElement("div");
-                player.id = "user-" + user.uid;
-                player.className = "video-box";
-
-                document.getElementById("video-container").appendChild(player);
-
-                user.videoTrack.play(player.id);
-            }
-
-            if (mediaType === "audio") {
-                user.audioTrack.play();
-            }
-
-            users[user.uid] = user;
-            updateUserCount();
-        });
+    if (micMuted) {
+        micTrack.setEnabled(false);
+        document.getElementById("mute-btn").innerText = "🔇 Unmute";
+    } else {
+        micTrack.setEnabled(true);
+        document.getElementById("mute-btn").innerText = "🎤 Mute";
     }
+}
 
-    // ✅ USER COUNT
-    function updateUserCount() {
-        const count = Object.keys(users).length + 1;
-        document.getElementById("user-count").innerText = count;
-    }
 
-    // 🔴 LEAVE STREAM
-    async function leaveStream() {
-        try {
+// 🚪 LEAVE STREAM
+async function leaveStream() {
 
-            for (let track of localTracks) {
-                track.stop();
-                track.close();
-            }
+    try {
 
-            await client.leave();
-
-            document.getElementById("video-container").innerHTML = "";
-            document.getElementById("user-count").innerText = 0;
-
-            users = {};
-
-            console.log("🚪 Left stream");
-
-        } catch (err) {
-            console.error("❌ Leave Error:", err);
+        for (let track of localTracks) {
+            track.stop();
+            track.close();
         }
+
+        await client.leave();
+
+        document.getElementById("video-container").innerHTML = "";
+        document.getElementById("user-count").innerText = 0;
+
+        users = {};
+
+        console.log("🚪 Left stream");
+
+    } catch (err) {
+        console.error(err);
     }
-    </script>
+}
+</script>
 
 </section>
 
