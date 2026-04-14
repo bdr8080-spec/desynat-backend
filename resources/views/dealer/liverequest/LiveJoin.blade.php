@@ -228,7 +228,7 @@ function checkAllLive() {
 
                 if (data.live) {
                     btnDiv.innerHTML = `
-                        <a href="/seller/seller-live?channel_id=${room.channel_id}"
+                        <a href="/seller/seller-live-view?channel_id=${room.channel_id}"
                            class="btn btn-info text-white"
                            style="width:100px;">
                            Join us
