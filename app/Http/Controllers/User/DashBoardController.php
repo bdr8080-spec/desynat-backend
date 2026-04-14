@@ -414,9 +414,8 @@ class DashBoardController extends Controller
 
       public function ViewLiveSellerRecords(Request $request)
     {
-
-        
-        return view('User/liveSeller/UserJoinLive');
+       
+        return view('User.liveSeller.UserJoinLive');
         
     }
 
