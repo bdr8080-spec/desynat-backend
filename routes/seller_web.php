@@ -218,6 +218,9 @@ Route::group(['prefix' => 'seller'], function () {
     });
 
 });
+Route::get('/seller-live-count', [SellerLiveRequestController::class, 'sellerLiveCount'])->name('sellerlivecount');
+
+
 
 Route::post('/send-message-in-chats', [ChatController::class,'SendMessageInChats'])->name("seller.send-chat");
 

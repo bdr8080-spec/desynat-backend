@@ -215,6 +215,42 @@ async function leaveStream() {
 }
 </script>
 
+{{-- count user id from database  --}}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+function loadLiveData() {
+  
+    let channel = document.getElementById('channel').value;
+
+    $.ajax({
+        url: "{{ route('sellerlivecount') }}",
+        type: "get",
+        data: {
+            channel_id: channel,
+            _token: "{{ csrf_token() }}"
+        },
+        success: function(response) {
+            console.log("Response:", response);
+
+            $("#user-count").html(response.data);
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+}
+
+// run every 5 sec
+setInterval(loadLiveData, 5000);
+
+// initial run
+loadLiveData();
+</script>
+
+
+
 </section>
 
 @include('dealer.layout.custom_code')
