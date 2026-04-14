@@ -396,8 +396,7 @@
 </script>
 
 <!-- tidio chatbot -->
-<!-- <script src="//code.tidio.co/{{ env('TIDIO_KEY') }}.js" async></script> -->
-<script src="//code.tidio.co/na5y0weklpcd9uxhccfezplsfg0fggvk.js" async></script>
+<script src="//code.tidio.co/{{ config('app.TIDIO_KEY') }}.js" async></script>
 
 <script>
 document.addEventListener("tidioChat-ready", function () {
