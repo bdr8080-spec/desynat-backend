@@ -356,7 +356,6 @@ $futureQuery->whereHas('timeslot_details', function ($q) use ($today) {
 });
 
 $future_requests = $futureQuery->get();
-dd($data['data']);
 
 // ❌ If both empty
 if ($current_requests->isEmpty() && $future_requests->isEmpty()) {
