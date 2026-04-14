@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\sellerStoreInformation;
 
 
-
+use App\Models\LiveRequest;
 
 
 use App\Services\SellerLiveRequestService;
@@ -189,6 +189,7 @@ class SellerLiveRequestController extends Controller
         }else{
         $liverequest=$result['data'];
         }
+
         
         return view('dealer/liverequest/LiveJoin' ,compact('liverequest'));
         
@@ -202,8 +203,10 @@ class SellerLiveRequestController extends Controller
 
       public function sellerliveview(Request $request)
     {
-        
-        return view('dealer/liverequest/Live');
+    
+     $liveRequest=LiveRequest::where('channel_id', $request->channel_id)->first();
+
+    return view('dealer/liverequest/Live',compact('liveRequest'));
         
     }
 

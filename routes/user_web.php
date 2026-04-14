@@ -173,6 +173,8 @@ Route::post('/raise_ticket', [DashBoardController::class, 'raise_ticket'])->name
 
 });
 
+
+
 Route::get('/get_admin_story', [DashBoardController::class, 'get_admin_story'])->name('user.get_admin_story');
 Route::get('/get_seller_story', [DashBoardController::class, 'get_seller_story'])->name('user.get_seller_story');
 Route::post('/add_remove_reel_to_whishlist', [DashBoardController::class, 'add_remove_reel_to_whishlist'])->name('user.add_remove_reel_to_whishlist');
@@ -212,6 +214,8 @@ Route::get('/custom-order-add-to-card', [UserStoreController::class,'Customorder
 Route::get('/remove-custom-product-add-to-card', [UserStoreController::class,'RemoveCustomProductAddToCard'])->name('remove_custom_addtocard');
 
 
+Route::get('user/get-live-seller-records', [DashBoardController::class, 'getLiveSellerRecords'])->name('user.getLiveSellerRecords');
+Route::get('user/View-live-seller-records', [DashBoardController::class, 'ViewLiveSellerRecords'])->name('user.ViewLiveSellerRecords');
 
 
 

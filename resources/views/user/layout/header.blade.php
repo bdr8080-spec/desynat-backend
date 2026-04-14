@@ -558,7 +558,7 @@
                                             <a class="nav-link active" aria-current="page" href="#">Best Selling</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Live</a>
+                                            <a class="nav-link" href="{{route('user.getLiveSellerRecords')}}">Live</a>
                                         </li>
                                         @if (Auth::guard('web')->check())
                                         <li class="nav-item">

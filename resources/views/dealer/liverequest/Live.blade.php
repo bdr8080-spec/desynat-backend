@@ -9,19 +9,23 @@
     <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
 
     <style>
-    #video-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
 
     .video-box {
-        width: 300px;
-        height: 220px;
+        width:600px;
+        height: 450px;
         background: black;
         border-radius: 8px;
         overflow: hidden;
     }
+
+    #video-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;   /* ✅ horizontal center */
+    align-items: center;       /* ✅ vertical align (if height available) */
+}
+
     </style>
 
     <h2>🎥 Auto Live Streaming</h2>
@@ -41,7 +45,7 @@
     let client;
     let localTracks = [];
     let users = {};
-    let localUid = null;
+    let localUid = {{$liveRequest->uid}};
 
     // ✅ AUTO GO LIVE ON PAGE LOAD
     window.addEventListener("load", async () => {
