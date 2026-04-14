@@ -690,6 +690,45 @@ document.addEventListener('click', function (e) {
 }, true); 
 </script>
 
+<!-- tidio chatbot -->
+<script src="//code.tidio.co/{{ config('app.TIDIO_KEY') }}.js" async></script>
+
+<script>
+document.addEventListener("tidioChat-ready", function () {
+
+    if (!window.tidioChatApi) return;
+
+    @php
+        $user = Auth::guard('web')->user();
+        $fullName = $user ? $user->full_name : 'Guest';
+        $email = $user ? $user->email : 'guest_'.uniqid();
+        $role = $user ? 'user' : 'guest';
+    @endphp
+
+    const email = "{{ $email }}";
+    const role = "{{ $role }}";
+    const fullName = "{{ $fullName }}";
+   // console.log(fullName);
+
+    const uniqueId = role + "_" + email;
+
+
+    window.tidioChatApi.setVisitorData({
+        name: fullName,
+        email: email,
+        distinct_id: uniqueId,
+        role: role
+    });
+
+    window.tidioChatApi.on("messageFromVisitor", function (event) {
+    });
+
+    window.tidioChatApi.on("messageFromOperator", function (event) {
+    });
+
+});
+</script>
+
 
 
 
