@@ -657,6 +657,39 @@ function handleSubCategory(id) {
 }
 </script>
 
+<script>
+document.addEventListener('click', function (e) {
+
+    var shareBtn = e.target.closest('.share-btn');
+
+    if (shareBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation(); // 🔥 strongest blocker
+
+        var link = shareBtn.closest('a').getAttribute('href');
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(link).then(function () {
+                toastr.success('Link copied to clipboard');
+            });
+        } else {
+            var temp = document.createElement("input");
+            document.body.appendChild(temp);
+            temp.value = link;
+            temp.select();
+            document.execCommand("copy");
+            document.body.removeChild(temp);
+
+            toastr.success('Link copied to clipboard');
+        }
+
+        return false; // extra safety
+    }
+
+}, true); 
+</script>
+
 
 
 @endsection
