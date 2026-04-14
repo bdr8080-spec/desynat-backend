@@ -414,9 +414,9 @@ $currentTime = Carbon::now()->format('H:i:s'); // 24-hour format
  */
 $currentQuery = clone $baseQuery;
 $currentQuery->whereHas('timeslot_details', function ($q) use ($today,$currentTime) {
-    $q->whereDate('date', $today)
-    ->whereRaw("STR_TO_DATE(`from`, '%h:%i %p') < ?", [$currentTime])
-    ->whereRaw("STR_TO_DATE(`to`, '%h:%i %p') > ?", [$currentTime]);
+    $q->whereDate('date', $today);
+    //->whereRaw("STR_TO_DATE(`from`, '%h:%i %p') < ?", [$currentTime])
+    //->whereRaw("STR_TO_DATE(`to`, '%h:%i %p') > ?", [$currentTime]);
     // ->where('to','>', )
 
 });
