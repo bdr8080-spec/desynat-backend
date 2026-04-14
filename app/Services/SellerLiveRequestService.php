@@ -357,13 +357,12 @@ $futureQuery->whereHas('timeslot_details', function ($q) use ($today) {
 
 $future_requests = $futureQuery->get();
 
-
 // ❌ If both empty
 if ($current_requests->isEmpty() && $future_requests->isEmpty()) {
     return [
         'status' => 'success',
         'message' => 'No Request found',
-        'data' => []
+        'data' => new \stdClass()
     ];
 }
 
@@ -428,7 +427,7 @@ if ($current_requests->isEmpty()) {
     return [
         'status' => 'success',
         'message' => 'No Request found',
-        'data' => []
+        'data' => (object)[]
     ];
 }
 
