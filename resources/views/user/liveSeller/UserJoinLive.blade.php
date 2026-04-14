@@ -2,16 +2,21 @@
 
 @section('content')
 
-   <style>
-    #video-container {
+<style>
+#video-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: center;   /* ✅ horizontal center */
-    align-items: center;       /* ✅ vertical align (if height available) */
+    justify-content: center;
+    align-items: center;
 }
-
-    </style>
+.video-box {
+    width: 600px;
+    height: 350px;
+    background: black;
+    border-radius: 8px;
+}
+</style>
 
 <section class="section dashboard">
 
@@ -23,20 +28,20 @@
 
 <h3>👥 Watching: <span id="user-count">0</span></h3>
 
-<!-- ✅ WAITING MESSAGE -->
+<!-- ⏳ WAITING -->
 <div id="waiting-message" style="text-align:center; padding:40px;">
     <h3>⏳ Waiting for seller to go LIVE</h3>
     <p>Please stay tuned...</p>
 </div>
 
-<!-- 🎥 VIDEO CONTAINER -->
-<div id="video-container" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+<!-- 🎥 VIDEO -->
+<div id="video-container"></div>
 
 <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
 
 <script>
 let client;
-let users = {};
+let viewers = {};
 
 window.addEventListener("load", async () => {
 
@@ -51,7 +56,7 @@ window.addEventListener("load", async () => {
 
         console.log("👀 Joining as audience...");
 
-        // 🔹 TOKEN FETCH
+        // 🔹 TOKEN
         const res = await fetch('/agora/token', {
             method: 'POST',
             headers: {
@@ -63,6 +68,9 @@ window.addEventListener("load", async () => {
 
         const data = await res.json();
 
+        // 🔥 RANDOM UID
+        let uid = Math.floor(Math.random() * 1000000);
+
         // 🔹 CREATE CLIENT
         client = AgoraRTC.createClient({
             mode: "live",
@@ -71,13 +79,18 @@ window.addEventListener("load", async () => {
 
         registerEvents();
 
-        // ✅ AUDIENCE MODE
+        // 👀 AUDIENCE ROLE
         await client.setClientRole("audience");
 
         // 🔹 JOIN CHANNEL
-        await client.join(data.appId, channel, data.token, data.uid);
+        await client.join(data.appId, channel, data.token, uid);
 
-        console.log("✅ Joined as audience");
+        console.log("✅ Joined as audience:", uid);
+
+        // 🔊 unlock audio on user gesture
+        document.body.addEventListener("click", () => {
+            console.log("Audio unlocked");
+        }, { once: true });
 
     } catch (err) {
         console.error("❌ Error:", err);
@@ -85,25 +98,25 @@ window.addEventListener("load", async () => {
 });
 
 
-// ✅ EVENTS
+// =======================
+// 🎯 EVENTS
+// =======================
 function registerEvents() {
 
-    // 🎥 HOST STARTED STREAM
+    // 🎥 HOST STREAM START
     client.on("user-published", async (user, mediaType) => {
 
-        // ❌ REMOVE WAITING MESSAGE
         document.getElementById("waiting-message")?.remove();
 
         await client.subscribe(user, mediaType);
+
+        viewers[user.uid] = true;
 
         if (mediaType === "video") {
 
             const player = document.createElement("div");
             player.id = "user-" + user.uid;
-            player.style.width = "600px";
-            player.style.height = "350px";
-            player.style.background = "black";
-            player.style.borderRadius = "8px";
+            player.className = "video-box";
 
             document.getElementById("video-container").appendChild(player);
 
@@ -111,31 +124,40 @@ function registerEvents() {
         }
 
         if (mediaType === "audio") {
+            user.audioTrack.setVolume(100);
             user.audioTrack.play();
         }
 
-        users[user.uid] = user;
         updateUserCount();
     });
 
     // 🔴 HOST LEFT
     client.on("user-left", (user) => {
 
-        delete users[user.uid];
+        delete viewers[user.uid];
 
         document.getElementById("user-" + user.uid)?.remove();
 
         updateUserCount();
 
-        // 👉 SHOW WAITING AGAIN IF NO HOST
-        if (Object.keys(users).length === 0) {
+        if (Object.keys(viewers).length === 0) {
             showWaitingMessage();
         }
     });
 }
 
 
-// ✅ SHOW WAITING MESSAGE AGAIN
+// =======================
+// 👥 COUNT
+// =======================
+function updateUserCount() {
+    document.getElementById("user-count").innerText = Object.keys(viewers).length;
+}
+
+
+// =======================
+// ⏳ WAITING UI
+// =======================
 function showWaitingMessage() {
 
     if (!document.getElementById("waiting-message")) {
@@ -155,20 +177,19 @@ function showWaitingMessage() {
 }
 
 
-// ✅ USER COUNT
-function updateUserCount() {
-    document.getElementById("user-count").innerText = Object.keys(users).length;
-}
-
-
-// 🔴 LEAVE STREAM
+// =======================
+// 🚪 LEAVE STREAM
+// =======================
 async function leaveStream() {
+
     try {
 
         await client.leave();
 
         document.getElementById("video-container").innerHTML = "";
         document.getElementById("user-count").innerText = 0;
+
+        viewers = {};
 
         showWaitingMessage();
 
@@ -178,6 +199,7 @@ async function leaveStream() {
         console.error("❌ Leave Error:", err);
     }
 }
+
 </script>
 
 </section>
