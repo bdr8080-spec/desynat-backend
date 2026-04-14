@@ -831,6 +831,24 @@ function addWishListFunctionproduct(val) {
 }
      </script>
 
+<script>
+$(document).on('click', '.wishlist-btn i', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var iconId = $(this).attr('id');
+
+    // Safety check (important)
+    if (!iconId) return;
+
+    // Ensure it's correct element
+    if (iconId.startsWith('wishlistProduct')) {
+        var id = iconId.replace('wishlistProduct', '');
+        addWishListFunctionproduct(id);
+    }
+});
+</script>
+
      <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('headerSearchInput');
