@@ -169,6 +169,13 @@
         </a>
     </li>
 
+     <li class="nav-item">
+        <a class="nav-link" href="/seller-live">
+            <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="Live" /></span>
+            Current Live Seller
+        </a>
+    </li>
+
     <li class="nav-item">
         <a class="nav-link" href="/support">
             <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>

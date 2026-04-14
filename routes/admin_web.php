@@ -260,6 +260,10 @@ Route::match(['get', 'post'], '/support', function () {
 
 })->name('admin.support');
 
+Route::match(['get', 'post'], '/seller-live', function () {
+    return view('admin.seller-live.index');
+
+})->name('admin.seller-live');
 
 
 
