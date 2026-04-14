@@ -139,7 +139,7 @@
                                 <td>{{$payment->product_details->seller_details->first_name}} {{$payment->product_details->seller_details->last_name}}</td>
                                 <td>#{{$payment->id}}</td>
                                 <td>{{$payment->user_details->country_info->name}}</td>
-                                <td>{{$payment->amount}} KD</td>
+                                <td>{{$payment->total_paid_amount}} KD</td>
                                 <td>
                                     {{ $payment->promocode_details->name_english ?? 'No' }}
                                 </td>
