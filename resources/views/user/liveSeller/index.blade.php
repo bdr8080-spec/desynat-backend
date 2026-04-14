@@ -1,12 +1,7 @@
+
 @extends('user.layout.app')
 
 @section('content')
-
-@if (session('status') === 'error')
-<div class="alert alert-danger">
-    {{ session('message') }}
-</div>
-@endif
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
@@ -70,16 +65,23 @@
 
 </div>
 
+@endsection
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
 
-const chatRooms = @json($live_records->map(function($val) {
-    return [
-        'id' => $val->id,
-        'channel_id' => $val->channel_id
-    ];
-}));
+const chatRooms = @json(collect($live_records ?? []));
+
+// const chatRooms = @json(
+//     collect($live_records ?? [])->map(function($val) {
+//         return {
+//             id: $val.id,
+//             channel_id: $val.channel_id
+//         };
+//     }).values()
+// );
+
 
 function checkAllLive() {
 
@@ -120,4 +122,3 @@ setInterval(checkAllLive, 5000);
 
 </script>
 
-@endsection
