@@ -618,6 +618,4 @@ function handleSubCategory(id) {
 
 
 
-
-
 @endsection
