@@ -758,8 +758,9 @@ $(document).ready(function() {
      </script>
 
      <script>
-function addWishListFunctionproduct(val) {
+function addWishListFunctionproduct(val,homepage=null) {
     var id = val;
+
 
     $.ajax({
         url: "{{ url('user/addOremovewishlist') }}",
@@ -776,6 +777,31 @@ function addWishListFunctionproduct(val) {
             $('#user_loder').hide();
             if (data.status == 'success') {
 
+                if(homepage){ 
+                    // if the wishlist called from home Page 
+
+                if (data.data == 1) {
+                    toastr.success(data.message);
+                    // location.reload();
+
+                } else {
+                    toastr.error(data.message);
+                    // location.reload();
+                }
+
+                var iconClass = $('.wishlistProduct' + id);
+
+                iconClass.each(function () {
+                        if ($(this).hasClass('fa-regular')) {
+                            $(this).removeClass('fa-regular').addClass('fa-solid');
+                        } else {
+                            $(this).removeClass('fa-solid').addClass('fa-regular');
+                        }
+                    });
+
+                }else{
+                    
+
                 // Show Toastr Notification
                 if (data.data == 1) {
                     toastr.success(data.message);
@@ -788,9 +814,9 @@ function addWishListFunctionproduct(val) {
 
                 // $('#wishlistProduct' + id).val();
                 var icon = $('#wishlistProduct' + id);
-
                 var icon1 = $('#wishlistProduct1' + id);
 
+            
                 // Toggle between fa-regular and fa-solid
                 if (icon.hasClass('fa-regular')) {
                     icon.removeClass('fa-regular').addClass('fa-solid');
@@ -803,6 +829,8 @@ function addWishListFunctionproduct(val) {
                 } else {
                     icon1.removeClass('fa-solid').addClass('fa-regular');
                 }
+
+            }
 
                 // Reload the page after 2 seconds
                 // setTimeout(function() {

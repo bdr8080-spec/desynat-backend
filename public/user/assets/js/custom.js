@@ -53,25 +53,24 @@ inputs.forEach((input, index) => {
 
 // category page js
 
+// // your page link
+// var profileLink = "https://your-website.com/user/12345";
 
-// your page link
-var profileLink = "https://your-website.com/user/12345";
-
-// Generate QR code
-new QRCode(document.getElementById("qrCodeBox"), {
-    text: profileLink,
-    width: 100,
-    height: 100
-});
+// // Generate QR code
+// new QRCode(document.getElementById("qrCodeBox"), {
+//     text: profileLink,
+//     width: 100,
+//     height: 100
+// });
 
 // Copy functionality
-document.getElementById("copyLinkBtn").addEventListener("click", function () {
-    navigator.clipboard.writeText(profileLink).then(() => {
-        let msg = document.getElementById("copiedMsg");
-        msg.style.display = "block";
-        setTimeout(() => msg.style.display = "none", 1500);
-    });
-});
+// document.getElementById("copyLinkBtn").addEventListener("click", function () {
+//     navigator.clipboard.writeText(profileLink).then(() => {
+//         let msg = document.getElementById("copiedMsg");
+//         msg.style.display = "block";
+//         setTimeout(() => msg.style.display = "none", 1500);
+//     });
+// });
 
 $('.storeCarousel').owlCarousel({
     loop: true,

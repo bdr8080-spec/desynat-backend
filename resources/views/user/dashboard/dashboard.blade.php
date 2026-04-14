@@ -236,22 +236,24 @@
 
         <div class="item">
             <div class="product-card blacktitle">
-                <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+              
                     <div class="product-img">
+                        <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
                         @if ($key != 0)
                         @php break @endphp
                         @endif
-                        <img src="{{ $val1 }}" alt="Product">
+                        <img  style="z-index:-99" src="{{ $val1 }}" alt="Product">
                         @endforeach
+                        </a>
 
                         @if (Auth::guard('web')->user())
-                        <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $item->id }}"
-                                class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
-                                onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
+                        <span class="wishlist-btn" style="cursor: pointer;z-index:999"><i style="cursor: pointer;z-index:99999999"
+                                class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                                onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
                         @else
-                        <a class="wishlist-btn text-decoration-underline" href="{{route('userLogin')}}">
-                            <i class="fa-regular fa-heart"></i>
+                        <a class="wishlist-btn text-decoration-underline" style="cursor: pointer;z-index:99" href="{{route('userLogin')}}">
+                            <i class="fa-regular fa-heart" style="cursor: pointer;z-index:999999"></i>
                         </a>
                         @endif
 
@@ -259,6 +261,7 @@
                                 src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
+                      <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                     <div class="product-content">
                         <h5>{{ $item->product_name_en }}</h5>
                         <div class="rating">
@@ -379,21 +382,25 @@
 
         <div class="item">
             <div class="product-card blacktitle">
-            <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
-                    <div class="product-img">
+                   <div class="product-img">
+            
+                    <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+            
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
                         @if ($key != 0)
                         @php break @endphp
                         @endif
-                        <img src="{{ $val1 }}" alt="Product">
+                        <img  style="z-index:-1;" src="{{ $val1 }}" alt="Product">
                         @endforeach
 
+                    </a>
+
                         @if (Auth::guard('web')->user())
-                        <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $item->id }}"
-                                class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
-                                onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
+                        <span class="wishlist-btn" style="cursor: pointer;z-index:999999999999"><i style="z-index:999999999;"
+                                class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                                onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
                         @else
-                        <a class="wishlist-btn text-decoration-underline" href="{{route('userLogin')}}">
+                        <a class="wishlist-btn text-decoration-underline"  style="cursor: pointer;z-index:99999999" href="{{route('userLogin')}}">
                             <i class="fa-regular fa-heart"></i>
                         </a>
                         @endif
@@ -402,6 +409,8 @@
                                 src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
+                     <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+            
                     <div class="product-content">
                         <h5>{{ $item->product_name_en }}</h5>
                         <div class="rating">
@@ -487,21 +496,23 @@
 
         <div class="col-lg-3 col-md-4 col-6 my-3">
             <div class="product-card blacktitle">
-            <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                     <div class="product-img">
+                         <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+           
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
                         @if ($key != 0)
                         @php break @endphp
                         @endif
-                        <img src="{{ $val1 }}" alt="Product">
+                        <img style="z-index:-99" src="{{ $val1 }}" alt="Product">
                         @endforeach
+                         </a>
 
                         @if (Auth::guard('web')->user())
-                        <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $item->id }}"
-                                class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
-                                onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
+                        <span class="wishlist-btn" style="cursor: pointer;z-index:99999999"><i
+                                class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                                onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
                         @else
-                        <a class="wishlist-btn text-decoration-underline" href="{{route('userLogin')}}">
+                        <a class="wishlist-btn text-decoration-underline"  style="cursor: pointer;z-index:99999999" href="{{route('userLogin')}}">
                             <i class="fa-regular fa-heart"></i>
                         </a>
                         @endif
@@ -510,6 +521,8 @@
                                 src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
+                     <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+           
                     <div class="product-content">
                         <h5>{{ $item->product_name_en }}</h5>
                         <div class="rating">

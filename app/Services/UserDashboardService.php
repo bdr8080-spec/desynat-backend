@@ -658,14 +658,17 @@ return [
 
 
 
-public function bestSellingProduct()
+public function bestSellingProduct($user_id=null)
     {
 try {
 
+$wishlistIds = wishlist::where('user_id', $user_id)
+                       ->pluck('product_id')
+                       ->toArray();
+
+
 //   $bestSeller = orderdetail::where('payment_status','1')->pluck('product_id')->unique();
-
-
-  $bestSeller = orderdetail::where('payment_status','1')
+ $bestSeller = orderdetail::where('payment_status','1')
     ->pluck('product_id')
     ->unique()
     ->values(); // 🔥 reindex keys
@@ -676,15 +679,23 @@ if($bestSeller){
   ->withCount('review')
  ->whereIn('id',$bestSeller)->limit(10)
  ->inRandomOrder()
- ->get();
+ ->get()
+ ->map(function ($product) use ($wishlistIds) {
+        $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+        return $product;
+    });
+
 }else{
 $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
 ->withAvg('review as product_avg_rating', 'product_rating')
 ->withCount('review') 
 ->limit(10)
 ->inRandomOrder()
-->get();
-
+->get()
+ ->map(function ($product) use ($wishlistIds) {
+        $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+        return $product;
+    });
 }
 
 return [
@@ -704,10 +715,16 @@ return [
 
 
 
-public function TopRatingProduct()
+public function TopRatingProduct($user_id=null)
     {
+        
 try {
 
+$wishlistIds = wishlist::where('user_id', $user_id)
+                       ->pluck('product_id')
+                       ->toArray();
+
+                       
 //   $bestSeller = orderdetail::where('payment_status','1')->pluck('product_id')->unique();
 
 
@@ -721,7 +738,11 @@ if($bestSeller){
   ->withCount('review')
  ->limit(10)
  ->inRandomOrder()
- ->get();
+ ->get()
+ ->map(function ($product) use ($wishlistIds) {
+        $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+        return $product;
+    });
  
 
 }else{
@@ -730,7 +751,11 @@ $all_product_fetch=product::with(['category','subcategory','brand','product_spec
 ->withCount('review')
 ->limit(10)
 ->inRandomOrder()
-->get();
+->get()
+ ->map(function ($product) use ($wishlistIds) {
+        $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+        return $product;
+    });
 
 }
 
@@ -751,15 +776,26 @@ return [
 
 
     
-public function userNewestProduct()
+public function userNewestProduct($user_id=null)
     {
 try {
+
+$wishlistIds = wishlist::where('user_id', $user_id)
+                       ->pluck('product_id')
+                       ->toArray();
+
+
+
 $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
 ->withAvg('review as product_avg_rating', 'product_rating')
 ->withCount('review') 
 ->orderBy('created_at','desc')
 ->limit(10)
-->get();
+->get()
+ ->map(function ($product) use ($wishlistIds) {
+        $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+        return $product;
+    });
 
 return [
     'status'  => 'success',

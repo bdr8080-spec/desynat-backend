@@ -619,17 +619,18 @@ class AuthController extends Controller
           // dd($homeDealBanner);
 
         // best Selling products
+        $user_id = auth()->guard('web')->id() ?? '';        
 
-        $bestSellingProduct=$this->UserDashboardService->bestSellingProduct();
+        $bestSellingProduct=$this->UserDashboardService->bestSellingProduct($user_id);
         $bestSellingProduct=$bestSellingProduct['data'];
 
         // Top rating products
 
-        $TopRatingProduct=$this->UserDashboardService->TopRatingProduct();
+        $TopRatingProduct=$this->UserDashboardService->TopRatingProduct($user_id);
         $TopRatingProduct=$TopRatingProduct['data'];
 
         // New Arrival products
-        $userNewestProduct=$this->UserDashboardService->userNewestProduct();
+        $userNewestProduct=$this->UserDashboardService->userNewestProduct($user_id);
         $userNewestProduct=$userNewestProduct['data'];
 
 
