@@ -84,14 +84,14 @@ class AgoraController extends Controller
 
         $token = $this->agora->generateRtcToken(
             $request->channel,
-            $uid ?? 0
+            $uid
         );
         
           return response()->json([
             'token' => $token,
             'appId' => config('services.agora.app_id'),
             'channel' => $request->channel,
-            'uid' => $uid ?? 0
+            'uid' => $uid
         ]);
 
 
