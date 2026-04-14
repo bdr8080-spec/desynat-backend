@@ -14,6 +14,11 @@ use App\Helpers\ApiResponse;
 use Validator;
 use App\Http\Controllers\CommonController;
 
+use App\Models\LiveRequest;
+
+use Carbon\Carbon;
+
+
 
 class DashBoardController extends Controller
 {
@@ -392,6 +397,49 @@ class DashBoardController extends Controller
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     }
+
+
+     public function getLiveSellerRecords(REQUEST $request){
+
+            $data = $this->UserDashboardService->UserSidelive_room_records();
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            $live_records=$data['data'];
+
+            return view('user.liveSeller.index',compact('live_records'));
+     }
+
+      public function ViewLiveSellerRecords(Request $request)
+    {
+
+        
+        return view('User/liveSeller/UserJoinLive');
+        
+    }
+
+
+    
+
+
+public function checkLiveJoinTimeStatus($id)
+{
+
+    $live = LiveRequest::with('timeslot_details')->find($id);
+
+    $currentTime = Carbon::now();
+
+    $fromTime = Carbon::createFromFormat('h:i A', $live->timeslot_details->from);
+    $toTime   = Carbon::createFromFormat('h:i A', $live->timeslot_details->to);
+
+    $isLive = $currentTime->between($fromTime, $toTime);
+
+    return response()->json([
+        'live' => $isLive
+    ]);
+}
 
 
 }

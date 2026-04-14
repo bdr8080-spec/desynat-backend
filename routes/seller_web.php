@@ -211,11 +211,7 @@ Route::group(['prefix' => 'seller'], function () {
     Route::get('/seller-live', [SellerLiveRequestController::class, 'seller_live'])->name("sellerLiveRequest");
 
     Route::get('/seller-live-view', [SellerLiveRequestController::class, 'sellerliveview'])->name('sellerLive');
-
-
-
-
-
+    
 
 
 
