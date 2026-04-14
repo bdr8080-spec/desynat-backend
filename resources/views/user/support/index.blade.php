@@ -90,7 +90,7 @@
 
             <div class="tab-pane fade" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab" tabindex="0">
                 <form method="GET" action="{{ route('user.support') }}">
-                    <div class="giftsearch py-3 d-flex w-100 gap-4">
+                    <div class="giftsearch py-3 d-flex w-100 gap-0">
                         <form action="#" method="GET" class="w-100 d-flex gap-0">
                             <div class="form-group w-100 d-flex">
                                 <div class="searchicon"><i class="bi bi-search"></i></div>
@@ -99,7 +99,7 @@
                             <button type="submit" class="btn btnsearch">Search</button>
                         </form>
 
-                        <a href="javascript:void(0)" class="add-icon" data-bs-toggle="modal" data-bs-target="#ticketModal">
+                        <a href="javascript:void(0)" class="add-icon2 ms-3" data-bs-toggle="modal" data-bs-target="#ticketModal">
                             <img src="{{ asset('user/assets/images/add-icon.svg') }}" alt="add" class="img-fluid">
                         </a>
                     </div>
@@ -189,7 +189,7 @@
            <form id="ticketModalForm" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <div class="sub-form">
+                    <div class="sub-form mb-3">
                         <div class="label-flex">
                             <label>Ticket Type</label>
                         </div>
@@ -202,15 +202,15 @@
                         <span class="text-danger small d-none" id="ticket_type_error">Please select ticket type</span>
                     </div>
 
-                    <div class="sub-form">
+                    <div class="sub-form mb-3">
                         <div class="label-flex">
                             <label>Title</label>
                         </div>
-                        <input type="text" id="title" name="title" class="form-control" placeholder="Enter Product name">
+                        <input type="text" id="title" name="title" class="form-control" placeholder="Enter title name">
                         <span class="text-danger small d-none" id="title_error">Please enter title</span>
                     </div>
 
-                    <div class="sub-form">
+                    <div class="sub-form mb-3">
                         <div class="label-flex">
                             <label>Description</label>
                         </div>
@@ -218,7 +218,7 @@
                         <span class="text-danger small d-none" id="description_error">Please enter description</span>
                     </div>
 
-                    <div class="sub-form">
+                    <div class="sub-form mt-3">
                         <div class="label-flex">
                             <label>Upload attachment (if any)</label>
                         </div>
@@ -235,8 +235,8 @@
                         </div>
                     </div>
 
-                    <div class="cmn-btn mt-4">
-                        <button type="button" id="submitTicket" class="customBtn customBtn5 mt-5">Submit</button>
+                    <div class="cmn-btn mt-3">
+                        <button type="button" id="submitTicket" class="customBtn customBtn5 mt-3">Submit</button>
                     </div>
                 </div>
             </form>
