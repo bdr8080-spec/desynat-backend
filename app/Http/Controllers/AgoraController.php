@@ -62,12 +62,6 @@ class AgoraController extends Controller
     return ApiResponse::generateResponse('success','agora token generate',$token_record, 200);
 
 
-
-        // return response()->json([
-        //     'token' => $token,
-        //     'channel' => $request->channel,
-        //     'uid' => $request->uid ?? 0
-        // ]);
     }
 
 
@@ -80,18 +74,23 @@ class AgoraController extends Controller
         //     'uid' => 'nullable|integer'
         // ]);
         
+    $livechat_details=  LiveRequest::where('channel_id',$request->channel)->first();
+    $livechat_details->update(['live_user'=> $livechat_details->live_user+1]);
+
+
+
         $uid= rand(00000,99999);
 
         $token = $this->agora->generateRtcToken(
             $request->channel,
-            $uid ?? 0
+            $uid
         );
         
           return response()->json([
             'token' => $token,
             'appId' => config('services.agora.app_id'),
             'channel' => $request->channel,
-            'uid' => $uid ?? 0
+            'uid' => $uid
         ]);
 
 

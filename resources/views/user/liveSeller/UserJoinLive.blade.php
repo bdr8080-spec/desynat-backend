@@ -2,16 +2,15 @@
 
 @section('content')
 
-   <style>
-    #video-container {
+<style>
+#video-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: center;   /* ✅ horizontal center */
-    align-items: center;       /* ✅ vertical align (if height available) */
+    justify-content: center;
+    align-items: center;
 }
-
-    </style>
+</style>
 
 <section class="section dashboard">
 
@@ -21,22 +20,26 @@
 
 <button onclick="leaveStream()">🚪 Leave</button>
 
-<h3>👥 Watching: <span id="user-count">0</span></h3>
+<h3 style="display: none;">
+    👥 Watching: <span id="user-count">0</span>
+</h3>
 
-<!-- ✅ WAITING MESSAGE -->
+<!-- WAITING -->
 <div id="waiting-message" style="text-align:center; padding:40px;">
     <h3>⏳ Waiting for seller to go LIVE</h3>
     <p>Please stay tuned...</p>
 </div>
 
-<!-- 🎥 VIDEO CONTAINER -->
-<div id="video-container" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+<!-- VIDEO -->
+<div id="video-container"></div>
 
 <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
 
 <script>
 let client;
 let users = {};
+
+AgoraRTC.setLogLevel(2);
 
 window.addEventListener("load", async () => {
 
@@ -51,7 +54,7 @@ window.addEventListener("load", async () => {
 
         console.log("👀 Joining as audience...");
 
-        // 🔹 TOKEN FETCH
+        // TOKEN
         const res = await fetch('/agora/token', {
             method: 'POST',
             headers: {
@@ -63,7 +66,7 @@ window.addEventListener("load", async () => {
 
         const data = await res.json();
 
-        // 🔹 CREATE CLIENT
+        // CLIENT
         client = AgoraRTC.createClient({
             mode: "live",
             codec: "vp8"
@@ -71,11 +74,14 @@ window.addEventListener("load", async () => {
 
         registerEvents();
 
-        // ✅ AUDIENCE MODE
+        // AUDIENCE ROLE
         await client.setClientRole("audience");
 
-        // 🔹 JOIN CHANNEL
+        // JOIN
         await client.join(data.appId, channel, data.token, data.uid);
+
+        // 🔥 ENABLE AUDIO (IMPORTANT FIX)
+        client.enableAudio();
 
         console.log("✅ Joined as audience");
 
@@ -85,18 +91,17 @@ window.addEventListener("load", async () => {
 });
 
 
-// ✅ EVENTS
+// 🎧 EVENTS
 function registerEvents() {
 
-    // 🎥 HOST STARTED STREAM
     client.on("user-published", async (user, mediaType) => {
 
-        // ❌ REMOVE WAITING MESSAGE
         document.getElementById("waiting-message")?.remove();
 
         await client.subscribe(user, mediaType);
 
-        if (mediaType === "video") {
+        // 🎥 VIDEO
+        if (mediaType === "video" && user.videoTrack) {
 
             const player = document.createElement("div");
             player.id = "user-" + user.uid;
@@ -110,8 +115,18 @@ function registerEvents() {
             user.videoTrack.play(player.id);
         }
 
-        if (mediaType === "audio") {
-            user.audioTrack.play();
+        // 🔊 AUDIO FIXED
+        if (mediaType === "audio" && user.audioTrack) {
+
+            try {
+                user.audioTrack.play();
+            } catch (err) {
+                console.warn("Autoplay blocked, retrying on click");
+
+                document.body.addEventListener("click", () => {
+                    user.audioTrack.play();
+                }, { once: true });
+            }
         }
 
         users[user.uid] = user;
@@ -127,7 +142,6 @@ function registerEvents() {
 
         updateUserCount();
 
-        // 👉 SHOW WAITING AGAIN IF NO HOST
         if (Object.keys(users).length === 0) {
             showWaitingMessage();
         }
@@ -135,7 +149,13 @@ function registerEvents() {
 }
 
 
-// ✅ SHOW WAITING MESSAGE AGAIN
+// 👥 USER COUNT
+function updateUserCount() {
+    document.getElementById("user-count").innerText = Object.keys(users).length;
+}
+
+
+// ⏳ WAITING MESSAGE
 function showWaitingMessage() {
 
     if (!document.getElementById("waiting-message")) {
@@ -155,14 +175,9 @@ function showWaitingMessage() {
 }
 
 
-// ✅ USER COUNT
-function updateUserCount() {
-    document.getElementById("user-count").innerText = Object.keys(users).length;
-}
-
-
-// 🔴 LEAVE STREAM
+// 🚪 LEAVE STREAM
 async function leaveStream() {
+
     try {
 
         await client.leave();
@@ -172,7 +187,11 @@ async function leaveStream() {
 
         showWaitingMessage();
 
+        users = {};
+
         console.log("🚪 Left stream");
+
+        window.location.href='/user/get-live-seller-records';
 
     } catch (err) {
         console.error("❌ Leave Error:", err);

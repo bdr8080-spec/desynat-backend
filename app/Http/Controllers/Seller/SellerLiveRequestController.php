@@ -188,6 +188,7 @@ class SellerLiveRequestController extends Controller
            $liverequest['future_requests']=[];
         }else{
         $liverequest=$result['data'];
+
         }
 
         

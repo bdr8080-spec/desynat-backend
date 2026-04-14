@@ -59,41 +59,7 @@
                     @endforelse
 
                 </div>
-
-
             </div>
-
-            <!-- 
-            <div class="row">
-                @forelse($liverequest['current_requests'] as $val)
-
-                <div class="col-lg-4 col-md-4">
-                    <div class="plan-card plan-shadow">
-                        <div class="plan-header text-center">
-                            {{ $val->order_id }}
-                        </div>
-                        <div class="plan-body p-3">
-
-                            <div class="py-3">
-
-                                <img src="">
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                @empty
-                <div class="col-12 text-center">
-                    <h5>No Live Request Found</h5>
-                </div>
-                @endforelse
-
-            </div> -->
-
-
-
-
 
         </div>
 
@@ -159,38 +125,6 @@
 
             </div>
 
-            <!-- 
-            <div class="row">
-                @forelse($liverequest['current_requests'] as $val)
-
-                <div class="col-lg-4 col-md-4">
-                    <div class="plan-card plan-shadow">
-                        <div class="plan-header text-center">
-                            {{ $val->order_id }}
-                        </div>
-                        <div class="plan-body p-3">
-
-                            <div class="py-3">
-
-                                <img src="">
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                @empty
-                <div class="col-12 text-center">
-                    <h5>No Live Request Found</h5>
-                </div>
-                @endforelse
-
-            </div> -->
-
-
-
-
-
         </div>
 
     </div>
@@ -228,7 +162,7 @@ function checkAllLive() {
 
                 if (data.live) {
                     btnDiv.innerHTML = `
-                        <a href="/seller/seller-live?channel_id=${room.channel_id}"
+                        <a href="/seller/seller-live-view?channel_id=${room.channel_id}"
                            class="btn btn-info text-white"
                            style="width:100px;">
                            Join us
