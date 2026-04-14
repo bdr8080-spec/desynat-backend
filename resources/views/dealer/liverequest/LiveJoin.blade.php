@@ -42,8 +42,11 @@
                                         </div>
                                     </div>
 
-                                    <a href="{{route('sellerLive',['channel_id'=>$val->channel_id ])}}"
-                                        class="btn-success text-white" style="width:100px;">Join us</a>
+                                    {{-- <a href="{{route('sellerLive',['channel_id'=>$val->channel_id ])}}"
+                                        class="btn-success text-white" style="width:100px;">Join us</a> --}}
+                                 <div id="join-btn-{{ $val->id }}"></div>
+
+
                                 </div>
                             </a>
                         </div>
@@ -195,6 +198,60 @@
 </section>
 
 
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+const chatRooms = @json(
+    collect($liverequest['current_requests'] ?? [])->map(function($val) {
+        return [
+            'id' => $val->id,
+            'channel_id' => $val->channel_id
+        ];
+    })->values()
+);
+
+function checkAllLive() {
+
+    if (!chatRooms.length) return;
+
+    chatRooms.forEach(room => {
+
+        fetch(`/check-live-join-time-status/${room.id}`)
+            .then(res => res.json())
+            .then(data => {
+
+                let btnDiv = document.getElementById('join-btn-' + room.id);
+
+                if (!btnDiv) return;
+
+                if (data.live) {
+                    btnDiv.innerHTML = `
+                        <a href="/seller/seller-live?channel_id=${room.channel_id}"
+                           class="btn btn-info text-white"
+                           style="width:100px;">
+                           Join us
+                        </a>
+                    `;
+                } else {
+                    btnDiv.innerHTML = "";
+                }
+
+            })
+            .catch(err => console.log(err));
+
+    });
+
+}
+
+// initial run
+checkAllLive();
+
+// every 5 seconds
+setInterval(checkAllLive, 5000);
+
+</script>
 
 
 
