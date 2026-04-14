@@ -259,8 +259,9 @@
 
                         <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
                                 src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                    
                     </div>
+
                       <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                     <div class="product-content">
                         <h5>{{ $item->product_name_en }}</h5>
@@ -407,8 +408,7 @@
 
                         <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
                                 src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
+                     </div>
                      <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
             
                     <div class="product-content">
@@ -519,8 +519,7 @@
 
                         <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
                                 src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
+                      </div>
                      <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
            
                     <div class="product-content">
