@@ -216,6 +216,7 @@ Route::get('/remove-custom-product-add-to-card', [UserStoreController::class,'Re
 
 Route::get('user/get-live-seller-records', [DashBoardController::class, 'getLiveSellerRecords'])->name('user.getLiveSellerRecords');
 Route::get('user/View-live-seller-records', [DashBoardController::class, 'ViewLiveSellerRecords'])->name('user.ViewLiveSellerRecords');
+Route::get('check-live-join-time-status/{id}', [DashBoardController::class, 'checkLiveJoinTimeStatus']);
 
 
 

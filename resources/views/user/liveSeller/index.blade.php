@@ -40,6 +40,8 @@
                                                     <h6 class="product-title linkgold"> {{$val->order_id}}</h6>
                                                     <div class="chat-user-light"> {{$val->timeslot_details->date}}
                                                     </div>
+
+                                                  
                                                     <div class="chat-user-light"> {{$val->timeslot_details->from}} -
                                                         {{$val->timeslot_details->to}}</div>
                                                 </div>
@@ -47,8 +49,8 @@
                                         </div>
                                     </div>
 
-                                    <a href="{{route('user.ViewLiveSellerRecords',['channel_id'=>$val->channel_id ])}}"
-                                        class="btn btn-info text-white" style="width:100px;">Join us</a>
+                                    <div id="join-btn-{{ $val->id }}"></div>
+
                                 </div>
                             </a>
                         </div>
@@ -68,5 +70,54 @@
 
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+const chatRooms = @json($live_records->map(function($val) {
+    return [
+        'id' => $val->id,
+        'channel_id' => $val->channel_id
+    ];
+}));
+
+function checkAllLive() {
+
+    chatRooms.forEach(room => {
+
+        fetch(`/check-live-join-time-status/${room.id}`)
+            .then(res => res.json())
+            .then(data => {
+
+                let btnDiv = document.getElementById('join-btn-' + room.id);
+
+                if (!btnDiv) return;
+
+                if (data.live) {
+                    btnDiv.innerHTML = `
+                        <a href="/user/ViewLiveSellerRecords?channel_id=${room.channel_id}"
+                           class="btn btn-info text-white"
+                           style="width:100px;">
+                           Join us
+                        </a>
+                    `;
+                } else {
+                    btnDiv.innerHTML = "";
+                }
+
+            })
+            .catch(err => console.log(err));
+
+    });
+
+}
+
+// run immediately
+checkAllLive();
+
+// run every 5 seconds
+setInterval(checkAllLive, 5000);
+
+</script>
 
 @endsection

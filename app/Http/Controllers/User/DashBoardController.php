@@ -16,6 +16,9 @@ use App\Http\Controllers\CommonController;
 
 use App\Models\LiveRequest;
 
+use Carbon\Carbon;
+
+
 
 class DashBoardController extends Controller
 {
@@ -416,6 +419,27 @@ class DashBoardController extends Controller
         return view('User/liveSeller/UserJoinLive');
         
     }
+
+
+    
+
+
+public function checkLiveJoinTimeStatus($id)
+{
+
+    $live = LiveRequest::with('timeslot_details')->find($id);
+
+    $currentTime = Carbon::now();
+
+    $fromTime = Carbon::createFromFormat('h:i A', $live->timeslot_details->from);
+    $toTime   = Carbon::createFromFormat('h:i A', $live->timeslot_details->to);
+
+    $isLive = $currentTime->between($fromTime, $toTime);
+
+    return response()->json([
+        'live' => $isLive
+    ]);
+}
 
 
 }
