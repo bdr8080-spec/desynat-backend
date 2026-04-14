@@ -211,6 +211,19 @@ class SellerLiveRequestController extends Controller
         
     }
 
+      public function sellerLiveCount(Request $request)
+    {
+
+     $liveRequest=LiveRequest::where('channel_id', $request->channel_id)->first();
+
+      return response()->json([
+            'status' => 'success',
+            'data' => $liveRequest->live_user??0
+        ], 200);
+        
+    }
+
+    
 
     
     
