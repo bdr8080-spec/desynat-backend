@@ -64,7 +64,7 @@
                                     onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-3 col-12">
+                        <div class="col-lg-3 col-md-3 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Ticket type</label>
 
@@ -79,7 +79,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-3 col-12">
+                        <div class="col-lg-3 col-md-3 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Submitted by</label>
 
@@ -102,7 +102,7 @@
                     </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-4">
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
@@ -154,7 +154,7 @@
                                     <td>{{ $ticket->ticket_type_details->name ?? '-' }}</td>
 
                                     <td>
-                                        <select class="form-select form-select-lg statusChange"
+                                        <select class="form-select  statusChange"
                                                 data-id="{{ $ticket->id }}">
                                             <option value="0" {{ $ticket->status == 0 ? 'selected' : '' }}>Pending</option>
                                             <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>Resolved</option>
@@ -190,7 +190,7 @@
                                     onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
+                        <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Ticket type</label>
 
@@ -205,7 +205,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
+                        <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Submitted by</label>
 
@@ -228,7 +228,7 @@
                     </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-4">
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
@@ -280,7 +280,7 @@
                                     <td>{{ $ticket->ticket_type_details->name ?? '-' }}</td>
 
                                     <td>
-                                        <select class="form-select form-select-lg statusChange"
+                                        <select class="form-select  statusChange"
                                                 data-id="{{ $ticket->id }}">
                                             <option value="0" {{ $ticket->status == 0 ? 'selected' : '' }}>Pending</option>
                                             <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>Resolved</option>
@@ -318,7 +318,7 @@
                                     onchange="updateToDate2(); document.getElementById('filterForm2').submit();" />
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
+                        <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Ticket type</label>
 
@@ -333,7 +333,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
+                        <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Submitted by</label>
 
@@ -356,7 +356,7 @@
                     </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-4">
                     <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
@@ -408,7 +408,7 @@
                                     <td>{{ $ticket->ticket_type_details->name ?? '-' }}</td>
 
                                     <td>
-                                        <select class="form-select form-select-lg statusChange"
+                                        <select class="form-select  statusChange"
                                                 data-id="{{ $ticket->id }}">
                                             <option value="0" {{ $ticket->status == 0 ? 'selected' : '' }}>Pending</option>
                                             <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>Resolved</option>
