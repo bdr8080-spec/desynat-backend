@@ -55,10 +55,12 @@
             @foreach($stores as $store)
             <div class="item">
                 <div class="suggestStore_content">
+                    <a href="{{ route('user.store_details', $store->id) }}" style="text-decoration:none; color:inherit;">
                     <div class="suggestedStore_img">
                         <img src="{{ $store->store_image }}" class="img-fluid circle-image"
                             alt="{{ $store->store_name }}" />
                     </div>
+                    </a>
                     <h5>{{ $store->store_name }}</h5>
                 </div>
             </div>
@@ -260,23 +262,36 @@
                     <div class="product-content">
                         <h5>{{ $item->product_name_en }}</h5>
                         <div class="rating">
-                            <!-- star rating Show Code  -->
                             @php
-                            $rating = $item->product_avg_rating;
-                            $fullStars = floor($rating);
-                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                $rating = $item->product_avg_rating ?? 0;
+                                $fullStars = floor($rating);
+                                $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
                             @endphp
 
-                            {{-- Full Stars --}}
-                            @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
+                            @if($rating > 0)
+
+                                @for($i = 0; $i < $fullStars; $i++)
+                                    <i class="fa-solid fa-star"></i>
                                 @endfor
 
-                                {{-- Half Star --}}
                                 @if($hasHalfStar)
-                                <i class="fa-solid fa-star-half-stroke"></i>
+                                    <i class="fa-solid fa-star-half-stroke"></i>
                                 @endif
-                                <!-- star rating code end here  -->
-                                <span>({{ $item->review_count }})</span>
+
+                                @for($i = 0; $i < $emptyStars; $i++)
+                                    <i class="fa-regular fa-star"></i>
+                                @endfor
+
+                            @else
+
+                                @for($i = 0; $i < 5; $i++)
+                                    <i class="fa-regular fa-star"></i>
+                                @endfor
+
+                            @endif
+
+                            <span>({{ $item->review_count ?? 0 }})</span>
                         </div>
                         <div class="price">
                             <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
@@ -390,23 +405,36 @@
                     <div class="product-content">
                         <h5>{{ $item->product_name_en }}</h5>
                         <div class="rating">
-                            <!-- star rating Show Code  -->
                             @php
-                            $rating = $item->product_avg_rating;
-                            $fullStars = floor($rating);
-                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                $rating = $item->product_avg_rating ?? 0;
+                                $fullStars = floor($rating);
+                                $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
                             @endphp
 
-                            {{-- Full Stars --}}
-                            @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
+                            @if($rating > 0)
+
+                                @for($i = 0; $i < $fullStars; $i++)
+                                    <i class="fa-solid fa-star"></i>
                                 @endfor
 
-                                {{-- Half Star --}}
                                 @if($hasHalfStar)
-                                <i class="fa-solid fa-star-half-stroke"></i>
+                                    <i class="fa-solid fa-star-half-stroke"></i>
                                 @endif
-                                <!-- star rating code end here  -->
-                                <span>({{ $item->review_count }})</span>
+
+                                @for($i = 0; $i < $emptyStars; $i++)
+                                    <i class="fa-regular fa-star"></i>
+                                @endfor
+
+                            @else
+
+                                @for($i = 0; $i < 5; $i++)
+                                    <i class="fa-regular fa-star"></i>
+                                @endfor
+
+                            @endif
+
+                            <span>({{ $item->review_count ?? 0 }})</span>
                         </div>
                         <div class="price">
                             <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
@@ -485,23 +513,36 @@
                     <div class="product-content">
                         <h5>{{ $item->product_name_en }}</h5>
                         <div class="rating">
-                            <!-- star rating Show Code  -->
                             @php
-                            $rating = $item->product_avg_rating;
-                            $fullStars = floor($rating);
-                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                $rating = $item->product_avg_rating ?? 0;
+                                $fullStars = floor($rating);
+                                $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
                             @endphp
 
-                            {{-- Full Stars --}}
-                            @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
+                            @if($rating > 0)
+
+                                @for($i = 0; $i < $fullStars; $i++)
+                                    <i class="fa-solid fa-star"></i>
                                 @endfor
 
-                                {{-- Half Star --}}
                                 @if($hasHalfStar)
-                                <i class="fa-solid fa-star-half-stroke"></i>
+                                    <i class="fa-solid fa-star-half-stroke"></i>
                                 @endif
-                                <!-- star rating code end here  -->
-                                <span>({{ $item->review_count }})</span>
+
+                                @for($i = 0; $i < $emptyStars; $i++)
+                                    <i class="fa-regular fa-star"></i>
+                                @endfor
+
+                            @else
+
+                                @for($i = 0; $i < 5; $i++)
+                                    <i class="fa-regular fa-star"></i>
+                                @endfor
+
+                            @endif
+
+                            <span>({{ $item->review_count ?? 0 }})</span>
                         </div>
                         <div class="price">
                             <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
