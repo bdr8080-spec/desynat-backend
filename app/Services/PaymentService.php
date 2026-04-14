@@ -71,9 +71,16 @@ class PaymentService
 
             $totalQuery = clone $query;
 
-            $total_revenue = round($totalQuery->sum('amount'), 2);
+            $total_revenue = round(
+                $totalQuery->sum(
+                    DB::raw('COALESCE(amount,0) + COALESCE(shipping_fees,0) + COALESCE(tax,0)')
+                ),
+                2
+            );
             $total_custom_order_revenue = round(
-                (clone $query)->where('order_type', '2')->sum('amount'),
+                (clone $query)
+                    ->where('order_type', '2')
+                    ->sum(DB::raw('COALESCE(amount,0) + COALESCE(shipping_fees,0) + COALESCE(tax,0)')),
                 2
             );
             $total_commission = round(
@@ -92,11 +99,19 @@ class PaymentService
             }
 
             $collection->transform(function ($item) {
-                $actualPrice = $item->variation_details->actual_price ?? 0;
-                $amount = $item->amount ?? 0;
-                $item->total_discount = round((float)$actualPrice - (float)$amount, 2);
-                return $item;
-            });
+            $actualPrice = $item->variation_details->actual_price ?? 0;
+            $amount = $item->amount ?? 0;
+            $shipping = $item->shipping_fees ?? 0;
+            $tax = $item->tax ?? 0;
+
+            $item->total_discount = round((float)$actualPrice - (float)$amount, 2);
+            $item->total_paid_amount = round(
+                (float)$amount + (float)$shipping + (float)$tax,
+                2
+            );
+
+            return $item;
+        });
 
             if ($collection->isEmpty()) {
                 return [

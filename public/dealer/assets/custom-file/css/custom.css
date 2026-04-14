@@ -2,12 +2,16 @@
     width: 2.8em;
     height: 20px;
 }
+
 .mob-change {
     position: absolute;
     right: 9px;
     bottom: 9px;
     line-height: 15px;
     background: #fff;
+}
+.add_ticket-btn{
+    width: 60px;
 }
 .cancel-outline {
     border: 1px solid #6E4527;

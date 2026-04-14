@@ -257,7 +257,7 @@
                         </a>
                         @endif
 
-                        <button class="share-btn"><img
+                        <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
                                 src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
@@ -405,7 +405,7 @@
                         </a>
                         @endif
 
-                        <button class="share-btn"><img
+                        <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
                                 src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
@@ -517,7 +517,7 @@
                         </a>
                         @endif
 
-                        <button class="share-btn"><img
+                        <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
                                 src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
@@ -678,29 +678,79 @@ document.addEventListener('click', function (e) {
     if (shareBtn) {
         e.preventDefault();
         e.stopPropagation();
-        e.stopImmediatePropagation(); // 🔥 strongest blocker
+        e.stopImmediatePropagation();
 
-        var link = shareBtn.closest('a').getAttribute('href');
+        var link = shareBtn.getAttribute('data-link');
 
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(link).then(function () {
-                toastr.success('Link copied to clipboard');
-            });
-        } else {
-            var temp = document.createElement("input");
-            document.body.appendChild(temp);
-            temp.value = link;
-            temp.select();
-            document.execCommand("copy");
-            document.body.removeChild(temp);
-
-            toastr.success('Link copied to clipboard');
+        if (!link) {
+            console.error('Share link not found');
+            return;
         }
 
-        return false; // extra safety
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(link).then(function () {
+                toastr.success('Link copied to clipboard');
+            }).catch(function () {
+                fallbackCopy(link);
+            });
+        } else {
+            fallbackCopy(link);
+        }
+
+        return false;
     }
 
-}, true); 
+}, true);
+
+function fallbackCopy(text) {
+    var temp = document.createElement("textarea");
+    temp.value = text;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+
+    toastr.success('Link copied to clipboard');
+}
+</script>
+
+<!-- tidio chatbot -->
+<script src="//code.tidio.co/{{ config('app.TIDIO_KEY') }}.js" async></script>
+
+<script>
+document.addEventListener("tidioChat-ready", function () {
+
+    if (!window.tidioChatApi) return;
+
+    @php
+        $user = Auth::guard('web')->user();
+        $fullName = $user ? $user->full_name : 'Guest';
+        $email = $user ? $user->email : 'guest_'.uniqid();
+        $role = $user ? 'user' : 'guest';
+    @endphp
+
+    const email = "{{ $email }}";
+    const role = "{{ $role }}";
+    const fullName = "{{ $fullName }}";
+   // console.log(fullName);
+
+    const uniqueId = role + "_" + email;
+
+
+    window.tidioChatApi.setVisitorData({
+        name: fullName,
+        email: email,
+        distinct_id: uniqueId,
+        role: role
+    });
+
+    window.tidioChatApi.on("messageFromVisitor", function (event) {
+    });
+
+    window.tidioChatApi.on("messageFromOperator", function (event) {
+    });
+
+});
 </script>
 
 

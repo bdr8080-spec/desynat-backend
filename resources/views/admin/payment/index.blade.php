@@ -53,7 +53,7 @@
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
                 <form method="GET" action="{{ route('admin.paymentManagement') }}" id="filterForm">
-                    <div class="row">
+                    <div class="row mb-4">
                         <!-- From Date Filter -->
                         <div class="col-lg-2 col-md-4 col-12">
                                 <div class="form-group mt-4 w-100">
@@ -139,7 +139,7 @@
                                 <td>{{$payment->product_details->seller_details->first_name}} {{$payment->product_details->seller_details->last_name}}</td>
                                 <td>#{{$payment->id}}</td>
                                 <td>{{$payment->user_details->country_info->name}}</td>
-                                <td>{{$payment->amount}} KD</td>
+                                <td>{{$payment->total_paid_amount}} KD</td>
                                 <td>
                                     {{ $payment->promocode_details->name_english ?? 'No' }}
                                 </td>
@@ -169,7 +169,7 @@
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
                 <form method="GET" action="{{ route('admin.paymentManagement') }}" id="filterForm1">
-                    <div class="row">
+                    <div class="row mb-4">
                         <!-- From Date Filter -->
                         <div class="col-lg-2 col-md-4 col-12">
                                 <div class="form-group mt-4 w-100">
@@ -260,7 +260,7 @@
             <div class="tab-pane fade" id="pills-return" role="tabpanel" aria-labelledby="pills-return-tab"
                 tabindex="0">
                 <form method="GET" action="{{ route('admin.paymentManagement') }}" id="filterForm2">
-                    <div class="row">
+                    <div class="row mb-4">
                         <!-- From Date Filter -->
                         <div class="col-lg-2 col-md-4 col-12">
                                 <div class="form-group mt-4 w-100">
@@ -349,7 +349,7 @@
             <div class="tab-pane fade" id="pills-Banner" role="tabpanel" aria-labelledby="pills-Banner-tab"
                 tabindex="0">
                 <form method="GET" action="{{ route('admin.paymentManagement') }}" id="filterForm3">
-                    <div class="row">
+                    <div class="row mb-4">
                         <!-- From Date Filter -->
                         <div class="col-lg-2 col-md-4 col-12">
                                 <div class="form-group mt-4 w-100">

@@ -14,7 +14,7 @@
                 </div>
                 <button type="submit" class="btn btn-success searchlin"> Search </button>
             </div>      
-            <a href="#" data-bs-toggle="modal" data-bs-target="#ticketModal"><img src="{{ asset('user') }}/assets/images/add-icon.svg" alt="add icon"></a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#ticketModal"><img src="{{ asset('user') }}/assets/images/add-icon.svg" alt="add icon" class="add_ticket-btn"></a>
         </div>
      </form>
 
@@ -118,7 +118,7 @@
                         <div class="label-flex">
                             <label>Title</label>
                         </div>
-                        <input type="text" id="title" name="title" class="form-control" placeholder="Enter Product name">
+                        <input type="text" id="title" name="title" class="form-control" placeholder="Enter title name">
                         <span class="text-danger small d-none" id="title_error">Please enter title</span>
                     </div>
 
