@@ -301,7 +301,7 @@ class UserManagementService
             }
 
 
-         $all_store_information=sellerStoreInformation::with('seller_information')->whereIn('id',$productQuery);
+         $all_store_information=sellerStoreInformation::with('seller_information','All_product.review.user_details')->whereIn('id',$productQuery);
         //  where('Store_Availability','1')->
 
         if(isset($request->search)){
@@ -316,6 +316,25 @@ class UserManagementService
         }
 
         $all_store_information=$all_store_information->get();
+
+        $all_store_information->map(function ($store) {
+
+            $totalRating = 0;
+            $count = 0;
+
+            foreach ($store->All_product as $product) {
+                foreach ($product->review as $review) {
+                    if (!empty($review->store_rating)) {
+                        $totalRating += (float)$review->store_rating;
+                        $count++;
+                    }
+                }
+            }
+
+            $store->average_store_rating = $count > 0 ? round($totalRating / $count, 1) : 0;
+
+            return $store;
+        });
 
             return [
                 'status' => 'success',
@@ -441,6 +460,25 @@ class UserManagementService
                 return $product;
             })
             ->appends((array) $data);
+
+            $allProducts = $store_information->All_product()->with('review')->get();
+
+                $totalStoreRating = 0;
+                $storeRatingCount = 0;
+
+                foreach ($allProducts as $product) {
+                    foreach ($product->review as $review) {
+                        if (!empty($review->store_rating)) {
+                            $totalStoreRating += (float)$review->store_rating;
+                            $storeRatingCount++;
+                        }
+                    }
+                }
+
+                $store_information->average_store_rating = $storeRatingCount > 0
+                    ? round($totalStoreRating / $storeRatingCount, 1)
+                    : 0;
+
 
             // Step 5: Response
             $response = [
