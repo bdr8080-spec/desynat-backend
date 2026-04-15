@@ -577,6 +577,7 @@ public function newestProduct(Request $request){
 
 }
 
+
     public function add_story_comment(Request $request)
     {
         $validate = Validator::make($request->all(), [
