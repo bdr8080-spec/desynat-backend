@@ -31,8 +31,6 @@ class AdminLiveStreamController extends Controller
 
         $sellerLive=$result['data'];
 
-        dump($sellerLive);
-
         return view('admin.seller-live.index',compact('sellerLive'));
         
     }
