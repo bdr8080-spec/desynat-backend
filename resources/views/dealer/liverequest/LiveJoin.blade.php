@@ -20,8 +20,8 @@
                     <div class="live-pnl">
                         <div class="cart-panel position-relative">
                             <a href="#" class="link-content w-100">
-                                <div class="cart-card d-flex justifry-content-between w-100 align-items-center">
-                                    <div class="card-left mb-2 d-flex align-items-center">
+                                <div class="cart-card d-flex justifry-content-between w-100 align-items-center ">
+                                    <div class="card-left mb-2 d-flex align-items-center w-100">
                                         <div>
                                             <div class="chat-user-circle me-3">
                                                 <img src="{{$val->seller_details->profile_pic}}" alt="seller-image"
@@ -42,10 +42,8 @@
                                         </div>
                                     </div>
 
-                                    {{-- <a href="{{route('sellerLive',['channel_id'=>$val->channel_id ])}}"
-                                    class="btn-success text-white" style="width:100px;">Join us
-                            </a> --}}
-                            <div id="join-btn-{{ $val->id }}" data-type="live"></div>
+                                        
+                                 <div id="join-btn-{{ $val->id }}"></div>
 
                         </div>
                         </a>
@@ -147,7 +145,7 @@
                         <div class="cart-panel position-relative">
                             <a href="#" class="link-content w-100">
                                 <div class="cart-card d-flex justifry-content-between w-100 align-items-center">
-                                    <div class="card-left mb-2 d-flex align-items-center">
+                                    <div class="card-left mb-2 d-flex align-items-center w-100">
                                         <div>
                                             <div class="chat-user-circle me-3">
                                                 <img src="{{$val->seller_details->profile_pic}}" alt="seller-image"
@@ -197,22 +195,21 @@
 </section>
 
 
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
 const chatRooms = @json(
-    collect($liverequest['current_requests'] ?? [])
-        ->merge($otherSellerdetails ?? [])
+    collect($AllLiverequest ?? [])
         ->map(function($val) {
             return [
-                'id' => $val->id,
-                'channel_id' => $val->channel_id
+                'id' => $val['id'],
+                'channel_id' => $val['channel_id'],
+                'type' => $val['type']
             ];
         })
         ->values()
 );
+
 
 function checkAllLive() {
 
@@ -234,17 +231,17 @@ function checkAllLive() {
 
                     btnDiv.innerHTML = `
                         <a href="/seller/seller-live-view?channel_id=${room.channel_id}"
-                           class="btn btn-info text-white"
+                           class="btn btn-red text-white"
                            style="width:100px;">
-                           Live 
+                          Go Live
                         </a>
                     `;
 
                     }else{
 
                          btnDiv.innerHTML = `
-                        <a href="/seller/OthersellerLive?channel_id=${room.channel_id}"
-                           class="btn btn-info text-white"
+                        <a href="/seller/othersellerLive?channel_id=${room.channel_id}"
+                           class="btn btn-success text-white"
                            style="width:100px;">
                            Join Now 
                         </a>

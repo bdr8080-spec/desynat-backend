@@ -19,7 +19,7 @@
                 <div class="cart-panel position-relative">
                     <a href="#" class="link-content w-100">
                         <div class="cart-card d-flex justifry-content-between w-100 align-items-center">
-                            <div class="card-left mb-2 d-flex align-items-center">
+                            <div class="card-left mb-2 d-flex align-items-center w-100">
                                 <div>
                                     <div class="chat-user-circle me-3">
                                         <img src="{{$val->seller_details->profile_pic}}" alt="seller-image"
@@ -94,9 +94,9 @@ function checkAllLive() {
                 if (data.live) {
                     btnDiv.innerHTML = `
                         <a href="/user/View-live-seller-records?channel_id=${room.channel_id}"
-                           class="btn btn-info text-white"
-                           style="width:100px;">
-                           Join us
+                           class="btn customBtn5 text-white"
+                           style="width:130px;">
+                           Watch Live
                         </a>
                     `;
                 } else {

@@ -196,8 +196,24 @@ class SellerLiveRequestController extends Controller
 
         $otherSellerdetails=$otherSellerdetails['data'];
 
+
+
+    $AllLiverequest= collect($liverequest['current_requests'] ?? [])
+    ->map(fn($v) => [
+        'id' => $v->id,
+        'channel_id' => $v->channel_id,
+        'type' => 'live'
+    ])
+    ->concat(
+        collect($otherSellerdetails ?? [])
+            ->map(fn($v) => [
+                'id' => $v->id,
+                'channel_id' => $v->channel_id,
+                'type' => 'other'
+            ])
+            );
         
-        return view('dealer/liverequest/LiveJoin' ,compact('liverequest','otherSellerdetails'));
+        return view('dealer/liverequest/LiveJoin' ,compact('liverequest','otherSellerdetails','AllLiverequest'));
         
         // return response()->json([
         //     'status' => 'success',

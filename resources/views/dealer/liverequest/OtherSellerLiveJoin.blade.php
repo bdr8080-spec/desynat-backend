@@ -1,6 +1,16 @@
 @include('dealer.layout.header')
 
 
+<style>
+#video-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+</style>
+
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Live Join Requests</div>
@@ -15,238 +25,202 @@
             <div class="row">
                 <div class="col-lg-12">
 
-                    @forelse($liverequest['current_requests'] as $val)
-
-                    <div class="live-pnl">
-                        <div class="cart-panel position-relative">
-                            <a href="#" class="link-content w-100">
-                                <div class="cart-card d-flex justifry-content-between w-100 align-items-center">
-                                    <div class="card-left mb-2 d-flex align-items-center">
-                                        <div>
-                                            <div class="chat-user-circle me-3">
-                                                <img src="{{$val->seller_details->profile_pic}}" alt="seller-image"
-                                                    class="img-fluid">
-                                            </div>
-                                        </div>
-                                        <div class="w-100">
-                                            <div
-                                                class="card-right d-flex w-100 justify-content-between align-items-baseline">
-                                                <div class="product-info">
-                                                    <h6 class="product-title linkgold"> {{$val->order_id}}</h6>
-                                                    <div class="chat-user-light"> {{$val->timeslot_details->date}}
-                                                    </div>
-                                                    <div class="chat-user-light"> {{$val->timeslot_details->from}} -
-                                                        {{$val->timeslot_details->to}}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- {{-- <a href="{{route('sellerLive',['channel_id'=>$val->channel_id ])}}"
-                                    class="btn-success text-white" style="width:100px;">Join us
-                            </a> --}} -->
-                            <div id="join-btn-{{ $val->id }}"></div>
 
 
-                        </div>
-                        </a>
-                    </div>
-                </div>
+<h2>👀 Watch Live</h2>
 
-                @empty
-                <div class="col-12 text-center">
-                    <h5>No Live Request Found</h5>
-                </div>
-                @endforelse
+<input type="hidden" id="channel" value="{{ request()->channel_id }}">
 
-            </div>
-        </div>
+<button onclick="leaveStream()">🚪 Leave</button>
 
-    </div>
+<h3 style="display: none;">
+    👥 Watching: <span id="user-count">0</span>
+</h3>
 
-    </div>
+<!-- WAITING -->
+<div id="waiting-message" style="text-align:center; padding:40px;">
+    <h3>⏳ Waiting for seller to go LIVE</h3>
+    <p>Please stay tuned...</p>
+</div>
 
-</section>
-<!-- 
-<section class="section dashboard">
-    <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Future Join Requests</div>
-      
-    </div>
-    <div class="datatable-wapper mt-4">
-        <div class="table-header-3">
+<!-- VIDEO -->
+<div id="video-container"></div>
 
-          
-            <div class="row">
-                <div class="col-lg-12">
+<script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
 
-                    @forelse($liverequest['future_requests'] as $val)
-
-                    <div class="live-pnl">
-                        <div class="cart-panel position-relative">
-                            <a href="#" class="link-content w-100">
-                                <div class="cart-card d-flex justifry-content-between w-100 align-items-center">
-                                    <div class="card-left mb-2 d-flex align-items-center">
-                                        <div>
-                                            <div class="chat-user-circle me-3">
-                                                <img src="{{$val->seller_details->profile_pic}}" alt="seller-image"
-                                                    class="img-fluid">
-                                            </div>
-                                        </div>
-                                        <div class="w-100">
-                                            <div
-                                                class="card-right d-flex w-100 justify-content-between align-items-baseline">
-                                                <div class="product-info">
-                                                    <h6 class="product-title linkgold"> {{$val->order_id}}</h6>
-                                                    <div class="chat-user-light"> {{$val->timeslot_details->date}}
-                                                    </div>
-                                                    <div class="chat-user-light"> {{$val->timeslot_details->from}} -
-                                                        {{$val->timeslot_details->to}}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a href="#" class="btn-success text-white" style="width:100px;">Join us</a>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    @empty
-                    <div class="col-12 text-center">
-                        <h5>No Future Live Request Found</h5>
-                    </div>
-                    @endforelse
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section> -->
-
-
-<section class="section dashboard">
-    <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Other Seller Live Requests</div>
-    </div>
-    <div class="datatable-wapper mt-4">
-        <div class="table-header-3">
-
-
-            <div class="row">
-                <div class="col-lg-12">
-
-                    @forelse($otherSellerdetails as $val)
-
-                    <div class="live-pnl">
-                        <div class="cart-panel position-relative">
-                            <a href="#" class="link-content w-100">
-                                <div class="cart-card d-flex justifry-content-between w-100 align-items-center">
-                                    <div class="card-left mb-2 d-flex align-items-center">
-                                        <div>
-                                            <div class="chat-user-circle me-3">
-                                                <img src="{{$val->seller_details->profile_pic}}" alt="seller-image"
-                                                    class="img-fluid">
-                                            </div>
-                                        </div>
-                                        <div class="w-100">
-                                            <div
-                                                class="card-right d-flex w-100 justify-content-between align-items-baseline">
-                                                <div class="product-info">
-                                                    <h6 class="product-title linkgold"> {{$val->seller_details->first_name}}
-                                                {{$val->seller_details->last_name}}
-                                            </h6>
-                                                    <div class="chat-user-light"> {{$val->timeslot_details->date}}
-                                                    </div>
-                                                    <div class="chat-user-light"> {{$val->timeslot_details->from}} -
-                                                        {{$val->timeslot_details->to}}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a href="#" class="btn-success text-white" style="width:100px;">Join us</a>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    @empty
-                    <div class="col-12 text-center">
-                        <h5>No Future Live Request Found</h5>
-                    </div>
-                    @endforelse
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-const chatRooms = @json(
-    collect($liverequest['current_requests'] ?? []) -> map(function($val) {
-        return [
-            'id' => $val -> id,
-            'channel_id' => $val -> channel_id
-        ];
-    }) -> values()
-);
+let client;
+let users = {};
 
-function checkAllLive() {
+AgoraRTC.setLogLevel(2);
 
-    if (!chatRooms.length) return;
+window.addEventListener("load", async () => {
 
-    chatRooms.forEach(room => {
+    const channel = document.getElementById('channel').value;
 
-        fetch(`/check-live-join-time-status/${room.id}`)
-            .then(res => res.json())
-            .then(data => {
+    if (!channel) {
+        alert("Channel missing");
+        return;
+    }
 
-                let btnDiv = document.getElementById('join-btn-' + room.id);
+    try {
 
-                if (!btnDiv) return;
+        console.log("👀 Joining as audience...");
 
-                if (data.live) {
-                    btnDiv.innerHTML = `
-                        <a href="/seller/seller-live-view?channel_id=${room.channel_id}"
-                           class="btn btn-info text-white"
-                           style="width:100px;">
-                           Join us
-                        </a>
-                    `;
-                } else {
-                    btnDiv.innerHTML = "";
-                }
+        // TOKEN
+        const res = await fetch('/agora/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ channel })
+        });
 
-            })
-            .catch(err => console.log(err));
+        const data = await res.json();
 
+        // CLIENT
+        client = AgoraRTC.createClient({
+            mode: "live",
+            codec: "vp8"
+        });
+
+        registerEvents();
+
+        // AUDIENCE ROLE
+        await client.setClientRole("audience");
+
+        // JOIN
+        await client.join(data.appId, channel, data.token, data.uid);
+
+        // 🔥 ENABLE AUDIO (IMPORTANT FIX)
+        client.enableAudio();
+
+        console.log("✅ Joined as audience");
+
+    } catch (err) {
+        console.error("❌ Error:", err);
+    }
+});
+
+
+// 🎧 EVENTS
+function registerEvents() {
+
+    client.on("user-published", async (user, mediaType) => {
+
+        document.getElementById("waiting-message")?.remove();
+
+        await client.subscribe(user, mediaType);
+
+        // 🎥 VIDEO
+        if (mediaType === "video" && user.videoTrack) {
+
+            const player = document.createElement("div");
+            player.id = "user-" + user.uid;
+            player.style.width = "600px";
+            player.style.height = "350px";
+            player.style.background = "black";
+            player.style.borderRadius = "8px";
+
+            document.getElementById("video-container").appendChild(player);
+
+            user.videoTrack.play(player.id);
+        }
+
+        // 🔊 AUDIO FIXED
+        if (mediaType === "audio" && user.audioTrack) {
+
+            try {
+                user.audioTrack.play();
+            } catch (err) {
+                console.warn("Autoplay blocked, retrying on click");
+
+                document.body.addEventListener("click", () => {
+                    user.audioTrack.play();
+                }, { once: true });
+            }
+        }
+
+        users[user.uid] = user;
+        updateUserCount();
     });
 
+    // 🔴 HOST LEFT
+    client.on("user-left", (user) => {
+
+        delete users[user.uid];
+
+        document.getElementById("user-" + user.uid)?.remove();
+
+        updateUserCount();
+
+        if (Object.keys(users).length === 0) {
+            showWaitingMessage();
+        }
+    });
 }
 
-// initial run
-checkAllLive();
 
-// every 5 seconds
-setInterval(checkAllLive, 5000);
+// 👥 USER COUNT
+function updateUserCount() {
+    document.getElementById("user-count").innerText = Object.keys(users).length;
+}
+
+
+// ⏳ WAITING MESSAGE
+function showWaitingMessage() {
+
+    if (!document.getElementById("waiting-message")) {
+
+        const div = document.createElement("div");
+        div.id = "waiting-message";
+        div.style.textAlign = "center";
+        div.style.padding = "40px";
+
+        div.innerHTML = `
+            <h3>⏳ Waiting for seller to go LIVE</h3>
+            <p>Please stay tuned...</p>
+        `;
+
+        document.querySelector('.dashboard').prepend(div);
+    }
+}
+
+
+// 🚪 LEAVE STREAM
+async function leaveStream() {
+
+    try {
+
+        await client.leave();
+
+        document.getElementById("video-container").innerHTML = "";
+        document.getElementById("user-count").innerText = 0;
+
+        showWaitingMessage();
+
+        users = {};
+
+        console.log("🚪 Left stream");
+
+        window.location.href='/user/get-live-seller-records';
+
+    } catch (err) {
+        console.error("❌ Leave Error:", err);
+    }
+}
 </script>
+
+
+    </div>
+    </div>
+
+    </div>
+
+    </div>
+
+</section>
 
 
 

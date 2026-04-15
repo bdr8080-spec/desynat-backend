@@ -19,6 +19,7 @@ use App\Models\Brand;
 use App\Models\color;
 use App\Models\size;
 use App\Models\TicketType;
+use App\Models\Content;
 
 
 
@@ -376,6 +377,34 @@ class CommonController extends Controller
         return ApiResponse::generateResponse('success', 'ticket type list fetched successfully', $data, 200);
       
      }
+
+     public function contact_us(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'type' => 'required|in:1,2,3'
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $data = Content::where('slug', 'contact_us')
+            ->where('type', $request->type)
+            ->first();
+
+        if (!$data) {
+            return ApiResponse::generateResponse('success', 'No data found', [], 200);
+        }
+
+        $data->content_english = json_decode($data->content_english, true);
+
+        return ApiResponse::generateResponse(
+            'success',
+            'contact us fetched successfully',
+            $data,
+            200
+        );
+    }
 
 
 
