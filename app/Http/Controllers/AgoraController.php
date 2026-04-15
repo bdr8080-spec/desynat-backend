@@ -77,8 +77,6 @@ class AgoraController extends Controller
     $livechat_details=  LiveRequest::where('channel_id',$request->channel)->first();
     $livechat_details->update(['live_user'=> $livechat_details->live_user+1]);
 
-
-
         $uid= rand(00000,99999);
 
         $token = $this->agora->generateRtcToken(

@@ -362,7 +362,7 @@ if ($current_requests->isEmpty() && $future_requests->isEmpty()) {
     return [
         'status' => 'success',
         'message' => 'No Request found',
-        'data' => new \stdClass()
+        'data' => []
     ];
 }
 

@@ -31,6 +31,8 @@ use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\AdminLiveStreamController;
+
 
 use App\Http\Controllers\SaveFirebaseToken;
 
@@ -246,6 +248,16 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/payment-management', [PaymentController::class, 'paymentManagement'])->name('admin.paymentManagement');
             
         
+        // seller Live Stream 
+        
+     Route::get('/seller-live-stream-Managemnt', [AdminLiveStreamController::class, 'sellerlivestreamManagemnt'])->name('admin.sellerlivestreamManagemnt');
+            
+        
+
+        
+
+
+
 
     });
 
@@ -260,6 +272,10 @@ Route::match(['get', 'post'], '/support', function () {
 
 })->name('admin.support');
 
+Route::match(['get', 'post'], '/seller-live', function () {
+    return view('admin.seller-live.index');
+
+})->name('admin.seller-live');
 
 
 
