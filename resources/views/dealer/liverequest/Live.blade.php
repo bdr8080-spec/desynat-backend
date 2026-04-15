@@ -45,11 +45,7 @@
     let client;
     let localTracks = [];
     let users = {};
-    let localUid = {
-        {
-            $liveRequest - > uid ?? 0
-        }
-    };
+    let localUid = "{{$liveRequest->uid ?? 0}}";
 
     let micTrack = null;
     let micMuted = false;
