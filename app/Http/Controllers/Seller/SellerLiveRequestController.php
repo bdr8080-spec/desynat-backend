@@ -191,8 +191,29 @@ class SellerLiveRequestController extends Controller
 
         }
 
+
+        $otherSellerdetails = $this->SellerLiveRequestService->otherSellerLiveRoomRecords($request_data);
+
+        $otherSellerdetails=$otherSellerdetails['data'];
+
+
+
+    $AllLiverequest= collect($liverequest['current_requests'] ?? [])
+    ->map(fn($v) => [
+        'id' => $v->id,
+        'channel_id' => $v->channel_id,
+        'type' => 'live'
+    ])
+    ->concat(
+        collect($otherSellerdetails ?? [])
+            ->map(fn($v) => [
+                'id' => $v->id,
+                'channel_id' => $v->channel_id,
+                'type' => 'other'
+            ])
+            );
         
-        return view('dealer/liverequest/LiveJoin' ,compact('liverequest'));
+        return view('dealer/liverequest/LiveJoin' ,compact('liverequest','otherSellerdetails','AllLiverequest'));
         
         // return response()->json([
         //     'status' => 'success',
@@ -262,6 +283,15 @@ class SellerLiveRequestController extends Controller
     }
 
     
+
+    public function OthersellerLive(Request $request)
+    {
+    
+     $liveRequest=LiveRequest::where('channel_id', $request->channel_id)->first();
+
+    return view('dealer/liverequest/OtherSellerLiveJoin',compact('liveRequest'));
+        
+    }
 
     
     
