@@ -55,13 +55,48 @@
                         <div class="product-content">
                             <p> {{$store_details['store']->seller_information->first_name}}
                                 {{$store_details['store']->seller_information->last_name}}</p>
+                            @php
+                                $totalReviews = 0;
+
+                                foreach ($store_details['All_Product'] as $product) {
+                                    $totalReviews += $product->review->count();
+                                }
+
+                                $rating = $store_details['store']->average_store_rating ?? 0;
+
+                                $fullStars = floor($rating);
+                                $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                            @endphp
+
                             <div class="rating">
-                                <span><i class="fa-solid fa-star"></i></span>
-                                <span><i class="fa-solid fa-star"></i></span>
-                                <span><i class="fa-solid fa-star"></i></span>
-                                <span><i class="fa-solid fa-star"></i></span>
-                                <span><i class="fa-solid fa-star-half-stroke"></i></span>
-                                <span class="totalstart">(1K)</span>
+
+                                @if($rating > 0)
+
+                                    @for($i = 0; $i < $fullStars; $i++)
+                                        <span><i class="fa-solid fa-star"></i></span>
+                                    @endfor
+
+                                    @if($hasHalfStar)
+                                        <span><i class="fa-solid fa-star-half-stroke"></i></span>
+                                    @endif
+
+                                    @for($i = 0; $i < $emptyStars; $i++)
+                                        <span><i class="fa-regular fa-star"></i></span>
+                                    @endfor
+
+                                @else
+
+                                    @for($i = 0; $i < 5; $i++)
+                                        <span><i class="fa-regular fa-star"></i></span>
+                                    @endfor
+
+                                @endif
+
+                                <span class="totalstart">
+                                    ({{ $totalReviews }})
+                                </span>
+
                             </div>
                         </div>
                     </div>
@@ -393,12 +428,44 @@
                                             <div class="product-content">
                                                 <h5 class="black-title">{{ $item->product_name_en }}
                                                     ({{ "by " . $store_details['store']['store_name'] }})</h5>
-                                                <div class="rating">
+                                                <!-- <div class="rating">
                                                     <i class="fa-solid fa-star"></i>
                                                     <i class="fa-solid fa-star"></i>
                                                     <i class="fa-solid fa-star"></i>
                                                     <i class="fa-solid fa-star-half-stroke"></i>
                                                     <span>(1K)</span>
+                                                </div> -->
+                                                <div class="rating">
+                                                    @php
+                                                        $rating = $item->average_rating ?? 0;
+                                                        $fullStars = floor($rating);
+                                                        $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                                        $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                                                    @endphp
+
+                                                    @if($rating > 0)
+
+                                                        @for($i = 0; $i < $fullStars; $i++)
+                                                            <i class="fa-solid fa-star"></i>
+                                                        @endfor
+
+                                                        @if($hasHalfStar)
+                                                            <i class="fa-solid fa-star-half-stroke"></i>
+                                                        @endif
+
+                                                        @for($i = 0; $i < $emptyStars; $i++)
+                                                            <i class="fa-regular fa-star"></i>
+                                                        @endfor
+
+                                                    @else
+
+                                                        @for($i = 0; $i < 5; $i++)
+                                                            <i class="fa-regular fa-star"></i>
+                                                        @endfor
+
+                                                    @endif
+
+                                                    <span>({{ $item->review->count() ?? 0 }})</span>
                                                 </div>
                                                 <div class="price">
                                                     <strong>{{ $item->product_variants[0]->final_price }}

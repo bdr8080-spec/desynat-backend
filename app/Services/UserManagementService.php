@@ -321,6 +321,7 @@ class UserManagementService
 
             $totalRating = 0;
             $count = 0;
+            $reviewCount = 0;
 
             foreach ($store->All_product as $product) {
                 foreach ($product->review as $review) {
@@ -328,10 +329,12 @@ class UserManagementService
                         $totalRating += (float)$review->store_rating;
                         $count++;
                     }
+                    $reviewCount++;
                 }
             }
 
             $store->average_store_rating = $count > 0 ? round($totalRating / $count, 1) : 0;
+            $store->total_review_count = $reviewCount;
 
             return $store;
         });
@@ -465,6 +468,7 @@ class UserManagementService
 
                 $totalStoreRating = 0;
                 $storeRatingCount = 0;
+                $reviewCount = 0;
 
                 foreach ($allProducts as $product) {
                     foreach ($product->review as $review) {
@@ -472,12 +476,15 @@ class UserManagementService
                             $totalStoreRating += (float)$review->store_rating;
                             $storeRatingCount++;
                         }
+                        $reviewCount++;
                     }
                 }
 
                 $store_information->average_store_rating = $storeRatingCount > 0
                     ? round($totalStoreRating / $storeRatingCount, 1)
                     : 0;
+
+                $store_information->total_review_count = $reviewCount;
 
 
             // Step 5: Response
