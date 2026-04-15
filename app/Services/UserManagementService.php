@@ -458,7 +458,7 @@ class UserManagementService
     
             // Step 1: Find store
             
-            $product_details = Product::with(['category','subcategory','store','brand','product_specifications','product_variants.color','product_variants.size','review','review.user_details'])
+            $product_details = product::with(['category','subcategory','store','brand','product_specifications','product_variants.color','product_variants.size','review','review.user_details'])
             ->where('id', $request->product_id)->first();
 
            
@@ -505,6 +505,29 @@ class UserManagementService
                 $product_details->addtocartTotalProduct = 0;
                 
             }
+
+            $reviews = $product_details->review ?? [];
+
+            if (count($reviews) > 0) {
+
+                $totalRating = 0;
+                $count = 0;
+
+                foreach ($reviews as $review) {
+                    if (!empty($review->product_rating)) {
+                        $totalRating += (float) $review->product_rating;
+                        $count++;
+                    }
+                }
+
+                $average = $count > 0 ? round($totalRating / $count, 1) : 0;
+
+            } else {
+                $average = 0;
+            }
+
+            $product_details->average_rating = $average;
+
 
            
             return [

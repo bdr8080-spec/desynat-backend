@@ -19,7 +19,8 @@
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.30",
         "myfatoorah/laravel-package": "^2.2",
-        "simplesoftwareio/simple-qrcode": "^4.2"
+        "simplesoftwareio/simple-qrcode": "^4.2",
+        "twilio/sdk": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

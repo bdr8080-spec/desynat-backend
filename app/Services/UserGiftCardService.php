@@ -8,6 +8,7 @@ use App\Models\{UserGiftCards,GiftCard};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
 Use DB;
+use Twilio\Rest\Client;
 
 
 class UserGiftCardService
@@ -80,9 +81,30 @@ class UserGiftCardService
 
                     'notification_type' => 'giftcard_added'
                 ]);
+
+                // send whatsapp msg
+                // $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
+
+                // $receiverNumber = 'whatsapp:' . $request->country_code . $request->mobile;
+
+                // $messageBody =
+                //     "🎁 You Received a Gift Card\n\n" .
+                //     "Amount: " . $request->amount . "\n" .
+                //     "Card No: " . $giftCardNo . "\n" .
+                //     "PIN: " . $giftCardPin . "\n\n" .
+                //     "Thank you!";
+
+                // $message = $twilio->messages->create(
+                //     $receiverNumber,
+                //     [
+                //         "from" => env('TWILIO_WHATSAPP_FROM'),
+                //         "body" => $messageBody
+                //     ]
+                // );
     
         
             return ['status'=>'success','message'=>"GiftCard Add successfully",'data'=>$AddGiftCard];
+
         
         } catch (\Exception $e) {
             return [
