@@ -54,11 +54,20 @@
                          <div class="footerNavLink_content">
                              <h6>Customer Policy</h6>
                              <ul class="navs list-unstyled">
+                                @php
+                                    $contact = \App\Models\Content::where('slug', 'contact_us')->where('type','1')->first();
+                                    $contactData = [];
+                                    if ($contact) {
+                                        $contactData = is_array($contact->content_english)
+                                            ? $contact->content_english
+                                            : json_decode($contact->content_english, true);
+                                    }
+                                @endphp
                                  <li>
-                                     <a href="">XYZgmail.com</a>
+                                     <a href="">{{ $contactData['email'] ?? 'XYZgmail.com' }}</a>
                                  </li>
                                  <li>
-                                     <a href="">+ 965 36214565</a>
+                                     <a href="">{{ $contactData['mobile'] ?? '+96536214565' }}</a>
                                  </li>
                              </ul>
                          </div>

@@ -350,8 +350,14 @@ class DashBoardController extends Controller
         $ticketTypesResponse = $commonController->ticket_types($request);
         $ticketTypes = $ticketTypesResponse->original['data'];
         //dd($ticketTypes);
+        $request_data1 = new Request([
+            'type' => 1,
+        ]);
+        $contactUsResponse = $commonController->contact_us($request_data1);
+        $ContactUs = $contactUsResponse->original['data'];
+        //dd($ContactUs);
 
-        return view('user.support.index',compact('tickets','ticketTypes'));
+        return view('user.support.index',compact('tickets','ticketTypes','ContactUs'));
     }
 
     public function raise_ticket(REQUEST $request){

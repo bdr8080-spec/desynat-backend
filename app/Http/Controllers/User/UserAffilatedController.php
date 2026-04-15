@@ -1171,8 +1171,13 @@ public function ticket_management(REQUEST $request){
         $ticketTypesResponse = $commonController->ticket_types($request);
         $ticketTypes = $ticketTypesResponse->original['data'];
         //dd($ticketTypes);
+        $request_data1 = new Request([
+            'type' => 1,
+        ]);
+        $contactUsResponse = $commonController->contact_us($request_data1);
+        $ContactUs = $contactUsResponse->original['data'];
 
-        return view('affiliatedUser.support.index',compact('tickets','ticketTypes'));
+        return view('affiliatedUser.support.index',compact('tickets','ticketTypes','ContactUs'));
     }
 
     public function raise_ticket(REQUEST $request){
