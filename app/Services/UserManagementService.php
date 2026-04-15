@@ -362,7 +362,9 @@ class UserManagementService
                     'subcategory',
                     'product_specifications',
                     'product_variants.color',
-                    'product_variants.size'
+                    'product_variants.size',
+                    'review',
+                    'review.user_details'
                 ]);
     
             // Step 3: Search
@@ -418,6 +420,24 @@ class UserManagementService
             $products = $products->paginate()
             ->through(function ($product) use ($wishlistIds) {
                 $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+                $reviews = $product->review ?? [];
+                if (count($reviews) > 0) {
+
+                    $totalRating = 0;
+                    $count = 0;
+
+                    foreach ($reviews as $review) {
+                        if (!empty($review->product_rating)) {
+                            $totalRating += (float) $review->product_rating;
+                            $count++;
+                        }
+                    }
+
+                    $product->average_rating = $count > 0 ? round($totalRating / $count, 1) : 0;
+
+                } else {
+                    $product->average_rating = 0;
+                }
                 return $product;
             })
             ->appends((array) $data);

@@ -13,12 +13,16 @@
 </style>
 
 <section class="section dashboard">
+    <div class="container">
 
-<h2>👀 Watch Live</h2>
+    <div class="d-flex justify-content-between">
+        <h4>Watch Live</h4>
+        <button onclick="leaveStream()" class="btn btn-danger">Leave</button>
+    </div>
 
 <input type="hidden" id="channel" value="{{ request()->channel_id }}">
 
-<button onclick="leaveStream()">🚪 Leave</button>
+
 
 <h3 style="display: none;">
     👥 Watching: <span id="user-count">0</span>
@@ -32,6 +36,9 @@
 
 <!-- VIDEO -->
 <div id="video-container"></div>
+
+</div>
+
 
 <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
 
