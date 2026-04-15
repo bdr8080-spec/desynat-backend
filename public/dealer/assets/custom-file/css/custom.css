@@ -962,7 +962,9 @@ table.dataTable td.dt-type-date {
 .noti-content {
     word-break: break-word;
 }
-
+.btn-red{
+    background: red;
+}
 
 
 @media (min-width: 1140px) and (max-width: 1440px) {

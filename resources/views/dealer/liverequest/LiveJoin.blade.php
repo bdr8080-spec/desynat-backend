@@ -44,6 +44,7 @@
 
                                     {{-- <a href="{{route('sellerLive',['channel_id'=>$val->channel_id ])}}"
                                         class="btn-success text-white" style="width:100px;">Join us</a> --}}
+                                        
                                  <div id="join-btn-{{ $val->id }}"></div>
 
 
@@ -163,9 +164,9 @@ function checkAllLive() {
                 if (data.live) {
                     btnDiv.innerHTML = `
                         <a href="/seller/seller-live-view?channel_id=${room.channel_id}"
-                           class="btn btn-info text-white"
+                           class="btn btn-red text-white"
                            style="width:100px;">
-                           Join us
+                          Go Live
                         </a>
                     `;
                 } else {
