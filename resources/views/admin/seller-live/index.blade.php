@@ -275,6 +275,12 @@ async function leaveStream() {
 
         console.log("🚪 Left");
 
+        // ✅ CLOSE MODAL PROPERLY
+        // const modalEl = document.getElementById('videoshow');
+        // const modalInstance = bootstrap.Modal.getInstance(modalEl);
+        // modalInstance.hide();
+
+
     } catch (err) {
         console.error(err);
     }
