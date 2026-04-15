@@ -13,6 +13,7 @@ use App\Services\UserDashboardService;
 use App\Services\StoryManagementService;
 use App\Services\TicketService;
 
+
 use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan };
 
 
@@ -527,7 +528,9 @@ public function suggestStore(Request $request){
 public function bestSellingProduct(Request $request){
 
 
-    $data=$this->UserDashboardService->bestSellingProduct();
+      $userid=getUserIdWithToken($request);
+
+    $data=$this->UserDashboardService->bestSellingProduct($userid);
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
@@ -541,7 +544,11 @@ public function bestSellingProduct(Request $request){
 
 public function TopRatingProduct(Request $request){
 
-    $data=$this->UserDashboardService->TopRatingProduct();
+      $userid=getUserIdWithToken($request);
+
+
+
+    $data=$this->UserDashboardService->TopRatingProduct($userid);
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
@@ -555,7 +562,11 @@ public function TopRatingProduct(Request $request){
 
 public function newestProduct(Request $request){
 
-    $data=$this->UserDashboardService->userNewestProduct();
+
+    $userid=getUserIdWithToken($request);
+
+
+    $data=$this->UserDashboardService->userNewestProduct($userid);
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],(object)[],422);

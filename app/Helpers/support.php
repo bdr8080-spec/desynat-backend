@@ -9,6 +9,9 @@ use Carbon\Carbon;
 use App\Models\Notification;
 
 
+use Laravel\Sanctum\PersonalAccessToken;
+
+
 // Function to calculate the distance using the Haversine formula
 function calculateDistance($lat1, $lon1, $lat2, $lon2) {
     // if (
@@ -564,6 +567,26 @@ if (!function_exists('SellerChatproductRequestStatus')) {
         $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
 
         return $client->fetchAccessTokenWithAssertion();
+    }
+
+
+function getUserIdWithToken($request){
+
+     $user = null;
+
+    if ($request->bearerToken()) {
+
+        $token = PersonalAccessToken::findToken($request->bearerToken());
+
+        if ($token) {
+            $user = $token->tokenable;
+
+            $user=$user->id;
+        }
+    }
+
+    return $user;
+
     }
 
 

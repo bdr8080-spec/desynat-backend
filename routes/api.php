@@ -232,11 +232,17 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     Route::get('/user/show-all-live-streaming-request', [UserDashboardController::class,'live_room_records']);
 
     Route::Post('/user/user-get-deals', [UserDashboardController::class,'UserHomescreenDeals']);
+
+
+    // some time i got token or some time not
+    // Route::middleware(['auth:api'])->group(function () {
+
     Route::get('/user/get_seller_stories', [UserDashboardController::class,'get_seller_stories']);
     Route::get('/user/get_seller_reels', [UserDashboardController::class,'get_seller_reels']);
     Route::get('/user/get_seller_highlights', [UserDashboardController::class,'get_seller_highlights']);
     Route::get('/user/get_admin_stories', [UserDashboardController::class,'get_admin_stories']);
     
+    // });
    
   Route::Post('/scanner-Seller-details', [UserDashboardController::class,'ScannerSellerdetails']);
 
