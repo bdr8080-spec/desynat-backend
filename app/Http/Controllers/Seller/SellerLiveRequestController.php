@@ -214,11 +214,49 @@ class SellerLiveRequestController extends Controller
       public function sellerLiveCount(Request $request)
     {
 
-     $liveRequest=LiveRequest::where('channel_id', $request->channel_id)->first();
+    //  $liveRequest=LiveRequest::where('channel_id', $request->channel_id)->first();
+
+
+   $url="https://api.agora.io/dev/v1/channel/user/".env('AGORA_APP_ID')."/".$request->channel_id;
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Basic MGRkZjAzNTkzMDJjNGUzYjk5NTI4MmI0NDQ3MGUyNWU6YzI1OGMyZTBlNTc4NDIwZmJkYjBlNDNiYWY1YjFlZTM=',
+            'Cookie: connect.sid=s%3AIHsEXiokm0y1tARxfvvQ0Lt1.NB3704XkND6lcnAe8C%2FumE6wrpb62SqmgsPH3Ja7aL0'
+        ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        // echo $response;
+
+
+        $agora_response=json_decode($response,1);
+
+        if(isset($agora_response)){
+
+            if($agora_response['success']==true){
+               $count_user=$agora_response['data']['audience_total'];
+            }
+        }else{
+            $count_user=0;
+        }
+
 
       return response()->json([
             'status' => 'success',
-            'data' => $liveRequest->live_user??0
+            'data' => $count_user
         ], 200);
         
     }
