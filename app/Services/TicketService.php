@@ -21,8 +21,20 @@ class TicketService
             ]);
 
             if (!empty($request->search)) {
+
                 $search = $request->search;
-                $query->where('ticket_id', 'like', '%' . $search . '%');
+
+                $query->where(function ($q) use ($search) {
+
+                    // search in ticket_id
+                    $q->where('ticket_id', 'like', '%' . $search . '%')
+
+                    // search in relation (ticket type name)
+                    ->orWhereHas('ticket_type_details', function ($sub) use ($search) {
+                        $sub->where('name', 'like', '%' . $search . '%');
+                    });
+
+                });
             }
 
             $query->where('sender_type', $request->sender_type)
