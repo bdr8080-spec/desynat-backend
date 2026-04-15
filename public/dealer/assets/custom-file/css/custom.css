@@ -963,7 +963,7 @@ table.dataTable td.dt-type-date {
     word-break: break-word;
 }
 .btn-red{
-    background: red;
+    background: red !important;
 }
 
 
