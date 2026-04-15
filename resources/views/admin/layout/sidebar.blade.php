@@ -1,4 +1,3 @@
-
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion customSidebar" id="accordionSidebar">
     <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.dashboard') }}">
@@ -12,7 +11,8 @@
             Brands Management
         </a>
     </li>
-    <li class="nav-item {{ Request::routeIs('categoryManagement') || Request::routeIs('manageSubCategory') ? 'active' : '' }}">
+    <li
+        class="nav-item {{ Request::routeIs('categoryManagement') || Request::routeIs('manageSubCategory') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('categoryManagement') }}">
             <span><img src="{{ asset('admin/image/category.svg') }}" alt="Category Management" /></span>
             Category & Sub-Category Management
@@ -24,7 +24,8 @@
             Seller Management
         </a>
     </li>
-    <li class="nav-item {{ Request::routeIs('countryManagement') || Request::routeIs('manageCities') || Request::routeIs('manageZones') ? 'active' : '' }}">
+    <li
+        class="nav-item {{ Request::routeIs('countryManagement') || Request::routeIs('manageCities') || Request::routeIs('manageZones') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('countryManagement') }}">
             <span><img src="{{ asset('admin/image/country.svg') }}" alt="Country Management" /></span>
             Country,City & Zone Management
@@ -48,7 +49,8 @@
             Affiliate User Management
         </a>
     </li>
-    <li class="nav-item {{ Request::routeIs('admin.deliveryBoyManagement') || Request::routeIs('admin.deliveryboy_reg_step1') || Request::routeIs('admin.deliveryboy_reg_step2') || Request::routeIs('admin.edit_deliveryboy_step1') || Request::routeIs('admin.edit_deliveryboy_step2') ? 'active' : '' }}">
+    <li
+        class="nav-item {{ Request::routeIs('admin.deliveryBoyManagement') || Request::routeIs('admin.deliveryboy_reg_step1') || Request::routeIs('admin.deliveryboy_reg_step2') || Request::routeIs('admin.edit_deliveryboy_step1') || Request::routeIs('admin.edit_deliveryboy_step2') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.deliveryBoyManagement') }}">
             <span><img src="{{ asset('admin/image/image-user-check.svg') }}" alt="Plan Management" /></span>
             Delivery Boy Management
@@ -60,7 +62,8 @@
             Reason Management
         </a>
     </li>
-    <li class="nav-item {{ Request::routeIs('admin.shippingManagement') || Request::routeIs('admin.manageShippingCharges') ? 'active' : '' }}">
+    <li
+        class="nav-item {{ Request::routeIs('admin.shippingManagement') || Request::routeIs('admin.manageShippingCharges') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.shippingManagement') }}">
             <span><img src="{{ asset('admin/image/category.svg') }}" alt="Shipping Management" /></span>
             Delivery Charges & Tax Management
@@ -80,7 +83,8 @@
     </li>
     <li class="nav-item {{ Request::routeIs('admin.promoCodeManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.promoCodeManagement') }}">
-            <span><img src="{{ asset('admin/image/DDDDDDDDD/addvertisement.svg') }}" alt="Promo Code Management" /></span>
+            <span><img src="{{ asset('admin/image/DDDDDDDDD/addvertisement.svg') }}"
+                    alt="Promo Code Management" /></span>
             Promo Code Management
         </a>
     </li>
@@ -136,7 +140,8 @@
 
     <li class="nav-item {{ Request::routeIs('admin.affiliateWithdrawRequestManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.affiliateWithdrawRequestManagement') }}">
-            <span><img src="{{ asset('admin/image/credit-card-down.svg') }}" alt="Affiliate Withdraw Request Management" /></span>
+            <span><img src="{{ asset('admin/image/credit-card-down.svg') }}"
+                    alt="Affiliate Withdraw Request Management" /></span>
             Affiliate User Withdraw Request Management
         </a>
     </li>
@@ -148,7 +153,8 @@
         </a>
     </li>
 
-    <li class="nav-item {{ Request::routeIs('admin.notificationManagement') || Request::routeIs('admin.sendNotification') ? 'active' : '' }}">
+    <li
+        class="nav-item {{ Request::routeIs('admin.notificationManagement') || Request::routeIs('admin.sendNotification') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.notificationManagement') }}">
             <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
             Notification Management
@@ -169,9 +175,9 @@
         </a>
     </li>
 
-     <li class="nav-item">
-        <a class="nav-link" href="/seller-live">
-            <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="Live" /></span>
+    <li class="nav-item {{ Request::routeIs('admin.sellerlivestreamManagemnt') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.sellerlivestreamManagemnt') }}">
+            <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="icon" /></span>
             Current Live Seller
         </a>
     </li>
@@ -182,7 +188,7 @@
             Support Chat
         </a>
     </li>
-     
+
     <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">
             <span><img src="{{ asset('admin/image/logout.svg') }}" alt="Logout" /></span>
@@ -190,4 +196,3 @@
         </a>
     </li> -->
 </ul>
-
