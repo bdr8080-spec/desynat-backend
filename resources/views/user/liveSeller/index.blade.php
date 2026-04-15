@@ -95,7 +95,7 @@ function checkAllLive() {
                     btnDiv.innerHTML = `
                         <a href="/user/View-live-seller-records?channel_id=${room.channel_id}"
                            class="btn customBtn5 text-white"
-                           style="width:100px;">
+                           style="width:130px;">
                            Watch Live
                         </a>
                     `;
