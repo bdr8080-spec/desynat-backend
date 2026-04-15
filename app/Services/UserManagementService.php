@@ -1282,12 +1282,30 @@ public function addtoCart_Increment_decrement($request)
 
             $productIds = wishlist::where('user_id', $userId)->pluck('product_id');
 
-            $wishListProduct = Product::with(['category','subcategory','brand','product_specifications','product_variants.color','product_variants.size'])
+            $wishListProduct = product::with(['category','subcategory','brand','product_specifications','product_variants.color','product_variants.size','review','review.user_details'])
             ->whereIn('id', $productIds)
                 ->get();
 
             $wishListProduct->map(function ($item) use ($user) {
                 $item->user_name = $user->full_name; 
+                $reviews = $item->review ?? [];
+                if (count($reviews) > 0) {
+
+                    $totalRating = 0;
+                    $count = 0;
+
+                    foreach ($reviews as $review) {
+                        if (!empty($review->product_rating)) {
+                            $totalRating += (float) $review->product_rating;
+                            $count++;
+                        }
+                    }
+
+                    $item->average_rating = $count > 0 ? round($totalRating / $count, 1) : 0;
+
+                } else {
+                    $item->average_rating = 0;
+                }
                 return $item;
             });
 
