@@ -208,8 +208,8 @@
             document.getElementById("user-count").innerText = 0;
 
             users = {};
-
-            console.log("🚪 Left stream");
+            console.log("🚪 Left stream leave");
+            window.location.href = '/seller/seller-live';
 
         } catch (err) {
             console.error(err);
