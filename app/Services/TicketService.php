@@ -124,11 +124,10 @@ class TicketService
     }
 
 
-
     public function getNewTicketsOnAdmin($request)
     {
         try {
-            $limit  = !empty($request->limit) ? (int)$request->limit : null;
+            $limit  = !empty($request->limit) ? (int)$request->limit : 10;
             $search = strtolower(trim($request->search ?? ''));
 
             $query = Ticket::with(['ticket_type_details']);
@@ -161,38 +160,80 @@ class TicketService
 
             $tickets = $limit ? $query->paginate($limit) : $query->get();
 
-            
 
             if (!empty($search)) {
-                $tickets = $tickets->filter(function ($ticket) use ($search) {
-                    // Check ticket_id first
-                    if (stripos($ticket->ticket_id, $search) !== false) {
-                        return true;
-                    }
 
-                    $sender = $ticket->sender_details;
-                    if (!$sender) return false;
+                if ($limit) {
+                    // For pagination
+                    $filtered = $tickets->getCollection()->filter(function ($ticket) use ($search) {
 
-                    switch ($ticket->sender_type) {
-                        case 1: // User
-                        case 3: // Affiliate
-                            $name = $sender->full_name ?? '';
-                            break;
-                        case 2: // Seller
-                            $name = trim(($sender->first_name ?? '') . ' ' . ($sender->last_name ?? ''));
-                            break;
-                        case 4: // Driver
-                            $name = $sender->full_name_english ?? '';
-                            break;
-                        default:
-                            $name = '';
-                    }
+                        if (stripos($ticket->ticket_id, $search) !== false) {
+                            return true;
+                        }
 
-                    return stripos($name, $search) !== false;
-                })->values();
+                         $typeName = $ticket->ticket_type_details->name ?? '';
+                        if (stripos($typeName, $search) !== false) {
+                            return true;
+                        }
+
+                        $sender = $ticket->sender_details;
+                        if (!$sender) return false;
+
+                        switch ($ticket->sender_type) {
+                            case 1:
+                            case 3:
+                                $name = $sender->full_name ?? '';
+                                break;
+                            case 2:
+                                $name = trim(($sender->first_name ?? '') . ' ' . ($sender->last_name ?? ''));
+                                break;
+                            case 4:
+                                $name = $sender->full_name_english ?? '';
+                                break;
+                            default:
+                                $name = '';
+                        }
+
+                        return stripos($name, $search) !== false;
+
+                    })->values();
+
+                    // Set filtered collection back to paginator
+                    $tickets->setCollection($filtered);
+
+                } else {
+                    // For normal collection
+                    $tickets = $tickets->filter(function ($ticket) use ($search) {
+
+                        if (stripos($ticket->ticket_id, $search) !== false) {
+                            return true;
+                        }
+
+                        $sender = $ticket->sender_details;
+                        if (!$sender) return false;
+
+                        switch ($ticket->sender_type) {
+                            case 1:
+                            case 3:
+                                $name = $sender->full_name ?? '';
+                                break;
+                            case 2:
+                                $name = trim(($sender->first_name ?? '') . ' ' . ($sender->last_name ?? ''));
+                                break;
+                            case 4:
+                                $name = $sender->full_name_english ?? '';
+                                break;
+                            default:
+                                $name = '';
+                        }
+
+                        return stripos($name, $search) !== false;
+
+                    })->values();
+                }
             }
 
-            if ($tickets->isEmpty()) {
+            if (($limit && $tickets->isEmpty()) || (!$limit && $tickets->isEmpty())) {
                 return [
                     'status' => 'success',
                     'message' => 'No Tickets found',
@@ -201,9 +242,15 @@ class TicketService
             }
 
             // Append sender details
-            $tickets->each(function ($ticket) {
-                $ticket->sender_details; // ensure accessor runs
-            });
+            if ($limit) {
+                $tickets->getCollection()->each(function ($ticket) {
+                    $ticket->sender_details;
+                });
+            } else {
+                $tickets->each(function ($ticket) {
+                    $ticket->sender_details;
+                });
+            }
 
             return [
                 'status' => 'success',
@@ -220,10 +267,11 @@ class TicketService
         }
     }
 
+
     public function getOngoingTicketsOnAdmin($request)
     {
         try {
-            $limit  = !empty($request->limit) ? (int)$request->limit : null;
+            $limit  = !empty($request->limit) ? (int)$request->limit : 10;
             $search = strtolower(trim($request->search ?? ''));
 
             $query = Ticket::with(['ticket_type_details']);
@@ -246,7 +294,6 @@ class TicketService
             if (!empty($request->sender_type_filter)) {
                 $query->where('sender_type', $request->sender_type_filter);
             }
-
 
             $query->where('status', '0');
             $query->whereDate('created_at', '<', Carbon::today());
@@ -255,35 +302,75 @@ class TicketService
             $tickets = $limit ? $query->paginate($limit) : $query->get();
 
             if (!empty($search)) {
-                $tickets = $tickets->filter(function ($ticket) use ($search) {
-                    // Check ticket_id first
-                    if (stripos($ticket->ticket_id, $search) !== false) {
-                        return true;
-                    }
 
-                    $sender = $ticket->sender_details;
-                    if (!$sender) return false;
+                if ($limit) {
+                    $filtered = $tickets->getCollection()->filter(function ($ticket) use ($search) {
 
-                    switch ($ticket->sender_type) {
-                        case 1: // User
-                        case 3: // Affiliate
-                            $name = $sender->full_name ?? '';
-                            break;
-                        case 2: // Seller
-                            $name = trim(($sender->first_name ?? '') . ' ' . ($sender->last_name ?? ''));
-                            break;
-                        case 4: // Driver
-                            $name = $sender->full_name_english ?? '';
-                            break;
-                        default:
-                            $name = '';
-                    }
+                        if (stripos($ticket->ticket_id, $search) !== false) {
+                            return true;
+                        }
 
-                    return stripos($name, $search) !== false;
-                })->values();
+                         $typeName = $ticket->ticket_type_details->name ?? '';
+                        if (stripos($typeName, $search) !== false) {
+                            return true;
+                        }
+
+                        $sender = $ticket->sender_details;
+                        if (!$sender) return false;
+
+                        switch ($ticket->sender_type) {
+                            case 1:
+                            case 3:
+                                $name = $sender->full_name ?? '';
+                                break;
+                            case 2:
+                                $name = trim(($sender->first_name ?? '') . ' ' . ($sender->last_name ?? ''));
+                                break;
+                            case 4:
+                                $name = $sender->full_name_english ?? '';
+                                break;
+                            default:
+                                $name = '';
+                        }
+
+                        return stripos($name, $search) !== false;
+
+                    })->values();
+
+                    $tickets->setCollection($filtered);
+
+                } else {
+                    $tickets = $tickets->filter(function ($ticket) use ($search) {
+
+                        if (stripos($ticket->ticket_id, $search) !== false) {
+                            return true;
+                        }
+
+                        $sender = $ticket->sender_details;
+                        if (!$sender) return false;
+
+                        switch ($ticket->sender_type) {
+                            case 1:
+                            case 3:
+                                $name = $sender->full_name ?? '';
+                                break;
+                            case 2:
+                                $name = trim(($sender->first_name ?? '') . ' ' . ($sender->last_name ?? ''));
+                                break;
+                            case 4:
+                                $name = $sender->full_name_english ?? '';
+                                break;
+                            default:
+                                $name = '';
+                        }
+
+                        return stripos($name, $search) !== false;
+
+                    })->values();
+                }
             }
 
-            if ($tickets->isEmpty()) {
+            if (($limit && $tickets->isEmpty()) || (!$limit && $tickets->isEmpty())) {
                 return [
                     'status' => 'success',
                     'message' => 'No Tickets found',
@@ -292,9 +379,15 @@ class TicketService
             }
 
             // Append sender details
-            $tickets->each(function ($ticket) {
-                $ticket->sender_details; // ensure accessor runs
-            });
+            if ($limit) {
+                $tickets->getCollection()->each(function ($ticket) {
+                    $ticket->sender_details;
+                });
+            } else {
+                $tickets->each(function ($ticket) {
+                    $ticket->sender_details;
+                });
+            }
 
             return [
                 'status' => 'success',
@@ -311,10 +404,11 @@ class TicketService
         }
     }
 
+
     public function getResolvedTicketsOnAdmin($request)
     {
         try {
-            $limit  = !empty($request->limit) ? (int)$request->limit : null;
+            $limit  = !empty($request->limit) ? (int)$request->limit : 10;
             $search = strtolower(trim($request->search ?? ''));
 
             $query = Ticket::with(['ticket_type_details']);
@@ -338,44 +432,81 @@ class TicketService
                 $query->where('sender_type', $request->sender_type_filter);
             }
 
-
             $query->where('status', '1');
             $query->orderBy('id', 'desc');
 
             $tickets = $limit ? $query->paginate($limit) : $query->get();
 
-            
-
             if (!empty($search)) {
-                $tickets = $tickets->filter(function ($ticket) use ($search) {
-                    // Check ticket_id first
-                    if (stripos($ticket->ticket_id, $search) !== false) {
-                        return true;
-                    }
 
-                    $sender = $ticket->sender_details;
-                    if (!$sender) return false;
+                if ($limit) {
+                    $filtered = $tickets->getCollection()->filter(function ($ticket) use ($search) {
 
-                    switch ($ticket->sender_type) {
-                        case 1: // User
-                        case 3: // Affiliate
-                            $name = $sender->full_name ?? '';
-                            break;
-                        case 2: // Seller
-                            $name = trim(($sender->first_name ?? '') . ' ' . ($sender->last_name ?? ''));
-                            break;
-                        case 4: // Driver
-                            $name = $sender->full_name_english ?? '';
-                            break;
-                        default:
-                            $name = '';
-                    }
+                        if (stripos($ticket->ticket_id, $search) !== false) {
+                            return true;
+                        }
 
-                    return stripos($name, $search) !== false;
-                })->values();
+                         $typeName = $ticket->ticket_type_details->name ?? '';
+                        if (stripos($typeName, $search) !== false) {
+                            return true;
+                        }
+
+                        $sender = $ticket->sender_details;
+                        if (!$sender) return false;
+
+                        switch ($ticket->sender_type) {
+                            case 1:
+                            case 3:
+                                $name = $sender->full_name ?? '';
+                                break;
+                            case 2:
+                                $name = trim(($sender->first_name ?? '') . ' ' . ($sender->last_name ?? ''));
+                                break;
+                            case 4:
+                                $name = $sender->full_name_english ?? '';
+                                break;
+                            default:
+                                $name = '';
+                        }
+
+                        return stripos($name, $search) !== false;
+
+                    })->values();
+
+                    $tickets->setCollection($filtered);
+
+                } else {
+                    $tickets = $tickets->filter(function ($ticket) use ($search) {
+
+                        if (stripos($ticket->ticket_id, $search) !== false) {
+                            return true;
+                        }
+
+                        $sender = $ticket->sender_details;
+                        if (!$sender) return false;
+
+                        switch ($ticket->sender_type) {
+                            case 1:
+                            case 3:
+                                $name = $sender->full_name ?? '';
+                                break;
+                            case 2:
+                                $name = trim(($sender->first_name ?? '') . ' ' . ($sender->last_name ?? ''));
+                                break;
+                            case 4:
+                                $name = $sender->full_name_english ?? '';
+                                break;
+                            default:
+                                $name = '';
+                        }
+
+                        return stripos($name, $search) !== false;
+
+                    })->values();
+                }
             }
 
-            if ($tickets->isEmpty()) {
+            if (($limit && $tickets->isEmpty()) || (!$limit && $tickets->isEmpty())) {
                 return [
                     'status' => 'success',
                     'message' => 'No Tickets found',
@@ -384,9 +515,15 @@ class TicketService
             }
 
             // Append sender details
-            $tickets->each(function ($ticket) {
-                $ticket->sender_details; // ensure accessor runs
-            });
+            if ($limit) {
+                $tickets->getCollection()->each(function ($ticket) {
+                    $ticket->sender_details;
+                });
+            } else {
+                $tickets->each(function ($ticket) {
+                    $ticket->sender_details;
+                });
+            }
 
             return [
                 'status' => 'success',
