@@ -15,11 +15,14 @@
 <section class="section dashboard">
     <div class="container">
 
-<h2>Watch Live</h2>
+    <div class="d-flex justify-content-between">
+        <h4>Watch Live</h4>
+        <button onclick="leaveStream()" class="btn btn-danger">Leave</button>
+    </div>
 
 <input type="hidden" id="channel" value="{{ request()->channel_id }}">
 
-<button onclick="leaveStream()" class="btn btn-danger">Leave</button>
+
 
 <h3 style="display: none;">
     👥 Watching: <span id="user-count">0</span>
