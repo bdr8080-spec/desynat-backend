@@ -146,15 +146,15 @@ class NotificationManagementService
         $receiver_type = (int)$receiver_type;
         switch ($receiver_type) {
             case 2: // User
-                return User::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
+                return User::select('fcm_token', 'device_type')->where('id', $receiver_id)->where('notification','1')->first();
             case 3: // seller
-                return seller::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
+                return seller::select('fcm_token', 'device_type')->where('id', $receiver_id)->where('notification','1')->first();
             case 4: // AffilatedUser
-                return AffilatedUser::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
+                return AffilatedUser::select('fcm_token', 'device_type')->where('id', $receiver_id)->where('notification','1')->first();
             case 1: // Admin
-                return Admin::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
+                return Admin::select('fcm_token', 'device_type')->where('id', $receiver_id)->where('notification','1')->first();
             case 5: // Driver
-                return DeliveryBoy::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
+                return DeliveryBoy::select('fcm_token', 'device_type')->where('id', $receiver_id)->where('notification','1')->first();
             default:
                 return null;
         }

@@ -152,7 +152,7 @@ if (!function_exists('CreateNotification')) {
             $deviceType = 0; // default web
             $badgeCount = 0;
 
-            if ($receiver) {
+            if ($receiver && $receiver->notification == '1') {
                 if (!empty($receiver->fcm_token)) {
                     $tokens = explode(',', $receiver->fcm_token);
                 }
