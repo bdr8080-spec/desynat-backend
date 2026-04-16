@@ -132,6 +132,31 @@ class NotificationController extends Controller
         }
     }
 
+    public function notification_on_off(Request $request){
+
+        try{
+
+        $user_id= auth()->id();
+       
+       $request_data=(object)[
+        'user_id'=>$user_id,
+       ];
+
+    $data=$this->SellerNotificationService->SellerNotificationOnOff($request_data);
+
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }catch(exception $e){
+        return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+    }
+
+}
+
 
 
 

@@ -97,7 +97,7 @@ class UserGiftCardService
                 // $message = $twilio->messages->create(
                 //     $receiverNumber,
                 //     [
-                //         "from" => env('TWILIO_WHATSAPP_FROM'),
+                //         "from" => env('TWILIO_PHONE'),
                 //         "body" => $messageBody
                 //     ]
                 // );

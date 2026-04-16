@@ -839,7 +839,95 @@ class NotificationManagementService
             ];
         }
     }
-    
+
+    public function UserNotificationOnOff($request_data)
+    {
+        try {
+            $userId = $request_data->user_id;
+
+            $user = User::findOrFail($userId);
+            $newStatus = $user->notification == 1 ? 0 : 1;
+
+            $user->update(['notification' => $newStatus]);
+
+            $message = $newStatus == 1 
+                ? 'Notification is set to On' 
+                : 'Notification is set to Off';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $user
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update notification: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function AffiliateNotificationOnOff($request_data)
+    {
+        try {
+            $userId = $request_data->user_id;
+
+            $user = AffilatedUser::findOrFail($userId);
+            $newStatus = $user->notification == 1 ? 0 : 1;
+
+            $user->update(['notification' => $newStatus]);
+
+            $message = $newStatus == 1 
+                ? 'Notification is set to On' 
+                : 'Notification is set to Off';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $user
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update notification: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+    public function DriverNotificationOnOff($request_data)
+    {
+        try {
+            $userId = $request_data->user_id;
+
+            $user = DeliveryBoy::findOrFail($userId);
+            $newStatus = $user->notification == 1 ? 0 : 1;
+
+            $user->update(['notification' => $newStatus]);
+
+            $message = $newStatus == 1 
+                ? 'Notification is set to On' 
+                : 'Notification is set to Off';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $user
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update notification: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+        
 
     
 

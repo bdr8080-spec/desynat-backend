@@ -20,6 +20,7 @@ use App\Models\color;
 use App\Models\size;
 use App\Models\TicketType;
 use App\Models\Content;
+use App\Models\Faq;
 
 
 
@@ -401,6 +402,162 @@ class CommonController extends Controller
         return ApiResponse::generateResponse(
             'success',
             'contact us fetched successfully',
+            $data,
+            200
+        );
+    }
+
+     public function terms_conditions(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'type' => 'required|in:1,2,3'
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $data = Content::where('slug', 'terms_conditions')
+            ->where('type', $request->type)
+            ->first();
+
+        if (!$data) {
+            return ApiResponse::generateResponse('success', 'No data found', [], 200);
+        }
+
+        return ApiResponse::generateResponse(
+            'success',
+            'term & condition fetched successfully',
+            $data,
+            200
+        );
+    }
+
+     public function return_policy(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'type' => 'required|in:1,2,3'
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $data = Content::where('slug', 'return_policy')
+            ->where('type', $request->type)
+            ->first();
+
+        if (!$data) {
+            return ApiResponse::generateResponse('success', 'No data found', [], 200);
+        }
+
+        return ApiResponse::generateResponse(
+            'success',
+            'Return Policy fetched successfully',
+            $data,
+            200
+        );
+    }
+
+     public function about_us(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'type' => 'required|in:1,2,3'
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $data = Content::where('slug', 'about_us')
+            ->where('type', $request->type)
+            ->first();
+
+        if (!$data) {
+            return ApiResponse::generateResponse('success', 'No data found', [], 200);
+        }
+
+        return ApiResponse::generateResponse(
+            'success',
+            'About Us fetched successfully',
+            $data,
+            200
+        );
+    }
+
+     public function cancellation_policy(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'type' => 'required|in:1,2,3'
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $data = Content::where('slug', 'cancellation_policy')
+            ->where('type', $request->type)
+            ->first();
+
+        if (!$data) {
+            return ApiResponse::generateResponse('success', 'No data found', [], 200);
+        }
+
+        return ApiResponse::generateResponse(
+            'success',
+            'Cancellation Policy fetched successfully',
+            $data,
+            200
+        );
+    }
+
+     public function exchange_policy(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'type' => 'required|in:1,2,3'
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $data = Content::where('slug', 'exchange_policy')
+            ->where('type', $request->type)
+            ->first();
+
+        if (!$data) {
+            return ApiResponse::generateResponse('success', 'No data found', [], 200);
+        }
+
+        return ApiResponse::generateResponse(
+            'success',
+            'Exchange Policy fetched successfully',
+            $data,
+            200
+        );
+    }
+
+    public function faqs(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'type' => 'required|in:1,2,3'
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $data = Faq::where('status', '1')
+            ->where('type', $request->type)
+            ->get();
+
+        if (!$data) {
+            return ApiResponse::generateResponse('success', 'No data found', [], 200);
+        }
+
+        return ApiResponse::generateResponse(
+            'success',
+            'Faqs fetched successfully',
             $data,
             200
         );
