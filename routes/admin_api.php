@@ -283,6 +283,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/get_giftcard_payments', [PaymentController::class,'get_giftcard_payments']);
    Route::get('/get_banner_payments', [PaymentController::class,'get_banner_payments']);
 
+   //m13
+    Route::post('/account_setting', [AuthController::class,'account_setting']);
+    Route::post('/update_password', [AuthController::class,'update_password']);
 
 
 

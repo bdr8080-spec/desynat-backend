@@ -378,6 +378,7 @@ class FullScreenBannerController extends Controller
         $validator = Validator::make($request->all(), [
             'start_date' => 'required',
             'end_date' => 'required',
+           // 'country_id' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
             'banner_position' => 'required|in:1,2,3',
             'category'        => 'nullable|required_if:banner_position,3|exists:categories,id',
@@ -400,6 +401,7 @@ class FullScreenBannerController extends Controller
         $banner->start_date = $request->start_date;
         $banner->end_date = $request->end_date;
         $banner->banner_position = $request->banner_position;
+        //$banner->country_id = $request->country_id;
         $banner->category = $request->category;
         $banner->subcatgory = $request->subcatgory;
         $start = Carbon::parse($request->start_date);
@@ -505,6 +507,7 @@ class FullScreenBannerController extends Controller
         $banner->banner_position = $request->banner_position;
         $banner->category = $request->category;
         $banner->subcatgory = $request->subcatgory;
+       // $banner->country_id = $request->country_id;
 
         $start = Carbon::parse($request->start_date);
         $end = Carbon::parse($request->end_date);

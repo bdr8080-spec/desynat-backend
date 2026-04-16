@@ -152,6 +152,74 @@ class AuthController extends Controller
         return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
     }
 
+    public function account_setting(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'profile_pic' => 'required',
+              'full_name' => 'required',
+              'country_code' => 'required',
+              'mobile' => 'required',
+              'email' => 'required',
+              ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $admin = Auth::user()->id;
+         //dd($admin);
+
+         $request_data = (object)[
+                'user_id'              => $admin,
+                'profile_pic' => $req->profile_pic,
+                'full_name'        => $req->full_name,
+                'country_code'      => $req->country_code,
+                'mobile'      => $req->mobile,
+                'email'      => $req->email,
+            ];
+  
+          $data= $this->AdminAuthService->AccountSetting($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+      }
+
+      public function update_password(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'old_password' => 'required',
+              'new_password' => 'required',
+              'confirm_password' => 'required|same:new_password',
+              ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $admin = Auth::user()->id;
+         //dd($admin);
+
+         $request_data = (object)[
+                'user_id'              => $admin,
+                'old_password' => $req->old_password,
+                'new_password'        => $req->new_password,
+                'confirm_password'      => $req->confirm_password,
+            ];
+  
+          $data= $this->AdminAuthService->UpdatePassword($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+      }
+
     
 
     

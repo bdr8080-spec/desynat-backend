@@ -123,6 +123,117 @@ class AdminAuthService
         }
 
     }
+
+    public function AccountSetting($request_data)
+    {
+        try {
+            $admin = Admin::find($request_data->user_id);
+
+            if (!$admin) {
+                return [
+                    'status' => 'error',
+                    'message' => 'User not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            if (!empty($request_data->email)) {
+                $emailExists = Admin::where('email', $request_data->email)
+                    ->where('id', '!=', $request_data->user_id)
+                    ->exists();
+
+                if ($emailExists) {
+                    return [
+                        'status' => 'error',
+                        'message' => 'Email already assigned to another co-admin',
+                        'data' => (object)[]
+                    ];
+                }
+            }
+
+            $mobileExists = Admin::where('mobile', $request_data->mobile)
+                ->where('country_code', $request_data->country_code)
+                ->where('id', '!=', $request_data->user_id)
+                ->exists();
+
+            if ($mobileExists) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Mobile number already assigned to another co-admin',
+                    'data' => (object)[]
+                ];
+            }
+
+            $admin->profile_pic  = $request_data->profile_pic;
+            $admin->full_name    = $request_data->full_name;
+            $admin->country_code = $request_data->country_code;
+            $admin->mobile       = $request_data->mobile;
+            $admin->email       = $request_data->email;
+
+            $admin->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Account settings updated successfully',
+                'data' => $admin
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update account: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+    public function UpdatePassword($request_data)
+    {
+        try {
+            $admin = Admin::find($request_data->user_id);
+
+            if (!$admin) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Admin not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            if (!Hash::check($request_data->old_password, $admin->password)) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Old password is incorrect',
+                    'data' => (object)[]
+                ];
+            }
+
+            if (Hash::check($request_data->new_password, $admin->password)) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Old password should not be used as new password',
+                    'data' => (object)[]
+                ];
+            }
+
+            $admin->password = Hash::make($request_data->new_password);
+            $admin->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Password updated successfully',
+                'data' => $admin
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update password: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
     
 
             

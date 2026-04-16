@@ -205,6 +205,7 @@ class FullBannerService
                 'end_date'=>$request->end_date,
                 'total_days'=>$request->total_days,
                 'upload_banner'=>$request->upload_banner,
+                //'country_id'=>$request->country_id,
                 'added_by' => '1',
                 'Admin_verify' => '1',
                 'payment_status' => '1',
@@ -253,6 +254,7 @@ class FullBannerService
                 'start_date'      => $request->start_date,
                 'end_date'        => $request->end_date,
                 'total_days'      => $request->total_days,
+                //'country_id'      => $request->country_id,
             ];
 
             // update banner image only if provided
@@ -315,6 +317,7 @@ class FullBannerService
             $query = sellerBanner::with([
                 'category_details',
                 'subcategory_details'
+               // 'country_details'
             ])
             ->where('added_by', '1');
 
