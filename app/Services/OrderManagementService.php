@@ -1134,30 +1134,6 @@ class OrderManagementService
 
             $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
 
-            // $checkOrder->getCollection()->transform(function ($order) {
-
-            //     $seller_id = $order->product_details->seller_id ?? null;
-            //     //dd($seller_id);
-            //     $amount_with_charges =
-            //         ($order->amount ?? 0) +
-            //         ($order->tax ?? 0) +
-            //         ($order->order->shipping_fees ?? 0) +
-            //         ($order->order->promocode_value ?? 0) +
-            //         ($order->order->giftcard_amount ?? 0);
-
-            //      $order->amount_with_charges = round($amount_with_charges, 2);
-
-            //     $order->admin_commission = calculateAndSaveCommission(
-            //         $order->id,
-            //         $seller_id,
-            //         $amount_with_charges
-            //     );
-
-            //     $order->seller_id = $seller_id;
-
-            //     return $order;
-            // });
-
             DB::commit();
 
             return ['status'=>'success','message'=>"Refund Orders fetched Successfully",'data'=>$checkOrder];

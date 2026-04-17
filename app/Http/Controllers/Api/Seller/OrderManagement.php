@@ -47,7 +47,7 @@ class OrderManagement extends Controller
 
         if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
-    }
+       }
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);    
     }
@@ -76,9 +76,9 @@ class OrderManagement extends Controller
 
         if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
-    }
+       }
 
-    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+       return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
         
     }
@@ -108,9 +108,9 @@ class OrderManagement extends Controller
 
         if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
-    }
+       }
 
-    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
         
     }
@@ -130,9 +130,9 @@ class OrderManagement extends Controller
 
         if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
-    }
+      }
 
-    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
         
     }
@@ -161,9 +161,9 @@ class OrderManagement extends Controller
 
         if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
-    }
+      }
 
-    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
         
     }
@@ -202,9 +202,9 @@ class OrderManagement extends Controller
 
         if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
-    }
+     }
 
-    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
         
     }
@@ -234,10 +234,34 @@ class OrderManagement extends Controller
 
         if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+      }
+
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+
     }
 
-    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
-    
+    public function get_refund_orders(Request $request){
+
+          $seller_details=$request->user()->id;
+
+       $request_data=(object) [
+        'seller_id'=>$seller_details,
+        'limit' => $request->limit??10,
+        'search' => $request->search??null,
+        'country_name' => $request->country_name??null,
+        'from_date' => $request->from_date??null,
+        'to_date' => $request->to_date??null,
+       ];
+
+
+       $data= $this->SellerOrderService->GetRefundOrders($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+      }
+
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);  
 
     }
 

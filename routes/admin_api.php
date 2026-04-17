@@ -294,7 +294,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/sub_admin_details', [AuthController::class,'sub_admin_details']);
     Route::get('/get_profile', [AuthController::class,'get_profile']);
     Route::post('/update_subadmin_status', [AuthController::class,'update_subadmin_status']);
-    Route::post('/get_refund_orders', [OrderManagementController::class,'get_refund_orders']);
+    Route::get('/get_refund_orders', [OrderManagementController::class,'get_refund_orders']);
 
 
 
