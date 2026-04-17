@@ -229,6 +229,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
     //m13
     Route::post('/notification_on_off', [ApiNotificationController::class,'notification_on_off']);
+    Route::post('/app_notification_on_off', [ApiNotificationController::class,'app_notification_on_off']);
     Route::post('/add_card', [ProfileController::class,'add_card']);
     Route::get('/get_my_cards', [ProfileController::class,'get_my_cards']);
     Route::post('/delete_card', [ProfileController::class,'delete_card']);
@@ -324,6 +325,7 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
 
   //m13
   Route::post('/affiliate_notification_on_off', [ApiNotificationController::class,'affiliate_notification_on_off']);
+  Route::post('/affiliate_app_notification_on_off', [ApiNotificationController::class,'affiliate_app_notification_on_off']);
   
 
 

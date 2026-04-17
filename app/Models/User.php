@@ -33,7 +33,8 @@ class User extends Authenticatable
         'profile_image',
         'banner_view',
         'lang',
-        'notification'
+        'notification',
+        'app_notification',
     ];
 
     /**

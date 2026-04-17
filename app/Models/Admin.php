@@ -31,6 +31,8 @@ class Admin extends Authenticatable
         'country_id',
         'status',
         'unhashed_password',
+        'notification',
+        'app_notification',
     ];
 
     /**

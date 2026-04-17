@@ -18,7 +18,130 @@ use App\Helpers\support;
 class NotificationManagementService
 {
    
-     public function sendNotification($request_data)
+    //  public function sendNotification($request_data)
+    // {
+    //     try {
+
+    //         $sender_id = $request_data->sender_id;
+    //         $description_english = $request_data->description_english;
+    //         $description_arabic = $request_data->description_arabic;
+    //         $sender_type = $request_data->sender_type;
+    //         $title_english = $request_data->title_english ?? null;
+    //         $title_arabic = $request_data->title_arabic ?? null;
+    //         $notification_type = $request_data->notification_type ?? null;
+
+    //         $receivers = [];
+
+    //         if (!empty($request_data->user_id)) {
+    //             foreach ($request_data->user_id as $id) {
+    //                 $receivers[] = [
+    //                     'id' => $id,
+    //                     'type' => '2'
+    //                 ];
+    //             }
+    //         }
+
+    //         if (!empty($request_data->seller_id)) {
+    //             foreach ($request_data->seller_id as $id) {
+    //                 $receivers[] = [
+    //                     'id' => $id,
+    //                     'type' => '3' 
+    //                 ];
+    //             }
+    //         }
+
+    //         if (!empty($request_data->affiliate_id)) {
+    //             foreach ($request_data->affiliate_id as $id) {
+    //                 $receivers[] = [
+    //                     'id' => $id,
+    //                     'type' => '4' 
+    //                 ];
+    //             }
+    //         }
+    //         if (!empty($request_data->driver_id)) {
+    //             foreach ($request_data->driver_id as $id) {
+    //                 $receivers[] = [
+    //                     'id' => $id,
+    //                     'type' => '5' 
+    //                 ];
+    //             }
+    //         }
+
+    //         if (empty($receivers)) {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => 'No receivers provided',
+    //                 'data' => (object)[]
+    //             ];
+    //         }
+
+    //         $allNotifications = []; 
+
+    //         foreach ($receivers as $receiver) {
+
+    //             $notification = Notification::create([
+    //                 'sender_id' => $sender_id,
+    //                 'sender_type' => $sender_type,
+    //                 'receiver_id' => $receiver['id'],
+    //                 'receiver_type' => $receiver['type'],
+    //                 'title_english' => $title_english,
+    //                 'title_arabic' => $title_arabic,
+    //                 'description_english' => $description_english,
+    //                 'description_arabic' => $description_arabic,
+    //                 'notification_type' => $notification_type
+    //             ]);
+
+    //             $allNotifications[] = $notification;
+
+    //             $token = $this->getDeviceToken($receiver['id'], $receiver['type']);
+
+    //             // if($token) {
+    //             //     sendPushNotificationNew(
+    //             //         [$token->fcm_token],
+    //             //         $title_english,
+    //             //         $description_english,
+    //             //         [$token->device_type],
+    //             //         '1'
+                        
+    //             //     );
+    //             // }
+
+    //             if ($token && !empty($token->fcm_token)) {
+
+    //                 //  Calculate badge (unread count)
+    //                 $badgeCount = Notification::where('receiver_id', $receiver['id'])
+    //                     ->where('receiver_type', $receiver['type'])
+    //                     ->where('is_read', '0')
+    //                     ->count();
+
+    //                 sendPushNotificationNew(
+    //                     [$token->fcm_token],
+    //                     $title_english,
+    //                     $description_english,
+    //                     $token->device_type, 
+    //                     $badgeCount          
+    //                 );
+    //             }
+    //         }
+
+    //        // dd($allNotifications);
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Notification sent successfully',
+    //             'data' => $allNotifications
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to send notification: ' . $e->getMessage(),
+    //             'data' => (object)[]
+    //         ];
+    //     }
+    // }
+
+    public function sendNotification($request_data)
     {
         try {
 
@@ -45,7 +168,7 @@ class NotificationManagementService
                 foreach ($request_data->seller_id as $id) {
                     $receivers[] = [
                         'id' => $id,
-                        'type' => '3' 
+                        'type' => '3'
                     ];
                 }
             }
@@ -54,15 +177,16 @@ class NotificationManagementService
                 foreach ($request_data->affiliate_id as $id) {
                     $receivers[] = [
                         'id' => $id,
-                        'type' => '4' 
+                        'type' => '4'
                     ];
                 }
             }
+
             if (!empty($request_data->driver_id)) {
                 foreach ($request_data->driver_id as $id) {
                     $receivers[] = [
                         'id' => $id,
-                        'type' => '5' 
+                        'type' => '5'
                     ];
                 }
             }
@@ -75,56 +199,67 @@ class NotificationManagementService
                 ];
             }
 
-            $allNotifications = []; 
+            $allNotifications = [];
 
             foreach ($receivers as $receiver) {
 
-                $notification = Notification::create([
-                    'sender_id' => $sender_id,
-                    'sender_type' => $sender_type,
-                    'receiver_id' => $receiver['id'],
-                    'receiver_type' => $receiver['type'],
-                    'title_english' => $title_english,
-                    'title_arabic' => $title_arabic,
-                    'description_english' => $description_english,
-                    'description_arabic' => $description_arabic,
-                    'notification_type' => $notification_type
-                ]);
+                // STEP 1: GET FLAGS (notification + app_notification)
+                $flags = $this->getNotificationFlags($receiver['id'], $receiver['type']);
 
-                $allNotifications[] = $notification;
+                if (!$flags) {
+                    continue;
+                }
 
-                $token = $this->getDeviceToken($receiver['id'], $receiver['type']);
+                $sendPush = $flags->notification == '1';
+                $saveDb   = $flags->app_notification == '1';
 
-                // if($token) {
-                //     sendPushNotificationNew(
-                //         [$token->fcm_token],
-                //         $title_english,
-                //         $description_english,
-                //         [$token->device_type],
-                //         '1'
-                        
-                //     );
-                // }
+                // CASE 4: both 0 → skip everything
+                if (!$sendPush && !$saveDb) {
+                    continue;
+                }
 
-                if ($token && !empty($token->fcm_token)) {
+                $notification = null;
 
-                    //  Calculate badge (unread count)
-                    $badgeCount = Notification::where('receiver_id', $receiver['id'])
-                        ->where('receiver_type', $receiver['type'])
-                        ->where('is_read', '0')
-                        ->count();
+                // STEP 2: INSERT DB ONLY IF app_notification = 1
+                if ($saveDb) {
 
-                    sendPushNotificationNew(
-                        [$token->fcm_token],
-                        $title_english,
-                        $description_english,
-                        $token->device_type, 
-                        $badgeCount          
-                    );
+                    $notification = Notification::create([
+                        'sender_id' => $sender_id,
+                        'sender_type' => $sender_type,
+                        'receiver_id' => $receiver['id'],
+                        'receiver_type' => $receiver['type'],
+                        'title_english' => $title_english,
+                        'title_arabic' => $title_arabic,
+                        'description_english' => $description_english,
+                        'description_arabic' => $description_arabic,
+                        'notification_type' => $notification_type
+                    ]);
+
+                    $allNotifications[] = $notification;
+                }
+
+                // STEP 3: PUSH ONLY IF notification = 1
+                if ($sendPush) {
+
+                    $token = $this->getDeviceToken($receiver['id'], $receiver['type']);
+
+                    if ($token && !empty($token->fcm_token)) {
+
+                        $badgeCount = Notification::where('receiver_id', $receiver['id'])
+                            ->where('receiver_type', $receiver['type'])
+                            ->where('is_read', '0')
+                            ->count();
+
+                        sendPushNotificationNew(
+                            [$token->fcm_token],
+                            $title_english,
+                            $description_english,
+                            $token->device_type,
+                            $badgeCount
+                        );
+                    }
                 }
             }
-
-           // dd($allNotifications);
 
             return [
                 'status' => 'success',
@@ -133,6 +268,7 @@ class NotificationManagementService
             ];
 
         } catch (\Exception $e) {
+
             return [
                 'status' => 'error',
                 'message' => 'Failed to send notification: ' . $e->getMessage(),
@@ -159,7 +295,43 @@ class NotificationManagementService
                 return null;
         }
     }
-    
+
+    private function getNotificationFlags($receiver_id, $receiver_type)
+    {
+        $receiver_type = (int)$receiver_type;
+
+        switch ($receiver_type) {
+
+            case 2:
+                return User::select('notification', 'app_notification')
+                    ->where('id', $receiver_id)
+                    ->first();
+
+            case 3:
+                return seller::select('notification', 'app_notification')
+                    ->where('id', $receiver_id)
+                    ->first();
+
+            case 4:
+                return AffilatedUser::select('notification', 'app_notification')
+                    ->where('id', $receiver_id)
+                    ->first();
+
+            case 5:
+                return DeliveryBoy::select('notification', 'app_notification')
+                    ->where('id', $receiver_id)
+                    ->first();
+
+            case 1:
+                return Admin::select('notification', 'app_notification')
+                    ->where('id', $receiver_id)
+                    ->first();
+
+            default:
+                return null;
+        }
+    }
+        
 
 
 
@@ -851,8 +1023,37 @@ class NotificationManagementService
             $user->update(['notification' => $newStatus]);
 
             $message = $newStatus == 1 
-                ? 'Notification is set to On' 
-                : 'Notification is set to Off';
+                ? 'Push Notification is set to On' 
+                : 'Push Notification is set to Off';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $user
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update notification: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function UserAppNotificationOnOff($request_data)
+    {
+        try {
+            $userId = $request_data->user_id;
+
+            $user = User::findOrFail($userId);
+            $newStatus = $user->app_notification == 1 ? 0 : 1;
+
+            $user->update(['app_notification' => $newStatus]);
+
+            $message = $newStatus == 1 
+                ? 'In app Notification is set to On' 
+                : 'In app Notification is set to Off';
 
             return [
                 'status' => 'success',
@@ -898,6 +1099,35 @@ class NotificationManagementService
         }
     }
 
+    public function AffiliateAppNotificationOnOff($request_data)
+    {
+        try {
+            $userId = $request_data->user_id;
+
+            $user = AffilatedUser::findOrFail($userId);
+            $newStatus = $user->app_notification == 1 ? 0 : 1;
+
+            $user->update(['app_notification' => $newStatus]);
+
+            $message = $newStatus == 1 
+                ? 'In app Notification is set to On' 
+                : 'In app Notification is set to Off';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $user
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update notification: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
     public function DriverNotificationOnOff($request_data)
     {
@@ -912,6 +1142,35 @@ class NotificationManagementService
             $message = $newStatus == 1 
                 ? 'Notification is set to On' 
                 : 'Notification is set to Off';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $user
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update notification: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function DriverAppNotificationOnOff($request_data)
+    {
+        try {
+            $userId = $request_data->user_id;
+
+            $user = DeliveryBoy::findOrFail($userId);
+            $newStatus = $user->app_notification == 1 ? 0 : 1;
+
+            $user->update(['app_notification' => $newStatus]);
+
+            $message = $newStatus == 1 
+                ? 'In app Notification is set to On' 
+                : 'In app Notification is set to Off';
 
             return [
                 'status' => 'success',

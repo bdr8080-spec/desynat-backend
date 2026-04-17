@@ -169,6 +169,7 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
    //m13
    Route::post('/notification_on_off', [NotificationController::class,'notification_on_off']);
+   Route::post('/app_notification_on_off', [NotificationController::class,'app_notification_on_off']);
    
 
 
