@@ -207,8 +207,8 @@ if (!function_exists('CreateNotification')) {
             }
 
             // STEP 1: FLAGS
-            $sendPush = $receiver->notification == '1';
-            $saveDb   = $receiver->app_notification == '1';
+            $sendPush = $receiver->notification == 1;
+            $saveDb   = $receiver->app_notification == 1;
 
             // CASE: both disabled → exit
             if (!$sendPush && !$saveDb) {

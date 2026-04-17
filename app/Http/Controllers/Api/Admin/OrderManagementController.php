@@ -160,6 +160,23 @@ class OrderManagementController extends Controller
         }
     }
 
+    public function get_refund_orders(Request $request)
+    {
+        try {
+            $data = $this->OrderManagementService->RefundOrders($request);
+           // dd($data);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 }
