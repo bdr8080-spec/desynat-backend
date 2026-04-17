@@ -468,7 +468,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
             'data' => []
         ];
        }
-        $transaction_id = mt_rand(1000000000, 9999999999);
+        $transaction_id = mt_rand(100000, 999999);
        //    Cut Amount From The Wallet Amount 
         $this->UserBalancePayOrder($userid,$OrderPayAmount);
 
@@ -505,9 +505,9 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     //    return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
 
     }elseif($checkOrder->payment_method=='1'){
-        $transaction_id = mt_rand(1000000000, 9999999999);
+        $transactionId = $request->transaction_id;
 
-        $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2','transaction_id' => $transaction_id]);
+        $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2','transaction_id' => $transactionId]);
 
         if($request->payment_status=='1'){
         $msg="Order Payment Paid Successfully";
