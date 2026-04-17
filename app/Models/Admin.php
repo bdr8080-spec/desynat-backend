@@ -26,6 +26,10 @@ class Admin extends Authenticatable
         'otp_verify',
         'device_type',
         'fcm_token',
+        'type',
+        'profile_pic',
+        'country_id',
+        'status',
     ];
 
     /**
@@ -49,5 +53,15 @@ class Admin extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function country_info()
+    {
+        return $this->belongsTo(country::class, 'country_id', 'id');
+    }
+
+    public function permission_details()
+    {
+        return $this->hasMany(AdminPermission::class, 'admin_id', 'id');
     }
 }

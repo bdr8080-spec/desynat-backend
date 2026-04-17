@@ -286,6 +286,13 @@ Route::group(['prefix' => 'admin'], function () {
    //m13
     Route::post('/account_setting', [AuthController::class,'account_setting']);
     Route::post('/update_password', [AuthController::class,'update_password']);
+    Route::post('/add_sub_admin', [AuthController::class,'add_sub_admin']);
+    Route::post('/update_sub_admin', [AuthController::class,'update_sub_admin']);
+    Route::post('/delete_sub_admin', [AuthController::class,'delete_sub_admin']);
+    Route::get('/get_admin_panel_modules', [AuthController::class,'get_admin_panel_modules']);
+    Route::get('/get_sub_admins', [AuthController::class,'get_sub_admins']);
+    Route::get('/sub_admin_details', [AuthController::class,'sub_admin_details']);
+    Route::get('/get_profile', [AuthController::class,'get_profile']);
 
 
 

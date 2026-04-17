@@ -2,7 +2,10 @@
 namespace App\Services;
 
 use App\Models\Admin;
+use App\Models\AdminPermission;
+use App\Models\AdminModule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Hash;
 
 class AdminAuthService
@@ -231,6 +234,342 @@ class AdminAuthService
                 'status' => 'error',
                 'message' => 'Failed to update password: ' . $e->getMessage(),
                 'data' => []
+            ];
+        }
+    }
+
+    public function AddSubAdmin($req)
+    {
+        DB::beginTransaction();
+
+        try {
+
+                $emailExists = Admin::where('email', $req->email)->first();
+                if ($emailExists) {
+                    return [
+                        'status' => 'error',
+                        'message' => 'Email already registered',
+                        'data' => (object)[]
+                    ];
+                }
+
+                $mobileExists = Admin::where('country_code', $req->country_code)
+                    ->where('mobile', $req->mobile)
+                    ->first();
+                if ($mobileExists) {
+                    return [
+                        'status' => 'error',
+                        'message' => 'Mobile number already registered',
+                        'data' => (object)[]
+                    ];
+                }
+
+            $admin = Admin::create([
+                'profile_pic' => $req->profile_pic,
+                'full_name' => $req->full_name,
+                'country_code' => $req->country_code,
+                'mobile' => $req->mobile,
+                'email' => $req->email,
+                'country_id' => $req->country_id,
+                'password' => Hash::make($req->password),
+                'type' => 2, 
+            ]);
+
+            $permissions = [];
+
+            foreach ($req->modules as $module) {
+
+                $permissions[] = [
+                    'admin_id' => $admin->id,
+                    'module_id' => $module['module_id'],
+
+                    'can_view' => isset($module['can_view']) ? (int)$module['can_view'] : 0,
+                    'can_action' => isset($module['can_action']) ? (int)$module['can_action'] : 0,
+
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            AdminPermission::insert($permissions);
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Sub admin created successfully',
+                'data' => $admin
+            ];
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong while creating sub admin',
+                'data' => $e->getMessage()
+            ];
+        }
+    }
+
+
+    public function UpdateSubAdmin($req)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $admin = Admin::where('id', $req->id)->first();
+
+            if (!$admin) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Sub Admin not found',
+                    'data' => []
+                ];
+            }
+
+            $emailExists = Admin::where('email', $req->email)
+                ->where('id', '!=', $req->id)
+                ->first();
+
+            if ($emailExists) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Email already registered',
+                    'data' => (object)[]
+                ];
+            }
+
+            $mobileExists = Admin::where('country_code', $req->country_code)
+                ->where('mobile', $req->mobile)
+                ->where('id', '!=', $req->id)
+                ->first();
+
+            if ($mobileExists) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Mobile number already registered',
+                    'data' => (object)[]
+                ];
+            }
+
+            $admin->update([
+                'profile_pic' => $req->profile_pic,
+                'full_name' => $req->full_name,
+                'country_code' => $req->country_code,
+                'mobile' => $req->mobile,
+                'email' => $req->email,
+                'country_id' => $req->country_id,
+                'password' => Hash::make($req->password),
+                'type' => 2,
+            ]);
+
+            AdminPermission::where('admin_id', $admin->id)->delete();
+            $permissions = [];
+
+            foreach ($req->modules as $module) {
+
+                $permissions[] = [
+                    'admin_id' => $admin->id,
+                    'module_id' => $module['module_id'],
+
+                    'can_view' => isset($module['can_view']) ? (int)$module['can_view'] : 0,
+                    'can_action' => isset($module['can_action']) ? (int)$module['can_action'] : 0,
+
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            AdminPermission::insert($permissions);
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Sub admin updated successfully',
+                'data' => $admin->fresh()
+            ];
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong while updating sub admin',
+                'data' => $e->getMessage()
+            ];
+        }
+    }
+
+
+    public function DeleteSubAdmin($req)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $admin = Admin::where('id', $req->id)
+                ->where('type', 2)
+                ->first();
+
+            if (!$admin) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Sub admin not found',
+                    'data' => (object)[]
+                ];
+            }
+             
+            $id = Auth::user()->id;
+            //dd($id);
+
+            if ($id == $admin->id) {
+                return [
+                    'status' => 'error',
+                    'message' => 'You cannot delete yourself',
+                    'data' => (object)[]
+                ];
+            }
+
+            AdminPermission::where('admin_id', $admin->id)->delete();
+
+            $admin->delete();
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Sub admin deleted successfully',
+                'data' => (object)[]
+            ];
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong while deleting sub admin',
+                'data' => $e->getMessage()
+            ];
+        }
+    }
+
+
+    public function GetAdminPanelModules($req)
+    {
+        try {
+
+            $modules = AdminModule::orderBy('id', 'asc')->get();
+
+            return [
+                'status' => 'success',
+                'message' => 'Modules fetched successfully',
+                'data' => $modules
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong while fetching modules',
+                'data' => $e->getMessage()
+            ];
+        }
+    }
+
+
+    public function GetSubAdmins($request_data)
+    {
+        try {
+
+            $query = Admin::with([
+                    'country_info',
+                    'permission_details.module_details'
+                ])
+                ->where('type', 2)
+                ->orderBy('id', 'desc');
+
+            if (!empty($request_data->search)) {
+                $query->where('full_name', 'like', '%' . $request_data->search . '%');
+            }
+
+            if (!empty($request_data->country_id)) {
+                $query->where('country_id', $request_data->country_id);
+            }
+
+            if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
+                $query->whereBetween('created_at', [
+                    $request_data->from_date . ' 00:00:00',
+                    $request_data->to_date . ' 23:59:59'
+                ]);
+            } elseif (!empty($request_data->from_date)) {
+                $query->whereDate('created_at', '>=', $request_data->from_date);
+            } elseif (!empty($request_data->to_date)) {
+                $query->whereDate('created_at', '<=', $request_data->to_date);
+            }
+
+            $result = new \stdClass();
+
+            if (!empty($request_data->limit)) {
+
+                $result->list = $query->paginate($request_data->limit);
+
+            } else {
+
+                $result->list = $query->get();
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Sub admins fetched successfully',
+                'data' => $result
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong while fetching sub admins',
+                'data' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function GetProfile($request_data)
+    {
+        try {
+
+            $admin = Admin::with([
+                    'country_info'
+                ])
+                ->where('id', $request_data->user_id)
+                ->first();
+
+            if (!$admin) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Profile not found',
+                    'data' => []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Profile fetched successfully',
+                'data' => $admin
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong while fetching profile',
+                'data' => $e->getMessage()
             ];
         }
     }
