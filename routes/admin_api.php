@@ -293,6 +293,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/get_sub_admins', [AuthController::class,'get_sub_admins']);
     Route::get('/sub_admin_details', [AuthController::class,'sub_admin_details']);
     Route::get('/get_profile', [AuthController::class,'get_profile']);
+    Route::post('/update_subadmin_status', [AuthController::class,'update_subadmin_status']);
 
 
 

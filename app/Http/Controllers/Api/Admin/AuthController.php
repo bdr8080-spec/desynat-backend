@@ -382,6 +382,59 @@ class AuthController extends Controller
   
     }
 
+    public function sub_admin_details(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'id' => 'required|exists:admins,id',
+            ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $request_data = (object)[
+                'id' => $req->id,
+            ];
+  
+          $data= $this->AdminAuthService->SubAdminDetails($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function update_subadmin_status(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'id' => 'required|exists:admins,id',
+            ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $request_data = (object)[
+                'id' => $req->id,
+            ];
+  
+          $data= $this->AdminAuthService->UpdateSubAdminStatus($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+
+    
+
+
+
     
 
     

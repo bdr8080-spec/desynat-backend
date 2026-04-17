@@ -272,6 +272,7 @@ class AdminAuthService
                 'email' => $req->email,
                 'country_id' => $req->country_id,
                 'password' => Hash::make($req->password),
+                'unhashed_password' => $req->password,
                 'type' => 2, 
             ]);
 
@@ -363,6 +364,7 @@ class AdminAuthService
                 'email' => $req->email,
                 'country_id' => $req->country_id,
                 'password' => Hash::make($req->password),
+                'unhashed_password' => $req->password,
                 'type' => 2,
             ]);
 
@@ -569,6 +571,89 @@ class AdminAuthService
             return [
                 'status' => 'error',
                 'message' => 'Something went wrong while fetching profile',
+                'data' => $e->getMessage()
+            ];
+        }
+    }
+
+
+    public function SubAdminDetails($request_data)
+    {
+        try {
+
+            $admin = Admin::with([
+                    'country_info',
+                    'permission_details.module_details'
+                ])
+                ->where('id', $request_data->id)
+                ->where('type', '2')
+                ->first();
+
+            if (!$admin) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Sub admin not found',
+                    'data' => []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Sub admin details fetched successfully',
+                'data' => $admin
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong while fetching sub admin details',
+                'data' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function UpdateSubAdminStatus($request_data)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $admin = Admin::where('id', $request_data->id)
+                ->where('type', '2')
+                ->first();
+
+            if (!$admin) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Sub admin not found',
+                    'data' => []
+                ];
+            }
+
+            $newStatus = $admin->status == 1 ? 0 : 1;
+
+            $admin->update([
+                'status' => $newStatus
+            ]);
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => $newStatus == 1
+                    ? 'Status Updated To Active'
+                    : 'Status Updated To Inactive',
+                'data' => $admin
+            ];
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong while updating status',
                 'data' => $e->getMessage()
             ];
         }
