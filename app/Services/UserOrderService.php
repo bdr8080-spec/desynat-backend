@@ -468,7 +468,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
             'data' => []
         ];
        }
-
+        $transaction_id = mt_rand(1000000000, 9999999999);
        //    Cut Amount From The Wallet Amount 
         $this->UserBalancePayOrder($userid,$OrderPayAmount);
 
@@ -492,7 +492,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
         OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
-        $checkOrder->update(['wallet_amount'=>$OrderPayAmount]); // add Wallet Amount in Table
+        $checkOrder->update(['wallet_amount'=>$OrderPayAmount,'transaction_id' => $transaction_id ]); // add Wallet Amount in Table
 
         $this->Order_detailsPaidStatusChange($checkOrder->id,$request->payment_status); // order details complete order
 
@@ -505,8 +505,9 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     //    return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
 
     }elseif($checkOrder->payment_method=='1'){
+        $transaction_id = mt_rand(1000000000, 9999999999);
 
-        $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2']);
+        $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2','transaction_id' => $transaction_id]);
 
         if($request->payment_status=='1'){
         $msg="Order Payment Paid Successfully";
