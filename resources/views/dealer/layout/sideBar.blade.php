@@ -1,5 +1,5 @@
     <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
+    <!-- <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20  {{ Request::is('seller/dashboard') ? 'sidebar-active' : '' }}"
@@ -89,7 +89,7 @@
                 </a>
             </li>
 
-            <!-- <li class="nav-item">
+             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Components</span><i
                         class="bi bi-chevron-down ms-auto"></i>
@@ -101,9 +101,50 @@
                         </a>
                     </li>
                 </ul>
-            </li> -->
+            </li> 
 
 
         </ul>
 
-    </aside>
+    </aside> -->
+
+
+    @php
+    $menus = getSellerMenus();
+@endphp
+
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        @foreach($menus as $menu)
+            <li class="nav-item">
+
+                <a class="nav-link border-radious-9 margin-20 
+                    {{ menuActive($menu->active_patterns, $menu->route) }}"
+                   href="{{ $menu->route ? route($menu->route) : '#' }}">
+
+                    <img src="{{ asset($menu->icon) }}" 
+                         class="asideicon">
+
+                    <span>{{ $menu->title }}</span>
+                </a>
+
+                {{-- Submenu --}}
+                @if($menu->children->count())
+                    <ul class="nav-content">
+                        @foreach($menu->children as $child)
+                            <li>
+                                <a class="{{ menuActive($child->active_patterns, $child->route) }}"
+                                   href="{{ route($child->route) }}">
+                                    {{ $child->title }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+
+            </li>
+        @endforeach
+
+    </ul>
+</aside>
