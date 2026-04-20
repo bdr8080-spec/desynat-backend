@@ -226,6 +226,13 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     Route::post('/raise_ticket', [UserDashboardController::class,'raise_ticket']);
     Route::get('/get_raised_tickets', [UserDashboardController::class,'get_raised_tickets']);
     Route::Post('/add_story_comment', [UserDashboardController::class,'add_story_comment']);
+
+    //m13
+    Route::post('/notification_on_off', [ApiNotificationController::class,'notification_on_off']);
+    Route::post('/app_notification_on_off', [ApiNotificationController::class,'app_notification_on_off']);
+    Route::post('/add_card', [ProfileController::class,'add_card']);
+    Route::get('/get_my_cards', [ProfileController::class,'get_my_cards']);
+    Route::post('/delete_card', [ProfileController::class,'delete_card']);
   
 });
 
@@ -315,6 +322,10 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
   //M12
   Route::post('/raise_ticket', [UserAffilatedControlller::class,'raise_ticket']);
   Route::get('/get_raised_tickets', [UserAffilatedControlller::class,'get_raised_tickets']);
+
+  //m13
+  Route::post('/affiliate_notification_on_off', [ApiNotificationController::class,'affiliate_notification_on_off']);
+  Route::post('/affiliate_app_notification_on_off', [ApiNotificationController::class,'affiliate_app_notification_on_off']);
   
 
 
@@ -362,4 +373,12 @@ Route::get('all-brand',[CommonController::class, 'get_brand']);
 Route::get('all-color',[CommonController::class, 'get_color']);
 Route::get('all-size',[CommonController::class, 'get_size']);
 Route::get('ticket_types',[CommonController::class, 'ticket_types']);
+
+// cms
 Route::get('contact_us',[CommonController::class, 'contact_us']);
+Route::get('terms_conditions',[CommonController::class, 'terms_conditions']);
+Route::get('return_policy',[CommonController::class, 'return_policy']);
+Route::get('about_us',[CommonController::class, 'about_us']);
+Route::get('cancellation_policy',[CommonController::class, 'cancellation_policy']);
+Route::get('exchange_policy',[CommonController::class, 'exchange_policy']);
+Route::get('faqs',[CommonController::class, 'faqs']);

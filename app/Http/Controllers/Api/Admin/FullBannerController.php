@@ -156,6 +156,7 @@ class FullBannerController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
             'total_days'=>'required|integer',
             "upload_banner"=>"required",
+           // "country_id"=>"required",
         ]);
 
         if ($validate->fails()) {
@@ -173,6 +174,7 @@ class FullBannerController extends Controller
                 'end_date'=>$request->end_date,
                 'total_days'=>$request->total_days,
                 'upload_banner'=>$request->upload_banner,
+                //'country_id'=>$request->country_id,
 
             ];
 
@@ -200,6 +202,7 @@ class FullBannerController extends Controller
             'end_date'        => 'required|date|after_or_equal:start_date',
             'total_days'      => 'required|integer',
             'upload_banner'   => 'nullable', // optional on update
+            //"country_id"=>"required",
         ]);
 
         if ($validate->fails()) {
@@ -221,6 +224,7 @@ class FullBannerController extends Controller
                 'end_date'        => $request->end_date,
                 'total_days'      => $request->total_days,
                 'upload_banner'   => $request->upload_banner,
+                //'country_id'   => $request->country_id,
             ];
 
             $result = $this->FullBannerService->updatePromotionalBanner($request_data);

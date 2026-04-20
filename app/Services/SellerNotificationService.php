@@ -261,6 +261,64 @@ class SellerNotificationService
         }
     }
 
+     public function SellerNotificationOnOff($request_data)
+    {
+        try {
+            $userId = $request_data->user_id;
+
+            $user = seller::findOrFail($userId);
+            $newStatus = $user->notification == 1 ? 0 : 1;
+
+            $user->update(['notification' => $newStatus]);
+
+            $message = $newStatus == 1 
+                ? 'Notification is set to On' 
+                : 'Notification is set to Off';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $user
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update notification: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+     public function SellerAppNotificationOnOff($request_data)
+    {
+        try {
+            $userId = $request_data->user_id;
+
+            $user = seller::findOrFail($userId);
+            $newStatus = $user->app_notification == 1 ? 0 : 1;
+
+            $user->update(['app_notification' => $newStatus]);
+
+            $message = $newStatus == 1 
+                ? 'In app Notification is set to On' 
+                : 'In app Notification is set to Off';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $user
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update notification: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
     
 

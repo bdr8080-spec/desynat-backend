@@ -1065,6 +1065,90 @@ class OrderManagementService
         }
     }
 
+    public function RefundOrders($request){
+
+        try{
+            $limit = (int)($request->input('limit'));
+
+            DB::beginTransaction();
+
+            $checkOrder = orderdetail::with([
+                'order.delivery_details',
+                'order.giftCard_details',
+                'order.promocode_details',
+                
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'product_details.store',
+                'variation_details.color',
+                'variation_details.size',
+                'UserRatingReviewProvide',
+                'driver_details.zone_info'
+            ])
+            ->where('payment_status', '3');
+
+            
+            if ($request->search) {
+                $checkOrder->where(function ($query) use ($request) {
+                    // Search in order_id
+                    $query->whereHas('order', function ($q) use ($request) {
+                        $q->where('order_id', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in seller's first_name or last_name
+                    ->orWhereHas('product_details.seller_details', function ($q) use ($request) {
+                        $q->where('first_name', 'like', '%' . $request->search . '%')
+                        ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    });
+                });
+            }
+
+            if ($request->country_name) {
+                $checkOrder->whereHas('order.delivery_details', function ($q) use ($request) {
+                    $q->where('country_name', 'like', '%' . $request->country_name . '%');
+                });
+            }
+
+            if (!empty($request->from_date) && !empty($request->to_date)) {
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereBetween('created_at', [
+                        $request->from_date . ' 00:00:00',
+                        $request->to_date . ' 23:59:59'
+                    ]);
+                });
+
+            } elseif (!empty($request->from_date)) {
+
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereDate('created_at', '>=', $request->from_date);
+                });
+
+            } elseif (!empty($request->to_date)) {
+
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereDate('created_at', '<=', $request->to_date);
+                });
+            }
+
+
+            $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
+
+            DB::commit();
+
+            return ['status'=>'success','message'=>"Refund Orders fetched Successfully",'data'=>$checkOrder];
+
+        
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch active orders: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+    }
+
 
 
 

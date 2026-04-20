@@ -166,6 +166,11 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
    Route::post('/raise_ticket', [SellerDashboardController::class,'raise_ticket']);
    Route::get('/get_raised_tickets', [SellerDashboardController::class,'get_raised_tickets']);
+
+   //m13
+   Route::post('/notification_on_off', [NotificationController::class,'notification_on_off']);
+   Route::post('/app_notification_on_off', [NotificationController::class,'app_notification_on_off']);
+   Route::get('/get_refund_orders', [OrderManagement::class,'get_refund_orders']);
    
 
 

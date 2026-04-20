@@ -5,7 +5,9 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\UserContactChangeHistory;
+use App\Models\UserCard;
 use Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserProfileService
 {
@@ -132,6 +134,111 @@ class UserProfileService
 
         return ['status'=>'success','message'=>"Category list fetched successfully",'data'=>$category];
         // return ApiResponse::generateResponse('success', 'Sub category list fetched successfully', $subCategory, 201);
+    }
+
+
+    public function AddCard($request_data)
+    {
+        try {
+            DB::beginTransaction();
+
+            // if is_future = 1, make others 0
+            if ($request_data->is_future == 1) {
+                UserCard::where('user_id', $request_data->user_id)
+                    ->update(['is_future' => 0]);
+            }
+
+            $card = UserCard::create([
+                'user_id'          => $request_data->user_id,
+                'card_holder_name' => $request_data->card_holder_name,
+                'card_number'      => $request_data->card_number,
+                'expiry_date'      => $request_data->expiry_date,
+                'cvv'              => $request_data->cvv,
+                'is_future'        => $request_data->is_future,
+            ]);
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Card added successfully',
+                'data' => $card
+            ];
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to add card',
+                'data' => []
+            ];
+        }
+    }
+
+
+    public function GetMyCards($request_data)
+    {
+        try {
+            $cards = UserCard::where('user_id', $request_data->user_id)
+                ->orderBy('id', 'desc')
+                ->get();
+
+            if ($cards->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No cards found',
+                    'data' => []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Cards fetched successfully',
+                'data' => $cards
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch cards',
+                'data' => []
+            ];
+        }
+    }
+
+
+    public function DeleteCard($request_data)
+    {
+        try {
+            $card = UserCard::where('id', $request_data->card_id)->first();
+
+            if (!$card) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Card not found',
+                    'data' => []
+                ];
+            }
+
+            $card->delete();
+
+            return [
+                'status' => 'success',
+                'message' => 'Card deleted successfully',
+                'data' => (object)[]
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to delete card',
+                'data' => []
+            ];
+        }
     }
 
 

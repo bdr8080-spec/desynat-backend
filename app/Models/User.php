@@ -32,7 +32,9 @@ class User extends Authenticatable
         'fcm_token',
         'profile_image',
         'banner_view',
-        'lang'
+        'lang',
+        'notification',
+        'app_notification',
     ];
 
     /**

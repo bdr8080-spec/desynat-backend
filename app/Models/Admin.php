@@ -26,6 +26,13 @@ class Admin extends Authenticatable
         'otp_verify',
         'device_type',
         'fcm_token',
+        'type',
+        'profile_pic',
+        'country_id',
+        'status',
+        'unhashed_password',
+        'notification',
+        'app_notification',
     ];
 
     /**
@@ -33,21 +40,31 @@ class Admin extends Authenticatable
      *
      * @var list<string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // protected $hidden = [
+    //     'password',
+    //     'remember_token',
+    // ];
 
     /**
      * The attributes that should be cast.
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    // protected function casts(): array
+    // {
+    //     return [
+    //         'email_verified_at' => 'datetime',
+    //         'password' => 'hashed',
+    //     ];
+    // }
+
+    public function country_info()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsTo(country::class, 'country_id', 'id');
+    }
+
+    public function permission_details()
+    {
+        return $this->hasMany(AdminPermission::class, 'admin_id', 'id');
     }
 }

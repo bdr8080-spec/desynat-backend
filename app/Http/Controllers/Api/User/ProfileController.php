@@ -357,6 +357,94 @@ class ProfileController extends Controller
      
     }
 
+    public function add_card(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'card_holder_name' => 'required|string',
+            'card_number' => 'required|digits_between:13,15', // digits only, max 15
+            'expiry_date' => [
+                'required',
+                'regex:/^(0[1-9]|1[0-2])\/([0-9]{2})$/' // MM/YY format
+            ],
+            'cvv' => 'required|digits_between:3,4',
+            'is_future' => 'required|in:0,1'
+        ]);
+
+        if ($validate->fails()) {
+               return ApiResponse::generateResponse('error',$validate->errors()->first(), $validate->errors()->first(), 422);
+        }
+
+        $user_id= $request->user()->id;
+
+        $request_data = (object )[
+            'user_id'=>$user_id,
+            'card_holder_name'=>$request->card_holder_name,
+            'card_number'=>$request->card_number,
+            'expiry_date'=>$request->expiry_date,
+            'cvv'=>$request->cvv,
+            'is_future'=>$request->is_future,
+        ];
+
+        $data = $this->UserProfileService->AddCard($request_data);
+        
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+       
+    }
+
+    public function get_my_cards(Request $request)
+    {
+
+        $user_id= $request->user()->id;
+
+        $request_data = (object )[
+            'user_id'=>$user_id,
+        ];
+
+        $data = $this->UserProfileService->GetMyCards($request_data);      
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+       
+    }
+
+    public function delete_card(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'card_id' => 'required|exists:user_cards,id',
+        ]);
+
+        if ($validate->fails()) {
+               return ApiResponse::generateResponse('error',$validate->errors()->first(), $validate->errors()->first(), 422);
+        }
+
+        $user_id= $request->user()->id;
+
+        $request_data = (object )[
+            'card_id'=>$request->card_id,
+        ];
+
+        $data = $this->UserProfileService->DeleteCard($request_data);
+        
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+       
+    }
+
    
     
 }

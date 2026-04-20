@@ -7,18 +7,23 @@
     <div class="header-divider"></div>
 
     <div class="right-section">
-
+        @php
+                $user = auth('admin')->user();
+                $profileImage = !empty($user->profile_pic) 
+                    ? $user->profile_pic 
+                    : asset('/admin/image/hightlights-1.svg');
+            @endphp
 
       <div class="dropdown">
          <div class="profile-trigger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="/admin/image/hightlights-1.svg" class="header-profile-img" id="profileToggle">
+            <img src="{{$profileImage}}" class="header-profile-img" id="profileToggle">
         </div>
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li>
                 <div class="seller-profile">
                     <div class="p-grid1 d-flex gap-3 align-items-center">
-                        <img src="/admin/image/hightlights-1.svg" alt="Profile" class="rounded-circle profile-img">
+                        <img src="{{$profileImage}}" alt="Profile" class="rounded-circle profile-img">
                         
                         @auth('admin')
                             <div>

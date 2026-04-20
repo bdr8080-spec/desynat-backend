@@ -54,6 +54,10 @@ Route::group(['prefix' => 'deliveryboy'], function () {
     Route::post('/raise_ticket', [DeliveryBoyDashboardController::class,'raise_ticket']);
     Route::get('/get_raised_tickets', [DeliveryBoyDashboardController::class,'get_raised_tickets']);
 
+    //m13
+    Route::post('/notification_on_off', [NotificationController::class,'notification_on_off']);
+    Route::post('/app_notification_on_off', [NotificationController::class,'app_notification_on_off']);
+
     });
 
 

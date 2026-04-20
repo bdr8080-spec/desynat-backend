@@ -283,6 +283,18 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/get_giftcard_payments', [PaymentController::class,'get_giftcard_payments']);
    Route::get('/get_banner_payments', [PaymentController::class,'get_banner_payments']);
 
+   //m13
+    Route::post('/account_setting', [AuthController::class,'account_setting']);
+    Route::post('/update_password', [AuthController::class,'update_password']);
+    Route::post('/add_sub_admin', [AuthController::class,'add_sub_admin']);
+    Route::post('/update_sub_admin', [AuthController::class,'update_sub_admin']);
+    Route::post('/delete_sub_admin', [AuthController::class,'delete_sub_admin']);
+    Route::get('/get_admin_panel_modules', [AuthController::class,'get_admin_panel_modules']);
+    Route::get('/get_sub_admins', [AuthController::class,'get_sub_admins']);
+    Route::get('/sub_admin_details', [AuthController::class,'sub_admin_details']);
+    Route::get('/get_profile', [AuthController::class,'get_profile']);
+    Route::post('/update_subadmin_status', [AuthController::class,'update_subadmin_status']);
+    Route::get('/get_refund_orders', [OrderManagementController::class,'get_refund_orders']);
 
 
 

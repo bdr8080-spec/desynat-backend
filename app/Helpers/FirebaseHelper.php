@@ -121,25 +121,79 @@ if (!function_exists('parseNotificationText')) {
 }
 
 
+// if (!function_exists('CreateNotification')) {
+//     function CreateNotification($data = [])
+//     {
+//         try {
+//             // dd($data);
+//             // Save notification in DB
+//             $notification = Notification::create([
+//                 'sender_id'             => $data['sender_id'],
+//                 'sender_type'           => $data['sender_type'],
+//                 'receiver_id'           => $data['receiver_id'],
+//                 'receiver_type'         => $data['receiver_type'],
+//                 'title_english'         => $data['title_english'],
+//                 'description_english'   => $data['description_english'],
+//                 'notification_type'     => $data['notification_type'] ?? null,
+//                 'is_read'               => 0,
+//             ]);
+
+//             // Fetch the receiver based on type
+//             $receiver = null;
+//             switch ($data['receiver_type']) {
+//                 case 1: $receiver = Admin::find($data['receiver_id']); break;
+//                 case 2: $receiver = User::find($data['receiver_id']); break;
+//                 case 3: $receiver = Seller::find($data['receiver_id']); break;
+//                 case 4: $receiver = AffilatedUser::find($data['receiver_id']); break;
+//                 case 5: $receiver = DeliveryBoy::find($data['receiver_id']); break;
+//             }
+
+//             $tokens = [];
+//             $deviceType = 0; // default web
+//             $badgeCount = 0;
+
+//             if ($receiver && $receiver->notification == '1') {
+//                 if (!empty($receiver->fcm_token)) {
+//                     $tokens = explode(',', $receiver->fcm_token);
+//                 }
+//                 $deviceType = $receiver->device_type ?? 0;
+
+//                 // Count unread notifications for badge
+//                 $badgeCount = Notification::where('receiver_id', $receiver->id)
+//                     ->where('receiver_type', $data['receiver_type'])
+//                     ->where('is_read', '0')
+//                     ->count();
+//                 //dd($badgeCount);
+//             }
+
+//             // Send push notification
+//             if (!empty($tokens)) {
+//                 //dd($tokens);
+//                 sendPushNotificationNew(
+//                     $tokens,
+//                     $data['title_english'],
+//                     $data['description_english'],
+//                     $deviceType,
+//                     $badgeCount
+//                 );
+//             }
+
+//             return $notification;
+
+//         } catch (\Exception $e) {
+//             \Log::error('Notification Error: ' . $e->getMessage());
+//             return false;
+//         }
+//     }
+// }
+
 if (!function_exists('CreateNotification')) {
     function CreateNotification($data = [])
     {
         try {
-            // dd($data);
-            // Save notification in DB
-            $notification = Notification::create([
-                'sender_id'             => $data['sender_id'],
-                'sender_type'           => $data['sender_type'],
-                'receiver_id'           => $data['receiver_id'],
-                'receiver_type'         => $data['receiver_type'],
-                'title_english'         => $data['title_english'],
-                'description_english'   => $data['description_english'],
-                'notification_type'     => $data['notification_type'] ?? null,
-                'is_read'               => 0,
-            ]);
 
-            // Fetch the receiver based on type
             $receiver = null;
+
             switch ($data['receiver_type']) {
                 case 1: $receiver = Admin::find($data['receiver_id']); break;
                 case 2: $receiver = User::find($data['receiver_id']); break;
@@ -148,34 +202,62 @@ if (!function_exists('CreateNotification')) {
                 case 5: $receiver = DeliveryBoy::find($data['receiver_id']); break;
             }
 
-            $tokens = [];
-            $deviceType = 0; // default web
-            $badgeCount = 0;
+            if (!$receiver) {
+                return false;
+            }
 
-            if ($receiver) {
+            // STEP 1: FLAGS
+            $sendPush = $receiver->notification == 1;
+            $saveDb   = $receiver->app_notification == 1;
+
+            // CASE: both disabled → exit
+            if (!$sendPush && !$saveDb) {
+                return false;
+            }
+
+            $notification = null;
+
+            // STEP 2: DB INSERT ONLY IF app_notification = 1
+            if ($saveDb) {
+
+                $notification = Notification::create([
+                    'sender_id'             => $data['sender_id'],
+                    'sender_type'           => $data['sender_type'],
+                    'receiver_id'           => $data['receiver_id'],
+                    'receiver_type'         => $data['receiver_type'],
+                    'title_english'         => $data['title_english'],
+                    'description_english'   => $data['description_english'],
+                    'notification_type'     => $data['notification_type'] ?? null,
+                    'is_read'               => 0,
+                ]);
+            }
+
+            // STEP 3: PUSH ONLY IF notification = 1
+            if ($sendPush) {
+
+                $tokens = [];
+                $deviceType = 0;
+
                 if (!empty($receiver->fcm_token)) {
                     $tokens = explode(',', $receiver->fcm_token);
                 }
+
                 $deviceType = $receiver->device_type ?? 0;
 
-                // Count unread notifications for badge
-                $badgeCount = Notification::where('receiver_id', $receiver->id)
+                $badgeCount = Notification::where('receiver_id', $data['receiver_id'])
                     ->where('receiver_type', $data['receiver_type'])
                     ->where('is_read', '0')
                     ->count();
-                //dd($badgeCount);
-            }
 
-            // Send push notification
-            if (!empty($tokens)) {
-                //dd($tokens);
-                sendPushNotificationNew(
-                    $tokens,
-                    $data['title_english'],
-                    $data['description_english'],
-                    $deviceType,
-                    $badgeCount
-                );
+                if (!empty($tokens)) {
+                    sendPushNotificationNew(
+                        $tokens,
+                        $data['title_english'],
+                        $data['description_english'],
+                        $deviceType,
+                        $badgeCount
+                    );
+                }
             }
 
             return $notification;

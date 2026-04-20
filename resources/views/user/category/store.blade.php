@@ -129,13 +129,38 @@
                                             </div>
                                             <div class="rate-content d-flex align-items-center">
                                                 <div class="rate">
-                                                    <span><i class="bi bi-star-fill"></i></span>
-                                                    <span><i class="bi bi-star-fill"></i></span>
-                                                    <span><i class="bi bi-star-fill"></i></span>
-                                                    <span><i class="bi bi-star-fill"></i></span>
-                                                    <span><i class="bi bi-star-fill"></i></span>
+                                                    @php
+                                                        $rating = $item->average_store_rating ?? 0;
+
+                                                        $fullStars = floor($rating);
+                                                        $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                                        $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                                                    @endphp
+
+                                                    @if($rating > 0)
+
+                                                        @for($i = 0; $i < $fullStars; $i++)
+                                                            <span><i class="bi bi-star-fill"></i></span>
+                                                        @endfor
+
+                                                        @if($hasHalfStar)
+                                                            <span><i class="bi bi-star-half"></i></span>
+                                                        @endif
+
+                                                        @for($i = 0; $i < $emptyStars; $i++)
+                                                            <span><i class="bi bi-star"></i></span>
+                                                        @endfor
+
+                                                    @else
+
+                                                        @for($i = 0; $i < 5; $i++)
+                                                            <span><i class="bi bi-star"></i></span>
+                                                        @endfor
+
+                                                    @endif
                                                 </div>
-                                                <p>(1K)</p>
+                                                <p>({{ $item->total_review_count ?? 0 }})</p>
+
                                             </div>
                                         </div>
                                     </div>

@@ -36,7 +36,7 @@
 
                                     <div class="giftinfo-2">
                                         <p>Support Email Address</p>
-                                        <a href="#">Loremipsum@gmail.com</a>
+                                        <a href="mailto:{{ $ContactUs->content_english['email'] ?? 'Loremipsum@gmail.com' }}" target="_blank">{{ $ContactUs->content_english['email'] ?? 'Loremipsum@gmail.com' }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -50,13 +50,13 @@
 
                                     <div class="giftinfo-2">
                                         <p>Support Contact Number</p>
-                                        <a href="#">+966 57689025</a>
+                                        <a href="tel:{{ $ContactUs->content_english['mobile'] ?? '+7837687648576' }}">{{ $ContactUs->content_english['mobile'] ?? '+7837687648576' }}</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        <!-- <div class="col-lg-6">
                             <div class="border-1 mt-3">
                                 <div class="d-flex justify-content-between">
                                     <div class="giftinfo-2">
@@ -67,8 +67,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
+                        </div> -->
+                        <!-- <div class="col-lg-6">
                             <div class="border-1 mt-3">
                                 <div class="d-flex justify-content-between">
                                     <div class="giftinfo-2">
@@ -79,7 +79,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>   

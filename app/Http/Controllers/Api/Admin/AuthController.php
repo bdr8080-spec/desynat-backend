@@ -152,6 +152,289 @@ class AuthController extends Controller
         return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
     }
 
+    public function account_setting(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'profile_pic' => 'required',
+              'full_name' => 'required',
+              'country_code' => 'required',
+              'mobile' => 'required',
+              'email' => 'required',
+              ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $admin = Auth::user()->id;
+         //dd($admin);
+
+         $request_data = (object)[
+                'user_id'              => $admin,
+                'profile_pic' => $req->profile_pic,
+                'full_name'        => $req->full_name,
+                'country_code'      => $req->country_code,
+                'mobile'      => $req->mobile,
+                'email'      => $req->email,
+            ];
+  
+          $data= $this->AdminAuthService->AccountSetting($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+      public function update_password(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'old_password' => 'required',
+              'new_password' => 'required',
+              'confirm_password' => 'required|same:new_password',
+              ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $admin = Auth::user()->id;
+         //dd($admin);
+
+         $request_data = (object)[
+                'user_id'              => $admin,
+                'old_password' => $req->old_password,
+                'new_password'        => $req->new_password,
+                'confirm_password'      => $req->confirm_password,
+            ];
+  
+          $data= $this->AdminAuthService->UpdatePassword($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function add_sub_admin(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'profile_pic' => 'required',
+              'full_name' => 'required',
+              'country_code' => 'required',
+              'mobile' => 'required',
+              'email' => 'required',
+              'country_id' => 'required|exists:countries,id',
+              'password' => 'required',
+              'confirm_password' => 'required|same:password',
+              'modules' => 'required|array',
+              'modules.*.module_id' => 'required|exists:admin_modules,id',
+              'modules.*.can_view' => 'required|in:0,1',
+              'modules.*.can_action' => 'required|in:0,1',
+            ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $request_data = (object)[
+                'profile_pic' => $req->profile_pic,
+                'full_name'        => $req->full_name,
+                'country_code'      => $req->country_code,
+                'mobile'      => $req->mobile,
+                'email'      => $req->email,
+                'country_id'      => $req->country_id,
+                'password'      => $req->password,
+                'modules' => $req->modules,
+            ];
+  
+          $data= $this->AdminAuthService->AddSubAdmin($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function update_sub_admin(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'id' => 'required|exists:admins,id',
+              'profile_pic' => 'required',
+              'full_name' => 'required',
+              'country_code' => 'required',
+              'mobile' => 'required',
+              'email' => 'required',
+              'country_id' => 'required|exists:countries,id',
+              'password' => 'required',
+              'confirm_password' => 'required|same:password',
+              'modules' => 'required|array',
+              'modules.*.module_id' => 'required|exists:admin_modules,id',
+              'modules.*.can_view' => 'required|in:0,1',
+              'modules.*.can_action' => 'required|in:0,1',
+            ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $request_data = (object)[
+                'id' => $req->id,
+                'profile_pic' => $req->profile_pic,
+                'full_name'        => $req->full_name,
+                'country_code'      => $req->country_code,
+                'mobile'      => $req->mobile,
+                'email'      => $req->email,
+                'country_id'      => $req->country_id,
+                'password'      => $req->password,
+                'modules' => $req->modules,
+            ];
+  
+          $data= $this->AdminAuthService->UpdateSubAdmin($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function delete_sub_admin(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'id' => 'required|exists:admins,id',
+            ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $request_data = (object)[
+                'id' => $req->id,
+            ];
+  
+          $data= $this->AdminAuthService->DeleteSubAdmin($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function get_admin_panel_modules(Request $req){
+  
+          $data= $this->AdminAuthService->GetAdminPanelModules($req);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function get_sub_admins(Request $req){
+
+            $request_data = (object)[
+                'search' => $req->search??null,
+                'country_id'        => $req->country_id??null,
+                'from_date'      => $req->from_date??null,
+                'to_date'      => $req->to_date??null,
+                'limit' => $req->limit??null,
+            ];
+  
+          $data= $this->AdminAuthService->GetSubAdmins($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+      public function get_profile(Request $req){
+
+
+         $admin = Auth::user()->id;
+         //dd($admin);
+
+         $request_data = (object)[
+                'user_id'  => $admin,
+            ];
+  
+          $data= $this->AdminAuthService->GetProfile($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function sub_admin_details(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'id' => 'required|exists:admins,id',
+            ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $request_data = (object)[
+                'id' => $req->id,
+            ];
+  
+          $data= $this->AdminAuthService->SubAdminDetails($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function update_subadmin_status(Request $req){
+
+          $validate = Validator::make($req->all(), [
+              'id' => 'required|exists:admins,id',
+            ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $request_data = (object)[
+                'id' => $req->id,
+            ];
+  
+          $data= $this->AdminAuthService->UpdateSubAdminStatus($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+
+    
+
+
+
     
 
     

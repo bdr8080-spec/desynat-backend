@@ -21,6 +21,10 @@ class sellerBanner extends Model
        return $this->hasOne(seller::class,'id','seller_id');
        }
 
+       // public function country_details(){
+       // return $this->belongsTo(all_countrie::class, 'country_id');
+       // }
+
 
        
 }
