@@ -26,13 +26,13 @@ class AuthController extends Controller
 
     public function create_account(Request $request){
 
-        $check_user_already=seller::where('email',$request->email)->where('otp_verify','0')->first();
+        $check_user_already=seller::where('type','0')->where('email',$request->email)->where('otp_verify','0')->first();
 
         if($check_user_already){
           $check_user_already->delete();
         }
 
-        $check_mobile_already=seller::where('country_code',$request->country_code)->where('mobile',$request->mobile)->where('otp_verify','0')->first();
+        $check_mobile_already=seller::where('type','0')->where('country_code',$request->country_code)->where('mobile',$request->mobile)->where('otp_verify','0')->first();
         if($check_mobile_already){
             $check_mobile_already->delete();
           }
