@@ -1480,135 +1480,8 @@ function closeStatus() {
 </script>
 
 <!-- google translator code -->
+
 <!-- <script>
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        autoDisplay: false
-    }, 'google_translate_element');
-}
-</script>
-
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<script>
-const countryLangMap = {
-    "Kuwait": "ar",
-    "Bahrain": "ar",
-    "Qatar": "ar",
-    "Saudi Arabia": "ar",
-    "UAE": "ar",
-    "Oman": "ar",
-    "United States": "en"
-};
- 
-document.querySelectorAll('input[name="country_language"]').forEach(radio => {
-
-    radio.addEventListener("change", function () {
-
-        const country = this.value;
-
-        // Save instantly
-        localStorage.setItem("selectedCountry", country);
-
-        const lang = countryLangMap[country] || "en";
-
-        applyTranslation(lang);
-
-        //  Close dropdown after selection
-        const dropdownBtn = document.getElementById("countryDropdownBtn");
-        if (dropdownBtn && window.bootstrap) {
-            const instance = bootstrap.Dropdown.getInstance(dropdownBtn);
-            if (instance) instance.hide();
-        }
-    });
-
-});
-
-function applyTranslation(lang) {
-
-    const loader = document.getElementById("loaderTrans");
-    loader.style.display = "flex";
-
-    let translationApplied = false;
-
-    function triggerTranslate() {
-        const select = document.querySelector(".goog-te-combo");
-
-        if (select) {
-            select.value = lang;
-            select.dispatchEvent(new Event("change"));
-
-            translationApplied = true;
-
-            // Hide loader after short delay
-            setTimeout(() => {
-                loader.style.display = "none";
-            }, 1500);
-
-        } else {
-            setTimeout(triggerTranslate, 500);
-        }
-    }
-
-    triggerTranslate();
-    setTimeout(() => {
-        loader.style.display = "none";
-    }, 5000);
-}
-
-window.addEventListener("load", function () {
-
-    const savedCountry = localStorage.getItem("selectedCountry");
-
-    if (!savedCountry) return;
-
-    const lang = countryLangMap[savedCountry] || "en";
-
-    // Auto-select radio
-    const radio = document.querySelector(`input[name="country_language"][value="${savedCountry}"]`);
-    if (radio) radio.checked = true;
-
-    setTimeout(() => {
-        applyTranslation(lang);
-    }, 1500);
-});
-
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-            if (node.id === 'goog-gt-tt') {
-                node.style.display = 'none';
-            }
-        });
-    });
-});
-
-observer.observe(document.body, { childList: true, subtree: true });
-
-/*  Fix back/forward cache */
-window.addEventListener("pageshow", function (event) {
-
-    const loader = document.getElementById("loaderTrans");
-
-    if (event.persisted || 
-        (window.performance && 
-         window.performance.getEntriesByType("navigation")[0].type === "back_forward")) {
-
-        loader.style.display = "flex";
-        window.location.reload();
-    }
-});
-
-window.addEventListener("error", function () {
-    const loader = document.getElementById("loaderTrans");
-    if (loader) loader.style.display = "none";
-});
-</script> -->
-
-
-
-<script>
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({
         pageLanguage: 'en',
@@ -1716,7 +1589,145 @@ window.addEventListener("load", function () {
 
 });
 
+</script> -->
+
+
+<script>
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        autoDisplay: false
+    }, 'google_translate_element');
+}
 </script>
+
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+
+let currentLang = localStorage.getItem("selectedLang") || "en";
+
+/* WAIT FOR GOOGLE DROPDOWN */
+function waitForCombo(callback) {
+
+    const timer = setInterval(() => {
+
+        const combo = document.querySelector(".goog-te-combo");
+
+        if (combo && combo.options.length > 0) {
+            clearInterval(timer);
+            callback(combo);
+        }
+
+    }, 200);
+}
+
+
+function applyTranslation(lang) {
+
+    const loader = document.getElementById("loaderTrans");
+    if (loader) loader.style.display = "flex";
+
+    currentLang = lang;
+    localStorage.setItem("selectedLang", lang);
+
+    updateUI(lang);
+
+    waitForCombo(function(combo) {
+
+        // RESET FIX (VERY IMPORTANT)
+        combo.value = "en";
+        combo.dispatchEvent(new Event("change"));
+
+        setTimeout(() => {
+
+            combo.value = lang;
+            combo.dispatchEvent(new Event("change"));
+
+            setTimeout(() => {
+                if (loader) loader.style.display = "none";
+            }, 600);
+
+        }, 250);
+
+    });
+}
+
+
+function updateUI(lang) {
+
+    document.getElementById("currentLang").innerText = lang.toUpperCase();
+
+    document.querySelectorAll(".langu .dropdown-item")
+        .forEach(el => el.style.background = "");
+
+    const active = document.querySelector(`.langu .dropdown-item[data-lang="${lang}"]`);
+
+    if (active) {
+        active.style.background =
+            "linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%)";
+    }
+}
+
+
+document.querySelectorAll(".langu .dropdown-item").forEach(item => {
+
+    item.addEventListener("click", function () {
+
+        const lang = this.getAttribute("data-lang");
+
+        applyTranslation(lang);
+
+    });
+
+});
+
+
+function initLanguage() {
+
+    const lang = localStorage.getItem("selectedLang") || "en";
+
+    updateUI(lang);
+
+    waitForCombo(function(combo) {
+
+        combo.value = lang;
+        combo.dispatchEvent(new Event("change"));
+
+    });
+
+}
+
+window.addEventListener("load", initLanguage);
+
+
+window.addEventListener("pageshow", function (event) {
+
+    if (event.persisted ||
+        performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
+
+        setTimeout(() => {
+            initLanguage();
+        }, 200);
+    }
+
+});
+
+/* HIDE GOOGLE TOOLTIP */
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+            if (node.id === 'goog-gt-tt') {
+                node.style.display = 'none';
+            }
+        });
+    });
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
+
+</script>
+
 
 
 

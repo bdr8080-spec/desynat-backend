@@ -449,32 +449,30 @@
                             </div>
                             <div class="dropdown-center mobileLang">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid"
-                                        style="width: 15px !important;" />
-                                    @if(App::getLocale()=='en')
-                                    EN
-                                    @elseif(App::getLocale()=='ar')
-                                    AR
-                                    @else
-                                    EN
-                                    @endif
+                                    data-bs-toggle="dropdown">
+
+                                    <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
+
+                                    <span id="currentLang">EN</span>
+
                                 </button>
+
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
-                                    <li
-                                        style="@if (app()->getLocale() === 'ar') Background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);  @endif ">
-                                        <a class="dropdown-item" href="{{ route('user_lang') }}?lang=ar"><span>AR</span>
-                                            Arabic</a>
-                                        <!-- @if (app()->getLocale() === 'ar') Active @endif -->
+                                    <li>
+                                        <a class="dropdown-item" data-lang="ar">
+                                            <span>AR</span> Arabic
+                                        </a>
                                     </li>
-                                    <li
-                                        style="@if (app()->getLocale() === 'en') Background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);  @endif ">
-                                        <a class="dropdown-item" href="{{ route('user_lang') }}?lang=en"><span>EN</span>
-                                            English</a>
-                                        <!-- @if (app()->getLocale() === 'en') Active @endif  -->
+
+                                    <li>
+                                        <a class="dropdown-item" data-lang="en">
+                                            <span>EN</span> English
+                                        </a>
                                     </li>
+
                                 </ul>
+
                             </div>
                         </div>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

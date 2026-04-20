@@ -37,119 +37,32 @@
                     </ul>
                 </div> -->
                 <div class="dropdown-center mobileLang">
-                    <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}"
-                            class="img-fluid" />
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu"
-                        aria-labelledby="countryDropdownBtn">
-                        <li class="topDropdonw">
-                            <p>Change Country
-                                <i class="fa-solid fa-xmark"></i>
-                            </p>
-                        </li>
-                        <li class="dropdown-item" data-country="United States"
-                            data-flag="{{asset('user/assets/images/flags/kuwait.svg')}}">
-                            <div class="d-flex align-self-center justify-content-between">
-                                <div class="radio-group">
-                                    <label class="custom-radio">
-                                        <input type="radio" name="country_language" value="United States"/>
-                                        <span class="radio-mark"></span>
-                                        <span class="label-text">United States</span>
-                                    </label>
-                                </div>
-                                <img src="{{asset('user/assets/images/flags/kuwait.svg')}}" />
-                            </div>
-                        </li>
-                        <li class="dropdown-item" data-country="Kuwait"
-                            data-flag="{{asset('user/assets/images/flags/kuwait.svg')}}">
-                            <div class="d-flex align-self-center justify-content-between">
-                                <div class="radio-group">
-                                    <label class="custom-radio">
-                                        <input type="radio" name="country_language" value="Kuwait"/>
-                                        <span class="radio-mark"></span>
-                                        <span class="label-text">Kuwait</span>
-                                    </label>
-                                </div>
-                                <img src="{{asset('user/assets/images/flags/kuwait.svg')}}" />
-                            </div>
-                        </li>
-                        <li class="dropdown-item" data-country="Bahrain"
-                            data-flag="{{asset('user/assets/images/flags/bahrain.svg')}}">
-                            <div class="d-flex align-self-center justify-content-between">
+                                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+                                    data-bs-toggle="dropdown">
 
-                                <div class="radio-group">
-                                    <label class="custom-radio">
-                                        <input type="radio" name="country_language" value="Bahrain" />
-                                        <span class="radio-mark"></span>
-                                        <span class="label-text">Bahrain</span>
-                                    </label>
-                                </div>
-                                <img src="{{asset('user/assets/images/flags/bahrain.svg')}}" />
-                            </div>
-                        </li>
-                        <li class="dropdown-item" data-country="Qatar"
-                            data-flag="{{asset('user/assets/images/flags/qatar.svg')}}">
-                            <div class="d-flex align-self-center justify-content-between">
+                                    <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                <div class="radio-group">
-                                    <label class="custom-radio">
-                                        <input type="radio" name="country_language" value="Qatar" />
-                                        <span class="radio-mark"></span>
-                                        <span class="label-text">Qatar</span>
-                                    </label>
-                                </div>
-                                <img src="{{asset('user/assets/images/flags/qatar.svg')}}" />
-                            </div>
-                        </li>
-                        <li class="dropdown-item" data-country="Saudi Arabia"
-                            data-flag="{{asset('user/assets/images/flags/saudi-arabia.svg')}}">
-                            <div class="d-flex align-self-center justify-content-between">
+                                    <span id="currentLang">EN</span>
 
-                                <div class="radio-group">
-                                    <label class="custom-radio">
-                                        <input type="radio" name="country_language" value="Saudi Arabia" />
-                                        <span class="radio-mark"></span>
-                                        <span class="label-text">Saudi Arabia</span>
-                                    </label>
-                                </div>
-                                <img src="{{asset('user/assets/images/flags/saudi-arabia.svg')}}" />
-                            </div>
-                        </li>
-                        <li class="dropdown-item" data-country="UAE"
-                            data-flag="{{asset('user/assets/images/flags/uae.svg')}}">
-                            <div class="d-flex align-self-center justify-content-between">
+                                </button>
 
-                                <div class="radio-group">
-                                    <label class="custom-radio">
-                                        <input type="radio" name="country_language" value="UAE" />
-                                        <span class="radio-mark"></span>
-                                        <span class="label-text">UAE</span>
-                                    </label>
-                                </div>
-                                <img src="{{asset('user/assets/images/flags/uae.svg')}}" />
-                            </div>
-                        </li>
-                        <li class="dropdown-item" data-country="Oman"
-                            data-flag="{{asset('user/assets/images/flags/oman.svg')}}">
-                            <div class="d-flex align-self-center justify-content-between">
+                                <ul class="dropdown-menu dropdown-menu-end langu">
 
-                                <div class="radio-group">
-                                    <label class="custom-radio">
-                                        <input type="radio" name="country_language" value="Oman" />
-                                        <span class="radio-mark"></span>
-                                        <span class="label-text">Oman</span>
-                                    </label>
-                                </div>
-                                <img src="{{asset('user/assets/images/flags/oman.svg')}}" />
+                                    <li>
+                                        <a class="dropdown-item" data-lang="ar">
+                                            <span>AR</span> Arabic
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" data-lang="en">
+                                            <span>EN</span> English
+                                        </a>
+                                    </li>
+
+                                </ul>
+
                             </div>
-                        </li>
-                        <!-- <li>
-                            <button id="saveCountry" class="customBtn customBtn5 mt-lg-5 mt-md-3 mt-3">Save</button>
-                        </li> -->
-                    </ul>
-                </div>
                 <a href="{{url('/seller/login')}}" class="customBtn1">Become a seller</a>
             </div>
         </header>
@@ -407,23 +320,16 @@ function googleTranslateElementInit() {
 
 <script>
 
-const countryLangMap = {
-    "Kuwait": "ar",
-    "Bahrain": "ar",
-    "Qatar": "ar",
-    "Saudi Arabia": "ar",
-    "UAE": "ar",
-    "Oman": "ar",
-    "United States": "en"
-};
+let currentLang = localStorage.getItem("selectedLang") || "en";
 
-function waitForComboReady(callback) {
+/* WAIT FOR GOOGLE DROPDOWN */
+function waitForCombo(callback) {
 
     const timer = setInterval(() => {
 
         const combo = document.querySelector(".goog-te-combo");
 
-        if (combo && combo.options && combo.options.length > 0) {
+        if (combo && combo.options.length > 0) {
             clearInterval(timer);
             callback(combo);
         }
@@ -431,14 +337,21 @@ function waitForComboReady(callback) {
     }, 200);
 }
 
+
 function applyTranslation(lang) {
 
     const loader = document.getElementById("loaderTrans");
     if (loader) loader.style.display = "flex";
 
-    waitForComboReady(function(combo) {
+    currentLang = lang;
+    localStorage.setItem("selectedLang", lang);
 
-        combo.selectedIndex = 0;
+    updateUI(lang);
+
+    waitForCombo(function(combo) {
+
+        // RESET FIX (VERY IMPORTANT)
+        combo.value = "en";
         combo.dispatchEvent(new Event("change"));
 
         setTimeout(() => {
@@ -448,59 +361,85 @@ function applyTranslation(lang) {
 
             setTimeout(() => {
                 if (loader) loader.style.display = "none";
-            }, 800);
+            }, 600);
 
-        }, 200);
+        }, 250);
+
+    });
+}
+
+
+function updateUI(lang) {
+
+    document.getElementById("currentLang").innerText = lang.toUpperCase();
+
+    document.querySelectorAll(".langu .dropdown-item")
+        .forEach(el => el.style.background = "");
+
+    const active = document.querySelector(`.langu .dropdown-item[data-lang="${lang}"]`);
+
+    if (active) {
+        active.style.background =
+            "linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%)";
+    }
+}
+
+
+document.querySelectorAll(".langu .dropdown-item").forEach(item => {
+
+    item.addEventListener("click", function () {
+
+        const lang = this.getAttribute("data-lang");
+
+        applyTranslation(lang);
+
+    });
+
+});
+
+
+function initLanguage() {
+
+    const lang = localStorage.getItem("selectedLang") || "en";
+
+    updateUI(lang);
+
+    waitForCombo(function(combo) {
+
+        combo.value = lang;
+        combo.dispatchEvent(new Event("change"));
 
     });
 
 }
 
-document.querySelectorAll('input[name="country_language"]').forEach(radio => {
+window.addEventListener("load", initLanguage);
 
-    radio.addEventListener("change", function () {
 
-        const country = this.value;
-        const lang = countryLangMap[country] || "en";
+window.addEventListener("pageshow", function (event) {
 
-        localStorage.setItem("selectedCountry", country);
+    if (event.persisted ||
+        performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
 
-        applyTranslation(lang);
-
-        const dropdownBtn = document.getElementById("countryDropdownBtn");
-
-        if (dropdownBtn && window.bootstrap) {
-            const instance = bootstrap.Dropdown.getInstance(dropdownBtn);
-            if (instance) instance.hide();
-        }
-
-    });
-
-});
-
-window.addEventListener("load", function () {
-
-    let saved = localStorage.getItem("selectedCountry");
-
-    if (!saved) {
-        saved = "United States";
-        localStorage.setItem("selectedCountry", saved);
+        setTimeout(() => {
+            initLanguage();
+        }, 200);
     }
 
-    const lang = countryLangMap[saved] || "en";
-
-    const radio = document.querySelector(
-        `input[name="country_language"][value="${saved}"]`
-    );
-
-    if (radio) radio.checked = true;
-
-    // extra delay = fixes FIRST LOAD issue (critical)
-    setTimeout(() => {
-        applyTranslation(lang);
-    }, 1500);
-
 });
+
+/* HIDE GOOGLE TOOLTIP */
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+            if (node.id === 'goog-gt-tt') {
+                node.style.display = 'none';
+            }
+        });
+    });
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
 
 </script>
 
