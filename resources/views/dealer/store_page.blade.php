@@ -431,7 +431,7 @@
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk1iHVph8nvXAn0uigTvPzKDpb9cslR18&libraries=places">
+<script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&libraries=places">
 </script>
 
 <script>
