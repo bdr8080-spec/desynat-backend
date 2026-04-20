@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\Seller\OrderManagement;
 use App\Http\Controllers\Api\Seller\SellerDealManagement;
 use App\Http\Controllers\Api\Seller\SellerLiveRequestController;
 use App\Http\Controllers\Api\Seller\NotificationController;
+use App\Http\Controllers\Api\Seller\SellerStaffManagementController;
+
 
 use App\Http\Controllers\CommonController;
 
@@ -171,7 +173,10 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
    Route::post('/notification_on_off', [NotificationController::class,'notification_on_off']);
    Route::post('/app_notification_on_off', [NotificationController::class,'app_notification_on_off']);
    Route::get('/get_refund_orders', [OrderManagement::class,'get_refund_orders']);
-   
+
+
+  Route::post('/add-new-staff', [SellerStaffManagementController::class,'addNewStaff']);
+
 
 
 });
