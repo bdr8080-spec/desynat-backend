@@ -26,6 +26,23 @@
     .pac-container {
         z-index: 9999;
     }
+
+        iframe#\:1\.container {
+    visibility: hidden !important;
+}
+
+/* Hide the Google Translate tooltip */
+.goog-te-banner-frame.skiptranslate,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-tooltip-vertical {
+    display: none !important;
+}
+
+/* Hide the feedback popup on selected text */
+#goog-gt-tt {
+    display: none !important;
+}
     </style>
 
     @php
@@ -242,12 +259,25 @@
                                             <i class="fa-solid fa-xmark"></i>
                                         </p>
                                     </li>
+                                    <li class="dropdown-item" data-country="United States"
+                                        data-flag="{{asset('user/assets/images/flags/kuwait.svg')}}">
+                                        <div class="d-flex align-self-center justify-content-between">
+                                            <div class="radio-group">
+                                                <label class="custom-radio">
+                                                    <input type="radio" name="country_language" value="United StatesUSA"/>
+                                                    <span class="radio-mark"></span>
+                                                    <span class="label-text">United States</span>
+                                                </label>
+                                            </div>
+                                            <img src="{{asset('user/assets/images/flags/kuwait.svg')}}" />
+                                        </div>
+                                    </li>
                                     <li class="dropdown-item" data-country="Kuwait"
                                         data-flag="{{asset('user/assets/images/flags/kuwait.svg')}}">
                                         <div class="d-flex align-self-center justify-content-between">
                                             <div class="radio-group">
                                                 <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
+                                                    <input type="radio" name="country_language" value="Kuwait"/>
                                                     <span class="radio-mark"></span>
                                                     <span class="label-text">Kuwait</span>
                                                 </label>
@@ -261,7 +291,7 @@
 
                                             <div class="radio-group">
                                                 <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
+                                                    <input type="radio" name="country_language" value="Bahrain" />
                                                     <span class="radio-mark"></span>
                                                     <span class="label-text">Bahrain</span>
                                                 </label>
@@ -275,7 +305,7 @@
 
                                             <div class="radio-group">
                                                 <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
+                                                    <input type="radio" name="country_language" value="Qatar" />
                                                     <span class="radio-mark"></span>
                                                     <span class="label-text">Qatar</span>
                                                 </label>
@@ -289,7 +319,7 @@
 
                                             <div class="radio-group">
                                                 <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
+                                                    <input type="radio" name="country_language" value="Saudi Arabia" />
                                                     <span class="radio-mark"></span>
                                                     <span class="label-text">Saudi Arabia</span>
                                                 </label>
@@ -303,7 +333,7 @@
 
                                             <div class="radio-group">
                                                 <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
+                                                    <input type="radio" name="country_language" value="UAE" />
                                                     <span class="radio-mark"></span>
                                                     <span class="label-text">UAE</span>
                                                 </label>
@@ -317,7 +347,7 @@
 
                                             <div class="radio-group">
                                                 <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
+                                                    <input type="radio" name="country_language" value="Oman" />
                                                     <span class="radio-mark"></span>
                                                     <span class="label-text">Oman</span>
                                                 </label>
@@ -325,9 +355,9 @@
                                             <img src="{{asset('user/assets/images/flags/oman.svg')}}" />
                                         </div>
                                     </li>
-                                    <li>
-                                        <button class="customBtn customBtn5 mt-lg-5 mt-md-3 mt-3">Save</button>
-                                    </li>
+                                    <!-- <li>
+                                        <button id="saveCountry" class="customBtn customBtn5 mt-lg-5 mt-md-3 mt-3">Save</button>
+                                    </li> -->
                                 </ul>
                             </div>
                             <div class="dropdown-center mobileLang">
@@ -621,4 +651,23 @@
                 </div>
             </div>
         </div>
+    </div>
+
+<div id="google_translate_element" style="display:none;"></div>
+<div id="loaderTrans"
+        style="display:none;
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:#ffffff; 
+        z-index:999999;   
+        /* display:flex;    */
+        align-items:center;
+        justify-content:center;">
+
+        <iframe src="https://lottie.host/embed/7629c0ed-9538-4b83-b7ab-5870d7aae0ab/KLkQkV2bNW.lottie"
+                style="border:none; width:200px; height:200px;">
+        </iframe>
     </div>

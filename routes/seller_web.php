@@ -241,6 +241,16 @@ Route::match(['get', 'post'], '/add-products', function () {
 
 })->name('dealer.add-products');
 
+Route::match(['get', 'post'], '/staff-management', function () {
+    return view('dealer.staff.index');
+
+})->name('dealer.staff-management');
+
+Route::match(['get', 'post'], '/add-staff', function () {
+    return view('dealer.staff.add-staff');
+
+})->name('dealer.add-staff');
+
 
 // Route::match(['get', 'post'], '/index', function () {
 //     return view('dealer.ticket-mgt.index');

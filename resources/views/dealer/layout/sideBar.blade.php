@@ -29,6 +29,13 @@
                     <span>Affiliated Commission</span>
                 </a>
             </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20" href="/staff-management">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/staff.svg" alt="icon" class="asideicon">
+                    <span>Staff Management</span>
+                </a>
+            </li> -->
+
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/show-banner') ? 'sidebar-active' : '' }}"
                     href="{{ route('seller.show_banner') }}">
