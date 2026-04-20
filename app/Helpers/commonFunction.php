@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\{seller};
 
+use App\Models\SellerMenus_table;
+use Illuminate\Support\Facades\Cache;
+
+
 
 
  function image_upload($file,$dir){
@@ -53,5 +57,37 @@ function Generate_SellerQrCode($seller_id,$store_id){
 
 
     seller::where('id',$seller_id)->update(['profile_qr'=>$image_url,'qrSellerUrl'=>$qrSellerCode]);
+    
+}
 
+if (!function_exists('getSellerMenus')) {
+    function getSellerMenus()
+    {
+        return Cache::remember('seller_menus', 60, function () {
+            return SellerMenus_table::whereNull('parent_id')
+                ->where('status', 1)
+                ->with('children')
+                ->orderBy('order_by')
+                ->get();
+        });
+    }
+}
+
+if (!function_exists('menuActive')) {
+    function menuActive($patterns, $route = null)
+    {
+        $patterns = json_decode($patterns, true) ?? [];
+
+        foreach ($patterns as $pattern) {
+            if (request()->is($pattern)) {
+                return 'sidebar-active';
+            }
+        }
+
+        if ($route && request()->routeIs($route)) {
+            return 'sidebar-active';
+        }
+
+        return '';
+    }
 }
