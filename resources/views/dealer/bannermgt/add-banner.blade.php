@@ -402,6 +402,11 @@ $(document).on('submit', 'form#addBanner', function(event) {
                 $('.submit').html('Upload');
             }, 2000);
 
+            if (response.success === false) {
+                toastr.error(response.message);
+                return; // stop further execution
+            }
+
             if (response.status === 'success') {
                 // toastr.success(response.message);
 
@@ -414,6 +419,7 @@ $(document).on('submit', 'form#addBanner', function(event) {
             }
         },
         error: function(xhr) {
+
 
             $('#loader').hide();
             $('.text-danger').empty(); // Clear previous errors
