@@ -35,7 +35,7 @@
                              <h6>Customer Policy</h6>
                              <ul class="navs list-unstyled">
                                  <li>
-                                     <a href="">About Us</a>
+                                     <a href="/about-us">About Us</a>
                                  </li>
                                  <li>
                                      <a href="">Terms & Condition</a>
@@ -47,7 +47,7 @@
                                      <a href="">Exchange Policy</a>
                                  </li>
                                  <li>
-                                     <a href="">FAQs</a>
+                                     <a href="/faq">FAQs</a>
                                  </li>
                              </ul>
                          </div>

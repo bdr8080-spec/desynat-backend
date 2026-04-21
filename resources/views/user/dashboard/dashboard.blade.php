@@ -248,12 +248,12 @@
                         </a>
 
                         @if (Auth::guard('web')->user())
-                        <span class="wishlist-btn" style="cursor: pointer;z-index:999"><i style="cursor: pointer;z-index:99999999"
+                        <span class="wishlist-btn" style="cursor: pointer;"><i style="cursor: pointer;"
                                 class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
                                 onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
                         @else
-                        <a class="wishlist-btn text-decoration-underline" style="cursor: pointer;z-index:99" href="{{route('userLogin')}}">
-                            <i class="fa-regular fa-heart" style="cursor: pointer;z-index:999999"></i>
+                        <a class="wishlist-btn text-decoration-underline" style="cursor: pointer;" href="{{route('userLogin')}}">
+                            <i class="fa-regular fa-heart" style="cursor: pointer;"></i>
                         </a>
                         @endif
 
@@ -397,11 +397,11 @@
                     </a>
 
                         @if (Auth::guard('web')->user())
-                        <span class="wishlist-btn" style="cursor: pointer;z-index:999999999999"><i style="z-index:999999999;"
+                        <span class="wishlist-btn" style="cursor: pointer;"><i style=""
                                 class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
                                 onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
                         @else
-                        <a class="wishlist-btn text-decoration-underline"  style="cursor: pointer;z-index:99999999" href="{{route('userLogin')}}">
+                        <a class="wishlist-btn text-decoration-underline"  style="cursor: pointer;" href="{{route('userLogin')}}">
                             <i class="fa-regular fa-heart"></i>
                         </a>
                         @endif
@@ -508,11 +508,11 @@
                          </a>
 
                         @if (Auth::guard('web')->user())
-                        <span class="wishlist-btn" style="cursor: pointer;z-index:99999999"><i
+                        <span class="wishlist-btn" style="cursor: pointer;"><i
                                 class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
                                 onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
                         @else
-                        <a class="wishlist-btn text-decoration-underline"  style="cursor: pointer;z-index:99999999" href="{{route('userLogin')}}">
+                        <a class="wishlist-btn text-decoration-underline"  style="cursor: pointer;" href="{{route('userLogin')}}">
                             <i class="fa-regular fa-heart"></i>
                         </a>
                         @endif

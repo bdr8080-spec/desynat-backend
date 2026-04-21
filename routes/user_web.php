@@ -242,6 +242,17 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
+Route::match(['get', 'post'], '/about-us', function () {
+     return view('user.cms-page.about');
+
+})->name('user.about-us');
+
+Route::match(['get', 'post'], '/faq', function () {
+     return view('user.cms-page.faq-list');
+
+})->name('user.faq');
+
+
 // Route::match(['get', 'post'], '/support', function () {
 //      return view('user.support.index');
 
