@@ -491,12 +491,13 @@ class AdminAuthService
     {
         try {
 
-            $query = Admin::with([
+            $query = Admin::query()
+                ->with([
                     'country_info',
                     'permission_details.module_details'
                 ])
-                ->where('type', '2')
-                ->orderBy('id', 'desc');
+                ->where('type', '2');
+
 
             if (!empty($request_data->search)) {
                 $query->where('full_name', 'like', '%' . $request_data->search . '%');
@@ -517,16 +518,20 @@ class AdminAuthService
                 $query->whereDate('created_at', '<=', $request_data->to_date);
             }
 
+            $total_count = $query->count();
+
+            $query->orderBy('id', 'desc');
+
             $result = new \stdClass();
 
+
             if (!empty($request_data->limit)) {
-
                 $result->list = $query->paginate($request_data->limit);
-
             } else {
-
                 $result->list = $query->get();
             }
+
+            $result->total_count = $total_count;
 
             return [
                 'status' => 'success',
@@ -548,13 +553,14 @@ class AdminAuthService
     {
         try {
 
-            $query = Admin::with([
+            $query = Admin::query()
+                ->with([
                     'country_info',
                     'permission_details.module_details'
                 ])
                 ->where('type', '2')
-                ->where('status', '1')
-                ->orderBy('id', 'desc');
+                ->where('status', '1');
+
 
             if (!empty($request_data->search)) {
                 $query->where('full_name', 'like', '%' . $request_data->search . '%');
@@ -575,20 +581,24 @@ class AdminAuthService
                 $query->whereDate('created_at', '<=', $request_data->to_date);
             }
 
+            $total_count = $query->count();
+
+            $query->orderBy('id', 'desc');
+
             $result = new \stdClass();
 
+
             if (!empty($request_data->limit)) {
-
                 $result->list = $query->paginate($request_data->limit);
-
             } else {
-
                 $result->list = $query->get();
             }
 
+            $result->total_count = $total_count;
+
             return [
                 'status' => 'success',
-                'message' => 'Sub admins fetched successfully',
+                'message' => 'Active sub admins fetched successfully',
                 'data' => $result
             ];
 
@@ -596,7 +606,7 @@ class AdminAuthService
 
             return [
                 'status' => 'error',
-                'message' => 'Something went wrong while fetching sub admins',
+                'message' => 'Something went wrong while fetching active sub admins',
                 'data' => $e->getMessage()
             ];
         }
@@ -606,13 +616,14 @@ class AdminAuthService
     {
         try {
 
-            $query = Admin::with([
+            $query = Admin::query()
+                ->with([
                     'country_info',
                     'permission_details.module_details'
                 ])
                 ->where('type', '2')
-                ->where('status', '0')
-                ->orderBy('id', 'desc');
+                ->where('status', '0');
+
 
             if (!empty($request_data->search)) {
                 $query->where('full_name', 'like', '%' . $request_data->search . '%');
@@ -633,20 +644,24 @@ class AdminAuthService
                 $query->whereDate('created_at', '<=', $request_data->to_date);
             }
 
+            $total_count = $query->count();
+
+            $query->orderBy('id', 'desc');
+
             $result = new \stdClass();
 
+
             if (!empty($request_data->limit)) {
-
                 $result->list = $query->paginate($request_data->limit);
-
             } else {
-
                 $result->list = $query->get();
             }
 
+            $result->total_count = $total_count;
+
             return [
                 'status' => 'success',
-                'message' => 'Sub admins fetched successfully',
+                'message' => 'Inactive sub admins fetched successfully',
                 'data' => $result
             ];
 
@@ -654,7 +669,7 @@ class AdminAuthService
 
             return [
                 'status' => 'error',
-                'message' => 'Something went wrong while fetching sub admins',
+                'message' => 'Something went wrong while fetching inactive sub admins',
                 'data' => $e->getMessage()
             ];
         }
