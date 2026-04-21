@@ -491,39 +491,46 @@ class AdminAuthService
     {
         try {
 
-            $query = Admin::query()
-                ->with([
-                    'country_info',
-                    'permission_details.module_details'
-                ])
+            $filteredQuery = Admin::query()
                 ->where('type', '2');
 
-
             if (!empty($request_data->search)) {
-                $query->where('full_name', 'like', '%' . $request_data->search . '%');
+                $filteredQuery->where('full_name', 'like', '%' . $request_data->search . '%');
             }
 
             if (!empty($request_data->country_id)) {
-                $query->where('country_id', $request_data->country_id);
+                $filteredQuery->where('country_id', $request_data->country_id);
             }
 
             if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
-                $query->whereBetween('created_at', [
+                $filteredQuery->whereBetween('created_at', [
                     $request_data->from_date . ' 00:00:00',
                     $request_data->to_date . ' 23:59:59'
                 ]);
             } elseif (!empty($request_data->from_date)) {
-                $query->whereDate('created_at', '>=', $request_data->from_date);
+                $filteredQuery->whereDate('created_at', '>=', $request_data->from_date);
             } elseif (!empty($request_data->to_date)) {
-                $query->whereDate('created_at', '<=', $request_data->to_date);
+                $filteredQuery->whereDate('created_at', '<=', $request_data->to_date);
             }
 
-            $total_count = $query->count();
+            $total_count = (clone $filteredQuery)->count();
 
-            $query->orderBy('id', 'desc');
+            $total_active_count = Admin::where('type', '2')
+                ->where('status', '1')
+                ->count();
+
+            $total_inactive_count = Admin::where('type', '2')
+                ->where('status', '0')
+                ->count();
+
+            $query = (clone $filteredQuery)
+                ->with([
+                    'country_info',
+                    'permission_details.module_details'
+                ])
+                ->orderBy('id', 'desc');
 
             $result = new \stdClass();
-
 
             if (!empty($request_data->limit)) {
                 $result->list = $query->paginate($request_data->limit);
@@ -532,6 +539,8 @@ class AdminAuthService
             }
 
             $result->total_count = $total_count;
+            $result->total_active_count = $total_active_count;
+            $result->total_inactive_count = $total_inactive_count;
 
             return [
                 'status' => 'success',
@@ -553,40 +562,48 @@ class AdminAuthService
     {
         try {
 
-            $query = Admin::query()
-                ->with([
-                    'country_info',
-                    'permission_details.module_details'
-                ])
-                ->where('type', '2')
-                ->where('status', '1');
-
+            $filteredBase = Admin::query()
+                ->where('type', '2');
 
             if (!empty($request_data->search)) {
-                $query->where('full_name', 'like', '%' . $request_data->search . '%');
+                $filteredBase->where('full_name', 'like', '%' . $request_data->search . '%');
             }
 
             if (!empty($request_data->country_id)) {
-                $query->where('country_id', $request_data->country_id);
+                $filteredBase->where('country_id', $request_data->country_id);
             }
 
             if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
-                $query->whereBetween('created_at', [
+                $filteredBase->whereBetween('created_at', [
                     $request_data->from_date . ' 00:00:00',
                     $request_data->to_date . ' 23:59:59'
                 ]);
             } elseif (!empty($request_data->from_date)) {
-                $query->whereDate('created_at', '>=', $request_data->from_date);
+                $filteredBase->whereDate('created_at', '>=', $request_data->from_date);
             } elseif (!empty($request_data->to_date)) {
-                $query->whereDate('created_at', '<=', $request_data->to_date);
+                $filteredBase->whereDate('created_at', '<=', $request_data->to_date);
             }
 
-            $total_count = $query->count();
 
-            $query->orderBy('id', 'desc');
+            $total_count = Admin::where('type', '2')->count();
+
+            $total_inactive_count = Admin::where('type', '2')
+                ->where('status', '0')
+                ->count();
+
+            $total_active_count = (clone $filteredBase)
+                ->where('status', '1')
+                ->count();
+
+            $query = (clone $filteredBase)
+                ->with([
+                    'country_info',
+                    'permission_details.module_details'
+                ])
+                ->where('status', '1')
+                ->orderBy('id', 'desc');
 
             $result = new \stdClass();
-
 
             if (!empty($request_data->limit)) {
                 $result->list = $query->paginate($request_data->limit);
@@ -595,6 +612,8 @@ class AdminAuthService
             }
 
             $result->total_count = $total_count;
+            $result->total_active_count = $total_active_count;
+            $result->total_inactive_count = $total_inactive_count;
 
             return [
                 'status' => 'success',
@@ -616,40 +635,52 @@ class AdminAuthService
     {
         try {
 
-            $query = Admin::query()
-                ->with([
-                    'country_info',
-                    'permission_details.module_details'
-                ])
-                ->where('type', '2')
-                ->where('status', '0');
-
+            $filteredBase = Admin::query()
+                ->where('type', '2');
 
             if (!empty($request_data->search)) {
-                $query->where('full_name', 'like', '%' . $request_data->search . '%');
+                $filteredBase->where('full_name', 'like', '%' . $request_data->search . '%');
             }
 
             if (!empty($request_data->country_id)) {
-                $query->where('country_id', $request_data->country_id);
+                $filteredBase->where('country_id', $request_data->country_id);
             }
 
             if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
-                $query->whereBetween('created_at', [
+                $filteredBase->whereBetween('created_at', [
                     $request_data->from_date . ' 00:00:00',
                     $request_data->to_date . ' 23:59:59'
                 ]);
             } elseif (!empty($request_data->from_date)) {
-                $query->whereDate('created_at', '>=', $request_data->from_date);
+                $filteredBase->whereDate('created_at', '>=', $request_data->from_date);
             } elseif (!empty($request_data->to_date)) {
-                $query->whereDate('created_at', '<=', $request_data->to_date);
+                $filteredBase->whereDate('created_at', '<=', $request_data->to_date);
             }
 
-            $total_count = $query->count();
+            $total_count = Admin::where('type', '2')->count();
 
-            $query->orderBy('id', 'desc');
+            $total_active_count = Admin::where('type', '2')
+                ->where('status', '1')
+                ->count();
+
+            $total_inactive_count_global = Admin::where('type', '2')
+                ->where('status', '0')
+                ->count();
+
+
+            $total_inactive_count = (clone $filteredBase)
+                ->where('status', '0')
+                ->count();
+
+            $query = (clone $filteredBase)
+                ->with([
+                    'country_info',
+                    'permission_details.module_details'
+                ])
+                ->where('status', '0')
+                ->orderBy('id', 'desc');
 
             $result = new \stdClass();
-
 
             if (!empty($request_data->limit)) {
                 $result->list = $query->paginate($request_data->limit);
@@ -658,6 +689,8 @@ class AdminAuthService
             }
 
             $result->total_count = $total_count;
+            $result->total_active_count = $total_active_count;
+            $result->total_inactive_count = $total_inactive_count;
 
             return [
                 'status' => 'success',
