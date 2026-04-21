@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class sellermenuAction extends Model
 {
      protected $guarded=[];
+
+       public function sellermenu(){ 
+        return $this->hasMany(SellerMenus_table::class,'id','menu_id'); 
+    }
 }

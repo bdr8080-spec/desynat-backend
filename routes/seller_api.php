@@ -175,7 +175,15 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
    Route::get('/get_refund_orders', [OrderManagement::class,'get_refund_orders']);
 
 
+  Route::get('/new-staff-category-type', [SellerStaffManagementController::class,'newStaffCategoryType']);
+  Route::get('/seller-all-menu', [SellerStaffManagementController::class,'SellerAllMenu']);
   Route::post('/add-new-staff', [SellerStaffManagementController::class,'addNewStaff']);
+
+  Route::post('/All-staff-details', [SellerStaffManagementController::class,'AllStaffDetails']);
+  Route::post('/staff-active-inactive', [SellerStaffManagementController::class,'StaffActiveInactive']);
+  Route::post('/staff-delete-staff', [SellerStaffManagementController::class,'staffDeleteStaff']);
+
+  Route::post('/view-single-staff-details', [SellerStaffManagementController::class,'viewSingleStaffDetails']);
 
 
 
