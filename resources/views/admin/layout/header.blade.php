@@ -55,17 +55,58 @@
 
 
         <!-- LANGUAGE DROPDOWN -->
-        <div class="language-dropdown" id="languageDropdown">
-            <button class="lang-btn">
-                <i class="fas fa-globe"></i> EN
-                <i class="fas fa-chevron-down"></i>
-            </button>
+        <div class="des-language">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+                                    data-bs-toggle="dropdown">
+
+                                    <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
+
+                                    <span id="currentLang">EN</span>
+
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-end langu">
+
+                                    <li>
+                                        <a class="dropdown-item" data-lang="ar">
+                                            <span>AR</span> Arabic
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" data-lang="en">
+                                            <span>EN</span> English
+                                        </a>
+                                    </li>
+
+                                </ul>
+            </div>
         </div>
 
     </div>
 
 
 </nav>
+
+<div id="google_translate_element" style="display:none;"></div>
+<div id="loaderTrans"
+        style="display:none;
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:#ffffff; 
+        z-index:999999;   
+        /* display:flex;    */
+        align-items:center;
+        justify-content:center;">
+
+        <iframe src="https://lottie.host/embed/7629c0ed-9538-4b83-b7ab-5870d7aae0ab/KLkQkV2bNW.lottie"
+                style="border:none; width:200px; height:200px;">
+        </iframe>
+    </div>
 
 <script>
 const langBtn = document.getElementById("langToggle");

@@ -50,6 +50,32 @@
 }
 </style>
 
+<style>
+
+        iframe#\:1\.container {
+    visibility: hidden !important;
+}
+
+/* Hide the Google Translate tooltip */
+.goog-te-banner-frame.skiptranslate,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-tooltip-vertical {
+    display: none !important;
+}
+
+/* Hide the feedback popup on selected text */
+#goog-gt-tt {
+    display: none !important;
+}
+    </style>
+
+    <style>
+  body {
+    visibility: hidden;
+  }
+</style>
+
 <body id="page-top">
 
     <!-- HEADER SECTION -->
