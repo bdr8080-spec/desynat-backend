@@ -37,6 +37,31 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
 
 </head>
+<style>
+
+        iframe#\:1\.container {
+    visibility: hidden !important;
+}
+
+/* Hide the Google Translate tooltip */
+.goog-te-banner-frame.skiptranslate,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-tooltip-vertical {
+    display: none !important;
+}
+
+/* Hide the feedback popup on selected text */
+#goog-gt-tt {
+    display: none !important;
+}
+    </style>
+
+    <style>
+  body {
+    visibility: hidden;
+  }
+</style>
 
 <body>
 
@@ -184,36 +209,30 @@
                 <li>
                     <div class="des-language">
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <img src="{{ asset('dealer') }}/assets/img/global.svg" class="img-fluid" />
+                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+                                    data-bs-toggle="dropdown">
 
-                                @if(App::getLocale()=='en')
-                                EN
-                                @elseif(App::getLocale()=='ar')
-                                AR
-                                @else
-                                EN
-                                @endif
+                                    <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                            </button>
-                            <ul class="dropdown-menu">
+                                    <span id="currentLang">EN</span>
 
-                                <li
-                                    style="@if (app()->getLocale() === 'ar') Background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);  @endif ">
-                                    <a class="dropdown-item" href="{{ route('seller_lang') }}?lang=ar"><span>AR</span>
-                                        Arabic</a>
-                                    <!-- @if (app()->getLocale() === 'ar') Active @endif -->
-                                </li>
+                                </button>
 
-                                <li
-                                    style="@if (app()->getLocale() === 'en') Background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);  @endif ">
-                                    <a class="dropdown-item" href="{{ route('seller_lang') }}?lang=en"><span>EN</span>
-                                        English</a>
-                                    <!-- @if (app()->getLocale() === 'en') Active @endif  -->
-                                </li>
+                                <ul class="dropdown-menu dropdown-menu-end langu">
 
-                            </ul>
+                                    <li>
+                                        <a class="dropdown-item" data-lang="ar">
+                                            <span>AR</span> Arabic
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" data-lang="en">
+                                            <span>EN</span> English
+                                        </a>
+                                    </li>
+
+                                </ul>
                         </div>
                     </div>
                 </li>
