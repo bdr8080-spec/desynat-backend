@@ -21,6 +21,10 @@
     border-radius: 5px;
     font-size: 25px;
 }
+.order-place-grid img {
+    filter: sepia(1);
+}
+
 </style>
 
 <div class="customContainer common-padding">
