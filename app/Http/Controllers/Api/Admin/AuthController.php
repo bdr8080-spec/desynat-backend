@@ -225,6 +225,7 @@ class AuthController extends Controller
           $validate = Validator::make($req->all(), [
               'profile_pic' => 'required',
               'full_name' => 'required',
+              'full_name_ar' => 'required',
               'country_code' => 'required',
               'mobile' => 'required',
               'email' => 'required',
@@ -244,6 +245,7 @@ class AuthController extends Controller
          $request_data = (object)[
                 'profile_pic' => $req->profile_pic,
                 'full_name'        => $req->full_name,
+                'full_name_ar'        => $req->full_name_ar,
                 'country_code'      => $req->country_code,
                 'mobile'      => $req->mobile,
                 'email'      => $req->email,
@@ -268,6 +270,7 @@ class AuthController extends Controller
               'id' => 'required|exists:admins,id',
               'profile_pic' => 'required',
               'full_name' => 'required',
+              'full_name_ar' => 'required',
               'country_code' => 'required',
               'mobile' => 'required',
               'email' => 'required',
@@ -288,6 +291,7 @@ class AuthController extends Controller
                 'id' => $req->id,
                 'profile_pic' => $req->profile_pic,
                 'full_name'        => $req->full_name,
+                'full_name_ar'        => $req->full_name_ar,
                 'country_code'      => $req->country_code,
                 'mobile'      => $req->mobile,
                 'email'      => $req->email,

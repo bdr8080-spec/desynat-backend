@@ -267,6 +267,7 @@ class AdminAuthService
             $admin = Admin::create([
                 'profile_pic' => $req->profile_pic,
                 'full_name' => $req->full_name,
+                'full_name_ar' => $req->full_name_ar,
                 'country_code' => $req->country_code,
                 'mobile' => $req->mobile,
                 'email' => $req->email,
@@ -359,6 +360,7 @@ class AdminAuthService
             $admin->update([
                 'profile_pic' => $req->profile_pic,
                 'full_name' => $req->full_name,
+                'full_name_ar' => $req->full_name_ar,
                 'country_code' => $req->country_code,
                 'mobile' => $req->mobile,
                 'email' => $req->email,
