@@ -316,7 +316,7 @@ class CommonController extends Controller
                         'error',
                         "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio",
                         null,
-                        422
+                        400
                     );
                 }
             }
