@@ -1081,7 +1081,7 @@ class OrderManagementService
                 'product_details.category',
                 'product_details.subcategory',
                 'product_details.seller_details',
-                'product_details.store',
+                'product_details.store.country_info',
                 'variation_details.color',
                 'variation_details.size',
                 'UserRatingReviewProvide',
