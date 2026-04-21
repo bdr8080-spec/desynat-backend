@@ -109,6 +109,13 @@ Route::post('/affiliate/raise_ticket', [UserAffilatedController::class, 'raise_t
 
 // });
 
+Route::get('affiliate/about-us', [UserAffilatedController::class, 'aboutUs'])->name('affiliate.aboutUs');
+Route::get('affiliate/terms-conditions', [UserAffilatedController::class, 'termCondition'])->name('affiliate.termCondition');
+Route::get('affiliate/return-policy', [UserAffilatedController::class, 'returnPolicy'])->name('affiliate.returnPolicy');
+Route::get('affiliate/exchange-policy', [UserAffilatedController::class, 'exchangePolicy'])->name('affiliate.exchangePolicy');
+Route::get('affiliate/cancellation-policy', [UserAffilatedController::class, 'cancellationPolicy'])->name('affiliate.cancellationPolicy');
+Route::get('affiliate/faq', [UserAffilatedController::class, 'faq'])->name('affiliate.faq');
+
 
 
 

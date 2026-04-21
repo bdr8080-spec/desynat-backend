@@ -219,12 +219,12 @@ Route::get('user/View-live-seller-records', [DashBoardController::class, 'ViewLi
 Route::get('check-live-join-time-status/{id}', [DashBoardController::class, 'checkLiveJoinTimeStatus']);
 
 //cms
-Route::get('about-us', [DashBoardController::class, 'aboutUs'])->name('user.aboutUs');
-Route::get('terms-conditions', [DashBoardController::class, 'termCondition'])->name('user.termCondition');
-Route::get('return-policy', [DashBoardController::class, 'returnPolicy'])->name('user.returnPolicy');
-Route::get('exchange-policy', [DashBoardController::class, 'exchangePolicy'])->name('user.exchangePolicy');
-Route::get('cancellation-policy', [DashBoardController::class, 'cancellationPolicy'])->name('user.cancellationPolicy');
-Route::get('faq', [DashBoardController::class, 'faq'])->name('user.faq');
+Route::get('user/about-us', [DashBoardController::class, 'aboutUs'])->name('user.aboutUs');
+Route::get('user/terms-conditions', [DashBoardController::class, 'termCondition'])->name('user.termCondition');
+Route::get('user/return-policy', [DashBoardController::class, 'returnPolicy'])->name('user.returnPolicy');
+Route::get('user/exchange-policy', [DashBoardController::class, 'exchangePolicy'])->name('user.exchangePolicy');
+Route::get('user/cancellation-policy', [DashBoardController::class, 'cancellationPolicy'])->name('user.cancellationPolicy');
+Route::get('user/faq', [DashBoardController::class, 'faq'])->name('user.faq');
 
 
 

@@ -50,26 +50,43 @@
                 </a>
             </li> 
 
-            <!--
 
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/terms-conditions') ? 'sidebar-active' : '' }}" href="{{route('affiliate.termCondition')}}">
                     <img src="{{ asset('dealer') }}/assets/img/m3-icon/terms.svg" alt="icon" class="asideicon">
                     <span>Terms & Condition</span>
                 </a>
             </li> 
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/about-us') ? 'sidebar-active' : '' }}" href="{{route('affiliate.aboutUs')}}">
                     <img src="{{ asset('dealer') }}/assets/img/m3-icon/about.svg" alt="icon" class="asideicon">
                     <span>About Us</span>
                 </a>
             </li> 
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/cancellation-policy') ? 'sidebar-active' : '' }}" href="{{route('affiliate.cancellationPolicy')}}">
+                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/about.svg" alt="icon" class="asideicon">
+                    <span>Cancellation Policy</span>
+                </a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/return-policy') ? 'sidebar-active' : '' }}" href="{{route('affiliate.returnPolicy')}}">
+                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/about.svg" alt="icon" class="asideicon">
+                    <span>Return Policy</span>
+                </a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/exchange-policy') ? 'sidebar-active' : '' }}" href="{{route('affiliate.exchangePolicy')}}">
+                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/about.svg" alt="icon" class="asideicon">
+                    <span>Exchange Policy</span>
+                </a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/faq') ? 'sidebar-active' : '' }}" href="{{route('affiliate.faq')}}">
                     <img src="{{ asset('dealer') }}/assets/img/m3-icon/faq.svg" alt="icon" class="asideicon">
                     <span>FAQs</span>
                 </a>
-            </li>  -->
+            </li>  
           
 
             <!-- <li class="nav-item">
@@ -84,7 +101,7 @@
                         </a>
                     </li>
                 </ul>
-            </li> -->
+            </li>  -->
 
 
         </ul>

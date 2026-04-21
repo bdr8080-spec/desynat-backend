@@ -20,18 +20,20 @@ use App\Services\UserOrderService;
 use App\Services\NotificationManagementService;
 use App\Services\UserAffiliatedProductService;
 use App\Services\TicketService;
+use App\Services\CMSManagementService;
 use App\Http\Controllers\CommonController;
 
 class UserAffilatedController extends Controller
 {
 
-    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, NotificationManagementService $NotificationManagementService, UserAffiliatedProductService $UserAffiliatedProductService, TicketService $TicketService)
+    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, NotificationManagementService $NotificationManagementService, UserAffiliatedProductService $UserAffiliatedProductService, TicketService $TicketService, CMSManagementService $CMSManagementService)
     {
         $this->UserAffilatedAuthService = $UserAffilatedAuthService;
         $this->UserOrderService = $UserOrderService;
         $this->NotificationManagementService = $NotificationManagementService;
         $this->UserAffiliatedProductService = $UserAffiliatedProductService;
         $this->TicketService = $TicketService;
+        $this->CMSManagementService = $CMSManagementService;
     }
 
 
@@ -1223,6 +1225,67 @@ public function ticket_management(REQUEST $request){
         }
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    }
+
+    public function aboutUs(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetAboutUs($request_data)['data'];
+        return view('affiliatedUser.cms-page.about',compact('data'));
+    }
+
+    public function termCondition(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetTermConditions($request_data)['data'];
+        return view('affiliatedUser.cms-page.terms',compact('data'));
+    }
+
+    public function returnPolicy(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetReturnPolicy($request_data)['data'];
+        return view('affiliatedUser.cms-page.return',compact('data'));
+    }
+
+    public function exchangePolicy(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetExchangePolicy($request_data)['data'];
+        return view('affiliatedUser.cms-page.exchange',compact('data'));
+    }
+
+    public function cancellationPolicy(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetCancellationPolicy($request_data)['data'];
+        return view('affiliatedUser.cms-page.cancellation',compact('data'));
+    }
+
+    public function faq(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetFaq($request_data)['data'];
+       //dd($data);
+        return view('affiliatedUser.cms-page.faq-list',compact('data'));
     }
 
 
