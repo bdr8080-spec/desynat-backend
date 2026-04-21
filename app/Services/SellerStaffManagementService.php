@@ -89,6 +89,7 @@ class SellerStaffManagementService
           'accept_terms' => '1',
           'device_type' => $request->device_type??null,
           'device_token'=>$request->device_token??null,
+          "otp_verify"=>'1',
         //   'otp'=>123456,
           'admin_verify'=>'2',
           'lang'=>$request->lang??null,
