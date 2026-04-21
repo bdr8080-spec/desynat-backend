@@ -218,6 +218,14 @@ Route::get('user/get-live-seller-records', [DashBoardController::class, 'getLive
 Route::get('user/View-live-seller-records', [DashBoardController::class, 'ViewLiveSellerRecords'])->name('user.ViewLiveSellerRecords');
 Route::get('check-live-join-time-status/{id}', [DashBoardController::class, 'checkLiveJoinTimeStatus']);
 
+//cms
+Route::get('about-us', [DashBoardController::class, 'aboutUs'])->name('user.aboutUs');
+Route::get('terms-conditions', [DashBoardController::class, 'termCondition'])->name('user.termCondition');
+Route::get('return-policy', [DashBoardController::class, 'returnPolicy'])->name('user.returnPolicy');
+Route::get('exchange-policy', [DashBoardController::class, 'exchangePolicy'])->name('user.exchangePolicy');
+Route::get('cancellation-policy', [DashBoardController::class, 'cancellationPolicy'])->name('user.cancellationPolicy');
+Route::get('faq', [DashBoardController::class, 'faq'])->name('user.faq');
+
 
 
  Route::match(['get', 'post'], '/route1', function () {
@@ -242,15 +250,7 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
-Route::match(['get', 'post'], '/about-us', function () {
-     return view('user.cms-page.about');
 
-})->name('user.about-us');
-
-Route::match(['get', 'post'], '/faq', function () {
-     return view('user.cms-page.faq-list');
-
-})->name('user.faq');
 
 
 // Route::match(['get', 'post'], '/support', function () {

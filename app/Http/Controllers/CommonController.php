@@ -226,7 +226,7 @@ class CommonController extends Controller
      public function uploadFile(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:512000',
+            'file' => 'required|mimes:jpeg,png,jpg,gif,mp4,mov,avi,mkv|max:512000',
         ], [
             'file.max' => 'Please upload a file upto 500 MB.',
         ]);
@@ -268,7 +268,7 @@ class CommonController extends Controller
     public function uploadWithResolution(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,avif',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,avif',
             'type'  => 'required|in:1,2', // 1 = Mobile, 2 = Web
         ]);
 

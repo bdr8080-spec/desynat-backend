@@ -9,6 +9,7 @@ use App\Services\UserDashboardService;
 use App\Services\NotificationManagementService;
 use App\Services\StoryManagementService;
 use App\Services\TicketService;
+use App\Services\CMSManagementService;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\ApiResponse;
 use Validator;
@@ -23,12 +24,13 @@ use Carbon\Carbon;
 class DashBoardController extends Controller
 {
 
-    public function __construct(UserDashboardService $UserDashboardService,NotificationManagementService $NotificationManagementService, StoryManagementService $StoryManagementService, TicketService $TicketService)
+    public function __construct(UserDashboardService $UserDashboardService,NotificationManagementService $NotificationManagementService, StoryManagementService $StoryManagementService, TicketService $TicketService, CMSManagementService $CMSManagementService)
     {
         $this->UserDashboardService = $UserDashboardService;
         $this->NotificationManagementService = $NotificationManagementService;
         $this->StoryManagementService = $StoryManagementService;
         $this->TicketService = $TicketService;
+        $this->CMSManagementService = $CMSManagementService;
     }
 
 
@@ -445,6 +447,67 @@ public function checkLiveJoinTimeStatus($id)
         'live' => $isLive
     ]);
 }
+
+    public function aboutUs(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetAboutUs($request_data)['data'];
+        return view('user.cms-page.about',compact('data'));
+    }
+
+    public function termCondition(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetTermConditions($request_data)['data'];
+        return view('user.cms-page.terms',compact('data'));
+    }
+
+    public function returnPolicy(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetReturnPolicy($request_data)['data'];
+        return view('user.cms-page.return',compact('data'));
+    }
+
+    public function exchangePolicy(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetExchangePolicy($request_data)['data'];
+        return view('user.cms-page.exchange',compact('data'));
+    }
+
+    public function cancellationPolicy(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetCancellationPolicy($request_data)['data'];
+        return view('user.cms-page.cancellation',compact('data'));
+    }
+
+    public function faq(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '1',
+            ];
+
+       $data = $this->CMSManagementService->GetFaq($request_data)['data'];
+       //dd($data);
+        return view('user.cms-page.faq-list',compact('data'));
+    }
 
 
 }

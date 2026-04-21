@@ -12,7 +12,7 @@
         <div class="col-lg-12">
             <div class="live-pnl">
 
-                <div class="faq-lists">
+                <!-- <div class="faq-lists">
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item mb-4">
                             <h2 class="accordion-header">
@@ -55,6 +55,52 @@
                         
                     </div>
 
+                </div> -->
+                <div class="faq-lists">
+                    <div class="accordion" id="accordionExample">
+
+                        @if($data->isEmpty())
+
+                            <div class="text-center py-4">
+                                <strong>No FAQ Found</strong>
+                            </div>
+
+                        @else
+
+                            @foreach($data as $key => $faq)
+
+                                <div class="accordion-item mb-4">
+                                    <h2 class="accordion-header">
+
+                                        <button class="accordion-button {{ $key != 0 ? 'collapsed' : '' }}"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapse{{ $faq->id }}"
+                                            aria-expanded="{{ $key == 0 ? 'true' : 'false' }}"
+                                            aria-controls="collapse{{ $faq->id }}">
+
+                                            {{ $faq->question_english }}
+
+                                        </button>
+
+                                    </h2>
+
+                                    <div id="collapse{{ $faq->id }}"
+                                        class="accordion-collapse collapse {{ $key == 0 ? 'show' : '' }}"
+                                        data-bs-parent="#accordionExample">
+
+                                        <div class="accordion-body">
+                                            {!! $faq->answer_english !!}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            @endforeach
+
+                        @endif
+
+                    </div>
                 </div>
 
 

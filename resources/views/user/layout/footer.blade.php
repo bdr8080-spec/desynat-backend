@@ -35,19 +35,22 @@
                              <h6>Customer Policy</h6>
                              <ul class="navs list-unstyled">
                                  <li>
-                                     <a href="/about-us">About Us</a>
+                                     <a href="{{route('user.aboutUs')}}">About Us</a>
                                  </li>
                                  <li>
-                                     <a href="">Terms & Condition</a>
+                                     <a href="{{route('user.termCondition')}}">Terms & Condition</a>
                                  </li>
                                  <li>
-                                     <a href="">Return Policy</a>
+                                     <a href="{{route('user.returnPolicy')}}">Return Policy</a>
                                  </li>
                                  <li>
-                                     <a href="">Exchange Policy</a>
+                                     <a href="{{route('user.exchangePolicy')}}">Exchange Policy</a>
                                  </li>
                                  <li>
-                                     <a href="/faq">FAQs</a>
+                                     <a href="{{route('user.cancellationPolicy')}}">Cancellation Policy</a>
+                                 </li>
+                                 <li>
+                                     <a href="{{route('user.faq')}}">FAQs</a>
                                  </li>
                              </ul>
                          </div>
