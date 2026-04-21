@@ -366,6 +366,46 @@ class AuthController extends Controller
   
     }
 
+    public function get_active_sub_admins(Request $req){
+
+            $request_data = (object)[
+                'search' => $req->search??null,
+                'country_id'        => $req->country_id??null,
+                'from_date'      => $req->from_date??null,
+                'to_date'      => $req->to_date??null,
+                'limit' => $req->limit??null,
+            ];
+  
+          $data= $this->AdminAuthService->GetActiveSubAdmins($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function get_inactive_sub_admins(Request $req){
+
+            $request_data = (object)[
+                'search' => $req->search??null,
+                'country_id'        => $req->country_id??null,
+                'from_date'      => $req->from_date??null,
+                'to_date'      => $req->to_date??null,
+                'limit' => $req->limit??null,
+            ];
+  
+          $data= $this->AdminAuthService->GetInactiveSubAdmins($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
       public function get_profile(Request $req){
 
 
