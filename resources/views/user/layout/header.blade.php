@@ -45,6 +45,12 @@
 }
     </style>
 
+    <style>
+  body {
+    visibility: hidden;
+  }
+</style>
+
     @php
     use App\Models\Category;
     use App\Models\UserCurrentLocation;

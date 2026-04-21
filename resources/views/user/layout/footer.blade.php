@@ -1606,23 +1606,35 @@ function googleTranslateElementInit() {
 <script>
 
 let currentLang = localStorage.getItem("selectedLang") || "en";
+let translateReady = false;
 
-/* WAIT FOR GOOGLE DROPDOWN */
+/* WAIT FOR GOOGLE DROPDOWN (ROBUST VERSION) */
 function waitForCombo(callback) {
+
+    let attempts = 0;
 
     const timer = setInterval(() => {
 
         const combo = document.querySelector(".goog-te-combo");
 
-        if (combo && combo.options.length > 0) {
+        if (combo && combo.options.length > 1) {
             clearInterval(timer);
+            translateReady = true;
             callback(combo);
+        }
+
+        attempts++;
+
+        if (attempts > 30) {
+            clearInterval(timer);
+            console.warn("Google Translate not ready");
         }
 
     }, 200);
 }
 
 
+/* APPLY TRANSLATION (FIXED FIRST TIME ISSUE) */
 function applyTranslation(lang) {
 
     const loader = document.getElementById("loaderTrans");
@@ -1635,28 +1647,41 @@ function applyTranslation(lang) {
 
     waitForCombo(function(combo) {
 
-        // RESET FIX (VERY IMPORTANT)
-        combo.value = "en";
-        combo.dispatchEvent(new Event("change"));
+        function trigger(value) {
+            combo.value = value;
+            combo.dispatchEvent(new Event("change"));
+        }
+
+        // STEP 1: RESET
+        trigger("en");
 
         setTimeout(() => {
 
-            combo.value = lang;
-            combo.dispatchEvent(new Event("change"));
+            // STEP 2: APPLY LANGUAGE
+            trigger(lang);
 
+            // STEP 3: RETRY (VERY IMPORTANT FIX)
             setTimeout(() => {
-                if (loader) loader.style.display = "none";
-            }, 600);
 
-        }, 250);
+                if (combo.value !== lang) {
+                    trigger(lang);
+                }
+
+                if (loader) loader.style.display = "none";
+
+            }, 500);
+
+        }, 300);
 
     });
 }
 
 
+/* UPDATE UI */
 function updateUI(lang) {
 
-    document.getElementById("currentLang").innerText = lang.toUpperCase();
+    const current = document.getElementById("currentLang");
+    if (current) current.innerText = lang.toUpperCase();
 
     document.querySelectorAll(".langu .dropdown-item")
         .forEach(el => el.style.background = "");
@@ -1670,11 +1695,18 @@ function updateUI(lang) {
 }
 
 
+/* CLICK EVENTS */
 document.querySelectorAll(".langu .dropdown-item").forEach(item => {
 
     item.addEventListener("click", function () {
 
         const lang = this.getAttribute("data-lang");
+
+        // PREVENT CLICK BEFORE READY
+        if (!translateReady) {
+            console.log("Translate still loading...");
+            return;
+        }
 
         applyTranslation(lang);
 
@@ -1683,16 +1715,45 @@ document.querySelectorAll(".langu .dropdown-item").forEach(item => {
 });
 
 
+/* INITIAL LOAD */
 function initLanguage() {
 
     const lang = localStorage.getItem("selectedLang") || "en";
+    const loader = document.getElementById("loaderTrans");
+
+    if (loader) loader.style.display = "flex";
 
     updateUI(lang);
 
     waitForCombo(function(combo) {
 
-        combo.value = lang;
-        combo.dispatchEvent(new Event("change"));
+        function trigger(value) {
+            combo.value = value;
+            combo.dispatchEvent(new Event("change"));
+        }
+
+        // RESET FIRST
+        trigger("en");
+
+        setTimeout(() => {
+
+            trigger(lang);
+
+            // RETRY FIX
+            setTimeout(() => {
+
+                if (combo.value !== lang) {
+                    trigger(lang);
+                }
+
+                // SHOW PAGE ONLY AFTER TRANSLATION
+                document.body.style.visibility = "visible";
+
+                if (loader) loader.style.display = "none";
+
+            }, 600);
+
+        }, 300);
 
     });
 
@@ -1701,6 +1762,7 @@ function initLanguage() {
 window.addEventListener("load", initLanguage);
 
 
+/* BACK/FORWARD CACHE FIX */
 window.addEventListener("pageshow", function (event) {
 
     if (event.persisted ||
@@ -1712,6 +1774,7 @@ window.addEventListener("pageshow", function (event) {
     }
 
 });
+
 
 /* HIDE GOOGLE TOOLTIP */
 const observer = new MutationObserver((mutations) => {

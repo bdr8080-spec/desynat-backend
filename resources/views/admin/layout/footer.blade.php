@@ -212,5 +212,205 @@ onMessage(messaging, (payload) => {
 });
      </script>
 
+<!-- translator -->
+<script>
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        autoDisplay: false
+    }, 'google_translate_element');
+}
+</script>
+
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+
+let currentLang = localStorage.getItem("selectedLang") || "en";
+let translateReady = false;
+
+/* WAIT FOR GOOGLE DROPDOWN (ROBUST VERSION) */
+function waitForCombo(callback) {
+
+    let attempts = 0;
+
+    const timer = setInterval(() => {
+
+        const combo = document.querySelector(".goog-te-combo");
+
+        if (combo && combo.options.length > 1) {
+            clearInterval(timer);
+            translateReady = true;
+            callback(combo);
+        }
+
+        attempts++;
+
+        if (attempts > 30) {
+            clearInterval(timer);
+            console.warn("Google Translate not ready");
+        }
+
+    }, 200);
+}
+
+
+/* APPLY TRANSLATION (FIXED FIRST TIME ISSUE) */
+function applyTranslation(lang) {
+
+    const loader = document.getElementById("loaderTrans");
+    if (loader) loader.style.display = "flex";
+
+    currentLang = lang;
+    localStorage.setItem("selectedLang", lang);
+
+    updateUI(lang);
+
+    waitForCombo(function(combo) {
+
+        function trigger(value) {
+            combo.value = value;
+            combo.dispatchEvent(new Event("change"));
+        }
+
+        // STEP 1: RESET
+        trigger("en");
+
+        setTimeout(() => {
+
+            // STEP 2: APPLY LANGUAGE
+            trigger(lang);
+
+            // STEP 3: RETRY (VERY IMPORTANT FIX)
+            setTimeout(() => {
+
+                if (combo.value !== lang) {
+                    trigger(lang);
+                }
+
+                if (loader) loader.style.display = "none";
+
+            }, 500);
+
+        }, 300);
+
+    });
+}
+
+
+/* UPDATE UI */
+function updateUI(lang) {
+
+    const current = document.getElementById("currentLang");
+    if (current) current.innerText = lang.toUpperCase();
+
+    document.querySelectorAll(".langu .dropdown-item")
+        .forEach(el => el.style.background = "");
+
+    const active = document.querySelector(`.langu .dropdown-item[data-lang="${lang}"]`);
+
+    if (active) {
+        active.style.background =
+            "linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%)";
+    }
+}
+
+
+/* CLICK EVENTS */
+document.querySelectorAll(".langu .dropdown-item").forEach(item => {
+
+    item.addEventListener("click", function () {
+
+        const lang = this.getAttribute("data-lang");
+
+        // PREVENT CLICK BEFORE READY
+        if (!translateReady) {
+            console.log("Translate still loading...");
+            return;
+        }
+
+        applyTranslation(lang);
+
+    });
+
+});
+
+
+/* INITIAL LOAD */
+function initLanguage() {
+
+    const lang = localStorage.getItem("selectedLang") || "en";
+    const loader = document.getElementById("loaderTrans");
+
+    if (loader) loader.style.display = "flex";
+
+    updateUI(lang);
+
+    waitForCombo(function(combo) {
+
+        function trigger(value) {
+            combo.value = value;
+            combo.dispatchEvent(new Event("change"));
+        }
+
+        // RESET FIRST
+        trigger("en");
+
+        setTimeout(() => {
+
+            trigger(lang);
+
+            // RETRY FIX
+            setTimeout(() => {
+
+                if (combo.value !== lang) {
+                    trigger(lang);
+                }
+
+                // SHOW PAGE ONLY AFTER TRANSLATION
+                document.body.style.visibility = "visible";
+
+                if (loader) loader.style.display = "none";
+
+            }, 600);
+
+        }, 300);
+
+    });
+
+}
+
+window.addEventListener("load", initLanguage);
+
+
+/* BACK/FORWARD CACHE FIX */
+window.addEventListener("pageshow", function (event) {
+
+    if (event.persisted ||
+        performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
+
+        setTimeout(() => {
+            initLanguage();
+        }, 200);
+    }
+
+});
+
+
+/* HIDE GOOGLE TOOLTIP */
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+            if (node.id === 'goog-gt-tt') {
+                node.style.display = 'none';
+            }
+        });
+    });
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
+
+</script>
+
 
 </footer>

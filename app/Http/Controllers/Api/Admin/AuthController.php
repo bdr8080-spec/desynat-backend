@@ -225,6 +225,7 @@ class AuthController extends Controller
           $validate = Validator::make($req->all(), [
               'profile_pic' => 'required',
               'full_name' => 'required',
+              'full_name_ar' => 'required',
               'country_code' => 'required',
               'mobile' => 'required',
               'email' => 'required',
@@ -244,6 +245,7 @@ class AuthController extends Controller
          $request_data = (object)[
                 'profile_pic' => $req->profile_pic,
                 'full_name'        => $req->full_name,
+                'full_name_ar'        => $req->full_name_ar,
                 'country_code'      => $req->country_code,
                 'mobile'      => $req->mobile,
                 'email'      => $req->email,
@@ -268,6 +270,7 @@ class AuthController extends Controller
               'id' => 'required|exists:admins,id',
               'profile_pic' => 'required',
               'full_name' => 'required',
+              'full_name_ar' => 'required',
               'country_code' => 'required',
               'mobile' => 'required',
               'email' => 'required',
@@ -288,6 +291,7 @@ class AuthController extends Controller
                 'id' => $req->id,
                 'profile_pic' => $req->profile_pic,
                 'full_name'        => $req->full_name,
+                'full_name_ar'        => $req->full_name_ar,
                 'country_code'      => $req->country_code,
                 'mobile'      => $req->mobile,
                 'email'      => $req->email,
@@ -353,6 +357,46 @@ class AuthController extends Controller
             ];
   
           $data= $this->AdminAuthService->GetSubAdmins($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function get_active_sub_admins(Request $req){
+
+            $request_data = (object)[
+                'search' => $req->search??null,
+                'country_id'        => $req->country_id??null,
+                'from_date'      => $req->from_date??null,
+                'to_date'      => $req->to_date??null,
+                'limit' => $req->limit??null,
+            ];
+  
+          $data= $this->AdminAuthService->GetActiveSubAdmins($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    public function get_inactive_sub_admins(Request $req){
+
+            $request_data = (object)[
+                'search' => $req->search??null,
+                'country_id'        => $req->country_id??null,
+                'from_date'      => $req->from_date??null,
+                'to_date'      => $req->to_date??null,
+                'limit' => $req->limit??null,
+            ];
+  
+          $data= $this->AdminAuthService->GetInactiveSubAdmins($request_data);
 
           if(isset($data['status']) && $data['status']=='error' ){
               return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);

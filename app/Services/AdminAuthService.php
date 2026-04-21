@@ -267,6 +267,7 @@ class AdminAuthService
             $admin = Admin::create([
                 'profile_pic' => $req->profile_pic,
                 'full_name' => $req->full_name,
+                'full_name_ar' => $req->full_name_ar,
                 'country_code' => $req->country_code,
                 'mobile' => $req->mobile,
                 'email' => $req->email,
@@ -359,6 +360,7 @@ class AdminAuthService
             $admin->update([
                 'profile_pic' => $req->profile_pic,
                 'full_name' => $req->full_name,
+                'full_name_ar' => $req->full_name_ar,
                 'country_code' => $req->country_code,
                 'mobile' => $req->mobile,
                 'email' => $req->email,
@@ -493,7 +495,123 @@ class AdminAuthService
                     'country_info',
                     'permission_details.module_details'
                 ])
-                ->where('type', 2)
+                ->where('type', '2')
+                ->orderBy('id', 'desc');
+
+            if (!empty($request_data->search)) {
+                $query->where('full_name', 'like', '%' . $request_data->search . '%');
+            }
+
+            if (!empty($request_data->country_id)) {
+                $query->where('country_id', $request_data->country_id);
+            }
+
+            if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
+                $query->whereBetween('created_at', [
+                    $request_data->from_date . ' 00:00:00',
+                    $request_data->to_date . ' 23:59:59'
+                ]);
+            } elseif (!empty($request_data->from_date)) {
+                $query->whereDate('created_at', '>=', $request_data->from_date);
+            } elseif (!empty($request_data->to_date)) {
+                $query->whereDate('created_at', '<=', $request_data->to_date);
+            }
+
+            $result = new \stdClass();
+
+            if (!empty($request_data->limit)) {
+
+                $result->list = $query->paginate($request_data->limit);
+
+            } else {
+
+                $result->list = $query->get();
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Sub admins fetched successfully',
+                'data' => $result
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong while fetching sub admins',
+                'data' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function GetActiveSubAdmins($request_data)
+    {
+        try {
+
+            $query = Admin::with([
+                    'country_info',
+                    'permission_details.module_details'
+                ])
+                ->where('type', '2')
+                ->where('status', '1')
+                ->orderBy('id', 'desc');
+
+            if (!empty($request_data->search)) {
+                $query->where('full_name', 'like', '%' . $request_data->search . '%');
+            }
+
+            if (!empty($request_data->country_id)) {
+                $query->where('country_id', $request_data->country_id);
+            }
+
+            if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
+                $query->whereBetween('created_at', [
+                    $request_data->from_date . ' 00:00:00',
+                    $request_data->to_date . ' 23:59:59'
+                ]);
+            } elseif (!empty($request_data->from_date)) {
+                $query->whereDate('created_at', '>=', $request_data->from_date);
+            } elseif (!empty($request_data->to_date)) {
+                $query->whereDate('created_at', '<=', $request_data->to_date);
+            }
+
+            $result = new \stdClass();
+
+            if (!empty($request_data->limit)) {
+
+                $result->list = $query->paginate($request_data->limit);
+
+            } else {
+
+                $result->list = $query->get();
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Sub admins fetched successfully',
+                'data' => $result
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong while fetching sub admins',
+                'data' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function GetInactiveSubAdmins($request_data)
+    {
+        try {
+
+            $query = Admin::with([
+                    'country_info',
+                    'permission_details.module_details'
+                ])
+                ->where('type', '2')
+                ->where('status', '0')
                 ->orderBy('id', 'desc');
 
             if (!empty($request_data->search)) {
