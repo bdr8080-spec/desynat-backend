@@ -413,7 +413,7 @@ class FullScreenBannerController extends Controller
 
         if($request->hasFile('image')){
             $commonController = new CommonController();
-            $uploadResult = $commonController->upload($request);
+            $uploadResult = $commonController->uploadWithResolutionPromotional($request);
             $uploadResultArray = $uploadResult->getData(true); 
 
             if ($uploadResultArray['status'] === 'error') {
@@ -515,7 +515,7 @@ class FullScreenBannerController extends Controller
 
         if ($request->hasFile('image')) {
             $commonController = new CommonController();
-            $uploadResult = $commonController->upload($request);
+            $uploadResult = $commonController->uploadWithResolutionPromotional($request);
             $uploadData = $uploadResult->getData(true);
             $banner->upload_banner = $uploadData['data']['url'];
         }

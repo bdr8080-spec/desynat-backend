@@ -16,6 +16,7 @@ use Auth;
 
 use Session;
 use App\Models\Category;
+use App\Http\Controllers\CommonController;
 
 class SellerBannerManagement extends Controller
 {
@@ -147,9 +148,33 @@ public function seller_banner_price(Request $request){
 
 
          $dir="banner";
-         if($request->upload_banner){
-            $upload_banner=doc_upload($request->upload_banner,$dir);  // chart Image
-         }
+        //  if($request->upload_banner){
+        //     $upload_banner=doc_upload($request->upload_banner,$dir);  // chart Image
+        //  }
+        if ($request->hasFile('upload_banner')) {
+
+            $commonController = new CommonController();
+            $newRequest = new \Illuminate\Http\Request();
+
+            $newRequest->files->set(
+                'image',
+                $request->file('upload_banner')
+            );
+
+            $uploadResult = $commonController->uploadWithResolutionPromotional($newRequest);
+
+            $uploadResultArray = $uploadResult->getData(true);
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json([
+                    'success' => false,
+                    'message' => $uploadResultArray['message']
+                ]);
+            }
+
+            $upload_banner = $uploadResultArray['data']['url'];
+        }
+        //dd($upload_banner);
 
 
        $request_data=(object) [
