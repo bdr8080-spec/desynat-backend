@@ -51,6 +51,13 @@ class seller extends Authenticatable
         return $this->hasOne(country::class,'dial_code','country_code'); 
     }
 
+    public function seller_category(){ 
+        return $this->hasOne(SellerTypeCategory::class,'id','select_category'); 
+    }
+
+     public function Role_Action(){ 
+        return $this->hasMany(sellermenuAction::class,'seller_id','id'); 
+    }
     
     
     

@@ -7,7 +7,7 @@ use App\Models\SubCategory;
 use Hash;
 
 
-use App\Models\{ seller,sellerStoreInformation,Bankdetails,sellermenuAction,SellerMenus_table};
+use App\Models\{ seller,sellerStoreInformation,Bankdetails,sellermenuAction,SellerMenus_table,SellerTypeCategory};
 use App\Models\color;
 use App\Models\Brand;
 use App\Models\SellerSubcriptionPlanBuy;
@@ -20,11 +20,40 @@ use App\Models\{ product,ProductSpecification,ProductVariant,StockInventoryRecor
 
 class SellerStaffManagementService
 {
+
+
+    public function newStaffCategoryType(){
+
+      $allcategory=SellerTypeCategory::all();
+
+       return [
+            'status' => 'success',
+            'message' => 'Seller stuff All category fetch Successfully',
+            'data' => $allcategory
+        ];
+
+    }
+
+
+
+  public function SellerAllMenu(){
+
+    $allcategory=SellerMenus_table::all();
+
+    return [
+        'status' => 'success',
+        'message' => 'Seller All Menu fetch Successfully',
+        'data' => $allcategory
+    ];
+
+    }
+
+
     public function AddNewStaffManagment($request)
     {
         try {
 
-        $check_user_already=seller::where('email',$request->email)->where('otp_verify','0')->first();
+        $check_user_already=seller::where('email',$request->email)->where('admin_verify','2')->first();
 
         if($check_user_already){
            return [
@@ -35,7 +64,7 @@ class SellerStaffManagementService
 
         }
 
-        $check_mobile_already=seller::where('type','0')->where('country_code',$request->country_code)->where('mobile',$request->mobile)->where('otp_verify','0')->first();
+        $check_mobile_already=seller::where('country_code',$request->country_code)->where('mobile',$request->mobile)->where('admin_verify','2')->first();
         if($check_mobile_already){
             return [
                 'status' => 'error',
@@ -63,7 +92,8 @@ class SellerStaffManagementService
         //   'otp'=>123456,
           'admin_verify'=>'2',
           'lang'=>$request->lang??null,
-          'parent_id'=>$request->seller_id
+          'parent_id'=>$request->seller_id,
+          "select_category"=>$request->select_category
         ];
 
        $check_seller= seller::create($record);
@@ -95,6 +125,134 @@ class SellerStaffManagementService
             ];
         }
     }
+
+
+    public function AllStaffDetails($request){
+
+        try{
+
+    $All_staff=seller::with('seller_category','Role_Action.sellermenu')->where('parent_id',$request->seller_id)
+    ->when($request->role_filter,function($query) use($request){
+        $query->where('select_category',$request->role_filter);
+    })
+->when($request->status_filter,function($query) use($request){
+        $query->where('is_block',$request->status_filter);
+    });
     
+    if ($request->from && $request->to) {
+    $All_staff = $All_staff->whereBetween('created_at', [
+        $request->from . ' 00:00:00',
+        $request->to . ' 23:59:59'
+    ]);
+    } elseif ($request->from) {
+    $All_staff = $All_staff->whereDate('created_at', $request->from);
+}
+
+   $All_staff=$All_staff->get();
+
+    return [
+        'status' => 'success',
+        'message' => 'Seller All Menu fetch Successfully',
+        'data' => $All_staff
+    ];
+
+     } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Error ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+
+    }
+
+
+    public function StaffActiveInactive($request){
+
+        try{
+
+    $staff=seller::with('seller_category','Role_Action.sellermenu')->where('id',$request->id)->first();
+
+    if($staff->is_block==0){ //0 No Block 
+
+        $msg="staff member Block Successfully";
+        $staff->update(['is_block'=>1]);
+    }else{  // 1 block
+        $msg="staff member UnBlock Successfully";
+        $staff->update(['is_block'=>0]);
+    }
+
+
+    return [
+        'status' => 'success',
+        'message' => $msg,
+        'data' => []
+    ];
+
+     } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Error ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+        
+
+    }
+
+
+    public function staffDelete($request){
+
+        try{
+
+    $staff=seller::with('seller_category','Role_Action.sellermenu')->where('id',$request->id)->first();
+
+    $msg="staff member delete Successfully";
+    $staff->delete();
+
+    return [
+        'status' => 'success',
+        'message' => $msg,
+        'data' => []
+    ];
+
+     } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Error ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+        
+
+    }
+
+
+
+    public function viewSingleStaffDetails($request){
+
+        try{
+
+    $All_staff=seller::with('seller_category','Role_Action.sellermenu')->where('id',$request->id)->get();
+
+    return [
+        'status' => 'success',
+        'message' => 'view Single Staff details fetch Successfully',
+        'data' => $All_staff
+    ];
+
+     } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Error ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+
+    }
+
+
 
 }
