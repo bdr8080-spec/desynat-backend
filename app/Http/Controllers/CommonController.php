@@ -267,10 +267,14 @@ class CommonController extends Controller
 
     public function uploadWithResolution(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,avif',
             'type'  => 'required|in:1,2', // 1 = Mobile, 2 = Web
         ]);
+
+        if ($validator->fails()) {
+               return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 400);
+        }
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
 
@@ -337,6 +341,86 @@ class CommonController extends Controller
                 // $url = Storage::disk('s3')->url($path);
                 $cloudfrontBase = env('CLOUDFRONT_URL', 'https://d79swovq1y56s.cloudfront.net');
                 $url = $cloudfrontBase . '/' . $path; 
+
+                return ApiResponse::generateResponse(
+                    'success',
+                    'File uploaded successfully.',
+                    ['url' => $url],
+                    200
+                );
+
+            } catch (\Exception $e) {
+                Log::error('File upload failed: ' . $e->getMessage());
+                Log::error('Exception Trace: ' . $e->getTraceAsString());
+
+                return ApiResponse::generateResponse(
+                    'error',
+                    'Failed to upload file.',
+                    null,
+                    500
+                );
+            }
+        }
+
+        return ApiResponse::generateResponse(
+            'error',
+            'Invalid file upload.',
+            null,
+            400
+        );
+    }
+
+    public function uploadWithResolutionPromotional(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,avif',
+        ]);
+
+        if ($validator->fails()) {
+               return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 400);
+        }
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+
+            $image = $request->file('image');
+
+            [$width, $height] = getimagesize($image);
+
+            $imageRatio = $width / $height;
+            $targetRatio = 16 / 9;
+            $tolerance = 0.01;
+
+            if (
+                $imageRatio < ($targetRatio - $tolerance) ||
+                $imageRatio > ($targetRatio + $tolerance)
+            ) {
+                return ApiResponse::generateResponse(
+                    'error',
+                    "Image upload failed. Please upload an image with a 16:9 aspect ratio",
+                    null,
+                    422
+                );
+            }
+
+            $filename = Str::random(10) . '.' . $image->getClientOriginalExtension();
+
+            try {
+                Log::info('S3 Configuration:', config('filesystems.disks.s3'));
+
+                $path = $image->storeAs('images', $filename, 's3');
+
+                if (!$path) {
+                    Log::error('File upload failed: storeAs returned false');
+                    return ApiResponse::generateResponse(
+                        'error',
+                        'Failed to upload file.',
+                        null,
+                        500
+                    );
+                }
+
+                $cloudfrontBase = env('CLOUDFRONT_URL', 'https://d79swovq1y56s.cloudfront.net');
+                $url = $cloudfrontBase . '/' . $path;
 
                 return ApiResponse::generateResponse(
                     'success',

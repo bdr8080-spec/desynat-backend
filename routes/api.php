@@ -362,6 +362,7 @@ Route::get('user/sub-category',[ProfileController::class, 'getSubCategories']);
 Route::post('upload', [CommonController::class, 'upload']);
 Route::post('uploadFile', [CommonController::class, 'uploadFile']);
 Route::post('uploadWithResolution', [CommonController::class, 'uploadWithResolution']);
+Route::post('uploadWithResolutionPromotional', [CommonController::class, 'uploadWithResolutionPromotional']);
 Route::get('country', [CommonController::class, 'country']);
 Route::get('all_country', [CommonController::class, 'all_country']);
 
