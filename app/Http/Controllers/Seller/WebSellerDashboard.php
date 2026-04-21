@@ -19,6 +19,7 @@ use App\Services\SellerAuthService;
 use App\Services\SellerProductService;
 use App\Services\StoryManagementService;
 use App\Services\TicketService;
+use App\Services\CMSManagementService;
 
 
 use App\Helpers\ApiResponse;
@@ -29,11 +30,12 @@ use App\Http\Controllers\CommonController;
 class WebSellerDashboard extends Controller
 {
 
-    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService){
+    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService, CMSManagementService $CMSManagementService){
         $this->SellerAuthService=$SellerAuthService;
        $this->SellerProductService=$SellerProductService;
        $this->StoryManagementService=$StoryManagementService;
        $this->TicketService=$TicketService;
+       $this->CMSManagementService = $CMSManagementService;
 
     }
 
@@ -1041,6 +1043,67 @@ $seller_id=Auth::guard('seller')->user()->id;
 
           return view('dealer.chatbot',compact('seller_details'));
       }
+
+      public function aboutUs(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '2',
+            ];
+
+       $data = $this->CMSManagementService->GetAboutUs($request_data)['data'];
+        return view('dealer.cms-page.about',compact('data'));
+    }
+
+    public function termCondition(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '2',
+            ];
+
+       $data = $this->CMSManagementService->GetTermConditions($request_data)['data'];
+        return view('dealer.cms-page.terms',compact('data'));
+    }
+
+    public function returnPolicy(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '2',
+            ];
+
+       $data = $this->CMSManagementService->GetReturnPolicy($request_data)['data'];
+        return view('dealer.cms-page.return',compact('data'));
+    }
+
+    public function exchangePolicy(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '2',
+            ];
+
+       $data = $this->CMSManagementService->GetExchangePolicy($request_data)['data'];
+        return view('dealer.cms-page.exchange',compact('data'));
+    }
+
+    public function cancellationPolicy(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '2',
+            ];
+
+       $data = $this->CMSManagementService->GetCancellationPolicy($request_data)['data'];
+        return view('dealer.cms-page.cancellation',compact('data'));
+    }
+
+    public function faq(REQUEST $request){
+
+        $request_data = (object)[
+                'type'        => '2',
+            ];
+
+       $data = $this->CMSManagementService->GetFaq($request_data)['data'];
+       //dd($data);
+        return view('dealer.cms-page.faq-list',compact('data'));
+    }
       
 
       

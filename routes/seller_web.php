@@ -229,6 +229,14 @@ Route::post('/send-message-in-chats', [ChatController::class,'SendMessageInChats
 
  Route::get('/seller_langauge', [LanguageController::class, 'seller_lang'])->name('seller_lang');
 
+ //cms
+ Route::get('seller/about-us', [WebSellerDashboard::class, 'aboutUs'])->name('seller.aboutUs');
+Route::get('seller/terms-conditions', [WebSellerDashboard::class, 'termCondition'])->name('seller.termCondition');
+Route::get('seller/return-policy', [WebSellerDashboard::class, 'returnPolicy'])->name('seller.returnPolicy');
+Route::get('seller/exchange-policy', [WebSellerDashboard::class, 'exchangePolicy'])->name('seller.exchangePolicy');
+Route::get('seller/cancellation-policy', [WebSellerDashboard::class, 'cancellationPolicy'])->name('seller.cancellationPolicy');
+Route::get('seller/faq', [WebSellerDashboard::class, 'faq'])->name('seller.faq');
+
 
 Route::match(['get', 'post'], '/chats', function () {
     return view('dealer.chatmgt.chatlist');

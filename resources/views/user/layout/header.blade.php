@@ -180,41 +180,35 @@
                                             </div>
                                         </div>
                                         <ul class="list-unstyled profile_links">
-                                            <li><a href="">
+                                            <li><a href="{{route('user.termCondition')}}">
                                                     <img src="{{asset('user/assets/images/profile-icon/terms.svg')}}" />
                                                     Terms & Condition
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
-                                            <li><a href="">
+                                            <li><a href="{{route('user.returnPolicy')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/return.svg')}}" />
                                                     Return Policy
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
-                                            <li><a href="">
+                                            <li><a href="{{route('user.aboutUs')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/about-us.svg')}}" />
                                                     About Us
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
-                                            <li><a href="">
+                                            <li><a href="{{route('user.faq')}}">
                                                     <img src="{{asset('user/assets/images/profile-icon/faq.svg')}}" />
                                                     FAQ's
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
-                                            <li><a href="">
-                                                    <img
-                                                        src="{{asset('user/assets/images/profile-icon/change-lang.svg')}}" />
-                                                    Change Language
-                                                    <i class="fa-solid fa-chevron-right i_icon"></i>
-                                                </a></li>
-                                            <li><a href="">
+                                            <li><a href="{{route('user.cancellationPolicy')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/cancel-policy.svg')}}" />
                                                     Cancellation Policy
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
-                                            <li><a href="">
+                                            <li><a href="{{route('user.exchangePolicy')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/exchange.svg')}}" />
                                                     Exchange Policy
