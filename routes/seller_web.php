@@ -249,7 +249,7 @@ Route::match(['get', 'post'], '/add-products', function () {
 
 })->name('dealer.add-products');
 
-Route::match(['get', 'post'], '/staff-management', function () {
+Route::match(['get', 'post'], 'seller/staff-management', function () {
     return view('dealer.staff.index');
 
 })->name('dealer.staff-management');

@@ -127,6 +127,14 @@ SellerMenus_table::insert([
         'order_by' => 11,
         'status' => 1
     ],
+    [
+        'title' => 'Staff Management',
+        'route' => 'dealer.staff-management',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/staff-management']),
+        'order_by' => 12,
+        'status' => 1
+    ]
 
 ]);
 
