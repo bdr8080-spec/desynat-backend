@@ -173,4 +173,19 @@ class AuthController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function accountSetting(Request $request)
+    {
+      return view('admin.account-setting.index');
+    }
+
+    public function subAdminManagement(Request $request)
+    {
+      return view('admin.sub-admin.index');
+    }
+
+    public function refundManagement(Request $request)
+    {
+      return view('admin.refund-management.index');
+    }
+
 }

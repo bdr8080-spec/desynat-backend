@@ -240,10 +240,34 @@
     </li>
     @endif
     @if(in_array(29, $permissions) || $admin->type == 1)
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="/support">
             <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
             Support Chat
+        </a>
+    </li> -->
+    @endif
+    @if(in_array(30, $permissions) || $admin->type == 1)
+    <li class="nav-item {{ Request::routeIs('admin.accountSetting') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.accountSetting') }}">
+            <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="icon" /></span>
+            Account Setting
+        </a>
+    </li>
+    @endif
+    @if(in_array(31, $permissions) || $admin->type == 1)
+    <li class="nav-item {{ Request::routeIs('admin.subAdminManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.subAdminManagement') }}">
+            <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="icon" /></span>
+            Sub Admin Management
+        </a>
+    </li>
+    @endif
+    @if(in_array(32, $permissions) || $admin->type == 1)
+    <li class="nav-item {{ Request::routeIs('admin.refundManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.refundManagement') }}">
+            <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="icon" /></span>
+            Refund Management
         </a>
     </li>
     @endif

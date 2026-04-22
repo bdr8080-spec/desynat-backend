@@ -251,6 +251,11 @@ Route::group(['prefix'=>'admin'], function(){
         // seller Live Stream 
         
      Route::get('/seller-live-stream-Managemnt', [AdminLiveStreamController::class, 'sellerlivestreamManagemnt'])->name('admin.sellerlivestreamManagemnt');
+
+     //m13
+     Route::get('/account-setting', [AuthController::class, 'accountSetting'])->name('admin.accountSetting');
+     Route::get('/sub-admin-managemnet', [AuthController::class, 'subAdminManagement'])->name('admin.subAdminManagement');
+     Route::get('/refund-managemnet', [AuthController::class, 'refundManagement'])->name('admin.refundManagement');
             
         
 
@@ -264,18 +269,6 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
-
-
-
-Route::match(['get', 'post'], '/support', function () {
-    return view('admin.support.index');
-
-})->name('admin.support');
-
-Route::match(['get', 'post'], '/seller-live', function () {
-    return view('admin.seller-live.index');
-
-})->name('admin.seller-live');
 
 
 
