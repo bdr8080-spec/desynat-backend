@@ -9,7 +9,7 @@
 
         <div class="col-lg-3 col-md-4 col-12">
             <div class="d-flex justify-content-end">
-                <a class="btn btn-dark customBtn" href="/admin/add-subadmin">
+                <a class="btn btn-dark customBtn" href="{{route('admin.add_subadmin')}}">
                     <span>Add Sub-admin</span>
                 </a>
             </div>

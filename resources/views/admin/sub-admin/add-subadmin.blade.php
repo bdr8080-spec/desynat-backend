@@ -4,7 +4,7 @@
 <div class="inner-content management">
     <div class="d-flex align-items-center gap-3 mt-2">
         <div class="arrow">
-            <a href="#" class="table-button " type="button">
+            <a href="{{route('admin.subAdminManagement')}}" class="table-button " type="button">
                 <i class="fas fa-angle-left"></i>
             </a>
         </div>
@@ -14,8 +14,18 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="text-center mb-4">
-                <div class="profile-box">
-                    <img src="image/profile.jpg" class="profile-img" />
+                <div class="profile-box" style="cursor:pointer;">
+                    
+                    <!-- Preview Image -->
+                    <img id="profilePreview" 
+                        src="image/profile.jpg" 
+                        class="profile-img" style="width:150px; height:150px; object-fit:cover;"/>
+
+                    <!-- Hidden File Input -->
+                    <input type="file" 
+                        id="profileInput" 
+                        accept="image/*" 
+                        style="display:none;">
                 </div>
             </div>
         </div>
@@ -75,75 +85,80 @@
 
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12">
-
             <div class="modal-body">
 
-                <!-- Module Row -->
-                <div class="module-block">
-                    <h5>Module 1</h5>
-                    <div class="d-flex gap-5 mt-3">
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> View
-                        </label>
+                @forelse($modules as $module)
+                    <div class="module-block">
+                        
+                        <h5>{{ $module->display_name }}</h5>
 
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> Edit
-                        </label>
+                        <div class="d-flex gap-5 mt-3">
 
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> Both
-                        </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" 
+                                    name="permissions[{{ $module->id }}][]" 
+                                    value="view">
+                                View
+                            </label>
+
+                            <label class="custom-checkbox">
+                                <input type="checkbox" 
+                                    name="permissions[{{ $module->id }}][]" 
+                                    value="edit">
+                                Edit
+                            </label>
+
+                            <label class="custom-checkbox">
+                                <input type="checkbox" 
+                                    name="permissions[{{ $module->id }}][]" 
+                                    value="both">
+                                Both
+                            </label>
+
+                        </div>
                     </div>
-                </div>
 
-                <!-- Repeat -->
-                <div class="module-block">
-                    <h5>Module 1</h5>
-                    <div class="d-flex gap-5 mt-3">
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> View
-                        </label>
+                @empty
+                    <p>No modules found</p>
+                @endforelse
 
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> Edit
-                        </label>
-
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> Both
-                        </label>
-                    </div>
-                </div>
-
-                <div class="module-block">
-                    <h5>Module 1</h5>
-                    <div class="d-flex gap-5 mt-3">
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> View
-                        </label>
-
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> Edit
-                        </label>
-
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> Both
-                        </label>
-                    </div>
-                </div>
             </div>
-
-
         </div>
     </div>
 
     <!-- Submit -->
     <div class="text-center">
-        <button type="button" class="btn btn-dark customBtn px-4">Send</button>
+        <button type="button" class="btn btn-dark customBtn px-4">Add</button>
     </div>
 
 
 
 </div>
+
+<script>
+    const preview = document.getElementById('profilePreview');
+    const input = document.getElementById('profileInput');
+
+    // Click image → open file picker
+    preview.addEventListener('click', function () {
+        input.click();
+    });
+
+    // Select file → show preview
+    input.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 
 
 

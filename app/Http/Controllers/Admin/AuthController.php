@@ -10,13 +10,15 @@ use Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Services\OrderManagementService;
 use App\Services\CountryService;
+use App\Services\AdminAuthService;
  
 class AuthController extends Controller
 {
-    public function __construct(OrderManagementService $OrderManagementService, CountryService $CountryService)
+    public function __construct(OrderManagementService $OrderManagementService, CountryService $CountryService, AdminAuthService $AdminAuthService)
     {
         $this->OrderManagementService = $OrderManagementService;
         $this->CountryService = $CountryService;
+        $this->AdminAuthService = $AdminAuthService;
     }
 
     
@@ -192,12 +194,15 @@ class AuthController extends Controller
 
     public function add_subadmin(Request $request)
     {
-      return view('admin.sub-admin.add-subadmin');
+      $modules = $this->AdminAuthService->GetAdminPanelModules($request)['data'];
+      //dd($modules);
+      return view('admin.sub-admin.add-subadmin',compact('modules'));
     }
 
     public function edit_subadmin(Request $request)
     {
-      return view('admin.sub-admin.edit-subadmin');
+        $modules = $this->AdminAuthService->GetAdminPanelModules($request)['data'];
+      return view('admin.sub-admin.edit-subadmin',compact('modules'));
     }
 
     public function refundManagement(Request $request)
