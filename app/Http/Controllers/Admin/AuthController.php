@@ -183,6 +183,16 @@ class AuthController extends Controller
       return view('admin.sub-admin.index');
     }
 
+    public function add_subadmin(Request $request)
+    {
+      return view('admin.sub-admin.add-subadmin');
+    }
+
+    public function edit_subadmin(Request $request)
+    {
+      return view('admin.sub-admin.edit-subadmin');
+    }
+
     public function refundManagement(Request $request)
     {
       return view('admin.refund-management.index');

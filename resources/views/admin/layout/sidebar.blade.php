@@ -256,7 +256,7 @@
     </li>
     @endif
     @if(in_array(31, $permissions) || $admin->type == 1)
-    <li class="nav-item {{ Request::routeIs('admin.subAdminManagement') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::routeIs('admin.subAdminManagement') || Request::routeIs('admin.add_subadmin') || Request::routeIs('admin.edit_subadmin') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.subAdminManagement') }}">
             <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="icon" /></span>
             Sub Admin Management

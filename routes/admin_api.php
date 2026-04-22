@@ -297,6 +297,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/get_profile', [AuthController::class,'get_profile']);
     Route::post('/update_subadmin_status', [AuthController::class,'update_subadmin_status']);
     Route::get('/get_refund_orders', [OrderManagementController::class,'get_refund_orders']);
+    Route::post('/send_subadmin_credentials', [AuthController::class,'send_subadmin_credentials']);
 
 
 
