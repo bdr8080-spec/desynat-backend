@@ -1068,7 +1068,7 @@ class OrderManagementService
     public function RefundOrders($request){
 
         try{
-            $limit = (int)($request->input('limit'));
+            $limit = (int)($request->limit);
 
             DB::beginTransaction();
 
@@ -1084,6 +1084,7 @@ class OrderManagementService
                 'product_details.store.country_info',
                 'variation_details.color',
                 'variation_details.size',
+                'user_details.country_info',
                 'UserRatingReviewProvide',
                 'driver_details.zone_info'
             ])

@@ -8,9 +8,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use Validator;
 use Illuminate\Support\Facades\Hash;
+use App\Services\OrderManagementService;
+use App\Services\CountryService;
  
 class AuthController extends Controller
 {
+    public function __construct(OrderManagementService $OrderManagementService, CountryService $CountryService)
+    {
+        $this->OrderManagementService = $OrderManagementService;
+        $this->CountryService = $CountryService;
+    }
 
     
     public function adminLogin(Request $request)
@@ -195,7 +202,17 @@ class AuthController extends Controller
 
     public function refundManagement(Request $request)
     {
-      return view('admin.refund-management.index');
+        $request_data = (object)[
+            'limit' => $request->limit??null,
+            'country_name' => $request->country_name??null,
+            'from_date' => $request->from_date??null,
+            'to_date' => $request->to_date??null,
+            'search' => $request->search??null,
+        ];
+        $refundData = $this->OrderManagementService->RefundOrders($request_data);
+        //dd($refundData);
+        $countries = $this->CountryService->getUserAllCountries($request)['data'];
+      return view('admin.refund-management.index',compact('refundData','countries'));
     }
 
 }

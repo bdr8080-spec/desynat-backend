@@ -17,35 +17,53 @@
     </div>
 
     <div class="userManagecontent">
+        
         <div class="mt-4">
+            <form method="GET" action="{{ route('admin.refundManagement') }}" id="filterForm">
             <div class="row align-items-end">
                 <!-- From Date Filter -->
-                <div class="col-lg-3 col-md-4 col-12">
+                <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="from" class="form-label">From:</label>
-                        <input type="date" id="from" name="from_date2" class="form-control" />
+                        <label for="from_date" class="form-label">From:</label>
+                        <input type="date" id="from_date" name="from_date" class="form-control"
+                            value="{{ request()->from_date }}"
+                            onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                     </div>
                 </div>
 
                 <!-- To Date Filter -->
-                <div class="col-lg-3 col-md-4 col-12">
+                <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="to" class="form-label">To:</label>
-                        <input type="date" id="to" name="to_date2" class="form-control" />
+                        <label for="to_date" class="form-label">To:</label>
+                        <input type="date" id="to_date" name="to_date" class="form-control"
+                            value="{{ request()->to_date }}"
+                            onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Country-</label>
-                        <select name="Country" class="form-select form-select-lg">
-                            <option value="">Select</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
+                        <label for="status" class="form-label">Country</label>
+                        <select name="country_name" id="country_name" onchange="document.getElementById('filterForm').submit();" class="form-select form-select-lg">
+                            <option value="">Select country</option>
+
+                            @foreach($countries as $country)
+                                <option value="{{ $country->name }}"
+                                    {{ request('country_name') == $country->name ? 'selected' : '' }}>
+                                    {{ $country->name }}
+                                </option>
+                            @endforeach
                         </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-12 col-12">
+                    <div class="d-dlex justify-content-end mt-5">
+                        <a href="{{route('admin.refundManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
+                            <span>Reset</span></a>
                     </div>
                 </div>
 
             </div>
+            </form>
 
             <div class="table-responsive w-100 mt-4">
                 <table id="myTable" class="table w-100">
@@ -58,32 +76,52 @@
                             <th scope="col">Cancellation Date & Time</th>
                             <th scope="col">Seller Name</th>
                             <th scope="col">User Name </th>
-                            <th scope="col">Country</th>
+                            <th scope="col">User Country</th>
                             <th scope="col">Reason</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($refundData['data'] as $data)
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Lorem</td>
-                            <td>UAE</td>
-                            <td>23456 </td>
-                            <td>lorem</td>
-                            <td>lorem</td>
-                            <td>lorem</td>
-                            <td>lorem</td>
-                            <td>lorem</td>
-                            <td>lorem</td>
-                            <td>lorem</td>
+                            <th scope="row">{{ $loop->iteration }}</th>
+                            <td>{{$data->order->transaction_id ?? 'N/A'}}</td>
+                            <td>{{$data->order->order_id ?? 'N/A'}}</td>
+                            <td>{{ $data->created_at->format('jS F Y | g:i A') }} </td>
+                            <td>{{ $data->updated_at->format('jS F Y | g:i A') }}</td>
+                            <td>{{$data->product_details->seller_details->first_name}} {{$data->product_details->seller_details->last_name}}</td>
+                            <td>{{$data->user_details->full_name}}</td>
+                            <td>{{$data->user_details->country_info->name}}</td>
+                            <td>{{$data->cancel_reason??'N/A'}}</td>
+                            <td>{{$data->amount}} KD</td>
+                            <td>Pending</td>
                         </tr>
+                         @empty
+
+                        @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('from_date').value;
+        const toDateInput = document.getElementById('to_date');
+        if (fromDate) {
+            toDateInput.setAttribute('min', fromDate);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate();
+    });
+
+</script>
 
 
 @endsection
