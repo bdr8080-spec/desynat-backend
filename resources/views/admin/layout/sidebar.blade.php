@@ -7,7 +7,7 @@
         ->toArray();
 @endphp
 
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion customSidebar" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion customSidebar" id="accordionSidebar2">
     @if(in_array(1, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.dashboard') }}">
