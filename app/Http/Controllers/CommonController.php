@@ -315,7 +315,7 @@ class CommonController extends Controller
                     return ApiResponse::generateResponse(
                         'error',
                         "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio",
-                        null,
+                        [],
                         400
                     );
                 }
@@ -333,7 +333,7 @@ class CommonController extends Controller
                     return ApiResponse::generateResponse(
                         'error',
                         'Failed to upload file.',
-                        null,
+                        [],
                         500
                     );
                 }
@@ -365,7 +365,7 @@ class CommonController extends Controller
         return ApiResponse::generateResponse(
             'error',
             'Invalid file upload.',
-            null,
+            [],
             400
         );
     }
@@ -397,7 +397,7 @@ class CommonController extends Controller
                 return ApiResponse::generateResponse(
                     'error',
                     "Image upload failed. Please upload an image with a 16:9 aspect ratio",
-                    null,
+                    [],
                     400
                 );
             }
@@ -414,7 +414,7 @@ class CommonController extends Controller
                     return ApiResponse::generateResponse(
                         'error',
                         'Failed to upload file.',
-                        null,
+                        [],
                         500
                     );
                 }
@@ -436,7 +436,7 @@ class CommonController extends Controller
                 return ApiResponse::generateResponse(
                     'error',
                     'Failed to upload file.',
-                    null,
+                    [],
                     500
                 );
             }
@@ -445,7 +445,7 @@ class CommonController extends Controller
         return ApiResponse::generateResponse(
             'error',
             'Invalid file upload.',
-            null,
+            [],
             400
         );
     }
