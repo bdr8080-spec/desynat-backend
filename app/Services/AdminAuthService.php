@@ -223,6 +223,7 @@ class AdminAuthService
             }
 
             $admin->password = Hash::make($request_data->new_password);
+            $admin->unhashed_password = $request_data->new_password;
             $admin->save();
 
             return [
