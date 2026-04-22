@@ -7,6 +7,8 @@ use App\Models\AdminModule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SubAdminCredentialsMail;
 
 class AdminAuthService
 {
@@ -821,6 +823,51 @@ class AdminAuthService
                 'status' => 'error',
                 'message' => 'Something went wrong while updating status',
                 'data' => $e->getMessage()
+            ];
+        }
+    }
+
+
+
+    public function SendSubAdminCredentials($request)
+    {
+        try {
+            $admin = Admin::where('id', $request->id)
+                        ->where('type', '2')
+                        ->first();
+
+            if (!$admin) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Sub Admin not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $plainPassword = $admin->unhashed_password;
+
+            if (empty($plainPassword)) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Password not available',
+                    'data' => (object)[]
+                ];
+            }
+
+            Mail::to($admin->email)->send(new SubAdminCredentialsMail($admin, $plainPassword));
+
+            return [
+                'status' => 'success',
+                'message' => 'Credentials sent successfully',
+                'data' => $admin
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => $e->getMessage(), 
+                'data' => (object)[]
             ];
         }
     }
