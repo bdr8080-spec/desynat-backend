@@ -233,6 +233,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     Route::post('/add_card', [ProfileController::class,'add_card']);
     Route::get('/get_my_cards', [ProfileController::class,'get_my_cards']);
     Route::post('/delete_card', [ProfileController::class,'delete_card']);
+    Route::post('/make_card_default', [ProfileController::class,'make_card_default']);
   
 });
 

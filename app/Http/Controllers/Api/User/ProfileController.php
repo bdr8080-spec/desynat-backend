@@ -445,6 +445,35 @@ class ProfileController extends Controller
        
     }
 
+    public function make_card_default(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'card_id' => 'required|exists:user_cards,id',
+        ]);
+
+        if ($validate->fails()) {
+               return ApiResponse::generateResponse('error',$validate->errors()->first(), $validate->errors()->first(), 422);
+        }
+
+        $user_id= $request->user()->id;
+
+        $request_data = (object )[
+            'card_id'=>$request->card_id,
+            'user_id'=>$user_id,
+        ];
+
+        $data = $this->UserProfileService->MakeDefaultCard($request_data);
+        
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+       
+    }
+
    
     
 }

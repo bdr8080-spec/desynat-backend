@@ -241,6 +241,43 @@ class UserProfileService
         }
     }
 
+    public function MakeDefaultCard($request_data)
+    {
+        try {
+            $card = UserCard::where('id', $request_data->card_id)
+                            ->where('user_id', $request_data->user_id)
+                            ->first();
+
+            if (!$card) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Card not found',
+                    'data' => []
+                ];
+            }
+
+            UserCard::where('user_id', $request_data->user_id)
+                    ->update(['is_future' => '0']);
+
+            $card->is_future = '1';
+            $card->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Card updated to default successfully',
+                'data' => $card
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to make default card',
+                'data' => []
+            ];
+        }
+    }
+
 
 
 
