@@ -342,14 +342,14 @@ h1 {
 }
 
 .customSidebar {
-    height: calc(100vh - 75px);
+    height: calc(100vh - 5px);
     overflow-y: auto !important;
     width: 244px;
     transition: all 0.3s;
     overflow: hidden;
     background: rgba(255, 247, 234, 1);
     z-index: 4 !important;
-    margin-top: 73px;
+    padding: 70px 0px;
     position: fixed;
 }
 
