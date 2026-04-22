@@ -7,7 +7,7 @@ use App\Models\AdminModule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Hash;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\SubAdminCredentialsMail;
 
 class AdminAuthService
@@ -864,11 +864,10 @@ class AdminAuthService
 
         } catch (\Exception $e) {
 
-
             return [
                 'status' => 'error',
-                'message' => 'Failed to send credentials',
-                'data' => []
+                'message' => $e->getMessage(), 
+                'data' => (object)[]
             ];
         }
     }

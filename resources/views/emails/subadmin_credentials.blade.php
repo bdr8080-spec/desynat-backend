@@ -1,6 +1,6 @@
 <h2>Sub Admin Credentials</h2>
 
-<p>Hello {{ $admin->name }},</p>
+<p>Hello {{ $admin->full_name }},</p>
 
 <p>Your login credentials are:</p>
 
