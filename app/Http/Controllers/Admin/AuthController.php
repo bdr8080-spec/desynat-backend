@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
+use App\Models\Country;
+use App\Helpers\ApiResponse;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Services\OrderManagementService;
 use App\Services\CountryService;
 use App\Services\AdminAuthService;
+use App\Http\Controllers\CommonController;
  
 class AuthController extends Controller
 {
@@ -184,7 +187,133 @@ class AuthController extends Controller
 
     public function accountSetting(Request $request)
     {
-      return view('admin.account-setting.index');
+        $country= country::all();
+        $admin = Auth::guard('admin')->user();
+        $user_id = $admin->id;
+            $request_data = (object)[
+                'user_id' => $user_id,
+            ];
+        $data = $this->AdminAuthService->GetProfile($request_data)['data'];
+        //dd($data);
+      return view('admin.account-setting.index',compact('country','data'));
+    }
+
+    public function update_account(Request $request)
+    {
+       // dd($request->all());
+
+        $validate = Validator::make($request->all(), [
+            'image'        => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+            'full_name'    => 'required',
+            'country_code' => 'required',
+            'mobile'       => 'required',
+            'email'        => 'required|email',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Validation error',
+                'errors'  => $validate->errors()
+            ], 422);
+        }
+
+
+        $admin = Auth::guard('admin')->user();
+        $user_id = $admin->id;
+
+        $imageUrl = $admin->profile_pic??null;
+
+        if ($request->hasFile('image')) {
+
+            $commonController = new CommonController();
+            $uploadResult = $commonController->upload($request);
+            $uploadResultArray = $uploadResult->getData(true);
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => $uploadResultArray['message']
+                ], 400);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+        }
+
+
+        $request_data = (object)[
+            'user_id'       => $user_id,
+            'profile_pic'   => $imageUrl,
+            'full_name'     => $request->full_name,
+            'country_code'  => $request->country_code,
+            'mobile'        => $request->mobile,
+            'email'         => $request->email,
+        ];
+
+
+        $data = $this->AdminAuthService->AccountSetting($request_data);
+
+        /* ================= ERROR RESPONSE ================= */
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return response()->json([
+                'status'  => 'error',
+                'message' => $data['message'],
+                'data'    => $data['data'] ?? null
+            ], 400);
+        }
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => $data['message'],
+            'data'    => $data['data'] ?? null
+        ], 200);
+    }
+
+    public function update_password(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'new_password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
+            ],
+            'confirm_password' => 'required|same:new_password',
+        ], [
+            'new_password.regex' => 'Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character.',
+            'confirm_password.same' => 'Confirm password must match new password.',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error',
+                'errors' => $validate->errors()
+            ], 422);
+        }
+
+        $admin = Auth::guard('admin')->user();
+
+        $request_data = (object)[
+            'old_password' => $request->old_password,
+            'new_password' => $request->new_password,
+            'user_id' => $admin->id,
+        ];
+
+        $data = $this->AdminAuthService->UpdatePassword($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message']
+        ], 200);
     }
 
     public function subAdminManagement(Request $request)

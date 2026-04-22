@@ -254,6 +254,8 @@ Route::group(['prefix'=>'admin'], function(){
 
      //m13
      Route::get('/account-setting', [AuthController::class, 'accountSetting'])->name('admin.accountSetting');
+     Route::post('/update_account', [AuthController::class, 'update_account'])->name('admin.update_account');
+     Route::post('/update_password', [AuthController::class, 'update_password'])->name('admin.update_password');
      Route::get('/sub-admin-managemnet', [AuthController::class, 'subAdminManagement'])->name('admin.subAdminManagement');
      Route::get('/add-subadmin', [AuthController::class, 'add_subadmin'])->name('admin.add_subadmin');
      Route::get('/edit-subadmin', [AuthController::class, 'edit_subadmin'])->name('admin.edit_subadmin');
