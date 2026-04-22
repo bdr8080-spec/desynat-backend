@@ -8,19 +8,23 @@
 }
 
 .order-place {
-    background: #218C4E21;
+    background: var(--gradient-color);
     text-align: center;
     border-radius: 5px;
     padding: 60px 0px 0px;
 }
 
 .place-footer {
-    background: #17854C;
+    background: var(--gradient-color);
     padding: 9px;
     color: #fff;
     border-radius: 5px;
     font-size: 25px;
 }
+.order-place-grid img {
+    filter: sepia(1);
+}
+
 </style>
 
 <div class="customContainer common-padding">
