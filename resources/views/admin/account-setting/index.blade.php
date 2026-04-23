@@ -129,7 +129,7 @@
                                     name="mobile"
                                     class="form-control mt-2" 
                                     placeholder="Enter phone number" 
-                                    value="{{ $data->mobile }}" />
+                                    value="{{ $data->mobile }}" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 15);"/>
 
                                 <div class="text-danger mt-1" id="error_mobile"></div>
                             </div>
@@ -219,7 +219,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     const tabContentContainer = document.getElementById('tabContentContainer');
 
@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
-</script>
+</script> -->
 
 <script>
     const preview = document.getElementById('profilePreview');
@@ -323,7 +323,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (mobileInput && mobileError) {
         mobileInput.addEventListener('input', function () {
-            mobileError.innerText = '';
+            const value = this.value.trim();
+
+            if (!value) {
+                mobileError.innerText = '';
+            } else if (value.length < 7) {
+                mobileError.innerText = 'Please enter phone number between 7-15 digits';
+            } else {
+                mobileError.innerText = '';
+            }
         });
     }
 
@@ -366,6 +374,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!mobile) {
             if (mobileError) mobileError.innerText = 'Please enter mobile number';
+            hasError = true;
+        } else if (!/^\d{7,15}$/.test(mobile)) {
+            if (mobileError) mobileError.innerText = 'Please enter phone number between 7-15 digits';
             hasError = true;
         }
 
