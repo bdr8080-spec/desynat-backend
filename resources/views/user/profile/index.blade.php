@@ -96,6 +96,9 @@
                 success: function (resp) {
                     if (resp.status === true) {
                         toastr.success(resp.message || "Profile updated successfully.");
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1200);
                     
                     } else {
                     $('#error-full_name').html(resp.error);

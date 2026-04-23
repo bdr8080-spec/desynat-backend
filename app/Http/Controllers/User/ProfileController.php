@@ -13,6 +13,7 @@ use App\Models\UserContactChangeHistory;
 use App\Helpers\ApiResponse;
 use Validator;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\CommonController;
 
 
 class ProfileController extends Controller
@@ -50,15 +51,30 @@ class ProfileController extends Controller
                     ]);
                 }
 
-               if($request->image){
-                 $dir = 'profile_image/';
-                 $image_path = $this->image_upload($request->image, $dir);
+            //    if($request->image){
+            //      $dir = 'profile_image/';
+            //      $image_path = $this->image_upload($request->image, $dir);
                  
+            //     }
+
+                if ($request->hasFile('image')) {
+                    $commonController = new CommonController();
+                    $uploadResult = $commonController->upload($request);
+                    $uploadResultArray = $uploadResult->getData(true);
+
+                    if ($uploadResultArray['status'] === 'error') {
+                        return response()->json([
+                            'status'  => 'error',
+                            'message' => $uploadResultArray['message']
+                        ], 400);
+                    }
+
+                    $imageUrl = $uploadResultArray['data']['url'];
                 }
 
                 $data = User::where('id', $user->id)->update([
                     'full_name'     => $request->full_name,
-                    'profile_image' => $image_path ?? $request->old_image,
+                    'profile_image' => $imageUrl ?? $request->old_image,
                 ]);
 
                     return response()->json([
