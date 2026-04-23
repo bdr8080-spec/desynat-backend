@@ -8,14 +8,12 @@
 @endphp
 
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion customSidebar" id="accordionSidebar2">
-    @if(in_array(1, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.dashboard') }}">
             <span><img src="{{ asset('admin/image/dashboard.svg') }}" alt="Dashboard" /></span>
             Dashboard
         </a>
     </li>
-    @endif
     @if(in_array(2, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('brandManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('brandManagement') }}">
@@ -33,7 +31,7 @@
         </a>
     </li>
     @endif
-    @if(in_array(3, $permissions) || $admin->type == 1)
+    @if(in_array(4, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('sellerManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('sellerManagement') }}">
             <span><img src="{{ asset('admin/image/seller.svg') }}" alt="Seller Management" /></span>

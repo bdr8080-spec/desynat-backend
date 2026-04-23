@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 <style>
 /* Hide all tab panes initially to avoid flicker */
@@ -55,10 +63,12 @@
                 <div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="received-tab"
                     tabindex="0">
                     <div class=" align-items-end d-flex justify-content-end">
+                        @if(in_array(25, $permissions) || $admin->type == 1)
                         <div class="noti">
                             <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn ms-auto mb-3">
                                 <span>Send Notification</span></a>
                         </div>
+                        @endif
                     </div>
                     <div class="mt-4">
                         @forelse($myNotifications as $notification)
@@ -97,10 +107,12 @@
                 </div>
                 <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab" tabindex="0">
                     <div class="align-items-end d-flex justify-content-end">
+                        @if(in_array(25, $permissions) || $admin->type == 1)
                         <div class="noti">
                             <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn ms-auto mb-3" href="/send-notification">
                                 <span>Send Notification</span></a>
                         </div>
+                        @endif
                     </div>
                     <form method="GET" action="{{ route('admin.notificationManagement') }}" id="filterForm">
                     <div class="row">

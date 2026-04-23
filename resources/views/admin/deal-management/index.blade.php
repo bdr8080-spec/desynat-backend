@@ -54,6 +54,15 @@ button.multiselect .caret {
 
 </style>
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 
 
 <div class="inner-content management">
@@ -63,11 +72,13 @@ button.multiselect .caret {
         </div>
 
         <div class="col-lg-3 col-md-4 col-12">
+            @if(in_array(20, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
                 <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
                     <span>Add Deals</span>
                 </a>
             </div>
+            @endif
         </div>
     </div>
     <div class="d-flex justify-content-center">
@@ -124,7 +135,9 @@ button.multiselect .caret {
                                 <th scope="col">Start From</th>
                                 <th scope="col">End To</th>
                                 <th scope="col">Number of Sellers Enrolled</th>
+                                @if(in_array(20, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -147,6 +160,7 @@ button.multiselect .caret {
                                     <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"
                                         class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
                                 </td>
+                                @if(in_array(20, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="javascript:void(0);" class="table-button edit-deal-btn"
@@ -175,6 +189,7 @@ button.multiselect .caret {
                                         </div>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                             @empty
                             <tr>

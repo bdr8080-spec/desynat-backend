@@ -1,6 +1,15 @@
 @extends('admin.layout.app')
 @section('content')
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 <div class="inner-content management">
     <h2 class="h2">Account Settings</h2>
     <div class="d-flex justify-content-center">
@@ -151,9 +160,11 @@
                     </div>
 
                     <!-- Button -->
+                     @if(in_array(30, $permissions) || $admin->type == 1)
                     <div class="text-center">
                         <button type="submit" id="submitBtn" class="btn btn-dark customBtn px-4">Update</button>
                     </div>
+                    @endif
 
                 </div>
 
@@ -196,8 +207,9 @@
                         </div>
 
                     </div>
+                    @if(in_array(30, $permissions) || $admin->type == 1)
                     <div class="d-flex justify-content-center gap-3 mt-4">
-
+                        
                         <button type="button"
                             class="btn btn-dark customBtn px-4 savePasswordBtn">
                             Save Password
@@ -210,6 +222,7 @@
                         </button>
 
                     </div>
+                    @endif
 
                </div>
            </form>

@@ -1,6 +1,15 @@
 @extends('admin.layout.app')
 @section('content')
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
@@ -73,8 +82,10 @@
                             <th scope="col">Total Number of Completed Order</th>
                             <th scope="col">Total Number of Cancelled Orders</th>
                             <th scope="col">Wallet Balance</th>
+                            @if(in_array(7, $permissions) || $admin->type == 1)
                             <th scope="col">Add Amount in Wallet</th>
                             <th scope="col">Block/Unblock</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -109,6 +120,7 @@
                                 @endif
                                 KD
                             </td>
+                            @if(in_array(7, $permissions) || $admin->type == 1)
                             <td>
                                 <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2" data-user-id="{{ $user['id'] }}">
                                     <span>Add</span>
@@ -124,6 +136,7 @@
                                     </div>
                                 </div>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

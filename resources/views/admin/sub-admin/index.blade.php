@@ -1,6 +1,15 @@
 @extends('admin.layout.app')
 @section('content')
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 <style>
 .custom-checkbox input[type="checkbox"] {
     width: 18px !important;
@@ -27,11 +36,13 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-12">
+            @if(in_array(31, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
                 <a class="btn btn-dark customBtn" href="{{route('admin.add_subadmin')}}">
                     <span>Add Sub-admin</span>
                 </a>
             </div>
+            @endif
         </div>
     </div>
 
@@ -115,7 +126,9 @@
                             <th>View credentials</th>
                             <th>Send credentials</th>
                             <th>Status</th>
+                            @if(in_array(31, $permissions) || $admin->type == 1)
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
 
@@ -176,6 +189,7 @@
                             </td>
 
                             <!-- Action -->
+                             @if(in_array(31, $permissions) || $admin->type == 1)
                             <td>
                                 <div class="d-flex gap-3 justify-content-center">
                                     <!-- Edit button -->
@@ -201,6 +215,7 @@
                                       </div>
                                 </div>
                             </td>
+                            @endif
                         </tr>
                          @empty
 

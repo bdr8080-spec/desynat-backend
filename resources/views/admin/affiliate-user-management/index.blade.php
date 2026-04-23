@@ -1,6 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
 
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 <div class="inner-content management">
     <h2 class="h2">Affiliate User Management</h2>
     <div class="d-flex justify-content-center">
@@ -101,7 +108,9 @@
                                 <th scope="col">Uploaded ID</th>
                                 <th scope="col">Bank Account Details</th>
                                 <!-- <th scope="col">Upload Account Proof</th> -->
+                                 @if(in_array(8, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -166,6 +175,7 @@
                                     N/A
                                     @endif
                                 </td> -->
+                                @if(in_array(8, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a class="table-button acceptUser" type="button"
@@ -178,6 +188,7 @@
                                         </a>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
@@ -259,7 +270,9 @@
                                 <!-- <th scope="col">Upload Account Proof</th> -->
                                 <th scope="col">Total Number of Orders</th>
                                 <th scope="col">Total Earning</th>
+                                @if(in_array(8, $permissions) || $admin->type == 1)
                                 <th scope="col">Block/Unblock</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -326,6 +339,7 @@
                                 </td> -->
                                 <td>0</td>
                                 <td>0 KD</td>
+                                @if(in_array(8, $permissions) || $admin->type == 1)
                                  <td>
                                 <div class="form-check form-switch" style="justify-content: center;">
                                     <input class="form-check-input toggleStatus" type="checkbox"
@@ -334,6 +348,7 @@
                                     <label class="form-check-label" for="flexSwitchCheckChecked"></label>
                                 </div>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

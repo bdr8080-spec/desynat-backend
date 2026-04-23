@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 <div id="content-wrapper" class="d-flex flex-column position-relative">
     <div id="content" class="">
@@ -109,7 +117,9 @@
                                         <th scope="col">Uploaded Store Document</th>
                                         <th scope="col">Bank Account Details</th>
                                         <th scope="col">Upload Account Proof</th>
+                                        @if(in_array(4, $permissions) || $admin->type == 1)
                                         <th scope="col">Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -190,7 +200,7 @@
                                             N/A
                                             @endif
                                         </td>
-
+                                        @if(in_array(4, $permissions) || $admin->type == 1)
                                         <td>
                                             <div class="d-flex gap-3 justify-content-center">
                                                 <a class="table-button acceptSeller" type="button"
@@ -203,6 +213,7 @@
                                                 </a>
                                             </div>
                                         </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -295,7 +306,9 @@
                                         <th scope="col">Average Rating</th>
                                         <th scope="col">View Reels</th>
                                         <th scope="col">View Highlights</th>
+                                        @if(in_array(4, $permissions) || $admin->type == 1)
                                         <th scope="col">Block/Unblock</th>
+                                        @endif
 
                                     </tr>
                                 </thead>
@@ -400,6 +413,7 @@
                                         <td> <a class="table-button" type="button">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a></td>
+                                        @if(in_array(4, $permissions) || $admin->type == 1)
                                         <td>
                                             <div class="form-check form-switch" style="justify-content: center;">
                                                 <input class="form-check-input toggleStatus" type="checkbox"
@@ -408,6 +422,7 @@
                                                 <label class="form-check-label" for="flexSwitchCheckChecked"></label>
                                             </div>
                                         </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>

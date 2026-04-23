@@ -10,6 +10,14 @@
     text-align: start;
 }
 </style>
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
@@ -25,11 +33,13 @@
             </div>
         </div> -->
         <div class="col-lg-3 col-md-4 col-12">
+            @if(in_array(14, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
                 <a class="btn btn-dark customBtn" href="{{route('admin.addPromocode')}}" >
                     <span>Add New Promocode</span>
                 </a>
             </div>
+            @endif
         </div>
 
     </div>
@@ -112,7 +122,9 @@
                             <th scope="col">Start Date</th>
                             <th scope="col">End date</th>
                             <th scope="col">Status</th>
+                            @if(in_array(14, $permissions) || $admin->type == 1)
                             <th scope="col">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -145,6 +157,7 @@
                                     Inactive
                                 @endif
                             </td>
+                            @if(in_array(14, $permissions) || $admin->type == 1)
                             <td>
                                 <div class="d-flex gap-3 justify-content-center ">
                                     <a class="table-button" href="{{ route('admin.editPromocode', $pc['id']) }}" type="button">
@@ -193,6 +206,7 @@
                                       </div>
                                 </div>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

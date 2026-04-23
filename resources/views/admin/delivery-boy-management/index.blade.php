@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
@@ -52,6 +60,7 @@
                 </a>
                     </div>
                 </div>
+                @if(in_array(9, $permissions) || $admin->type == 1)
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="d-flex justify-content-end  mt-5 mb-5">
                         <a class="btn btn-dark customBtn"  href="{{route('admin.deliveryboy_reg_step1')}}" style="
@@ -61,6 +70,7 @@
                         </a>
                     </div>
                 </div>
+                @endif
             </div>
            </form>
 
@@ -85,8 +95,9 @@
                             <th scope="col">Uploaded <br> Pollution Paper</th>
                             <th scope="col">Uploaded RC</th>
                             <th scope="col">Total Order <br> Delivered</th>
-
+                            @if(in_array(9, $permissions) || $admin->type == 1)
                             <th scope="col">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -170,6 +181,7 @@
                                 @endif
                             </td>
                             <td>0</td>
+                            @if(in_array(9, $permissions) || $admin->type == 1)
                             <td>
                                 <div class="d-flex gap-3 justify-content-center">
                                     <a class="table-button" href="{{ route('admin.edit_deliveryboy_step1', ['id' => $deliveryBoy['id']]) }}"><i  class="bi bi-pencil-square"></i></a>
@@ -185,6 +197,7 @@
                                     </div>
                                 </div>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

@@ -1,6 +1,15 @@
 @extends('admin.layout.app')
 @section('content')
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 
 <div class="inner-content management">
     <h2 class="h2">REASON MANAGEMENT</h2>
@@ -38,11 +47,13 @@
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
                 <div class="row align-items-end justify-content-end">
                     <div class="col-lg-6 col-md-4 col-12">
+                        @if(in_array(10, $permissions) || $admin->type == 1)
                         <div class="d-flex justify-content-end mb-3">
                             <a class="btn btn-dark customBtn button add-reason-btn" data-type="1" data-bs-toggle="modal" data-bs-target="#sentModal2">
                                 <span>Add</span>
                             </a>
                         </div>
+                        @endif
                     </div>
                 </div>
 
@@ -52,7 +63,9 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Exchange Reason</th>
+                                @if(in_array(10, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
 
 
                             </tr>
@@ -62,6 +75,7 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $reason['reason_english'] }}</td>
+                                @if(in_array(10, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="javascript:void(0);" 
@@ -87,6 +101,7 @@
                                         </div>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
@@ -106,11 +121,13 @@
 
 
                     <div class="col-lg-6 col-md-4 col-12">
+                        @if(in_array(10, $permissions) || $admin->type == 1)
                         <div class="d-flex justify-content-end mb-3">
                             <a class="btn btn-dark customBtn button add-reason-btn" data-type="2" data-bs-toggle="modal" data-bs-target="#sentModal2">
                                 <span>Add</span>
                             </a>
                         </div>
+                        @endif
                     </div>
                 </div>
 
@@ -120,7 +137,9 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Return Reason</th>
+                                @if(in_array(10, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
 
 
                             </tr>
@@ -130,6 +149,7 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $reason['reason_english'] }}</td>
+                                @if(in_array(10, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="javascript:void(0);" 
@@ -155,6 +175,7 @@
                                         </div>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
@@ -175,11 +196,13 @@
 
 
                     <div class="col-lg-6 col-md-4 col-12">
+                        @if(in_array(10, $permissions) || $admin->type == 1)
                         <div class="d-flex justify-content-end mb-3">
                             <a class="btn btn-dark customBtn button add-reason-btn" data-type="3" data-bs-toggle="modal" data-bs-target="#sentModal2">
                                 <span>Add</span>
                             </a>
                         </div>
+                        @endif
                     </div>
                 </div>
 
@@ -189,7 +212,9 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Cancle Reason</th>
+                                @if(in_array(10, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
 
 
                             </tr>
@@ -199,6 +224,7 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $reason['reason_english'] }}</td>
+                                @if(in_array(10, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="javascript:void(0);" 
@@ -224,6 +250,7 @@
                                         </div>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>

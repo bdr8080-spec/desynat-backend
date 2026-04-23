@@ -1,9 +1,17 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_view', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 <div id="content-wrapper" class="d-flex flex-column position-relative">
     <div id="content">
 
-
+        @if(in_array(1, $permissions) || $admin->type == 1)
         <div class="inner-content">
             <div class="container-fluid">
                 <div class="row align-items-center">
@@ -26,9 +34,6 @@
                                 <input class="form-check-input" type="radio" name="radioDefault" />
                                 <label class="form-check-label">This Month</label>
                             </div>
-
-                            <!-- <input type="date" class="custom-date-input" />
-      <input type="date" class="custom-date-input" /> -->
                         </div>
                     </div>
                 </div>
@@ -330,6 +335,11 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="inner-content">
+          <h5>You don't have dashboard access</h5>
+        </div>
+        @endif
     </div>
 
 </div>

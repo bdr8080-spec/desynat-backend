@@ -1,6 +1,15 @@
 @extends('admin.layout.app')
 @section('content')
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 
 <div class="inner-content management">
     <h2 class="h2">Banner Requests Management</h2>
@@ -159,7 +168,9 @@
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>No. of Days</th>
+                                @if(in_array(17, $permissions) || $admin->type == 1)
                                 <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -181,12 +192,14 @@
                                 <td>{{ optional($data['start_date']) ? \Carbon\Carbon::parse($data['start_date'])->format('d F Y') : '' }}</td>
                                 <td>{{ optional($data['end_date']) ? \Carbon\Carbon::parse($data['end_date'])->format('d F Y') : '' }}</td>
                                 <td>{{ $data['total_days'] ?? '' }} days</td>
+                                @if(in_array(17, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a class="table-button approveBannerBtn" data-id="{{ $data['id'] }}"><i class="bi bi-check-circle-fill"></i></a>
                                         <a class="table-button rejectBannerBtn" data-id="{{ $data['id'] }}" data-bs-toggle="modal" data-bs-target="#rejectmodel"><i class="bi bi-x-circle-fill"></i></a>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
@@ -246,7 +259,9 @@
                                 <th scope="col">No. of Days</th>
                                 <th scope="col">Seller Posted</th>
                                 <th scope="col">Amount Paid</th>
+                                @if(in_array(17, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
 
                             </tr>
                         </thead>
@@ -305,6 +320,7 @@
                                     N/A
                                     @endif
                                 </td>
+                                @if(in_array(17, $permissions) || $admin->type == 1)
                                 <td>
                                 <div class="form-check form-switch d-flex justify-content-center align-items-center"">
                                         <input
@@ -317,6 +333,7 @@
                                         />
                                     </div>
                                 </td>
+                                @endif
 
                             </tr>
                             @empty

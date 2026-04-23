@@ -1,6 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
 
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 
 <div class="inner-content management">
@@ -34,7 +41,9 @@
                             <th scope="col">SR No.</th>
                             <th scope="col">Country Name</th>
                             <th scope="col">Commission Percentage</th>
+                            @if(in_array(16, $permissions) || $admin->type == 1)
                             <th scope="col">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -49,6 +58,7 @@
                                         : number_format($data['affiliate_commission_info']['commission'], 2)
                                 }}%
                             </td>
+                            @if(in_array(16, $permissions) || $admin->type == 1)
                             <td>
                                 <div class="d-flex gap-3 justify-content-center">
                                     <a href="javascript:void(0);" 
@@ -61,6 +71,7 @@
                                     </a>
                                 </div>
                             </td>
+                            @endif
                         </tr>
                         @empty
                             <tr>
