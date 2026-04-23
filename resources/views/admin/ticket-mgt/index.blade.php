@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 
 <div class="inner-content management">
@@ -113,7 +121,9 @@
                                 <th scope="col"> User name</th>
                                 <th scope="col">View Details & Attachment</th>
                                 <th scope="col">Type</th>
+                                @if(in_array(26, $permissions) || $admin->type == 1)
                                 <th scope="col">Update Status</th>
+                                @endif
 
                             </tr>
                         </thead>
@@ -152,7 +162,7 @@
                                     </td>
 
                                     <td>{{ $ticket->ticket_type_details->name ?? '-' }}</td>
-
+                                    @if(in_array(26, $permissions) || $admin->type == 1)
                                     <td>
                                         <select class="form-select  statusChange"
                                                 data-id="{{ $ticket->id }}">
@@ -160,6 +170,7 @@
                                             <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>Resolved</option>
                                         </select>
                                     </td>
+                                    @endif
                                 </tr>
                             @empty
 
@@ -239,7 +250,9 @@
                                 <th scope="col"> User name</th>
                                 <th scope="col">View Details & Attachment</th>
                                 <th scope="col">Type</th>
+                                @if(in_array(26, $permissions) || $admin->type == 1)
                                 <th scope="col">Update Status</th>
+                                @endif
 
                             </tr>
                         </thead>
@@ -278,7 +291,7 @@
                                     </td>
 
                                     <td>{{ $ticket->ticket_type_details->name ?? '-' }}</td>
-
+                                    @if(in_array(26, $permissions) || $admin->type == 1)
                                     <td>
                                         <select class="form-select  statusChange"
                                                 data-id="{{ $ticket->id }}">
@@ -286,6 +299,7 @@
                                             <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>Resolved</option>
                                         </select>
                                     </td>
+                                    @endif
                                 </tr>
                             @empty
 
@@ -367,7 +381,9 @@
                                 <th scope="col"> User name</th>
                                 <th scope="col">View Details & Attachment</th>
                                 <th scope="col">Type</th>
+                                @if(in_array(26, $permissions) || $admin->type == 1)
                                 <th scope="col">Update Status</th>
+                                @endif
 
                             </tr>
                         </thead>
@@ -406,7 +422,7 @@
                                     </td>
 
                                     <td>{{ $ticket->ticket_type_details->name ?? '-' }}</td>
-
+                                    @if(in_array(26, $permissions) || $admin->type == 1)
                                     <td>
                                         <select class="form-select  statusChange"
                                                 data-id="{{ $ticket->id }}">
@@ -414,6 +430,7 @@
                                             <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>Resolved</option>
                                         </select>
                                     </td>
+                                    @endif
                                 </tr>
                             @empty
 

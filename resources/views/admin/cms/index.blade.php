@@ -23,6 +23,15 @@
 }
 </style>
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 
 
 <div class="inner-content management mb-5" id="tabContentContainer">
@@ -174,11 +183,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
 
                         </form>
                         </div>
@@ -231,11 +242,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
 
@@ -286,11 +299,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
                     <!-- cancel-policy -->
@@ -339,11 +354,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
 
@@ -399,11 +416,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
 
@@ -411,8 +430,10 @@
                     <div class="tab-pane fade" id="pills-faq-user" role="tabpanel" aria-labelledby="pills-faq-tab-user">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h5 class="flex-grow-1 text-start">FAQs</h5>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#faqquestionModal">Add New Question</a>
+                            @endif
                         </div>
                         <div class="management mt-4 pb-5">
                             <h6>List of Questions(English)</h6>
@@ -466,6 +487,7 @@
                                         </div>
 
                                     </div>
+                                    @if(in_array(24, $permissions) || $admin->type == 1)
                                         <div class="d-flex gap-3 justify-content-end align-items-center">
                                             <a class="table-button editFaqBtn"
                                                 href="#"
@@ -484,6 +506,7 @@
                                             <i class="bi bi-trash3-fill"></i>
                                             </a>
                                         </div>
+                                        @endif
 
                                 </div>
                                 @empty
@@ -534,12 +557,13 @@
                                     value="{{ $userContactUs->content_english['whatsapp'] ?? '' }}" />
                                 <h6 class="text-danger error-whatsapp"></h6>
                             </div>
-
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="button" id="contactSubmitBtn" class="btn btn-dark customBtn">
                                     <span>Submit</span>
                                 </button>
                             </div>
+                            @endif
 
                         </div>
                     </div>
@@ -656,11 +680,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
 
                         </form>
                         </div>
@@ -713,11 +739,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
 
@@ -768,11 +796,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
                     <!-- cancel-policy -->
@@ -822,11 +852,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
 
@@ -882,11 +914,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
 
@@ -895,8 +929,10 @@
                         aria-labelledby="pills-faq-tab-dealer">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h5 class="flex-grow-1 text-start">FAQs</h5>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#faqquestionModalSeller">Add New Question</a>
+                            @endif
                         </div>
                         <div class="management mt-4 pb-5">
                             <h6>List of Questions(English)</h6>
@@ -931,6 +967,7 @@
                                         </div>
 
                                     </div>
+                                       @if(in_array(24, $permissions) || $admin->type == 1)
                                         <div class="d-flex gap-3 justify-content-end align-items-center">
                                             <a class="table-button editFaqBtnSeller"
                                                 href="javascript:void(0)"
@@ -949,6 +986,7 @@
                                             <i class="bi bi-trash3-fill"></i>
                                             </a>
                                         </div>
+                                        @endif
                                 </div>
                                 @empty
                                 <div class="text-center text-muted">
@@ -998,12 +1036,13 @@
                                     value="{{ $sellerContactUs->content_english['whatsapp'] ?? '' }}" />
                                 <h6 class="text-danger error-whatsapp_seller"></h6>
                             </div>
-
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="button" id="contactSubmitBtnSeller" class="btn btn-dark customBtn">
                                     <span>Submit</span>
                                 </button>
                             </div>
+                            @endif
 
                         </div>
                     </div>
@@ -1121,11 +1160,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
 
                         </form>
                         </div>
@@ -1178,11 +1219,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
 
@@ -1233,11 +1276,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
                     <!-- cancel-policy -->
@@ -1286,11 +1331,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
 
@@ -1346,11 +1393,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                         </form>
                         </div>
 
@@ -1394,6 +1443,7 @@
                                         </div>
 
                                     </div>
+                                    @if(in_array(24, $permissions) || $admin->type == 1)
                                     <div class="d-flex gap-3 justify-content-end align-items-center">
                                             <a class="table-button editFaqBtnDriver"
                                                 href="javascript:void(0)"
@@ -1412,6 +1462,7 @@
                                             <i class="bi bi-trash3-fill"></i>
                                             </a>
                                         </div>
+                                    @endif
                                 </div>
                                 @empty
                                 <div class="text-center text-muted">
@@ -1461,12 +1512,13 @@
                                     value="{{ $driverContactUs->content_english['whatsapp'] ?? '' }}" />
                                 <h6 class="text-danger error-whatsapp_driver"></h6>
                             </div>
-
+                            @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="button" id="contactSubmitBtnDriver" class="btn btn-dark customBtn">
                                     <span>Submit</span>
                                 </button>
                             </div>
+                            @endif
 
                         </div>
                     </div>

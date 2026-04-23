@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 <div id="content-wrapper" class="d-flex flex-column position-relative">
     <div id="content" class="">
@@ -21,9 +29,13 @@
                                 <tr>
                                     <th scope="col">SR No.</th>
                                     <th scope="col">Country Name</th>
+                                    @if(in_array(11, $permissions) || $admin->type == 1)
                                     <th scope="col">Manage Delivery Charges</th>
+                                    @endif
                                     <th scope="col">Tax Percentage</th>
+                                    @if(in_array(11, $permissions) || $admin->type == 1)
                                     <th scope="col">Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,11 +43,13 @@
                                 <tr>
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td>{{ $country->name }}</td>
+                                    @if(in_array(11, $permissions) || $admin->type == 1)
                                     <td> <a class="btn btn-dark customBtn" href="{{ route('admin.manageShippingCharges', ['id' => $country->id]) }}">
                                             <span>Manage </span>
                                         </a></td>
+                                    @endif
                                     <td>{{ $country['tax_info'] ? $country['tax_info']->tax : 'N/A' }}</td>
-
+                                    @if(in_array(11, $permissions) || $admin->type == 1)
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
                                             <a href="javascript:void(0);" 
@@ -49,6 +63,7 @@
 
                                         </div>
                                     </td>
+                                    @endif
                                 </tr>
                                 @empty
                                     <tr>

@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 <style>
 .spinner {
@@ -113,7 +121,9 @@
                                 <th scope="col">Available Amount</th>
                                 <th scope="col">Requested Amount</th>
                                 <th scope="col">Bank Account Number</th>
+                                @if(in_array(23, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -127,6 +137,7 @@
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
                                 <td>{{ $req['bank_details']['account_no']??'N/A' }}</td>
+                                @if(in_array(23, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a class="table-button acceptUser" data-id="{{ $req['id'] }}" type="button">
@@ -140,6 +151,7 @@
                                         </a>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

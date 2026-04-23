@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 
 
@@ -53,11 +61,13 @@
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-12">
+                    @if(in_array(12, $permissions) || $admin->type == 1)
                     <div class="d-flex justify-content-end">
                         <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
                             <span>Add Gift Card Category</span>
                         </a>
                     </div>
+                    @endif
                 </div>
             </div>
 
@@ -73,7 +83,9 @@
                         <th scope="col">Gift Card Category Name(English)</th>
                         <!-- <th scope="col">Brand name(Arabic)</th> -->
                         <!-- <th scope="col">Status</th> -->
+                         @if(in_array(12, $permissions) || $admin->type == 1)
                         <th scope="col">Action</th>
+                        @endif
                       </tr>
                     </thead>
                     <tbody>
@@ -91,6 +103,7 @@
                               <td>{{ $gc->name_english }}</td>
                               <!-- <td>{{ $gc->name_arabic }}</td> -->
                               <!-- <td>{{ $gc->status == 1 ? 'Active' : 'Inactive' }}</td> -->
+                               @if(in_array(12, $permissions) || $admin->type == 1)
                               <td>
                                   <div class="d-flex gap-3 justify-content-center">
                                       <!-- Edit button -->
@@ -129,6 +142,7 @@
                                       </div>
                                   </div>
                               </td>
+                              @endif
                           </tr>
                       @empty
                           <tr>

@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
       <div id="content-wrapper" class="d-flex flex-column position-relative">
         <div id="content" class="">
         
@@ -43,9 +51,13 @@
                         <th scope="col">SR No.</th>
                         <th scope="col">Image</th>
                         <th scope="col">Category Name</th>
+                        @if(in_array(3, $permissions) || $admin->type == 1)
                         <th scope="col">Manage Sub-Category</th>
+                        @endif
                         <th scope="col">Status</th>
+                        @if(in_array(3, $permissions) || $admin->type == 1)
                         <th scope="col">Action</th>
+                        @endif
                       </tr>
                     </thead>
                     <tbody>
@@ -62,6 +74,7 @@
                         </td>
 
                         <td>{{$category->name}}</td>
+                        @if(in_array(3, $permissions) || $admin->type == 1)
                         <td>
                           <a
                             class="btn btn-dark customBtn"
@@ -70,7 +83,9 @@
                             <span>Manage</span>
                           </a>
                         </td>
+                        @endif
                         <td>{{ $category->status == 1 ? 'Active' : 'Inactive' }}</td>
+                        @if(in_array(3, $permissions) || $admin->type == 1)
                         <td>
                           <div class="form-check form-switch" style="justify-content: center;">
                               <input
@@ -83,6 +98,7 @@
                               />
                           </div>
                         </td>
+                        @endif
                       </tr>
                       @empty
                           <tr>

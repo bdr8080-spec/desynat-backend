@@ -1,6 +1,15 @@
 @extends('admin.layout.app')
 @section('content')
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 <div class="inner-content management">
 
     <div class="row align-items-center justify-content-between">
@@ -136,7 +145,7 @@
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                                 <td>{{ $payment->updated_at->format('jS F Y | g:i A') }}</td>
                                 <td>{{$payment->user_details->full_name}}</td>
-                                <td>{{$payment->product_details->seller_details->first_name}} {{$payment->product_details->seller_details->last_name}}</td>
+                                <td>{{$payment->product_details->seller_details->first_name?? ''}} {{$payment->product_details->seller_details->last_name??''}}</td>
                                 <td>#{{$payment->id}}</td>
                                 <td>{{$payment->user_details->country_info->name}}</td>
                                 <td>{{$payment->total_paid_amount}} KD</td>

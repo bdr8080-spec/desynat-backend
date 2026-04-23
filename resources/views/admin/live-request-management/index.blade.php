@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
@@ -52,6 +60,7 @@
 
                             </div>
                             <div class="col-lg-6 ">
+                                @if(in_array(18, $permissions) || $admin->type == 1)
                                 <div class="d-flex gap-3 justify-content-end">
 
 
@@ -60,6 +69,7 @@
                                         <span>Add Timeslot</span>
                                     </a>
                                 </div>
+                                @endif
                             </div>
                         </div>
 
@@ -208,7 +218,9 @@
                                                 <th scope="col">Seller Country</th>
                                                 <th scope="col">Request On</th>
                                                 <th scope="col">Live Date & Time</th>
+                                                @if(in_array(18, $permissions) || $admin->type == 1)
                                                 <th scope="col">Action</th>
+                                                @endif
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -220,6 +232,7 @@
                                                 <td>{{ $data['seller_details']['store_info']['country_info']['name']??'N/A' }}</td>
                                                 <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}</td>
+                                                @if(in_array(18, $permissions) || $admin->type == 1)
                                                 <td>
                                                     <div class="d-flex gap-3 justify-content-center">
                                                         <a class="table-button approveLiveRequest"
@@ -236,6 +249,7 @@
                                                         </a>
                                                     </div>
                                                 </td>
+                                                @endif
                                             </tr>
                                             @empty
 

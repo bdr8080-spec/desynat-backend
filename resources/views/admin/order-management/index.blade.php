@@ -16,6 +16,14 @@
     font-size: 13px;
 }
 </style>
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 
 <div class="inner-content management">
@@ -131,7 +139,9 @@
                                 <th scope="col">Status</th>
                                 <th scope="col">Invoice</th>
                                 <th scope="col">Zone</th>
+                                @if(in_array(15, $permissions) || $admin->type == 1)
                                 <th scope="col">Assign Driver</th>
+                                @endif
                             </tr>
                         </thead>
 
@@ -219,6 +229,7 @@
                                     </a>
                                 </td>
                                 <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }}</td>
+                                @if(in_array(15, $permissions) || $admin->type == 1)
                                 <td>
                                     @if($data['assign_status'] == 0 && $data['order']['delivery_details']['country_code'] === '+965')
                                     <a class="btn btn-dark customBtn assignDriverBtn"
@@ -230,6 +241,7 @@
                                     </a>
                                     @endif
                                 </td>
+                                @endif
                             </tr>
                             @empty
  
@@ -323,7 +335,9 @@
                                 <th scope="col">Reason</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Zone</th>
+                                @if(in_array(15, $permissions) || $admin->type == 1)
                                 <th scope="col">Assign Driver</th>
+                                @endif
 
 
                             </tr>
@@ -447,6 +461,7 @@
                                  </td>
                                  
                                 <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }}</td>
+                                @if(in_array(15, $permissions) || $admin->type == 1)
                                 <td>
                                     @if($data['assign_status'] == 0 && $data['order']['delivery_details']['country_code'] === '+965')
                                     <a class="btn btn-dark customBtn assignDriverBtn"
@@ -458,6 +473,7 @@
                                     </a>
                                     @endif
                                 </td>
+                                @endif
                             </tr>
                             @empty
 

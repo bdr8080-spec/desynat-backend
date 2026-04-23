@@ -42,6 +42,15 @@
 }
 </style>
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
@@ -90,11 +99,13 @@
                         </select>
                     </div>
                 </form>
+                @if(in_array(21, $permissions) || $admin->type == 1)
                 <div class="d-flex justify-content-end">
                     <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
                         <span>Add Advertisement</span>
                     </a>
                 </div>
+                @endif
             </div>
 
             <div class="userManagecontent">
@@ -110,7 +121,9 @@
                                     <th scope="col">Country</th>
                                     <th scope="col">Start Date</th>
                                     <th scope="col">End Date</th>
+                                    @if(in_array(21, $permissions) || $admin->type == 1)
                                     <th scope="col">Action</th>
+                                    @endif
 
                                 </tr>
                             </thead>
@@ -135,6 +148,7 @@
                                     <td>{{ $banner['country_info']['name'] }}</td>
                                     <td>{{ $banner['start_date'] }}</td>
                                     <td>{{ $banner['end_date'] }}</td>
+                                    @if(in_array(21, $permissions) || $admin->type == 1)
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
                                             <a href="javascript:void(0);" class="table-button edit-reason-btn"
@@ -155,6 +169,7 @@
                                             </a>
                                         </div>
                                     </td>
+                                    @endif
 
                                 </tr>
                                 @empty
@@ -186,11 +201,13 @@
                         </select>
                     </div> -->
                 </form>
+                @if(in_array(21, $permissions) || $admin->type == 1)
                 <div class="d-flex justify-content-end mb-3">
                     <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#addPromotional">
                         <span>Add Promotional</span>
                     </a>
                 </div>
+                @endif
             </div>
 
             <div class="userManagecontent">
@@ -208,7 +225,9 @@
                                  <th scope="col">Sub-Category</th>
                                 <th scope="col">Start Date</th>
                                 <th scope="col">End Date</th>
+                                @if(in_array(21, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
 
                             </tr>
                         </thead>
@@ -250,6 +269,7 @@
                                 <!-- <td>India</td> -->
                                 <td>{{ $banner['start_date'] }}</td>
                                 <td>{{ $banner['end_date'] }}</td>
+                                @if(in_array(21, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="javascript:void(0);"
@@ -284,6 +304,7 @@
                                         </div>
                                     </div>
                                 </td>
+                                @endif
 
                             </tr>
                             @empty

@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 <div id="content-wrapper" class="d-flex flex-column position-relative">
     <div id="content" class="">
@@ -34,7 +42,9 @@
                                 <tr>
                                     <th scope="col">SR No.</th>
                                     <th scope="col">Country Name</th>
+                                    @if(in_array(5, $permissions) || $admin->type == 1)
                                     <th scope="col">Manage City</th>
+                                    @endif
                                     <!-- <th scope="col">Action</th> -->
                                 </tr>
                             </thead>
@@ -44,12 +54,13 @@
                                         <th scope="row">{{ $index + 1 }}</th>
 
                                         <td>{{ $country->name }}</td>
-
+                                        @if(in_array(5, $permissions) || $admin->type == 1)
                                         <td>
                                             <a class="btn btn-dark customBtn" href="{{ route('manageCities', ['id' => $country->id]) }}">
                                                 <span>Manage</span>
                                             </a>
                                         </td>
+                                        @endif
 
                                         <!-- <td>
                                             <div class="d-flex gap-3 justify-content-center">

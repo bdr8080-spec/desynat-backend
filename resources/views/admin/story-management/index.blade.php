@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
   <style>
 #editPreviewImage {
@@ -206,6 +214,7 @@
                             </div> -->
 
                         </div>
+                        @if(in_array(19, $permissions) || $admin->type == 1)
                         <div class="col-lg-6 ">
                             <div class="d-flex  align-items-end justify-content-end">
                                 <a class="btn btn-dark customBtn" data-bs-toggle="modal"
@@ -214,6 +223,7 @@
                                 </a>
                             </div>
                         </div>
+                        @endif
                     </div>
 
                 </div>
@@ -226,7 +236,9 @@
                                 <th scope="col">Posted Image/Video</th>
                                 <th scope="col">Posted On Date & Time</th>
                                 <th scope="col">Status</th>
+                                @if(in_array(19, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
 
 
                             </tr>
@@ -263,6 +275,7 @@
                                         ->format('jS F Y | h:i A') }}
                                 </td>
                                 <td>{{ $story['status'] == 1 ? 'Active' : 'Inactive' }}</td>
+                                @if(in_array(19, $permissions) || $admin->type == 1)
                                 <td>
 
                                     <div class="d-flex  justify-content-center">
@@ -275,6 +288,7 @@
 
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                              @empty
                             <tr>

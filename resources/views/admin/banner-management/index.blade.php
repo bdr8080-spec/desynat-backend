@@ -1,5 +1,13 @@
 @extends('admin.layout.app')
 @section('content')
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
 
 
 <style>
@@ -91,7 +99,9 @@
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Country Name</th>
                                 <th scope="col">Per Day Charges</th>
+                                @if(in_array(13, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -100,6 +110,7 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $banner['country_info']['name'] }}</td>
                                 <td>{{ $banner['per_day_price'] }} KD</td>
+                                @if(in_array(13, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="javascript:void(0);" 
@@ -113,6 +124,7 @@
                                         </a>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
@@ -140,7 +152,9 @@
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Country Name</th>
                                 <th scope="col">Per Day Charges</th>
+                                @if(in_array(13, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -149,6 +163,7 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $banner['country_info']['name'] }}</td>
                                 <td>{{ $banner['per_day_price'] }} KD</td>
+                                @if(in_array(13, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="javascript:void(0);" 
@@ -162,6 +177,7 @@
                                         </a>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
@@ -191,7 +207,9 @@
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Country Name</th>
                                 <th scope="col">Per Day Charges</th>
+                                @if(in_array(13, $permissions) || $admin->type == 1)
                                 <th scope="col">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -200,6 +218,7 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $banner['country_info']['name'] }}</td>
                                 <td>{{ $banner['per_day_price'] }} KD</td>
+                                @if(in_array(13, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="javascript:void(0);" 
@@ -213,6 +232,7 @@
                                         </a>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
