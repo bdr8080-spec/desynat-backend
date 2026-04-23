@@ -46,9 +46,9 @@
     </style>
 
     <style>
-  body {
+  /* body {
     visibility: hidden;
-  }
+  } */
 </style>
 
     @php
