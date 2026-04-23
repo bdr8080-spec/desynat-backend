@@ -110,9 +110,9 @@
                         </td>
 
                         <td>
-                            <a href="#" class="eyebtn">
+                            <span class="eyebtn" id="deletestaff"  rel="{{ $val->id }}">
                                 <img src="{{ asset('dealer') }}/assets/img/delete-ic.svg" alt="delete" class="img-fluid" width="18px">
-                            </a>
+                            </span>
                         </td>
                     </tr>
 
@@ -222,16 +222,51 @@ $(document).ready(function() {
                     } else {
                         toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
                     }
-                    
-                    setInterval(() => {
-                        window.location.reload();
-                    }, 1000);
+
+                    // setInterval(() => {
+                    //     window.location.reload();
+                    // }, 1000);
 
 
                 },
                 error: function() {
                     alert("Fail")
-                }
+                },
+                 complete: function() {
+                    $('#loader').hide()
+                },
+            })
+        })
+
+
+ $('body').on('click', '#deletestaff', function() {
+            //alert('Hello');
+            var id = $(this).attr('rel');
+            //alert(id)
+            $.ajax({
+                url: "{{ url('seller/delete-staff') }}",
+                type: "get",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('#loader').show()
+                },
+                success: function(data) {
+
+                    toastr.success(data.message);
+                    setInterval(() => {
+                        window.location.reload();
+                    }, 1000);
+                },
+                error: function() {
+                    alert("Fail")
+                },
+                 complete: function() {
+                    $('#loader').hide()
+                },
             })
         })
 

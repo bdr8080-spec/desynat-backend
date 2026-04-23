@@ -145,6 +145,21 @@ public function activeAndInactiveStaff(Request $request){
 
 
 
+public function deleteStaff(Request $request){
+
+    $request_data=(object) [
+    'id'=>$request->id,
+    ];
+ 
+    $data=  $this->SellerStaffManagementService->staffDelete($request_data);
+
+  return $data;
+
+}
+
+
+
+
     
 
 }
