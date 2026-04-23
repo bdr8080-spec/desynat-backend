@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('parent_id')->nullable()->comment('when type is 1');
             $table->string('name_ar')->nullable()->comment();
             $table->string('select_category')->nullable();
+            $table->string('save_password')->nullable();
+            
         });
     }
 
