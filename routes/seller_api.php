@@ -184,6 +184,7 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
   Route::post('/staff-delete-staff', [SellerStaffManagementController::class,'staffDeleteStaff']);
 
   Route::post('/view-single-staff-details', [SellerStaffManagementController::class,'viewSingleStaffDetails']);
+  Route::post('/edit-new-staff', [SellerStaffManagementController::class,'EditNewStaff']);
 
 
 

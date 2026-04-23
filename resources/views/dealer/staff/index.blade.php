@@ -76,16 +76,19 @@
                 </thead>
                 <tbody>
 
+                @forelse($all_staff as $key=>$val)
+
                     <tr>
-                        <td>01</td>
+                        <td>{{$key+1}}</td>
                         <td>
-                            <img src="#" class="img-fluid" alt="image" class="pro-image" style="width: 105px;height: 65px;border-radius: 5%;object-fit: cover;">
+                            <img src="{{$val->profile_pic}}" class="img-fluid" alt="image" class="pro-image" style="width: 105px;height: 65px;border-radius: 5%;object-fit: cover;">
                         </td>
-                        <td> Ankit</td>
-                        <td>123456789</td>
-                        <td>ankit@gmail.com </td>
-                        <td>Manager</td>
-                        <td>21/02/2026</td>
+                        <td> {{$val->first_name}}</td>
+                        <td>{{$val->country_code}} {{$val->mobile}} </td>
+                        <td>{{$val->email}} </td>
+                        <td>{{$val->seller_category->name_en}}</td>
+
+                        <td>{{$val->created_at}}</td>
                         <td>
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#showModule" class="eyebtn"><i class="bi bi-eye"></i></a>
                         </td>
@@ -110,7 +113,13 @@
                         </td>
                     </tr>
 
-                  
+                    @empty
+
+
+                    No data found
+
+
+                    @endforelse
 
                 </tbody>
             </table>
