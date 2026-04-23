@@ -4,7 +4,7 @@
   
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Staff Management</div>
-        <a href="/add-staff" class="btn btn-success">Add New Staff</a>
+        <a href="{{route('dealer.add-staff')}}" class="btn btn-success">Add New Staff</a>
     </div>
 
     <div class="datatable-wapper mt-5">
@@ -34,7 +34,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <div class="from-group">
                         <select class="form-select form-control width-50" aria-label="Default select example">
@@ -88,7 +87,7 @@
                         <td>Manager</td>
                         <td>21/02/2026</td>
                         <td>
-                            <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
+                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#showModule" class="eyebtn"><i class="bi bi-eye"></i></a>
                         </td>
                         <td>
                             <a href="#" class="eyebtn">
@@ -118,10 +117,48 @@
         </div>
     </div>
 
-
-
-
 </section>
+
+<!-- Success Modal -->
+<div class="modal fade" id="showModule" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Module</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+        
+            <div class="d-flex gap-2 justify-content-between w-100 mb-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkDefault">
+                    <label class="form-check-label" for="checkDefault">
+                        Module
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkDefault">
+                    <label class="form-check-label" for="checkDefault">
+                        View
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkDefault">
+                    <label class="form-check-label" for="checkDefault">
+                        Action
+                    </label>
+                </div>
+            </div>
+            
+</div>
+           
+        </div>
+    </div>
+</div>
+
+
 
 
 @include('dealer.layout.custom_code');

@@ -14,6 +14,9 @@ use App\Http\Controllers\Seller\SellerChatController;
 use App\Http\Controllers\Seller\WebDealManagement;
 use App\Http\Controllers\Seller\SellerLiveRequestController;
 use App\Http\Controllers\Seller\NotificationController;
+use App\Http\Controllers\Seller\WebSellerStuffManagementController;
+
+
 
 
 use App\Http\Controllers\ChatController;
@@ -215,7 +218,10 @@ Route::group(['prefix' => 'seller'], function () {
 
     Route::get('/othersellerLive', [SellerLiveRequestController::class, 'OthersellerLive'])->name('OthersellerLive');
 
-
+    // M13 work
+    
+    Route::match(['get', 'post'], '/staff-management',[WebSellerStuffManagementController::class,'index'])->name('dealer.staff-management');
+    Route::match(['get', 'post'], '/add-staff',[WebSellerStuffManagementController::class,'addStaff'])->name('dealer.add-staff');
 
     });
 
@@ -249,15 +255,6 @@ Route::match(['get', 'post'], '/add-products', function () {
 
 })->name('dealer.add-products');
 
-Route::match(['get', 'post'], 'seller/staff-management', function () {
-    return view('dealer.staff.index');
-
-})->name('dealer.staff-management');
-
-Route::match(['get', 'post'], '/add-staff', function () {
-    return view('dealer.staff.add-staff');
-
-})->name('dealer.add-staff');
 
 
 // Route::match(['get', 'post'], '/index', function () {
