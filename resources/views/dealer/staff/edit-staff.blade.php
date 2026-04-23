@@ -54,7 +54,7 @@
                         <label>Full Name</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Full name" name="name_ar">
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Full name" name="name_ar" value="{{$view_staff->name_ar}}">
                  <p class="text-danger" id="error-name_ar"></p>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                                         <div class="w-100">
                                             <input class="form-control notapplyspace" type="number" id="phone"
                                                 placeholder="Enter mobile Number" name="mobile"
-                                                value="{{ old('mobile') }}"
+                                                value="{{$view_staff->mobile}}"
                                                 oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
                                             <p class="text-danger" id="error-mobile"></p>
                                         </div>
@@ -138,7 +138,7 @@
                     <div class="label-flex">
                         <label>Email</label>
                     </div>
-                    <input type="text"  class="form-control" placeholder="Enter Email" name="email">
+                    <input type="text"  class="form-control" placeholder="Enter Email" name="email" value="{{$view_staff->email}}">
                      <p class="text-danger" id="error-email"></p>
                 </div>
             </div>
@@ -152,7 +152,7 @@
                 @foreach($staff_category as $key=>$val)
                     <div class="check_radio">
                         <label class="radio-group">
-                            <input type="radio" name="select_category" value="{{$val->id}}" checked>
+                            <input type="radio" name="select_category" value="{{$val->id}}" @if($val->id==$view_staff->select_category) checked  @endif >
                             <span class="custom-radio"></span>
                             <span class="radio-label">{{$val->name_en}}</span>
                         </label>
