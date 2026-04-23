@@ -62,8 +62,9 @@
                     </thead>
 
                     <tbody>
+                        @forelse($subAdmins->list as $data)
                         <tr>
-                            <td>1</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>25/02/25</td>
                             <td>John Doe</td>
 
@@ -125,67 +126,9 @@
                                 </div>
                             </td>
                         </tr>
+                         @empty
 
-                        <tr>
-                            <td>1</td>
-                            <td>25/02/25</td>
-                            <td>John Doe</td>
-
-                            <td>
-                                <img src="image/dummy-image.jpg" alt="Profile Image" width="40px" height="40px"
-                                    class="square" />
-                            </td>
-
-                            <td>1-212-456-7890</td>
-                            <td>Lorem</td>
-                            <td>johndoe123@gmail.com</td>
-
-                            <!-- View module -->
-                            <td>
-                                <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#bankModal">
-                                    <i class="bi bi-eye-fill"></i>
-                                </a>
-                            </td>
-
-                            <!-- View credentials -->
-                            <td>
-                                <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#bankModal">
-                                    <i class="bi bi-eye-fill"></i>
-                                </a>
-                            </td>
-
-                            <!-- Send credentials -->
-                            <td>
-                                <i class="bi bi-send-fill action-icon"></i>
-                            </td>
-
-                            <!-- Status -->
-                            <td>
-                                <span class="status active">Active</span>
-                            </td>
-
-                            <!-- Action -->
-                            <td>
-                                <div class="d-flex gap-3 justify-content-center">
-                                    <!-- Edit button -->
-                                    <a class="table-button editBrandBtn">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-
-                                    <!-- Delete button  -->
-                                    <a class="table-button text-danger deleteBrand mt-1 mb-1">
-                                        <i class="bi bi-trash3-fill"></i>
-                                    </a>
-
-                                    <!-- Toggle switch -->
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input toggleStatus" type="checkbox" role="switch" />
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

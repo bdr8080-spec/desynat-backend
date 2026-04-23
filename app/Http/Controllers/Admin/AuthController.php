@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
-use App\Models\Country;
+use App\Models\country;
 use App\Helpers\ApiResponse;
 use Validator;
 use Illuminate\Support\Facades\Hash;
@@ -253,7 +253,6 @@ class AuthController extends Controller
 
         $data = $this->AdminAuthService->AccountSetting($request_data);
 
-        /* ================= ERROR RESPONSE ================= */
 
         if (isset($data['status']) && $data['status'] == 'error') {
             return response()->json([
@@ -318,20 +317,186 @@ class AuthController extends Controller
 
     public function subAdminManagement(Request $request)
     {
-      return view('admin.sub-admin.index');
+      $countries = $this->CountryService->getCountries($request)['data'];
+      $subAdmins = $this->AdminAuthService->GetSubAdmins($request)['data'];
+      //dd($subAdmins);
+      return view('admin.sub-admin.index',compact('subAdmins','countries'));
     }
 
     public function add_subadmin(Request $request)
     {
+        $country= country::all();
       $modules = $this->AdminAuthService->GetAdminPanelModules($request)['data'];
       //dd($modules);
-      return view('admin.sub-admin.add-subadmin',compact('modules'));
+      return view('admin.sub-admin.add-subadmin',compact('modules','country'));
     }
 
-    public function edit_subadmin(Request $request)
-    {
+    public function edit_subadmin(Request $request, $id)
+    {   $country= country::all();
         $modules = $this->AdminAuthService->GetAdminPanelModules($request)['data'];
-      return view('admin.sub-admin.edit-subadmin',compact('modules'));
+         $data = Admin::with('permission_details') 
+                     ->findOrFail($id);
+         //dd($subadmin);
+      return view('admin.sub-admin.edit-subadmin',compact('modules','country','data'));
+    }
+
+    public function addSubadmin(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:5120',
+              'full_name' => 'required',
+              'full_name_ar' => 'required',
+              'country_code' => 'required',
+              'mobile' => 'required',
+              'email' => 'required',
+              'country_id' => 'required|exists:countries,id',
+              'password' => [
+                    'required',
+                    'min:8',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
+                ],
+              'confirm_password' => 'required|same:password',
+              'modules' => 'required|array',
+              'modules.*.module_id' => 'required|exists:admin_modules,id',
+              'modules.*.can_view' => 'required|in:0,1',
+              'modules.*.can_action' => 'required|in:0,1',
+        ], [
+            'password.regex' => 'Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character.',
+            'confirm_password.same' => 'Confirm password must match new password.',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error',
+                'errors' => $validate->errors()
+            ], 422);
+        }
+
+        
+
+        if ($request->hasFile('image')) {
+
+            $commonController = new CommonController();
+            $uploadResult = $commonController->upload($request);
+            $uploadResultArray = $uploadResult->getData(true);
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => $uploadResultArray['message']
+                ], 400);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+        }
+
+        $request_data = (object)[
+            'profile_pic' => $imageUrl,
+            'full_name' => $request->full_name,
+            'full_name_ar' => $request->full_name_ar,
+            'country_code' => $request->country_code,
+            'mobile' => $request->mobile,
+            'email' => $request->email,
+            'country_id' => $request->country_id,
+            'password' => $request->password,
+            'modules' => $request->modules,
+        ];
+
+        $data = $this->AdminAuthService->AddSubAdmin($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message']
+        ], 200);
+    }
+
+    public function updateSubadmin(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'id'=>'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+              'full_name' => 'required',
+              'full_name_ar' => 'required',
+              'country_code' => 'required',
+              'mobile' => 'required',
+              'email' => 'required',
+              'country_id' => 'required|exists:countries,id',
+              'password' => [
+                    'required',
+                    'min:8',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
+                ],
+              'confirm_password' => 'required|same:password',
+              'modules' => 'required|array',
+              'modules.*.module_id' => 'required|exists:admin_modules,id',
+              'modules.*.can_view' => 'required|in:0,1',
+              'modules.*.can_action' => 'required|in:0,1',
+        ], [
+            'password.regex' => 'Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character.',
+            'confirm_password.same' => 'Confirm password must match new password.',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error',
+                'errors' => $validate->errors()
+            ], 422);
+        }
+
+         $admin = Admin::where('id',$request->id)->first();
+         $imageUrl = $admin->profile_pic??null;
+
+        if ($request->hasFile('image')) {
+
+            $commonController = new CommonController();
+            $uploadResult = $commonController->upload($request);
+            $uploadResultArray = $uploadResult->getData(true);
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => $uploadResultArray['message']
+                ], 400);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+        }
+
+        $request_data = (object)[
+            'id' => $request->id,
+            'profile_pic' => $imageUrl,
+            'full_name' => $request->full_name,
+            'full_name_ar' => $request->full_name_ar,
+            'country_code' => $request->country_code,
+            'mobile' => $request->mobile,
+            'email' => $request->email,
+            'country_id' => $request->country_id,
+            'password' => $request->password,
+            'modules' => $request->modules,
+        ];
+
+        $data = $this->AdminAuthService->UpdateSubAdmin($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message']
+        ], 200);
     }
 
     public function refundManagement(Request $request)
