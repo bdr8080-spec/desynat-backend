@@ -456,7 +456,7 @@ $('#addBanner').on('submit', function(e) {
 
              if (res.status === 'success') {
                     toastr.success(res.message);
-                    setTimeout(() => window.location.href='/seller/staff-management', 1000);
+                    setTimeout(() => window.location.href='/seller/staff-management', 2000);
                 } else {
                     toastr.error(res.message || 'Something went wrong');
                 }
