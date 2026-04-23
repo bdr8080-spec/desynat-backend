@@ -158,6 +158,35 @@ public function deleteStaff(Request $request){
 }
 
 
+public function editStaff(Request $request){
+
+
+     if($request->ismethod('get')){
+            $data=  $this->SellerStaffManagementService->newStaffCategoryType();
+            $staff_category=$data['data'];
+
+            $sellerMenu=  $this->SellerStaffManagementService->SellerAllMenu();
+            $sellerMenu=$sellerMenu['data'];
+
+            $all_country=country::get();  
+            
+
+            $request_data=(object)[
+                'id'=>$request->id
+            ];
+
+            $data=  $this->SellerStaffManagementService->viewSingleStaffDetails($request_data);
+
+            $view_staff=$data['data'];
+
+            return view('dealer.staff.edit-staff',compact('staff_category','all_country','sellerMenu','view_staff'));
+       }
+
+
+
+}
+
+
 
 
     

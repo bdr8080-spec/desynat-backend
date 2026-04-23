@@ -222,11 +222,12 @@ Route::group(['prefix' => 'seller'], function () {
     
     Route::match(['get', 'post'], '/staff-management',[WebSellerStuffManagementController::class,'index'])->name('dealer.staff-management');
     Route::match(['get', 'post'], '/add-staff',[WebSellerStuffManagementController::class,'addStaff'])->name('dealer.add-staff');
-
+    
     Route::match(['get', 'post'], '/active-and-inactive-staff',[WebSellerStuffManagementController::class,'activeAndInactiveStaff'])->name('dealer.activeAndInactiveStaff');
 
     Route::match(['get', 'post'], '/delete-staff',[WebSellerStuffManagementController::class,'deleteStaff'])->name('dealer.deleteStaff');
- 
+    Route::match(['get', 'post'], '/edit-staff/{id}',[WebSellerStuffManagementController::class,'editStaff'])->name('dealer.editStaff');
+
     });
 
 });

@@ -356,7 +356,7 @@ class SellerStaffManagementService
 
         try{
 
-    $All_staff=seller::with('seller_category','Role_Action.sellermenu')->where('id',$request->id)->get();
+    $All_staff=seller::with('seller_category','Role_Action.sellermenu')->where('id',$request->id)->first();
 
     return [
         'status' => 'success',
