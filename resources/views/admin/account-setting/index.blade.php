@@ -2,12 +2,12 @@
 @section('content')
 
 @php
-    $admin = auth('admin')->user();
+$admin = auth('admin')->user();
 
-    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
-        ->where('can_action', 1)
-        ->pluck('module_id')
-        ->toArray();
+$permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+->where('can_action', 1)
+->pluck('module_id')
+->toArray();
 @endphp
 
 <div class="inner-content management">
@@ -32,27 +32,23 @@
         <div class="tab-content" id="pills-tabContent">
             <form id="accountForm" enctype="multipart/form-data">
 
-                <div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="received-tab" tabindex="0">
-                            
+                <div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="received-tab"
+                    tabindex="0">
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="text-center mb-4">
                                 <label class="form-label">Profile Picture</label>
 
                                 <div class="profile-box" style="cursor:pointer;">
-                                    
+
                                     <!-- Profile Image -->
-                                    <img id="profilePreview" 
-                                        src="{{ $data->profile_pic ?? asset('image/profile.jpg') }}" 
-                                        class="profile-img" 
-                                        style="width:150px; height:150px; object-fit:cover;"/>
+                                    <img id="profilePreview"
+                                        src="{{ $data->profile_pic ?? asset('image/profile.jpg') }}" class="profile-img"
+                                        style="width:150px; height:150px; object-fit:cover;" />
 
                                     <!-- File Input -->
-                                    <input type="file" 
-                                        name="image"
-                                        id="profileInput" 
-                                        accept="image/*" 
-                                        hidden>
+                                    <input type="file" name="image" id="profileInput" accept="image/*" hidden>
 
                                 </div>
 
@@ -70,10 +66,7 @@
                             <div class="form-group">
                                 <label class="form-label">Full Name</label>
 
-                                <input type="text" 
-                                    name="full_name"
-                                    class="form-control" 
-                                    placeholder="Enter name" 
+                                <input type="text" name="full_name" class="form-control" placeholder="Enter name"
                                     value="{{ $data->full_name }}" />
 
                                 <div class="text-danger mt-1" id="error_full_name"></div>
@@ -82,40 +75,38 @@
                             <!-- Phone -->
                             <div class="form-group">
                                 <label class="form-label">Phone number</label>
+                                <div class="input-group">
+                                    <div class="dropdown" style="width: 30%;">
+                                        <button
+                                            class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                                            type="button" id="countryDropdown" data-bs-toggle="dropdown"
+                                            aria-expanded="false" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
 
-                                <div class="dropdown">
-                                    <button
-                                        class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
-                                        type="button" id="countryDropdown" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-
-                                        @php
+                                            @php
                                             $selectedCountry = $country->firstWhere('dial_code', $data->country_code);
-                                        @endphp
+                                            @endphp
 
-                                        <span id="selected-flag">
-                                            <img src="{{ $selectedCountry?->flag1 }}" 
-                                                width="25" height="16">
-                                        </span>
+                                            <span id="selected-flag">
+                                                <img src="{{ $selectedCountry?->flag1 }}" width="20" height="14">
+                                            </span>
 
-                                        <span id="selected-code" class="ms-2">
-                                            {{ $data->country_code }}
-                                        </span>
+                                            <span id="selected-code" class="ms-2 small">
+                                                {{ $data->country_code }}
+                                            </span>
 
-                                    </button>
+                                        </button>
 
-                                    <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
+                                        <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown" style="max-height: 300px; overflow-y: auto;">
 
-                                        @foreach ($country as $item)
+                                            @foreach ($country as $item)
                                             <li>
-                                                <label class="dropdown-item d-flex align-items-center gap-2 country-option" style="cursor: pointer;">
-                                                    
-                                                    <input type="radio" 
-                                                        name="country_code"
-                                                        value="{{ $item->dial_code }}"
-                                                        data-flag="{{ $item->flag1 }}"
-                                                        data-name="{{ $item->name }}"
-                                                        class="country-radio"
+                                                <label
+                                                    class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                    style="cursor: pointer;">
+
+                                                    <input type="radio" name="country_code"
+                                                        value="{{ $item->dial_code }}" data-flag="{{ $item->flag1 }}"
+                                                        data-name="{{ $item->name }}" class="country-radio"
                                                         {{ ($data->country_code == $item->dial_code) ? 'checked' : '' }}
                                                         hidden>
 
@@ -126,31 +117,29 @@
 
                                                 </label>
                                             </li>
-                                        @endforeach
+                                            @endforeach
 
-                                    </ul>
+                                        </ul>
+                                    </div>
+
+                                    <!-- ERROR -->
+
+
+                                    <input type="text" name="mobile" class="form-control mt-2"
+                                        placeholder="Enter phone number" value="{{ $data->mobile }}" style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
+                                        oninput="this.value = this.value.replace(/\D/g, '').slice(0, 15);" />
                                 </div>
-
-                                <!-- ERROR -->
-                                <div class="text-danger mt-1" id="error_country_code"></div>
-
-                                <input type="text" 
-                                    name="mobile"
-                                    class="form-control mt-2" 
-                                    placeholder="Enter phone number" 
-                                    value="{{ $data->mobile }}" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 15);"/>
-
-                                <div class="text-danger mt-1" id="error_mobile"></div>
+                                <div class="d-flex gap-2">
+                                    <div class="text-danger mt-1" id="error_country_code"></div>
+                                    <div class="text-danger mt-1" id="error_mobile"></div>
+                                </div>
                             </div>
 
                             <!-- Email -->
                             <div class="form-group">
                                 <label class="form-label">Email</label>
 
-                                <input type="email" 
-                                    name="email"
-                                    class="form-control" 
-                                    placeholder="Enter mail id" 
+                                <input type="email" name="email" class="form-control" placeholder="Enter mail id"
                                     value="{{ $data->email }}" />
 
                                 <div class="text-danger mt-1" id="error_email"></div>
@@ -160,7 +149,7 @@
                     </div>
 
                     <!-- Button -->
-                     @if(in_array(30, $permissions) || $admin->type == 1)
+                    @if(in_array(30, $permissions) || $admin->type == 1)
                     <div class="text-center">
                         <button type="submit" id="submitBtn" class="btn btn-dark customBtn px-4">Update</button>
                     </div>
@@ -168,7 +157,7 @@
 
                 </div>
 
-                </form>
+            </form>
 
             <form id="passwordForm">
                 <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab" tabindex="0">
@@ -176,31 +165,31 @@
                     <div class="row d-flex justify-content-center">
 
                         <div class="col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group" style="position: relative;">
                                 <label class="form-label">Enter your old password*</label>
 
-                                <input type="password"
-                                    name="old_password"
-                                    class="form-control"
+                                <input type="password" id="old_password" name="old_password" class="form-control"
                                     placeholder="Enter old password" />
+                                <i class="fas fa-eye toggle-password1" onclick="togglePasswordVisibility1()"
+                                    style="position: absolute; right: 10px; top: 40px; cursor: pointer;"></i>
                                 <small id="error_old_password" class="text-danger"></small>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Enter your new password*</label>
 
-                                <input type="password"
-                                    name="new_password"
-                                    class="form-control"
+                                <input type="password" id="new_password" name="new_password" class="form-control"
                                     placeholder="Enter new password" />
+                                <i class="fas fa-eye toggle-password2" onclick="togglePasswordVisibility2()"
+                                    style="position: absolute; right: 10px; top: 40px; cursor: pointer;"></i>
                                 <small id="error_new_password" class="text-danger"></small>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Re-enter your new password*</label>
 
-                                <input type="password"
-                                    name="confirm_password"
-                                    class="form-control"
+                                <input type="password" id="confirm_password" name="confirm_password" class="form-control"
                                     placeholder="Re-enter new password" />
+                                <i class="fas fa-eye toggle-password3" onclick="togglePasswordVisibility3()"
+                                    style="position: absolute; right: 10px; top: 40px; cursor: pointer;"></i>
                                 <small id="error_confirm_password" class="text-danger"></small>
                             </div>
 
@@ -209,29 +198,78 @@
                     </div>
                     @if(in_array(30, $permissions) || $admin->type == 1)
                     <div class="d-flex justify-content-center gap-3 mt-4">
-                        
-                        <button type="button"
-                            class="btn btn-dark customBtn px-4 savePasswordBtn">
+
+                        <button type="button" class="btn btn-dark customBtn px-4 savePasswordBtn">
                             Save Password
                         </button>
 
-                        <button type="button"
-                            class="btn btn-secondary px-4"
-                            onclick="location.reload();">
+                        <button type="button" class="btn btn-secondary px-4" onclick="location.reload();">
                             Cancel
                         </button>
 
                     </div>
                     @endif
 
-               </div>
-           </form>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
+<script>
+function togglePasswordVisibility1() {
+    const passwordInput = document.getElementById("old_password");
+    const toggleIcon = document.querySelector(".toggle-password1");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleIcon.classList.add("fa-eye");
+        toggleIcon.classList.remove("fa-eye-slash");
+    } else {
+
+        passwordInput.type = "password";
+        toggleIcon.classList.add("fa-eye-slash");
+        toggleIcon.classList.remove("fa-eye");
+    }
+}
+</script>
+<script>
+function togglePasswordVisibility2() {
+    const passwordInput = document.getElementById("new_password");
+    const toggleIcon = document.querySelector(".toggle-password2");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleIcon.classList.add("fa-eye");
+        toggleIcon.classList.remove("fa-eye-slash");
+    } else {
+
+        passwordInput.type = "password";
+        toggleIcon.classList.add("fa-eye-slash");
+        toggleIcon.classList.remove("fa-eye");
+    }
+}
+</script>
+<script>
+function togglePasswordVisibility3() {
+    const passwordInput = document.getElementById("confirm_password");
+    const toggleIcon = document.querySelector(".toggle-password3");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleIcon.classList.add("fa-eye");
+        toggleIcon.classList.remove("fa-eye-slash");
+    } else {
+
+        passwordInput.type = "password";
+        toggleIcon.classList.add("fa-eye-slash");
+        toggleIcon.classList.remove("fa-eye");
+    }
+}
+</script>
 <!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     const tabContentContainer = document.getElementById('tabContentContainer');
@@ -267,31 +305,31 @@ document.addEventListener("DOMContentLoaded", function() {
 </script> -->
 
 <script>
-    const preview = document.getElementById('profilePreview');
-    const input = document.getElementById('profileInput');
+const preview = document.getElementById('profilePreview');
+const input = document.getElementById('profileInput');
 
-    preview.addEventListener('click', function () {
-        input.click();
-    });
+preview.addEventListener('click', function() {
+    input.click();
+});
 
-    input.addEventListener('change', function (event) {
-        const file = event.target.files[0];
+input.addEventListener('change', function(event) {
+    const file = event.target.files[0];
 
-        if (file) {
-            const reader = new FileReader();
+    if (file) {
+        const reader = new FileReader();
 
-            reader.onload = function (e) {
-                preview.src = e.target.result;
-            };
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        };
 
-            reader.readAsDataURL(file);
-        }
-    });
+        reader.readAsDataURL(file);
+    }
+});
 </script>
 
 <script>
 document.querySelectorAll('.country-radio').forEach(radio => {
-    radio.addEventListener('change', function () {
+    radio.addEventListener('change', function() {
 
         document.getElementById('selected-code').innerText = this.value;
 
@@ -303,11 +341,11 @@ document.querySelectorAll('.country-radio').forEach(radio => {
 
 <!-- update account -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
 
     const form = document.getElementById('accountForm');
 
-    if (!form) return; 
+    if (!form) return;
 
     const fullNameError = document.getElementById('error_full_name');
     const emailError = document.getElementById('error_email');
@@ -323,19 +361,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     if (fullNameInput && fullNameError) {
-        fullNameInput.addEventListener('input', function () {
+        fullNameInput.addEventListener('input', function() {
             fullNameError.innerText = '';
         });
     }
 
     if (emailInput && emailError) {
-        emailInput.addEventListener('input', function () {
+        emailInput.addEventListener('input', function() {
             emailError.innerText = '';
         });
     }
 
     if (mobileInput && mobileError) {
-        mobileInput.addEventListener('input', function () {
+        mobileInput.addEventListener('input', function() {
             const value = this.value.trim();
 
             if (!value) {
@@ -350,14 +388,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (countryRadio.length) {
         countryRadio.forEach(radio => {
-            radio.addEventListener('change', function () {
+            radio.addEventListener('change', function() {
                 if (countryError) countryError.innerText = '';
             });
         });
     }
 
 
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
 
         if (fullNameError) fullNameError.innerText = '';
@@ -412,44 +450,44 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         fetch("{{ route('admin.update_account') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: formData
-        })
-        .then(async (res) => {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: formData
+            })
+            .then(async (res) => {
 
-            let text = await res.text();
+                let text = await res.text();
 
-            try {
-                return JSON.parse(text);
-            } catch (e) {
-                console.log("Server Error:", text);
-                toastr.error("Server error occurred");
-                throw e;
-            }
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.log("Server Error:", text);
+                    toastr.error("Server error occurred");
+                    throw e;
+                }
 
-        })
-        .then(data => {
+            })
+            .then(data => {
 
-            if (data.status === 'success') {
+                if (data.status === 'success') {
 
-                toastr.success(data.message);
+                    toastr.success(data.message);
 
-                setTimeout(() => {
-                    location.reload();
-                }, 1500);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
 
-            } else {
-                toastr.error(data.message || 'Something went wrong');
-            }
+                } else {
+                    toastr.error(data.message || 'Something went wrong');
+                }
 
-        })
-        .catch(err => {
-            console.log(err);
-            toastr.error('Request failed');
-        });
+            })
+            .catch(err => {
+                console.log(err);
+                toastr.error('Request failed');
+            });
 
     });
 
@@ -462,7 +500,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- update password -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
 
     const form = document.querySelector('#passwordForm') || document;
 
@@ -490,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (saveBtn) {
 
-        saveBtn.addEventListener('click', function () {
+        saveBtn.addEventListener('click', function() {
 
             oldError.innerText = '';
             newError.innerText = '';
@@ -512,7 +550,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 newError.innerText = 'Please enter new password';
                 hasError = true;
             } else if (!validatePassword(new_password)) {
-                newError.innerText = 'Password must be 8+ chars with uppercase, number & special character';
+                newError.innerText =
+                    'Password must be 8+ chars with uppercase, number & special character';
                 hasError = true;
             }
 
@@ -533,44 +572,44 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('confirm_password', confirm_password);
 
             fetch("{{ route('admin.update_password') }}", {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: formData
-            })
-            .then(async (res) => {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: formData
+                })
+                .then(async (res) => {
 
-                let text = await res.text();
+                    let text = await res.text();
 
-                try {
-                    return JSON.parse(text);
-                } catch (e) {
-                    toastr.error("Server error occurred");
-                    console.log(text);
-                    throw e;
-                }
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        toastr.error("Server error occurred");
+                        console.log(text);
+                        throw e;
+                    }
 
-            })
-            .then(data => {
+                })
+                .then(data => {
 
-                if (data.status === 'success') {
+                    if (data.status === 'success') {
 
-                    toastr.success(data.message);
+                        toastr.success(data.message);
 
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1500);
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
 
-                } else {
-                    toastr.error(data.message || 'Something went wrong');
-                }
+                    } else {
+                        toastr.error(data.message || 'Something went wrong');
+                    }
 
-            })
-            .catch(err => {
-                console.log(err);
-                toastr.error('Request failed');
-            });
+                })
+                .catch(err => {
+                    console.log(err);
+                    toastr.error('Request failed');
+                });
 
         });
 
