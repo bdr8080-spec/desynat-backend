@@ -128,4 +128,23 @@ class WebSellerStuffManagementController extends Controller
 
     }
 
+
+
+public function activeAndInactiveStaff(Request $request){
+
+    $request_data=(object) [
+    'id'=>$request->id,
+    ];
+ 
+    $data=  $this->SellerStaffManagementService->StaffActiveInactive($request_data);
+
+
+  return $data;
+
+}
+
+
+
+    
+
 }
