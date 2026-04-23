@@ -577,7 +577,7 @@ onMessage(messaging, (payload) => {
      </script>
 
 <!-- translator -->
-<script>
+<!-- <script>
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({
         pageLanguage: 'en',
@@ -774,7 +774,7 @@ const observer = new MutationObserver((mutations) => {
 
 observer.observe(document.body, { childList: true, subtree: true });
 
-</script>
+</script> -->
 
 </body>
 

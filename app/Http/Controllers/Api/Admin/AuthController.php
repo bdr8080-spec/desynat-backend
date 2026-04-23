@@ -354,6 +354,7 @@ class AuthController extends Controller
                 'from_date'      => $req->from_date??null,
                 'to_date'      => $req->to_date??null,
                 'limit' => $req->limit??null,
+                'status' => $req->status??null,
             ];
   
           $data= $this->AdminAuthService->GetSubAdmins($request_data);

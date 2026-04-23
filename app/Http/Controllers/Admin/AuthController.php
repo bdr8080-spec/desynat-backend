@@ -318,7 +318,14 @@ class AuthController extends Controller
     public function subAdminManagement(Request $request)
     {
       $countries = $this->CountryService->getCountries($request)['data'];
-      $subAdmins = $this->AdminAuthService->GetSubAdmins($request)['data'];
+      $request_data = (object)[
+            'country_id' => $request->country_id??null,
+            'from_date' => $request->from_date??null,
+            'to_date' => $request->to_date??null,
+            'status' => $request->status??null,
+        ];
+        //dd($request_data);
+      $subAdmins = $this->AdminAuthService->GetSubAdmins($request_data)['data'];
       //dd($subAdmins);
       return view('admin.sub-admin.index',compact('subAdmins','countries'));
     }
@@ -512,6 +519,74 @@ class AuthController extends Controller
         //dd($refundData);
         $countries = $this->CountryService->getUserAllCountries($request)['data'];
       return view('admin.refund-management.index',compact('refundData','countries'));
+    }
+
+    public function sendCredentials(Request $request)
+    {
+
+        $request_data = (object)[
+            'id' => $request->id,
+        ];
+
+        $data = $this->AdminAuthService->SendSubAdminCredentials($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message']
+        ], 200);
+    }
+
+    public function deleteSubAdmin(Request $request, $id)
+    {
+        $admin = Auth::guard('admin')->user();
+        $auth_id = $admin->id;
+        $request_data = (object)[
+            'id' => $id,
+            'auth_id'=>$auth_id,
+        ];
+
+        $data = $this->AdminAuthService->DeleteSubAdminWeb($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message']
+        ], 200);
+    }
+
+    public function updateSubAdminStatus(Request $request, $id)
+    {
+
+        $request_data = (object)[
+            'id' => $id,
+        ];
+
+        $data = $this->AdminAuthService->UpdateSubAdminStatus($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message']
+        ], 200);
     }
 
 }
