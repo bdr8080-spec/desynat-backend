@@ -27,10 +27,15 @@
                             <input type="file" accept="image/*" id="banner_image_upload"
                                 style="opacity:0;position: absolute;" name="profile_pic">
                         </label>
+
+                         <p class="text-danger" id="error-file"></p>
+
                     </div>
                 </div>
             </div>
         </div>
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
         <div class="row">
             <div class="col-lg-6">
@@ -40,7 +45,7 @@
                         <span>In English</span>
                     </div>
                     <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" name="full_name" class="form-control" placeholder="Enter Full name">
-                
+                   <p class="text-danger" id="error-full_name"></p>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -50,6 +55,7 @@
                         <span>In Arabic</span>
                     </div>
                     <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Full name" name="name_ar">
+                 <p class="text-danger" id="error-name_ar"></p>
                 </div>
             </div>
         </div>
@@ -133,6 +139,7 @@
                         <label>Email</label>
                     </div>
                     <input type="text"  class="form-control" placeholder="Enter Email" name="email">
+                     <p class="text-danger" id="error-email"></p>
                 </div>
             </div>
         </div>
@@ -166,6 +173,7 @@
                         <label>Password</label>
                     </div>
                     <input type="text"  class="form-control" placeholder="Enter Password" name="password">
+                     <p class="text-danger" id="error-password"></p>
                 
                 </div>
             </div>
@@ -175,6 +183,7 @@
                         <label>Confirm Password</label>
                     </div>
                     <input type="text"  class="form-control" placeholder="Enter Confirm Password" name="confirm_password">
+                     <p class="text-danger" id="error-confirm_password"></p>
                 </div>
             </div>
         </div>
@@ -184,30 +193,40 @@
             <div class="row">
                 <div class="col-lg-5">
 
+                 <p class="text-danger" id="error-menuSelect"></p>
+
                 @foreach($sellerMenu as $key=>$menu)
+                <div class="d-flex gap-2 justify-content-between w-100 mb-4">
 
-                    <div class="d-flex gap-2 justify-content-between w-100 mb-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkDefault" name="">
-                            <label class="form-check-label" for="checkDefault">
-                                {{$menu->title}}
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-                            <label class="form-check-label" for="checkDefault">
-                                View
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-                            <label class="form-check-label" for="checkDefault">
-                                Action
-                            </label>
-                        </div>
-                    </div>
+                <!-- MAIN MENU -->
+                <div class="form-check">
+                <input class="form-check-input menu-checkbox"
+                type="checkbox"
+                value="{{$menu->id}}">
+                <label class="form-check-label">
+                {{$menu->title}}
+                </label>
+                </div>
 
-                    @endforeach
+                <!-- VIEW -->
+                <div class="form-check">
+                <input class="form-check-input view-checkbox"
+                type="checkbox"
+                data-id="{{$menu->id}}">
+                <label class="form-check-label">View</label>
+                </div>
+
+                <!-- ACTION -->
+                <div class="form-check">
+                <input class="form-check-input action-checkbox"
+                type="checkbox"
+                data-id="{{$menu->id}}">
+                <label class="form-check-label">Action</label>
+                </div>
+
+                </div>
+                @endforeach
+
                     
                 </div>
             </div>
@@ -238,6 +257,8 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
     const file = event.target.files[0];
 
     if (!file) return;
+
+     $('#error-file').text('');
 
     const reader = new FileReader();
     reader.onload = function(e) {
@@ -288,6 +309,189 @@ $(document).ready(function() {
     });
 
 });
+
+
+// Add Staff Code 
+
+$('#addBanner').on('submit', function(e) {
+    e.preventDefault();
+
+    let full_name = $('input[name="full_name"]').val().trim();
+    let full_name_ar = $('input[name="name_ar"]').val().trim();
+    
+    let mobile = $('input[name="mobile"]').val().trim();
+    let email = $('input[name="email"]').val().trim();
+    let password = $('input[name="password"]').val();
+    let confirm_password = $('input[name="confirm_password"]').val();
+    let file = $('#banner_image_upload')[0].files[0];
+
+    console.log(file);
+
+    let error = false;
+
+    // Clear old errors
+    $('.text-danger').text('');
+
+    if (!full_name) {
+        error = true;
+        // alert('Full name is required');
+        $('#error-full_name').text('Please Enter full Name');
+    }
+
+     if (!full_name_ar) {
+        error = true;
+        // alert('Full name is required');
+        $('#error-name_ar').text('Please Enter full Name');
+    }
+
+    if (!mobile || mobile.length < 8) {
+        error = true;
+        $('#error-mobile').text('Enter valid mobile number');
+    }
+
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        error = true;
+        // alert('Enter valid email');
+        $('#error-email').text('Please Enter email Address');
+
+    }
+
+    if (!password || password.length < 6) {
+        error = true;
+        // alert('Password must be at least 6 characters');
+
+        $('#error-password').text('Please Enter Password');
+    }
+
+     if (!confirm_password || confirm_password.length < 6) {
+        error = true;
+        // alert('Password must be at least 6 characters');
+
+        $('#error-confirm_password').text('Please Enter Password');
+    }
+
+    if (password !== confirm_password) {
+        error = true;
+        // alert('Passwords do not match');
+        $('#error-confirm_password').text('Please match password and confirm Password');
+    }
+
+    if (!file) {
+        error = true;
+        // alert('Profile image is required');
+        $('#error-file').text('Please Upload profile');
+    }
+
+      // File upload
+   
+
+
+    // At least one menu selected
+    if ($('.menu-checkbox:checked').length === 0) {
+        error = true;
+        // alert('Select at least one module');
+        $('#error-menuSelect').text('Please Select at least one module');
+    }
+
+    if (error) return;
+
+    let menuData = [];
+
+    $('.menu-checkbox').each(function() {
+        let id = $(this).val();
+
+        let can_view = $('.view-checkbox[data-id="'+id+'"]').is(':checked') ? 1 : 0;
+        let can_action = $('.action-checkbox[data-id="'+id+'"]').is(':checked') ? 1 : 0;
+
+        if ($(this).is(':checked')) {
+            menuData.push({
+                id: parseInt(id),
+                can_view: can_view,
+                can_action: can_action
+            });
+        }
+    });
+
+
+
+    file = $('#banner_image_upload')[0].files[0];
+
+    if (!file) {
+        alert('Profile image is required');
+        return;
+    }
+
+    let formData = new FormData();
+
+    // Text fields
+    formData.append('full_name', $('input[name="full_name"]').val());
+    formData.append('name_ar', $('input[name="name_ar"]').val());
+    formData.append('country_code', $('input[name="country_code"]:checked').val());
+    formData.append('mobile', $('input[name="mobile"]').val());
+    formData.append('email', $('input[name="email"]').val());
+    formData.append('select_category', $('input[name="select_category"]:checked').val());
+    formData.append('password', $('input[name="password"]').val());
+    formData.append('confirm_password', $('input[name="confirm_password"]').val());
+
+    // ✅ Image
+    formData.append('profile_pic', file);
+
+    // ✅ Menu array
+    menuData.forEach((item, index) => {
+        formData.append(`menu_id[${index}][id]`, item.id);
+        formData.append(`menu_id[${index}][can_view]`, item.can_view);
+        formData.append(`menu_id[${index}][can_action]`, item.can_action);
+    });
+
+    $.ajax({
+        url: '/seller/add-staff',
+        type: 'POST',
+        data: formData,
+        processData: false,   // REQUIRED
+        contentType: false,   // REQUIRED
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(res) {
+
+             if (res.status === 'success') {
+                    toastr.success(res.message);
+                    setTimeout(() => window.location.href='/seller/staff-management', 1000);
+                } else {
+                    toastr.error(res.message || 'Something went wrong');
+                }
+
+            console.log(res);
+            alert('Success');
+        },
+        error: function(err) {
+
+        if (err.status === 422) {
+
+        let errors = err.responseJSON.errors;
+
+        // Loop all validation errors
+        for (let key in errors) {
+            $(`#error-${key}`).html(errors[key][0]); // show first error
+        }
+
+        toastr.error('Please fix validation errors');
+
+    } else if (err.responseJSON && err.responseJSON.message) {
+        toastr.error(err.responseJSON.message);
+    } else {
+        toastr.error('Something went wrong');
+    }
+
+           
+        }
+    });
+
+    console.log(formData); // debug
+
+});
+
+// add stuff code End here 
 
 </script>
 
