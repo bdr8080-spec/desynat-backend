@@ -366,7 +366,7 @@ foreach ($data->product_variants as $item) {
      }
 
       public function addToCart(Request $request){
-       // dd($request->all());
+        //dd($request->all());
 
         $request_data = (object)[
             'user_id'     => $request->user()->id,

@@ -258,7 +258,12 @@ Route::group(['prefix'=>'admin'], function(){
      Route::post('/update_password', [AuthController::class, 'update_password'])->name('admin.update_password');
      Route::get('/sub-admin-managemnet', [AuthController::class, 'subAdminManagement'])->name('admin.subAdminManagement');
      Route::get('/add-subadmin', [AuthController::class, 'add_subadmin'])->name('admin.add_subadmin');
-     Route::get('/edit-subadmin', [AuthController::class, 'edit_subadmin'])->name('admin.edit_subadmin');
+     Route::post('/addSubadmin', [AuthController::class, 'addSubadmin'])->name('admin.addSubadmin');
+     Route::post('/updateSubadmin', [AuthController::class, 'updateSubadmin'])->name('admin.updateSubadmin');
+     Route::post('/sendCredentials', [AuthController::class, 'sendCredentials'])->name('admin.sendCredentials');
+     Route::get('/edit-subadmin/{id}', [AuthController::class, 'edit_subadmin'])->name('admin.edit_subadmin');
+     Route::post('/deleteSubAdmin/{id}', [AuthController::class, 'deleteSubAdmin'])->name('admin.deleteSubAdmin');
+     Route::post('/updateSubAdminStatus/{id}', [AuthController::class, 'updateSubAdminStatus'])->name('admin.updateSubAdminStatus');
      Route::get('/refund-managemnet', [AuthController::class, 'refundManagement'])->name('admin.refundManagement');
             
         

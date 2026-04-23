@@ -71,9 +71,9 @@
     </style>
 
     <style>
-  body {
+  /* body {
     visibility: hidden;
-  }
+  } */
 </style>
 
 <body id="page-top">

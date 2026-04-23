@@ -460,7 +460,60 @@ class AdminAuthService
 
             return [
                 'status' => 'error',
-                'message' => 'Something went wrong while deleting sub admin',
+                'message' => $e->getMessage(),
+                'data' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function DeleteSubAdminWeb($req)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $admin = Admin::where('id', $req->id)
+                ->where('type', 2)
+                ->first();
+
+            if (!$admin) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Sub admin not found',
+                    'data' => (object)[]
+                ];
+            }
+             
+            $id = $req->auth_id;
+            //dd($id);
+
+            if ($id == $admin->id) {
+                return [
+                    'status' => 'error',
+                    'message' => 'You cannot delete yourself',
+                    'data' => (object)[]
+                ];
+            }
+
+            AdminPermission::where('admin_id', $admin->id)->delete();
+
+            $admin->delete();
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Sub admin deleted successfully',
+                'data' => (object)[]
+            ];
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return [
+                'status' => 'error',
+                'message' => $e->getMessage(),
                 'data' => $e->getMessage()
             ];
         }
@@ -503,6 +556,10 @@ class AdminAuthService
 
             if (!empty($request_data->country_id)) {
                 $filteredQuery->where('country_id', $request_data->country_id);
+            }
+
+            if ($request_data->status !== null && $request_data->status !== '') {
+                $filteredQuery->where('status', $request_data->status);
             }
 
             if (!empty($request_data->from_date) && !empty($request_data->to_date)) {

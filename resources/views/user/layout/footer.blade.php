@@ -1484,118 +1484,8 @@ function closeStatus() {
 
 <!-- google translator code -->
 
+
 <!-- <script>
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        autoDisplay: false
-    }, 'google_translate_element');
-}
-</script>
-
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<script>
-
-const countryLangMap = {
-    "Kuwait": "ar",
-    "Bahrain": "ar",
-    "Qatar": "ar",
-    "Saudi Arabia": "ar",
-    "UAE": "ar",
-    "Oman": "ar",
-    "United States": "en"
-};
-
-function waitForComboReady(callback) {
-
-    const timer = setInterval(() => {
-
-        const combo = document.querySelector(".goog-te-combo");
-
-        if (combo && combo.options && combo.options.length > 0) {
-            clearInterval(timer);
-            callback(combo);
-        }
-
-    }, 200);
-}
-
-function applyTranslation(lang) {
-
-    const loader = document.getElementById("loaderTrans");
-    if (loader) loader.style.display = "flex";
-
-    waitForComboReady(function(combo) {
-
-        combo.selectedIndex = 0;
-        combo.dispatchEvent(new Event("change"));
-
-        setTimeout(() => {
-
-            combo.value = lang;
-            combo.dispatchEvent(new Event("change"));
-
-            setTimeout(() => {
-                if (loader) loader.style.display = "none";
-            }, 800);
-
-        }, 200);
-
-    });
-
-}
-
-document.querySelectorAll('input[name="country_language"]').forEach(radio => {
-
-    radio.addEventListener("change", function () {
-
-        const country = this.value;
-        const lang = countryLangMap[country] || "en";
-
-        localStorage.setItem("selectedCountry", country);
-
-        applyTranslation(lang);
-
-        const dropdownBtn = document.getElementById("countryDropdownBtn");
-
-        if (dropdownBtn && window.bootstrap) {
-            const instance = bootstrap.Dropdown.getInstance(dropdownBtn);
-            if (instance) instance.hide();
-        }
-
-    });
-
-});
-
-window.addEventListener("load", function () {
-
-    let saved = localStorage.getItem("selectedCountry");
-
-    if (!saved) {
-        saved = "United States";
-        localStorage.setItem("selectedCountry", saved);
-    }
-
-    const lang = countryLangMap[saved] || "en";
-
-    const radio = document.querySelector(
-        `input[name="country_language"][value="${saved}"]`
-    );
-
-    if (radio) radio.checked = true;
-
-    // extra delay = fixes FIRST LOAD issue (critical)
-    setTimeout(() => {
-        applyTranslation(lang);
-    }, 1500);
-
-});
-
-</script> -->
-
-
-<script>
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({
         pageLanguage: 'en',
@@ -1792,7 +1682,7 @@ const observer = new MutationObserver((mutations) => {
 
 observer.observe(document.body, { childList: true, subtree: true });
 
-</script>
+</script> -->
 
 
 
