@@ -309,7 +309,7 @@ class SellerStaffManagementService
     return [
         'status' => 'success',
         'message' => $msg,
-        'data' => []
+        'data' => $staff
     ];
 
      } catch (\Exception $e) {

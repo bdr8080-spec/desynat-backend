@@ -88,7 +88,7 @@
                         <td>{{$val->email}} </td>
                         <td>{{$val->seller_category->name_en}}</td>
 
-                        <td>{{$val->created_at}}</td>
+                        <td>{{$val->created_at->format('Y-m-d')}}</td>
                         <td>
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#showModule" class="eyebtn"><i class="bi bi-eye"></i></a>
                         </td>
@@ -97,19 +97,22 @@
                                 <img src="{{ asset('dealer') }}/assets/img/edit-ic.svg" alt="edit" class="img-fluid" width="18px">
                             </a>
                         </td>
-                        <td>
+                        
+                          <td>
                             <div class="d-flex justify-content-center">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="switchinactive">
-                                    <label class="form-check-label" for="switchinactive"></label>
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchCheckDefault" rel="{{ $val->id }}"
+                                        @if ($val->is_block == 1) checked @endif>
+                                    <label class="form-check-label" for="switchCheckDefault"></label>
                                 </div>
                             </div>
                         </td>
 
                         <td>
-                            <a href="#" class="eyebtn">
+                            <span class="eyebtn" id="deletestaff"  rel="{{ $val->id }}">
                                 <img src="{{ asset('dealer') }}/assets/img/delete-ic.svg" alt="delete" class="img-fluid" width="18px">
-                            </a>
+                            </span>
                         </td>
                     </tr>
 
@@ -192,5 +195,79 @@ $(document).ready(function() {
     });
 });
 
+
+ $('body').on('click', '#switchCheckDefault', function() {
+            //alert('Hello');
+            var id = $(this).attr('rel');
+            //alert(id)
+            $.ajax({
+                url: "{{ url('seller/active-and-inactive-staff') }}",
+                type: "get",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('#loader').show()
+                },
+                success: function(data) {
+
+                    if (data.data.is_block == 1) {
+                        toastr.success(data.message);
+
+                    } else if (data.data.is_block === 0) {
+                        toastr.error(data.message);
+
+                    } else {
+                        toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
+                    }
+
+                    // setInterval(() => {
+                    //     window.location.reload();
+                    // }, 1000);
+
+
+                },
+                error: function() {
+                    alert("Fail")
+                },
+                 complete: function() {
+                    $('#loader').hide()
+                },
+            })
+        })
+
+
+ $('body').on('click', '#deletestaff', function() {
+            //alert('Hello');
+            var id = $(this).attr('rel');
+            //alert(id)
+            $.ajax({
+                url: "{{ url('seller/delete-staff') }}",
+                type: "get",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('#loader').show()
+                },
+                success: function(data) {
+
+                    toastr.success(data.message);
+                    setInterval(() => {
+                        window.location.reload();
+                    }, 1000);
+                },
+                error: function() {
+                    alert("Fail")
+                },
+                 complete: function() {
+                    $('#loader').hide()
+                },
+            })
+        })
 
 </script>
