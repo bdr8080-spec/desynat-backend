@@ -27,10 +27,12 @@ class CartController extends Controller
         // $user = auth()->user();  
 
          $user=  $request->user();
+        // dd($user);
 
         $data = (object)[
             'user_id' => $user->id,
         ];
+        //dd($data);
 
         $cartData = $this->UserManagementService->product_view_cart_details($data)['data'];
         //dd($cartData);
