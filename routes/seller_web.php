@@ -223,6 +223,8 @@ Route::group(['prefix' => 'seller'], function () {
     Route::match(['get', 'post'], '/staff-management',[WebSellerStuffManagementController::class,'index'])->name('dealer.staff-management');
     Route::match(['get', 'post'], '/add-staff',[WebSellerStuffManagementController::class,'addStaff'])->name('dealer.add-staff');
 
+
+    
     });
 
 });

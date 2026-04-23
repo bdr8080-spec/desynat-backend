@@ -23,7 +23,22 @@ class WebSellerStuffManagementController extends Controller
 
     public function index(Request $request){
 
-        return view('dealer.staff.index');
+    $seller_id=Auth::guard('seller')->user()->id;
+
+    $request=(object)[
+        'from'=>$request->from,
+        "to"=>$request->to,
+        "status_filter"=>$request->status_filter,
+        "role_filter"=>$request->role_filter,
+        "seller_id"=>$seller_id
+    ];
+
+    $data=  $this->SellerStaffManagementService->AllStaffDetails($request);
+    $all_staff=$data['data'];
+
+
+    return view('dealer.staff.index',compact('all_staff'));
+
     }
 
 

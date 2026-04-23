@@ -128,6 +128,127 @@ class SellerStaffManagementService
     }
 
 
+
+    public function EditNewStaffManagment($request)
+{
+    try {
+
+        // ✅ Check if EDIT or CREATE
+        $isEdit = !empty($request->id);
+
+        // ✅ Get existing user if edit
+        if ($isEdit) {
+            $seller = seller::find($request->id);
+
+            if (!$seller) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Staff not found',
+                    'data' => []
+                ];
+            }
+        }
+
+        // ✅ Email check (ignore current user in edit)
+        $check_user_already = seller::where('email', $request->email)
+            ->where('admin_verify', '2')
+            ->when($isEdit, function ($q) use ($request) {
+                $q->where('id', '!=', $request->id);
+            })
+            ->first();
+
+        if ($check_user_already) {
+            return [
+                'status' => 'error',
+                'message' => 'Email Address is Already used',
+                'data' => []
+            ];
+        }
+
+        // ✅ Mobile check (ignore current user in edit)
+        $check_mobile_already = seller::where('country_code', $request->country_code)
+            ->where('mobile', $request->mobile)
+            ->where('admin_verify', '2')
+            ->when($isEdit, function ($q) use ($request) {
+                $q->where('id', '!=', $request->id);
+            })
+            ->first();
+
+        if ($check_mobile_already) {
+            return [
+                'status' => 'error',
+                'message' => 'Phone Number is Already used',
+                'data' => []
+            ];
+        }
+
+        // ✅ Prepare data
+        $record = [
+            'profile_pic' => $request->profile_pic ?? ($isEdit ? $seller->profile_pic : null),
+            'type' => '1',
+            'first_name' => $request->full_name,
+            'last_name' => $request->last_name ?? '-',
+            'name_ar' => $request->name_ar,
+            'country_code' => $request->country_code,
+            'mobile' => $request->mobile,
+            'email' => $request->email,
+            'accept_terms' => '1',
+            'device_type' => $request->device_type ?? null,
+            'device_token' => $request->device_token ?? null,
+            'otp_verify' => '1',
+            'admin_verify' => '2',
+            'lang' => $request->lang ?? null,
+            'parent_id' => $request->seller_id,
+            'select_category' => $request->select_category
+        ];
+
+        // ✅ Password only if provided
+        if (!empty($request->password)) {
+            $record['password'] = Hash::make($request->password);
+        }
+
+        // ✅ Create or Update
+        if ($isEdit) {
+            $seller->update($record);
+            $check_seller = $seller;
+        } else {
+            $check_seller = seller::create($record);
+        }
+
+        // ✅ Handle Menu Permissions
+        if (!empty($request->menu_id)) {
+
+            // Delete old permissions in edit
+            if ($isEdit) {
+                sellermenuAction::where('seller_id', $check_seller->id)->delete();
+            }
+
+            foreach ($request->menu_id as $val) {
+                sellermenuAction::create([
+                    'seller_id' => $check_seller->id,
+                    'menu_id' => intval($val['id']),
+                    'can_view' => intval($val['can_view']),
+                    'can_action' => intval($val['can_action']),
+                ]);
+            }
+        }
+
+        return [
+            'status' => 'success',
+            'message' => $isEdit ? 'Staff updated successfully' : 'Staff created successfully',
+            'data' => $check_seller
+        ];
+
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Error ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+}
+
+
     public function AllStaffDetails($request){
 
         try{
