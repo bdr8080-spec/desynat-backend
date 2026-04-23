@@ -41,7 +41,7 @@
 
                 <div class="form-group">
                     <label class="form-label">Full name(English)</label>
-                    <input type="text" name="full_name" class="form-control" placeholder="Enter full name in English">
+                    <input type="text" name="full_name" class="form-control" placeholder="Enter full name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
                     <small class="text-danger error" id="error_full_name"></small>
                 </div>
 
@@ -87,7 +87,7 @@
 
                     <small class="text-danger error" id="error_country_code"></small>
 
-                    <input type="text" name="mobile" class="form-control" placeholder="Enter phone number">
+                    <input type="text" name="mobile" class="form-control" placeholder="Enter phone number" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 15);">
                     <small class="text-danger error" id="error_mobile"></small>
                 </div>
 
@@ -118,7 +118,7 @@
 
                 <div class="form-group">
                     <label class="form-label">Full name(Arabic)</label>
-                    <input type="text" name="full_name_ar" class="form-control" placeholder="Enter full name in Arabic">
+                    <input type="text" name="full_name_ar" class="form-control" dir="rtl" style="text-align: right;" placeholder="Enter full name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <small class="text-danger error" id="error_full_name_ar"></small>
                 </div>
 

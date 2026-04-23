@@ -51,7 +51,7 @@
                 <label class="form-label">Full name(English)</label>
                 <input type="text" name="full_name" class="form-control"
                     value="{{ $data->full_name ?? '' }}"
-                    placeholder="Enter full name in English">
+                    placeholder="Enter full name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
                 <small class="text-danger error" id="error_full_name"></small>
             </div>
 
@@ -103,7 +103,7 @@
 
                 <input type="text" name="mobile" class="form-control"
                     value="{{ $data->mobile ?? '' }}"
-                    placeholder="Enter phone number">
+                    placeholder="Enter phone number" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 15);">
 
                 <small class="text-danger error" id="error_mobile"></small>
 
@@ -144,7 +144,7 @@
                 <label class="form-label">Full name(Arabic)</label>
                 <input type="text" name="full_name_ar" class="form-control"
                     value="{{ $data->full_name_ar ?? '' }}"
-                    placeholder="Enter full name in Arabic">
+                    dir="rtl" style="text-align: right;" placeholder="Enter full name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                 <small class="text-danger error" id="error_full_name_ar"></small>
             </div>
 
