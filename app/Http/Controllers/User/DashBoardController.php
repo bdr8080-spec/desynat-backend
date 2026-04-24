@@ -16,6 +16,7 @@ use Validator;
 use App\Http\Controllers\CommonController;
 
 use App\Models\LiveRequest;
+use App\Models\User;
 
 use Carbon\Carbon;
 
@@ -507,6 +508,63 @@ public function checkLiveJoinTimeStatus($id)
        $data = $this->CMSManagementService->GetFaq($request_data)['data'];
        //dd($data);
         return view('user.cms-page.faq-list',compact('data'));
+    }
+
+    public function setting(REQUEST $request){
+        $user = $request->user();
+        $userId = $user->id;
+        $data = User::where('id',$userId)->first();
+
+        return view('user.cms-page.setting',compact('data'));
+    }
+
+    public function notification_on_off(Request $request){
+
+        try{
+
+        $user = $request->user();
+       
+        $request_data=(object)[
+            'user_id'=>$user->id,
+        ];
+
+        $data=$this->NotificationManagementService->UserNotificationOnOff($request_data);
+
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+        }catch(exception $e){
+            return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+        }
+    }
+
+    public function app_notification_on_off(Request $request){
+
+        try{
+
+            $user = $request->user();
+        
+            $request_data=(object)[
+                'user_id'=>$user->id,
+            ];
+
+            $data=$this->NotificationManagementService->UserAppNotificationOnOff($request_data);
+
+
+            if(isset($data['status']) && $data['status']=='error' ){
+                return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+        }catch(exception $e){
+            return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+        }
+
     }
 
 

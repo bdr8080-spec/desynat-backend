@@ -89,7 +89,7 @@
             </li>  
 
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="/setting">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/setting') ? 'sidebar-active' : '' }}" href="{{route('affiliate.setting')}}">
                     <img src="{{ asset('dealer') }}/assets/img/m3-icon/faq.svg" alt="icon" class="asideicon">
                     <span>Setting</span>
                 </a>
