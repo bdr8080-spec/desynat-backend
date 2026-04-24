@@ -21,6 +21,7 @@ use App\Services\StoryManagementService;
 use App\Services\TicketService;
 use App\Services\CMSManagementService;
 use App\Services\SellerOrderService;
+use App\Services\SellerNotificationService;
 
 
 use App\Helpers\ApiResponse;
@@ -31,13 +32,14 @@ use App\Http\Controllers\CommonController;
 class WebSellerDashboard extends Controller
 {
 
-    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService, CMSManagementService $CMSManagementService, SellerOrderService $SellerOrderService){
+    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService, CMSManagementService $CMSManagementService, SellerOrderService $SellerOrderService, SellerNotificationService $SellerNotificationService){
         $this->SellerAuthService=$SellerAuthService;
        $this->SellerProductService=$SellerProductService;
        $this->StoryManagementService=$StoryManagementService;
        $this->TicketService=$TicketService;
        $this->CMSManagementService = $CMSManagementService;
        $this->SellerOrderService = $SellerOrderService;
+       $this->SellerNotificationService = $SellerNotificationService;
 
     }
 
@@ -1123,6 +1125,62 @@ $seller_id=Auth::guard('seller')->user()->id;
         $refundData= $this->SellerOrderService->GetRefundOrders($request_data)['data'];
         //dd($refundData);
         return view('dealer.refund.index',compact('refundData'));
+    }
+
+    public function setting(REQUEST $request){
+        $seller_id=Auth::guard('seller')->user()->id;
+        $data = seller::where('id',$seller_id)->first();
+
+        return view('dealer.cms-page.settings',compact('data'));
+    }
+
+    public function notification_on_off(Request $request){
+
+        try{
+
+        $seller_id=Auth::guard('seller')->user()->id;
+       
+        $request_data=(object)[
+            'user_id'=>$seller_id,
+        ];
+
+        $data=$this->SellerNotificationService->SellerNotificationOnOff($request_data);
+
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+        }catch(exception $e){
+            return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+        }
+    }
+
+    public function app_notification_on_off(Request $request){
+
+        try{
+
+            $seller_id=Auth::guard('seller')->user()->id;
+        
+            $request_data=(object)[
+                'user_id'=>$seller_id,
+            ];
+
+            $data=$this->SellerNotificationService->SellerAppNotificationOnOff($request_data);
+
+
+            if(isset($data['status']) && $data['status']=='error' ){
+                return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+        }catch(exception $e){
+            return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+        }
+
     }
       
 

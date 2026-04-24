@@ -233,6 +233,10 @@ Route::group(['prefix' => 'seller'], function () {
 
     Route::match(['get', 'post'], '/view-menu-permission',[WebSellerStuffManagementController::class,'ViewMenuPermission'])->name('dealer.ViewMenuPermission');
 
+    Route::get('setting', [WebSellerDashboard::class, 'setting'])->name('seller.setting');
+    Route::post('notification_on_off', [WebSellerDashboard::class, 'notification_on_off'])->name('seller.notification_on_off');
+    Route::post('app_notification_on_off', [WebSellerDashboard::class, 'app_notification_on_off'])->name('seller.app_notification_on_off');
+
     });
 
 });
