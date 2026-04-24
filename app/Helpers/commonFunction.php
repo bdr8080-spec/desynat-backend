@@ -5,7 +5,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\{seller};
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\{SellerMenus_table,sellermenuAction};
 use Illuminate\Support\Facades\Cache;
