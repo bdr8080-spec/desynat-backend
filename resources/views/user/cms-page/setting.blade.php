@@ -12,8 +12,8 @@
         <div class="col-lg-12">
             <div class="live-pnl mb-3">
                 <div class="d-flex justify-content-between">
-                    <div class="inapp-list">
-                            <img src="{{asset('user/assets/images/in-app.png')}}" class="img-fluid">
+                    <div class="inapp-list d-flex gap-3">
+                            <div><img src="{{asset('user/assets/images/in-app.png')}}" class="img-fluid"></div>
                             <h6>In-app Notifications</h6>
                     </div>
                     <div class="form-check form-switch">
@@ -25,8 +25,8 @@
 
             <div class="live-pnl mb-3">
                 <div class="d-flex justify-content-between">
-                    <div class="inapp-list">
-                            <img src="{{asset('user/assets/images/push-icon.png')}}" class="img-fluid">
+                <div class="inapp-list d-flex gap-3">
+                           <div> <img src="{{asset('user/assets/images/push-icon.png')}}" class="img-fluid"></div>
                             <h6>Push Notifications</h6>
                     </div>
                     <div class="form-check form-switch">
