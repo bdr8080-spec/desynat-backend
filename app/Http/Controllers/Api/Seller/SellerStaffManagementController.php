@@ -38,7 +38,7 @@ class SellerStaffManagementController extends Controller
 
  public function SellerAllMenu(Request $request){
 
-    $data=  $this->SellerStaffManagementService->SellerAllMenu();
+    $data=  $this->SellerStaffManagementService->SellerAllMenu($request->menu_type);
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);

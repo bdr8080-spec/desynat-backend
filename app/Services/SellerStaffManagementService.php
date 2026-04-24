@@ -36,9 +36,14 @@ class SellerStaffManagementService
 
 
 
-  public function SellerAllMenu(){
+  public function SellerAllMenu($menu=null){
 
-    $allcategory=SellerMenus_table::all();
+    if($menu==1){
+        $allcategory=SellerMenus_table::where('order_by','!=','12')->get();
+
+    }else{
+        $allcategory=SellerMenus_table::get();
+    }
 
     return [
         'status' => 'success',
