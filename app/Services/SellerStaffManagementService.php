@@ -371,10 +371,14 @@ if($type=='api'){
 
     public function viewSingleStaffDetails($request){
 
-        try{
+    try{
 
-    $All_staff=seller::with('seller_category','Role_Action.sellermenu','country_details')->where('id',$request->id)->first();
-
+    $All_staff=seller::with('seller_category','Role_Action.sellermenu','country_details')->where('id',$request->id)
+    ->whereHas('Role_Action', function($query){
+        $query->orderBy('menu_id','asc');
+    })
+    ->first();
+    
     return [
         'status' => 'success',
         'message' => 'view Single Staff details fetch Successfully',
