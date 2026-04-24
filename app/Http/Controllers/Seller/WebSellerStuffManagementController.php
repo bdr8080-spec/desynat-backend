@@ -99,7 +99,7 @@ class WebSellerStuffManagementController extends Controller
     // ✅ Upload Image
     if ($request->hasFile('profile_pic')) {
 
-        $dir='stuff/';
+        $dir='staff/';
 
         $image = $request->file('profile_pic');
         $upload_image=image_upload($image,$dir);
@@ -154,6 +154,92 @@ public function deleteStaff(Request $request){
     $data=  $this->SellerStaffManagementService->staffDelete($request_data);
 
   return $data;
+
+}
+
+
+public function editStaff(Request $request){
+
+
+     if($request->ismethod('get')){
+            $data=  $this->SellerStaffManagementService->newStaffCategoryType();
+            $staff_category=$data['data'];
+
+            $sellerMenu=  $this->SellerStaffManagementService->SellerAllMenu();
+            $sellerMenu=$sellerMenu['data'];
+
+            $all_country=country::get();  
+            
+
+            $request_data=(object)[
+                'id'=>$request->id
+            ];
+
+            $data=  $this->SellerStaffManagementService->viewSingleStaffDetails($request_data);
+
+            $view_staff=$data['data'];
+
+            return view('dealer.staff.edit-staff',compact('staff_category','all_country','sellerMenu','view_staff'));
+       }
+
+//  Post request 
+
+$validate = Validator::make($request->all(), [
+            "id"=>"required|exists:sellers,id",
+            'full_name' => 'required',
+            'name_ar' => 'required',
+            // 'profile_pic'=>'required',
+            'country_code'=>'required',
+            'mobile'=>'required',
+            'email'=>'required',
+            'select_category'=>'required',
+            'password'=>'required',
+            'menu_id' => 'required|array',
+            'menu_id.*.id' => 'required|integer',
+            'menu_id.*.can_view' => 'required|integer',                       
+            'menu_id.*.can_action' => 'required|integer',                       
+        ]);
+
+        if($validate->fails()){
+            return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+           }
+
+    $seller_id=Auth::guard('seller')->user()->id;
+
+    $request_data=(object)$validate->validate();
+    $request_data->seller_id=$seller_id;
+
+    // ✅ Upload Image
+
+    if(isset($request->old_profile_pic)){
+        
+        $request_data->profile_pic= $request->old_profile_pic;
+
+    }else{
+
+    if ($request->hasFile('profile_pic')) {
+
+        $dir='staff/';
+        $image = $request->file('profile_pic');
+        $upload_image=image_upload($image,$dir);
+
+        $request_data->profile_pic= $upload_image;
+
+    }
+}
+
+           
+    $data=  $this->SellerStaffManagementService->EditNewStaffManagment($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+    }
+
+    if(isset($data['status']) && $data['status']=='failed' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],499);
+        }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
 }
 

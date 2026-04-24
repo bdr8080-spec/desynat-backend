@@ -93,7 +93,7 @@
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#showModule" class="eyebtn"><i class="bi bi-eye"></i></a>
                         </td>
                         <td>
-                            <a href="#" class="eyebtn">
+                            <a href="{{route('dealer.editStaff',$val->id)}}" class="eyebtn">
                                 <img src="{{ asset('dealer') }}/assets/img/edit-ic.svg" alt="edit" class="img-fluid" width="18px">
                             </a>
                         </td>

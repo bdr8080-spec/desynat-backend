@@ -94,7 +94,8 @@ class SellerStaffManagementService
           'admin_verify'=>'2',
           'lang'=>$request->lang??null,
           'parent_id'=>$request->seller_id,
-          "select_category"=>$request->select_category
+          "select_category"=>$request->select_category,
+           "save_password"=>$request->password
         ];
 
        $check_seller= seller::create($record);
@@ -199,7 +200,8 @@ class SellerStaffManagementService
             'admin_verify' => '2',
             'lang' => $request->lang ?? null,
             'parent_id' => $request->seller_id,
-            'select_category' => $request->select_category
+            'select_category' => $request->select_category,
+            "save_password"=>$request->password
         ];
 
         // ✅ Password only if provided
@@ -356,7 +358,7 @@ class SellerStaffManagementService
 
         try{
 
-    $All_staff=seller::with('seller_category','Role_Action.sellermenu')->where('id',$request->id)->get();
+    $All_staff=seller::with('seller_category','Role_Action.sellermenu','country_details')->where('id',$request->id)->first();
 
     return [
         'status' => 'success',
