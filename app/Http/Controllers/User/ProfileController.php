@@ -438,5 +438,21 @@ class ProfileController extends Controller
 
 }
 
+    public function saved_cards(REQUEST $request){
+        $user = $request->user();
+        $userId = $user->id;
+        $request_data=(object)[
+            'user_id'=>$userId,
+        ];
+        $data = $this->UserProfileService->GetMyCards($request_data)['data'];
+
+        return view('user.savecard.index',compact('data'));
+    }
+
+    public function add_new_card(REQUEST $request){
+
+        return view('user.savecard.add-new-address');
+    }
+
 
 }
