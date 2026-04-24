@@ -165,7 +165,7 @@ public function editStaff(Request $request){
             $data=  $this->SellerStaffManagementService->newStaffCategoryType();
             $staff_category=$data['data'];
 
-            $sellerMenu=  $this->SellerStaffManagementService->SellerAllMenu();
+            $sellerMenu=  $this->SellerStaffManagementService->SellerAllMenu(1);
             $sellerMenu=$sellerMenu['data'];
 
             $all_country=country::get();  
