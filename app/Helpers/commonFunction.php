@@ -68,8 +68,7 @@ if (!function_exists('getSellerMenus')) {
 
            $Actionmenu= sellermenuAction::with('singleActionmenu')->where('seller_id',Auth::guard('seller')->user()->id)->pluck('menu_id');
 
-           $data=  SellerMenus_table::with('children')->whereNull('parent_id')
-           
+           $data=  SellerMenus_table::whereNull('parent_id')
                 ->where('status', 1)
                 ->whereIn('id',$Actionmenu )
                 ->with('children')
@@ -77,6 +76,7 @@ if (!function_exists('getSellerMenus')) {
                 ->get();
 
                 return $data;
+
                 
         }else{
 
@@ -111,3 +111,55 @@ if (!function_exists('menuActive')) {
         return '';
     }
 }
+
+
+
+   function SellermenuPermission()
+    {
+        $user = Auth::guard('seller')->user();
+
+        if (!$user) {
+            abort(403);
+        }
+
+     $seller_details=seller::with('seller_category','Role_Action.sellermenu')->where('id',$user->id)->first();
+
+
+     if($seller_details->type=='1'){
+
+
+     }
+
+
+    dd($seller_details);
+
+        // 🔥 Get current route name
+        $routeName = $request->route()->getName();
+
+        // 🔥 Find menu by route
+        $menu = SellerMenus_table::where('route_name', $routeName)->first();
+
+        if (!$menu) {
+            return $next($request); // no menu mapping → allow
+        }
+
+        // 🔥 Get permission
+        $permission = $user->menuActions
+            ->where('menu_id', $menu->id)
+            ->first();
+
+        if (!$permission) {
+            abort(403, 'No permission');
+        }
+
+        // 🔥 Check type
+        if ($type == 'view' && $permission->can_view != 1) {
+            abort(403, 'View not allowed');
+        }
+
+        if ($type == 'action' && $permission->can_action != 1) {
+            abort(403, 'Action not allowed');
+        }
+
+        return $next($request);
+    }
