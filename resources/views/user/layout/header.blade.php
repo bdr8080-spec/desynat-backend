@@ -171,7 +171,7 @@
                                                         Orders</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
-                                                    <a href="/saved-card" class="custom-btn3">My Saved Cards</a>
+                                                    <a href="{{route('user.saved_cards')}}" class="custom-btn3">My Saved Cards</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
                                                     <a href="{{route('user.view_address')}}" class="custom-btn3">Saved

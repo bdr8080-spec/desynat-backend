@@ -54,7 +54,6 @@ $(document).on('change', '#switchCheckDefault', function () {
         data: {
             _token: "{{ csrf_token() }}",
         },
-
         success: function (response) {
             if (response.status === 'success') {
                 toastr.success(response.message);
@@ -67,19 +66,8 @@ $(document).on('change', '#switchCheckDefault', function () {
                 toastr.error(response.message);
             }
         },
-
-        error: function (xhr, status, error) {
-
-            console.log("AJAX ERROR RESPONSE:", xhr);
-            console.log("STATUS:", status);
-            console.log("ERROR:", error);
-
-            // Try to extract Laravel validation / exception message
-            let message = xhr.responseJSON?.message 
-                        || xhr.responseText 
-                        || "Something went wrong";
-
-            toastr.error(message);
+        error: function () {
+            toastr.error('Something went wrong');
         }
     });
 });

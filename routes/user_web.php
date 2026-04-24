@@ -175,6 +175,9 @@ Route::get('/setting', [DashBoardController::class, 'setting'])->name('user.sett
 Route::post('notification_on_off', [DashBoardController::class, 'notification_on_off'])->name('user.notification_on_off');
 Route::post('app_notification_on_off', [DashBoardController::class, 'app_notification_on_off'])->name('user.app_notification_on_off');
 
+Route::get('/saved-cards', [ProfileController::class, 'saved_cards'])->name('user.saved_cards');
+Route::get('/add-new-card', [ProfileController::class, 'add_new_card'])->name('user.add_new_card');
+
 
 });
 
@@ -243,12 +246,12 @@ Route::match(['get', 'post'], '/route2', function () {
 Route::match(['get', 'post'], '/product-store-details', function () {
      return view('user.category.product-store-details');
 });
-Route::match(['get', 'post'], '/add-new-address', function () {
-     return view('user.profile.add-new-address');
-});
-Route::match(['get', 'post'], '/saved-address', function () {
-     return view('user.profile.saved-address');
-});
+// Route::match(['get', 'post'], '/add-new-address', function () {
+//      return view('user.profile.add-new-address');
+// });
+// Route::match(['get', 'post'], '/saved-address', function () {
+//      return view('user.profile.saved-address');
+// });
 
 
 Route::match(['get', 'post'], '/order-place', function () {
@@ -256,10 +259,10 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
-Route::match(['get', 'post'], '/save-card', function () {
-     return view('user.savecard.index');
+// Route::match(['get', 'post'], '/save-card', function () {
+//      return view('user.savecard.index');
 
-})->name('user.save-card');
+// })->name('user.save-card');
 
 
 // Route::match(['get', 'post'], '/setting', function () {

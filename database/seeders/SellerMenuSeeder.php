@@ -134,6 +134,72 @@ SellerMenus_table::insert([
         'active_patterns' => json_encode(['seller/staff-management']),
         'order_by' => 12,
         'status' => 1
+    ],
+    [
+        'title' => 'Terms & Condition',
+        'route' => 'seller.termCondition',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/terms-conditions']),
+        'order_by' => 13,
+        'status' => 1
+    ],
+    [
+        'title' => 'About Us',
+        'route' => 'seller.aboutUs',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/about-us']),
+        'order_by' => 14,
+        'status' => 1
+    ],
+    [
+        'title' => 'Faq',
+        'route' => 'seller.faq',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/faq']),
+        'order_by' => 15,
+        'status' => 1
+    ],
+    [
+        'title' => 'Return Policy',
+        'route' => 'seller.returnPolicy',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/return-policy']),
+        'order_by' => 16,
+        'status' => 1
+    ],
+    [
+        'title' => 'Exchange Policy',
+        'route' => 'seller.exchangePolicy',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/exchange-policy']),
+        'order_by' => 17,
+        'status' => 1
+    ],
+    [
+        'title' => 'Cancellation Policy',
+        'route' => 'seller.cancellationPolicy',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/cancellation-policy']),
+        'order_by' => 18,
+        'status' => 1
+    ],
+
+    [
+        'title' => 'Refund Management',
+        'route' => 'seller.refundManagement',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/refund-management']),
+        'order_by' => 19,
+        'status' => 1
+    ],
+
+    [
+        'title' => 'Setting',
+        'route' => 'seller.setting',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/setting']),
+        'order_by' => 20,
+        'status' => 1
     ]
 
 ]);
