@@ -491,6 +491,61 @@ $('#addBanner').on('submit', function(e) {
 
 });
 
+
+document.addEventListener("change", function (e) {
+
+    // 🔹 When MENU is clicked
+    if (e.target.classList.contains("menu-checkbox")) {
+
+        let parent = e.target.closest(".d-flex");
+
+        let view = parent.querySelector(".view-checkbox");
+        let action = parent.querySelector(".action-checkbox");
+
+        if (e.target.checked) {
+            view.checked = true;
+            action.checked = true;
+        } else {
+            view.checked = false;
+            action.checked = false;
+        }
+    }
+
+    // 🔹 When VIEW is clicked
+    if (e.target.classList.contains("view-checkbox")) {
+
+        let parent = e.target.closest(".d-flex");
+        let menu = parent.querySelector(".menu-checkbox");
+
+        if (e.target.checked) {
+            menu.checked = true;
+        } else {
+            // if both view & action unchecked → uncheck menu
+            let action = parent.querySelector(".action-checkbox");
+            if (!action.checked) {
+                menu.checked = false;
+            }
+        }
+    }
+
+    // 🔹 When ACTION is clicked
+    if (e.target.classList.contains("action-checkbox")) {
+
+        let parent = e.target.closest(".d-flex");
+        let menu = parent.querySelector(".menu-checkbox");
+
+        if (e.target.checked) {
+            menu.checked = true;
+        } else {
+            // if both view & action unchecked → uncheck menu
+            let view = parent.querySelector(".view-checkbox");
+            if (!view.checked) {
+                menu.checked = false;
+            }
+        }
+    }
+});
+
 // add stuff code End here 
 
 </script>
