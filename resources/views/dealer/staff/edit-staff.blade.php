@@ -119,7 +119,7 @@
                                                         style="cursor: pointer;">
                                                         <input type="radio" name="country_code"
                                                             value="{{ $item->dial_code }} " data-flag="{{ $item->flag }}"
-                                                            data-name="{{ $item->name }}" class="country-radio"
+                                                            data-name="{{ $item->name }}" class="country-radio" @if($item->dial_code==$view_staff->country_code) checked @endif
                                                             hidden>
 
                                                         <div width="25" height="16">
@@ -362,6 +362,9 @@ $('#addBanner').on('submit', function(e) {
     let full_name_ar = $('input[name="name_ar"]').val().trim();
     
     let country_code = $('input[name="country_code"]:checked').val();
+
+    // alert(country_code);
+    // return false;
 
     let mobile = $('input[name="mobile"]').val().trim();
 
