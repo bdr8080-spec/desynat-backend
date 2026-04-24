@@ -21,13 +21,13 @@
                     <div class="from-group">
                         <div class="show-date d-flex gap-2  flex-wrap">
                             <div class="date-form-pnl">
-                                <input type="date" class="form-control" name="from" id="fromDate"
-                                    value="{{request()->from }}">
+                                <input type="date" class="form-control" name="from_date" id="fromDate"
+                                    value="{{request()->from_date }}">
                                 <p class="text-danger" id="error-start_date"></p>
                             </div>
                             <div class="date-form-pnl">
-                                <input type="date" class="form-control" name="to" id="toDate"
-                                    value="{{request()->to }}">
+                                <input type="date" class="form-control" name="to_date" id="toDate"
+                                    value="{{request()->to_date }}">
 
                                 <p class="text-danger" id="error-end_date"></p>
                             </div>
@@ -44,7 +44,7 @@
                     <div class="from-group">
                         <div class="total-refund d-flex gap-3">
                             <h6>Total Refund</h6>
-                            <h3>102829.00 KD</h3>
+                            <h3>{{$refundData['total_refunds']}} KD</h3>
                         </div>
                     </div>
 
@@ -66,21 +66,24 @@
                         <th class="no-sort">Customer name</th>
                         <th class="no-sort">Order ID</th>
                         <th class="no-sort">Total Amount</th>
-                        <th class="no-sort">Total Commission</th>
+                        <!-- <th class="no-sort">Total Commission</th> -->
                     </tr>
                 </thead>
                 <tbody>
-
+                    @forelse($refundData['orders'] as $index => $data)
                     <tr>
-                        <td>1</td>
-                        <td>#9898y98</td>
-                        <td>#r5r57655 </td>
-                        <td>21/08/25 at 07:30PM</td>
-                        <td>Ajay kumar</td>
-                        <td>#76777</td>
-                        <td>20 KD</td>
-                        <td>20 KD</td>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $data->order->order_id }}</td>
+                        <td>{{ $data->order->transaction_id ?? 'N/A' }}</td>
+                        <td>{{ \Carbon\Carbon::parse($data->updated_at)->format('d/m/y \a\t h:iA') }}</td>
+                        <td>{{ $data->user_details->full_name ?? '' }}</td>
+                        <td>{{ $data->id }}</td>
+                        <td>{{ $data->amount }} KD</td>
+                        <!-- <td>20 KD</td> -->
                     </tr>
+                    @empty
+
+                    @endforelse
 
                 </tbody>
             </table>
@@ -92,6 +95,87 @@
 
 @include('dealer.layout.custom_code');
 @include('dealer.layout.footer');
+
+<script>
+$(document).ready(function() {
+    $('#customTableSearch').on('keyup search', function() {
+        let value = $(this).val().toLowerCase().trim();
+
+        $('.tablesearch tbody tr').each(function() {
+            let rowText = $(this).text().toLowerCase();
+
+            if (value === "") {
+                // input empty → show all rows
+                $(this).show();
+            } else {
+                // match text
+                $(this).toggle(rowText.indexOf(value) > -1);
+            }
+        });
+    });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const fromDate = document.getElementById('fromDate');
+    const toDate = document.getElementById('toDate');
+    const form = fromDate.form;
+
+    const today = new Date().toISOString().split('T')[0];
+
+    fromDate.min = today;
+    toDate.min = today;
+
+    function canSubmit() {
+        return (
+            fromDate.value &&
+            toDate.value &&
+            fromDate.value >= today &&
+            toDate.value >= fromDate.value
+        );
+    }
+
+    // From date change
+    fromDate.addEventListener('change', function() {
+        if (this.value < today) {
+            this.value = '';
+            // document.getElementById('error-start_date').innerText =
+            // 'Start date cannot be earlier than today';
+            return;
+        }
+
+        document.getElementById('error-start_date').innerText = '';
+        toDate.min = this.value;
+
+        if (toDate.value && toDate.value < this.value) {
+            toDate.value = '';
+        }
+
+        if (canSubmit()) {
+            form.submit();
+        }
+    });
+
+    // To date change
+    toDate.addEventListener('change', function() {
+        if (fromDate.value && this.value < fromDate.value) {
+            this.value = '';
+            // document.getElementById('error-end_date').innerText =
+            // 'End date cannot be earlier than start date';
+            return;
+        }
+
+        document.getElementById('error-end_date').innerText = '';
+
+        if (canSubmit()) {
+            form.submit();
+        }
+    });
+
+});
+</script>
 
 
 
