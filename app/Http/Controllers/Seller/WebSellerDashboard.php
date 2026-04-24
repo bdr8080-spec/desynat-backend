@@ -20,6 +20,7 @@ use App\Services\SellerProductService;
 use App\Services\StoryManagementService;
 use App\Services\TicketService;
 use App\Services\CMSManagementService;
+use App\Services\SellerOrderService;
 
 
 use App\Helpers\ApiResponse;
@@ -30,12 +31,13 @@ use App\Http\Controllers\CommonController;
 class WebSellerDashboard extends Controller
 {
 
-    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService, CMSManagementService $CMSManagementService){
+    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService, CMSManagementService $CMSManagementService, SellerOrderService $SellerOrderService){
         $this->SellerAuthService=$SellerAuthService;
        $this->SellerProductService=$SellerProductService;
        $this->StoryManagementService=$StoryManagementService;
        $this->TicketService=$TicketService;
        $this->CMSManagementService = $CMSManagementService;
+       $this->SellerOrderService = $SellerOrderService;
 
     }
 
@@ -1106,8 +1108,21 @@ $seller_id=Auth::guard('seller')->user()->id;
     }
 
     public function refundManagement(REQUEST $request){
+        $seller_id=Auth::guard('seller')->user()->id;
 
-        return view('dealer.refund.index');
+       $request_data=(object) [
+        'seller_id'=>$seller_id,
+        'limit' => $request->limit??10,
+        'search' => $request->search??null,
+        'country_name' => $request->country_name??null,
+        'from_date' => $request->from_date??null,
+        'to_date' => $request->to_date??null,
+        
+       ];
+
+        $refundData= $this->SellerOrderService->GetRefundOrders($request_data)['data'];
+        //dd($refundData);
+        return view('dealer.refund.index',compact('refundData'));
     }
       
 
