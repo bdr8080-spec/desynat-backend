@@ -231,6 +231,8 @@ Route::group(['prefix' => 'seller'], function () {
  
     Route::match(['get', 'post'], '/edit-staff/{id}',[WebSellerStuffManagementController::class,'editStaff'])->name('dealer.editStaff');
 
+    Route::match(['get', 'post'], '/view-menu-permission',[WebSellerStuffManagementController::class,'ViewMenuPermission'])->name('dealer.ViewMenuPermission');
+
     });
 
 });

@@ -92,7 +92,7 @@
 
          <div class="col-lg-6 col-md-6">
                                     <div class="label-flex">
-                                        <label>Store Phone Number</label>
+                                        <label>Store Phone Number </label>
                                     </div>
 
                                     <div class="form-group d-flex gap-0 w-100">
@@ -103,7 +103,7 @@
                                                 aria-expanded="false">
 
                                                 <span id="selected-flag">
-                                                    <img src="{{$view_staff->country_details->flag1}}"
+                                                    <img src="{{@$view_staff->country_details->flag1}}"
                                                         alt="flag" width="25" height="16">
                                                     {{$view_staff->country_code}}
                                                 </span>
@@ -118,8 +118,8 @@
                                                         class="dropdown-item d-flex align-items-center gap-2 country-option"
                                                         style="cursor: pointer;">
                                                         <input type="radio" name="country_code"
-                                                            value="{{ $item->dial_code }}" data-flag="{{ $item->flag }}"
-                                                            data-name="{{ $item->name }}" class="country-radio"
+                                                            value="{{ $item->dial_code }} " data-flag="{{ $item->flag }}"
+                                                            data-name="{{ $item->name }}" class="country-radio" @if($item->dial_code==$view_staff->country_code) checked @endif
                                                             hidden>
 
                                                         <div width="25" height="16">
@@ -312,6 +312,25 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 
 
 $(document).ready(function() {
+
+
+    $(document).on('click', '.country-option1', function() {
+        let radio = $(this).find('.country-radio1');
+        let flag = radio.data('flag');
+        let code = radio.val();
+        let name = radio.data('name');
+
+        // Update the flag and code shown on the button
+        $('#selected-flag1').html('');
+        $('#selected-code1').text(flag + ' ' + ' ' + name);
+
+        // Set the radio input as checked
+        radio.prop('checked', true);
+
+        // Close the dropdown (Bootstrap 5)
+        $('#countryDropdown1').dropdown('hide');
+    });
+
     // When a user selects a country (clicks a label)
     $(document).on('click', '.country-option', function() {
         let radio = $(this).find('.country-radio');
@@ -342,8 +361,11 @@ $('#addBanner').on('submit', function(e) {
     let full_name = $('input[name="full_name"]').val().trim();
     let full_name_ar = $('input[name="name_ar"]').val().trim();
     
-    
-    let country_code = $('input[name="country_code"]').val().trim();
+    let country_code = $('input[name="country_code"]:checked').val();
+
+    // alert(country_code);
+    // return false;
+
     let mobile = $('input[name="mobile"]').val().trim();
 
 

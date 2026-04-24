@@ -226,7 +226,7 @@
                                                     Become An Affiliate
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
-                                            <li><a href="">
+                                            <li><a href="/setting">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/setting.svg')}}" />
                                                     Settings
