@@ -39,7 +39,7 @@ class SellerStaffManagementService
   public function SellerAllMenu($menu=null){
 
     if($menu==1){
-        $allcategory=SellerMenus_table::where('order_by','!=','12')->get();
+        $allcategory=SellerMenus_table::whereNotIn('order_by',['12','10'])->get();
 
     }else{
         $allcategory=SellerMenus_table::get();

@@ -5,10 +5,10 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\{seller};
+use Auth;
 
-use App\Models\SellerMenus_table;
+use App\Models\{SellerMenus_table,sellermenuAction};
 use Illuminate\Support\Facades\Cache;
-
 
 
 
@@ -63,13 +63,33 @@ function Generate_SellerQrCode($seller_id,$store_id){
 if (!function_exists('getSellerMenus')) {
     function getSellerMenus()
     {
-        return Cache::remember('seller_menus', 60, function () {
+
+        if(Auth::guard('seller')->check() && Auth::guard('seller')->user()->type=='1'){
+
+           $Actionmenu= sellermenuAction::with('singleActionmenu')->where('seller_id',Auth::guard('seller')->user()->id)->pluck('menu_id');
+
+           $data=  SellerMenus_table::with('children')->whereNull('parent_id')
+           
+                ->where('status', 1)
+                ->whereIn('id',$Actionmenu )
+                ->with('children')
+                ->orderBy('order_by')
+                ->get();
+
+                return $data;
+                
+        }else{
+
+        return Cache::remember('seller_menus', 10, function () {
             return SellerMenus_table::whereNull('parent_id')
                 ->where('status', 1)
                 ->with('children')
                 ->orderBy('order_by')
                 ->get();
         });
+
+    }
+
     }
 }
 
