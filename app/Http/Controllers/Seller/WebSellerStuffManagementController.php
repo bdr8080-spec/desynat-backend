@@ -33,7 +33,7 @@ class WebSellerStuffManagementController extends Controller
         "seller_id"=>$seller_id
     ];
 
-    $data=  $this->SellerStaffManagementService->AllStaffDetails($request);
+    $data=  $this->SellerStaffManagementService->AllStaffDetails($request,'web');
     $all_staff=$data['data'];
 
 
@@ -51,7 +51,7 @@ class WebSellerStuffManagementController extends Controller
             $data=  $this->SellerStaffManagementService->newStaffCategoryType();
             $staff_category=$data['data'];
 
-            $sellerMenu=  $this->SellerStaffManagementService->SellerAllMenu();
+            $sellerMenu=  $this->SellerStaffManagementService->SellerAllMenu('1');
             $sellerMenu=$sellerMenu['data'];
 
             $all_country=country::get();    

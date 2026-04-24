@@ -36,9 +36,14 @@ class SellerStaffManagementService
 
 
 
-  public function SellerAllMenu(){
+  public function SellerAllMenu($menu=null){
 
-    $allcategory=SellerMenus_table::all();
+    if($menu==1){
+        $allcategory=SellerMenus_table::where('order_by','!=','12')->get();
+
+    }else{
+        $allcategory=SellerMenus_table::get();
+    }
 
     return [
         'status' => 'success',
@@ -251,7 +256,7 @@ class SellerStaffManagementService
 }
 
 
-    public function AllStaffDetails($request){
+    public function AllStaffDetails($request,$type){
 
         try{
 
@@ -272,8 +277,15 @@ class SellerStaffManagementService
     $All_staff = $All_staff->whereDate('created_at', $request->from);
 }
 
-   $All_staff=$All_staff->get();
+if($type=='api'){
+  $All_staff=$All_staff->paginate();
+  
+}else{
+      $All_staff=$All_staff->get();
 
+}
+
+ 
     return [
         'status' => 'success',
         'message' => 'Seller All Menu fetch Successfully',
