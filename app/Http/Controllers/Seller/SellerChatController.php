@@ -27,7 +27,10 @@ class SellerChatController extends Controller
     public function All_chats(Request $request){
 
     
-        $seller_details=Auth::guard('seller')->user()->id;
+        // $seller_details=Auth::guard('seller')->user()->id;
+
+        $seller_details=sellerAndStaffId();
+
 
        $request_data=(object) [
         'seller_id'=>$seller_details,
@@ -49,7 +52,9 @@ class SellerChatController extends Controller
 
     public function single_chat_room(Request $request, $id){
     
-        $seller_details=Auth::guard('seller')->user()->id;
+        // $seller_details=Auth::guard('seller')->user()->id;
+
+       $seller_details=sellerAndStaffId();
 
        $request_data=(object) [
         'seller_id'=>$seller_details,
@@ -83,7 +88,10 @@ class SellerChatController extends Controller
        }
 
 
-         $seller_details=Auth::guard('seller')->user()->id;
+        //  $seller_details=Auth::guard('seller')->user()->id;
+
+
+   $seller_details=sellerAndStaffId();
 
 
        $request_data=(object) [
@@ -116,7 +124,9 @@ class SellerChatController extends Controller
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
        }
 
-       $seller_details=Auth::guard('seller')->user()->id;
+    //    $seller_details=Auth::guard('seller')->user()->id;
+
+       $seller_details=sellerAndStaffId();
        
        $request_data=(object) [
         'seller_id'=>$seller_details,

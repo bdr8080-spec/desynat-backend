@@ -145,10 +145,9 @@ if (!function_exists('menuActive')) {
     if($menu_action){
             
     if($menu_action->can_view=='0'){
-
             // return redirect()->back();
-
             abort(403, 'No permission');
+
         }
     $can_view=$menu_action->can_view;
     $can_action=$menu_action->can_action;
@@ -170,36 +169,21 @@ return [
     'can_action'=>$can_action
 ];
 
-
-
-    dd($seller_details);
-        // 🔥 Get current route name
-        $routeName = $request->route()->getName();
-
-        // 🔥 Find menu by route
-        $menu = SellerMenus_table::where('route_name', $routeName)->first();
-
-        if (!$menu) {
-            return $next($request); // no menu mapping → allow
-        }
-
-        // 🔥 Get permission
-        $permission = $user->menuActions
-            ->where('menu_id', $menu->id)
-            ->first();
-
-        if (!$permission) {
-            abort(403, 'No permission');
-        }
-
-        // 🔥 Check type
-        if ($type == 'view' && $permission->can_view != 1) {
-            abort(403, 'View not allowed');
-        }
-
-        if ($type == 'action' && $permission->can_action != 1) {
-            abort(403, 'Action not allowed');
-        }
-
-        return $next($request);
     }
+
+
+
+if (!function_exists('sellerAndStaffId')) {
+
+    function sellerAndStaffId()
+    {
+        $seller = Auth::guard('seller')->user();
+
+        if (!$seller) return null;
+
+        // 🔥 your logic
+        return ($seller->type == 1 && $seller->parent_id)
+            ? $seller->parent_id
+            : $seller->id;
+    }
+}
