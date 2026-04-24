@@ -256,7 +256,7 @@ class SellerStaffManagementService
 }
 
 
-    public function AllStaffDetails($request){
+    public function AllStaffDetails($request,$type){
 
         try{
 
@@ -277,8 +277,15 @@ class SellerStaffManagementService
     $All_staff = $All_staff->whereDate('created_at', $request->from);
 }
 
-   $All_staff=$All_staff->get();
+if($type=='api'){
+  $All_staff=$All_staff->paginate();
+  
+}else{
+      $All_staff=$All_staff->get();
 
+}
+
+ 
     return [
         'status' => 'success',
         'message' => 'Seller All Menu fetch Successfully',

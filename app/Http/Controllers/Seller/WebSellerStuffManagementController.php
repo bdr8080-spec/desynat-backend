@@ -33,7 +33,7 @@ class WebSellerStuffManagementController extends Controller
         "seller_id"=>$seller_id
     ];
 
-    $data=  $this->SellerStaffManagementService->AllStaffDetails($request);
+    $data=  $this->SellerStaffManagementService->AllStaffDetails($request,'web');
     $all_staff=$data['data'];
 
 

@@ -162,7 +162,7 @@ public function AllStaffDetails(Request $request){
     ];
 
 
-    $data=  $this->SellerStaffManagementService->AllStaffDetails($request);
+    $data=  $this->SellerStaffManagementService->AllStaffDetails($request,'api');
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
