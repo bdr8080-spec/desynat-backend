@@ -250,6 +250,10 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
+Route::match(['get', 'post'], '/setting', function () {
+     return view('user.cms-page.setting');
+
+})->name('user.setting');
 
 
 

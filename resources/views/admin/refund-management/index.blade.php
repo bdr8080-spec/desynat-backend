@@ -93,7 +93,18 @@
                             <td>{{$data->product_details->seller_details->first_name}} {{$data->product_details->seller_details->last_name}}</td>
                             <td>{{$data->user_details->full_name}}</td>
                             <td>{{$data->user_details->country_info->name}}</td>
-                            <td>{{$data->cancel_reason??'N/A'}}</td>
+                            <td>@if(!empty($data->cancel_reason))
+                                    <a class="table-button view-owner-btn"
+                                    type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#sentModal4"
+                                    data-reason="{{ $data->cancel_reason }}">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
+                                @else
+                                    N/A
+                                @endif
+                            </td>
                             <td>{{$data->amount}} KD</td>
                             <td>Pending</td>
                         </tr>
@@ -102,6 +113,21 @@
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="sentModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Reason</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="reasonContainer" class="appointment-container d-flex flex-wrap  justify-content-center">
+                </div>
             </div>
         </div>
     </div>
@@ -121,6 +147,21 @@
         updateToDate();
     });
 
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".view-owner-btn");
+    const reasonContainer = document.getElementById("reasonContainer");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function () {
+            const reason = this.getAttribute("data-reason");
+
+            reasonContainer.innerHTML = `<p>${reason}</p>`;
+        });
+    });
+});
 </script>
 
 
