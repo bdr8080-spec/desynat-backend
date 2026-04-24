@@ -250,6 +250,16 @@ class SellerAuthService
                 
                 $get_user_details->accessToken = $get_user_details->createToken('seller-token', ['seller'])->plainTextToken;
 
+                // if seller is staff member Then generate a Extra Token
+                if($get_user_details->type=='1'){
+                $Staff_user_details=seller::with('subcription_plan','Role_Action.sellermenu')->where('id',$get_user_details->parent_id)->first();  
+
+                $get_user_details->staffaccessToken = $Staff_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+                }else{
+                  $get_user_details->staffaccessToken='';
+                }
+
+
                 if(count($get_user_details->subcription_plan) > 0){
                   $get_user_details->subcription_plan_check ='1';
                 }else{
