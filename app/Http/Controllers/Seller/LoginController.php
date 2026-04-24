@@ -121,9 +121,8 @@ class LoginController extends Controller
             return redirect()->route('seller.upload_document',$seller_details->id)->with('error','Your Document is Rejected By Admin Please Upload Again');
         
         }
-        
 
-           return redirect()->route('seller.dashboard')->with('success','Login successfully');
+        return redirect()->route('seller.dashboard')->with('success','Login successfully');
            
 
         }{

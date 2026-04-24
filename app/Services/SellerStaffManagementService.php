@@ -100,7 +100,10 @@ class SellerStaffManagementService
           'lang'=>$request->lang??null,
           'parent_id'=>$request->seller_id,
           "select_category"=>$request->select_category,
-           "save_password"=>$request->password
+           "save_password"=>$request->password,
+           "store_information"=>1,
+           "bank_information"=>1,
+
         ];
 
        $check_seller= seller::create($record);

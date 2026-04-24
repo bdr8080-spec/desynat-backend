@@ -1,5 +1,15 @@
 @include('dealer.layout.header')
 
+@php
+$menu_permission=SellermenuPermission();
+
+$can_view=$menu_permission['can_view'];
+$can_action=$menu_permission['can_action'];
+
+
+@endphp
+
+
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center mb-5">
         <a class="title24 alink" href="{{ route('seller.deal_management') }} "> <i class="bi bi-chevron-left"></i>
@@ -55,9 +65,11 @@
                 <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table2">
             </div>
         </div>
+          @if($can_action == '1')
         <a href="{{ route('seller.add-single-deal-management',request()->id)}}">
             <img src="{{ asset('dealer') }}/assets/img/add.svg" alt="add" height="50px">
         </a>
+        @endif
     </div>
 
     <div class="table-responsive">
@@ -90,7 +102,11 @@
                     <td>{{$val->product_details->brand->name_english }}</td>
                     <td><i class="bi bi-star-fill yellow-star"></i> {{$val->avg_product_rating ?? 0 }}</td>
                     <td>{{$val->product_details->product_variants['0']->final_price}} KD</td>
-                    <td> <i class="bi bi-trash removeProductFromList fas-5" ref="{{$val->id }}"> </i></td>
+                    <td>
+                          @if($can_action == '1') 
+                        <i class="bi bi-trash removeProductFromList fas-5" ref="{{$val->id }}"> </i>
+                         @endif
+                </td>
                 </tr>
                 @endforeach
 

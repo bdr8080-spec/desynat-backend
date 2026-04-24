@@ -1,5 +1,14 @@
 @include('dealer.layout.header')
 
+
+@php
+$menu_permission=SellermenuPermission();
+
+$can_view=$menu_permission['can_view'];
+$can_action=$menu_permission['can_action'];
+
+@endphp
+
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Ticket Management</div>
@@ -13,8 +22,11 @@
                     <input type="search" name="search" class="form-control py-3" placeholder="Search"  value="{{ request('search') }}">
                 </div>
                 <button type="submit" class="btn btn-success searchlin"> Search </button>
-            </div>      
+            </div>    
+               @if($can_action == '1')
+
             <a href="#" data-bs-toggle="modal" data-bs-target="#ticketModal"><img src="{{ asset('user') }}/assets/images/add-icon.svg" alt="add icon" class="add_ticket-btn"></a>
+            @endif
         </div>
      </form>
 

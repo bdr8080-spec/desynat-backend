@@ -1,5 +1,13 @@
 @include('dealer.layout.header')
 
+@php
+$menu_permission=SellermenuPermission();
+
+$can_view=$menu_permission['can_view'];
+$can_action=$menu_permission['can_action'];
+
+@endphp
+
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Affiliated Commission</div>
@@ -18,15 +26,19 @@
                         <input type="text" class="form-control" placeholder="Eg. 5%"
                             value="{{$seller_details->affilate_commission}}" name="affilate_commission" min="0"
                             max="100" oninput="this.value = this.value.replace(/[^0-9]/g, ''); 
-                if(this.value > 100) this.value = 100;">
+                if(this.value > 100) this.value = 100;" @if($can_action=='0') disabled @endif>
                         <p class="text-danger" id="error-affilate_commission"></p>
                     </div>
                 </div>
             </div>
 
+            @if($can_action=='1')
+            
             <div class="dashboard-button mt-4">
                 <button type="submit" class="btn add-fillbtn w-100">Save</button>
             </div>
+            @endif
+
         </div>
     </form>
 

@@ -1,5 +1,16 @@
 @include('dealer.layout.header')
 
+
+@php
+$menu_permission=SellermenuPermission();
+
+$can_view=$menu_permission['can_view'];
+$can_action=$menu_permission['can_action'];
+
+@endphp
+
+
+
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Inventory Management</div>
@@ -126,10 +137,11 @@
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" role="switch"
                                                     id="switchCheckDefault" rel="{{ $item->id }}"
-                                                    @if ($item->product_active_status == 1) checked @endif>
+                                                    @if ($item->product_active_status == 1) checked @endif  @if($can_action=='0') disabled @endif>
                                                 <label class="form-check-label" for="switchCheckDefault"></label>
                                             </div>
                                         </div>
+                                        
                                     </td>
                                     <td>
                                         <a href="{{ route('seller.view_inventory', $item->id) }}" class="eyebtn"><i
@@ -237,7 +249,7 @@
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" role="switch"
                                                     id="switchCheckDefault" rel="{{ $item->id }}"
-                                                    @if ($item->product_active_status == 1) checked @endif>
+                                                    @if ($item->product_active_status == 1) checked @endif @if($can_action=='0') disabled @endif>
                                                 <label class="form-check-label" for="switchCheckDefault"></label>
                                             </div>
                                         </div>
@@ -350,7 +362,7 @@
                                                 <input class="form-check-input" type="checkbox" role="switch"
                                                     id="switchCheckDefault"
                                                     @if ($item->product_active_status == 1) checked @endif
-                                                    rel="{{ $item->id }}">
+                                                    rel="{{ $item->id }}" @if($can_action=='0') disabled @endif>
                                                 <label class="form-check-label" for="switchCheckDefault"></label>
                                             </div>
                                         </div>

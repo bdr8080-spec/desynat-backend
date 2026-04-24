@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\{SellerMenus_table,sellermenuAction};
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request;
 
 
 
@@ -122,17 +123,56 @@ if (!function_exists('menuActive')) {
             abort(403);
         }
 
-     $seller_details=seller::with('seller_category','Role_Action.sellermenu')->where('id',$user->id)->first();
+    $seller_id=$user->id;
+
+    $seller_details=seller::with('seller_category','Role_Action.sellermenu')->where('id',$seller_id)->first();
+
+    $can_view=0;
+    $can_action=0;
 
 
-     if($seller_details->type=='1'){
+ if($seller_details->type=='1'){
+        
+    $path=Request::path();
+
+    $Web_url = SellerMenus_table::whereJsonContains('active_patterns', $path)
+    ->first();
+
+  $menu_action=sellermenuAction::where('menu_id',$Web_url->id)
+->where('seller_id', $seller_id)->first();
 
 
-     }
+    if($menu_action){
+            
+    if($menu_action->can_view=='0'){
+
+            // return redirect()->back();
+
+            abort(403, 'No permission');
+        }
+    $can_view=$menu_action->can_view;
+    $can_action=$menu_action->can_action;
+
+    }else{
+
+             abort(403, 'No permission');
+        }
+
+}else{
+
+$can_view=1;
+$can_action=1;
+
+}
+
+return [
+    'can_view'=>$can_view,
+    'can_action'=>$can_action
+];
+
 
 
     dd($seller_details);
-
         // 🔥 Get current route name
         $routeName = $request->route()->getName();
 

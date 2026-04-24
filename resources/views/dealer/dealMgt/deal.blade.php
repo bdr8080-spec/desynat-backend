@@ -1,5 +1,14 @@
 @include('dealer.layout.header')
 
+@php
+$menu_permission=SellermenuPermission();
+
+$can_view=$menu_permission['can_view'];
+$can_action=$menu_permission['can_action'];
+
+@endphp
+
+
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Deal Management</div>
@@ -72,8 +81,10 @@
                                     <td>{{$val->from}} - {{$val->to}}</td>
                                     <td>{{$val->discount}} % </td>
                                     <td>
+                                          @if($can_action == '1')
                                         <a href="{{ route('seller.add-single-deal-management',$val->id) }}"
                                             class="addPlus-btn btn-success"><i class="bi bi-plus-lg"></i></a>
+                                          @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -147,9 +158,13 @@
                                         <a href="{{ route('seller.View-single-deal-management',$val->id) }}"
                                             class="eyebtn"><i class="bi bi-eye"></i></a>
                                     </td>
+
+                                    
                                     <td>
+                                        @if($can_action == '1')
                                         <a href="{{ route('seller.add-single-deal-management',$val->id) }}"
-                                            class="addPlus-btn btn-success"><i class="bi bi-plus-lg"></i></a>
+                                            class="addPlus-btn btn-success" ><i class="bi bi-plus-lg"></i></a>
+                                            @endif
                                     </td>
 
                                 </tr>
@@ -208,8 +223,10 @@
                                     <td>{{$val->seller_deal_count}} </td>
 
                                     <td>
+                                        @if($can_action == '1')
                                         <a href="{{route('seller.expire-single-deal-management',$val->id) }}"
                                             class="btn btn-expired">Expired</a>
+                                            @endif
                                     </td>
 
                                 </tr>
