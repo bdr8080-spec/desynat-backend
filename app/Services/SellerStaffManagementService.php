@@ -373,12 +373,26 @@ if($type=='api'){
 
     try{
 
-    $All_staff=seller::with('seller_category','Role_Action.sellermenu','country_details')->where('id',$request->id)
-    ->whereHas('Role_Action', function($query){
-        $query->orderBy('menu_id','asc');
-    })
+   $All_staff = seller::with([
+        'seller_category',
+        'country_details',
+
+        // 🔥 Order Role_Action
+        'Role_Action' => function ($q) {
+            $q->orderBy('menu_id', 'asc');
+        },
+
+        // 🔥 Also load menu inside Role_Action
+        'Role_Action.sellermenu'
+    ])
+    ->where('id', $request->id)
+
+    // Only ensure relation exists
+    ->whereHas('Role_Action')
+
     ->first();
     
+
     return [
         'status' => 'success',
         'message' => 'view Single Staff details fetch Successfully',
