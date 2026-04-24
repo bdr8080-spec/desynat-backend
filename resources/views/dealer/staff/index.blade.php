@@ -90,7 +90,7 @@
 
                         <td>{{$val->created_at->format('Y-m-d')}}</td>
                         <td>
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#showModule" class="eyebtn"><i class="bi bi-eye"></i></a>
+                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#showModule" class="eyebtn openModuleModal" data-id="{{$val->id}}"><i class="bi bi-eye"></i></a>
                         </td>
                         <td>
                             <a href="{{route('dealer.editStaff',$val->id)}}" class="eyebtn">
@@ -131,7 +131,7 @@
 
 </section>
 
-<!-- Success Modal -->
+<!-- Shoow Menu Permission Model -->
 <div class="modal fade" id="showModule" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -140,31 +140,31 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body" id="moduleData">
 
-        
-            <div class="d-flex gap-2 justify-content-between w-100 mb-4">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-                    <label class="form-check-label" for="checkDefault">
-                        Module
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-                    <label class="form-check-label" for="checkDefault">
-                        View
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-                    <label class="form-check-label" for="checkDefault">
-                        Action
-                    </label>
-                </div>
-            </div>
+                
+                    <!-- <div class="d-flex gap-2 justify-content-between w-100 mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkDefault">
+                            <label class="form-check-label" for="checkDefault">
+                                Module
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkDefault">
+                            <label class="form-check-label" for="checkDefault">
+                                View
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkDefault">
+                            <label class="form-check-label" for="checkDefault">
+                                Action
+                            </label>
+                        </div>
+                    </div> -->
             
-</div>
+              </div>
            
         </div>
     </div>
@@ -268,6 +268,59 @@ $(document).ready(function() {
                     $('#loader').hide()
                 },
             })
-        })
+        });
+
+
+// Show menu permission
+
+$(document).on("click", ".openModuleModal", function () {
+
+    let id = $(this).data("id");
+
+    // Show modal first
+    $("#showModule").modal("show");
+
+    // Show loader
+    $("#moduleData").html("Loading...");
+
+    $.ajax({
+        url: "/seller/view-menu-permission", // your route
+        type: "GET",
+        data: { id: id },
+        success: function (res) {
+
+            let html = "";
+
+            res.data.forEach((item, index) => {
+
+                html += `
+                <div class="d-flex justify-content-between mb-3">
+
+                    <div class="form-check">
+                        <label class="form-check-label">${item.single_actionmenu.title}</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" ${item.can_view ? 'checked' : ''}>
+                        <label class="form-check-label">View</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" ${item.can_action ? 'checked' : ''}>
+                        <label class="form-check-label">Action</label>
+                    </div>
+
+                </div>
+                `;
+            });
+
+            $("#moduleData").html(html);
+        }
+    });
+
+});
+</script>
+
+
+
 
 </script>

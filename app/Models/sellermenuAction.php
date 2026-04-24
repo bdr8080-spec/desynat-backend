@@ -11,4 +11,8 @@ class sellermenuAction extends Model
        public function sellermenu(){ 
         return $this->hasMany(SellerMenus_table::class,'id','menu_id'); 
     }
+
+     public function singleActionmenu(){ 
+        return $this->hasOne(SellerMenus_table::class,'id','menu_id'); 
+    }
 }

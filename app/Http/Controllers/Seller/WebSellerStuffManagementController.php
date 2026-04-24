@@ -10,7 +10,7 @@ use App\Helpers\ApiResponse;
 use Validator;
 use App\Services\SellerStaffManagementService;
 
-use App\Models\country;
+use App\Models\{country,sellermenuAction};
 
 use Auth;
 
@@ -246,6 +246,16 @@ $validate = Validator::make($request->all(), [
 
 
 
+public function ViewMenuPermission(Request $request){
+
+  $modules=sellermenuAction::with('singleActionmenu')->where('seller_id',$request->id)->get();
+
+ return response()->json([
+        'data' => $modules
+    ]);
+
+
+}
     
 
 }
