@@ -1104,6 +1104,11 @@ $seller_id=Auth::guard('seller')->user()->id;
        //dd($data);
         return view('dealer.cms-page.faq-list',compact('data'));
     }
+
+    public function refundManagement(REQUEST $request){
+
+        return view('dealer.refund.index');
+    }
       
 
       
