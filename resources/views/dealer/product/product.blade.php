@@ -8,6 +8,7 @@
     text:truncate;
 }
 </style>
+
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Product Management</div>
