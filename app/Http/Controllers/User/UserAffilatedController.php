@@ -1288,6 +1288,65 @@ public function ticket_management(REQUEST $request){
         return view('affiliatedUser.cms-page.faq-list',compact('data'));
     }
 
+    public function setting(REQUEST $request){
+        $affilatedUser=Auth::guard('affilated_user')->user();
+        $user = $affilatedUser->id;
+        $data = AffilatedUser::where('id',$user)->first();
+
+        return view('affiliatedUser.cms-page.settings',compact('data'));
+    }
+
+    public function affiliate_notification_on_off(Request $request){
+
+        try{
+
+        $affilatedUser=Auth::guard('affilated_user')->user();
+        $user = $affilatedUser->id;
+       
+        $request_data=(object)[
+            'user_id'=>$user,
+        ];
+
+        $data=$this->NotificationManagementService->AffiliateNotificationOnOff($request_data);
+
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+        }catch(exception $e){
+            return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+        }
+    }
+
+    public function affiliate_app_notification_on_off(Request $request){
+
+        try{
+
+            $affilatedUser=Auth::guard('affilated_user')->user();
+            $user = $affilatedUser->id;
+        
+            $request_data=(object)[
+                'user_id'=>$user,
+            ];
+
+            $data=$this->NotificationManagementService->AffiliateAppNotificationOnOff($request_data);
+
+
+            if(isset($data['status']) && $data['status']=='error' ){
+                return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+        }catch(exception $e){
+            return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+        }
+
+    }
+
 
 
 

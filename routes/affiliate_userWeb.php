@@ -116,6 +116,10 @@ Route::get('affiliate/exchange-policy', [UserAffilatedController::class, 'exchan
 Route::get('affiliate/cancellation-policy', [UserAffilatedController::class, 'cancellationPolicy'])->name('affiliate.cancellationPolicy');
 Route::get('affiliate/faq', [UserAffilatedController::class, 'faq'])->name('affiliate.faq');
 
+Route::get('affiliate/setting', [UserAffilatedController::class, 'setting'])->name('affiliate.setting');
+Route::post('affiliate/affiliate_notification_on_off', [UserAffilatedController::class, 'affiliate_notification_on_off'])->name('affiliate.affiliate_notification_on_off');
+Route::post('affiliate/affiliate_app_notification_on_off', [UserAffilatedController::class, 'affiliate_app_notification_on_off'])->name('affiliate.affiliate_app_notification_on_off');
+
 
 
 

@@ -170,6 +170,11 @@ Route::post('/mark_notification_as_read', [DashBoardController::class, 'mark_not
 Route::get('/support', [DashBoardController::class, 'support'])->name('user.support');
 Route::post('/raise_ticket', [DashBoardController::class, 'raise_ticket'])->name('user.raise_ticket');
 
+//m13
+Route::get('/setting', [DashBoardController::class, 'setting'])->name('user.setting');
+Route::post('notification_on_off', [DashBoardController::class, 'notification_on_off'])->name('user.notification_on_off');
+Route::post('app_notification_on_off', [DashBoardController::class, 'app_notification_on_off'])->name('user.app_notification_on_off');
+
 
 });
 
@@ -228,6 +233,7 @@ Route::get('user/faq', [DashBoardController::class, 'faq'])->name('user.faq');
 
 
 
+
  Route::match(['get', 'post'], '/route1', function () {
      return view('user.category.index');
 });
@@ -250,10 +256,10 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
-Route::match(['get', 'post'], '/setting', function () {
-     return view('user.cms-page.setting');
+// Route::match(['get', 'post'], '/setting', function () {
+//      return view('user.cms-page.setting');
 
-})->name('user.setting');
+// })->name('user.setting');
 
 
 
