@@ -77,6 +77,8 @@
                     <input type="text"  class="form-control" placeholder="Enter Phone Number" name="mobile">
                 </div>
         </div> -->
+        <input type="hidden" name="country_code_hidden" id="country_code_hidden"
+            value="{{ $all_country[0]->dial_code ?? '' }}">
 
          <div class="col-lg-6 col-md-6">
                                     <div class="label-flex">
@@ -271,41 +273,74 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 
 
 
-$(document).ready(function() {
-    // When a user selects a country (clicks a label)
-    $(document).on('click', '.country-option', function() {
+// $(document).ready(function() {
+//     // When a user selects a country (clicks a label)
+//     $(document).on('click', '.country-option', function() {
+//         let radio = $(this).find('.country-radio');
+//         let flag = radio.data('flag');
+//         let code = radio.val();
+//         let name = radio.data('name');
+
+//         // Update the flag and code shown on the button
+//         $('#selected-flag').html(flag);
+//         $('#selected-code').text(code);
+
+//         // Set the radio input as checked
+//         radio.prop('checked', true);
+
+//         // Close the dropdown (Bootstrap 5)
+//         $('#countryDropdown').dropdown('hide');
+//     });
+
+
+//     $(document).on('click', '.country-option1', function() {
+//         let radio = $(this).find('.country-radio1');
+//         let flag = radio.data('flag');
+//         let code = radio.val();
+//         let name = radio.data('name');
+
+//         // Update the flag and code shown on the button
+//         $('#selected-flag1').html('');
+//         $('#selected-code1').text(flag + ' ' + ' ' + name);
+
+//         // Set the radio input as checked
+//         radio.prop('checked', true);
+
+//         // Close the dropdown (Bootstrap 5)
+//         $('#countryDropdown1').dropdown('hide');
+//     });
+
+// });
+
+$(document).ready(function () {
+
+    // 🔥 SET DEFAULT ON PAGE LOAD (IMPORTANT)
+    let defaultCountry = $('input[name="country_code"]:checked').val();
+
+    if (!defaultCountry) {
+        defaultCountry = $('#country_code_hidden').val();
+    }
+
+    $('#country_code_hidden').val(defaultCountry);
+
+
+
+    // ================= COUNTRY SELECT =================
+    $(document).on('click', '.country-option', function () {
+
         let radio = $(this).find('.country-radio');
         let flag = radio.data('flag');
         let code = radio.val();
-        let name = radio.data('name');
 
-        // Update the flag and code shown on the button
         $('#selected-flag').html(flag);
         $('#selected-code').text(code);
 
-        // Set the radio input as checked
+        // update hidden input (IMPORTANT FIX)
+        $('#country_code_hidden').val(code);
+
+        // set radio checked
+        $('input[name="country_code"]').prop('checked', false);
         radio.prop('checked', true);
-
-        // Close the dropdown (Bootstrap 5)
-        $('#countryDropdown').dropdown('hide');
-    });
-
-
-    $(document).on('click', '.country-option1', function() {
-        let radio = $(this).find('.country-radio1');
-        let flag = radio.data('flag');
-        let code = radio.val();
-        let name = radio.data('name');
-
-        // Update the flag and code shown on the button
-        $('#selected-flag1').html('');
-        $('#selected-code1').text(flag + ' ' + ' ' + name);
-
-        // Set the radio input as checked
-        radio.prop('checked', true);
-
-        // Close the dropdown (Bootstrap 5)
-        $('#countryDropdown1').dropdown('hide');
     });
 
 });
@@ -426,7 +461,8 @@ $('#addBanner').on('submit', function(e) {
     // Text fields
     formData.append('full_name', $('input[name="full_name"]').val());
     formData.append('name_ar', $('input[name="name_ar"]').val());
-    formData.append('country_code', $('input[name="country_code"]:checked').val());
+    // formData.append('country_code', $('input[name="country_code"]:checked').val());
+    formData.append('country_code', $('#country_code_hidden').val());
     formData.append('mobile', $('input[name="mobile"]').val());
     formData.append('email', $('input[name="email"]').val());
     formData.append('select_category', $('input[name="select_category"]:checked').val());
@@ -492,59 +528,6 @@ $('#addBanner').on('submit', function(e) {
 });
 
 
-// document.addEventListener("change", function (e) {
-
-//     // 🔹 When MENU is clicked
-//     if (e.target.classList.contains("menu-checkbox")) {
-
-//         let parent = e.target.closest(".d-flex");
-
-//         let view = parent.querySelector(".view-checkbox");
-//         let action = parent.querySelector(".action-checkbox");
-
-//         if (e.target.checked) {
-//             view.checked = true;
-//             action.checked = true;
-//         } else {
-//             view.checked = false;
-//             action.checked = false;
-//         }
-//     }
-
-//     // 🔹 When VIEW is clicked
-//     if (e.target.classList.contains("view-checkbox")) {
-
-//         let parent = e.target.closest(".d-flex");
-//         let menu = parent.querySelector(".menu-checkbox");
-
-//         if (e.target.checked) {
-//             menu.checked = true;
-//         } else {
-//             // if both view & action unchecked → uncheck menu
-//             let action = parent.querySelector(".action-checkbox");
-//             if (!action.checked) {
-//                 menu.checked = false;
-//             }
-//         }
-//     }
-
-//     // 🔹 When ACTION is clicked
-//     if (e.target.classList.contains("action-checkbox")) {
-
-//         let parent = e.target.closest(".d-flex");
-//         let menu = parent.querySelector(".menu-checkbox");
-
-//         if (e.target.checked) {
-//             menu.checked = true;
-//         } else {
-//             // if both view & action unchecked → uncheck menu
-//             let view = parent.querySelector(".view-checkbox");
-//             if (!view.checked) {
-//                 menu.checked = false;
-//             }
-//         }
-//     }
-// });
 
 document.addEventListener("change", function (e) {
 

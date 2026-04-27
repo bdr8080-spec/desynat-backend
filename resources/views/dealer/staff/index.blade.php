@@ -36,17 +36,19 @@
                     </div>
 
                     <div class="from-group">
-                        <select class="form-select form-control width-50" aria-label="Default select example">
+                        <select name="status_filter" class="form-select form-control width-50" aria-label="Default select example">
                             <option value="">Filter by status</option>
-                            <option value="1"> Active </option>
-                            <option value="2"> confirmed </option>
+                            <option value="0"> Active </option>
+                            <option value="1"> Inactive </option>
                         </select>
                     </div>
                     <div class="from-group">
-                        <select class="form-select form-control width-50" aria-label="Default select example">
+                        <select name="role_filter" class="form-select form-control width-50" aria-label="Default select example">
                             <option value="">Filter by Role</option>
-                            <option value="1"> Active </option>
-                            <option value="2"> confirmed </option>
+                            <option value="1"> Manager </option>
+                            <option value="2"> Officer </option>
+                            <option value="3"> Sales Employee </option>
+                            
                         </select>
                     </div>
 
@@ -70,7 +72,7 @@
                         <th class="no-sort">Added on</th>
                         <th class="no-sort">View Modules</th>
                         <th class="no-sort">Edit</th>
-                        <th class="no-sort">Active/Inactive </th>
+                        <th class="no-sort">Inactive/Active </th>
                         <th class="no-sort">Delete</th>
                     </tr>
                 </thead>
@@ -103,7 +105,7 @@
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch"
                                         id="switchCheckDefault" rel="{{ $val->id }}"
-                                        @if ($val->is_block == 1) checked @endif>
+                                        @if ($val->is_block == 0) checked @endif>
                                     <label class="form-check-label" for="switchCheckDefault"></label>
                                 </div>
                             </div>
@@ -213,10 +215,10 @@ $(document).ready(function() {
                 },
                 success: function(data) {
 
-                    if (data.data.is_block == 1) {
+                    if (data.data.is_block == 0) {
                         toastr.success(data.message);
 
-                    } else if (data.data.is_block === 0) {
+                    } else if (data.data.is_block === 1) {
                         toastr.error(data.message);
 
                     } else {
@@ -315,6 +317,71 @@ $(document).on("click", ".openModuleModal", function () {
 
             $("#moduleData").html(html);
         }
+    });
+
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const fromDate = document.getElementById('fromDate');
+    const toDate = document.getElementById('toDate');
+    const form = fromDate.form;
+
+    const today = new Date().toISOString().split('T')[0];
+
+    fromDate.min = today;
+    toDate.min = today;
+
+    function canSubmit() {
+        return (
+            fromDate.value &&
+            toDate.value &&
+            fromDate.value >= today &&
+            toDate.value >= fromDate.value
+        );
+    }
+
+    fromDate.addEventListener('change', function() {
+
+        if (this.value < today) {
+            this.value = '';
+            return;
+        }
+
+        toDate.min = this.value;
+
+        if (toDate.value && toDate.value < this.value) {
+            toDate.value = '';
+        }
+
+        if (canSubmit()) {
+            form.submit();
+        }
+    });
+
+    toDate.addEventListener('change', function() {
+
+        if (fromDate.value && this.value < fromDate.value) {
+            this.value = '';
+            return;
+        }
+
+        if (canSubmit()) {
+            form.submit();
+        }
+    });
+
+    const statusFilter = document.querySelector('select[name="status_filter"]');
+
+    statusFilter.addEventListener('change', function() {
+        form.submit();
+    });
+
+    const roleFilter = document.querySelector('select[name="role_filter"]');
+
+    roleFilter.addEventListener('change', function() {
+        form.submit();
     });
 
 });
