@@ -48,6 +48,11 @@ class AuthController extends Controller
                 return response()->json(['errors' => ['email' => ['Email is not registered']]], 422);
             }
 
+            if ($admin->status == '0') {
+                return response()->json(['errors' => ['email' => ['Your Account Is Blocked']]], 422);
+            }
+
+
             if (!Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
                 return response()->json(['errors' => ['password' => ['Password is Incorrect']]], 422);
             }

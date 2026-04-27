@@ -32,7 +32,7 @@ class AdminAuthService
 
     public function loginCheck($request){
 
-        $get_user_details=  Admin::where('email',$request->email)->first();
+        $get_user_details=  Admin::where('email',$request->email)->where('status','1')->first();
 
         if($get_user_details){
 
@@ -54,7 +54,7 @@ class AdminAuthService
             }
     
         }else{
-        return ['status'=>'error','message'=>"Admin does not exist",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Admin does not exist or blocked",'data'=>(object)[]];                
         }
 
     }
