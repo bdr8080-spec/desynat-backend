@@ -41,8 +41,26 @@ Route::get('/agoraOnlyStream', function () {
 
 
 Route::match(['get', 'post'], '/agora/token', [AgoraController::class, 'generateTokenWeb']);
-  
 
+
+// Web frontend change country and Currency Code Start
+// Route::post('/set-country', function (Illuminate\Http\Request $request) {
+//     session(['country_id' => $request->country_id]);
+//     return response()->json(['status' => true]);
+// });
+
+// Route::post('/set-currency', function (Illuminate\Http\Request $request) {
+//     session(['currency' => $request->currency]);
+//     return response()->json(['status' => true]);
+// });
+
+Route::post('/set-country',[LanguageController::class,'setCountryInUser']);
+Route::post('/set-currency',[LanguageController::class,'setCurrencyInUser']);
+
+
+// Web frontend change country and Currency Code Start
+
+  
 Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
 
  Route::group(['prefix' => 'user'], function () { 

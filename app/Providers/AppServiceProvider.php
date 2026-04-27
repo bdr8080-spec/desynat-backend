@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +21,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
+    $this->loadHeaderCountryData();
+    
+       
     }
+
+    private function loadHeaderCountryData()
+{
+    View::composer('user.layout.header', function ($view) {
+        $view->with('GetsellerCountry', \App\Models\country::get());
+    });
+}
+
+
 
 }

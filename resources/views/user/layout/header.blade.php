@@ -246,207 +246,68 @@
                                     class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
                             @endif
 
-                            <div class="dropdown-center mobileLang">
-                                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}"
-                                        class="img-fluid" />
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu"
-                                    aria-labelledby="countryDropdownBtn">
-                                    <li class="topDropdonw">
-                                        <p>Change Country
-                                            <i class="fa-solid fa-xmark"></i>
-                                        </p>
-                                    </li>
-                                    <li class="dropdown-item" data-country="United States"
-                                        data-flag="{{asset('user/assets/images/flags/kuwait.svg')}}">
-                                        <div class="d-flex align-self-center justify-content-between">
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="country_language" value="United StatesUSA"/>
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">United States</span>
-                                                </label>
-                                            </div>
-                                            <img src="{{asset('user/assets/images/flags/kuwait.svg')}}" />
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="Kuwait"
-                                        data-flag="{{asset('user/assets/images/flags/kuwait.svg')}}">
-                                        <div class="d-flex align-self-center justify-content-between">
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="country_language" value="Kuwait"/>
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">Kuwait</span>
-                                                </label>
-                                            </div>
-                                            <img src="{{asset('user/assets/images/flags/kuwait.svg')}}" />
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="Bahrain"
-                                        data-flag="{{asset('user/assets/images/flags/bahrain.svg')}}">
-                                        <div class="d-flex align-self-center justify-content-between">
+                            <!-- Country code  -->
 
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="country_language" value="Bahrain" />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">Bahrain</span>
-                                                </label>
-                                            </div>
-                                            <img src="{{asset('user/assets/images/flags/bahrain.svg')}}" />
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="Qatar"
-                                        data-flag="{{asset('user/assets/images/flags/qatar.svg')}}">
-                                        <div class="d-flex align-self-center justify-content-between">
+                    <div class="dropdown-center mobileLang">
+                    <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+                    data-bs-toggle="dropdown">
+                    <img id="selectedFlag" src="{{$GetsellerCountry[0]->flag1}}" class="img-fluid" />
+                    </button>
 
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="country_language" value="Qatar" />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">Qatar</span>
-                                                </label>
-                                            </div>
-                                            <img src="{{asset('user/assets/images/flags/qatar.svg')}}" />
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="Saudi Arabia"
-                                        data-flag="{{asset('user/assets/images/flags/saudi-arabia.svg')}}">
-                                        <div class="d-flex align-self-center justify-content-between">
+                    <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu">
+                    <li class="topDropdonw">
+                    <p>Change Country <i class="fa-solid fa-xmark"></i></p>
+                    </li>
 
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="country_language" value="Saudi Arabia" />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">Saudi Arabia</span>
-                                                </label>
-                                            </div>
-                                            <img src="{{asset('user/assets/images/flags/saudi-arabia.svg')}}" />
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="UAE"
-                                        data-flag="{{asset('user/assets/images/flags/uae.svg')}}">
-                                        <div class="d-flex align-self-center justify-content-between">
+                    @foreach($GetsellerCountry as $key=>$val)
+                    <li class="dropdown-item" data-flag="{{$val->flag1}}">
+                    <label class="custom-radio d-flex justify-content-between">
+                    <input type="radio" name="country_language"
+                    value="{{$val->id}}"
+                    {{ session('country_id', $GetsellerCountry[0]->id) == $val->id ? 'checked' : '' }}>
+                    <span>{{$val->name}}</span>
+                    <img src="{{$val->flag1}}" width="20">
+                    </label>
+                    </li>
+                    @endforeach
+                    </ul>
+                    </div>
+                            
+                        <!-- Currency code  -->
+    
+                        <div class="dropdown-center mobileLang">
+    <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+        data-bs-toggle="dropdown">
+        <span id="selectedCurrency">
+            {{ session('currency', $GetsellerCountry[0]->iso_code) }}
+        </span>
+    </button>
 
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="country_language" value="UAE" />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">UAE</span>
-                                                </label>
-                                            </div>
-                                            <img src="{{asset('user/assets/images/flags/uae.svg')}}" />
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="Oman"
-                                        data-flag="{{asset('user/assets/images/flags/oman.svg')}}">
-                                        <div class="d-flex align-self-center justify-content-between">
+    <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu currency">
+        <li class="topDropdonw">
+            <p>Change Currency <i class="fa-solid fa-xmark"></i></p>
+        </li>
 
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="country_language" value="Oman" />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">Oman</span>
-                                                </label>
-                                            </div>
-                                            <img src="{{asset('user/assets/images/flags/oman.svg')}}" />
-                                        </div>
-                                    </li>
-                                    <!-- <li>
-                                        <button id="saveCountry" class="customBtn customBtn5 mt-lg-5 mt-md-3 mt-3">Save</button>
-                                    </li> -->
-                                </ul>
-                            </div>
-                            <div class="dropdown-center mobileLang">
-                                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span id="selectedCurrency">KWD</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu currency">
-                                    <li class="topDropdonw">
-                                        <p>Change Currency
-                                            <i class="fa-solid fa-xmark"></i>
-                                        </p>
-                                    </li>
-                                    <li class="dropdown-item" data-country="Kuwait">
-                                        <div class="d-flex align-self-center justify-content-between">
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">KWD</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="Bahrain">
-                                        <div class="d-flex align-self-center justify-content-between">
+        @foreach($GetsellerCountry as $key=>$val)
+        <li class="dropdown-item">
+            <label class="custom-radio">
+                <input type="radio" name="currency"
+                       value="{{$val->iso_code}}"
+                       {{ session('currency', $GetsellerCountry[0]->iso_code) == $val->iso_code ? 'checked' : '' }}>
+                <span>{{$val->iso_code}}</span>
+            </label>
+        </li>
+        @endforeach
 
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">BHD</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="Qatar">
-                                        <div class="d-flex align-self-center justify-content-between">
+        <li>
+            <button class="customBtn customBtn5">Save</button>
+        </li>
+    </ul>
+</div>
 
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">QAR</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="Saudi Arabia">
-                                        <div class="d-flex align-self-center justify-content-between">
 
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">SAR</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="UAE">
-                                        <div class="d-flex align-self-center justify-content-between">
+            <!-- langauge Change Code  -->
 
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">AED</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="dropdown-item" data-country="Oman">
-                                        <div class="d-flex align-self-center justify-content-between">
-
-                                            <div class="radio-group">
-                                                <label class="custom-radio">
-                                                    <input type="radio" name="gender" value="male" checked />
-                                                    <span class="radio-mark"></span>
-                                                    <span class="label-text">OMR</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <button class="customBtn customBtn5 mt-lg-5 mt-md-3 mt-3">Save</button>
-                                    </li>
-                                </ul>
-                            </div>
                             <div class="dropdown-center mobileLang">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
                                     data-bs-toggle="dropdown">
@@ -669,3 +530,89 @@
                 style="border:none; width:200px; height:200px;">
         </iframe>
     </div>
+
+<!-- chnage country and currency Code  -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ================= LOAD FROM LOCAL STORAGE =================
+    let currency = localStorage.getItem("currency");
+    let flag = localStorage.getItem("flag");
+    let country_id = localStorage.getItem("country_id");
+
+    if (currency) {
+        document.getElementById("selectedCurrency").innerText = currency;
+        document.querySelectorAll('[name="currency"]').forEach(r => {
+            if (r.value === currency) r.checked = true;
+        });
+    }
+
+    if (flag) document.getElementById("selectedFlag").src = flag;
+
+    if (country_id) {
+        document.querySelectorAll('[name="country_language"]').forEach(r => {
+            if (r.value === country_id) r.checked = true;
+        });
+    }
+
+    // ================= COUNTRY CHANGE =================
+    document.querySelectorAll('[name="country_language"]').forEach(radio => {
+        radio.addEventListener("change", function () {
+
+            let parent = this.closest(".dropdown-item");
+            let flag = parent.getAttribute("data-flag");
+
+            document.getElementById("selectedFlag").src = flag;
+
+            localStorage.setItem("country_id", this.value);
+            localStorage.setItem("flag", flag);
+
+            // SAVE IN LARAVEL SESSION
+            fetch("/set-country", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    country_id: this.value
+                })
+            });
+        });
+    });
+
+    // ================= CURRENCY SAVE =================
+    document.querySelector('.currency .customBtn5').addEventListener("click", function () {
+
+        let selected = document.querySelector('[name="currency"]:checked');
+
+        if (selected) {
+            let value = selected.value;
+
+            document.getElementById("selectedCurrency").innerText = value;
+
+            localStorage.setItem("currency", value);
+
+            // SAVE IN LARAVEL SESSION
+            fetch("/set-currency", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    currency: value
+                })
+            });
+
+            // Close dropdown
+            let dropdown = bootstrap.Dropdown.getInstance(
+                document.querySelector('.currency').previousElementSibling
+            );
+            if (dropdown) dropdown.hide();
+        }
+    });
+
+});
+</script>
