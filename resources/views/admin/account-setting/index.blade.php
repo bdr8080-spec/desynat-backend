@@ -10,6 +10,90 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 ->toArray();
 @endphp
 
+
+<style>
+ /* Wrapper fix */
+.form-group .input-group {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Country dropdown button */
+#countryDropdown {
+    height: 48px !important;
+    border-radius: 10px 0 0 10px !important;
+    border: 1px solid #ced4da !important;
+    background: #fff !important;
+    font-size: 14px !important;
+    padding: 6px 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+/* Fix dropdown width properly */
+.form-group .dropdown {
+    /* position: relative !important; */
+    width: 110px !important;
+    z-index: 2 !important;
+}
+
+/* Remove weird absolute overlap */
+.form-group .dropdown button {
+    width: 100% !important;
+}
+
+/* Phone input field */
+.form-group input.form-control {
+    height: 48px !important;
+    border-radius: 0 10px 10px 0 !important;
+    border: 1px solid #ced4da !important;
+    padding-left: 12px !important;
+    font-size: 14px !important;
+}
+
+/* Align input beside dropdown */
+.form-group .input-group input.form-control {
+    margin-top: 0 !important;
+    margin-left: 110px !important;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    border-radius: 10px !important;
+    border: 1px solid #eee !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+}
+
+/* Country option hover */
+.country-option:hover {
+    background: #f5f5f5 !important;
+    border-radius: 6px !important;
+}
+
+/* Selected state feel */
+.country-radio:checked + span {
+    font-weight: 600 !important;
+}
+
+/* Flag alignment */
+#selected-flag img {
+    border-radius: 2px !important;
+}
+
+/* Label spacing */
+.form-label {
+    margin-bottom: 6px !important;
+    font-weight: 500 !important;
+}
+
+/* Error text spacing */
+.text-danger {
+    font-size: 12px !important;
+}
+</style>
+
 <div class="inner-content management">
     <h2 class="h2">Account Settings</h2>
     <div class="d-flex justify-content-center">
@@ -30,10 +114,10 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
     </div>
     <div class="userManagecontent mt-4">
         <div class="tab-content" id="pills-tabContent">
+            
+            <div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="received-tab"
+            tabindex="0">
             <form id="accountForm" enctype="multipart/form-data">
-
-                <div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="received-tab"
-                    tabindex="0">
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -76,7 +160,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                             <div class="form-group">
                                 <label class="form-label">Phone number</label>
                                 <div class="input-group">
-                                    <div class="dropdown" style="width: 30%;">
+                                    <div class="dropdown" style="width: 20%; position: absolute;">
                                         <button
                                             class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
                                             type="button" id="countryDropdown" data-bs-toggle="dropdown"
@@ -155,12 +239,12 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     </div>
                     @endif
 
-                </div>
+                    
+                </form>
+            </div>
 
-            </form>
-
-            <form id="passwordForm">
-                <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab" tabindex="0">
+            <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab" tabindex="0">
+                    <form id="passwordForm">
 
                     <div class="row d-flex justify-content-center">
 
@@ -171,7 +255,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <input type="password" id="old_password" name="old_password" class="form-control"
                                     placeholder="Enter old password" />
                                 <i class="fas fa-eye toggle-password1" onclick="togglePasswordVisibility1()"
-                                    style="position: absolute; right: 10px; top: 40px; cursor: pointer;"></i>
+                                    style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 <small id="error_old_password" class="text-danger"></small>
                             </div>
                             <div class="form-group">
@@ -180,7 +264,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <input type="password" id="new_password" name="new_password" class="form-control"
                                     placeholder="Enter new password" />
                                 <i class="fas fa-eye toggle-password2" onclick="togglePasswordVisibility2()"
-                                    style="position: absolute; right: 10px; top: 40px; cursor: pointer;"></i>
+                                    style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 <small id="error_new_password" class="text-danger"></small>
                             </div>
                             <div class="form-group">
@@ -189,7 +273,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <input type="password" id="confirm_password" name="confirm_password" class="form-control"
                                     placeholder="Re-enter new password" />
                                 <i class="fas fa-eye toggle-password3" onclick="togglePasswordVisibility3()"
-                                    style="position: absolute; right: 10px; top: 40px; cursor: pointer;"></i>
+                                    style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 <small id="error_confirm_password" class="text-danger"></small>
                             </div>
 
@@ -203,15 +287,15 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                             Save Password
                         </button>
 
-                        <button type="button" class="btn btn-secondary px-4" onclick="location.reload();">
+                        <button type="button" class="btn btn-dark customBtn px-4" onclick="location.reload();">
                             Cancel
                         </button>
 
                     </div>
                     @endif
 
+                </form>
                 </div>
-            </form>
         </div>
     </div>
 </div>
