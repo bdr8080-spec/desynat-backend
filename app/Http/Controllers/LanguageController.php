@@ -71,8 +71,11 @@ public function setCountryInUser(Request $request){
 
     $user_detail = Auth::guard('web')->user();
 
+
     if($user_detail){
-        $user_detail->selected_country=$request->country_id;
+
+    User::where('id',$user_detail->id)->update(['selected_country'=> IntVal($request->country_id)]);
+
     }
 
     session(['country_id' => $request->country_id]);
@@ -84,12 +87,12 @@ public function setCurrencyInUser(Request $request){
     $user_detail = Auth::guard('web')->user();
 
     if($user_detail){
-        $user_detail->selected_currency=$request->currency;
+
+        User::where('id',$user_detail->id)->update(['selected_currency'=> IntVal($request->currency)]);
+        // $user_detail->selected_currency=IntVal($request->currency);
     }
 
-
-
-     session(['currency' => $request->currency]);
+    session(['currency' => $request->currency]);
     return response()->json(['status' => true]);
 }
 
