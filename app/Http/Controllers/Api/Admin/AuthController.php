@@ -223,7 +223,7 @@ class AuthController extends Controller
     public function add_sub_admin(Request $req){
 
           $validate = Validator::make($req->all(), [
-              'profile_pic' => 'required',
+            //   'profile_pic' => 'required',
               'full_name' => 'required',
               'full_name_ar' => 'required',
               'country_code' => 'required',
@@ -243,7 +243,7 @@ class AuthController extends Controller
          }
 
          $request_data = (object)[
-                'profile_pic' => $req->profile_pic,
+                'profile_pic' => $req->profile_pic??null,
                 'full_name'        => $req->full_name,
                 'full_name_ar'        => $req->full_name_ar,
                 'country_code'      => $req->country_code,
@@ -268,7 +268,7 @@ class AuthController extends Controller
 
           $validate = Validator::make($req->all(), [
               'id' => 'required|exists:admins,id',
-              'profile_pic' => 'required',
+            //   'profile_pic' => 'required',
               'full_name' => 'required',
               'full_name_ar' => 'required',
               'country_code' => 'required',
@@ -289,7 +289,7 @@ class AuthController extends Controller
 
          $request_data = (object)[
                 'id' => $req->id,
-                'profile_pic' => $req->profile_pic,
+                'profile_pic' => $req->profile_pic??null,
                 'full_name'        => $req->full_name,
                 'full_name_ar'        => $req->full_name_ar,
                 'country_code'      => $req->country_code,

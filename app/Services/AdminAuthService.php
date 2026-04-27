@@ -268,7 +268,7 @@ class AdminAuthService
                 }
 
             $admin = Admin::create([
-                'profile_pic' => $req->profile_pic,
+                'profile_pic' => $req->profile_pic??null,
                 'full_name' => $req->full_name,
                 'full_name_ar' => $req->full_name_ar,
                 'country_code' => $req->country_code,
@@ -361,7 +361,7 @@ class AdminAuthService
             }
 
             $admin->update([
-                'profile_pic' => $req->profile_pic,
+                'profile_pic' => $req->profile_pic??null,
                 'full_name' => $req->full_name,
                 'full_name_ar' => $req->full_name_ar,
                 'country_code' => $req->country_code,

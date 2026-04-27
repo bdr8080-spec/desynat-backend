@@ -306,6 +306,76 @@
 <!-- view module -->
 
 <script>
+// document.addEventListener('DOMContentLoaded', function () {
+
+//     const modal = document.getElementById('sentModal1');
+//     const container = document.getElementById('moduleContainer');
+
+//     if (!modal || !container) return;
+
+//     modal.addEventListener('show.bs.modal', function (event) {
+
+//         const button = event.relatedTarget;
+
+//         let modules = [];
+
+//         try {
+//             modules = JSON.parse(button.getAttribute('data-modules') || '[]');
+//         } catch (e) {
+//             console.log('Invalid module JSON');
+//             modules = [];
+//         }
+
+//         container.innerHTML = '';
+
+//         if (!Array.isArray(modules) || modules.length === 0) {
+//             container.innerHTML = `<p class="text-center text-muted">No modules found</p>`;
+//             return;
+//         }
+
+//         let html = '';
+
+//         modules.forEach((item) => {
+
+//             const moduleName = item?.module_details?.display_name || 'Module';
+
+//             const canView = Number(item.can_view) === 1;
+//             const canEdit = Number(item.can_action) === 1;
+
+//             html += `
+//                 <div class="module-block mb-3">
+
+//                     <h5>${moduleName}</h5>
+
+//                     <div class="d-flex gap-4 mt-2">
+
+//                         <label class="custom-checkbox">
+//                             <input type="checkbox" ${canView ? 'checked' : ''} onclick="return false;">
+//                             View
+//                         </label>
+
+//                         <label class="custom-checkbox">
+//                             <input type="checkbox" ${canEdit ? 'checked' : ''} onclick="return false;">
+//                             Edit
+//                         </label>
+
+//                         <label class="custom-checkbox">
+//                             <input type="checkbox" ${(canView && canEdit) ? 'checked' : ''} onclick="return false;">
+//                             Both
+//                         </label>
+
+//                     </div>
+
+//                 </div>
+//             `;
+//         });
+
+//         container.innerHTML = html;
+
+//     });
+
+// });
+
 document.addEventListener('DOMContentLoaded', function () {
 
     const modal = document.getElementById('sentModal1');
@@ -326,51 +396,48 @@ document.addEventListener('DOMContentLoaded', function () {
             modules = [];
         }
 
-        container.innerHTML = '';
-
-        if (!Array.isArray(modules) || modules.length === 0) {
-            container.innerHTML = `<p class="text-center text-muted">No modules found</p>`;
-            return;
-        }
-
         let html = '';
 
-        modules.forEach((item) => {
+        if (Array.isArray(modules)) {
 
-            const moduleName = item?.module_details?.display_name || 'Module';
+            modules.forEach((item) => {
 
-            const canView = Number(item.can_view) === 1;
-            const canEdit = Number(item.can_action) === 1;
+                const moduleName = item?.module_details?.display_name || 'Module';
 
-            html += `
-                <div class="module-block mb-3">
+                const canView = Number(item.can_view) === 1;
+                const canEdit = Number(item.can_action) === 1;
 
-                    <h5>${moduleName}</h5>
+                //  Skip if no permission at all
+                if (!canView && !canEdit) return;
 
-                    <div class="d-flex gap-4 mt-2">
+                let block = `
+                    <div class="module-block mb-3">
+                        <h5>${moduleName}</h5>
+                        <div class="d-flex gap-4 mt-2">
+                            
+                            <label class="custom-checkbox">
+                                <input type="checkbox" ${canView ? 'checked' : ''} onclick="return false;">
+                                View
+                            </label>
 
-                        <label class="custom-checkbox">
-                            <input type="checkbox" ${canView ? 'checked' : ''} onclick="return false;">
-                            View
-                        </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" ${canEdit ? 'checked' : ''} onclick="return false;">
+                                Edit
+                            </label>
 
-                        <label class="custom-checkbox">
-                            <input type="checkbox" ${canEdit ? 'checked' : ''} onclick="return false;">
-                            Edit
-                        </label>
-
-                        <label class="custom-checkbox">
-                            <input type="checkbox" ${(canView && canEdit) ? 'checked' : ''} onclick="return false;">
-                            Both
-                        </label>
-
+                        </div>
                     </div>
+                `;
 
-                </div>
-            `;
-        });
+                html += block;
+            });
+        }
 
-        container.innerHTML = html;
+        if (html === '') {
+            container.innerHTML = `<p class="text-center text-muted">No modules found</p>`;
+        } else {
+            container.innerHTML = html;
+        }
 
     });
 

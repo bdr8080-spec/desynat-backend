@@ -355,7 +355,7 @@ class AuthController extends Controller
     public function addSubadmin(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:5120',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
               'full_name' => 'required',
               'full_name_ar' => 'required',
               'country_code' => 'required',
@@ -404,7 +404,7 @@ class AuthController extends Controller
         }
 
         $request_data = (object)[
-            'profile_pic' => $imageUrl,
+            'profile_pic' => $imageUrl??null,
             'full_name' => $request->full_name,
             'full_name_ar' => $request->full_name_ar,
             'country_code' => $request->country_code,
@@ -485,7 +485,7 @@ class AuthController extends Controller
 
         $request_data = (object)[
             'id' => $request->id,
-            'profile_pic' => $imageUrl,
+            'profile_pic' => $imageUrl??null,
             'full_name' => $request->full_name,
             'full_name_ar' => $request->full_name_ar,
             'country_code' => $request->country_code,

@@ -163,10 +163,10 @@
                                 Edit
                             </label>
 
-                            <label class="custom-checkbox">
+                            <!-- <label class="custom-checkbox">
                                 <input type="checkbox" class="both-checkbox" data-index="{{ $index }}">
                                 Both
-                            </label>
+                            </label> -->
 
                             <!-- hidden values for backend -->
                             <input type="hidden" name="modules[{{ $index }}][can_view]" value="0" class="can-view-{{ $index }}">
@@ -290,28 +290,50 @@ document.addEventListener('DOMContentLoaded', function () {
         if (canAction) canAction.value = edit && edit.checked ? 1 : 0;
     }
 
-    document.querySelectorAll('.both-checkbox').forEach(cb => {
+    // document.querySelectorAll('.both-checkbox').forEach(cb => {
 
-        cb.addEventListener('change', function () {
+    //     cb.addEventListener('change', function () {
 
-            let i = this.dataset.index;
+    //         let i = this.dataset.index;
 
-            let view = document.querySelector(`.view-checkbox[data-index="${i}"]`);
-            let edit = document.querySelector(`.edit-checkbox[data-index="${i}"]`);
+    //         let view = document.querySelector(`.view-checkbox[data-index="${i}"]`);
+    //         let edit = document.querySelector(`.edit-checkbox[data-index="${i}"]`);
 
-            if (this.checked) {
-                view.checked = true;
-                edit.checked = true;
-            } else {
-                view.checked = false;
-                edit.checked = false;
-            }
+    //         if (this.checked) {
+    //             view.checked = true;
+    //             edit.checked = true;
+    //         } else {
+    //             view.checked = false;
+    //             edit.checked = false;
+    //         }
 
-            updateHidden(i);
-            clearError('modules');
-        });
+    //         updateHidden(i);
+    //         clearError('modules');
+    //     });
 
-    });
+    // });
+
+    // document.querySelectorAll('.view-checkbox, .edit-checkbox').forEach(cb => {
+
+    //     cb.addEventListener('change', function () {
+
+    //         let i = this.dataset.index;
+
+    //         let view = document.querySelector(`.view-checkbox[data-index="${i}"]`);
+    //         let edit = document.querySelector(`.edit-checkbox[data-index="${i}"]`);
+    //         let both = document.querySelector(`.both-checkbox[data-index="${i}"]`);
+
+    //         if (view.checked && edit.checked) {
+    //             both.checked = true;
+    //         } else {
+    //             both.checked = false;
+    //         }
+
+    //         updateHidden(i);
+    //         clearError('modules');
+    //     });
+
+    // });
 
     document.querySelectorAll('.view-checkbox, .edit-checkbox').forEach(cb => {
 
@@ -321,12 +343,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let view = document.querySelector(`.view-checkbox[data-index="${i}"]`);
             let edit = document.querySelector(`.edit-checkbox[data-index="${i}"]`);
-            let both = document.querySelector(`.both-checkbox[data-index="${i}"]`);
 
-            if (view.checked && edit.checked) {
-                both.checked = true;
-            } else {
-                both.checked = false;
+            //  If Edit is checked → force View checked
+            if (this.classList.contains('edit-checkbox') && edit.checked) {
+                view.checked = true;
+            }
+
+            //  Optional: if View is unchecked → also uncheck Edit
+            if (this.classList.contains('view-checkbox') && !view.checked) {
+                edit.checked = false;
             }
 
             updateHidden(i);
@@ -348,10 +373,10 @@ document.addEventListener('DOMContentLoaded', function () {
         let mobile = form.mobile.value;
         let profile = profileInput?.files[0];
 
-        if (!profile) {
-            setError('profile_pic', 'Please select an image');
-            valid = false;
-        }
+        // if (!profile) {
+        //     setError('profile_pic', 'Please select an image');
+        //     valid = false;
+        // }
 
         if (!full_name) {
             setError('full_name', 'Please enter full name in English');

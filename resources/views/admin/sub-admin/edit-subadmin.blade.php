@@ -24,9 +24,9 @@
 
                     <!-- Preview Image -->
                     <img id="profilePreview"
-                        src="{{ $data->profile_pic ?? asset('image/profile.jpg') }}"
+                        src="{{ !empty($data->profile_pic) ? asset($data->profile_pic) : asset('admin/image/profile.jpg') }}"
                         class="profile-img"
-                        style="width:150px; height:150px; object-fit:cover;"/>
+                        style="width:150px; height:150px; object-fit:cover;" />
 
                     <!-- Hidden File Input -->
                     <input type="file"
@@ -217,7 +217,7 @@
 
                         </label>
 
-                        <label class="custom-checkbox">
+                        <!-- <label class="custom-checkbox">
 
                             <input type="checkbox"
                                 class="both-checkbox"
@@ -228,7 +228,7 @@
 
                             Both
 
-                        </label>
+                        </label> -->
 
                         <input type="hidden"
                             name="modules[{{ $index }}][can_view]"
@@ -362,28 +362,60 @@ document.addEventListener('DOMContentLoaded', function () {
         if (canAction) canAction.value = edit && edit.checked ? 1 : 0;
     }
 
-    document.querySelectorAll('.both-checkbox').forEach(cb => {
+    document.querySelectorAll('.edit-checkbox').forEach(cb => {
+        let i = cb.dataset.index;
 
-        cb.addEventListener('change', function () {
+        let view = document.querySelector(`.view-checkbox[data-index="${i}"]`);
 
-            let i = this.dataset.index;
-
-            let view = document.querySelector(`.view-checkbox[data-index="${i}"]`);
-            let edit = document.querySelector(`.edit-checkbox[data-index="${i}"]`);
-
-            if (this.checked) {
-                view.checked = true;
-                edit.checked = true;
-            } else {
-                view.checked = false;
-                edit.checked = false;
-            }
-
-            updateHidden(i);
-            clearError('modules');
-        });
-
+        if (cb.checked && view && !view.checked) {
+            view.checked = true;
+        }
     });
+
+    // document.querySelectorAll('.both-checkbox').forEach(cb => {
+
+    //     cb.addEventListener('change', function () {
+
+    //         let i = this.dataset.index;
+
+    //         let view = document.querySelector(`.view-checkbox[data-index="${i}"]`);
+    //         let edit = document.querySelector(`.edit-checkbox[data-index="${i}"]`);
+
+    //         if (this.checked) {
+    //             view.checked = true;
+    //             edit.checked = true;
+    //         } else {
+    //             view.checked = false;
+    //             edit.checked = false;
+    //         }
+
+    //         updateHidden(i);
+    //         clearError('modules');
+    //     });
+
+    // });
+
+    // document.querySelectorAll('.view-checkbox, .edit-checkbox').forEach(cb => {
+
+    //     cb.addEventListener('change', function () {
+
+    //         let i = this.dataset.index;
+
+    //         let view = document.querySelector(`.view-checkbox[data-index="${i}"]`);
+    //         let edit = document.querySelector(`.edit-checkbox[data-index="${i}"]`);
+    //         let both = document.querySelector(`.both-checkbox[data-index="${i}"]`);
+
+    //         if (view.checked && edit.checked) {
+    //             both.checked = true;
+    //         } else {
+    //             both.checked = false;
+    //         }
+
+    //         updateHidden(i);
+    //         clearError('modules');
+    //     });
+
+    // });
 
     document.querySelectorAll('.view-checkbox, .edit-checkbox').forEach(cb => {
 
@@ -393,12 +425,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let view = document.querySelector(`.view-checkbox[data-index="${i}"]`);
             let edit = document.querySelector(`.edit-checkbox[data-index="${i}"]`);
-            let both = document.querySelector(`.both-checkbox[data-index="${i}"]`);
 
-            if (view.checked && edit.checked) {
-                both.checked = true;
-            } else {
-                both.checked = false;
+            // ✅ If Edit checked → force View checked
+            if (this.classList.contains('edit-checkbox') && edit.checked) {
+                view.checked = true;
+            }
+
+            // ❌ If View unchecked → remove Edit
+            if (this.classList.contains('view-checkbox') && !view.checked) {
+                edit.checked = false;
             }
 
             updateHidden(i);
