@@ -191,9 +191,6 @@ SellerMenus_table::insert([
         'order_by' => 18,
         'status' => 1
     ],
-
-    
-
     [
         'title' => 'Setting',
         'route' => 'seller.setting',
