@@ -255,7 +255,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <input type="password" id="old_password" name="old_password" class="form-control"
                                     placeholder="Enter old password" />
                                 <i class="fas fa-eye toggle-password1" onclick="togglePasswordVisibility1()"
-                                    style="position: absolute; right: 10px; top: 40px; cursor: pointer;"></i>
+                                    style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 <small id="error_old_password" class="text-danger"></small>
                             </div>
                             <div class="form-group">
@@ -264,7 +264,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <input type="password" id="new_password" name="new_password" class="form-control"
                                     placeholder="Enter new password" />
                                 <i class="fas fa-eye toggle-password2" onclick="togglePasswordVisibility2()"
-                                    style="position: absolute; right: 10px; top: 40px; cursor: pointer;"></i>
+                                    style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 <small id="error_new_password" class="text-danger"></small>
                             </div>
                             <div class="form-group">
@@ -273,7 +273,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <input type="password" id="confirm_password" name="confirm_password" class="form-control"
                                     placeholder="Re-enter new password" />
                                 <i class="fas fa-eye toggle-password3" onclick="togglePasswordVisibility3()"
-                                    style="position: absolute; right: 10px; top: 40px; cursor: pointer;"></i>
+                                    style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 <small id="error_confirm_password" class="text-danger"></small>
                             </div>
 
