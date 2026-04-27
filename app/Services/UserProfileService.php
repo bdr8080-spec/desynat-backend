@@ -160,6 +160,24 @@ class UserProfileService
                     ->update(['is_future' => 0]);
             }
 
+            // ================= CARD TYPE DETECTION =================
+            $cardNumber = preg_replace('/\D/', '', $request_data->card_number);
+
+            if (preg_match('/^4/', $cardNumber)) {
+                $cardType = 'Visa';
+            } elseif (
+                preg_match('/^5[1-5]/', $cardNumber) ||
+                preg_match('/^2(2[2-9]|[3-6]|7[01]|720)/', $cardNumber)
+            ) {
+                $cardType = 'MasterCard';
+            } elseif (preg_match('/^3[47]/', $cardNumber)) {
+                $cardType = 'American Express';
+            } elseif (preg_match('/^6/', $cardNumber)) {
+                $cardType = 'Discover';
+            } else {
+                $cardType = 'Unknown';
+            }
+
             $card = UserCard::create([
                 'user_id'          => $request_data->user_id,
                 'card_holder_name' => $request_data->card_holder_name,
@@ -167,6 +185,8 @@ class UserProfileService
                 'expiry_date'      => $request_data->expiry_date,
                 'cvv'              => $request_data->cvv,
                 'is_future'        => $request_data->is_future,
+                'card_type'        => $cardType,
+                
             ]);
 
             DB::commit();
