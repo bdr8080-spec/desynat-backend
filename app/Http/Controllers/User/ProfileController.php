@@ -451,8 +451,90 @@ class ProfileController extends Controller
 
     public function add_new_card(REQUEST $request){
 
-        return view('user.savecard.add-new-address');
+        return view('user.savecard.add-new-card');
     }
+
+    public function make_card_default(Request $request){
+
+        try{
+
+        $user = $request->user();
+        $cardId = $request->card_id;
+       
+        $request_data=(object)[
+            'user_id'=>$user->id,
+            'card_id'=>$cardId,
+        ];
+
+        $data=$this->UserProfileService->MakeDefaultCard($request_data);
+
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+        }catch(exception $e){
+            return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+        }
+    }
+
+    public function delete_card(Request $request){
+
+        try{
+
+        $user = $request->user();
+        $cardId = $request->card_id;
+       
+        $request_data=(object)[
+            'card_id'=>$cardId,
+        ];
+
+        $data=$this->UserProfileService->DeleteCard($request_data);
+
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+        }catch(exception $e){
+            return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+        }
+    }
+
+    public function save_new_card(Request $request){
+
+        try{
+
+        $user = $request->user();
+       
+        $request_data=(object)[
+            'user_id'=>$user->id,
+            'card_holder_name'=>$request->card_holder_name,
+            'card_number'=>$request->card_number,
+            'expiry_date'=>$request->expiry_date,
+            'cvv'=>$request->cvv,
+            'is_future'=>$request->is_future,
+        ];
+
+        $data=$this->UserProfileService->AddCard($request_data);
+
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+        }catch(exception $e){
+            return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+        }
+    }
+
+
 
 
 }
