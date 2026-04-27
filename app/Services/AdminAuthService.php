@@ -218,7 +218,7 @@ class AdminAuthService
             if (Hash::check($request_data->new_password, $admin->password)) {
                 return [
                     'status' => 'error',
-                    'message' => 'Old password should not be used as new password',
+                    'message' => 'New password should not be same as old password ',
                     'data' => (object)[]
                 ];
             }
