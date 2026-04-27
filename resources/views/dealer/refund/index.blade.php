@@ -67,6 +67,7 @@
                         <th class="no-sort">Order ID</th>
                         <th class="no-sort">Total Amount</th>
                         <!-- <th class="no-sort">Total Commission</th> -->
+                         <th class="no-sort">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,6 +81,7 @@
                         <td>{{ $data->id }}</td>
                         <td>{{ $data->amount }} KD</td>
                         <!-- <td>20 KD</td> -->
+                         <td>Pending</td>
                     </tr>
                     @empty
 
