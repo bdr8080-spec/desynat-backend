@@ -8,10 +8,26 @@
     border-radius: 10px;
     align-items: center;
 }
+.view-width {
+    width: 300px;
+}
 .total-refund h3 {
     font-weight: 700;
     color: #000;
     font-size: 24px;
+}
+.profileImg {
+    width: 160px;
+    height: 170px;
+    background: #eee;
+    margin: auto;
+    border-radius: 11px;
+    overflow: hidden;
+}
+.profileImg img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 .mob-change {
     position: absolute;

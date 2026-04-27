@@ -95,7 +95,7 @@
                                         <label>Store Phone Number </label>
                                     </div>
 
-                                    <div class="form-group d-flex gap-0 w-100">
+                                    <div class="form-group d-flex gap-2 w-100">
                                         <div class="dropdown">
                                             <button
                                                 class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
@@ -238,6 +238,7 @@
 
                 <div class="d-flex gap-2 justify-content-between w-100 mb-4">
                 <!-- MAIN MENU -->
+                <div class="view-width">
                 <div class="form-check">
                 <input class="form-check-input menu-checkbox"
                 type="checkbox"
@@ -246,6 +247,7 @@
                 {{$menu->title}}
                 </label>
                 </div>
+            </div>
 
                 <!-- VIEW -->
                 <div class="form-check">
