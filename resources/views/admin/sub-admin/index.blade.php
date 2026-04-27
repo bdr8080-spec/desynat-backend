@@ -140,8 +140,12 @@
                             <td>{{$data->full_name}}</td>
 
                             <td>
+                                @if(!empty($data->profile_pic))
                                 <img src="{{$data->profile_pic}}" alt="Profile Image" width="40px" height="40px"
                                     class="square" />
+                                    @else
+                                    N/A
+                                    @endif
                             </td>
 
                             <td>{{$data->country_code}} {{$data->mobile}}</td>

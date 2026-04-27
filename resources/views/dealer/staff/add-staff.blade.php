@@ -54,7 +54,7 @@
                         <label>Full Name</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Full name" name="name_ar">
+                    <input type="text" dir="rtl" style="text-align: right;" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Full name" name="name_ar">
                  <p class="text-danger" id="error-name_ar"></p>
                 </div>
             </div>
@@ -461,8 +461,8 @@ $('#addBanner').on('submit', function(e) {
                     toastr.error(res.message || 'Something went wrong');
                 }
 
-            console.log(res);
-            alert('Success');
+            //console.log(res);
+           // alert('Success');
         },
         error: function(err) {
 
@@ -492,17 +492,75 @@ $('#addBanner').on('submit', function(e) {
 });
 
 
+// document.addEventListener("change", function (e) {
+
+//     // 🔹 When MENU is clicked
+//     if (e.target.classList.contains("menu-checkbox")) {
+
+//         let parent = e.target.closest(".d-flex");
+
+//         let view = parent.querySelector(".view-checkbox");
+//         let action = parent.querySelector(".action-checkbox");
+
+//         if (e.target.checked) {
+//             view.checked = true;
+//             action.checked = true;
+//         } else {
+//             view.checked = false;
+//             action.checked = false;
+//         }
+//     }
+
+//     // 🔹 When VIEW is clicked
+//     if (e.target.classList.contains("view-checkbox")) {
+
+//         let parent = e.target.closest(".d-flex");
+//         let menu = parent.querySelector(".menu-checkbox");
+
+//         if (e.target.checked) {
+//             menu.checked = true;
+//         } else {
+//             // if both view & action unchecked → uncheck menu
+//             let action = parent.querySelector(".action-checkbox");
+//             if (!action.checked) {
+//                 menu.checked = false;
+//             }
+//         }
+//     }
+
+//     // 🔹 When ACTION is clicked
+//     if (e.target.classList.contains("action-checkbox")) {
+
+//         let parent = e.target.closest(".d-flex");
+//         let menu = parent.querySelector(".menu-checkbox");
+
+//         if (e.target.checked) {
+//             menu.checked = true;
+//         } else {
+//             // if both view & action unchecked → uncheck menu
+//             let view = parent.querySelector(".view-checkbox");
+//             if (!view.checked) {
+//                 menu.checked = false;
+//             }
+//         }
+//     }
+// });
+
 document.addEventListener("change", function (e) {
 
-    // 🔹 When MENU is clicked
+    let parent = e.target.closest(".d-flex");
+    if (!parent) return;
+
+    let menu = parent.querySelector(".menu-checkbox");
+    let view = parent.querySelector(".view-checkbox");
+    let action = parent.querySelector(".action-checkbox");
+
+    // =========================
+    // MENU CLICK
+    // =========================
     if (e.target.classList.contains("menu-checkbox")) {
 
-        let parent = e.target.closest(".d-flex");
-
-        let view = parent.querySelector(".view-checkbox");
-        let action = parent.querySelector(".action-checkbox");
-
-        if (e.target.checked) {
+        if (menu.checked) {
             view.checked = true;
             action.checked = true;
         } else {
@@ -511,39 +569,36 @@ document.addEventListener("change", function (e) {
         }
     }
 
-    // 🔹 When VIEW is clicked
+    // =========================
+    // VIEW CLICK
+    // =========================
     if (e.target.classList.contains("view-checkbox")) {
 
-        let parent = e.target.closest(".d-flex");
-        let menu = parent.querySelector(".menu-checkbox");
-
-        if (e.target.checked) {
+        if (view.checked) {
             menu.checked = true;
         } else {
-            // if both view & action unchecked → uncheck menu
-            let action = parent.querySelector(".action-checkbox");
-            if (!action.checked) {
-                menu.checked = false;
-            }
+            // If VIEW removed → ACTION must also go off
+            action.checked = false;
+            menu.checked = false;
         }
     }
 
-    // 🔹 When ACTION is clicked
+    // =========================
+    // ACTION CLICK
+    // =========================
     if (e.target.classList.contains("action-checkbox")) {
 
-        let parent = e.target.closest(".d-flex");
-        let menu = parent.querySelector(".menu-checkbox");
-
-        if (e.target.checked) {
+        if (action.checked) {
             menu.checked = true;
+            view.checked = true;
         } else {
-            // if both view & action unchecked → uncheck menu
-            let view = parent.querySelector(".view-checkbox");
+            // if ACTION removed → check remaining state
             if (!view.checked) {
                 menu.checked = false;
             }
         }
     }
+
 });
 
 // add stuff code End here 

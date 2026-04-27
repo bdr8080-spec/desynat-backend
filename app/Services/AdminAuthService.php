@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SubAdminCredentialsMail;
+use App\Mail\SubAdminWelcomeMail;
 
 class AdminAuthService
 {
@@ -299,6 +300,7 @@ class AdminAuthService
             AdminPermission::insert($permissions);
 
             DB::commit();
+            Mail::to($admin->email)->send(new SubAdminWelcomeMail($admin));
 
             return [
                 'status' => 'success',

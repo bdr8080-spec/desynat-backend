@@ -195,6 +195,9 @@ Route::post('app_notification_on_off', [DashBoardController::class, 'app_notific
 
 Route::get('/saved-cards', [ProfileController::class, 'saved_cards'])->name('user.saved_cards');
 Route::get('/add-new-card', [ProfileController::class, 'add_new_card'])->name('user.add_new_card');
+Route::post('/make_card_default', [ProfileController::class, 'make_card_default'])->name('user.make_card_default');
+Route::post('/delete_card', [ProfileController::class, 'delete_card'])->name('user.delete_card');
+Route::post('/save_new_card', [ProfileController::class, 'save_new_card'])->name('user.save_new_card');
 
 
 });
