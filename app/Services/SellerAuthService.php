@@ -248,15 +248,20 @@ class SellerAuthService
                     }
                 // $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;   
                 
-                $get_user_details->accessToken = $get_user_details->createToken('seller-token', ['seller'])->plainTextToken;
-
                 // if seller is staff member Then generate a Extra Token
                 if($get_user_details->type=='1'){
-                $Parent_user_details=seller::with('subcription_plan','Role_Action.sellermenu')->where('id',$get_user_details->parent_id)->first();  
 
-                $get_user_details->ParentAccessToken = $Parent_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+                $get_user_details->accessToken = $Staff_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+                $get_user_details->staffaccessToken = $get_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+
+                $Staff_user_details=seller::with('subcription_plan','Role_Action.sellermenu')->where('id',$get_user_details->parent_id)->first();  
+
                 }else{
-                  $get_user_details->ParentAccessToken='';
+
+
+                  $get_user_details->accessToken = $get_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+
+                  $get_user_details->staffaccessToken='';
                 }
 
 
