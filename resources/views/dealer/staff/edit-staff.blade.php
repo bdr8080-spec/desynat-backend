@@ -23,10 +23,12 @@
                     </div>
 
                     <!-- Uploaded Image -->
+                    <div class="profileImg" style="display:none;" id="showProfile">
                     <img id="bannerUploadedImg"
                          src="{{ !empty($view_staff->profile_pic) ? asset($view_staff->profile_pic) : '' }}"
                          class="img-fluid uploadbnr"
                          style="{{ empty($view_staff->profile_pic) ? 'display:none;' : '' }}">
+                    </div>
 
                     <!-- File Input -->
                     <input type="file"
@@ -180,22 +182,24 @@
 
         <div class="row">
             <div class="col-lg-6">
-                <div class="sub-form">
+             <div class="sub-form position-relative">
                     <div class="label-flex">
                         <label>Password</label>
                     </div>
                     <input type="text"  class="form-control" placeholder="Enter Password" name="password" value="{{$view_staff->save_password}}">
-                     <p class="text-danger" id="error-password"></p>
+                    <i class="toggle-password  bi bi-eye-slash "></i>  
+                    <p class="text-danger" id="error-password"></p>
                 
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="sub-form">
+             <div class="sub-form position-relative">
                     <div class="label-flex">
                         <label>Confirm Password</label>
                     </div>
                     <input type="text"  class="form-control" placeholder="Enter Confirm Password" name="confirm_password"  value="{{$view_staff->save_password}}">
-                     <p class="text-danger" id="error-confirm_password"></p>
+                    <i class="toggle-password  bi bi-eye-slash "></i>  
+                    <p class="text-danger" id="error-confirm_password"></p>
                 </div>
             </div>
         </div>
@@ -306,6 +310,7 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
     reader.onload = function(e) {
         document.getElementById('bannerUploadedImg').src = e.target.result;
         document.getElementById('bannerUploadedImg').style.display = 'block';
+        document.getElementById('showProfile').style.display = 'block';
         document.getElementById('bannerPlaceholderImg').style.display = 'none';
     };
     reader.readAsDataURL(file);
@@ -658,6 +663,16 @@ document.addEventListener("change", function (e) {
 
 
 // add stuff code End here 
+
+$(".toggle-password").click(function() {
+        $(this).toggleClass("bi-eye bi-eye-slash");
+        input = $(this).parent().find("input");
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
 
 </script>
 
