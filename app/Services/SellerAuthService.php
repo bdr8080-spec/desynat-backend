@@ -218,9 +218,19 @@ class SellerAuthService
         // $get_user_details=  seller::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
 
         if($request->type=='0'){
-          $get_user_details=  seller::with('subcription_plan','Role_Action.sellermenu')->where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();  
+          $get_user_details=  seller::with(['subcription_plan','Role_Action.sellermenu',
+           'Role_Action' => function ($q) {
+            $q->orderBy('menu_id', 'asc');
+        }
+          
+          ])->where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();  
         }else{
-          $get_user_details=  seller::with('subcription_plan','Role_Action.sellermenu')->where('email',$request->email_mobile)->where('otp_verify','1')->first();
+          $get_user_details=  seller::with(['subcription_plan','Role_Action.sellermenu',
+           'Role_Action' => function ($q) {
+            $q->orderBy('menu_id', 'asc');
+        },
+          
+          ])->where('email',$request->email_mobile)->where('otp_verify','1')->first();
         }
         
 
@@ -251,10 +261,12 @@ class SellerAuthService
                 // if seller is staff member Then generate a Extra Token
                 if($get_user_details->type=='1'){
 
-                $get_user_details->accessToken = $Staff_user_details->createToken('seller-token', ['seller'])->plainTextToken;
-                $get_user_details->staffaccessToken = $get_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+                $Staff_user_details=seller::where('id',$get_user_details->parent_id)->first();  
 
-                $Staff_user_details=seller::with('subcription_plan','Role_Action.sellermenu')->where('id',$get_user_details->parent_id)->first();  
+                $get_user_details->accessToken = $Staff_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+              
+              
+                $get_user_details->staffaccessToken = $get_user_details->createToken('seller-token', ['seller'])->plainTextToken;
 
                 }else{
 
