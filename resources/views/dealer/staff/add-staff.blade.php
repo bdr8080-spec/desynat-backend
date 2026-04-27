@@ -206,10 +206,10 @@
 
                 <!-- MAIN MENU -->
                 <div class="view-width">
-                <div class="form-check">
-                <input class="form-check-input menu-checkbox"
+                <div class="form-check-3">
+                <!-- <input class="form-check-input menu-checkbox"
                 type="checkbox"
-                value="{{$menu->id}}">
+                value="{{$menu->id}}"> -->
                 <label class="form-check-label">
                 {{$menu->title}}
                 </label>

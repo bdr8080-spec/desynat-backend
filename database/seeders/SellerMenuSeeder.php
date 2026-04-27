@@ -136,6 +136,14 @@ SellerMenus_table::insert([
         'status' => 1
     ],
     [
+        'title' => 'Refund Management',
+        'route' => 'seller.refundManagement',
+        'icon' => 'dealer/assets/img/all-icons/refund.svg',
+        'active_patterns' => json_encode(['seller/refund-management']),
+        'order_by' => 19,
+        'status' => 1
+    ],
+    [
         'title' => 'Terms & Condition',
         'route' => 'seller.termCondition',
         'icon' => 'dealer/assets/img/all-icons/plan.svg',
@@ -154,7 +162,7 @@ SellerMenus_table::insert([
     [
         'title' => 'Faq',
         'route' => 'seller.faq',
-        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'icon' => 'dealer/assets/img/all-icons/faqs.svg',
         'active_patterns' => json_encode(['seller/faq']),
         'order_by' => 15,
         'status' => 1
@@ -178,21 +186,11 @@ SellerMenus_table::insert([
     [
         'title' => 'Cancellation Policy',
         'route' => 'seller.cancellationPolicy',
-        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'icon' => 'dealer/assets/img/all-icons/terms.svg',
         'active_patterns' => json_encode(['seller/cancellation-policy']),
         'order_by' => 18,
         'status' => 1
     ],
-
-    [
-        'title' => 'Refund Management',
-        'route' => 'seller.refundManagement',
-        'icon' => 'dealer/assets/img/all-icons/plan.svg',
-        'active_patterns' => json_encode(['seller/refund-management']),
-        'order_by' => 19,
-        'status' => 1
-    ],
-
     [
         'title' => 'Setting',
         'route' => 'seller.setting',

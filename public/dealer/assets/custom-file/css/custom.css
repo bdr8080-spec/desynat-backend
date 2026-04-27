@@ -8,6 +8,14 @@
     border-radius: 10px;
     align-items: center;
 }
+.accordion-header .accordion-button {
+    background: #eee;
+    color: #0c0b0a;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 5px;
+}
+
 .view-width {
     width: 300px;
 }
