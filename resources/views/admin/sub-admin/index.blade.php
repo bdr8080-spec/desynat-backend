@@ -27,6 +27,75 @@
     background-color: #0d6efd !important;
     border-color: #0d6efd !important;
 }
+.table td, .table th {
+    vertical-align: middle !important;
+    /* font-size: 15px; */
+    text-align: center !important;
+    word-break: auto-phrase !important;
+}
+/* Container */
+.modal-body {
+    max-height: 65vh !important;
+    overflow-y: auto !important;
+}
+
+/* Each row = grid layout (BEST for alignment) */
+.module-block {
+    display: grid !important;
+    grid-template-columns: 1fr 120px 120px !important; 
+    align-items: center !important;
+    padding: 12px 10px !important;
+    border-bottom: 1px solid #eee !important;
+}
+
+/* Remove old flex */
+.module-block .d-flex {
+    display: contents !important;
+}
+
+/* Heading (left side) */
+.module-block h5 {
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+}
+
+/* Each checkbox label = column aligned */
+.custom-checkbox {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 14px !important;
+    justify-content: flex-start !important;
+}
+
+/* Checkbox size */
+.custom-checkbox input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+/* Make columns perfectly aligned */
+.module-block .custom-checkbox:nth-child(1) {
+    grid-column: 2 !important;
+}
+.module-block .custom-checkbox:nth-child(2) {
+    grid-column: 3 !important;
+}
+
+/* (Optional) spacing polish */
+.module-block:hover {
+    background: #fafafa !important;
+}
+
+/* Scrollbar */
+.modal-body::-webkit-scrollbar {
+    width: 6px !important;
+}
+.modal-body::-webkit-scrollbar-thumb {
+    background: #ccc !important;
+    border-radius: 10px !important;
+}
 </style>
 
 <div class="inner-content management">

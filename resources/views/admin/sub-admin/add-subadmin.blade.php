@@ -1,8 +1,160 @@
 @extends('admin.layout.app')
 @section('content')
 
+
+<style>
+/* Wrapper fix */
+.form-group .input-group {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Country dropdown button */
+#countryDropdown {
+    height: 48px !important;
+    border-radius: 10px 0 0 10px !important;
+    border: 1px solid #ced4da !important;
+    background: #fff !important;
+    font-size: 14px !important;
+    padding: 6px 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+/* Fix dropdown width properly */
+.form-group .dropdown {
+    /* position: relative !important; */
+    width: 110px !important;
+    z-index: 2 !important;
+}
+
+/* Remove weird absolute overlap */
+.form-group .dropdown button {
+    width: 100% !important;
+}
+
+/* Phone input field */
+.form-group input.form-control {
+    height: 48px !important;
+    border-radius: 0 10px 10px 0 !important;
+    border: 1px solid #ced4da !important;
+    padding-left: 12px !important;
+    font-size: 14px !important;
+}
+
+/* Align input beside dropdown */
+.form-group .input-group input.form-control {
+    margin-top: 0 !important;
+    margin-left: 110px !important;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    border-radius: 10px !important;
+    border: 1px solid #eee !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Country option hover */
+.country-option:hover {
+    background: #f5f5f5 !important;
+    border-radius: 6px !important;
+}
+
+/* Selected state feel */
+.country-radio:checked+span {
+    font-weight: 600 !important;
+}
+
+/* Flag alignment */
+#selected-flag img {
+    border-radius: 2px !important;
+}
+
+/* Label spacing */
+.form-label {
+    margin-bottom: 6px !important;
+    font-weight: 500 !important;
+}
+
+/* Error text spacing */
+.text-danger {
+    font-size: 12px !important;
+}
+.input-group .btn {
+    position: relative;
+    z-index: 2;
+    background: #fff !important;
+    height: 48px;
+}
+
+ /* Scroll area */
+.modal-body {
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+}
+ 
+/* Module row = grid */
+.module-block {
+    display: grid !important;
+    grid-template-columns: 1fr 300px !important;
+    align-items: center !important;
+    padding: 14px 16px !important;
+    border-bottom: 1px solid #e5e7eb !important;
+}
+ 
+/* Remove extra spacing */
+.module-block h5 {
+    margin: 0 !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+}
+ 
+/* Checkbox container right side */
+.module-block .d-flex {
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+}
+ 
+/* Checkbox label */
+.custom-checkbox {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+}
+ 
+/* Checkbox size */
+.custom-checkbox input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+}
+ 
+/* Make all rows same alignment */
+.module-block:nth-child(even) {
+    background: #fafafa !important;
+}
+ 
+/* Optional header styling */
+.h2 {
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+}
+ 
+/* Fix spacing inside flex */
+.module-block .d-flex.mt-3 {
+    margin-top: 0 !important;
+}
+
+</style>
+
+
 <form id="subAdminForm" enctype="multipart/form-data">
-  @csrf
+    @csrf
     <div class="inner-content management">
         <div class="d-flex align-items-center gap-3 mt-2">
             <div class="arrow">
@@ -17,19 +169,13 @@
             <div class="col-lg-12">
                 <div class="text-center mb-4">
                     <div class="profile-box" style="cursor:pointer;">
-                        
+
                         <!-- Preview Image -->
-                        <img id="profilePreview" 
-                            src="image/profile.jpg" 
-                            class="profile-img" 
-                            style="width:150px; height:150px; object-fit:cover;"/>
+                        <img id="profilePreview" src="image/profile.jpg" class="profile-img"
+                            style="width:150px; height:150px; object-fit:cover;" />
 
                         <!-- Hidden File Input -->
-                        <input type="file" 
-                            id="profileInput"
-                            name="profile_pic" 
-                            accept="image/*" 
-                            style="display:none;">
+                        <input type="file" id="profileInput" name="profile_pic" accept="image/*" style="display:none;">
                     </div>
                     <small class="text-danger error" id="error_profile_pic"></small>
                 </div>
@@ -41,59 +187,69 @@
 
                 <div class="form-group">
                     <label class="form-label">Full name(English)</label>
-                    <input type="text" name="full_name" class="form-control" placeholder="Enter full name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
+                    <input type="text" name="full_name" class="form-control" placeholder="Enter full name in English"
+                        oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
                     <small class="text-danger error" id="error_full_name"></small>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Phone number</label>
+                    <div class="input-group">
+                        <div class="dropdown" style="width: 20%; position: absolute;">
+                            <button
+                                class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
 
-                    <div class="dropdown">
-                        <button class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
-                            type="button" data-bs-toggle="dropdown">
+                                <span id="selected-flag">
+                                    <img src="{{ old('country_flag', $country[0]->flag1) }}" width="25" height="16">
+                                </span>
 
-                            <span id="selected-flag">
-                                <img src="{{ old('country_flag', $country[0]->flag1) }}"
-                                    width="25" height="16">
-                            </span>
+                                <span id="selected-code" class="ms-2">
+                                    {{ old('country_code', $country[0]->dial_code) }}
+                                </span>
+                            </button>
 
-                            <span id="selected-code" class="ms-2">
-                                {{ old('country_code', $country[0]->dial_code) }}
-                            </span>
-                        </button>
+                            <ul class="dropdown-menu  p-2" aria-labelledby="countryDropdown"
+                                style="max-height: 300px; overflow-y: auto;">
 
-                        <ul class="dropdown-menu p-2">
+                                @foreach ($country as $item)
+                                <li>
+                                    <label class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                        style="cursor: pointer;">
 
-                            @foreach ($country as $item)
-                            <li>
-                                <label class="dropdown-item d-flex align-items-center gap-2 country-option">
+                                        <input type="radio" name="country_code" value="{{ $item->dial_code }}"
+                                            data-flag="{{ $item->flag1 }}" data-name="{{ $item->name }}"
+                                            class="country-radio"
+                                            {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                            hidden>
 
-                                    <input type="radio" name="country_code"
-                                        value="{{ $item->dial_code }}"
-                                        data-flag="{{ $item->flag1 }}"
-                                        data-name="{{ $item->name }}"
-                                        class="country-radio"
-                                        {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
-                                        hidden>
+                                        <span>{{ $item->flag }} {{ $item->dial_code }} ({{ $item->name }})</span>
 
-                                    <span>{{ $item->flag }} {{ $item->dial_code }} ({{ $item->name }})</span>
+                                    </label>
+                                </li>
+                                @endforeach
 
-                                </label>
-                            </li>
-                            @endforeach
+                            </ul>
+                        </div>
 
-                        </ul>
-                    </div>
 
-                    <small class="text-danger error" id="error_country_code"></small>
-
-                    <input type="text" name="mobile" class="form-control" placeholder="Enter phone number" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 15);">
-                    <small class="text-danger error" id="error_mobile"></small>
+                        <input type="text" name="mobile" class="form-control" placeholder="Enter phone number"
+                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 15);">
+                      </div>
+                        <div class="d-flex gap-2">
+                            <small class="text-danger error" id="error_country_code"></small>
+                            <small class="text-danger error" id="error_mobile"></small>
+                        </div>
+                  
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Password</label>
-                    <input type="text" name="password" class="form-control" placeholder="Enter password">
+                    <input type="text" id="old_password" name="password" class="form-control" placeholder="Enter password">
+                    <i class="fas fa-eye toggle-password1" onclick="togglePasswordVisibility1()"
+                                    style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
+                                
                     <small class="text-danger error" id="error_password"></small>
                 </div>
 
@@ -103,9 +259,9 @@
                     <select name="country_id" class="form-select form-select-lg">
                         <option value="">Select country</option>
                         @foreach($country as $data)
-                            <option value="{{ $data->id }}">
-                                {{ $data->name }}
-                            </option>
+                        <option value="{{ $data->id }}">
+                            {{ $data->name }}
+                        </option>
                         @endforeach
                     </select>
 
@@ -118,19 +274,24 @@
 
                 <div class="form-group">
                     <label class="form-label">Full name(Arabic)</label>
-                    <input type="text" name="full_name_ar" class="form-control" dir="rtl" style="text-align: right;" placeholder="Enter full name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
+                    <input type="text" name="full_name_ar" class="form-control" dir="rtl" style="text-align: right;"
+                        placeholder="Enter full name in Arabic"
+                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <small class="text-danger error" id="error_full_name_ar"></small>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Email</label>
-                    <input type="text" name="email" class="form-control" placeholder="Enter email address">
+                    <input type="text" name="email" class="form-control" placeholder="Enter email address" >
                     <small class="text-danger error" id="error_email"></small>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Confirm password</label>
-                    <input type="text" name="confirm_password" class="form-control" placeholder="Confirm password">
+                    <input type="text" id="new_password" name="confirm_password" class="form-control" placeholder="Confirm password">
+                      <i class="fas fa-eye toggle-password2" onclick="togglePasswordVisibility2()"
+                                    style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
+                               
                     <small class="text-danger error" id="error_confirm_password"></small>
                 </div>
 
@@ -146,7 +307,7 @@
                     @foreach($modules as $index => $module)
 
                     <div class="module-block">
-                        
+
                         <h5>{{ $module->display_name }}</h5>
 
                         <input type="hidden" name="modules[{{ $index }}][module_id]" value="{{ $module->id }}">
@@ -169,33 +330,82 @@
                             </label> -->
 
                             <!-- hidden values for backend -->
-                            <input type="hidden" name="modules[{{ $index }}][can_view]" value="0" class="can-view-{{ $index }}">
-                            <input type="hidden" name="modules[{{ $index }}][can_action]" value="0" class="can-action-{{ $index }}">
+                            <input type="hidden" name="modules[{{ $index }}][can_view]" value="0"
+                                class="can-view-{{ $index }}">
+                            <input type="hidden" name="modules[{{ $index }}][can_action]" value="0"
+                                class="can-action-{{ $index }}">
 
                         </div>
                     </div>
 
                     @endforeach
 
-                    <small class="text-danger error" id="error_modules"></small>
-
+                    
                 </div>
+                <small class="text-danger error" id="error_modules"></small>
             </div>
         </div>
 
         <!-- Submit -->
-        <div class="text-center">
-            <button type="button" class="btn btn-dark customBtn px-4">Add</button>
+        <div class="text-center  mt-3 mb-4">
+            <button type="button" class="btn btn-dark customBtn px-4 w-25">Add</button>
         </div>
 
     </div>
 </form>
+<script>
+function togglePasswordVisibility1() {
+    const passwordInput = document.getElementById("old_password");
+    const toggleIcon = document.querySelector(".toggle-password1");
 
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleIcon.classList.add("fa-eye");
+        toggleIcon.classList.remove("fa-eye-slash");
+    } else {
 
+        passwordInput.type = "password";
+        toggleIcon.classList.add("fa-eye-slash");
+        toggleIcon.classList.remove("fa-eye");
+    }
+}
+</script>
+<script>
+function togglePasswordVisibility2() {
+    const passwordInput = document.getElementById("new_password");
+    const toggleIcon = document.querySelector(".toggle-password2");
 
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleIcon.classList.add("fa-eye");
+        toggleIcon.classList.remove("fa-eye-slash");
+    } else {
+
+        passwordInput.type = "password";
+        toggleIcon.classList.add("fa-eye-slash");
+        toggleIcon.classList.remove("fa-eye");
+    }
+}
+</script><script>
+function togglePasswordVisibility2() {
+    const passwordInput = document.getElementById("new_password");
+    const toggleIcon = document.querySelector(".toggle-password2");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleIcon.classList.add("fa-eye");
+        toggleIcon.classList.remove("fa-eye-slash");
+    } else {
+
+        passwordInput.type = "password";
+        toggleIcon.classList.add("fa-eye-slash");
+        toggleIcon.classList.remove("fa-eye");
+    }
+}
+</script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
 
     const form = document.getElementById('subAdminForm');
     const submitBtn = document.querySelector('.customBtn');
@@ -224,13 +434,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (profileBox) {
-        profileBox.addEventListener('click', function () {
+        profileBox.addEventListener('click', function() {
             profileInput.click();
         });
     }
 
     if (profileInput) {
-        profileInput.addEventListener('change', function () {
+        profileInput.addEventListener('change', function() {
             if (this.files && this.files[0]) {
                 profilePreview.src = URL.createObjectURL(this.files[0]);
                 clearError('profile_pic');
@@ -240,7 +450,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.country-radio').forEach(radio => {
 
-        radio.addEventListener('change', function () {
+        radio.addEventListener('change', function() {
 
             let flagEl = document.getElementById('selected-flag');
             let codeEl = document.getElementById('selected-code');
@@ -337,7 +547,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.view-checkbox, .edit-checkbox').forEach(cb => {
 
-        cb.addEventListener('change', function () {
+        cb.addEventListener('change', function() {
 
             let i = this.dataset.index;
 
@@ -382,7 +592,14 @@ document.addEventListener('DOMContentLoaded', function () {
             setError('full_name', 'Please enter full name in English');
             valid = false;
         }
-
+      
+            if (!mobile) {
+            setError('mobile', 'Please enter mobile number');
+            valid = false;
+            } else if (!/^\d{7,15}$/.test(mobile)) {
+            setError('mobile', 'Mobile number must be 7 to 15 digits');
+            valid = false;
+            }
         if (!full_name_ar) {
             setError('full_name_ar', 'Please enter full name in Arabic');
             valid = false;
@@ -426,7 +643,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return valid;
     }
 
-    submitBtn?.addEventListener('click', function () {
+    submitBtn?.addEventListener('click', function() {
 
         document.querySelectorAll('.error').forEach(e => e.innerText = '');
 
@@ -444,7 +661,8 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('confirm_password', form.confirm_password.value);
         formData.append('country_id', form.country_id.value);
         formData.append('mobile', form.mobile.value);
-        formData.append('country_code', document.querySelector('input[name="country_code"]:checked')?.value);
+        formData.append('country_code', document.querySelector('input[name="country_code"]:checked')
+            ?.value);
 
         if (profileInput.files[0]) {
             formData.append('image', profileInput.files[0]);
@@ -462,43 +680,43 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         fetch("{{ route('admin.addSubadmin') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Accept": "application/json"
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Accept": "application/json"
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
 
-            submitBtn.disabled = false;
-            submitBtn.innerText = 'Add';
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Add';
 
-            if (data.status === 'success') {
-                toastr.success(data.message);
-                setTimeout(() => {
-                    window.location.href = "{{ route('admin.subAdminManagement') }}";
-                }, 1500);
-            } else if (data.errors) {
-                Object.keys(data.errors).forEach(key => {
-                    let main = key.split('.')[0];
-                    setError(main, data.errors[key][0]);
-                });
-            } else {
-                toastr.error(data.message || 'Something went wrong');
-            }
+                if (data.status === 'success') {
+                    toastr.success(data.message);
+                    setTimeout(() => {
+                        window.location.href = "{{ route('admin.subAdminManagement') }}";
+                    }, 1500);
+                } else if (data.errors) {
+                    Object.keys(data.errors).forEach(key => {
+                        let main = key.split('.')[0];
+                        setError(main, data.errors[key][0]);
+                    });
+                } else {
+                    toastr.error(data.message || 'Something went wrong');
+                }
 
-        })
-        .catch(err => {
+            })
+            .catch(err => {
 
-            submitBtn.disabled = false;
-            submitBtn.innerText = 'Add';
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Add';
 
-            console.log(err);
-            toastr.error('Request failed');
+                console.log(err);
+                toastr.error('Request failed');
 
-        });
+            });
 
     });
 
