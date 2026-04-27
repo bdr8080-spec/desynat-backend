@@ -32,28 +32,19 @@
             </div>
         </div> -->
         @forelse($data as $item)
-            @php
-                $cards = [
-                    ['type' => 'Visa Card', 'image' => 'visa-card.png'],
-                    ['type' => 'Master Card', 'image' => 'master-card.png'],
-                ];
-
-                $random = $cards[array_rand($cards)];
-            @endphp
-
             <div class="border-1 mb-3 mt-3">
                 <div class="giftinfo">
 
                     <div class="d-flex gap-3 align-items-center">
 
                         <div>
-                            <img src="{{ asset('user/assets/images/' . $random['image']) }}"
+                            <img src="{{ $item->card_image }}"
                                 class="img-fluid"
                                 width="90px">
                         </div>
 
                         <div class="master-card">
-                            <div class="mst-title">{{  $random['type'] }}</div>
+                            <div class="mst-title">{{ $item->card_type }}</div>
                             <div class="mst-title">{{ $item->card_number }}</div>
                         </div>
 

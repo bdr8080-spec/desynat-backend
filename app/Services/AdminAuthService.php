@@ -55,7 +55,7 @@ class AdminAuthService
             }
     
         }else{
-        return ['status'=>'error','message'=>"Admin does not exist or blocked",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Account does not exist or blocked",'data'=>(object)[]];                
         }
 
     }

@@ -160,6 +160,29 @@ class UserProfileService
                     ->update(['is_future' => 0]);
             }
 
+            // ================= CARD TYPE DETECTION =================
+            $cardNumber = preg_replace('/\D/', '', $request_data->card_number);
+
+            if (preg_match('/^4/', $cardNumber)) {
+                $cardType = 'Visa';
+                $cardImage = 'https://d79swovq1y56s.cloudfront.net/uploads/YX7SxfDU2T.png';
+            } elseif (
+                preg_match('/^5[1-5]/', $cardNumber) ||
+                preg_match('/^2(2[2-9]|[3-6]|7[01]|720)/', $cardNumber)
+            ) {
+                $cardType = 'MasterCard';
+                $cardImage = 'https://d79swovq1y56s.cloudfront.net/uploads/oEciJYvB06.png';
+            } elseif (preg_match('/^3[47]/', $cardNumber)) {
+                $cardType = 'American Express';
+                $cardImage = 'https://d79swovq1y56s.cloudfront.net/uploads/2RZBMl6VK4.png';
+            } elseif (preg_match('/^6/', $cardNumber)) {
+                $cardType = 'Discover';
+                $cardImage = 'https://d79swovq1y56s.cloudfront.net/uploads/OnoRBD3rjD.png';
+            } else {
+                $cardType = 'Unknown';
+                $cardImage = 'https://d79swovq1y56s.cloudfront.net/uploads/ECtnpFqIDd.png';
+            }
+
             $card = UserCard::create([
                 'user_id'          => $request_data->user_id,
                 'card_holder_name' => $request_data->card_holder_name,
@@ -167,6 +190,9 @@ class UserProfileService
                 'expiry_date'      => $request_data->expiry_date,
                 'cvv'              => $request_data->cvv,
                 'is_future'        => $request_data->is_future,
+                'card_type'        => $cardType,
+                'card_image'        => $cardImage,
+                
             ]);
 
             DB::commit();
