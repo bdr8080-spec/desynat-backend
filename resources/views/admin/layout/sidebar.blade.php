@@ -199,7 +199,7 @@
     @if(in_array(24, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.cmsManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.cmsManagement') }}">
-            <span><img src="{{ asset('admin/image/users-01-1.svg') }}" alt="icon" /></span>
+            <span><img src="{{ asset('admin/image/Icon.svg') }}" alt="icon" /></span>
             CMS Management
         </a>
     </li>
@@ -208,7 +208,7 @@
     <li
         class="nav-item {{ Request::routeIs('admin.notificationManagement') || Request::routeIs('admin.sendNotification') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.notificationManagement') }}">
-            <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
+            <span><img src="{{ asset('admin/image/icon-1.svg') }}" alt="icon" /></span>
             Notification Management
         </a>
     </li>
@@ -216,7 +216,7 @@
     @if(in_array(26, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.ticketManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.ticketManagement') }}">
-            <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
+            <span><img src="{{ asset('admin/image/icon-02.svg') }}" alt="icon" /></span>
             Ticket Management
         </a>
     </li>
@@ -232,7 +232,7 @@
     @if(in_array(28, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.sellerlivestreamManagemnt') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.sellerlivestreamManagemnt') }}">
-            <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="icon" /></span>
+            <span><img src="{{ asset('admin/image/icon-04.svg') }}" alt="icon" /></span>
             Current Live Seller
         </a>
     </li>
@@ -248,7 +248,7 @@
     @if(in_array(30, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.accountSetting') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.accountSetting') }}">
-            <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="icon" /></span>
+            <span><img src="{{ asset('admin/image/icon-03.svg') }}" alt="icon" /></span>
             Account Setting
         </a>
     </li>
@@ -256,7 +256,7 @@
     @if(in_array(31, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.subAdminManagement') || Request::routeIs('admin.add_subadmin') || Request::routeIs('admin.edit_subadmin') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.subAdminManagement') }}">
-            <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="icon" /></span>
+            <span><img src="{{ asset('admin/image/icon-05.svg') }}" alt="icon" /></span>
             Sub Admin Management
         </a>
     </li>
@@ -264,7 +264,7 @@
     @if(in_array(32, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.refundManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.refundManagement') }}">
-            <span><img src="{{ asset('admin/image/play-square.svg') }}" alt="icon" /></span>
+            <span><img src="{{ asset('admin/image/icon-06.svg') }}" alt="icon" /></span>
             Refund Management
         </a>
     </li>

@@ -12,7 +12,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
 
 <style>
- /* Wrapper fix */
+/* Wrapper fix */
 .form-group .input-group {
     position: relative !important;
     display: flex !important;
@@ -63,7 +63,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 .dropdown-menu {
     border-radius: 10px !important;
     border: 1px solid #eee !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* Country option hover */
@@ -73,7 +73,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 }
 
 /* Selected state feel */
-.country-radio:checked + span {
+.country-radio:checked+span {
     font-weight: 600 !important;
 }
 
@@ -114,10 +114,10 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
     </div>
     <div class="userManagecontent mt-4">
         <div class="tab-content" id="pills-tabContent">
-            
+
             <div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="received-tab"
-            tabindex="0">
-            <form id="accountForm" enctype="multipart/form-data">
+                tabindex="0">
+                <form id="accountForm" enctype="multipart/form-data">
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -164,7 +164,8 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                         <button
                                             class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
                                             type="button" id="countryDropdown" data-bs-toggle="dropdown"
-                                            aria-expanded="false" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                            aria-expanded="false"
+                                            style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
 
                                             @php
                                             $selectedCountry = $country->firstWhere('dial_code', $data->country_code);
@@ -180,7 +181,8 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                                         </button>
 
-                                        <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown" style="max-height: 300px; overflow-y: auto;">
+                                        <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown"
+                                            style="max-height: 300px; overflow-y: auto;">
 
                                             @foreach ($country as $item)
                                             <li>
@@ -210,7 +212,8 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
 
                                     <input type="text" name="mobile" class="form-control mt-2"
-                                        placeholder="Enter phone number" value="{{ $data->mobile }}" style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
+                                        placeholder="Enter phone number" value="{{ $data->mobile }}"
+                                        style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
                                         oninput="this.value = this.value.replace(/\D/g, '').slice(0, 15);" />
                                 </div>
                                 <div class="d-flex gap-2">
@@ -239,12 +242,12 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     </div>
                     @endif
 
-                    
+
                 </form>
             </div>
 
             <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab" tabindex="0">
-                    <form id="passwordForm">
+                <form id="passwordForm">
 
                     <div class="row d-flex justify-content-center">
 
@@ -270,8 +273,8 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                             <div class="form-group">
                                 <label class="form-label">Re-enter your new password*</label>
 
-                                <input type="password" id="confirm_password" name="confirm_password" class="form-control"
-                                    placeholder="Re-enter new password" />
+                                <input type="password" id="confirm_password" name="confirm_password"
+                                    class="form-control" placeholder="Re-enter new password" />
                                 <i class="fas fa-eye toggle-password3" onclick="togglePasswordVisibility3()"
                                     style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 <small id="error_confirm_password" class="text-danger"></small>
@@ -295,7 +298,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     @endif
 
                 </form>
-                </div>
+            </div>
         </div>
     </div>
 </div>
