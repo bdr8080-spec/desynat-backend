@@ -21,8 +21,10 @@
                                 </div>
                             </div>
                             <!-- Uploaded Image -->
-                            <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr"
-                                style="display:none;">
+                             <div class="profileImg" style="display:none;" id="showProfile">
+                                 <img id="bannerUploadedImg" src="" alt="image" class="img-fluid"
+                                >
+                            </div>
                             <!-- SINGLE IMAGE -->
                             <input type="file" accept="image/*" id="banner_image_upload"
                                 style="opacity:0;position: absolute;" name="profile_pic">
@@ -85,7 +87,7 @@
                                         <label>Store Phone Number</label>
                                     </div>
 
-                                    <div class="form-group d-flex gap-0 w-100">
+                                    <div class="form-group d-flex gap-2 w-100">
                                         <div class="dropdown">
                                             <button
                                                 class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
@@ -170,22 +172,24 @@
 
         <div class="row">
             <div class="col-lg-6">
-                <div class="sub-form">
+                <div class="sub-form position-relative">
                     <div class="label-flex">
                         <label>Password</label>
                     </div>
                     <input type="text"  class="form-control" placeholder="Enter Password" name="password">
-                     <p class="text-danger" id="error-password"></p>
+                    <i class="toggle-password  bi bi-eye-slash "></i> 
+                    <p class="text-danger" id="error-password"></p>
                 
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="sub-form">
+                <div class="sub-form position-relative">
                     <div class="label-flex">
                         <label>Confirm Password</label>
                     </div>
                     <input type="text"  class="form-control" placeholder="Enter Confirm Password" name="confirm_password">
-                     <p class="text-danger" id="error-confirm_password"></p>
+                    <i class="toggle-password  bi bi-eye-slash "></i> 
+                    <p class="text-danger" id="error-confirm_password"></p>
                 </div>
             </div>
         </div>
@@ -201,6 +205,7 @@
                 <div class="d-flex gap-2 justify-content-between w-100 mb-4">
 
                 <!-- MAIN MENU -->
+                <div class="view-width">
                 <div class="form-check">
                 <input class="form-check-input menu-checkbox"
                 type="checkbox"
@@ -209,14 +214,17 @@
                 {{$menu->title}}
                 </label>
                 </div>
+                </div>
 
                 <!-- VIEW -->
-                <div class="form-check">
-                <input class="form-check-input view-checkbox"
-                type="checkbox"
-                data-id="{{$menu->id}}">
-                <label class="form-check-label">View</label>
-                </div>
+                
+                    <div class="form-check">
+                    <input class="form-check-input view-checkbox"
+                    type="checkbox"
+                    data-id="{{$menu->id}}">
+                    <label class="form-check-label">View</label>
+                    </div>
+            
 
                 <!-- ACTION -->
                 <div class="form-check">
@@ -266,6 +274,7 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
     reader.onload = function(e) {
         document.getElementById('bannerUploadedImg').src = e.target.result;
         document.getElementById('bannerUploadedImg').style.display = 'block';
+        document.getElementById('showProfile').style.display = 'block';
         document.getElementById('bannerPlaceholderImg').style.display = 'none';
     };
     reader.readAsDataURL(file);
@@ -585,6 +594,16 @@ document.addEventListener("change", function (e) {
 });
 
 // add stuff code End here 
+
+$(".toggle-password").click(function() {
+        $(this).toggleClass("bi-eye bi-eye-slash");
+        input = $(this).parent().find("input");
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
 
 </script>
 
