@@ -9,4 +9,4 @@
 
 <p>Please login and change your password.</p>
 
-<p>Thanks,Tean Desynat</p>
+<p>Thanks,Team Desynat</p>

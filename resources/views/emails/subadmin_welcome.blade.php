@@ -10,4 +10,4 @@ You can  log in once your credentials will shared to you by Admin.
 
 <br>
 
-<p>Thanks,Tean Desynat</p>
+<p>Thanks,Team Desynat</p>
