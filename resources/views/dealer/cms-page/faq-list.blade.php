@@ -83,7 +83,7 @@
                                     </h2>
 
                                     <div id="collapse{{ $faq->id }}"
-                                        class="accordion-collapse collapse {{ $key == 0 ? 'show' : '' }}"
+                                        class="accordion-collapse collapse {{ $key == 0 ? 'hide' : '' }}"
                                         data-bs-parent="#accordionExample">
 
                                         <div class="accordion-body">
