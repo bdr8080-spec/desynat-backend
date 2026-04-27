@@ -300,7 +300,34 @@ foreach ($check_chatRecord as $key => $val) {
 
             // Step 3: Write the message data using the generated key
             $newMessageRef->set($message);
+           
+            // if($request->by==='user'){
+            // CreateNotification([
+            //         'sender_id' => $check_chatRecord->user_id, 
+            //         'sender_type' => 2, 
 
+            //         'receiver_id' => $check_chatRecord->seller_id,
+            //         'receiver_type' => 3, 
+
+            //         'title_english' => $request->message,
+            //         'description_english' => "You have a new message",
+
+            //         'notification_type' => 'chat_message'
+            //     ]);
+            // }else{
+            //     CreateNotification([
+            //         'sender_id' => $check_chatRecord->seller_id, 
+            //         'sender_type' => 3, 
+
+            //         'receiver_id' => $check_chatRecord->user_id,
+            //         'receiver_type' => 2, 
+
+            //         'title_english' => $request->message,
+            //         'description_english' => "You have a new message",
+
+            //         'notification_type' => 'chat_message'
+            //     ]);
+            // }
             
     return [
         'status'  => 'success',

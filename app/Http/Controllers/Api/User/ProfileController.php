@@ -361,7 +361,7 @@ class ProfileController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'card_holder_name' => 'required|string',
-            'card_number' => 'required|digits_between:13,15', // digits only, max 15
+            'card_number' => 'required|digits_between:13,19|unique:user_cards,card_number',
             'expiry_date' => [
                 'required',
                 'regex:/^(0[1-9]|1[0-2])\/([0-9]{2})$/' // MM/YY format

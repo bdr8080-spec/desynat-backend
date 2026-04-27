@@ -142,6 +142,18 @@ class UserProfileService
         try {
             DB::beginTransaction();
 
+             $exists = UserCard::where('user_id', $request_data->user_id)
+                ->where('card_number', $request_data->card_number)
+                ->first();
+
+            if ($exists) {
+                return [
+                    'status' => 'error',
+                    'message' => 'This card is already added',
+                    'data' => (object)[]
+                ];
+            }
+
             // if is_future = 1, make others 0
             if ($request_data->is_future == 1) {
                 UserCard::where('user_id', $request_data->user_id)
