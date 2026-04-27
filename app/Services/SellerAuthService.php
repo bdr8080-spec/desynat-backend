@@ -254,9 +254,9 @@ class SellerAuthService
                 if($get_user_details->type=='1'){
                 $Staff_user_details=seller::with('subcription_plan','Role_Action.sellermenu')->where('id',$get_user_details->parent_id)->first();  
 
-                $get_user_details->staffaccessToken = $Staff_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+                $get_user_details->ParentaccessToken = $Staff_user_details->createToken('seller-token', ['seller'])->plainTextToken;
                 }else{
-                  $get_user_details->staffaccessToken='';
+                  $get_user_details->ParentaccessToken='';
                 }
 
 
