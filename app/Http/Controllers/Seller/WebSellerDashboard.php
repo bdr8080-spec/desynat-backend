@@ -55,9 +55,11 @@ class WebSellerDashboard extends Controller
 
 
 
-        $seller_details=Auth::guard('seller')->user();
+        // $seller_details=Auth::guard('seller')->user();
 
-        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details->id)->first();
+         $seller_details=sellerAndStaffId();
+
+        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details)->first();
 
        $plan_page=Cache::get('plan_page');
 
@@ -99,9 +101,11 @@ class WebSellerDashboard extends Controller
             return  redirect()->route('seller.all_plans');
         }     
 
-        $seller_details=Auth::guard('seller')->user();
-  
-        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details->id)->first();
+        // $seller_details=Auth::guard('seller')->user();
+
+         $seller_details=sellerAndStaffId();
+
+        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details)->first();
     
         if($seller_details){
 
@@ -181,14 +185,16 @@ class WebSellerDashboard extends Controller
             ->withInput();
          }
 
-         $seller_details=Auth::guard('seller')->user();
-         $seller_details=seller::where('id',$seller_details->id)->first();
+        //  $seller_details=Auth::guard('seller')->user();
+         $seller_details=sellerAndStaffId();
+         
+         $seller_details=seller::where('id',$seller_details)->first();
 
         $tranasaction_id='Tran'.rand(1111111111111,9999999999999);
 
         $request_data=(object )[
             'transaction_id'=>$tranasaction_id,
-            'seller_id'=>$seller_details->id,
+            'seller_id'=>$seller_details,
             'plan_id' =>$request->plan_id,
             'payment_status'=>'0',
             "payment_method"=>$request->payment_method??'online'
@@ -234,12 +240,13 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
     public function web_store_on_off(Request $request){
 
+         $seller_details=sellerAndStaffId();
 
-        $seller_details=Auth::guard('seller')->user();
+        // $seller_details=Auth::guard('seller')->user();
 
 
         $request_data=(object )[
-            'seller_id'=>$seller_details->id,
+            'seller_id'=>$seller_details,
         ];
 
 
@@ -258,11 +265,14 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
   public function view_profile(REQUEST $request){
 
-    $seller_id=Auth::guard('seller')->user()->id;
+    // $seller_id=Auth::guard('seller')->user()->id;
+
+    $seller_details=sellerAndStaffId();
+
     //dd($seller_id);
 
     $request_data=(object) [
-    'seller_id'=>$seller_id,
+    'seller_id'=>$seller_details,
     ];
 
       $seller_details=  $this->SellerProductService->View_seller_profile($request_data);
@@ -282,7 +292,9 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
       public function edit_profile(REQUEST $request){
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+            $seller_id=sellerAndStaffId();
+
 
         $request_data=(object) [
         'seller_id'=>$seller_id,
@@ -347,7 +359,9 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
      
        }
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+          $seller_id=sellerAndStaffId();
+
 
         $dir='profile/';
 
@@ -401,7 +415,9 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
     public function editbankdetails(REQUEST $req){
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+          $seller_id=sellerAndStaffId();
+
 
         $validate = Validator::make($req->all(), [
             'account_type'=>"required|in:0,1", // 0 Personal 1 Busness
@@ -471,7 +487,9 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
        public function update_commison(REQUEST $request){
 
-$seller_id=Auth::guard('seller')->user()->id;
+// $seller_id=Auth::guard('seller')->user()->id;
+  $seller_id=sellerAndStaffId();
+
 
         if($request->isMethod('get')){
 
@@ -528,20 +546,23 @@ $seller_id=Auth::guard('seller')->user()->id;
         }
     
     public function subscriptionPlan(Request $request){
-        $seller_details=Auth::guard('seller')->user();
+        // $seller_details=Auth::guard('seller')->user();
+
+         $seller_details=sellerAndStaffId();
+
         $request_data=(object )[
-            'seller_id'=>$seller_details->id,
+            'seller_id'=>$seller_details,
         ];
      $myPlans= $this->SellerAuthService->seller_myPlan($request_data)['data'];
      //dd($myPlans);
-     $sellerCountry = sellerStoreInformation::with('country_info')->where('seller_id',$seller_details->id)->first();
+     $sellerCountry = sellerStoreInformation::with('country_info')->where('seller_id',$seller_details)->first();
      //dd($sellerCountry);
      $request_data=(object )[
             'country_id'=>$sellerCountry->country,
         ];
      $allPlans= $this->SellerAuthService->seller_allPlan($request_data)['data'];
      //dd($allPlans);
-     $activePlan = SellerSubcriptionPlanBuy::where('seller_id', $seller_details->id)
+     $activePlan = SellerSubcriptionPlanBuy::where('seller_id', $seller_details)
                     ->where('is_expired','0')
                     ->where('status', '1')
                     ->first();
@@ -563,9 +584,11 @@ $seller_id=Auth::guard('seller')->user()->id;
            }
 
 
-        $seller_details=Auth::guard('seller')->user();
+        // $seller_details=Auth::guard('seller')->user();
+         $seller_details=sellerAndStaffId();
 
-        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details')->where('id',$seller_details->id)->first();
+
+        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details')->where('id',$seller_details)->first();
 
         $tranasaction_id='Tran'.rand(1111111111111,9999999999999);
 
@@ -590,7 +613,9 @@ $seller_id=Auth::guard('seller')->user()->id;
 
     public function add_story(REQUEST $request){
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+        $seller_id=sellerAndStaffId();
+
         //dd($seller_id);
 
         $request_data=(object) [
@@ -605,7 +630,9 @@ $seller_id=Auth::guard('seller')->user()->id;
 
     public function add_highlight(REQUEST $request){
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+        $seller_id=sellerAndStaffId();
+        
         //dd($seller_id);
 
         $request_data=(object) [
@@ -627,7 +654,9 @@ $seller_id=Auth::guard('seller')->user()->id;
             'file.max' => 'Image size should not exceed 5MB',
         ]);
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+          $seller_id=sellerAndStaffId();
+        
         //dd($seller_id);
 
         if($request->hasFile('file')){
@@ -664,7 +693,9 @@ $seller_id=Auth::guard('seller')->user()->id;
 
     public function upload_story_from_gallery(REQUEST $request){
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+        $seller_id=sellerAndStaffId();
+        
         //dd($seller_id);
 
         $request_data=(object) [
@@ -697,7 +728,9 @@ $seller_id=Auth::guard('seller')->user()->id;
             'file.max' => 'Image size should not exceed 5MB',
         ]);
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+        $seller_id=sellerAndStaffId();
+        
         //dd($seller_id);
 
         if($request->hasFile('file')){
@@ -735,7 +768,9 @@ $seller_id=Auth::guard('seller')->user()->id;
 
     public function upload_highlight_from_gallery(REQUEST $request){
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+         $seller_id=sellerAndStaffId();
+        
         //dd($seller_id);
 
         $request_data=(object) [
@@ -770,7 +805,9 @@ $seller_id=Auth::guard('seller')->user()->id;
             'file.required' => 'Please enter caption',
         ]);
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+         $seller_id=sellerAndStaffId();
+        
         //dd($seller_id);
 
         if($request->hasFile('file')){
@@ -826,7 +863,9 @@ $seller_id=Auth::guard('seller')->user()->id;
             ]);
         }
 
-        $seller_id = Auth::guard('seller')->user()->id;
+        //  $seller_id = Auth::guard('seller')->user()->id;
+         $seller_id=sellerAndStaffId();
+        
 
         $imageUrl = null;
 
@@ -977,7 +1016,10 @@ $seller_id=Auth::guard('seller')->user()->id;
 
     public function ticket_management(REQUEST $request){
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+
+         $seller_id=sellerAndStaffId();
+        
         //dd($seller_id);
 
         $request_data=(object) [
@@ -1006,7 +1048,9 @@ $seller_id=Auth::guard('seller')->user()->id;
             'file.max' => 'Image size should not exceed 5MB',
         ]);
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+         $seller_id=sellerAndStaffId();
+        
         //dd($seller_id);
 
         if($request->hasFile('file')){
@@ -1043,6 +1087,7 @@ $seller_id=Auth::guard('seller')->user()->id;
     }
 
      public function chatbot(Request $request,$id){
+
         $seller_details=seller::where('id',$id)->first();
 
           return view('dealer.chatbot',compact('seller_details'));
@@ -1110,7 +1155,10 @@ $seller_id=Auth::guard('seller')->user()->id;
     }
 
     public function refundManagement(REQUEST $request){
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+
+         $seller_id=sellerAndStaffId();
+        
 
        $request_data=(object) [
         'seller_id'=>$seller_id,
@@ -1138,7 +1186,10 @@ $seller_id=Auth::guard('seller')->user()->id;
 
         try{
 
-        $seller_id=Auth::guard('seller')->user()->id;
+        // $seller_id=Auth::guard('seller')->user()->id;
+
+        $seller_id=sellerAndStaffId();
+
        
         $request_data=(object)[
             'user_id'=>$seller_id,
@@ -1162,7 +1213,9 @@ $seller_id=Auth::guard('seller')->user()->id;
 
         try{
 
-            $seller_id=Auth::guard('seller')->user()->id;
+            // $seller_id=Auth::guard('seller')->user()->id;
+            $seller_id=sellerAndStaffId();
+
         
             $request_data=(object)[
                 'user_id'=>$seller_id,

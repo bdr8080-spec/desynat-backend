@@ -29,7 +29,11 @@ class SellerBannerManagement extends Controller
     public function show_banner(Request $request){
 
 
-    $seller_details=Auth::guard('seller')->user()->id;
+    // $seller_details=Auth::guard('seller')->user()->id;
+
+    $seller_details=sellerAndStaffId();
+
+    
 
 
     $request_data=(object) [
@@ -91,7 +95,10 @@ class SellerBannerManagement extends Controller
 public function seller_banner_price(Request $request){
 
 
-   $seller_details=Auth::guard('seller')->user()->id;
+//    $seller_details=Auth::guard('seller')->user()->id;
+
+   $seller_details=sellerAndStaffId();
+
 
      $request_data=(object) [
     'seller_id'=>$seller_details,
@@ -121,7 +128,9 @@ public function seller_banner_price(Request $request){
 
         }
 
-        $seller_details=Auth::guard('seller')->user()->id;
+        // $seller_details=Auth::guard('seller')->user()->id;
+        $seller_details=sellerAndStaffId();
+
 
           $validate = Validator::make($request->all(), [
             'banner_position' => 'required|in:1,2,3', // 1 homeTop 2 home Banner 3 category

@@ -41,9 +41,11 @@ class SellerProductController extends Controller
 
     public function products(Request $request){
 
-        $seller_details=  Auth::guard('seller')->user();
-        $seller_id=$seller_details->id;
-      
+        // $seller_details=  Auth::guard('seller')->user();
+        // $seller_id=$seller_details->id;
+
+        $seller_id=sellerAndStaffId();
+
         $category = Category::orderBy('id', 'asc')->get();
         $brand = Brand::all();
     
@@ -1083,8 +1085,11 @@ public function product_delete(Request $request, $id){
 
 
     public function Inventory_Management(Request $request){
-        $seller_details=  Auth::guard('seller')->user();
-        $seller_id=$seller_details->id;
+        // $seller_details=  Auth::guard('seller')->user();
+        // $seller_id=$seller_details->id;
+
+         $seller_id=sellerAndStaffId();
+       
       
         $category = Category::orderBy('id', 'asc')->get();
         $brand = Brand::all();
@@ -1146,8 +1151,10 @@ public function Add_product_code1(Request $request){
 
     $categoryId = $request->category_id;
     
-    $seller_details=Auth::guard('seller')->user();
-    $seller_id=$seller_details->id;
+    // $seller_details=Auth::guard('seller')->user();
+    // $seller_id=$seller_details->id;
+     $seller_id=sellerAndStaffId();
+       
     
       $validate = Validator::make($request->all(), [
           'category_id' => 'required|exists:categories,id',
@@ -1594,9 +1601,11 @@ public function edit_product_code1(Request $request, $id){
 
     $categoryId = $request->category_id;
 
+    // $seller_details=Auth::guard('seller')->user();
+    // $seller_id=$seller_details->id;
 
-    $seller_details=Auth::guard('seller')->user();
-    $seller_id=$seller_details->id;
+     $seller_id=sellerAndStaffId();
+       
 
       $validate = Validator::make($request->all(), [
           'category_id' => 'required|exists:categories,id',
@@ -2139,8 +2148,11 @@ public function getcolorsizeaccordingdetails(Request $request)
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
     }
 
-    $seller_details=Auth::guard('seller')->user();
-    $seller_id=$seller_details->id;
+    // $seller_details=Auth::guard('seller')->user();
+    // $seller_id=$seller_details->id;
+
+     $seller_id=sellerAndStaffId();
+       
     
     $request_data=(object) [
     'seller_id'=>$seller_id,

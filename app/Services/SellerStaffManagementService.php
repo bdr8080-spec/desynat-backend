@@ -100,7 +100,10 @@ class SellerStaffManagementService
           'lang'=>$request->lang??null,
           'parent_id'=>$request->seller_id,
           "select_category"=>$request->select_category,
-           "save_password"=>$request->password
+           "save_password"=>$request->password,
+           "store_information"=>1,
+           "bank_information"=>1,
+
         ];
 
        $check_seller= seller::create($record);
@@ -368,9 +371,27 @@ if($type=='api'){
 
     public function viewSingleStaffDetails($request){
 
-        try{
+    try{
 
-    $All_staff=seller::with('seller_category','Role_Action.sellermenu','country_details')->where('id',$request->id)->first();
+   $All_staff = seller::with([
+        'seller_category',
+        'country_details',
+
+        // 🔥 Order Role_Action
+        'Role_Action' => function ($q) {
+            $q->orderBy('menu_id', 'asc');
+        },
+
+        // 🔥 Also load menu inside Role_Action
+        'Role_Action.sellermenu'
+    ])
+    ->where('id', $request->id)
+
+    // Only ensure relation exists
+    ->whereHas('Role_Action')
+
+    ->first();
+    
 
     return [
         'status' => 'success',

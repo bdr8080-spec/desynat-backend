@@ -23,7 +23,9 @@ class WebDealManagement extends Controller
     public function deal_management(Request $request){
         
 
-    $seller_details=  Auth::guard('seller')->user()->id;
+    // $seller_details=  Auth::guard('seller')->user()->id;
+
+     $seller_details=sellerAndStaffId();
 
         $request_data=(object )[
         'seller_id'=>$seller_details,
@@ -42,10 +44,9 @@ class WebDealManagement extends Controller
 
 
     public function ViewsingleDealManagement(Request $request, $id){
-        
-        
 
-          $seller_details=  Auth::guard('seller')->user()->id;
+         $seller_details=sellerAndStaffId();
+        //   $seller_details=  Auth::guard('seller')->user()->id;
 
           $request_data=(object )[
             'seller_id'=>$seller_details,
@@ -64,7 +65,9 @@ class WebDealManagement extends Controller
 
     public function singleDealManagement(Request $request, $id){
         
-    $seller_details=  Auth::guard('seller')->user()->id;
+    // $seller_details=  Auth::guard('seller')->user()->id;
+
+         $seller_details=sellerAndStaffId();
 
         if($request->ismethod('get')){
 
@@ -105,7 +108,10 @@ class WebDealManagement extends Controller
 
     public function RemovesingleDealManagement(Request $request){
 
-        $seller_details=$request->user()->id;
+        // $seller_details=$request->user()->id;
+
+
+         $seller_details=sellerAndStaffId();
 
           $request_data=(object )[
             'seller_id'=>$seller_details,
@@ -129,7 +135,9 @@ class WebDealManagement extends Controller
 
     public function expireViewsingleDealManagement(Request $request, $id){
         
-    $seller_details=  Auth::guard('seller')->user()->id;
+    // $seller_details=  Auth::guard('seller')->user()->id;
+
+         $seller_details=sellerAndStaffId();
     
         if($request->ismethod('get')){
             

@@ -1,5 +1,15 @@
 @include('dealer.layout.header')
 
+@php
+$menu_permission=SellermenuPermission();
+
+$can_view=$menu_permission['can_view'];
+$can_action=$menu_permission['can_action'];
+
+@endphp
+
+
+
 <style>
  #tidio-like-btn {
     position: fixed;
@@ -71,11 +81,13 @@
                 <div class="title24">Store availability</div>
                 <div class="d-flex gap-3">
                     <div class="buy">Busy/On</div>
+                    
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault"
-                            onclick="store_availbilityfunction(this)" @if (@$seller_details->store_info->Store_Availability == 1) checked @endif>
+                            onclick="store_availbilityfunction(this)" @if (@$seller_details->store_info->Store_Availability == 1) checked @endif @if($can_action=='0') disabled @endif>
                         <label class="form-check-label" for="switchCheckDefault"></label>
                     </div>
+                    
                 </div>
             </div>
 

@@ -264,10 +264,10 @@ Route::match(['get', 'post'], '/chats', function () {
 })->name('dealer.chats');
 
 
-Route::match(['get', 'post'], '/add-products', function () {
-    return view('dealer.dealMgt.dealadd');
+// Route::match(['get', 'post'], '/add-products', function () {
+//     return view('dealer.dealMgt.dealadd');
 
-})->name('dealer.add-products');
+// })->name('dealer.add-products');
 
 
 

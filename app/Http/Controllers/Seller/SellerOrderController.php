@@ -24,10 +24,12 @@ class SellerOrderController extends Controller
 
     public function order_management(Request $request){
 
-        $seller_details=Auth::guard('seller')->user()->id;
+        // $seller_details=Auth::guard('seller')->user()->id;
+
+        $seller_id=sellerAndStaffId();
 
        $request_data=(object) [
-        'seller_id'=>$seller_details,
+        'seller_id'=>$seller_id,
         "type" =>"1",
          "tabs"=>$request->tabs??null,
       
@@ -46,7 +48,7 @@ class SellerOrderController extends Controller
 
 
         $request_data1=(object) [
-        'seller_id'=>$seller_details,
+        'seller_id'=>$seller_id,
         "type" =>"2",
         "tabs"=>$request->tabs??null,
         // "search"=>$request->search,
@@ -74,7 +76,9 @@ class SellerOrderController extends Controller
 
      public function single_order_View(Request $Request, $id){   
 
-    $seller_details=Auth::guard('seller')->user()->id;
+    // $seller_details=Auth::guard('seller')->user()->id;
+
+     $seller_details=sellerAndStaffId();
 
     $request_data=(object) [
         'seller_id'=>$seller_details,
@@ -97,7 +101,10 @@ class SellerOrderController extends Controller
 
     public function updateSingleOrderStatus(Request $request){
 
-        $seller_details=Auth::guard('seller')->user()->id;
+        // $seller_details=Auth::guard('seller')->user()->id;
+
+
+     $seller_details=sellerAndStaffId();
 
 
             $validate = Validator::make($request->all(), [
@@ -131,7 +138,9 @@ class SellerOrderController extends Controller
     public function updateOrderExchangeReturnStatus(Request $request){
 
 
-        $seller_details=Auth::guard('seller')->user()->id;
+        // $seller_details=Auth::guard('seller')->user()->id;
+
+     $seller_details=sellerAndStaffId();
 
         $validate = Validator::make($request->all(), [
         'id' => 'required|exists:orderdetails,id', // 

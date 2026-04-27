@@ -32,8 +32,10 @@ class SellerLiveRequestController extends Controller
 
     public function liveRequests(Request $request){
 
-        $seller_details=  Auth::guard('seller')->user();
-        $seller_id=$seller_details->id;
+        // $seller_details=  Auth::guard('seller')->user();
+        // $seller_id=$seller_details->id;
+
+        $seller_id=sellerAndStaffId();
         //dd($seller_id);
         
         $request_data=(object) [
@@ -90,15 +92,18 @@ class SellerLiveRequestController extends Controller
     public function getTimeslots(Request $request)
     {
 
-            $seller_details=  Auth::guard('seller')->user();
-            $seller_store_details = sellerStoreInformation::where('seller_id',$seller_details->id)->first();
+         // $seller_details=  Auth::guard('seller')->user();
+
+          $seller_id=sellerAndStaffId();
+
+            $seller_store_details = sellerStoreInformation::where('seller_id',$seller_id)->first();
             $seller_store_country = $seller_store_details->country;
             //dd($seller_store_country);
             //$country = country::where('dial_code',$seller_details->country_code)->first();
             //dd($country);
 
             $request_data=(object )[
-                'seller_id' => $seller_details->id, 
+                'seller_id' => $seller_id, 
                 'country_id'=>$seller_store_country,
                 "date"=>$request->date
             ];
@@ -171,10 +176,12 @@ class SellerLiveRequestController extends Controller
       public function seller_live(Request $request)
     {
      
-        $seller_details=  Auth::guard('seller')->user();
+        // $seller_details=  Auth::guard('seller')->user();
+
+        $seller_id=sellerAndStaffId();
     
         $request_data=(object )[
-            'seller_id' => $seller_details->id, 
+            'seller_id' => $seller_id, 
         ];
 
         $result = $this->SellerLiveRequestService->live_room_records($request_data);
