@@ -60,7 +60,6 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     Route::get('/store_on_off', [SellerDashboardController::class,'store_on_off']);
 
-    
     Route::post('add-product',[SellerProductController::class, 'add_product']);
 
     Route::post('edit-product',[SellerProductController::class, 'edit_product']);
