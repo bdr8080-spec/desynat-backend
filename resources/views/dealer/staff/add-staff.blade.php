@@ -54,7 +54,7 @@
                         <label>Full Name</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Full name" name="name_ar">
+                    <input type="text" dir="rtl" style="text-align: right;" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Full name" name="name_ar">
                  <p class="text-danger" id="error-name_ar"></p>
                 </div>
             </div>
@@ -77,6 +77,8 @@
                     <input type="text"  class="form-control" placeholder="Enter Phone Number" name="mobile">
                 </div>
         </div> -->
+        <input type="hidden" name="country_code_hidden" id="country_code_hidden"
+            value="{{ $all_country[0]->dial_code ?? '' }}">
 
          <div class="col-lg-6 col-md-6">
                                     <div class="label-flex">
@@ -271,41 +273,74 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 
 
 
-$(document).ready(function() {
-    // When a user selects a country (clicks a label)
-    $(document).on('click', '.country-option', function() {
+// $(document).ready(function() {
+//     // When a user selects a country (clicks a label)
+//     $(document).on('click', '.country-option', function() {
+//         let radio = $(this).find('.country-radio');
+//         let flag = radio.data('flag');
+//         let code = radio.val();
+//         let name = radio.data('name');
+
+//         // Update the flag and code shown on the button
+//         $('#selected-flag').html(flag);
+//         $('#selected-code').text(code);
+
+//         // Set the radio input as checked
+//         radio.prop('checked', true);
+
+//         // Close the dropdown (Bootstrap 5)
+//         $('#countryDropdown').dropdown('hide');
+//     });
+
+
+//     $(document).on('click', '.country-option1', function() {
+//         let radio = $(this).find('.country-radio1');
+//         let flag = radio.data('flag');
+//         let code = radio.val();
+//         let name = radio.data('name');
+
+//         // Update the flag and code shown on the button
+//         $('#selected-flag1').html('');
+//         $('#selected-code1').text(flag + ' ' + ' ' + name);
+
+//         // Set the radio input as checked
+//         radio.prop('checked', true);
+
+//         // Close the dropdown (Bootstrap 5)
+//         $('#countryDropdown1').dropdown('hide');
+//     });
+
+// });
+
+$(document).ready(function () {
+
+    // 🔥 SET DEFAULT ON PAGE LOAD (IMPORTANT)
+    let defaultCountry = $('input[name="country_code"]:checked').val();
+
+    if (!defaultCountry) {
+        defaultCountry = $('#country_code_hidden').val();
+    }
+
+    $('#country_code_hidden').val(defaultCountry);
+
+
+
+    // ================= COUNTRY SELECT =================
+    $(document).on('click', '.country-option', function () {
+
         let radio = $(this).find('.country-radio');
         let flag = radio.data('flag');
         let code = radio.val();
-        let name = radio.data('name');
 
-        // Update the flag and code shown on the button
         $('#selected-flag').html(flag);
         $('#selected-code').text(code);
 
-        // Set the radio input as checked
+        // update hidden input (IMPORTANT FIX)
+        $('#country_code_hidden').val(code);
+
+        // set radio checked
+        $('input[name="country_code"]').prop('checked', false);
         radio.prop('checked', true);
-
-        // Close the dropdown (Bootstrap 5)
-        $('#countryDropdown').dropdown('hide');
-    });
-
-
-    $(document).on('click', '.country-option1', function() {
-        let radio = $(this).find('.country-radio1');
-        let flag = radio.data('flag');
-        let code = radio.val();
-        let name = radio.data('name');
-
-        // Update the flag and code shown on the button
-        $('#selected-flag1').html('');
-        $('#selected-code1').text(flag + ' ' + ' ' + name);
-
-        // Set the radio input as checked
-        radio.prop('checked', true);
-
-        // Close the dropdown (Bootstrap 5)
-        $('#countryDropdown1').dropdown('hide');
     });
 
 });
@@ -426,7 +461,8 @@ $('#addBanner').on('submit', function(e) {
     // Text fields
     formData.append('full_name', $('input[name="full_name"]').val());
     formData.append('name_ar', $('input[name="name_ar"]').val());
-    formData.append('country_code', $('input[name="country_code"]:checked').val());
+    // formData.append('country_code', $('input[name="country_code"]:checked').val());
+    formData.append('country_code', $('#country_code_hidden').val());
     formData.append('mobile', $('input[name="mobile"]').val());
     formData.append('email', $('input[name="email"]').val());
     formData.append('select_category', $('input[name="select_category"]:checked').val());
@@ -461,8 +497,8 @@ $('#addBanner').on('submit', function(e) {
                     toastr.error(res.message || 'Something went wrong');
                 }
 
-            console.log(res);
-            alert('Success');
+            //console.log(res);
+           // alert('Success');
         },
         error: function(err) {
 
@@ -492,17 +528,22 @@ $('#addBanner').on('submit', function(e) {
 });
 
 
+
 document.addEventListener("change", function (e) {
 
-    // 🔹 When MENU is clicked
+    let parent = e.target.closest(".d-flex");
+    if (!parent) return;
+
+    let menu = parent.querySelector(".menu-checkbox");
+    let view = parent.querySelector(".view-checkbox");
+    let action = parent.querySelector(".action-checkbox");
+
+    // =========================
+    // MENU CLICK
+    // =========================
     if (e.target.classList.contains("menu-checkbox")) {
 
-        let parent = e.target.closest(".d-flex");
-
-        let view = parent.querySelector(".view-checkbox");
-        let action = parent.querySelector(".action-checkbox");
-
-        if (e.target.checked) {
+        if (menu.checked) {
             view.checked = true;
             action.checked = true;
         } else {
@@ -511,39 +552,36 @@ document.addEventListener("change", function (e) {
         }
     }
 
-    // 🔹 When VIEW is clicked
+    // =========================
+    // VIEW CLICK
+    // =========================
     if (e.target.classList.contains("view-checkbox")) {
 
-        let parent = e.target.closest(".d-flex");
-        let menu = parent.querySelector(".menu-checkbox");
-
-        if (e.target.checked) {
+        if (view.checked) {
             menu.checked = true;
         } else {
-            // if both view & action unchecked → uncheck menu
-            let action = parent.querySelector(".action-checkbox");
-            if (!action.checked) {
-                menu.checked = false;
-            }
+            // If VIEW removed → ACTION must also go off
+            action.checked = false;
+            menu.checked = false;
         }
     }
 
-    // 🔹 When ACTION is clicked
+    // =========================
+    // ACTION CLICK
+    // =========================
     if (e.target.classList.contains("action-checkbox")) {
 
-        let parent = e.target.closest(".d-flex");
-        let menu = parent.querySelector(".menu-checkbox");
-
-        if (e.target.checked) {
+        if (action.checked) {
             menu.checked = true;
+            view.checked = true;
         } else {
-            // if both view & action unchecked → uncheck menu
-            let view = parent.querySelector(".view-checkbox");
+            // if ACTION removed → check remaining state
             if (!view.checked) {
                 menu.checked = false;
             }
         }
     }
+
 });
 
 // add stuff code End here 

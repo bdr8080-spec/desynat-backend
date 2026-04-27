@@ -67,4 +67,34 @@ public function user_lang(Request $req)
     return back()->with('message', 'Language changed successfully');
 }
 
+public function setCountryInUser(Request $request){
+
+    $user_detail = Auth::guard('web')->user();
+
+
+    if($user_detail){
+
+    User::where('id',$user_detail->id)->update(['selected_country'=> IntVal($request->country_id)]);
+
+    }
+
+    session(['country_id' => $request->country_id]);
+    return response()->json(['status' => true]);
+}
+
+public function setCurrencyInUser(Request $request){
+
+    $user_detail = Auth::guard('web')->user();
+
+    if($user_detail){
+
+        User::where('id',$user_detail->id)->update(['selected_currency'=> IntVal($request->currency)]);
+        // $user_detail->selected_currency=IntVal($request->currency);
+    }
+
+    session(['currency' => $request->currency]);
+    return response()->json(['status' => true]);
+}
+
+
 }

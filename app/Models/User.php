@@ -35,6 +35,8 @@ class User extends Authenticatable
         'lang',
         'notification',
         'app_notification',
+        'selected_currency',
+        'selected_country'
     ];
 
     /**

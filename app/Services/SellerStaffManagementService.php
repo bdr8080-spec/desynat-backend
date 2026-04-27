@@ -123,7 +123,7 @@ class SellerStaffManagementService
     }
         return [
             'status' => 'success',
-            'message' => 'Seller Add stuff create Successfully',
+            'message' => 'Staff created Successfully',
             'data' => $check_seller
         ];
 
@@ -347,7 +347,7 @@ if($type=='api'){
 
     $staff=seller::with('seller_category','Role_Action.sellermenu')->where('id',$request->id)->first();
 
-    $msg="staff member delete Successfully";
+    $msg="Staff deleted Successfully";
     $staff->delete();
 
     return [

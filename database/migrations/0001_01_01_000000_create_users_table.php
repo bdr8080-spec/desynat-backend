@@ -33,6 +33,9 @@ return new class extends Migration
 
             $table->string('lang')->default('en')->comment(' en ar');
             
+            $table->integer('selected_country')->nullable()->comment('user Seleted Country');
+            $table->integer('selected_currency')->nullable()->comment('user Seleted Currency');
+            
             $table->timestamps();
         });
 
