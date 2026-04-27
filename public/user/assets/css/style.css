@@ -367,6 +367,15 @@ h3.mid-headng {
     text-decoration: none;
 
 }
+.border-11 {
+    border: 1px solid #6E4527;
+    padding: 12px;
+    border-radius: 8px;
+}
+.card-color {
+    color: #6E4527;
+    text-decoration: none;
+}
 
 .login_content_right {
     /* max-height: 620px; */
