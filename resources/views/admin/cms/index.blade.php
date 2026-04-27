@@ -585,7 +585,7 @@
                             <button class="nav-link customBtn2 m-0" id="pills-privacy-tab-dealer" data-bs-toggle="pill"
                                 data-bs-target="#pills-privacy-dealer" type="button" role="tab"
                                 aria-controls="pills-privacy-dealer" aria-selected="false">
-                                Privacy Policy
+                                Return Policy
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
