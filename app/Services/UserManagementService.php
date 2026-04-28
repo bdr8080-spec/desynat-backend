@@ -997,8 +997,10 @@ public function product_view_cart_details($request)
         $shipping_fees=0;
         $tax=0;
         $total_amount=0;
-        $defaultFee=20;
-        
+        $defaultFee=config('services.defaultShippingFees');
+
+        $defaultTaxFee=config('services.defaultTaxFees');
+
 
         $add_to_cart= Addtocart::with('chatroom_data','product.seller_details','product.store','product_variants.color','product_variants.size')->where('user_id',$request->user_id)->get();
 
@@ -1104,13 +1106,13 @@ public function product_view_cart_details($request)
             // $total_amount=$total_amount+$tax;
            
         }else{
-            $taxAmount= 10; 
+            $taxAmount= $defaultTaxFee; 
              $tax+=$taxAmount;
 
         }
           }else{
 
-            $taxAmount= 10; 
+            $taxAmount= $defaultTaxFee; 
             $tax+=$taxAmount;
             
          }
