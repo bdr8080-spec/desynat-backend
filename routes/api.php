@@ -397,3 +397,4 @@ Route::get('about_us',[CommonController::class, 'about_us']);
 Route::get('cancellation_policy',[CommonController::class, 'cancellation_policy']);
 Route::get('exchange_policy',[CommonController::class, 'exchange_policy']);
 Route::get('faqs',[CommonController::class, 'faqs']);
+Route::post('sendPushNotificationApp',[CommonController::class, 'sendPushNotificationApp']);
