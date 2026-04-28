@@ -196,11 +196,15 @@
                 <input type="hidden" id="variantId" name="variant_id">
                 <input type="hidden" id="productId" name="product_id">
 
+                @if(auth()->guard('web')->check() && auth()->guard('web')->user())
+
                 {{-- <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
                 <p class="text-muted mb-1">{{$data->description_en}}</p> --}}
                 <div id="optionError" style="color:red; font-size:14px; display:none;"></div>
                 @if ($data->customized_product==1)
                 <button class="customBtn2" id="customOrder">Custom Order</button>
+                @endif
+
                 @endif
 
 
@@ -215,6 +219,7 @@
 
                     <div class="action-row d-flex align-items-center gap-3 mt-2">
 
+                       @if(auth()->guard('web')->check() && auth()->guard('web')->user())
                         <!-- LEFT SIDE -->
                         <div class="left-action w-50">
 
@@ -234,6 +239,29 @@
 
                         <!-- BUY NOW BUTTON -->
                         <button class="customBtn w-50" id="buyNowBtn">Buy Now</button>
+
+                        @else
+
+                       
+                          <div class="left-action w-50">
+
+                            <!-- ADD TO BAG -->
+                          <a href="{{route('userLogin')}}" class="customBtn2 w-100 addToBagBtnRemove text-center" id="addToBagBtn">Add to Bag </a>
+
+                            <!-- QUANTITY BOX -->
+                            <div class="quantity-box">
+                                <div class="cart-counts d-flex justify-content-between align-items-center">
+                                    <button class="qty-btn" id="minusBtn"><i class="bi bi-dash icons"></i></button>
+                                    <div class="qty-number" id="qtyNumber">01</div>
+                                    <button class="qty-btn" id="plusBtn"><i class="bi bi-plus icons"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- BUY NOW BUTTON -->
+                    <a href="{{route('userLogin')}}" class="customBtn w-50" id="buyNowBtn">Buy Now</a>
+                    @endif
 
                     </div>
 
@@ -807,7 +835,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         document.getElementById("actualPrice").innerText = variant.actual_price + " {{$currency}}";
         document.getElementById("finalPrice").innerText = variant.final_price + " {{$currency}}";
-        
+
         updateCartUIForVariant(variantId);
         AddAndBuyButtonHideAndShowCode();
     }
