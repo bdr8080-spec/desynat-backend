@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App;
 use Validator;
-use App\Models\User;
+use App\Models\{User,country};
 use App\Helpers\ApiResponse;
 use Auth;
 
@@ -79,6 +79,9 @@ public function setCountryInUser(Request $request){
     }
 
     session(['country_id' => $request->country_id]);
+
+    
+
     return response()->json(['status' => true]);
 }
 
@@ -86,13 +89,25 @@ public function setCurrencyInUser(Request $request){
 
     $user_detail = Auth::guard('web')->user();
 
+    $selectCountry=country::where('iso_code',$request->currency)->first();
+
     if($user_detail){
 
-        User::where('id',$user_detail->id)->update(['selected_currency'=> IntVal($request->currency)]);
+        User::where('id',$user_detail->id)->update(['selected_currency'=> IntVal($selectCountry->id)]);
         // $user_detail->selected_currency=IntVal($request->currency);
     }
 
-    session(['currency' => $request->currency]);
+   if($selectCountry){
+       session([
+        'currency' => $request->currency, // table id
+        'iso_code' => $selectCountry->iso_code,
+        'rate' => $selectCountry->exchange_rate_to_kwd ?? 1
+    ]);
+
+   }else{
+        session(['currency' => $request->currency]);
+   }
+
     return response()->json(['status' => true]);
 }
 
