@@ -43,7 +43,7 @@ class GiftCardControler extends Controller
         $validate = Validator::make($request->all(), [
             // "profile_image"=>"required",
             'gift_card_id' => 'required|exists:gift_cards,id',
-            'amount' => 'required|integer|min:0',
+            'amount' => 'required',
             'receiver_name' => 'required',
             'receiver_email' => 'required|email',
             'sender_name' => 'required',
