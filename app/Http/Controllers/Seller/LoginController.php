@@ -88,8 +88,18 @@ class LoginController extends Controller
  
 
         if (Auth::guard('seller')->attempt($credentials)) {
-          
+
+
            $seller_details=Auth::guard('seller')->user();
+
+           if($seller_details->is_block==1){
+
+            Auth::guard('seller')->logout(); 
+
+             return redirect()->back()
+            ->withErrors(['password'=>'This Account is Blocked'])
+            ->withInput();
+           }
 
            if($seller_details->admin_verify=='0' || $seller_details->admin_verify=='1'){
 

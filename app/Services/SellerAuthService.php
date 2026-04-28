@@ -257,6 +257,10 @@ class SellerAuthService
                         $get_user_details->update($updateData);
                     }
                 // $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;   
+
+                if($get_user_details->is_block==1){
+                  return ['status'=>'error','message'=>"This Account is blocked",'data'=>(object)[]];                
+                }
                 
                 // if seller is staff member Then generate a Extra Token
                 if($get_user_details->type=='1'){
