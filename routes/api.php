@@ -234,6 +234,11 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     Route::get('/get_my_cards', [ProfileController::class,'get_my_cards']);
     Route::post('/delete_card', [ProfileController::class,'delete_card']);
     Route::post('/make_card_default', [ProfileController::class,'make_card_default']);
+
+
+  Route::post('/update-user-selected-country', [UserDashboardController::class,'updateUserSelectedCountry']);
+  Route::post('/update-user-selected-currency', [UserDashboardController::class,'updateUserSelectedCurrency']);
+
   
 });
 
@@ -327,7 +332,7 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
   //m13
   Route::post('/affiliate_notification_on_off', [ApiNotificationController::class,'affiliate_notification_on_off']);
   Route::post('/affiliate_app_notification_on_off', [ApiNotificationController::class,'affiliate_app_notification_on_off']);
-  
+
 
 
 });
