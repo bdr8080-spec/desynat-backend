@@ -9,6 +9,8 @@ use App\Helpers\ApiResponse;
 use Validator;
 use Auth;
 
+use App\Models\User;
+
 use App\Services\UserDashboardService;
 use App\Services\StoryManagementService;
 use App\Services\TicketService;
@@ -611,6 +613,64 @@ public function newestProduct(Request $request){
         }
     }
 
+
+ public function updateUserSelectedCountry(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'country_id' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 400);
+        }
+
+        try {
+            $user_id=$request->user()->id;
+
+
+            if($user_id){
+
+             $user_detials=   User::where('id',$user_id)->update(['selected_country'=> IntVal($request->country_id)]);
+
+            }
+
+            return ApiResponse::generateResponse('success', 'selected country Update Successfully',[], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+
+
+
+ public function updateUserSelectedCurrency(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'currency' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 400);
+        }
+
+        try {
+
+            $user_id=$request->user()->id;
+
+            if($user_id){
+
+             $user_detials=   User::where('id',$user_id)->update(['selected_currency'=> IntVal($request->currency)]);
+
+            }
+
+        return ApiResponse::generateResponse('success', 'selected Currency Update Successfully',[], 200);
+
+        
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
 
 
 
