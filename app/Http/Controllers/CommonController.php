@@ -648,6 +648,54 @@ class CommonController extends Controller
         );
     }
 
+    public function sendPushNotificationApp(Request $request)
+    {
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'sender_id' => 'required|integer',
+                'sender_type' => 'required|in:1,2,3,4,5',
+                'receiver_id' => 'required|integer',
+                'receiver_type' => 'required|in:1,2,3,4,5',
+                'title_english' => 'required|string',
+                'description_english' => 'required|string',
+                'notification_type' => 'required|string',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $validator->errors()->first()
+                ], 422);
+            }
+
+            CreateNotification([
+                'sender_id' => $request->sender_id,
+                'sender_type' => $request->sender_type,
+
+                'receiver_id' => $request->receiver_id,
+                'receiver_type' => $request->receiver_type,
+
+                'title_english' => $request->title_english,
+                'description_english' => $request->description_english,
+
+                'notification_type' => $request->notification_type
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Notification sent successfully'
+            ], 200);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 
  
