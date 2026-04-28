@@ -640,80 +640,74 @@ return ['status'=>'success','message'=>"Custom Order Create Successfully",'data'
         return $count;
     }
 
-    // public function single_chat_count($request_data)
-    // {
-    //     $room = $request_data->unique_id;
-    //     $currentUserId = $request_data->user_id;
-
-    //     $messages = $this->getMessages($room);
-    //     //dd($messages);
-    //     $count = 0;
-
-    //     foreach ($messages as $msg) {
-    //         if (
-    //             isset($msg['user_id']) &&
-    //             $msg['user_id'] != $currentUserId &&
-    //             (!isset($msg['read_status']) || $msg['read_status'] == 0)
-    //         ) {
-    //             $count++;
-    //         }
-    //     }
-
-    //     return [
-    //         'status' => 'success',
-    //         'message' => 'Chat count fetched successfully',
-    //         'data' => $count
-    //     ];
-    // }
 
     public function mark_all_chat_msg_as_read($request_data)
-    {
-        try {
+{
+    try {
 
-            $room = $request_data->unique_id;
-            $currentUserId = $request_data->user_id;
+        $room = $request_data->unique_id;
+        $currentUserId = $request_data->user_id;
 
-            $messages = $this->getMessages($room);
+        $messages = $this->getMessages($room);
 
-            if (empty($messages)) {
-                return [
-                    'status' => 'success',
-                    'message' => 'No messages found',
-                    'data' => (object)[]
-                ];
-            }
-
-            $updatedCount = 0;
-
-            foreach ($messages as $key => $msg) {
-
-                if (
-                    isset($msg['user_id']) &&
-                    $msg['user_id'] != $currentUserId &&
-                    (empty($msg['read_status']) || $msg['read_status'] == 0)
-                ) {
-
-                    $messages[$key]['read_status'] = 1;
-                    $updatedCount++;
-                }
-            }
-
-            $this->updateMessages($room, $messages);
-
+        if (empty($messages)) {
             return [
                 'status' => 'success',
-                'message' => 'Messages marked as read successfully',
-                'data' => $updatedCount
-            ];
-
-        } catch (\Exception $e) {
-            return [
-                'status' => 'error',
-                'message' => 'Error: ' . $e->getMessage(),
-                'data' => []
+                'message' => 'No messages found',
+                'data' => (object)[]
             ];
         }
+
+        $updatedCount = 0;
+
+        foreach ($messages as $key => $msg) {
+
+            if (
+                isset($msg['user_id']) &&
+                $msg['user_id'] != $currentUserId &&
+                (empty($msg['read']) || $msg['read'] == 0)   
+            ) {
+
+                $messages[$key]['read'] = 1;  
+                $updatedCount++;
+            }
+        }
+
+        $this->updateMessages($room, $messages);
+
+        return [
+            'status' => 'success',
+            'message' => 'Messages marked as read successfully',
+            'data' => $updatedCount
+        ];
+
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Error: ' . $e->getMessage(),
+            'data' => []
+        ];
     }
+}
+
+public function updateMessages($room, $messages)
+{
+    try {
+
+        // Firebase reference path
+        $reference = $this->database
+            ->getReference('chats/' . $room);
+
+        // Update full messages array
+        $reference->set($messages);
+
+        return true;
+
+    } catch (\Exception $e) {
+
+        throw new \Exception('Firebase update failed: ' . $e->getMessage());
+    }
+}
 
 
 
