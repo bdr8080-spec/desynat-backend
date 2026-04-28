@@ -987,9 +987,9 @@ public function product_view_cart_details($request)
 
        }
 
+
     //    country,Tax,ShippingCharge}
   
-
 
         $total_mrp=0;
         $discount_on_mrp=0;
@@ -997,6 +997,10 @@ public function product_view_cart_details($request)
         $shipping_fees=0;
         $tax=0;
         $total_amount=0;
+        $defaultFee=config('services.defaultShippingFees');
+
+        $defaultTaxFee=config('services.defaultTaxFees');
+
 
         $add_to_cart= Addtocart::with('chatroom_data','product.seller_details','product.store','product_variants.color','product_variants.size')->where('user_id',$request->user_id)->get();
 
@@ -1008,6 +1012,7 @@ public function product_view_cart_details($request)
             ];
         }
 
+
         foreach($add_to_cart as $key=>$val){
 
             // check Every product Stock
@@ -1016,6 +1021,7 @@ public function product_view_cart_details($request)
             }else{
                 $val->check_stock='Stock_Availble';
             }
+
 
             // if($val->order_type=='2'){ // when Cutom Order Show in card
                 
@@ -1044,9 +1050,10 @@ public function product_view_cart_details($request)
                 $ItemAmounttotal=$val->product_variants->final_price * $val->quantity ;
             }
 
+
          // discount Amount Code Apply 
         if($val->product->store){
-
+          
             
         if($user_address && $userCountry_id!==0){
             $user_let=$user_address->latitude;
@@ -1081,11 +1088,11 @@ public function product_view_cart_details($request)
             }
 
             }else{
+
                 $get_shipping_charge=$defaultFee*$val->quantity;
                 $shipping_fees+=$get_shipping_charge;
            
             }
-
 
             // Tax calculate Code 
 
@@ -1099,13 +1106,13 @@ public function product_view_cart_details($request)
             // $total_amount=$total_amount+$tax;
            
         }else{
-            $taxAmount= 10; 
+            $taxAmount= $defaultTaxFee; 
              $tax+=$taxAmount;
 
         }
           }else{
 
-            $taxAmount= 10; 
+            $taxAmount= $defaultTaxFee; 
             $tax+=$taxAmount;
             
          }
@@ -1113,7 +1120,6 @@ public function product_view_cart_details($request)
             Addtocart::where('id',$val->id)->update(['shipping_fees'=>$get_shipping_charge,'tax'=>$taxAmount]); // Update Shiping Charge
             }   
         }
-
 
         // Tax calucltor Code  start
 
