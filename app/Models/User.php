@@ -78,4 +78,10 @@ class User extends Authenticatable
         return $this->hasOne(UserWallet::class, 'user_id', 'id');
     }
 
+
+      public function User_currency()
+    {
+        return $this->hasOne(all_countrie::class, 'id', 'selected_currency');
+    }
+
 }
