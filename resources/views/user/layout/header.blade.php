@@ -86,6 +86,9 @@
     @endphp
 
 
+    @php
+    $isHome = request()->routeIs('dashboard'); // change 'home' to your route name
+@endphp
 
 </head>
 
@@ -270,8 +273,8 @@
         <!-- Country code  -->
 
                     <div class="dropdown-center mobileLang">
-                    <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                    data-bs-toggle="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle customBtn1 " type="button"
+                    data-bs-toggle="dropdown" {{ !$isHome ? 'disabled' : '' }}>
                     <img id="selectedFlag" src="{{$GetsellerCountry[0]->flag1}}" class="img-fluid" />
                     </button>
 
@@ -295,10 +298,10 @@
                     </div>
                             
                         <!-- Currency code  -->
-    
-                        <div class="dropdown-center mobileLang">
+                         
+<div class="dropdown-center mobileLang">
     <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-        data-bs-toggle="dropdown" data-bs-auto-close="outside">
+        data-bs-toggle="dropdown" data-bs-auto-close="outside" {{ !$isHome ? 'disabled' : '' }}>
         <span id="selectedCurrency">
             {{ session('currency', $GetsellerCountry[0]->iso_code) }}
         </span>
