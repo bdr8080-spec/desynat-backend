@@ -741,7 +741,8 @@ public function GetRefundOrders($request)
 
         $totalRefundQuery = clone $checkOrder;
 
-        $total_refunds = $totalRefundQuery->sum('amount');
+        // $total_refunds = $totalRefundQuery->sum('amount');
+        $total_refunds = 0;
 
         $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
 
