@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function () {
             const reason = this.getAttribute("data-reason");
 
-            reasonContainer.innerHTML = `<p>${reason}</p>`;
+            reasonContainer.innerHTML = `<p style="font-size: 16px; line-height: 1.5;font-weight: 500;">${reason}</p>`;
         });
     });
 });

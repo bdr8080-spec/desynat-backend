@@ -1139,8 +1139,8 @@ td {
 
 .modal-header h2.h2 {
     font-size: 22px;
-    line-height: 38px;
-    font-weight: 700;
+    line-height: 40px;
+    /* font-weight: 700; */
     margin-bottom: 0;
     /* text-decoration: underline; */
 }
@@ -2769,5 +2769,24 @@ a.text {
   .select-all span {
     font-size: 13px;
   }
+  .view-checkbox {
+    accent-color: var(--secondry-color); 
+    cursor: pointer;
+}
+.custom-checkbox input[type="checkbox"] {
+    accent-color: var(--secondry-color); 
+    
+    width: 16px;
+    height: 16px;
+    
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.custom-checkbox {
+    cursor: pointer;
+    margin-right: 10px;
+   
+}
 
   
