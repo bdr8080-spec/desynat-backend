@@ -193,7 +193,7 @@ foreach ($check_chatRecord as $key => $val) {
         $val->last_chat = $lastMessage['message'] ?? null;
         $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
         $val->last_chat_by = $lastMessage['by'] ?? null;
-            foreach ($firebase_chat as $msg) {
+            foreach ($firbase_chat as $msg) {
 
                 if (
                     isset($msg['user_id']) &&
