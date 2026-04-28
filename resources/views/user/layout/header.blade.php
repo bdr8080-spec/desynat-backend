@@ -102,6 +102,9 @@
 
 </head>
 
+
+
+
 <body>
 
     <header class="header-main">
@@ -608,6 +611,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 body: JSON.stringify({
                     country_id: this.value
+
+
                 })
             });
         });
@@ -642,6 +647,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelector('.currency').previousElementSibling
             );
             if (dropdown) dropdown.hide();
+
+            window.location.reload();
+            
         }
     });
 

@@ -633,6 +633,7 @@ class CommonController extends Controller
 
         $data = Faq::where('status', '1')
             ->where('type', $request->type)
+            ->orderBy('id', 'desc')
             ->get();
 
         if (!$data) {

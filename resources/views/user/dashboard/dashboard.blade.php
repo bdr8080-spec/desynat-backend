@@ -1,6 +1,13 @@
 @extends('user.layout.app')
 
 @section('content')
+
+@php
+    $currency = session('currency', 'KWD');
+
+@endphp
+
+
 <div class="customContainer">
     <div class="owl-carousel owl-theme customOwlcarousel2 storeBanner">
         @if(empty($topBanners['data']) || count($topBanners['data']) == 0)
@@ -66,167 +73,13 @@
             </div>
             @endforeach
 
-            <!-- <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div> -->
+         
         </div>
 
     </div>
-    <!-- <div class="suggestStore_contenar">
-            <div class="owl-carousel storeCarousel">
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
-            </div>
-
-        </div> -->
+  
 </div>
+
 
 <section class="bestSelling customContainer">
     <h3 class="mid-headng mb-3">Best Selling</h3>
@@ -297,45 +150,38 @@
 
                             <span>({{ $item->review_count ?? 0 }})</span>
                         </div>
-                        <div class="price">
+                        <!-- <div class="price">
                             <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
                             <span class="old-price">KD {{ $item->product_variants[0]->actual_price }}</span>
                             <span class="discount"> {{ $item->product_variants[0]->discount_value }}
                                 {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
                             </span>
-                        </div>
-                    </div>
+                        </div> -->
+
+
+            <div class="price">
+                <strong>
+                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                </strong>
+
+                <span class="old-price">
+                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                </span>
+
+                <span class="discount">
+                {{ $item->product_variants[0]->discount_value }}
+                {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                </span>
+            </div>
+
+            </div>
                 </a>
             </div>
         </div>
 
         @endforeach
 
-        <!-- <div class="item">
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                    <button class="share-btn"><img src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                </div>
-                <div class="product-content">
-                    <h5>3pcs Set (by Abaya)</h5>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                    </div>
-                    <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-   -->
+       
     </div>
 </section>
 
@@ -362,17 +208,6 @@
         @endif
     </div>
 
-    <!-- @if(empty($bottomBanners['data']) || count($bottomBanners['data']) == 0)
-            <div class="premiumImg">
-                <img src="{{ asset('user/assets/images/active-banner.png') }}" class="img-fluid" />
-            </div>
-        @else
-            @foreach($bottomBanners['data'] as $banner)
-                <div class="premiumImg">
-                    <img src="{{ $banner->upload_banner }}" class="img-fluid" />
-                </div>
-            @endforeach
-        @endif -->
 </div>
 
 <section class="bestSelling customContainer mt-3">
@@ -445,13 +280,29 @@
 
                             <span>({{ $item->review_count ?? 0 }})</span>
                         </div>
-                        <div class="price">
+                        <!-- <div class="price">
                             <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
                             <span class="old-price">KD {{ $item->product_variants[0]->actual_price }}</span>
                             <span class="discount"> {{ $item->product_variants[0]->discount_value }}
                                 {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
                             </span>
-                        </div>
+                        </div> -->
+
+                          <div class="price">
+                <strong>
+                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                </strong>
+
+                <span class="old-price">
+                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                </span>
+
+                <span class="discount">
+                {{ $item->product_variants[0]->discount_value }}
+                {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                </span>
+            </div>
+
                     </div>
                 </a>
                 </div>
@@ -556,13 +407,29 @@
 
                             <span>({{ $item->review_count ?? 0 }})</span>
                         </div>
-                        <div class="price">
+                        <!-- <div class="price">
                             <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
                             <span class="old-price">KD {{ $item->product_variants[0]->actual_price }}</span>
                             <span class="discount"> {{ $item->product_variants[0]->discount_value }}
                                 {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
                             </span>
-                        </div>
+                        </div> -->
+
+                          <div class="price">
+                <strong>
+                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                </strong>
+
+                <span class="old-price">
+                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                </span>
+
+                <span class="discount">
+                {{ $item->product_variants[0]->discount_value }}
+                {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                </span>
+            </div>
+
                     </div>
                 </a>
                 </div>
