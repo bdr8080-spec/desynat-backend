@@ -23,6 +23,7 @@ class SaveFirebaseToken extends Controller
 
         if ($user) {
             $user->fcm_token = $request->token;
+            $user->device_type = 0;
             $user->save();
 
             return response()->json(['success' => true]);
@@ -39,6 +40,7 @@ class SaveFirebaseToken extends Controller
 
         if ($user) {
             $user->fcm_token = $request->token;
+            $user->device_type = 0;
             $user->save();
 
             return response()->json(['success' => true]);
@@ -55,6 +57,7 @@ class SaveFirebaseToken extends Controller
 
         if ($user) {
             $user->fcm_token = $request->token;
+            $user->device_type = 0;
             $user->save();
 
             return response()->json(['success' => true]);
@@ -71,6 +74,7 @@ class SaveFirebaseToken extends Controller
 
         if ($user) {
             $user->fcm_token = $request->token;
+            $user->device_type = 0;
             $user->save();
 
             return response()->json(['success' => true]);

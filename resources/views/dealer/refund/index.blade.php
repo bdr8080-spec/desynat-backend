@@ -36,7 +36,7 @@
 
                     <div class="from-group">
                         <select class="form-select form-control width-50" aria-label="Default select example">
-                            <option value="">Payment Mode</option>
+                            <option value="">Payment Status</option>
                             <option value="1"> Complete </option>
                             <option value="2"> Pending </option>
                         </select>
@@ -44,7 +44,9 @@
                     <div class="from-group">
                         <div class="total-refund d-flex gap-3">
                             <h6>Total Refund</h6>
-                            <h3>{{$refundData['total_refunds']}} KD</h3>
+                            <!-- <h3>{{$refundData['total_refunds']}} KD</h3> -->
+                             <h3>0 KD</h3>
+                             
                         </div>
                     </div>
 
