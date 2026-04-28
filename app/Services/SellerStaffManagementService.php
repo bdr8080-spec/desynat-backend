@@ -263,15 +263,14 @@ class SellerStaffManagementService
 
         try{
 
+
     $All_staff=seller::with('seller_category','Role_Action.sellermenu')->where('parent_id',$request->seller_id)
     ->when($request->role_filter,function($query) use($request){
-        $query->where('select_category',$request->role_filter);
-        
+        $query->where('select_category',$request->role_filter);        
     })
-->when($request->status_filter,function($query) use($request){
-        $query->where('is_block',$request->status_filter);
+    ->when($request->status_filter !== null, function ($query) use ($request) {
+        $query->where('is_block', $request->status_filter);
     })
-
     ->orderBy('id', 'desc');
     
     if ($request->from && $request->to) {
