@@ -152,6 +152,7 @@ class NotificationManagementService
             $title_english = $request_data->title_english ?? null;
             $title_arabic = $request_data->title_arabic ?? null;
             $notification_type = $request_data->notification_type ?? null;
+            $deviceType = 0;
 
             $receivers = [];
 
@@ -254,7 +255,8 @@ class NotificationManagementService
                             [$token->fcm_token],
                             $title_english,
                             $description_english,
-                            $token->device_type,
+                           //$token->device_type,
+                           $deviceType,
                             $badgeCount
                         );
                     }
