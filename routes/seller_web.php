@@ -130,6 +130,11 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/view-profile',[WebSellerDashboard::class,'view_profile'])->name('seller.view_profile');
 
     route::Match(['get','post'],'/edit-profile',[WebSellerDashboard::class,'edit_profile'])->name('seller.edit_profile');
+
+    route::Match(['get','post'],'/Staff-edit-profile',[WebSellerDashboard::class,'Staffedit_profile'])->name('seller.staff_edit_profile');
+    route::Match(['get','post'],'/Staff-update-profile',[WebSellerDashboard::class,'Staffupdate_profile'])->name('seller.Staffeditprofile');
+
+
     route::Match(['get','post'],'/update-profile',[WebSellerDashboard::class,'update_profile'])->name('seller.editprofile');
 
     route::Match(['get','post'],'/update-bank-details',[WebSellerDashboard::class,'editbankdetails'])->name('seller.editbankdetails');    

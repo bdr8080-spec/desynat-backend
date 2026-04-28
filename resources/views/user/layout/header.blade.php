@@ -275,7 +275,7 @@
                     <div class="dropdown-center mobileLang">
                     <button class="btn btn-secondary dropdown-toggle customBtn1 " type="button"
                     data-bs-toggle="dropdown" {{ !$isHome ? 'disabled' : '' }}>
-                    <img id="selectedFlag" src="{{$GetsellerCountry[0]->flag1}}" class="img-fluid" />
+                    <img id="selectedFlag" src="{{$GetsellerCountry[0]->flag}}" class="img-fluid" />
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu">
@@ -284,13 +284,13 @@
                     </li>
 
                     @foreach($GetsellerCountry as $key=>$val)
-                    <li class="dropdown-item" data-flag="{{$val->flag1}}">
+                    <li class="dropdown-item" data-flag="{{$val->flag}}">
                     <label class="custom-radio d-flex justify-content-between">
                     <input type="radio" name="country_language"
                     value="{{$val->id}}"
                     {{ session('country_id', $GetsellerCountry[0]->id) == $val->id ? 'checked' : '' }}>
                     <span>{{$val->name}}</span>
-                    <img src="{{$val->flag1}}" width="20">
+                    <img src="{{$val->flag}}" width="20">
                     </label>
                     </li>
                     @endforeach
@@ -303,7 +303,7 @@
     <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
         data-bs-toggle="dropdown" data-bs-auto-close="outside" {{ !$isHome ? 'disabled' : '' }}>
         <span id="selectedCurrency">
-            {{ session('currency', $GetsellerCountry[0]->iso_code) }}
+            {{ session('currency', $GetsellerCountry[0]->currency_code) }}
         </span>
     </button>
 
@@ -316,9 +316,9 @@
         <li class="dropdown-item">
             <label class="custom-radio">
                 <input type="radio" name="currency"
-                       value="{{$val->iso_code}}"
-                       {{ session('currency', $GetsellerCountry[0]->iso_code) == $val->iso_code ? 'checked' : '' }}>
-                <span>{{$val->iso_code}}</span>
+                       value="{{$val->currency_code}}"
+                       {{ session('currency', $GetsellerCountry[0]->currency_code) == $val->currency_code ? 'checked' : '' }}>
+                <span>{{$val->currency_code}}</span>
             </label>
         </li>
         @endforeach

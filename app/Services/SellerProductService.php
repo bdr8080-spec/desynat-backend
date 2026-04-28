@@ -1846,6 +1846,49 @@ public function View_seller_profile($request){
     
         }
   
+
+
+    public function Staffprofile_store_information_insert($request){
+
+       
+        // Update seller details 
+
+        $match_seller=[
+            'id' => $request->user_id
+          ];
+
+          if($request->profile_pic){
+            $seller_information['profile_pic'] = $request->profile_pic;
+          }
+
+        //   $fullname=explode(' ',$request->full_name);
+
+        //   if($fullname){
+
+            $seller_information['first_name'] = $request->first_name;
+            $seller_information['last_name'] = $request->last_name;
+        //   }
+    
+         seller::Updateorcreate($match_seller,$seller_information);
+        
+        CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $request->user_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Store Info',
+                    'description_english' => "Your store {$request->store_name} information has been updated",
+
+                    'notification_type' => 'store_info_update'
+                ]);
+        
+        return ['status'=>'success','message'=>"Staff Profile details updated succesfully",'data'=>''];            
+  
+    
+        }
+  
   
     
     public function store_bank_details_update($request){
