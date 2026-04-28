@@ -266,6 +266,34 @@ class OrderManagement extends Controller
 
     }
 
+    public function markAllChatMsgAsRead(Request $request){
+
+         $seller_details=$request->user()->id;
+
+        $validate = Validator::make($request->all(), [
+            'unique_id' => 'required|exists:allproductchats,unique_id',
+        ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       $request_data=(object)[
+        'user_id'=>$seller_details,
+        'unique_id' => $request->unique_id ,
+       ];
+
+       $data= $this->SellerOrderService->mark_all_chat_msg_as_read($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+      }
+
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+
+    }
+
 
 
 
