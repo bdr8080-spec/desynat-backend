@@ -172,9 +172,22 @@
                                         <div class="h-email">{{$seller_details->email}} </div>
                                     </div>
                                 </div>
+                                
+                                
+
+                                @if($seller_details->type=="1")
+                                <a class="drop-profile" href="{{ route('seller.staff_edit_profile') }}">
+                                    <span>View Profile</span>
+                                </a>
+
+                                @else
+                                
                                 <a class="drop-profile" href="{{ route('seller.view_profile') }}">
                                     <span>View Profile</span>
                                 </a>
+
+                                @endif
+
                             </div>
 
                             @else
@@ -183,8 +196,8 @@
                                     <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile"
                                         class="rounded-circle">
                                     <div>
-                                        <h6>Vijay</h6>
-                                        <div class="h-email">vijay@gmail.com</div>
+                                        <h6>demo</h6>
+                                        <div class="h-email">demo@gmail.com</div>
                                     </div>
                                 </div>
                                 <a class="drop-profile" href="{{ route('seller.view_profile') }}">
