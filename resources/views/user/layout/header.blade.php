@@ -49,21 +49,34 @@
   } */
 
 
-.custom-radio input[type="radio"] {
+.flagdrop .custom-radio input[type="radio"] {
     display: none;
 }
 
-.custom-radio span {
+.flagdrop .custom-radio span {
     display: block;
-    padding: 8px 12px;
+    padding: 0px 7px;
     border-radius: 6px;
     cursor: pointer;
+    font-size: 15px;
+    line-height: 34px;
 }
-
-/* Selected state */
-.custom-radio input[type="radio"]:checked + span {
-    background-color: #0d6efd; /* Bootstrap primary */
+.flagdrop .custom-radio input[type="radio"]:checked + span {
+    background-color: #bd996f; 
     color: #fff;
+    width: 100%;
+}
+.flagdrop .customBtn1 {
+    padding: 4px 5px;
+}
+.flagdrop img {
+    width: 35px;
+}
+.flagdrop .dropdown-menu .dropdown-item {
+    margin: 9px 0;
+    border: 1px solid var(--toxic-color);
+    border-radius: 6px;
+    padding: 2px;
 }
 
 
@@ -88,6 +101,9 @@
 
 
 </head>
+
+
+
 
 <body>
 
@@ -182,7 +198,7 @@
                                             <div class="row">
                                                 <div class="col-lg-6 my-2">
                                                     <a href="{{route('user.myWallet')}}" class="custom-btn3">My
-                                                        wallet</a>
+                                                        Wallet</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
                                                     <a href="{{route('user.myOrders')}}" class="custom-btn3">My
@@ -266,7 +282,7 @@
 
                             <!-- Country code  -->
 
-                    <div class="dropdown-center mobileLang">
+                    <div class="dropdown-center mobileLang flagdrop">
                     <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
                     data-bs-toggle="dropdown">
                     <img id="selectedFlag" src="{{$GetsellerCountry[0]->flag1}}" class="img-fluid" />
@@ -293,7 +309,7 @@
                             
                         <!-- Currency code  -->
     
-                        <div class="dropdown-center mobileLang">
+                        <div class="dropdown-center mobileLang flagdrop">
     <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
         data-bs-toggle="dropdown" data-bs-auto-close="outside">
         <span id="selectedCurrency">
@@ -326,7 +342,7 @@
 
             <!-- langauge Change Code  -->
 
-                            <div class="dropdown-center mobileLang">
+                            <div class="dropdown-center mobileLang flagdrop">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
                                     data-bs-toggle="dropdown">
 
@@ -595,6 +611,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 body: JSON.stringify({
                     country_id: this.value
+
+
                 })
             });
         });
@@ -629,6 +647,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelector('.currency').previousElementSibling
             );
             if (dropdown) dropdown.hide();
+
+            window.location.reload();
+            
         }
     });
 

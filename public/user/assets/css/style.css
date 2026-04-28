@@ -77,6 +77,8 @@ ul li a {
     font-weight: var(--nav-font-weight) !important;
     color: var(--third-color) !important;
 }
+/* add Dropdown Currency */
+
 
 .customContainer {
     max-width: 1443px;

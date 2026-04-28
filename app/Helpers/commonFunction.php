@@ -150,7 +150,6 @@ if (!function_exists('menuActive')) {
   $menu_action=sellermenuAction::where('menu_id',$Web_url->id)
 ->where('seller_id', $seller_id)->first();
 
-
     if($menu_action){
             
     if($menu_action->can_view=='0'){
@@ -196,6 +195,16 @@ if (!function_exists('sellerAndStaffId')) {
             : $seller->id;
     }
 }
+
+
+    function convertPriceInUserWeb($priceInKWD)
+    {
+        $rate = session('rate', 1); // stored when user selects currency
+
+        return $priceInKWD * $rate;
+    }
+
+
 
 
 
