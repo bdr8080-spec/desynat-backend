@@ -186,7 +186,6 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
   Route::post('/edit-new-staff', [SellerStaffManagementController::class,'EditNewStaff']);
 
 
-
 });
 
 

@@ -77,11 +77,10 @@ class ProfileController extends Controller
 
         if($user){
 
+          $user=User::with('User_currency')->where('id',$user->id)->first();
+
         $user->affiliated_userdetails=AffilatedUser::where('user_id',$user->id)->where('otp_verify','1')->first();
         }
-
-
-
 
         if (!$user) {
             return ApiResponse::generateResponse('error', 'User not found', (object)[], 404);

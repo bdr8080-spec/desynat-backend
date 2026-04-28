@@ -267,12 +267,7 @@ Route::match(['get', 'post'], '/route2', function () {
 Route::match(['get', 'post'], '/product-store-details', function () {
      return view('user.category.product-store-details');
 });
-// Route::match(['get', 'post'], '/add-new-address', function () {
-//      return view('user.profile.add-new-address');
-// });
-// Route::match(['get', 'post'], '/saved-address', function () {
-//      return view('user.profile.saved-address');
-// });
+
 
 
 Route::match(['get', 'post'], '/order-place', function () {
@@ -280,81 +275,8 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
-// Route::match(['get', 'post'], '/save-card', function () {
-//      return view('user.savecard.index');
-
-// })->name('user.save-card');
 
 
-// Route::match(['get', 'post'], '/setting', function () {
-//      return view('user.cms-page.setting');
-
-// })->name('user.setting');
-
-
-
-// Route::match(['get', 'post'], '/support', function () {
-//      return view('user.support.index');
-
-// })->name('user.support');
-
-// Route::match(['get', 'post'], '/my-wallet', function () {
-//      return view('user.mywallet.wallet');
-
-// })->name('user.my-wallet');
-
-// Route::match(['get', 'post'], '/add-money', function () {
-//      return view('user.mywallet.addmoney');
-
-// })->name('user.add-money');
-
-
-// Route::match(['get', 'post'], '/chat', function () {
-//      return view('user.chat.chatlists');
-
-// })->name('user.chat');
-
-// Route::match(['get', 'post'], '/user-chat', function () {
-//      return view('user.chat.userChat');
-
-// })->name('user.user-chat');
-
-// Route::match(['get', 'post'], '/details-chat', function () {
-//      return view('user.chat.detailsChat');
-     
-// })->name('user.details-chat');
-
-// Route::match(['get', 'post'], '/order_details', function () {
-//      return view('user.orders.order-details');
-
-// })->name('user.order_details');
-
-
-// Route::match(['get', 'post'], '/view-cart', function () {
-
-//      return view('user.carts.cartlist');
-// })->name('user.view-cart');
-
-
-
-// Route::match(['get', 'post'], '/wishlist', function () {
-//      return view('user.profile.wishlist');
-// });
-//  Route::match(['get', 'post'], '/route2', function () {
-//      return view('user.profile.changePassword');
-// });
-//  Route::match(['get', 'post'], '/route3', function () {
-//      return view('user.profile.profileChangeNumberOtp');
-// });
-//  Route::match(['get', 'post'], '/route4', function () {
-//      return view('user.profile.profileChangeNumber');
-// });
-//  Route::match(['get', 'post'], '/route5', function () {
-//      return view('user.profile.verificationCode');
-// });
-//  Route::match(['get', 'post'], '/route6', function () {
-//      return view('user.profile.profileChangeEmailOtp');
-// });
 
 Route::fallback(function (Request $request) {
     $uri = $request->getRequestUri();
