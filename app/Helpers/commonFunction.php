@@ -123,6 +123,15 @@ if (!function_exists('menuActive')) {
             abort(403);
         }
 
+        $path = Request::path();
+
+        if ($path == 'seller/dashboard') {
+            return [
+                'can_view' => 1,
+                'can_action' => 0
+            ];
+        }
+
     $seller_id=$user->id;
 
     $seller_details=seller::with('seller_category','Role_Action.sellermenu')->where('id',$seller_id)->first();
