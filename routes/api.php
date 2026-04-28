@@ -335,6 +335,12 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
 
 
 
+  Route::post('/update-user-selected-country', [UserDashboardController::class,'updateUserSelectedCountry']);
+  Route::post('/update-user-selected-currency', [UserDashboardController::class,'updateUserSelectedCurrency']);
+
+
+
+
 });
 
 

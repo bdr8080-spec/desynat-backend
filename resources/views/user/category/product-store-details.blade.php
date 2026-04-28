@@ -1,6 +1,12 @@
 @extends('user.layout.app')
 
 @section('content')
+
+@php
+    $currency = session('currency', 'KWD');
+
+@endphp
+
 <style>
 .cd-change-btn {
     background: #8a6a4366;
@@ -140,10 +146,13 @@
                 <p class="text-muted mb-1">{{$data->product_name_en}}</p>
 
                 <div class="d-flex align-items-center mb-1">
-                    <h4 class="fw-bold text-dark me-2" id="finalPrice">{{$firstVariant['final_price']}} KD</h4>
+
+
+                    <h4 class="fw-bold text-dark me-2" id="finalPrice">{{ number_format(convertPriceInUserWeb($firstVariant['final_price']), 2) }}   {{ $currency }}</h4>
 
                     @if($firstVariant['discount_value']!=="0")
-                    <del class="text-muted me-2" id="actualPrice">{{$firstVariant['actual_price']}} KD
+                    <del class="text-muted me-2" id="actualPrice">
+                    {{ number_format(convertPriceInUserWeb($firstVariant['actual_price']), 2) }}  {{ $currency }} 
                     </del>
                     <span class="text-danger fw-semibold">{{$firstVariant['discount_value']}}% off</span>
                     @endif
@@ -414,7 +423,7 @@
 </div>
 </div>
 
-<div class="col-lg-12">
+<!-- <div class="col-lg-12">
     <section class="bestSelling customContainer mt-3 pb-0">
         <h3>Similiar Product</h3>
         <div class="owl-carousel topRatedCarousel">
@@ -441,267 +450,12 @@
                     </div>
                 </div>
             </div>
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar2.png') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar3.jpg') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar4.jpg') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar4.png') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar5.png') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="bestSelling customContainer mt-3 pt-0">
-        <div class="owl-carousel topRatedCarousel">
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar1.png') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar2.png') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar3.jpg') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar4.jpg') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar4.png') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{ asset('user/assets/images/simliar5.png') }}" alt="Product">
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                            <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                            <strong>KD 239</strong>
-                            <span class="old-price">KD 299</span>
-                            <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          
         </div>
     </section>
 </div>
+ -->
+
 </div>
 </div>
 
@@ -914,8 +668,8 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!variant) return;
 
             // Update prices
-            document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
-            document.getElementById("finalPrice").innerText = variant.final_price + " KD";
+            document.getElementById("actualPrice").innerText = variant.actual_price + " {{$currency}}";
+            document.getElementById("finalPrice").innerText = variant.final_price + " {{$currency}}";
 
             // Update sizes
             const sizeContainer = document.getElementById("sizeContainer");
@@ -1051,9 +805,9 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("variantId").value = variant.variant_id;
         document.getElementById("productId").value = variant.product_id;
 
-        document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
-        document.getElementById("finalPrice").innerText = variant.final_price + " KD";
-
+        document.getElementById("actualPrice").innerText = variant.actual_price + " {{$currency}}";
+        document.getElementById("finalPrice").innerText = variant.final_price + " {{$currency}}";
+        
         updateCartUIForVariant(variantId);
         AddAndBuyButtonHideAndShowCode();
     }

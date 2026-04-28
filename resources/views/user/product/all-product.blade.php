@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+    $currency = session('currency', 'KWD');
+
+@endphp
 
 <div class="product_reels customContainer">
 
@@ -267,7 +271,26 @@
                                                     <i class="fa-solid fa-star-half-stroke"></i>
                                                     <span>(1K)</span>
                                                 </div>
-                                                <div class="price">
+
+                                                 <div class="price">
+                                                        <strong>
+                                                        {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                                                        </strong>
+
+                                                        <span class="old-price">
+                                                        {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                                                        </span>
+
+                                                        <span class="discount">
+                                                        {{ $item->product_variants[0]->discount_value }}
+                                                        {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                                                        </span>
+                                                    </div>
+
+
+
+
+                                                <!-- <div class="price">
                                                     <strong>{{ $item->product_variants[0]->final_price }}
                                                         KD</strong>
 
@@ -286,7 +309,7 @@
 
                                                     @endif
 
-                                                </div>
+                                                </div> -->
 
 
 
