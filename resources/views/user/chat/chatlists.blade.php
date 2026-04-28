@@ -79,8 +79,11 @@
 
                     @forelse ($chatData as $chat)
                         <div class="cart-panel position-relative">
-                            <a href="{{ route('user.userChat', ['id' => $chat->unique_id]) }}" class="link-content">
+                            <a href="{{ route('user.userChat', ['id' => $chat->unique_id]) }}" class="link-content chat-link" data-id="{{ $chat->unique_id }}">
                                 <div class="cart-card">
+                                    @if($chat['unread_count'] > 0)
+                                    <span class="badge text-bg-danger badge-number">{{ $chat['unread_count'] }}</span>
+                                    @endif
                                     <div class="card-left mb-2 d-flex align-items-center">
                                         <div>
                                             <div class="chat-user-circle me-3">
@@ -235,6 +238,33 @@
 <div id="loader" style="display:none;">
     <div class="loader"></div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).on('click', '.chat-link', function(e) {
+    e.preventDefault();
+    e.stopPropagation();   
+    e.stopImmediatePropagation(); 
+
+    let url = $(this).attr('href');
+    let unique_id = $(this).data('id');
+
+    $.ajax({
+        url: "{{ route('user.mark_all_chat_msg_as_read') }}",
+        type: "POST",
+        data: {
+            unique_id: unique_id,
+            _token: "{{ csrf_token() }}"
+        },
+        success: function(res) {
+            console.log(res);
+             window.location.href = url;
+        }
+    });
+
+    return false; 
+});
+</script>
 
 
 
