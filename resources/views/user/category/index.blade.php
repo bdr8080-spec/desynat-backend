@@ -2,6 +2,12 @@
 
 @section('content')
 
+@php
+    $currency = session('currency', 'KWD');
+
+@endphp
+
+
 <style>
 .share-btn {
     position: absolute;
@@ -467,7 +473,7 @@
 
                                                     <span>({{ $item->review->count() ?? 0 }})</span>
                                                 </div>
-                                                <div class="price">
+                                                <!-- <div class="price">
                                                     <strong>{{ $item->product_variants[0]->final_price }}
                                                         KD</strong>
                                                     <div class="d-block">
@@ -481,6 +487,21 @@
 
                                                         </span>
                                                     </div>
+                                                </div> -->
+
+                                                 <div class="price">
+                                                    <strong>
+                                                    {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                                                    </strong>
+
+                                                    <span class="old-price">
+                                                    {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                                                    </span>
+
+                                                    <span class="discount">
+                                                    {{ $item->product_variants[0]->discount_value }}
+                                                    {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                                                    </span>
                                                 </div>
 
 
