@@ -7,10 +7,10 @@
     </div>
 
     <form id="addBanner" action="#" method="post">
-        <div class="row mt-4">
-            <div class="col-lg-12">
+        <div class="row mt-4 justify-content-center mb-4">
+            <div class="col-lg-2">
                 <div class="product-pnls2 mt-3">
-                    <div class="upload-image" style="height:250px;">
+                    <div class="upload-image" style="height:200px;">
                         <label id="bannerUploadLabel" style="cursor:pointer;text-align:center;display:block;">
                             <!-- Placeholder -->
                             <div id="bannerPlaceholderImg">

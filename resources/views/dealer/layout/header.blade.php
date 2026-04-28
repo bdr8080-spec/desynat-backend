@@ -121,7 +121,7 @@
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialog" >
                         <img src="{{ asset('dealer') }}/assets/img/bell.svg" alt="icon" class="bell-icon">
                         @if($notificationCount>0)
-                        <span class="badge bg-primary badge-number">{{$notificationCount}}</span>
+                        <span class="badge bg-danger badge-number">{{$notificationCount}}</span>
                         @endif
                     </a>
 

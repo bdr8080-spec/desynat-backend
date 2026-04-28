@@ -705,6 +705,9 @@ public function GetRefundOrders($request)
                 ->orWhereHas('product_details.seller_details', function ($q) use ($request) {
                     $q->where('first_name', 'like', '%' . $request->search . '%')
                       ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                })
+                ->orWhereHas('user_details', function ($q) use ($request) {
+                    $q->where('full_name', 'like', '%' . $request->search . '%');
                 });
             });
         }
