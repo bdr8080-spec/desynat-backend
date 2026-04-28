@@ -2,6 +2,13 @@
 
 @section('content')
 
+
+@php
+    $currency = session('currency', 'KWD');
+
+@endphp
+
+
 <style>
 #loader {
     position: fixed;
@@ -126,7 +133,9 @@
                                     {{-- Price --}}
                                     <div class="price">
                                         <span class="price-current">
-                                            {{ $item->product_variants->final_price }} KD
+                                            
+                                        {{ number_format(convertPriceInUserWeb( $item->product_variants->final_price ), 2) }}  {{ $currency }}
+
                                         </span>
 
                                         @if($item->product_variants->discount_value!=="0")
@@ -134,14 +143,17 @@
 
                                         @if(!empty($item->product_variants->actual_price))
                                         <span class="price-old">
-                                            {{ $item->product_variants->actual_price }} KD
+
+
+                                        {{ number_format(convertPriceInUserWeb( $item->product_variants->actual_price ), 2) }}  {{ $currency }}
+                                           
                                         </span>
                                         @endif
                                         <span class="discount ms-2">
                                             @if($item->product_variants->discount_type == 1)
-                                            {{ $item->product_variants->discount_value }}% Off
+                                             {{ number_format(convertPriceInUserWeb( $item->product_variants->discount_value ), 2) }}% Off
                                             @elseif($item->product_variants->discount_type == 2)
-                                            {{ $item->product_variants->discount_value }} KD Off
+                                            {{ number_format(convertPriceInUserWeb( $item->product_variants->discount_value ), 2) }} {{ $currency }} Off
                                             @endif
                                         </span>
 
@@ -244,12 +256,10 @@
                                     {{-- Price --}}
                                     <div class="price">
                                         <span class="price-current">
-                                            {{ $item->chatroom_data->total_amount }} KD
+                                              {{ number_format(convertPriceInUserWeb( $item->chatroom_data->total_amount ), 2) }}  {{ $currency }}
                                         </span>
 
                                         <!-- @if($item->product_variants->discount_value!=="0")
-
-
                                         @if(!empty($item->product_variants->actual_price))
                                         <span class="price-old">
                                             {{ $item->product_variants->actual_price }} KD
@@ -398,34 +408,37 @@
                         @if($hasOrderType1)
                         <div class="giftinfo">
                             <div>Total MRP</div>
-                            <div>{{ $cartData['total_mrp'] }} KD</div>
+                            <div>{{ convertPriceInUserWeb($cartData['total_mrp']); }} {{ $currency }} 
+            
+                            </div>
                         </div>
                         @endif
                         @if($hasOrderType1)
                         <div class="giftinfo">
                             <div>Discount on MRP</div>
-                            <div class="red-color">{{ $cartData['discount_on_mrp'] }} KD</div>
+                            <div class="red-color">{{ convertPriceInUserWeb($cartData['discount_on_mrp']); }} {{ $currency }}</div>
                         </div>
                         @endif
                         @if($hasOrderType2)
                         <div class="giftinfo">
                             <div>Custom Item price</div>
-                            <div>{{ $customAmount }} KD</div>
+                            <div> {{ number_format(convertPriceInUserWeb($customAmount), 2) }}  {{ $currency }} </div>
                         </div>
                         @endif
                         <div class="giftinfo d-none" id="couponDiscountRow">
                             <div>Coupon Discount</div>
-                            <div class="red-color" id="couponDiscountAmount">{{ $cartData['discount_coupon'] }} KD
+                            <div class="red-color" id="couponDiscountAmount">{{ number_format(convertPriceInUserWeb($cartData['discount_coupon']), 2) }}  {{ $currency }}
                             </div>
                         </div>
                         <div class="giftinfo d-none" id="giftCardDiscountRow">
                             <div>Gift Card Discount</div>
-                            <div class="red-color" id="giftCardDiscountAmount">0 KD</div>
+                            <div class="red-color" id="giftCardDiscountAmount">0 {{$currency}}</div>
                         </div>
                         @if(!empty($cartData['shipping_fees']) && $cartData['shipping_fees'] > 0)
                         <div class="giftinfo">
                             <div>Shipping Fee</div>
-                            <div>{{ $cartData['shipping_fees'] }} KD</div>
+                            <div>{{ number_format(convertPriceInUserWeb($cartData['shipping_fees']), 2) }}  {{ $currency }}
+                            </div>
                         </div>
                         @else
                         <div class="giftinfo">
@@ -436,18 +449,18 @@
                         @if(!empty($cartData['tax']) && $cartData['tax'] > 0)
                         <div class="giftinfo">
                             <div>TAX (if any)</div>
-                            <div>{{ $cartData['tax'] }} KD</div>
+                            <div>{{ number_format(convertPriceInUserWeb($cartData['tax']), 2) }}    {{ $currency }}</div>
                         </div>
                         @endif
                         <div class="giftinfo">
                             <div>Total Amount</div>
-                            <div>{{ $cartData['total_amount'] }} KD</div>
+                            <div>{{ $cartData['total_amount'] }}  {{ $currency }}</div>
                         </div>
                     </div>
                 </div>
                 @if($hasOrderType1)
                 <p id="promoSavingsText" class="return-text mb-2">
-                    You will save {{ $cartData['discount_on_mrp'] }} KD on this
+                    You will save {{ $cartData['discount_on_mrp'] }}  {{ $currency }} on this
                 </p>
                 @endif
             </div>
@@ -577,7 +590,7 @@
                                     <p>
                                         @if($promo->discount_percent)
                                         Flat {{ $promo->discount_percent }}% off on minimum order
-                                        {{ $promo->min_order_value }} KD
+                                        {{ $promo->min_order_value }} {{$currency}}
                                         @else
                                         Discount details not available
                                         @endif
@@ -653,6 +666,12 @@
 
 
 <script>
+
+
+const currencySymbal="{{$currency}}";
+
+
+
 window.addEventListener('pageshow', function(event) {
     if (event.persisted) {
         // Reload the page if it's loaded from the back/forward cache
@@ -666,10 +685,12 @@ if (performance.navigation.type === 2) {
 }
 </script>
 
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".qty-box").forEach(box => {
+
+        debugger
+
 
         const productId = box.dataset.productId;
         const variantId = box.dataset.variantId;
@@ -735,11 +756,15 @@ document.addEventListener("DOMContentLoaded", function() {
 $(document).ready(function() {
     var appliedPromoId = null;
 
+    
+
     $(document).on('click', '.applyPromoBtn', function() {
+        debugger
+        
         var promoId = $(this).data('id');
         var totalAmountText = $('.giftinfo').filter(function() {
             return $(this).find('div').first().text().trim() === 'Total Amount';
-        }).find('div').last().text().replace(' KD', '').trim();
+        }).find('div').last().text().replace(' '+currencySymbal, '').trim();
         var amount = parseFloat(totalAmountText);
 
         $.ajax({
@@ -885,11 +910,17 @@ $(document).ready(function() {
 
 <script>
 function refreshDiscountUI() {
+
+    debugger
+        
     var savedPromo = JSON.parse(localStorage.getItem('appliedPromo') || 'null');
     var savedGiftCard = JSON.parse(localStorage.getItem('appliedGiftCard') || 'null');
 
     // Update Promo
     if (savedPromo) {
+
+        debugger
+        
         $('#applyPromoText').text(savedPromo.promoCode + ' applied');
         $('#promoApplyLink').hide();
         $('#cancelPromoSection').removeClass('d-none');
@@ -897,7 +928,7 @@ function refreshDiscountUI() {
         //         return $(this).find('div').first().text().trim() === 'Coupon Discount';
         //     })
         //     .find('div').last().text(savedPromo.discountValue + ' KD');
-        $('#couponDiscountAmount').text(savedPromo.discountValue + ' KD');
+        $('#couponDiscountAmount').text(savedPromo.discountValue + ' '+currencySymbal);
         $('#couponDiscountRow').removeClass('d-none');
     } else {
         $('#applyPromoText').text('Apply PromoCode');
@@ -908,7 +939,7 @@ function refreshDiscountUI() {
         //     })
         //     .find('div').last().text('0 KD');
         $('#couponDiscountRow').addClass('d-none');
-        $('#couponDiscountAmount').text('0 KD');
+        $('#couponDiscountAmount').text('0 '+currencySymbal);
     }
 
     // Update Gift Card
@@ -932,25 +963,28 @@ function refreshDiscountUI() {
         //     })
         //     .find('div').last().text('0 KD');
         $('#giftCardDiscountRow').addClass('d-none');
-        $('#giftCardDiscountAmount').text('0 KD');
+        $('#giftCardDiscountAmount').text('0 '+currencySymbal);
     }
 
     // Recalculate Total Amount
     var baseTotal = parseFloat($('.giftinfo').filter(function() {
         return $(this).find('div').first().text().trim() === 'Total MRP';
-    }).find('div').last().text().replace(' KD', '')) || 0;
+    }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
     var discountOnMRP = parseFloat($('.giftinfo').filter(function() {
         return $(this).find('div').first().text().trim() === 'Discount on MRP';
-    }).find('div').last().text().replace(' KD', '')) || 0;
+    }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
     var shippingFee = parseFloat($('.giftinfo').filter(function() {
         return $(this).find('div').first().text().trim() === 'Shipping Fee';
-    }).find('div').last().text().replace(' KD', '')) || 0;
+    }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
     var tax = parseFloat($('.giftinfo').filter(function() {
         return $(this).find('div').first().text().trim() === 'TAX (if any)';
-    }).find('div').last().text().replace(' KD', '')) || 0;
+    }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
     var custom = parseFloat($('.giftinfo').filter(function() {
         return $(this).find('div').first().text().trim() === 'Custom Item price';
-    }).find('div').last().text().replace(' KD', '')) || 0;
+    }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
+
+    debugger
+        
 
     var promoDiscount = savedPromo ? savedPromo.discountValue : 0;
     var giftCardDiscount = savedGiftCard ? savedGiftCard.giftCardAmount : 0;
@@ -959,11 +993,14 @@ function refreshDiscountUI() {
     $('.giftinfo').filter(function() {
             return $(this).find('div').first().text().trim() === 'Total Amount';
         })
-        .find('div').last().text(finalTotal.toFixed(2) + ' KD');
+        .find('div').last().text(finalTotal.toFixed(2) + ' '+currencySymbal);
+
+        debugger
+        
 
     // Total Savings
     var totalSavings = discountOnMRP + promoDiscount + giftCardDiscount;
-    $('#promoSavingsText').text("You will save " + totalSavings.toFixed(2) + " KD on this");
+    $('#promoSavingsText').text("You will save " + totalSavings.toFixed(2) + currencySymbal +" on this");
 }
 </script>
 
@@ -973,11 +1010,17 @@ function formatKD(amount) {
 
     // If decimal part is .00 → show integer
     if (amount % 1 === 0) {
-        return amount.toFixed(0) + ' KD';
+        return amount.toFixed(0) + ' '+currencySymbal;
     }
 
+    debugger
+        
+
     // Otherwise show 2 decimals
-    return amount.toFixed(2) + ' KD';
+    return amount.toFixed(2) + ' '+currencySymbal;
+
+    debugger
+        
 }
 </script>
 
@@ -998,7 +1041,6 @@ $(document).ready(function() {
             toastr.error("delivery Address is required");
             return false;
 
-
         }
 
         // Get localStorage data
@@ -1013,7 +1055,7 @@ $(document).ready(function() {
         var cartSummary = {};
         $('.giftinfo').each(function() {
             var title = $(this).find('div').first().text().trim();
-            var valueText = $(this).find('div').last().text().replace(' KD', '').trim();
+            var valueText = $(this).find('div').last().text().replace(' '+currencySymbal, '').trim();
             var value = parseFloat(valueText) || 0;
 
             switch (title) {
@@ -1064,6 +1106,8 @@ $(document).ready(function() {
             Payment_method: paymentMethod,
             deliveryAddressId: deliveryAddressId
         };
+
+        debugger;
 
         // Send AJAX request
         $.ajax({

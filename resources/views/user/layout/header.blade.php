@@ -49,34 +49,21 @@
   } */
 
 
-.flagdrop .custom-radio input[type="radio"] {
+.custom-radio input[type="radio"] {
     display: none;
 }
 
-.flagdrop .custom-radio span {
+.custom-radio span {
     display: block;
-    padding: 0px 7px;
+    padding: 8px 12px;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 15px;
-    line-height: 34px;
 }
-.flagdrop .custom-radio input[type="radio"]:checked + span {
-    background-color: #bd996f; 
+
+/* Selected state */
+.custom-radio input[type="radio"]:checked + span {
+    background-color: #0d6efd; /* Bootstrap primary */
     color: #fff;
-    width: 100%;
-}
-.flagdrop .customBtn1 {
-    padding: 4px 5px;
-}
-.flagdrop img {
-    width: 35px;
-}
-.flagdrop .dropdown-menu .dropdown-item {
-    margin: 9px 0;
-    border: 1px solid var(--toxic-color);
-    border-radius: 6px;
-    padding: 2px;
 }
 
 
@@ -198,7 +185,7 @@
                                             <div class="row">
                                                 <div class="col-lg-6 my-2">
                                                     <a href="{{route('user.myWallet')}}" class="custom-btn3">My
-                                                        Wallet</a>
+                                                        wallet</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
                                                     <a href="{{route('user.myOrders')}}" class="custom-btn3">My
@@ -280,9 +267,9 @@
                                     class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
                             @endif
 
-                            <!-- Country code  -->
+        <!-- Country code  -->
 
-                    <div class="dropdown-center mobileLang flagdrop">
+                    <div class="dropdown-center mobileLang">
                     <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
                     data-bs-toggle="dropdown">
                     <img id="selectedFlag" src="{{$GetsellerCountry[0]->flag1}}" class="img-fluid" />
@@ -309,7 +296,7 @@
                             
                         <!-- Currency code  -->
     
-                        <div class="dropdown-center mobileLang flagdrop">
+                        <div class="dropdown-center mobileLang">
     <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
         data-bs-toggle="dropdown" data-bs-auto-close="outside">
         <span id="selectedCurrency">
@@ -342,7 +329,7 @@
 
             <!-- langauge Change Code  -->
 
-                            <div class="dropdown-center mobileLang flagdrop">
+                            <div class="dropdown-center mobileLang">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
                                     data-bs-toggle="dropdown">
 
