@@ -23,9 +23,9 @@
     border: 2px solid #0d6efd !important;
 }
 
-.custom-checkbox input[type="checkbox"]:checked {
-    background-color: #0d6efd !important;
-    border-color: #0d6efd !important;
+ .view-checkbox {
+    accent-color: var(--secondry-color) !important; 
+    cursor: pointer;
 }
 .table td, .table th {
     vertical-align: middle !important;
