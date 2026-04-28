@@ -497,7 +497,7 @@ try{
             "read"=>1
         ];
 
-        $this->updateMessage($check_chatRecord->unique_id,$messageId,$data);
+        // $this->updateMessage($check_chatRecord->unique_id,$messageId,$data);
      }
 
 
@@ -628,8 +628,9 @@ try{
         $data=[
             "read"=>1
         ];
+        
 
-        $this->updateMessage($chatRoom_id,$messageId,$data);  
+        // $this->updateMessage($chatRoom_id,$messageId,$data);  
         $lastMessageId=$messageId;// last message id send
      }     
 

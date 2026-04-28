@@ -274,9 +274,16 @@ foreach ($check_chatRecord as $key => $val) {
         'data'    => (object)[]
     ];
         }
+
+        $by = strtolower(trim($request->by));
+        if ($by === 'user') {
+        $userId = $check_chatRecord->user_id;
+        }else{
+          $userId = $check_chatRecord->seller_id;  
+        }
         
      $request_data=[
-        'user_id'=>$check_chatRecord->user_id,
+        'user_id'=>$userId,
         "unique_id"=>$request->unique_id,
         "message"=>$request->message,
         "messageAr" => $request->messageAr,
@@ -619,6 +626,81 @@ return ['status'=>'success','message'=>"Custom Order Create Successfully",'data'
         }
 
         return $count;
+    }
+
+    // public function single_chat_count($request_data)
+    // {
+    //     $room = $request_data->unique_id;
+    //     $currentUserId = $request_data->user_id;
+
+    //     $messages = $this->getMessages($room);
+    //     //dd($messages);
+    //     $count = 0;
+
+    //     foreach ($messages as $msg) {
+    //         if (
+    //             isset($msg['user_id']) &&
+    //             $msg['user_id'] != $currentUserId &&
+    //             (!isset($msg['read_status']) || $msg['read_status'] == 0)
+    //         ) {
+    //             $count++;
+    //         }
+    //     }
+
+    //     return [
+    //         'status' => 'success',
+    //         'message' => 'Chat count fetched successfully',
+    //         'data' => $count
+    //     ];
+    // }
+
+    public function mark_all_chat_msg_as_read($request_data)
+    {
+        try {
+
+            $room = $request_data->unique_id;
+            $currentUserId = $request_data->user_id;
+
+            $messages = $this->getMessages($room);
+
+            if (empty($messages)) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No messages found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $updatedCount = 0;
+
+            foreach ($messages as $key => $msg) {
+
+                if (
+                    isset($msg['user_id']) &&
+                    $msg['user_id'] != $currentUserId &&
+                    (empty($msg['read_status']) || $msg['read_status'] == 0)
+                ) {
+
+                    $messages[$key]['read_status'] = 1;
+                    $updatedCount++;
+                }
+            }
+
+            $this->updateMessages($room, $messages);
+
+            return [
+                'status' => 'success',
+                'message' => 'Messages marked as read successfully',
+                'data' => $updatedCount
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Error: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
     }
 
 

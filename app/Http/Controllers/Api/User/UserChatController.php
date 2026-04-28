@@ -279,6 +279,66 @@ public function customAcceptRejectOrder(Request $request){
 
 }
 
+// public function SingleChatCount(Request $request){
+
+//         $validate = Validator::make($request->all(), [
+//             'unique_id' => 'required|exists:allproductchats,unique_id',
+//         ]);
+        
+//        if($validate->fails()){
+//         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+//        }
+
+//        $user_id= $request->user()->id;
+       
+//        $request_data=(object)[
+//         'user_id'=>$user_id,
+//         'unique_id' => $request->unique_id ,
+//        ];
+
+
+//     $data=$this->UserFirebaseService->single_chat_count($request_data);
+
+//     if(isset($data['status']) && $data['status']=='error' ){
+//         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+//     }
+
+//     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+
+//     }
+
+    public function markAllChatMsgAsRead(Request $request){
+
+        $validate = Validator::make($request->all(), [
+            'unique_id' => 'required|exists:allproductchats,unique_id',
+        ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       $user_id= $request->user()->id;
+       
+       $request_data=(object)[
+        'user_id'=>$user_id,
+        'unique_id' => $request->unique_id ,
+       ];
+
+
+    $data=$this->UserFirebaseService->mark_all_chat_msg_as_read($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+
+    }
+
 
 
 

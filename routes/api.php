@@ -235,6 +235,8 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     Route::post('/delete_card', [ProfileController::class,'delete_card']);
     Route::post('/make_card_default', [ProfileController::class,'make_card_default']);
 
+    Route::post('/mark_all_chat_msg_as_read', [UserChatController::class,'markAllChatMsgAsRead']);
+
 
   Route::post('/update-user-selected-country', [UserDashboardController::class,'updateUserSelectedCountry']);
   Route::post('/update-user-selected-currency', [UserDashboardController::class,'updateUserSelectedCurrency']);
