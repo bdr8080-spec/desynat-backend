@@ -5,6 +5,7 @@
 
 @php
     $currency = session('currency', 'KWD');
+    $rate = session('rate', '1');
 
 @endphp
 
@@ -670,6 +671,10 @@
 
 const currencySymbal="{{$currency}}";
 
+const currencyrate="{{$rate}}";
+
+
+
 
 
 window.addEventListener('pageshow', function(event) {
@@ -1060,25 +1065,25 @@ $(document).ready(function() {
 
             switch (title) {
                 case 'Total MRP':
-                    cartSummary.totalMRP = value;
+                    cartSummary.totalMRP = value/currencyrate;
                     break;
                 case 'Discount on MRP':
-                    cartSummary.discountOnMRP = value;
+                    cartSummary.discountOnMRP = value/currencyrate;
                     break;
                 case 'Coupon Discount':
-                    cartSummary.couponDiscount = value;
+                    cartSummary.couponDiscount = value/currencyrate;
                     break;
                 case 'Gift Card Discount':
-                    cartSummary.giftCardDiscount = value;
+                    cartSummary.giftCardDiscount = value/currencyrate;
                     break;
                 case 'Shipping Fee':
-                    cartSummary.shippingFee = value;
+                    cartSummary.shippingFee = value/currencyrate;
                     break;
                 case 'TAX (if any)':
-                    cartSummary.tax = value;
+                    cartSummary.tax = value/currencyrate;
                     break;
                 case 'Total Amount':
-                    cartSummary.totalAmount = value;
+                    cartSummary.totalAmount = value/currencyrate;
                     break;
             }
         });
