@@ -246,7 +246,7 @@
                 <div class="form-check">
                 <input class="form-check-input menu-checkbox"
                 type="checkbox"
-                value="{{$menu->id}}"  {{$firstMenu}}>
+                value="{{$menu->id}}"  {{$firstMenu}} hidden>
                 <label class="form-check-label">
                 {{$menu->title}}
                 </label>

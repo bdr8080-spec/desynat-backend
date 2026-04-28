@@ -207,9 +207,9 @@
                 <!-- MAIN MENU -->
                 <div class="view-width">
                 <div class="form-check-3">
-                <!-- <input class="form-check-input menu-checkbox"
+                <input class="form-check-input menu-checkbox"
                 type="checkbox"
-                value="{{$menu->id}}"> -->
+                value="{{$menu->id}}" hidden>
                 <label class="form-check-label">
                 {{$menu->title}}
                 </label>
