@@ -28,10 +28,9 @@
 <div class="onepage mb-5">
     <section class="section dashboard container">
         <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-            <a href="{{route('seller.view_profile')}}" style="color:rgb(57, 55, 55)" class="title24">
+            <a href="{{route('seller.staff_edit_profile')}}" style="color:rgb(57, 55, 55)" class="title24">
                 <i class="bi bi-chevron-left"></i> Edit
             </a>
-
         </div>
 
         <div class="tabs-panel py-4">
