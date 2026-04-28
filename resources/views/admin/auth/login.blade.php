@@ -187,7 +187,7 @@
         });
     });
     </script>
-    <script>
+    <!-- <script>
     $(document).ready(function() {
         $('#email, #password').on('input', function() {
             const field = $(this).attr('id');
@@ -244,7 +244,87 @@
             });
         });
     });
-    </script>
+    </script> -->
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+$(document).ready(function() {
+
+    // =========================
+    // CLEAR ERRORS ON INPUT
+    // =========================
+    $('#email, #password').on('input', function() {
+        $('#emailError').text('');
+        $('#passwordError').text('');
+    });
+
+    // =========================
+    // LOGIN AJAX
+    // =========================
+    $('#loginBtn').click(function(e) {
+        e.preventDefault();
+
+        // reset errors
+        $('#emailError').text('');
+        $('#passwordError').text('');
+
+        $.ajax({
+            url: '{{ route("adminLogin") }}',
+            type: 'POST',
+            data: {
+                email: $('#email').val(),
+                password: $('#password').val(),
+                _token: '{{ csrf_token() }}'
+            },
+
+            success: function(response) {
+
+                if (response.success) {
+                    toastr.success(response.message ?? 'Login Successful');
+
+                    setTimeout(function() {
+                        window.location.href = "{{ route('admin.dashboard') }}";
+                    }, 800);
+                }
+            },
+
+            error: function(xhr) {
+
+                if (xhr.status === 422) {
+
+                    const res = xhr.responseJSON;
+
+                    // =========================
+                    // FIELD VALIDATION ERRORS
+                    // =========================
+                    if (res.type === 'validation') {
+
+                        if (res.errors.email) {
+                            $('#emailError').text(res.errors.email[0]);
+                        }
+
+                        if (res.errors.password) {
+                            $('#passwordError').text(res.errors.password[0]);
+                        }
+                    }
+
+                    // =========================
+                    // AUTH / BUSINESS ERRORS
+                    // =========================
+                    if (res.type === 'auth') {
+                        toastr.error(res.message);
+                    }
+
+                } else {
+                    toastr.error('Something went wrong. Please try again.');
+                }
+            }
+        });
+    });
+
+});
+</script>
 
 <!-- translator -->
 <script>

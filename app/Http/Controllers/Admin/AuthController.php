@@ -25,40 +25,94 @@ class AuthController extends Controller
     }
 
     
+    // public function adminLogin(Request $request)
+    // {
+    //     if ($request->isMethod('get')) {
+    //         return view('admin.auth.login');
+    //     } else {
+    //         $validator = Validator::make($request->all(), [
+    //             'email' => 'required|email',
+    //             'password' => 'required',
+    //         ], [
+    //             'email.required' => 'Please Enter Email Id',
+    //             'email.email' => 'Please Enter a Valid Email Id',
+    //             'password.required' => 'Please Enter Password'
+    //         ]);
+
+    //         if ($validator->fails()) {
+    //             return response()->json(['errors' => $validator->errors()], 422);
+    //         }
+
+    //         $admin = Admin::where('email', $request->email)->first();
+    //         if (!$admin) {
+    //             return response()->json(['errors' => ['email' => ['Email is not registered']]], 422);
+    //         }
+
+    //         if ($admin->status == '0') {
+    //             return response()->json(['errors' => ['email' => ['Your Account Is Blocked']]], 422);
+    //         }
+
+
+    //         if (!Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+    //             return response()->json(['errors' => ['password' => ['Password is Incorrect']]], 422);
+    //         }
+
+    //         return response()->json(['success' => true]);
+    //     }
+    // }
+
     public function adminLogin(Request $request)
     {
         if ($request->isMethod('get')) {
             return view('admin.auth.login');
-        } else {
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required',
-            ], [
-                'email.required' => 'Please Enter Email Id',
-                'email.email' => 'Please Enter a Valid Email Id',
-                'password.required' => 'Please Enter Password'
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
-
-            $admin = Admin::where('email', $request->email)->first();
-            if (!$admin) {
-                return response()->json(['errors' => ['email' => ['Email is not registered']]], 422);
-            }
-
-            if ($admin->status == '0') {
-                return response()->json(['errors' => ['email' => ['Your Account Is Blocked']]], 422);
-            }
-
-
-            if (!Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-                return response()->json(['errors' => ['password' => ['Password is Incorrect']]], 422);
-            }
-
-            return response()->json(['success' => true]);
         }
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ], [
+            'email.required' => 'Please Enter Email Id',
+            'email.email' => 'Please Enter a Valid Email Id',
+            'password.required' => 'Please Enter Password'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'type' => 'validation',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $admin = Admin::where('email', $request->email)->first();
+
+        if (!$admin) {
+            return response()->json([
+                'type' => 'auth',
+                'message' => 'Email is not registered'
+            ], 422);
+        }
+
+        if ($admin->status == '0') {
+            return response()->json([
+                'type' => 'auth',
+                'message' => 'Your Account Is Blocked'
+            ], 422);
+        }
+
+        if (!Auth::guard('admin')->attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ])) {
+            return response()->json([
+                'type' => 'auth',
+                'message' => 'Password is Incorrect'
+            ], 422);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Login Successful'
+        ]);
     }
 
 
