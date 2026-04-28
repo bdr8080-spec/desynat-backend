@@ -440,7 +440,7 @@ try{
 
                 if (
                     isset($msg['user_id']) &&
-                    $msg['user_id'] != $request->user_id &&   // not my message
+                    $msg['user_id'] != $request->seller_id &&   // not my message
                     (empty($msg['read']) || $msg['read'] == 0)
                 ) {
                     $unreadCount++;
