@@ -30,10 +30,9 @@ class AppServiceProvider extends ServiceProvider
     private function loadHeaderCountryData()
 {
     View::composer('user.layout.header', function ($view) {
-        $view->with('GetsellerCountry', \App\Models\country::get());
+        $view->with('GetsellerCountry', \App\Models\all_countrie::limit(10)->get());
     });
 }
-
 
 
 }
