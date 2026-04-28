@@ -460,6 +460,37 @@ class ChatController extends Controller
         }
     }
 
+    public function mark_all_chat_msg_as_read(Request $request)
+    {
+        try {
+
+            $userId   = auth()->id();
+            $sellerId = $request->seller_id;
+
+            $chatData = (object)[
+                'user_id'   => $userId,
+                'unique_id' => $request->unique_id,
+            ];
+
+            $data = $this->UserFirebaseService->mark_all_chat_msg_as_read($chatData);
+
+
+            return response()->json([
+                'status'    => 'success',
+                'message' => $data['message'],
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Failed to send message',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 
 

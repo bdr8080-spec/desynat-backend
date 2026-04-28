@@ -684,7 +684,8 @@ class CommonController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Notification sent successfully'
+                'message' => 'Notification sent successfully',
+                'data' => (object)[]
             ], 200);
 
         } catch (\Exception $e) {
