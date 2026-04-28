@@ -681,8 +681,10 @@ h3.mid-headng {
 
 .header_nav_button_dropdown .dropdown-menu.show {
     padding: 10px;
-    max-height: calc(100vh - 270px);
+      max-height: 430px;
     width: 350px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .header_nav_button_dropdown .profileDropdown.show {

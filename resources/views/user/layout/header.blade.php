@@ -62,8 +62,9 @@
 
 /* Selected state */
 .custom-radio input[type="radio"]:checked + span {
-    background-color: #0d6efd; /* Bootstrap primary */
+  background-color: #c7a479;
     color: #fff;
+    width: 75% !important;
 }
 
 
@@ -322,10 +323,10 @@
             </label>
         </li>
         @endforeach
-
         <li>
             <button class="customBtn customBtn5">Save</button>
         </li>
+
     </ul>
 </div>
 
