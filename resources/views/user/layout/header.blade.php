@@ -43,12 +43,30 @@
 #goog-gt-tt {
     display: none !important;
 }
-    </style>
-
-    <style>
+   
   /* body {
     visibility: hidden;
   } */
+
+
+.custom-radio input[type="radio"] {
+    display: none;
+}
+
+.custom-radio span {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Selected state */
+.custom-radio input[type="radio"]:checked + span {
+    background-color: #0d6efd; /* Bootstrap primary */
+    color: #fff;
+}
+
+
 </style>
 
     @php
@@ -277,7 +295,7 @@
     
                         <div class="dropdown-center mobileLang">
     <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-        data-bs-toggle="dropdown">
+        data-bs-toggle="dropdown" data-bs-auto-close="outside">
         <span id="selectedCurrency">
             {{ session('currency', $GetsellerCountry[0]->iso_code) }}
         </span>
@@ -615,4 +633,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+// Stop Currency Dropdown To Close on Click 
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdown = document.querySelector('.dropdown-menu.currency');
+
+    dropdown.addEventListener('click', function (e) {
+        e.stopPropagation(); // prevents dropdown from closing
+    });
+});
+
 </script>
