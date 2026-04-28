@@ -137,7 +137,7 @@
                                             Cancel Order
                                         </button>
                                     </div>
-                                    @else@if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
+                                    @elseif($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
                                             $orderData->payment_status !== '3' && $orderData->order->order_type == '2')
                                     <!-- @php
                                     $cancelDays = 3; 

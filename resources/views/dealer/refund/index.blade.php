@@ -44,8 +44,8 @@
                     <div class="from-group">
                         <div class="total-refund d-flex gap-3">
                             <h6>Total Refund</h6>
-                            <!-- <h3>{{$refundData['total_refunds']}} KD</h3> -->
-                             <h3>0 KD</h3>
+                            <h3>{{$refundData['total_refunds']}} KD</h3>
+                             
                              
                         </div>
                     </div>
