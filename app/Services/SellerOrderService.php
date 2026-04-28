@@ -426,6 +426,7 @@ try{
     foreach ($check_chatRecord as $key => $val) {
 
     $firbase_chat = $this->getMessages($val->unique_id);
+    $unreadCount = 0;
 
     if (!empty($firbase_chat)) {
         // Ensure array order
@@ -435,6 +436,16 @@ try{
         $val->last_chat = $lastMessage['message'] ?? null;
         $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
         $val->last_chat_by = $lastMessage['by'] ?? null;
+        foreach ($firbase_chat as $msg) {
+
+                if (
+                    isset($msg['user_id']) &&
+                    $msg['user_id'] != $request->user_id &&   // not my message
+                    (empty($msg['read']) || $msg['read'] == 0)
+                ) {
+                    $unreadCount++;
+                }
+            }
   
     } else {
         $val->message_type=null;
@@ -443,6 +454,7 @@ try{
         $val->last_chat_by = null;
 
     }
+    $val->unread_count = $unreadCount;
 }
     
 
