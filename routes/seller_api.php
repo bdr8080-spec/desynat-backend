@@ -172,6 +172,7 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
    Route::post('/notification_on_off', [NotificationController::class,'notification_on_off']);
    Route::post('/app_notification_on_off', [NotificationController::class,'app_notification_on_off']);
    Route::get('/get_refund_orders', [OrderManagement::class,'get_refund_orders']);
+   Route::get('/mark_all_chat_msg_as_read', [OrderManagement::class,'markAllChatMsgAsRead']);
 
 
   Route::get('/new-staff-category-type', [SellerStaffManagementController::class,'newStaffCategoryType']);
