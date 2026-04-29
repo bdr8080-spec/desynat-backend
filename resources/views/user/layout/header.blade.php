@@ -60,12 +60,64 @@
     cursor: pointer;
 }
 
-/* Selected state */
 .custom-radio input[type="radio"]:checked + span {
-    background-color: #0d6efd; /* Bootstrap primary */
-    color: #fff;
+    background-color: #fff;
+    color: #000;
+    width: 100%;
 }
 
+.custom-radio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
+    padding: 5px 0;
+}
+
+.custom-radio input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+       width: 24px;
+    height: 18px;
+    border: 2px solid #ccc; /* Default grey border */
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+    transition: border 0.2s ease-in-out;
+}
+
+.custom-radio input[type="radio"]:hover {
+    border-color: #8B4513;
+}
+
+.custom-radio input[type="radio"]:checked {
+    border: 2px solid #8B4513; /* Brown Border */
+}
+
+.custom-radio input[type="radio"]::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    background-color: #8B4513; /* Brown Dot */
+}
+
+.custom-radio input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+.custom-radio span {
+    font-size: 14px;
+    color: #333;
+     background-color: #fff;
+    color: #000;
+    width: 100%;
+}
 
 </style>
 
@@ -323,10 +375,10 @@
             </label>
         </li>
         @endforeach
-
         <li>
             <button class="customBtn customBtn5">Save</button>
         </li>
+
     </ul>
 </div>
 
