@@ -14,9 +14,28 @@ use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\Http;
 use App\Helpers\support;
 
+use App\Models\allproductchats;
+
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\Database;
+
 
 class SellerNotificationService
 {
+
+   protected Database $database;
+    public function __construct()
+        {
+            $factory = (new Factory)
+        ->withServiceAccount(storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json'))
+        ->withDatabaseUri('https://desynat-default-rtdb.firebaseio.com');
+
+
+            // $factory = (new Factory)
+            //     ->withServiceAccount(storage_path('ichrono-firebase-adminsdk-fbsvc-bc66e0b097.json'));
+
+            $this->database = $factory->createDatabase();
+        }
    
 
     public function GetMyNotificationList($request_data)
@@ -185,10 +204,37 @@ class SellerNotificationService
                 ->where('is_read', '0')
                 ->count();
 
+             $chatRooms = allproductchats::where('seller_id', $receiver_id)
+                        ->pluck('unique_id');
+
+            $firebaseUnreadCount = 0;
+
+            foreach ($chatRooms as $room) {
+
+                $messages = $this->getMessages($room);
+
+                if (!empty($messages)) {
+
+                    foreach ($messages as $msg) {
+
+                        if (
+                            isset($msg['user_id']) &&
+                            $msg['user_id'] != $receiver_id &&   // seller is receiver side
+                            (empty($msg['read']) || $msg['read'] == 0)
+                        ) {
+                            $firebaseUnreadCount++;
+                        }
+                    }
+                }
+            }
+
             return [
                 'status' => 'success',
                 'message' => 'Notification Count fetched successfully',
-                'data' => $notificationCount
+                'data' => [
+                    'notification_count' => $notificationCount,
+                    'chat_unread_count' => $firebaseUnreadCount,
+                ]
             ];
 
         } catch (\Exception $e) {
@@ -317,6 +363,15 @@ class SellerNotificationService
                 'data' => []
             ];
         }
+    }
+
+    public function getMessages(string $room): array
+    {
+
+        return $this->database
+            ->getReference("chats/{$room}")
+            ->orderByChild('timestamp')
+            ->getValue() ?? [];
     }
 
 

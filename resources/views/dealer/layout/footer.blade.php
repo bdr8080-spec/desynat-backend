@@ -776,6 +776,28 @@ observer.observe(document.body, { childList: true, subtree: true });
 
 </script> -->
 
+
+<script>
+$(document).ready(function () {
+
+    $.ajax({
+        url: "{{ route('seller.chat_unread_count') }}",
+        type: "GET",
+        success: function (response) {
+
+            if (response.status === "success") {
+
+                $("#chatCount").text(response.data.chat_unread_count);
+            }
+        },
+        error: function (xhr) {
+            console.log("Error loading chat count");
+        }
+    });
+
+});
+</script>
+
 </body>
 
 </html>

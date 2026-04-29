@@ -10,6 +10,7 @@ use App\Helpers\ApiResponse;
 use App\Http\Controllers\CommonController;
 use App\Models\userAddress;
 use App\Services\UserOrderService;
+use App\Services\NotificationManagementService;
 
 use App;
 
@@ -21,11 +22,12 @@ use Validator;
 class ChatController extends Controller
 {
  
-    public function __construct(UserFirebaseService $UserFirebaseService, UserOrderService $UserOrderService,GoogletranslateService $GoogletranslateService)
+    public function __construct(UserFirebaseService $UserFirebaseService, UserOrderService $UserOrderService,GoogletranslateService $GoogletranslateService, NotificationManagementService $NotificationManagementService)
     {
         $this->UserFirebaseService = $UserFirebaseService;
         $this->UserOrderService = $UserOrderService;
         $this->GoogletranslateService = $GoogletranslateService;
+        $this->NotificationManagementService = $NotificationManagementService;
     }
 
     public function allChats(Request $request){ 
@@ -479,6 +481,35 @@ class ChatController extends Controller
                 'status'    => 'success',
                 'message' => $data['message'],
                 'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Failed to send message',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function chat_unread_count(Request $request)
+    {
+        try {
+
+            $userId   = auth()->id();
+
+            $chatData = (object)[
+                'user_id'   => $userId,
+            ];
+
+            $data = $this->NotificationManagementService->CountgetUserNotifications($chatData);
+
+
+            return response()->json([
+                'status'    => 'success',
+                'message' => $data['message'],
+                'data' => $data['data']
             ]);
 
         } catch (\Exception $e) {

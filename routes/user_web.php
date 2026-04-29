@@ -199,6 +199,7 @@ Route::post('/make_card_default', [ProfileController::class, 'make_card_default'
 Route::post('/delete_card', [ProfileController::class, 'delete_card'])->name('user.delete_card');
 Route::post('/save_new_card', [ProfileController::class, 'save_new_card'])->name('user.save_new_card');
 Route::post('/mark_all_chat_msg_as_read', [ChatController::class,'mark_all_chat_msg_as_read'])->name('user.mark_all_chat_msg_as_read');
+Route::get('/chat_unread_count', [ChatController::class,'chat_unread_count'])->name('user.chat_unread_count');
 
 
 });

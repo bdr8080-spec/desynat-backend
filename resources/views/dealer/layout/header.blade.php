@@ -90,15 +90,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon" href="{{route('seller.All_chats')}}">
                         <img src="{{ asset('dealer') }}/assets/img/chat.svg" alt="icon" class="bell-icon" >
-                        <!-- <span class="badge bg-success badge-number">3</span> -->
+                        <span id="chatCount" class="badge bg-danger badge-number"></span>
                     </a>
-                   
-                    <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                        <li class="dropdown-header">
-                            You have 3 new messages
-                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                        </li>
-                    </ul> -->
                 </li>
                 @php
                     use Illuminate\Support\Facades\Auth;

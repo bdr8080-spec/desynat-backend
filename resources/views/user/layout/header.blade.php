@@ -117,6 +117,7 @@
                             <div class="user_nav_inner_profile">
                                 <a href="{{route('user.allChats')}}">
                                     <span>
+                                        <span id="chatCount" class="badge text-bg-danger red-badge"></span>
                                         <img src="{{asset('user/assets/images/chat.svg')}}" class=img-fluid />
                                     </span>
                                 </a>

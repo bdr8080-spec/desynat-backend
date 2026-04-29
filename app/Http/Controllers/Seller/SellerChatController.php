@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Helpers\ApiResponse;
 
 use App\Services\SellerOrderService;
+use App\Services\SellerNotificationService;
 
 use Validator;
 
@@ -17,8 +18,9 @@ use Auth;
 class SellerChatController extends Controller
 {
 
-    public function __construct(SellerOrderService $SellerOrderService){
+    public function __construct(SellerOrderService $SellerOrderService, SellerNotificationService $SellerNotificationService){
         $this->SellerOrderService=$SellerOrderService;
+        $this->SellerNotificationService=$SellerNotificationService;
     }
 
     
@@ -198,6 +200,36 @@ class SellerChatController extends Controller
                 'status'    => 'success',
                 'message' => $data['message'],
                 'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Failed to send message',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function chat_unread_count(Request $request)
+    {
+        try {
+
+            $seller_details=Auth::guard('seller')->user()->id;
+
+            $chatData = (object)[
+                'receiver_id'   => $seller_details,
+                'receiver_type' => 3,
+            ];
+
+            $data = $this->SellerNotificationService->GetNotificationCountSeller($chatData);
+
+
+            return response()->json([
+                'status'    => 'success',
+                'message' => $data['message'],
+                'data'    => $data['data'] 
             ]);
 
         } catch (\Exception $e) {

@@ -13,10 +13,28 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\Http;
 use App\Helpers\support;
+use App\Models\allproductchats;
+
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\Database;
 
 
 class NotificationManagementService
 {
+
+   protected Database $database;
+    public function __construct()
+        {
+            $factory = (new Factory)
+        ->withServiceAccount(storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json'))
+        ->withDatabaseUri('https://desynat-default-rtdb.firebaseio.com');
+
+
+            // $factory = (new Factory)
+            //     ->withServiceAccount(storage_path('ichrono-firebase-adminsdk-fbsvc-bc66e0b097.json'));
+
+            $this->database = $factory->createDatabase();
+        }
    
     //  public function sendNotification($request_data)
     // {
@@ -994,28 +1012,82 @@ class NotificationManagementService
     }
 
 
-     public function CountgetUserNotifications($request_data)
+    //  public function CountgetUserNotifications($request_data)
+    // {
+    //     try {
+
+    //     $limit       = (int)($request_data->limit ?? 10); 
+
+           
+    //         $AllNotification = Notification::where('receiver_type','2')
+    //             ->where('receiver_id', $request_data->user_id )
+    //             ->where('is_read','0')
+    //             ->count();
+           
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Notifications fetch successfully',
+    //             'data' => $AllNotification
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to mark notifications as read: '.$e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
+    public function CountgetUserNotifications($request_data)
     {
         try {
 
-        $limit       = (int)($request_data->limit ?? 10); 
+            $userId = $request_data->user_id;
 
-           
-            $AllNotification = Notification::where('receiver_type','2')
-                ->where('receiver_id', $request_data->user_id )
-                ->where('is_read','0')
+            $notificationCount = Notification::where('receiver_type', '2')
+                ->where('receiver_id', $userId)
+                ->where('is_read', '0')
                 ->count();
-           
+
+            $chatRooms = allproductchats::where('user_id', $userId)->pluck('unique_id');
+            //dd($chatRooms);
+
+            $firebaseUnreadCount = 0;
+
+            foreach ($chatRooms as $room) {
+
+                $messages = $this->getMessages($room);
+
+                if (!empty($messages)) {
+
+                    foreach ($messages as $msg) {
+
+                        if (
+                            isset($msg['user_id']) &&
+                            $msg['user_id'] != $userId &&   
+                            (empty($msg['read']) || $msg['read'] == 0)
+                        ) {
+                            $firebaseUnreadCount++;
+                        }
+                    }
+                }
+            }
+
+
             return [
                 'status' => 'success',
                 'message' => 'Notifications fetch successfully',
-                'data' => $AllNotification
+                'data' => [
+                    'notification_count' => $notificationCount,
+                    'chat_unread_count' => $firebaseUnreadCount,
+                ]
             ];
 
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to mark notifications as read: '.$e->getMessage(),
+                'message' => 'Failed: ' . $e->getMessage(),
                 'data' => []
             ];
         }
@@ -1350,6 +1422,15 @@ class NotificationManagementService
                 'data' => []
             ];
         }
+    }
+
+    public function getMessages(string $room): array
+    {
+
+        return $this->database
+            ->getReference("chats/{$room}")
+            ->orderByChild('timestamp')
+            ->getValue() ?? [];
     }
         
 

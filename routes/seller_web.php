@@ -242,6 +242,9 @@ Route::group(['prefix' => 'seller'], function () {
     Route::post('notification_on_off', [WebSellerDashboard::class, 'notification_on_off'])->name('seller.notification_on_off');
     Route::post('app_notification_on_off', [WebSellerDashboard::class, 'app_notification_on_off'])->name('seller.app_notification_on_off');
     Route::post('/mark_all_chat_msg_as_read', [SellerChatController::class,'mark_all_chat_msg_as_read'])->name('seller.mark_all_chat_msg_as_read');
+    Route::get('/chat_unread_count', [SellerChatController::class,'chat_unread_count'])->name('seller.chat_unread_count');
+
+    
 
     });
 
