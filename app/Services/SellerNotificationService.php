@@ -272,6 +272,33 @@ class SellerNotificationService
             ];
         }
     }
+
+    public function MarkAllOrderNotification($request_data)
+    {
+        try {
+            $receiver_id = $request_data->receiver_id;
+            $receiver_type = $request_data->receiver_type;
+
+            $notificationCount = Notification::where('receiver_id', $receiver_id)
+                ->where('receiver_type', $receiver_type)
+                ->where('is_read', 0)
+                ->where('notification_type', 'order_place')
+                ->update(['is_read' => 1]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Order Notification Marked As Read',
+                'data' => (object)[]
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch notifications: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
         
 
 

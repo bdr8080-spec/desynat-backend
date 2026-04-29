@@ -182,6 +182,31 @@ class NotificationController extends Controller
 
 }
 
+    public function mark_all_order_notification(Request $request)
+    {
+
+        try {
+            $sellerId = auth()->id();
+            //dd($senderId);
+
+            $request_data = (object)[
+                'receiver_id'    => $sellerId,
+                'receiver_type'      => '3',
+            ];
+
+            $data = $this->SellerNotificationService->MarkAllOrderNotification($request_data);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
     public function order_notification_unread_count(Request $request)
     {
 
