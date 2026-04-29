@@ -71,6 +71,19 @@ public function setCountryInUser(Request $request){
 
     $user_detail = Auth::guard('web')->user();
 
+    $selectCountry=all_countrie::where('id',$request->country_id)->first();
+
+      if($selectCountry){
+        
+       session([
+        'countryName' => $selectCountry->name, // table id
+        'countrydialCode' => $selectCountry->dial_code,
+        'country_id' => $request->country_id
+    ]);
+
+   }else{
+        session(['country_id' => $request->country_id]);
+   }
 
     if($user_detail){
 
@@ -78,7 +91,6 @@ public function setCountryInUser(Request $request){
 
     }
 
-    session(['country_id' => $request->country_id]);
 
     
 
