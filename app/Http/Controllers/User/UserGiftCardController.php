@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use App\Services\UserGiftCardService;
 
 use App\Models\all_countrie;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Session;
 use App\Helpers\ApiResponse;
@@ -128,7 +129,31 @@ class UserGiftCardController extends Controller
 
         try {
 
-            $data = $this->UserGiftCardService->AddgiftCard($request);
+            $user = User::find($request->user_id);
+            $currencyData = all_countrie::find($user->selected_currency);
+            $rate = $currencyData->exchange_rate_to_kwd ?? 1;
+            $rawAmount = str_replace(',', '', $request->amount);
+            $amount = round(((float)$rawAmount) / $rate, 2);
+            //dd($amount);
+
+            $request_data=(object)[
+                'user_id'=>$request->user_id,
+                'amount' => $amount,
+                "gift_card_id"=>$request->gift_card_id,
+                "receiver_name"=>$request->receiver_name,
+                "receiver_email"=>$request->receiver_email,
+                "sender_name"=>$request->sender_name,
+                "sender_email"=>$request->sender_email,
+                "wish_message"=>$request->wish_message,
+                "country_code"=>$request->country_code,
+                "mobile"=>$request->mobile,
+                "notes"=>$request->notes,
+            ];
+
+           // dd($request_data);
+
+
+            $data = $this->UserGiftCardService->AddgiftCard($request_data);
             
             $message = $data['message'];
 

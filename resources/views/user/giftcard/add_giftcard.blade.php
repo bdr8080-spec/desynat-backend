@@ -43,6 +43,12 @@
 }
 </style>
 
+@php
+    $currency = session('currency', 'KWD');
+    $rate = session('rate', '1');
+ 
+@endphp
+
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('user.gift_cards')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
@@ -74,10 +80,10 @@
                 <div class="gift-pnl">
                     <h6>Choose Amount</h6>
                     <div class="occasion-buttons">
-                        <button type="button" class="amount-btn active" data-value="50">50 KD</button>
-                        <button type="button" class="amount-btn" data-value="100">100 KD</button>
-                        <button type="button" class="amount-btn" data-value="200">200 KD</button>
-                        <button type="button" class="amount-btn" data-value="500">500 KD</button>
+                        <button type="button" class="amount-btn active" data-value="{{ number_format(convertPriceInUserWeb(50), 2) }}">{{ number_format(convertPriceInUserWeb(50), 2) }} {{ $currency }}</button>
+                        <button type="button" class="amount-btn" data-value="{{ number_format(convertPriceInUserWeb(100), 2) }}">{{ number_format(convertPriceInUserWeb(100), 2) }} {{ $currency }}</button>
+                        <button type="button" class="amount-btn" data-value="{{ number_format(convertPriceInUserWeb(200), 2) }}">{{ number_format(convertPriceInUserWeb(200), 2) }} {{ $currency }}</button>
+                        <button type="button" class="amount-btn" data-value="{{ number_format(convertPriceInUserWeb(500), 2) }}">{{ number_format(convertPriceInUserWeb(500), 2) }} {{ $currency }}</button>
                         <button type="button" class="amount-btn" data-value="">Enter Amount</button>
                     </div>
 
@@ -90,7 +96,7 @@
                 <form id="giftCardForm">
                     @csrf
                     <div class="gift-pnl mt-4">
-                        <input type="hidden" name="amount" id="amount" value="50">
+                        <input type="hidden" name="amount" id="amount" value="{{ number_format(convertPriceInUserWeb(50), 2) }}">
                         <input type="hidden" name="gift_card_id" id="gift_card_id"
                             value="{{ $giftCardCategory[0]['id'] }}">
                         <input type="hidden" name="notes" id="notes">
@@ -207,7 +213,7 @@
                     <div id="myfatoorah-container"></div>
                 </div>
 
-                <input type="hidden" id="WalletBalance" value="{{$walletBalance}}">
+                <input type="hidden" id="WalletBalance" value="{{ number_format(convertPriceInUserWeb($walletBalance), 2) }}">
 
                 <div class="payment-option mb-3">
                     <label class="custom-radio mb-3">
@@ -217,7 +223,7 @@
                             <img src="{{ asset('user/assets/images/wallet.svg') }}" class="img-fluid">
                             <div class="title">
                                 In -App Wallet
-                                <div class="small-14">Available Balance : {{$walletBalance}} KD</div>
+                                <div class="small-14">Available Balance : {{ number_format(convertPriceInUserWeb($walletBalance), 2) }} {{ $currency }}</div>
                             </div>
                         </div>
                     </label>
@@ -273,6 +279,9 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    const rate = parseFloat("{{ $rate }}");
+</script>
+<script>
 $(document).on("click", ".occasion-btn", function() {
     $(".occasion-btn").removeClass("active");
     $(this).addClass("active");
@@ -299,7 +308,17 @@ $(document).ready(function() {
         }
     });
     $(document).on("input", "#customAmount", function() {
-        $("#amount").val($(this).val());
+
+        let val = parseFloat($(this).val());
+
+        if (isNaN(val)) {
+            $("#amount").val("");
+            return;
+        }
+
+        let converted = val * rate;
+
+        $("#amount").val(converted.toFixed(2));
     });
 });
 
@@ -517,7 +536,7 @@ $(document).ready(function() {
 
 
                     if (paymentMethod == 1) {
-                   // console.log('123');
+                    //console.log(response);
 
                         var orderid = response.data.data.order_id;
 
