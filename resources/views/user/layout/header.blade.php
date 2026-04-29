@@ -108,8 +108,9 @@
                             @if (Auth::guard('web')->check())
 
                             <div class="user_nav_inner_profile">
-                                <a href="{{route('user.allChats')}}">
+                                <a href="{{route('user.allChats')}}" class="position-relative">
                                     <span>
+                                        <span id="chatCount" class="badge text-bg-danger red-badge"></span>
                                         <img src="{{asset('user/assets/images/chat.svg')}}" class=img-fluid />
                                     </span>
                                 </a>
@@ -141,12 +142,12 @@
                                     }
                                 @endphp
 
-                                <a href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialogUser">
-                                    <img src="{{ asset('user/assets/images/noti.svg') }}" class="img-fluid" />
+                                <a href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialogUser" class="position-relative">       
 
                                     @if($notificationCount > 0)
                                         <span class="badge text-bg-danger badge-number">{{ $notificationCount }}</span>
                                     @endif
+                                    <img src="{{ asset('user/assets/images/noti.svg') }}" class="img-fluid" />
                                 </a>
                             </div>
 
