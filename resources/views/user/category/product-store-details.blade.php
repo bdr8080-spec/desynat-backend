@@ -4,6 +4,7 @@
 
 @php
     $currency = session('currency', 'KWD');
+    $rate = session('rate', '1');
 
 @endphp
 
@@ -532,8 +533,12 @@ $wishlistBlock = trim(preg_replace('/\s+/', ' ', ob_get_clean()));
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-
 <script>
+
+const currencySymbal="{{$currency}}";
+const currencyrate="{{$rate}}";
+
+
 document.addEventListener("DOMContentLoaded", function() {
 
     // ------------------------------
@@ -696,8 +701,8 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!variant) return;
 
             // Update prices
-            document.getElementById("actualPrice").innerText = variant.actual_price + " {{$currency}}";
-            document.getElementById("finalPrice").innerText = variant.final_price + " {{$currency}}";
+            document.getElementById("actualPrice").innerText = variant.actual_price*currencyrate + " {{$currency}}";
+            document.getElementById("finalPrice").innerText = variant.final_price*currencyrate + " {{$currency}}";
 
             // Update sizes
             const sizeContainer = document.getElementById("sizeContainer");
@@ -833,8 +838,8 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("variantId").value = variant.variant_id;
         document.getElementById("productId").value = variant.product_id;
 
-        document.getElementById("actualPrice").innerText = variant.actual_price + " {{$currency}}";
-        document.getElementById("finalPrice").innerText = variant.final_price + " {{$currency}}";
+        document.getElementById("actualPrice").innerText = variant.actual_price * currencyrate + " {{$currency}}";
+        document.getElementById("finalPrice").innerText = variant.final_price * currencyrate + " {{$currency}}";
 
         updateCartUIForVariant(variantId);
         AddAndBuyButtonHideAndShowCode();
