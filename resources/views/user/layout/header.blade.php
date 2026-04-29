@@ -59,6 +59,13 @@
     border-radius: 6px;
     cursor: pointer;
 }
+/* Selected state */
+.custom-radio input[type="radio"]:checked + span {
+    background-color: #0d6efd; /* Bootstrap primary */
+    color: #fff;
+  
+}
+
 
 
 </style>
