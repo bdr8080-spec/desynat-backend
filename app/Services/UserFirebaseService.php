@@ -191,7 +191,12 @@ foreach ($check_chatRecord as $key => $val) {
          $val->message_type = StrVal($lastMessage['type']) ?? null;
 
         $val->last_chat = $lastMessage['message'] ?? null;
-        $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
+        // $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
+        $val->last_chat_time = $lastMessage['times']
+                    ? \Carbon\Carbon::parse($lastMessage['times'])
+                        ->setTimezone('Asia/Kolkata')
+                        ->format('d M Y, h:i A')
+                    : null;
         $val->last_chat_by = $lastMessage['by'] ?? null;
             foreach ($firbase_chat as $msg) {
 
