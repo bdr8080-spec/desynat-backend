@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Http;
 use App\Services\UserOrderService;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\CommonController;
+use App\Models\User;
+use App\Models\all_countrie;
 
 use Session;
 
@@ -72,17 +74,22 @@ class WalletController extends Controller
     if($request->isMethod('post')){
 
           $validate = Validator::make($request->all(), [
-                'amount' => 'required|integer',
+                'amount' => 'required',
                 "payment_method"=>'required|in:1'
             ]);
 
         if($validate->fails()){
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
         }
+
+            $user = User::find($user->id);
+
+            $currencyData = all_countrie::find($user->selected_currency);
+            $rate = $currencyData->exchange_rate_to_kwd ?? 1;
         
         $request_data=(object)[
         'user_id'=>$user->id,
-        'amount'=>$request->amount,
+        'amount' => round($request->amount / $rate, 2),
         "payment_method"=>$request->payment_method,
         ];
 

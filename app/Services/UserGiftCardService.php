@@ -32,6 +32,7 @@ class UserGiftCardService
     public function AddgiftCard($request){
 
         try{
+            //dd(123);
 
             $orderId="Order". rand('11111111111','999999999999999');
 
@@ -67,6 +68,7 @@ class UserGiftCardService
                 'mobile' =>$request->mobile,
                 
             ];
+            //dd($data);
 
             $AddGiftCard = UserGiftCards::Create($data);
             CreateNotification([

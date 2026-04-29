@@ -2,6 +2,12 @@
 
 @section('content')
 
+@php
+    $currency = session('currency', 'KWD');
+    $rate = session('rate', '1');
+ 
+@endphp
+
 <div class="categoryDetail customContainer">
 
     <!-- <div class="tabs-panel py-4">
@@ -297,8 +303,8 @@
                                                     </div>
 
                                                     <h5 class="product-title">
-                                                        {{ floor($variant->final_price) != $variant->final_price? number_format($variant->final_price, 2) : number_format($variant->final_price, 0) }}
-                                                        KD
+
+                                                        {{ number_format(convertPriceInUserWeb($variant['final_price']), 2) }}  {{ $currency }}
 
                                                     </h5>
                                                 </div>

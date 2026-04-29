@@ -681,7 +681,7 @@ h3.mid-headng {
 
 .header_nav_button_dropdown .dropdown-menu.show {
     padding: 10px;
-      max-height: 430px;
+      max-height: calc(100vh - 270px);
     width: 350px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -3461,4 +3461,26 @@ img.img-fluid.circle-image {
 .giftinfo-2 a {
     color: #6E4527;
     text-decoration: none;
+}
+.dropdown-menu {
+    --bs-dropdown-zindex: 1000;
+    --bs-dropdown-min-width: 10rem;
+    --bs-dropdown-padding-x: 0;
+    --bs-dropdown-padding-y: 0.5rem;
+    --bs-dropdown-spacer: 0.125rem;
+    --bs-dropdown-font-size: 1rem;
+    --bs-dropdown-color: var(--bs-body-color);
+    --bs-dropdown-bg: var(--bs-body-bg);
+    --bs-dropdown-border-color: var(--bs-border-color-translucent);
+    --bs-dropdown-border-radius: var(--bs-border-radius);
+    --bs-dropdown-border-width: var(--bs-border-width);
+    --bs-dropdown-inner-border-radius: calc(var(--bs-border-radius) - var(--bs-border-width));
+    --bs-dropdown-divider-bg: var(--bs-border-color-translucent);
+    --bs-dropdown-divider-margin-y: 0.5rem;
+    --bs-dropdown-box-shadow: var(--bs-box-shadow);
+    --bs-dropdown-link-color: var(--bs-body-color);
+    --bs-dropdown-link-hover-color: var(--bs-body-color);
+    --bs-dropdown-link-hover-bg: var(--bs-tertiary-bg);
+    --bs-dropdown-link-active-color: #c19e73 !important;
+    --bs-dropdown-link-active-bg: #f3f0ec !important;
 }

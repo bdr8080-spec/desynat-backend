@@ -8,6 +8,12 @@
 </div>
 @endif
 
+@php
+    $currency = session('currency', 'KWD');
+    $rate = session('rate', '1');
+ 
+@endphp
+
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('user.myWallet')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
@@ -22,9 +28,9 @@
                 <div class="gift-pnl addheight">
                     <h6>Amount</h6>
                     <div class="occasion-buttons mb-3">
-                        <button type="button" class="amount-btn min-width-100 active" data-value="100">100 KD</button>
-                        <button type="button" class="amount-btn min-width-100" data-value="500">500 KD</button>
-                        <button type="button" class="amount-btn min-width-100" data-value="1000">1000 KD</button>
+                        <button type="button" class="amount-btn min-width-100 active" data-value="100">{{ number_format(convertPriceInUserWeb(100), 2) }} {{ $currency }}</button>
+                        <button type="button" class="amount-btn min-width-100" data-value="500">{{ number_format(convertPriceInUserWeb(500), 2) }} {{ $currency }}</button>
+                        <button type="button" class="amount-btn min-width-100" data-value="1000">{{ number_format(convertPriceInUserWeb(1000), 2) }} {{ $currency }}</button>
 
                     </div>
                     <div class="form-group w-100 py-2 amountpnl">
@@ -99,16 +105,32 @@ $(function() {
 
 
 <script>
+// $(document).ready(function() {
+//     $(".amount-btn").click(function() {
+//         $(".amount-btn").removeClass("active");
+
+//         $(this).addClass("active");
+//         let btnText = $(this).attr('data-value');
+//         const currencyrate="{{$rate}}";
+//         $("#customAmount").val(btnText);
+        
+
+//     });
+
+// });
+
 $(document).ready(function() {
     $(".amount-btn").click(function() {
         $(".amount-btn").removeClass("active");
-
         $(this).addClass("active");
-        let btnText = $(this).attr('data-value');
-        $("#customAmount").val(btnText);
 
+        let baseAmount = parseFloat($(this).data('value'));
+        let currencyrate = parseFloat("{{$rate}}");
+
+        let convertedAmount = (baseAmount * currencyrate).toFixed(2);
+
+        $("#customAmount").val(convertedAmount);
     });
-
 });
 
 $(document).on('submit', 'form#AddMoneyForm', function(event) {

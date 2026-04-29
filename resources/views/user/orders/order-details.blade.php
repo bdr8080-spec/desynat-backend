@@ -2,6 +2,12 @@
 
 @section('content')
 
+@php
+    $currency = session('currency', 'KWD');
+    $rate = session('rate', '1');
+ 
+@endphp
+
 
 
 <div class="customContainer common-padding">
@@ -88,14 +94,14 @@
                                     @if($orderData->order_type=='1')
                                     <div class="price">
                                         <span
-                                            class="price-current">{{ number_format($orderData->variation_details->final_price ?? 0, 2) }}
-                                            KD</span>
+                                            class="price-current"> {{ number_format(convertPriceInUserWeb($orderData->variation_details->final_price), 2) }}  {{ $currency }}
+                                            </span>
                                         @if(isset($orderData->variation_details->actual_price) &&
                                         $orderData->variation_details->actual_price >
                                         $orderData->variation_details->final_price)
                                         <span
-                                            class="price-old">{{ number_format($orderData->variation_details->actual_price, 2) }}
-                                            KD</span>
+                                            class="price-old"> {{ number_format(convertPriceInUserWeb($orderData->variation_details->actual_price), 2) }}  {{ $currency }}
+                                            </span>
                                         @if($orderData->variation_details->discount_type == '1')
                                         <span class="discount ms-2">{{ $orderData->variation_details->discount_value }}%
                                             Off</span>
@@ -105,8 +111,8 @@
                                     @endif
                                     @if($orderData->order_type=='2')
                                     <div class="price">
-                                        <span class="price-current">{{ $orderData->amount ?? 0 }}
-                                            KD</span>
+                                        <span class="price-current"> {{ number_format(convertPriceInUserWeb($orderData->amount), 2) }}  {{ $currency }}
+                                            </span>
                                     </div>
                                     @endif
                                 </div>
@@ -314,14 +320,14 @@
                                 @if($val->order_type=='1')
                                 <div class="price">
                                     <span
-                                        class="price-current">{{ number_format($val->variation_details->final_price ?? 0, 2) }}
-                                        KD</span>
+                                        class="price-current"> {{ number_format(convertPriceInUserWeb($val->variation_details->final_price ), 2) }}  {{ $currency }}
+                                        </span>
                                     @if(isset($val->variation_details->actual_price) &&
                                     $val->variation_details->actual_price >
                                     $val->variation_details->final_price)
                                     <span
-                                        class="price-old">{{ number_format($val->variation_details->actual_price, 2) }}
-                                        KD</span>
+                                        class="price-old"> {{ number_format(convertPriceInUserWeb($val->variation_details->actual_price ), 2) }}  {{ $currency }}
+                                        </span>
                                     @if($val->variation_details->discount_type == '1')
                                     <span class="discount ms-2">{{ $val->variation_details->discount_value }}%
                                         Off</span>
@@ -332,8 +338,8 @@
                                 @if($val->order_type=='2')
                                 <div class="price">
                                     <span
-                                        class="price-current">{{ number_format($val->ChatroomRecordtable->total_amount ?? 0, 2) }}
-                                        KD</span>
+                                        class="price-current"> {{ number_format(convertPriceInUserWeb($val->ChatroomRecordtable->total_amount ), 2) }}  {{ $currency }}
+                                        </span>
                                 </div>
                                 @endif
 
@@ -840,12 +846,12 @@
                         @if($hasOrderType1)
                             <div class="giftinfo">
                                 <div>Total MRP</div>
-                                <div>{{ $totalMrp }} KD</div>
+                                <div> {{ number_format(convertPriceInUserWeb($totalMrp ), 2) }}  {{ $currency }}</div>
                             </div>
 
                             <div class="giftinfo">
                                 <div>Discount on MRP</div>
-                                <div class="discount">{{ $discountMrp }} KD</div>
+                                <div class="discount"> {{ number_format(convertPriceInUserWeb($discountMrp ), 2) }}  {{ $currency }} </div>
                             </div>
                         @endif
 
@@ -853,7 +859,7 @@
                         @if($hasOrderType2)
                             <div class="giftinfo">
                                 <div>Custom Item price</div>
-                                <div>{{ $customAmount }} KD</div>
+                                <div> {{ number_format(convertPriceInUserWeb($customAmount ), 2) }} {{ $currency }}</div>
                             </div>
                         @endif
 
@@ -861,7 +867,7 @@
                         @if(!empty($orderData->order->promocode_value))
                             <div class="giftinfo">
                                 <div>Coupon Discount</div>
-                                <div class="discount">{{ $orderData->order->promocode_value }} KD</div>
+                                <div class="discount"> {{ number_format(convertPriceInUserWeb($orderData->order->promocode_value ), 2) }} {{ $currency }}</div>
                             </div>
                         @endif
 
@@ -869,14 +875,14 @@
                         @if(!empty($orderData->order->giftcard_amount))
                             <div class="giftinfo">
                                 <div>Gift Card Discount</div>
-                                <div class="discount">{{ $orderData->order->giftcard_amount }} KD</div>
+                                <div class="discount">{{ number_format(convertPriceInUserWeb($orderData->order->giftcard_amount ), 2) }} {{ $currency }}</div>
                             </div>
                         @endif
 
                         @if(($orderData->order->shipping_fees ?? 0) > 0)
                             <div class="giftinfo">
                                 <div>Shipping Fee</div>
-                                <div>{{ $orderData->order->shipping_fees }} KD</div>
+                                <div> {{ number_format(convertPriceInUserWeb($orderData->order->shipping_fees ), 2) }} {{ $currency }}</div>
                             </div>
                         @else
                             <div class="giftinfo">
@@ -890,14 +896,14 @@
                         @if(($orderData->order->tax ?? 0) > 0)
                             <div class="giftinfo">
                                 <div>Tax (if any)</div>
-                                <div>{{ $orderData->order->tax }} KD</div>
+                                <div> {{ number_format(convertPriceInUserWeb($orderData->order->tax ), 2) }} {{ $currency }}</div>
                             </div>
                         @endif
 
                         <div class="giftinfo">
                             <div>Total Amount</div>
                             <div>
-                                {{ rtrim(rtrim(number_format($orderData->order->total_amount, 2), '0'), '.') }} KD
+                                 {{ number_format(convertPriceInUserWeb($orderData->order->total_amount ), 2) }} {{ $currency }}
                             </div>
                         </div>
 
@@ -913,7 +919,7 @@
                 $totalDiscount = $discountMRP + $couponDiscount + $giftcardDiscount;
                 @endphp
                 @if($orderData->order->order_type=='1')
-                <div class="return-green">You will save {{$totalDiscount }} KD on this</div>
+                <div class="return-green">You will save  {{ number_format(convertPriceInUserWeb($totalDiscount ), 2) }} {{ $currency }} on this</div>
                 @endif
 
 
@@ -927,7 +933,7 @@
                     </div>
                     <div class="border-1">
                         <div class="giftinfo">
-                            <div>{{ rtrim(rtrim(str_replace(',', '', number_format($orderData->order->total_amount, 2)), '0'), '.') }} KD</div>
+                            <div>{{ number_format(convertPriceInUserWeb($orderData->order->total_amount ), 2) }} {{ $currency }}</div>
                             <!-- <div>Paid By Card</div> -->
                             <div>
                                 @php
@@ -955,7 +961,7 @@
 
                 <!-- @if($orderData->order->order_type == '1') -->
                 <div class="mt-4 text-center">
-                    <a href="{{ url('Invoice', ['order_id' => $orderData->order->order_id]) }}" target="_blank"
+                    <a href="{{ url('InvoiceUser', ['order_id' => $orderData->order->order_id]) }}" target="_blank"
                         class="customBtn8 mb-3 text-decoration-none">
                         Download Invoice
                     </a>
