@@ -143,11 +143,12 @@
                                 @endphp
 
                                 <a href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialogUser" class="position-relative">       
-
+                                  <span>
                                     @if($notificationCount > 0)
                                         <span class="badge text-bg-danger badge-number">{{ $notificationCount }}</span>
                                     @endif
                                     <img src="{{ asset('user/assets/images/noti.svg') }}" class="img-fluid" />
+                                   </span>
                                 </a>
                             </div>
 
