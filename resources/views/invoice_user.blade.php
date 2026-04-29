@@ -232,10 +232,10 @@
           <td>{{$val->quantity}}</td>
           <td>
            @if($val->order_type=='1')
-                                 {{ number_format(convertPriceInUserWeb($val->variation_details->actual_price), 2) }}  {{ $currency }}
-                                @elseif($val->order_type=='2')
-                                 {{ number_format(convertPriceInUserWeb($val->amount), 2) }}  {{ $currency }}
-                                @endif
+              {{ number_format($val->variation_details->actual_price * $rate, 2) }} {{ $currencyCode }}
+          @elseif($val->order_type=='2')
+              {{ number_format($val->amount * $rate, 2) }} {{ $currencyCode }}
+          @endif
           </td>
         </tr>
         @endforeach
@@ -254,11 +254,11 @@
       <thead>
         <tr>
           <td>SubTotal:</td>
-          <td style="text-align: right"> {{ number_format(convertPriceInUserWeb($checkOrder->total_mrp), 2) }}  {{ $currency }}</td>
+          <td style="text-align: right"> {{ number_format($checkOrder->total_mrp * $rate, 2) }} {{ $currencyCode }}</td>
         </tr>
         <tr>
           <td>Discount:</td>
-          <td style="text-align: right"> {{ number_format(convertPriceInUserWeb($checkOrder->discount_mrp), 2) }}  {{ $currency }}</td>
+          <td style="text-align: right"> {{ number_format($checkOrder->discount_mrp * $rate, 2) }} {{ $currencyCode }}</td>
         </tr>
         @if($checkOrder->promocode_details)
 
@@ -268,15 +268,15 @@
         @endif
         <tr>
           <td>Delivery Fee:</td>
-          <td style="text-align: right"> {{ number_format(convertPriceInUserWeb($checkOrder->shipping_fees), 2) }}  {{ $currency }}</td>
+          <td style="text-align: right">   {{ number_format($checkOrder->shipping_fees * $rate, 2) }} {{ $currencyCode }}</td>
         </tr>
         <tr>
           <td>Tax (VAT)</td>
-          <td style="text-align: right"> {{ number_format(convertPriceInUserWeb($checkOrder->tax), 2) }}  {{ $currency }}</td>
+          <td style="text-align: right">  {{ number_format($checkOrder->tax * $rate, 2) }} {{ $currencyCode }}</td>
         </tr>
         <tr>
           <td style="font-weight: 600;"> Total Amount:  </td>
-          <td style="text-align: right;font-weight: 600;"> {{ number_format(convertPriceInUserWeb($checkOrder->total_amount), 2) }}  {{ $currency }}</td>
+          <td style="text-align: right;font-weight: 600;">   {{ number_format($checkOrder->total_amount * $rate, 2) }} {{ $currencyCode }}</td>
       </tr>
       </thead>
     </table>

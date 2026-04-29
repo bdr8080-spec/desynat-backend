@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\User;
+use App\Models\all_countrie;
 
 class OrderInvoiceController extends Controller
 {
@@ -23,6 +25,7 @@ class OrderInvoiceController extends Controller
                 'order_details.variation_details.size',
                 'driver_details.zone_info'
             )->where('order_id', $id)->first();
+
 
             
            //dd($checkOrder);
@@ -50,10 +53,19 @@ class OrderInvoiceController extends Controller
                 'driver_details.zone_info'
             )->where('order_id', $id)->first();
 
+            $userId = $checkOrder->user_details->id;
+
+            $user = User::find($userId);
+
+            $currencyData = all_countrie::find($user->selected_currency);
+
+            $currencyCode = $currencyData->currency_code ?? 'KWD';
+            $rate = $currencyData->exchange_rate_to_kwd ?? 1;
+
             
            //dd($checkOrder);
             if($checkOrder){
-                return view('invoice_user',compact('checkOrder'));
+                return view('invoice_user',compact('checkOrder','currencyCode','rate'));
             }else{
                 return redirect()->route('userLogin');
             }
