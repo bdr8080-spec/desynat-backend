@@ -27,48 +27,46 @@
         z-index: 9999;
     }
 
-        iframe#\:1\.container {
-    visibility: hidden !important;
-}
+    iframe#\:1\.container {
+        visibility: hidden !important;
+    }
 
-/* Hide the Google Translate tooltip */
-.goog-te-banner-frame.skiptranslate,
-.goog-tooltip,
-.goog-tooltip:hover,
-.goog-tooltip-vertical {
-    display: none !important;
-}
+    /* Hide the Google Translate tooltip */
+    .goog-te-banner-frame.skiptranslate,
+    .goog-tooltip,
+    .goog-tooltip:hover,
+    .goog-tooltip-vertical {
+        display: none !important;
+    }
 
-/* Hide the feedback popup on selected text */
-#goog-gt-tt {
-    display: none !important;
-}
-   
-  /* body {
+    /* Hide the feedback popup on selected text */
+    #goog-gt-tt {
+        display: none !important;
+    }
+
+    /* body {
     visibility: hidden;
   } */
 
 
-.custom-radio input[type="radio"] {
-    display: none;
-}
+    .custom-radio input[type="radio"] {
+        display: none;
+    }
 
-.custom-radio span {
-    display: block;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-/* Selected state */
-.custom-radio input[type="radio"]:checked + span {
-    background-color:#c19e73;
-    color: #000;
-  
-}
+    .custom-radio span {
+        display: block;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
 
+    /* Selected state */
+    .custom-radio input[type="radio"]:checked+span {
+        background-color: #c19e73;
+        color: #000;
 
-
-</style>
+    }
+    </style>
 
     @php
     use App\Models\Category;
@@ -89,7 +87,7 @@
 
     @php
     $isHome = request()->routeIs('dashboard'); // change 'home' to your route name
-@endphp
+    @endphp
 
 </head>
 
@@ -104,11 +102,12 @@
                 <div
                     class="container-fluid d-flex align-items-center justify-content-between flex-wrap mobileResponsive">
                     <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont w-100">
-                        <a class="navbar-brand" >
+                        <a class="navbar-brand">
                             <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" usemap="#logoMap" />
                         </a>
                         <map name="logoMap">
-                            <area shape="rect" coords="0,0,50,50" href="javascript:void(0)" onclick="onAdminIconClick(0)">
+                            <area shape="rect" coords="0,0,50,50" href="javascript:void(0)"
+                                onclick="onAdminIconClick(0)">
                             <area shape="rect" coords="60,0,200,50" href="{{route('dashboard')}}">
                         </map>
 
@@ -138,25 +137,26 @@
                                         <img src="{{asset('user/assets/images/cart.svg')}}" class=img-fluid />
                                     </span>
                                 </a>
-                                 @php
-                                    $notificationCount = 0;
+                                @php
+                                $notificationCount = 0;
 
-                                    if (Auth::guard('web')->check()) {
-                                        $notificationCount = \App\Models\Notification::where('receiver_id', auth()->id())
-                                            ->where('receiver_type', '2')
-                                            ->where('is_read', '0')
-                                            ->orderBy('id', 'desc')
-                                            ->count();
-                                    }
+                                if (Auth::guard('web')->check()) {
+                                $notificationCount = \App\Models\Notification::where('receiver_id', auth()->id())
+                                ->where('receiver_type', '2')
+                                ->where('is_read', '0')
+                                ->orderBy('id', 'desc')
+                                ->count();
+                                }
                                 @endphp
 
-                                <a href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialogUser" class="position-relative">       
-                                  <span>
-                                    @if($notificationCount > 0)
+                                <a href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialogUser"
+                                    class="position-relative">
+                                    <span>
+                                        @if($notificationCount > 0)
                                         <span class="badge text-bg-danger badge-number">{{ $notificationCount }}</span>
-                                    @endif
-                                    <img src="{{ asset('user/assets/images/noti.svg') }}" class="img-fluid" />
-                                   </span>
+                                        @endif
+                                        <img src="{{ asset('user/assets/images/noti.svg') }}" class="img-fluid" />
+                                    </span>
                                 </a>
                             </div>
 
@@ -198,7 +198,8 @@
                                                         Orders</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
-                                                    <a href="{{route('user.saved_cards')}}" class="custom-btn3">My Saved Cards</a>
+                                                    <a href="{{route('user.saved_cards')}}" class="custom-btn3">My Saved
+                                                        Cards</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
                                                     <a href="{{route('user.view_address')}}" class="custom-btn3">Saved
@@ -273,67 +274,66 @@
                                     class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
                             @endif
 
-        <!-- Country code  -->
+                            <!-- Country code  -->
 
-                    <div class="dropdown-center mobileLang">
-                    <button class="btn btn-secondary dropdown-toggle customBtn1 " type="button"
-                    data-bs-toggle="dropdown" {{ !$isHome ? 'disabled' : '' }}>
-                    <img id="selectedFlag" src="{{$GetsellerCountry[0]->flag}}" class="img-fluid" />
-                    </button>
+                            <div class="dropdown-center mobileLang">
+                                <button class="btn btn-secondary dropdown-toggle customBtn1 " type="button"
+                                    data-bs-toggle="dropdown" {{ !$isHome ? 'disabled' : '' }}>
+                                    <img id="selectedFlag" src="{{$GetsellerCountry[0]->flag}}" class="img-fluid" />
+                                </button>
 
-                    <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu">
-                    <li class="topDropdonw">
-                    <p>Change Country <i class="fa-solid fa-xmark"></i></p>
-                    </li>
+                                <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu">
+                                    <li class="topDropdonw">
+                                        <p>Change Country <i class="fa-solid fa-xmark"></i></p>
+                                    </li>
 
-                    @foreach($GetsellerCountry as $key=>$val)
-                    <li class="dropdown-item" data-flag="{{$val->flag}}">
-                    <label class="custom-radio d-flex justify-content-between">
-                    <input type="radio" name="country_language"
-                    value="{{$val->id}}"
-                    {{ session('country_id', $GetsellerCountry[0]->id) == $val->id ? 'checked' : '' }}>
-                    <span>{{$val->name}}</span>
-                    <img src="{{$val->flag}}" width="20">
-                    </label>
-                    </li>
-                    @endforeach
-                    </ul>
-                    </div>
-                            
-                        <!-- Currency code  -->
-                         
-<div class="dropdown-center mobileLang">
-    <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-        data-bs-toggle="dropdown" data-bs-auto-close="outside" {{ !$isHome ? 'disabled' : '' }}>
-        <span id="selectedCurrency">
-            {{ session('currency', $GetsellerCountry[0]->currency_code) }}
-        </span>
-    </button>
+                                    @foreach($GetsellerCountry as $key=>$val)
+                                    <li class="dropdown-item" data-flag="{{$val->flag}}">
+                                        <label class="custom-radio d-flex justify-content-between">
+                                            <input type="radio" name="country_language" value="{{$val->id}}"
+                                                {{ session('country_id', $GetsellerCountry[0]->id) == $val->id ? 'checked' : '' }}>
+                                            <span>{{$val->name}}</span>
+                                            <img src="{{$val->flag}}" width="20">
+                                        </label>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
 
-    <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu currency">
-        <li class="topDropdonw">
-            <p>Change Currency <i class="fa-solid fa-xmark"></i></p>
-        </li>
+                            <!-- Currency code  -->
 
-        @foreach($GetsellerCountry as $key=>$val)
-        <li class="dropdown-item">
-            <label class="custom-radio">
-                <input type="radio" name="currency"
-                       value="{{$val->currency_code}}"
-                       {{ session('currency', $GetsellerCountry[0]->currency_code) == $val->currency_code ? 'checked' : '' }}>
-                <span>{{$val->currency_code}}</span>
-            </label>
-        </li>
-        @endforeach
-        <li>
-            <button class="customBtn customBtn5">Save</button>
-        </li>
+                            <div class="dropdown-center mobileLang">
+                                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+                                    data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                                    {{ !$isHome ? 'disabled' : '' }}>
+                                    <span id="selectedCurrency">
+                                        {{ session('currency', $GetsellerCountry[0]->currency_code) }}
+                                    </span>
+                                </button>
 
-    </ul>
-</div>
+                                <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu currency">
+                                    <li class="topDropdonw">
+                                        <p>Change Currency <i class="fa-solid fa-xmark close-dropdown"></i></p>
+                                    </li>
+
+                                    @foreach($GetsellerCountry as $key=>$val)
+                                    <li class="dropdown-item">
+                                        <label class="custom-radio">
+                                            <input type="radio" name="currency" value="{{$val->currency_code}}"
+                                                {{ session('currency', $GetsellerCountry[0]->currency_code) == $val->currency_code ? 'checked' : '' }}>
+                                            <span>{{$val->currency_code}}</span>
+                                        </label>
+                                    </li>
+                                    @endforeach
+                                    <li>
+                                        <button class="customBtn customBtn5">Save</button>
+                                    </li>
+
+                                </ul>
+                            </div>
 
 
-            <!-- langauge Change Code  -->
+                            <!-- langauge Change Code  -->
 
                             <div class="dropdown-center mobileLang">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
@@ -539,9 +539,8 @@
         </div>
     </div>
 
-<div id="google_translate_element" style="display:none;"></div>
-<div id="loaderTrans"
-        style="display:none;
+    <div id="google_translate_element" style="display:none;"></div>
+    <div id="loaderTrans" style="display:none;
         position:fixed;
         top:0;
         left:0;
@@ -554,107 +553,116 @@
         justify-content:center;">
 
         <iframe src="https://lottie.host/embed/7629c0ed-9538-4b83-b7ab-5870d7aae0ab/KLkQkV2bNW.lottie"
-                style="border:none; width:200px; height:200px;">
+            style="border:none; width:200px; height:200px;">
         </iframe>
     </div>
 
-<!-- chnage country and currency Code  -->
+    <!-- chnage country and currency Code  -->
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
 
-    // ================= LOAD FROM LOCAL STORAGE =================
-    let currency = localStorage.getItem("currency");
-    let flag = localStorage.getItem("flag");
-    let country_id = localStorage.getItem("country_id");
+        // ================= LOAD FROM LOCAL STORAGE =================
+        let currency = localStorage.getItem("currency");
+        let flag = localStorage.getItem("flag");
+        let country_id = localStorage.getItem("country_id");
 
-    if (currency) {
-        document.getElementById("selectedCurrency").innerText = currency;
-        document.querySelectorAll('[name="currency"]').forEach(r => {
-            if (r.value === currency) r.checked = true;
-        });
-    }
+        if (currency) {
+            document.getElementById("selectedCurrency").innerText = currency;
+            document.querySelectorAll('[name="currency"]').forEach(r => {
+                if (r.value === currency) r.checked = true;
+            });
+        }
 
-    if (flag) document.getElementById("selectedFlag").src = flag;
+        if (flag) document.getElementById("selectedFlag").src = flag;
 
-    if (country_id) {
-        document.querySelectorAll('[name="country_language"]').forEach(r => {
-            if (r.value === country_id) r.checked = true;
-        });
-    }
+        if (country_id) {
+            document.querySelectorAll('[name="country_language"]').forEach(r => {
+                if (r.value === country_id) r.checked = true;
+            });
+        }
 
-    // ================= COUNTRY CHANGE =================
-    document.querySelectorAll('[name="country_language"]').forEach(radio => {
-        radio.addEventListener("change", function () {
+        // ================= COUNTRY CHANGE =================
+        document.querySelectorAll('[name="country_language"]').forEach(radio => {
+            radio.addEventListener("change", function() {
 
-            let parent = this.closest(".dropdown-item");
-            let flag = parent.getAttribute("data-flag");
+                let parent = this.closest(".dropdown-item");
+                let flag = parent.getAttribute("data-flag");
 
-            document.getElementById("selectedFlag").src = flag;
+                document.getElementById("selectedFlag").src = flag;
 
-            localStorage.setItem("country_id", this.value);
-            localStorage.setItem("flag", flag);
+                localStorage.setItem("country_id", this.value);
+                localStorage.setItem("flag", flag);
 
-            // SAVE IN LARAVEL SESSION
-            fetch("/set-country", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({
-                    country_id: this.value
+                // SAVE IN LARAVEL SESSION
+                fetch("/set-country", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        country_id: this.value
 
 
-                })
+                    })
+                });
             });
         });
+
+        // ================= CURRENCY SAVE =================
+        document.querySelector('.currency .customBtn5').addEventListener("click", function() {
+
+            let selected = document.querySelector('[name="currency"]:checked');
+
+            if (selected) {
+                let value = selected.value;
+
+                document.getElementById("selectedCurrency").innerText = value;
+
+                localStorage.setItem("currency", value);
+
+                // SAVE IN LARAVEL SESSION
+                fetch("/set-currency", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        currency: value
+                    })
+                });
+
+                // Close dropdown
+                let dropdown = bootstrap.Dropdown.getInstance(
+                    document.querySelector('.currency').previousElementSibling
+                );
+                if (dropdown) dropdown.hide();
+
+                window.location.reload();
+
+            }
+        });
+
     });
 
-    // ================= CURRENCY SAVE =================
-    document.querySelector('.currency .customBtn5').addEventListener("click", function () {
+    // Close Currency Dropdown To Close on Click 
 
-        let selected = document.querySelector('[name="currency"]:checked');
+    document.addEventListener("DOMContentLoaded", function() {
 
-        if (selected) {
-            let value = selected.value;
+        const closeBtn = document.querySelector('.close-dropdown');
+        const toggleBtn = document.querySelector('[data-bs-toggle="dropdown"]');
 
-            document.getElementById("selectedCurrency").innerText = value;
+        closeBtn.addEventListener('click', function(e) {
+            // e.stopPropagation(); // optional
 
-            localStorage.setItem("currency", value);
-
-            // SAVE IN LARAVEL SESSION
-            fetch("/set-currency", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({
-                    currency: value
-                })
-            });
-
-            // Close dropdown
             let dropdown = bootstrap.Dropdown.getInstance(
                 document.querySelector('.currency').previousElementSibling
             );
             if (dropdown) dropdown.hide();
 
-            window.location.reload();
-            
-        }
+        });
+
     });
-
-});
-
-// Stop Currency Dropdown To Close on Click 
-document.addEventListener("DOMContentLoaded", function () {
-    const dropdown = document.querySelector('.dropdown-menu.currency');
-
-    dropdown.addEventListener('click', function (e) {
-        e.stopPropagation(); // prevents dropdown from closing
-    });
-});
-
-</script>
+    </script>
