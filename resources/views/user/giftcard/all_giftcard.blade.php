@@ -2,6 +2,12 @@
 
 @section('content')
 
+@php
+    $currency = session('currency', 'KWD');
+    $rate = session('rate', '1');
+ 
+@endphp
+
 
 
 <div class="customContainer">
@@ -45,7 +51,7 @@
                             <div class="giftdate">{{ $gift->created_at->format('d M y, h:i a') }}</div>
                         </div>
                         <div class="gift-title">
-                            <h5>{{ $gift->amount }} KD</h5>
+                            <h5>{{ number_format(convertPriceInUserWeb($gift->amount), 2) }}  {{ $currency }}</h5>
                             <div class="giftdate">{{ $gift->gift_details->name_english ?? 'Gift Card' }}</div>
                         </div>
                     </div>

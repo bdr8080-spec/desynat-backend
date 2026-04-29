@@ -28,6 +28,7 @@ Route::get('optimize',function(){
 Route::match(['get', 'post'], '/myfatoorah/{id}', [MyFatoorahController::class, 'index']);
 
 Route::match(['get', 'post'], '/Invoice/{id}', [OrderInvoiceController::class, 'Invoice']);
+Route::match(['get', 'post'], '/InvoiceUser/{id}', [OrderInvoiceController::class, 'InvoiceUser']);
 
 
 
