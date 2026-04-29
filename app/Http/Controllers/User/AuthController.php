@@ -287,6 +287,8 @@ class AuthController extends Controller
 
             if (Auth::guard('web')->attempt($credentials, $request->boolean('remember'))) {
                 $request->session()->regenerate();
+                $user->update(['is_login' => 1]);
+                $user->update(['is_visit_website' => 1]);
 
                 return response()->json([
                     'status' => true,
@@ -522,6 +524,7 @@ class AuthController extends Controller
             //dd($user);
 
         if ($user) {
+            $user->update(['is_login' => 0]);
             $user->update(['banner_view' => '0']);
         }
             Auth::guard('web')->logout();

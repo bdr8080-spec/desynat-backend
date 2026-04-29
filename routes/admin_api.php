@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\Admin\CMSController;
 use App\Http\Controllers\Api\Admin\NotificationController;
 use App\Http\Controllers\Api\Admin\TicketController;
 use App\Http\Controllers\Api\Admin\PaymentController;
+use App\Http\Controllers\Api\Admin\DashboardController;
 
 
 // Admin APi M1
@@ -299,6 +300,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/get_refund_orders', [OrderManagementController::class,'get_refund_orders']);
     Route::post('/send_subadmin_credentials', [AuthController::class,'send_subadmin_credentials']);
 
+    //m14
+    Route::get('/dashboard_data', [DashboardController::class,'dashboard_data']);
 
 
 

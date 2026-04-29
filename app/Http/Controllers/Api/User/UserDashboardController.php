@@ -42,6 +42,7 @@ class UserDashboardController extends Controller
 
     public function logout(Request $request)
     {
+        $request->user()->update(['is_login' => 0]);
         $request->user()->currentAccessToken()->delete();
 
         return ApiResponse::generateResponse('success','Logged out successfully',(object)[], 200);

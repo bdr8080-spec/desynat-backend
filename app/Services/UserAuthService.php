@@ -87,6 +87,8 @@ class UserAuthService
                     }
          
                  $get_user_details->update(['lang'=> $request->lang??null]);// update code in language 
+                 $get_user_details->update(['is_login' => 1]);
+                 $get_user_details->update(['is_visit_app' => 1]);
          
               // $get_user_details->accessToken = $get_user_details->createToken('user')->plainTextToken;   
               $get_user_details->accessToken = $get_user_details->createToken('user-token', ['user'])->plainTextToken;   
@@ -137,6 +139,8 @@ class UserAuthService
            $otp= config('services.otp');
 
             $get_user_details->update(['otp'=>$otp]);
+            $get_user_details->update(['is_login' => 1]);
+            $get_user_details->update(['is_visit_app' => 1]);
 
             $get_user_details->accessToken ='';            
             return ['status'=>'success','message'=>"OTP sent to mobile number succesfully",'data'=>$get_user_details];            
