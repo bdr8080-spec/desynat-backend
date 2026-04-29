@@ -2,6 +2,12 @@
 
 @section('content')
 
+@php
+    $currency = session('currency', 'KWD');
+    $rate = session('rate', '1');
+ 
+@endphp
+
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
@@ -22,8 +28,8 @@
                                 <div class="wallet-ic">
                                     <img src="{{asset('user/assets/images/wallet-ic.svg')}}" class="img-fluid">
                                 </div>
-                                <h5>{{ rtrim(rtrim(number_format($walletData['wallet_balance'], 2, '.', ''), '0'), '.') }}
-                                    KD</h5>
+                                <h5>
+                                     {{ number_format(convertPriceInUserWeb($walletData['wallet_balance']), 2) }}  {{ $currency }}</h5>
                             </div>
                         </div>
                         <div class="total-balance-2">
@@ -55,7 +61,7 @@
 
                         <div>
                             {{ $isCredit ? '+' : '-' }}
-                            {{ rtrim(rtrim(number_format($history->amount, 2), '0'), '.') }} KD
+                             {{ number_format(convertPriceInUserWeb($history->amount), 2) }} {{ $currency }}
                         </div>
                     </div>
 

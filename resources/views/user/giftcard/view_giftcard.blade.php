@@ -2,6 +2,12 @@
 
 @section('content')
 
+@php
+    $currency = session('currency', 'KWD');
+    $rate = session('rate', '1');
+ 
+@endphp
+
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{ route('user.gift_cards') }}"> 
@@ -21,7 +27,7 @@
             <div class="giftcard-type">
                 <div class="border-1 giftinfo">
                     <div>{{ $giftCard->gift_details->name_english }}</div>
-                    <div>{{ $giftCard->amount }} KD</div>
+                    <div> {{ number_format(convertPriceInUserWeb($giftCard->amount), 2) }}  {{ $currency }}</div>
                 </div>
 
                 <div class="gift-pnl mt-4">
@@ -65,7 +71,7 @@
                     <h6>Paid by</h6>
                     <div class="border-1">
                         <div class="giftinfo">
-                            <div>{{ $giftCard->amount }} KD</div>
+                            <div>{{ number_format(convertPriceInUserWeb($giftCard->amount), 2) }}  {{ $currency }}</div>
                             <div>Paid By Card</div>
                         </div>
                     </div>
