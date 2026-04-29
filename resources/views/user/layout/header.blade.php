@@ -313,7 +313,7 @@
 
                                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu currency">
                                     <li class="topDropdonw">
-                                        <p>Change Currency <i class="fa-solid fa-xmark"></i></p>
+                                        <p>Change Currency <i class="fa-solid fa-xmark close-dropdown"></i></p>
                                     </li>
 
                                     @foreach($GetsellerCountry as $key=>$val)
@@ -647,24 +647,22 @@
 
     });
 
-    // Stop Currency Dropdown To Close on Click 
+    // Close Currency Dropdown To Close on Click 
 
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     const dropdown = document.querySelector('.dropdown-menu.currency');
-    //     const closeBtn = document.querySelector('.fa-xmark');
+    document.addEventListener("DOMContentLoaded", function() {
 
-    //     debugger
+        const closeBtn = document.querySelector('.close-dropdown');
+        const toggleBtn = document.querySelector('[data-bs-toggle="dropdown"]');
 
-    //     dropdown.addEventListener('click', function(e) {
-    //         e.stopPropagation();
-    //     });
+        closeBtn.addEventListener('click', function(e) {
+            // e.stopPropagation(); // optional
 
+            let dropdown = bootstrap.Dropdown.getInstance(
+                document.querySelector('.currency').previousElementSibling
+            );
+            if (dropdown) dropdown.hide();
 
-    //     debugger
+        });
 
-    //     closeBtn.addEventListener('click', function() {
-    //         const bsDropdown = bootstrap.Dropdown.getInstance(dropdown.previousElementSibling);
-    //         bsDropdown.hide();
-    //     });
-    // });
+    });
     </script>
