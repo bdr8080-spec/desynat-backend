@@ -61,8 +61,8 @@
 }
 /* Selected state */
 .custom-radio input[type="radio"]:checked + span {
-    background-color: #0d6efd; /* Bootstrap primary */
-    color: #fff;
+    background-color:#c19e73;
+    color: #000;
   
 }
 
