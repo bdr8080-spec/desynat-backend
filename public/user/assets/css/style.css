@@ -3481,6 +3481,6 @@ img.img-fluid.circle-image {
     --bs-dropdown-link-color: var(--bs-body-color);
     --bs-dropdown-link-hover-color: var(--bs-body-color);
     --bs-dropdown-link-hover-bg: var(--bs-tertiary-bg);
-    --bs-dropdown-link-active-color: #c19e73;
+    --bs-dropdown-link-active-color: #c19e73 !important;
     --bs-dropdown-link-active-bg: #f3f0ec !important;
 }
