@@ -60,6 +60,7 @@
     cursor: pointer;
 }
 
+
 </style>
 
     @php
