@@ -350,6 +350,38 @@ class AuthController extends Controller
 
     }
 
+     public function update_password(Request $request){
+
+          $validate = Validator::make($request->all(), [
+              'old_password' => 'required',
+              'new_password' => 'required',
+              'confirm_password' => 'required|same:new_password',
+              ]);
+          
+         if($validate->fails()){
+          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+         }
+
+         $seller_details=$request->user()->id;
+         //dd($admin);
+
+         $request_data = (object)[
+                'user_id'              => $seller_details,
+                'old_password' => $request->old_password,
+                'new_password'        => $request->new_password,
+                'confirm_password'      => $request->confirm_password,
+            ];
+  
+          $data= $this->SellerAuthService->UpdatePassword($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
 
 
     

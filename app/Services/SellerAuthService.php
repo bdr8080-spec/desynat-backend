@@ -710,6 +710,55 @@ class SellerAuthService
                 }
 
               }
+
+
+    public function UpdatePassword($request_data)
+    {
+        try {
+            $data = seller::find($request_data->user_id);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Seller not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            if (!Hash::check($request_data->old_password, $data->password)) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Old password is incorrect',
+                    'data' => (object)[]
+                ];
+            }
+
+            if (Hash::check($request_data->new_password, $data->password)) {
+                return [
+                    'status' => 'error',
+                    'message' => 'New password should not be same as old password ',
+                    'data' => (object)[]
+                ];
+            }
+
+            $data->password = Hash::make($request_data->new_password);
+           // $data->unhashed_password = $request_data->new_password;
+            $data->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Password updated successfully',
+                'data' => $data
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update password: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
               
 
             

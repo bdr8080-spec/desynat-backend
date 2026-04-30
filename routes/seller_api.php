@@ -190,6 +190,7 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
   //m14
   Route::get('/dashboard_data', [SellerDashboardController::class,'dashboard_data']);
+  Route::post('/update_password', [AuthController::class,'update_password']);
 
 
 });
