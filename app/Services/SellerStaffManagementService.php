@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StaffCredentialsMail;
+
 use App\Models\{ product,ProductSpecification,ProductVariant,StockInventoryRecords};
 
 class SellerStaffManagementService
@@ -108,8 +111,9 @@ class SellerStaffManagementService
 
        $check_seller= seller::create($record);
 
+        Mail::to($request->email)->send(new StaffCredentialsMail($check_seller, $request->password));
 
-       foreach($request->menu_id as $key=>$val){
+  foreach($request->menu_id as $key=>$val){
 
         $insert=[
             'seller_id'=>$check_seller->id,
