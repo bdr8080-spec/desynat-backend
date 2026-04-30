@@ -21,7 +21,7 @@
                     <div class="col-lg-6">
                         <div class="filter-box d-flex align-items-center justify-content-end">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="radioDefault" checked />
+                                <input class="form-check-input" type="radio" name="radioDefault" />
                                 <label class="form-check-label">Today</label>
                             </div>
 
@@ -84,7 +84,7 @@
                                             <h5>Total users registered</h5>
                                         </div>
                                         <div class="dolor-icon">
-                                            <span> 1900</span>
+                                            <span>{{$data['total_users']}}</span>
                                         </div>
                                     </div>
 
@@ -92,11 +92,11 @@
                                         <div class="row">
                                             <div class=" text-center col-lg-6">
                                                 <p>Active</p>
-                                                <h5>500</h5>
+                                                <h5>{{$data['total_active_users']}}</h5>
                                             </div>
                                             <div class=" text-center col-lg-6">
                                                 <p>Inactive</p>
-                                                <h5>200</h5>
+                                                <h5>{{$data['total_inactive_users']}}</h5>
                                             </div>
 
                                         </div>
@@ -110,7 +110,7 @@
                                             <h5>Total Number of Affiliated Users</h5>
                                         </div>
                                         <div class="dolor-icon">
-                                            <span> 2000</span>
+                                            <span> {{$data['total_affiliate_users']}}</span>
                                         </div>
                                     </div>
 
@@ -119,12 +119,12 @@
                                             <div class="text-center col-lg-6">
                                                 <p>Active</p>
 
-                                                <h5>500</h5>
+                                                <h5>{{$data['total_active_affiliate_users']}}</h5>
 
                                             </div>
                                             <div class=" text-center col-lg-6">
                                                 <p>Inactive</p>
-                                                <h5>200</h5>
+                                                <h5>{{$data['total_inactive_affiliate_users']}}</h5>
                                             </div>
 
                                         </div>
@@ -142,7 +142,7 @@
                                             <h5>Total Number of Delivery Partners</h5>
                                         </div>
                                         <div class="dolor-icon">
-                                            <span> 2000</span>
+                                            <span> {{$data['total_delivery_boy']}}</span>
                                         </div>
                                     </div>
 
@@ -150,11 +150,11 @@
                                         <div class="row">
                                             <div class=" text-center col-lg-6">
                                                 <p>Active</p>
-                                                <h5>500</h5>
+                                                <h5>{{$data['total_active_delivery_boy']}}</h5>
                                             </div>
                                             <div class=" text-center col-lg-6">
                                                 <p>Inactive</p>
-                                                <h5>200</h5>
+                                                <h5>{{$data['total_inactive_delivery_boy']}}</h5>
                                             </div>
 
                                         </div>
@@ -168,7 +168,7 @@
                                             <h5>Total Number of Sellers</h5>
                                         </div>
                                         <div class="dolor-icon">
-                                            <span>2000</span>
+                                            <span>{{$data['total_sellers']}}</span>
                                         </div>
                                     </div>
 
@@ -177,12 +177,12 @@
                                             <div class="text-center col-lg-6">
                                                 <p>Active</p>
 
-                                                <h5>500</h5>
+                                                <h5>{{$data['total_active_sellers']}}</h5>
 
                                             </div>
                                             <div class=" text-center col-lg-6">
                                                 <p>Inactive</p>
-                                                <h5>200</h5>
+                                                <h5>{{$data['total_inactive_sellers']}}</h5>
                                             </div>
 
                                         </div>
@@ -200,7 +200,7 @@
                                             <h5>Total tickets</h5>
                                         </div>
                                         <div class="dolor-icon">
-                                            <span> 1500</span>
+                                            <span> {{$data['total_tickets']}}</span>
                                         </div>
                                     </div>
 
@@ -208,15 +208,15 @@
                                         <div class="row">
                                             <div class=" text-center col-lg-4">
                                                 <p>Raised</p>
-                                                <h5>500</h5>
+                                                <h5>{{$data['total_tickets']}}</h5>
                                             </div>
                                             <div class=" text-center col-lg-4">
                                                 <p>Un-resolved</p>
-                                                <h5>200</h5>
+                                                <h5>{{$data['total_unresolved_tickets']}}</h5>
                                             </div>
                                             <div class=" text-center col-lg-4">
                                                 <p>Resolved</p>
-                                                <h5>200</h5>
+                                                <h5>{{$data['total_resolved_tickets']}}</h5>
                                             </div>
 
                                         </div>
@@ -230,7 +230,7 @@
                                             <h5>Total Number of Orders</h5>
                                         </div>
                                         <div class="dolor-icon">
-                                            <span> 2000</span>
+                                            <span> {{$data['total_orders']}}</span>
                                         </div>
                                     </div>
 
@@ -239,20 +239,20 @@
                                             <div class="text-center col-lg-3">
                                                 <p>On-going</p>
 
-                                                <h5>500</h5>
+                                                <h5>{{$data['total_ongoing_orders']}}</h5>
 
                                             </div>
                                             <div class=" text-center col-lg-3">
                                                 <p>Completed</p>
-                                                <h5>200</h5>
+                                                <h5>{{$data['total_completed_orders']}}</h5>
                                             </div>
                                             <div class=" text-center col-lg-3">
                                                 <p>Cancelled</p>
-                                                <h5>200</h5>
+                                                <h5>{{$data['total_cancelled_orders']}}</h5>
                                             </div>
                                             <div class=" text-center col-lg-3">
                                                 <p>Return</p>
-                                                <h5>200</h5>
+                                                <h5>{{$data['total_returned_orders']}}</h5>
                                             </div>
 
                                         </div>
@@ -271,7 +271,7 @@
                                             <h5>Total Revenue</h5>
                                         </div>
                                         <div class="dolor-icon">
-                                            <span> $ 150000</span>
+                                            <span>{{$data['total_revenue']}} KD</span>
                                         </div>
                                     </div>
 
@@ -279,19 +279,19 @@
                                         <div class="row">
                                             <div class=" text-center col-lg-3">
                                                 <p>By Orders</p>
-                                                <h5>$ 500</h5>
+                                                <h5>{{$data['total_order_revenue']}} KD</h5>
                                             </div>
                                             <div class=" text-center col-lg-3">
                                                 <p>By Subscription Plan</p>
-                                                <h5>$ 200</h5>
+                                                <h5>{{$data['total_subscription_plan_revenue']}} KD</h5>
                                             </div>
                                              <div class=" text-center col-lg-3">
                                                 <p>By Affilate Orders</p>
-                                                <h5>$ 200</h5>
+                                                <h5>{{$data['total_affiliate_orders_revenue']}} KD</h5>
                                             </div>
                                             <div class=" text-center col-lg-3">
                                                 <p>By Banner</p>
-                                                <h5>$ 200</h5>
+                                                <h5>{{$data['total_banner_revenue']}} KD</h5>
                                             </div>
 
                                         </div>
@@ -310,7 +310,7 @@
                                             <h5>Total Online Users</h5>
                                         </div>
                                         <div class="dolor-icon">
-                                            <span> 2000</span>
+                                            <span>{{$data['total_online_users']}}</span>
                                         </div>
                                     </div>
 
@@ -318,11 +318,11 @@
                                         <div class="row">
                                             <div class=" text-center col-lg-6">
                                                 <p>No.of Users Visit App</p>
-                                                <h5>500</h5>
+                                                <h5>{{$data['total_app_visitor_users']}}</h5>
                                             </div>
                                             <div class=" text-center col-lg-6">
                                                 <p>No.of User Visit Website</p>
-                                                <h5>500</h5>
+                                                <h5>{{$data['total_website_visitor_users']}}</h5>
                                             </div>
 
                                         </div>

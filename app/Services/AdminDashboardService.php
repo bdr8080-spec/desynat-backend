@@ -138,6 +138,16 @@ class AdminDashboardService
                 ''
             );
 
+            $total_revenue = number_format(
+                (float)$total_order_revenue +
+                (float)$total_subscription_plan_revenue +
+                (float)$total_affiliate_orders_revenue +
+                (float)$total_banner_revenue,
+                2,
+                '.',
+                ''
+            );
+
             $total_online_users = $applyFilters(User::where('is_login', 1))->count();
             $total_website_visitor_users = $applyFilters(User::where('is_visit_website', 1))->count();
             $total_app_visitor_users = $applyFilters(User::where('is_visit_app', 1))->count();
@@ -172,6 +182,7 @@ class AdminDashboardService
                     'total_returned_orders' => $total_returned_orders,
                     'total_cancelled_orders' => $total_cancelled_orders,
 
+                    'total_revenue' => $total_revenue,
                     'total_order_revenue' => $total_order_revenue,
                     'total_subscription_plan_revenue' => $total_subscription_plan_revenue,
                     'total_affiliate_orders_revenue' => $total_affiliate_orders_revenue,
