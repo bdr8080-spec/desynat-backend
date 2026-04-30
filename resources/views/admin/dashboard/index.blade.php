@@ -14,6 +14,7 @@
         @if(in_array(1, $permissions) || $admin->type == 1)
         <div class="inner-content">
             <div class="container-fluid">
+                <form method="GET" action="{{ route('admin.dashboard') }}" id="filterForm">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <h2 class="h2">WELCOME TO DASHBOARD</h2> 
@@ -21,17 +22,32 @@
                     <div class="col-lg-6">
                         <div class="filter-box d-flex align-items-center justify-content-end">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="radioDefault" />
+                                <input class="form-check-input"
+                                    type="radio"
+                                    name="filter"
+                                    value="1"
+                                    {{ request()->filter == 1 ? 'checked' : '' }}
+                                    onchange="document.getElementById('filterForm').submit();">
                                 <label class="form-check-label">Today</label>
                             </div>
 
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="radioDefault" />
+                                <input class="form-check-input"
+                                    type="radio"
+                                    name="filter"
+                                    value="2"
+                                    {{ request()->filter == 2 ? 'checked' : '' }}
+                                    onchange="document.getElementById('filterForm').submit();">
                                 <label class="form-check-label">This Week</label>
                             </div>
 
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="radioDefault" />
+                                <input class="form-check-input"
+                                    type="radio"
+                                    name="filter"
+                                    value="3"
+                                    {{ request()->filter == 3 ? 'checked' : '' }}
+                                    onchange="document.getElementById('filterForm').submit();">
                                 <label class="form-check-label">This Month</label>
                             </div>
                         </div>
@@ -42,13 +58,17 @@
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-5 w-100">
                             <label for="from" class="form-label">From:</label>
-                            <input type="date" id="from" class="form-control" />
+                            <input type="date" id="from_date" name="from_date" class="form-control"
+                            value="{{ request()->from_date }}"
+                            onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-5 w-100">
                             <label for="from" class="form-label">To:</label>
-                            <input type="date" id="from" class="form-control" />
+                            <input type="date" id="to_date" name="to_date" class="form-control"
+                            value="{{ request()->to_date }}"
+                            onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-12">
@@ -63,12 +83,19 @@
                         </div>
                     </div>
                     <div class="col-md-2 col-lg-3 col-12 mt-5">
+                        <div class="d-dlex justify-content-end">
+                            <a href="{{route('admin.dashboard')}}" class="btn btn-dark customBtn w-50 mt-2">
+                                <span>Reset</span></a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-3 col-12 mt-5">
                         <div class="d-dlex justify-content-end" style="text-align: end">
                             <a class="btn btn-dark customBtns w-100" style="margin-top: 30px">
                                 <span>Export in Excel or PDF</span></a>
                         </div>
                     </div>
                 </div>
+                </form>
 
                 <div class="col-12">
                     <hr />
@@ -367,4 +394,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('from_date').value;
+        const toDateInput = document.getElementById('to_date');
+        if (fromDate) {
+            toDateInput.setAttribute('min', fromDate);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate();
+    });
+
+</script>
+
+
 @endsection

@@ -23,10 +23,10 @@ class DashboardController extends Controller
         // $admin = Auth::guard('admin')->user();
         // $adminId = $admin->id;
         $request_data = (object)[
-                'from_date' => $req->from_date??null,
-                'to_date' => $req->to_date??null,
-                'country_id' => $req->country_id??null,
-                'filter' => $req->filter??null,
+                'from_date' => $request->from_date??null,
+                'to_date' => $request->to_date??null,
+                'country_id' => $request->country_id??null,
+                'filter' => $request->filter??null,
             ];
   
           $data= $this->AdminDashboardService->GetDashboardData($request_data)['data'];
