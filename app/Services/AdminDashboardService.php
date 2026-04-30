@@ -100,7 +100,7 @@ class AdminDashboardService
 
             //revenue
             $total_order_revenue = number_format(
-                $applyFilters(orderdetail::where('delivery_status', 3))
+                $applyFilters(orderdetail::where('payment_status', 1))
                     ->sum(\DB::raw('COALESCE(amount,0) + COALESCE(tax,0) + COALESCE(shipping_fees,0)')),
                 2,
                 '.',
@@ -117,7 +117,7 @@ class AdminDashboardService
 
             $total_affiliate_orders_revenue = number_format(
                 $applyFilters(
-                    orderdetail::where('delivery_status', 3)
+                    orderdetail::where('payment_status', 1)
                         ->whereNotNull('affiliate_id') 
                         ->where('affiliate_id', '!=', '') 
                 )

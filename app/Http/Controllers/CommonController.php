@@ -21,6 +21,7 @@ use App\Models\size;
 use App\Models\TicketType;
 use App\Models\Content;
 use App\Models\Faq;
+use App\Models\SellerStoreVisitor;
 
 
 
@@ -686,6 +687,46 @@ class CommonController extends Controller
                 'status' => 'success',
                 'message' => 'Notification sent successfully',
                 'data' => (object)[]
+            ], 200);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    
+    public function CaptureSellerStoreVisitor(Request $request)
+    {
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'seller_id' => 'required|integer',
+                'store_id' => 'required|integer',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $validator->errors()->first()
+                ], 422);
+            }
+
+            $userId = !empty($request->user_id) ? $request->user_id : null;
+
+            $visitor = SellerStoreVisitor::create([
+                'user_id' => $userId,
+                'seller_id' => $request->seller_id,
+                'store_id' => $request->store_id,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Visitor captured successfully',
+                'data' => $visitor
             ], 200);
 
         } catch (\Exception $e) {

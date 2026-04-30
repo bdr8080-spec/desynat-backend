@@ -20,16 +20,18 @@ use Validator;
 use App\Services\SellerAuthService;
 use App\Services\StoryManagementService;
 use App\Services\TicketService;
+use App\Services\SellerDashboardService;
 
 
 class SellerDashboardController extends Controller
 {
 
-    public function __construct(SellerAuthService $SellerAuthService, StoryManagementService $StoryManagementService, TicketService $TicketService){
+    public function __construct(SellerAuthService $SellerAuthService, StoryManagementService $StoryManagementService, TicketService $TicketService, SellerDashboardService $SellerDashboardService){
 
         $this->SellerAuthService=$SellerAuthService;
         $this->StoryManagementService=$StoryManagementService;
         $this->TicketService=$TicketService;
+        $this->SellerDashboardService=$SellerDashboardService;
 
     }
 
@@ -44,6 +46,28 @@ class SellerDashboardController extends Controller
         return ApiResponse::generateResponse('success','Seller Dashboard fetch Successfully',$seller_details, 200);
 
 
+    }
+
+    public function dashboard_data(Request $request){
+
+        $seller_details=$request->user()->id;
+         $request_data = (object)[
+                'seller_id' => $seller_details,
+                'from_date' => $request->from_date??null,
+                'to_date' => $request->to_date??null,
+                'filter' => $request->filter??null,
+                'from_date_analytics' => $request->from_date_analytics??null,
+                'to_date_analytics' => $request->to_date_analytics??null,
+            ];
+  
+          $data= $this->SellerDashboardService->GetDashboardData($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
     }
 
     

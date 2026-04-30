@@ -188,6 +188,9 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
   Route::post('/view-single-staff-details', [SellerStaffManagementController::class,'viewSingleStaffDetails']);
   Route::post('/edit-new-staff', [SellerStaffManagementController::class,'EditNewStaff']);
 
+  //m14
+  Route::get('/dashboard_data', [SellerDashboardController::class,'dashboard_data']);
+
 
 });
 
@@ -198,6 +201,8 @@ Route::get('all-brand',[CommonController::class, 'get_brand']);
 
 Route::get('all-color',[CommonController::class, 'get_color']);
 Route::get('all-size',[CommonController::class, 'get_size']);
+
+
 
 
 
