@@ -56,7 +56,7 @@
                                 style="margin-top: 60px">
                                 <span>Reset</span>
                             </a>
-                             <a class="btn btn-dark customBtn " style="margin-top: 60px">
+                             <a href="{{ route('admin.export_user_data', request()->all()) }}" class="btn btn-dark customBtn " style="margin-top: 60px">
                                 <span>Export </span></a>
                         </div>
                     </div>

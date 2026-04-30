@@ -268,6 +268,10 @@ Route::group(['prefix'=>'admin'], function(){
 
      //m14
      Route::get('/export_dashboard_data', [DashboardController::class, 'export_dashboard_data'])->name('admin.export_dashboard_data');
+     Route::get('/export_user_data', [UserController::class, 'export_user_data'])->name('admin.export_user_data');
+     Route::get('/export_new_seller_data', [SellerController::class, 'export_new_seller_data'])->name('admin.export_new_seller_data');
+     Route::get('/export_approved_seller_data', [SellerController::class, 'export_approved_seller_data'])->name('admin.export_approved_seller_data');
+     Route::get('/export_rejected_seller_data', [SellerController::class, 'export_rejected_seller_data'])->name('admin.export_rejected_seller_data');
             
         
 

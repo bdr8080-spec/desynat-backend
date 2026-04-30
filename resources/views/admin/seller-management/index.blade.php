@@ -90,7 +90,7 @@
                                             <span>Reset</span>
                                         </a>
                                 
-                                        <a class="btn btn-dark customBtn mt-2">
+                                        <a href="{{ route('admin.export_new_seller_data', request()->all()) }}" class="btn btn-dark customBtn mt-2">
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -269,7 +269,7 @@
                                         <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn mt-2">
                                             <span>Reset</span>
                                         </a>
-                                        <a class="btn btn-dark customBtn mt-2">
+                                        <a href="{{ route('admin.export_approved_seller_data', request()->all()) }}" class="btn btn-dark customBtn mt-2">
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -480,7 +480,7 @@
                                             >
                                             <span>Reset</span>
                                         </a>
-                                          <a class="btn btn-dark customBtn mt-2" >
+                                          <a href="{{ route('admin.export_rejected_seller_data', request()->all()) }}" class="btn btn-dark customBtn mt-2" >
                                             <span>Export</span>
                                         </a>
                                     </div>

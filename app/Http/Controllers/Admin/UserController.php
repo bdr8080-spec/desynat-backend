@@ -68,6 +68,69 @@ class UserController extends Controller
         ], 200);
     }
 
+
+    public function export_user_data(Request $request)
+    {
+        $users = $this->UserManagementService->getUsers($request)['data'];
+
+        $fileName = 'users_export_' . now()->format('Y_m_d_H_i_s') . '.csv';
+
+        $headers = [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+        ];
+
+        $callback = function () use ($users) {
+
+            $file = fopen('php://output', 'w');
+
+            fputcsv($file, [
+                'SR No',
+                'Joining Date',
+                'Name',
+                'Image URL',
+                'Phone Number',
+                'Country',
+                'Email',
+                'Completed Orders',
+                'Cancelled Orders',
+                'Wallet Balance(KD)',
+                'Status'
+            ]);
+
+            foreach ($users as $index => $user) {
+
+                $wallet = $user->wallet_info->amount ?? 0;
+                $country = $user->country_info->name ?? 'N/A';
+                $status = $user->status == 1 ? 'Active' : 'Inactive';
+
+                fputcsv($file, [
+                    $index + 1,
+
+                    '="' . \Carbon\Carbon::parse($user->created_at)->format('d-m-Y') . '"',
+
+                    $user->full_name ?? 'N/A',
+                    $user->profile_image ?? '',
+
+                    '="' . ($user->country_code . $user->mobile) . '"',
+
+                    $country,
+                    $user->email ?? 'N/A',
+
+                    'N/A',
+                    'N/A',
+
+                    $wallet,
+                    $status,
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
     
 
 
