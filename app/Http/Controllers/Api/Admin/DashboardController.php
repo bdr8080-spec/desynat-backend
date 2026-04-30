@@ -28,6 +28,7 @@ class DashboardController extends Controller
                 'from_date' => $req->from_date??null,
                 'to_date' => $req->to_date??null,
                 'country_id' => $req->country_id??null,
+                'filter' => $req->filter??null,
             ];
   
           $data= $this->AdminDashboardService->GetDashboardData($request_data);

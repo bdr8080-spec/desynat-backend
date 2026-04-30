@@ -13,7 +13,7 @@ use App\Models\SellerSubcriptionPlanBuy;
 use App\Models\sellerBanner;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Hash;
+use Carbon\Carbon;
 
 class AdminDashboardService
 {
@@ -26,6 +26,22 @@ class AdminDashboardService
 
                 if (!empty($request_data->country_id)) {
                     $query->where('country_id', $request_data->country_id);
+                }
+
+                if (!empty($request_data->filter)) {
+                    if ($request_data->filter == 1) {
+                        $query->whereDate('created_at', Carbon::today());
+                    } elseif ($request_data->filter == 2) {
+                        $query->whereBetween('created_at', [
+                            Carbon::now()->startOfWeek(),
+                            Carbon::now()->endOfWeek()
+                        ]);
+                    } elseif ($request_data->filter == 3) {
+                        $query->whereBetween('created_at', [
+                            Carbon::now()->startOfMonth(),
+                            Carbon::now()->endOfMonth()
+                        ]);
+                    }
                 }
 
                 if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
