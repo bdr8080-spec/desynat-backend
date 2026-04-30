@@ -31,15 +31,23 @@ class AdminDashboardService
                 if (!empty($request_data->filter)) {
                     if ($request_data->filter == 1) {
                         $query->whereDate('created_at', Carbon::today());
+
                     } elseif ($request_data->filter == 2) {
                         $query->whereBetween('created_at', [
                             Carbon::now()->startOfWeek(),
                             Carbon::now()->endOfWeek()
                         ]);
+
                     } elseif ($request_data->filter == 3) {
                         $query->whereBetween('created_at', [
                             Carbon::now()->startOfMonth(),
                             Carbon::now()->endOfMonth()
+                        ]);
+
+                    } elseif ($request_data->filter == 4) {
+                        $query->whereBetween('created_at', [
+                            Carbon::now()->startOfYear(),
+                            Carbon::now()->endOfYear()
                         ]);
                     }
                 }
@@ -88,6 +96,7 @@ class AdminDashboardService
             $total_ongoing_orders = $applyFilters(orderdetail::whereIn('delivery_status', [1, 2, '2.1', '2.2', 6, 7]))->count();
             $total_completed_orders = $applyFilters(orderdetail::where('delivery_status', 3))->count();
             $total_returned_orders = $applyFilters(orderdetail::where('delivery_status', 5))->count();
+            $total_cancelled_orders = $applyFilters(orderdetail::where('payment_status', 2))->count();
 
             //revenue
             $total_order_revenue = number_format(
@@ -161,6 +170,7 @@ class AdminDashboardService
                     'total_ongoing_orders' => $total_ongoing_orders,
                     'total_completed_orders' => $total_completed_orders,
                     'total_returned_orders' => $total_returned_orders,
+                    'total_cancelled_orders' => $total_cancelled_orders,
 
                     'total_order_revenue' => $total_order_revenue,
                     'total_subscription_plan_revenue' => $total_subscription_plan_revenue,
