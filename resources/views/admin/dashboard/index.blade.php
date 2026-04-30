@@ -90,7 +90,7 @@
                     </div>
                     <div class="col-md-2 col-lg-3 col-12 mt-5">
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtns w-100" style="margin-top: 30px">
+                            <a href="{{ route('admin.export_dashboard_data', request()->all()) }}" class="btn btn-dark customBtns w-100" style="margin-top: 30px">
                                 <span>Export in Excel or PDF</span></a>
                         </div>
                     </div>
