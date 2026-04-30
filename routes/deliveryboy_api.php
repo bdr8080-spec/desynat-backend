@@ -58,6 +58,9 @@ Route::group(['prefix' => 'deliveryboy'], function () {
     Route::post('/notification_on_off', [NotificationController::class,'notification_on_off']);
     Route::post('/app_notification_on_off', [NotificationController::class,'app_notification_on_off']);
 
+    //m14
+    Route::post('/delete_account', [AuthController::class,'delete_account']);
+
     });
 
 

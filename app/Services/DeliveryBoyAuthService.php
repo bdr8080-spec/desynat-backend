@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\DeliveryBoy;
 
 use Carbon\carbon;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -143,6 +144,44 @@ class DeliveryBoyAuthService
         }
 
     }
+
+     public function DeleteAccount($request_data)
+   {
+      try {
+
+          DB::beginTransaction();
+
+          $data = DeliveryBoy::find($request_data->user_id);
+
+          if (!$data) {
+              return [
+                  'status' => 'error',
+                  'message' => 'User not found',
+                  'data' => []
+              ];
+          }
+
+          $data->delete();
+
+          DB::commit();
+
+          return [
+              'status' => 'success',
+              'message' => 'Account deleted successfully',
+              'data' => $data
+          ];
+
+      } catch (\Exception $e) {
+
+          DB::rollBack();
+
+          return [
+              'status' => 'error',
+              'message' => $e->getMessage(),
+              'data' => []
+          ];
+      }
+    } 
 
     
 
