@@ -93,14 +93,14 @@ class AdminDashboardService
 
             //orders
             $total_orders = $applyFilters(orderdetail::query())->count();
-            $total_ongoing_orders = $applyFilters(orderdetail::whereIn('delivery_status', [1, 2, '2.1', '2.2', 6, 7]))->count();
-            $total_completed_orders = $applyFilters(orderdetail::where('delivery_status', 3))->count();
-            $total_returned_orders = $applyFilters(orderdetail::where('delivery_status', 5))->count();
-            $total_cancelled_orders = $applyFilters(orderdetail::where('payment_status', 2))->count();
+            $total_ongoing_orders = $applyFilters(orderdetail::whereIn('delivery_status', ['1', '2', '2.1', '2.2', '6', '7']))->count();
+            $total_completed_orders = $applyFilters(orderdetail::where('delivery_status', '3'))->count();
+            $total_returned_orders = $applyFilters(orderdetail::where('delivery_status', '5'))->count();
+            $total_cancelled_orders = $applyFilters(orderdetail::where('payment_status', '2'))->count();
 
             //revenue
             $total_order_revenue = number_format(
-                $applyFilters(orderdetail::where('payment_status', 1))
+                $applyFilters(orderdetail::where('payment_status', '1'))
                     ->sum(\DB::raw('COALESCE(amount,0) + COALESCE(tax,0) + COALESCE(shipping_fees,0)')),
                 2,
                 '.',
@@ -108,7 +108,7 @@ class AdminDashboardService
             );
 
             $total_subscription_plan_revenue = number_format(
-                $applyFilters(SellerSubcriptionPlanBuy::where('payment_status', 1))
+                $applyFilters(SellerSubcriptionPlanBuy::where('payment_status', '1'))
                     ->sum('amount'),
                 2,
                 '.',
@@ -117,7 +117,7 @@ class AdminDashboardService
 
             $total_affiliate_orders_revenue = number_format(
                 $applyFilters(
-                    orderdetail::where('payment_status', 1)
+                    orderdetail::where('payment_status', '1')
                         ->whereNotNull('affiliate_id') 
                         ->where('affiliate_id', '!=', '') 
                 )
@@ -130,8 +130,8 @@ class AdminDashboardService
 
             $total_banner_revenue = number_format(
                 $applyFilters(
-                    sellerBanner::where('added_by', 0)
-                        ->where('payment_status', 1)
+                    sellerBanner::where('added_by', '0')
+                        ->where('payment_status', '1')
                 )->sum('price'),
                 2,
                 '.',

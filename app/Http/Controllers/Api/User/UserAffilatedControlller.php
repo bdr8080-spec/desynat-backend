@@ -13,16 +13,17 @@ use Illuminate\Validation\Rule;
 use App\Services\UserAffilatedAuthService;
 use App\Services\UserOrderService;
 use App\Services\TicketService;
-
+use App\Services\AffiliateDashboardService;
 
 class UserAffilatedControlller extends Controller
 {
 
-    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, TicketService $TicketService)
+    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, TicketService $TicketService, AffiliateDashboardService $AffiliateDashboardService)
     {
         $this->UserAffilatedAuthService = $UserAffilatedAuthService;
         $this->UserOrderService = $UserOrderService;
         $this->TicketService = $TicketService;
+        $this->AffiliateDashboardService = $AffiliateDashboardService;
     }
 
 
@@ -1035,6 +1036,26 @@ public function get_raised_tickets(Request $request){
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
 }
+
+    public function affiliate_dashboard_data(Request $request){
+
+        $user_id=$request->user()->id;
+         $request_data = (object)[
+                'user_id' => $user_id,
+                'from_date' => $request->from_date??null,
+                'to_date' => $request->to_date??null,
+                'filter' => $request->filter??null,
+            ];
+  
+          $data= $this->AffiliateDashboardService->GetDashboardData($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
 
 
 

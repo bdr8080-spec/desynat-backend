@@ -335,6 +335,9 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
   Route::post('/affiliate_notification_on_off', [ApiNotificationController::class,'affiliate_notification_on_off']);
   Route::post('/affiliate_app_notification_on_off', [ApiNotificationController::class,'affiliate_app_notification_on_off']);
 
+  //m14
+  Route::get('/affiliate_dashboard_data', [UserAffilatedControlller::class,'affiliate_dashboard_data']);
+
 
 
   Route::post('/update-user-selected-country', [UserDashboardController::class,'updateUserSelectedCountry']);
