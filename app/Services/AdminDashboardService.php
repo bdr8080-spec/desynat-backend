@@ -93,10 +93,23 @@ class AdminDashboardService
 
             //orders
             $total_orders = $applyFilters(orderdetail::query())->count();
-            $total_ongoing_orders = $applyFilters(orderdetail::whereIn('delivery_status', ['1', '2', '2.1', '2.2', '6', '7']))->count();
-            $total_completed_orders = $applyFilters(orderdetail::where('delivery_status', '3'))->count();
+            $total_ongoing_orders = $applyFilters(
+                                    orderdetail::whereIn('delivery_status', ['1', '2', '2.1', '2.2', '6', '7'])
+                                        ->where('payment_status', '!=', '2')
+                                )->count();
+            $total_completed_orders = $applyFilters(
+                                    orderdetail::where(function ($q) {
+                                        $q->where('delivery_status', '3')
+                                        ->Where('payment_status', '1');
+                                    })
+                                )->count();
             $total_returned_orders = $applyFilters(orderdetail::where('delivery_status', '5'))->count();
-            $total_cancelled_orders = $applyFilters(orderdetail::where('payment_status', '2'))->count();
+            $total_cancelled_orders = $applyFilters(
+                                    orderdetail::where(function ($q) {
+                                        $q->where('payment_status', '2')
+                                        ->orWhere('delivery_status', '8');
+                                    })
+                                )->count();
 
             //revenue
             $total_order_revenue = number_format(

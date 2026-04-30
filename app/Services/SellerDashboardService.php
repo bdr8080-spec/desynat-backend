@@ -83,8 +83,8 @@ class SellerDashboardService
 
             //orders
             $total_orders = $applyFilters(orderdetail::where('seller_id', $request_data->seller_id))->count();
-            $total_new_orders = $applyFilters(orderdetail::where('seller_id', $request_data->seller_id)->where('delivery_status', '1'))->count();
-            $total_ongoing_orders = $applyFilters(orderdetail::where('seller_id', $request_data->seller_id)->whereIn('delivery_status', ['2', '2.1', '2.2', '6', '7']))->count();
+            $total_new_orders = $applyFilters(orderdetail::where('seller_id', $request_data->seller_id)->where('delivery_status', '1')->where('payment_status', '!=', '2'))->count();
+            $total_ongoing_orders = $applyFilters(orderdetail::where('seller_id', $request_data->seller_id)->whereIn('delivery_status', ['2', '2.1', '2.2', '6', '7'])->where('payment_status', '!=', '2'))->count();
             $total_completed_orders = $applyFilters(orderdetail::where('seller_id', $request_data->seller_id)->where('delivery_status', '3'))->count();
             $total_cancelled_orders = $applyFilters(orderdetail::where('seller_id', $request_data->seller_id)->where('payment_status', '2'))->count();
 
