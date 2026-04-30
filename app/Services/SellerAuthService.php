@@ -8,6 +8,7 @@ use App\Models\Bankdetails;
 use App\Models\Plan;
 
 use App\Models\SellerSubcriptionPlanBuy;
+use Illuminate\Support\Facades\DB;
 
 use Carbon\carbon;
 
@@ -261,11 +262,13 @@ class SellerAuthService
                 if($get_user_details->is_block==1){
                   return ['status'=>'error','message'=>"This Account is blocked",'data'=>(object)[]];                
                 }
+
                 
                 // if seller is staff member Then generate a Extra Token
                 if($get_user_details->type=='1'){
 
-                $Staff_user_details=seller::where('id',$get_user_details->parent_id)->first();  
+                $Staff_user_details=seller::where('id',$get_user_details->parent_id)->first();
+
 
                 $get_user_details->accessToken = $Staff_user_details->createToken('seller-token', ['seller'])->plainTextToken;
               
@@ -759,6 +762,54 @@ class SellerAuthService
             ];
         }
     }
+
+
+  public function DeleteAccount($request_data)
+  {
+      try {
+
+          DB::beginTransaction();
+
+          $seller = seller::find($request_data->user_id);
+
+          if (!$seller) {
+              return [
+                  'status' => 'error',
+                  'message' => 'Seller not found',
+                  'data' => []
+              ];
+          }
+
+          // $seller->accessToken = null;
+          // $seller->save();
+
+          // $seller->staffs()->update([
+          //     'accessToken' => null
+          // ]);
+
+          $seller->staffs()->delete();
+
+          $seller->delete();
+
+          DB::commit();
+
+          return [
+              'status' => 'success',
+              'message' => 'Account deleted successfully',
+              'data' => $seller
+          ];
+
+      } catch (\Exception $e) {
+
+          DB::rollBack();
+
+          return [
+              'status' => 'error',
+              'message' => $e->getMessage(),
+              'data' => []
+          ];
+      }
+  }
               
 
             

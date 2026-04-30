@@ -7,14 +7,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DeliveryBoy extends Authenticatable
 {
-    use HasApiTokens,HasFactory;
+    use HasApiTokens,HasFactory,SoftDeletes;
 
     protected $table = 'delivery_boys';
 
     protected $guarded=[];
+    protected $dates = ['deleted_at'];
     
 
     public function vehicle_image(){

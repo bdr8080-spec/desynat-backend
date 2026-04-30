@@ -241,6 +241,9 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/update-user-selected-country', [UserDashboardController::class,'updateUserSelectedCountry']);
   Route::post('/update-user-selected-currency', [UserDashboardController::class,'updateUserSelectedCurrency']);
 
+  //m14
+  Route::post('/delete_account', [AuthController::class,'delete_account']);
+
   
 });
 

@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\{User,AffilatedUser};
 
 use Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserAuthService
 {
@@ -236,7 +237,46 @@ class UserAuthService
     
 
             
-        
+   public function DeleteAccount($request_data)
+  {
+      try {
+
+          DB::beginTransaction();
+
+          $data = User::find($request_data->user_id);
+
+          if (!$data) {
+              return [
+                  'status' => 'error',
+                  'message' => 'User not found',
+                  'data' => []
+              ];
+          }
+
+          $data->accessToken = null;
+          $data->save();
+
+          $data->delete();
+
+          DB::commit();
+
+          return [
+              'status' => 'success',
+              'message' => 'Account deleted successfully',
+              'data' => $data
+          ];
+
+      } catch (\Exception $e) {
+
+          DB::rollBack();
+
+          return [
+              'status' => 'error',
+              'message' => $e->getMessage(),
+              'data' => []
+          ];
+      }
+  }   
 
     
     

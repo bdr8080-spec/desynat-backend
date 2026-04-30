@@ -382,6 +382,25 @@ class AuthController extends Controller
   
     }
 
+    public function delete_account(Request $request){
+
+
+         $seller_details=$request->user()->id;
+
+         $request_data = (object)[
+                'user_id'              => $seller_details,
+            ];
+  
+          $data= $this->SellerAuthService->DeleteAccount($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
 
 
     

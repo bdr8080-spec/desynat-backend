@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 
@@ -14,12 +15,14 @@ use Laravel\Sanctum\HasApiTokens;
 
 class seller extends Authenticatable
 {
-    use HasApiTokens,HasFactory;
+    use HasApiTokens,HasFactory,SoftDeletes;
 
 
      protected $table = 'sellers';
 
     protected $guarded=[];
+
+    protected $dates = ['deleted_at'];
 
 
     // store_info','owner_document','store_document','bank_details'
@@ -57,6 +60,12 @@ class seller extends Authenticatable
 
      public function Role_Action(){ 
         return $this->hasMany(sellermenuAction::class,'seller_id','id'); 
+    }
+
+    public function staffs()
+    {
+        return $this->hasMany(self::class, 'parent_id', 'id')
+            ->where('type', '1');
     }
     
     
