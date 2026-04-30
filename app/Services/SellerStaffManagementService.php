@@ -61,6 +61,17 @@ class SellerStaffManagementService
     {
         try {
 
+        $check_user_alreadyinseller=seller::where('email',$request->email)->where('type','0')->first();
+        
+        if($check_user_alreadyinseller){
+           return [
+                'status' => 'error',
+                'message' => 'Email Address is Already used',
+                'data' => []
+            ];
+
+        }
+
         $check_user_already=seller::where('email',$request->email)->where('admin_verify','2')->first();
 
         if($check_user_already){
