@@ -48,7 +48,7 @@
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
                 <form method="GET" action="{{ route('admin.ticketManagement') }}" id="filterForm">
                     <div class="row">
-                        <div class="col-lg-2 col-md-4 col-12">
+                        <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from_date" class="form-label">From:</label>
                                 <input type="date" id="from_date" name="from_date" class="form-control"
@@ -57,7 +57,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-2 col-md-4 col-12">
+                        <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date" class="form-label">To:</label>
                                 <input type="date" id="to_date" name="to_date" class="form-control"
@@ -94,16 +94,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
-                            <div class="d-dlex justify-content-end mt-5">
-                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
+                        <div class="col-lg-1 col-md-12 col-12">
+                            <div class="">
+                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-100 mt-2">
                                     <span>Reset</span></a>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-12 col-12">
+                        <div class="col-lg-1 col-md-12 col-12">
                         @if(in_array(26, $permissions) || $admin->type == 1)
-                        <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a href="{{ route('admin.export_new_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                        <div >
+                            <a href="{{ route('admin.export_new_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-100 mt-2" >
                                 <span>Export</span></a>
                         </div>
                         @endif
@@ -185,7 +185,7 @@
                 tabindex="0">
                 <form method="GET" action="{{ route('admin.ticketManagement') }}" id="filterForm1">
                     <div class="row">
-                    <div class="col-lg-2 col-md-12 col-12">
+                    <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from_date1" class="form-label">From:</label>
                                 <input type="date" id="from_date1" name="from_date1" class="form-control"
@@ -194,7 +194,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-2 col-md-12 col-12">
+                        <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date1" class="form-label">To:</label>
                                 <input type="date" id="to_date1" name="to_date1" class="form-control"
@@ -231,16 +231,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
-                            <div class="d-dlex justify-content-end mt-5">
-                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
+                        <div class="col-lg-1 col-md-12 col-12">
+                            <div>
+                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-100 mt-2">
                                     <span>Reset</span></a>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-12 col-12">
+                        <div class="col-lg-1 col-md-12 col-12">
                         @if(in_array(26, $permissions) || $admin->type == 1)
-                        <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a href="{{ route('admin.export_ongoing_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                        <div>
+                            <a href="{{ route('admin.export_ongoing_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-100 mt-2">
                                 <span>Export</span></a>
                         </div>
                         @endif
@@ -324,7 +324,7 @@
                 tabindex="0">
                 <form method="GET" action="{{ route('admin.ticketManagement') }}" id="filterForm2">
                     <div class="row">
-                    <div class="col-lg-2 col-md-12 col-12">
+                    <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from_date2" class="form-label">From:</label>
                                 <input type="date" id="from_date2" name="from_date2" class="form-control"
@@ -333,7 +333,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-2 col-md-12 col-12">
+                        <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date2" class="form-label">To:</label>
                                 <input type="date" id="to_date2" name="to_date2" class="form-control"
@@ -370,16 +370,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
-                            <div class="d-dlex justify-content-end mt-5">
-                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
+                        <div class="col-lg-1 col-md-12 col-12">
+                            <div class="">
+                                <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-100 mt-2">
                                     <span>Reset</span></a>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-12 col-12">
+                        <div class="col-lg-1 col-md-12 col-12">
                         @if(in_array(26, $permissions) || $admin->type == 1)
-                        <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a href="{{ route('admin.export_past_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                        <div class="">
+                            <a href="{{ route('admin.export_past_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-100 mt-2" >
                                 <span>Export</span></a>
                         </div>
                         @endif
