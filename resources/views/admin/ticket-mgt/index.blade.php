@@ -15,13 +15,6 @@
         <div class="col-lg-6 col-md-6 col-12">
             <h2 class="h2">Tickets Management </h2>
         </div>
-        <div class="col-lg-3 col-md-4 col-12">
-            <div class="d-flex justify-content-end">
-                <a class="btn btn-dark customBtn" href="#" role="button">
-                    <span>Export</span>
-                </a>
-            </div>
-        </div>
 
 
     </div>
@@ -107,6 +100,14 @@
                                     <span>Reset</span></a>
                             </div>
                         </div>
+                        <div class="col-lg-3 col-md-12 col-12">
+                        @if(in_array(26, $permissions) || $admin->type == 1)
+                        <div class="d-dlex justify-content-end" style="text-align: end">
+                            <a href="{{ route('admin.export_new_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                                <span>Export</span></a>
+                        </div>
+                        @endif
+                    </div>
                     </div>
                 </form>
 
@@ -236,6 +237,14 @@
                                     <span>Reset</span></a>
                             </div>
                         </div>
+                        <div class="col-lg-3 col-md-12 col-12">
+                        @if(in_array(26, $permissions) || $admin->type == 1)
+                        <div class="d-dlex justify-content-end" style="text-align: end">
+                            <a href="{{ route('admin.export_ongoing_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                                <span>Export</span></a>
+                        </div>
+                        @endif
+                    </div>
                     </div>
                 </form>
 
@@ -367,6 +376,14 @@
                                     <span>Reset</span></a>
                             </div>
                         </div>
+                        <div class="col-lg-3 col-md-12 col-12">
+                        @if(in_array(26, $permissions) || $admin->type == 1)
+                        <div class="d-dlex justify-content-end" style="text-align: end">
+                            <a href="{{ route('admin.export_past_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                                <span>Export</span></a>
+                        </div>
+                        @endif
+                    </div>
                     </div>
                 </form>
 

@@ -64,11 +64,13 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-12">
-            <!-- <div class="d-flex justify-content-end">
-                <a class="btn btn-dark customBtn" href="">
-                    <span>Export in Excel</span>
+            @if(in_array(22, $permissions) || $admin->type == 1)
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('admin.export_products_data', request()->all()) }}" class="btn btn-dark customBtn" href="">
+                    <span>Export</span>
                 </a>
-            </div> -->
+            </div>
+            @endif
         </div>
     </div>
 

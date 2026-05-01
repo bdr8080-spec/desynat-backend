@@ -286,7 +286,13 @@ Route::group(['prefix'=>'admin'], function(){
      Route::get('/export_return_exchange_orders_data', [OrderController::class, 'export_return_exchange_orders_data'])->name('admin.export_return_exchange_orders_data');
      Route::get('/export_completed_orders_data', [OrderController::class, 'export_completed_orders_data'])->name('admin.export_completed_orders_data');
      Route::get('/export_cancelled_orders_data', [OrderController::class, 'export_cancelled_orders_data'])->name('admin.export_cancelled_orders_data');
-            
+     //product export
+     Route::get('/export_products_data', [ProductController::class, 'export_products_data'])->name('admin.export_products_data');    
+     //ticket export
+     Route::get('/export_new_tickets_data', [TicketController::class, 'export_new_tickets_data'])->name('admin.export_new_tickets_data'); 
+     Route::get('/export_ongoing_tickets_data', [TicketController::class, 'export_ongoing_tickets_data'])->name('admin.export_ongoing_tickets_data'); 
+     Route::get('/export_past_tickets_data', [TicketController::class, 'export_past_tickets_data'])->name('admin.export_past_tickets_data'); 
+
         
 
         
