@@ -648,4 +648,99 @@ class AuthController extends Controller
         ], 200);
     }
 
+    public function export_refund_data(Request $request)
+    {
+        $request_data = (object)[
+            'limit' => $request->limit ?? null,
+            'country_name' => $request->country_name ?? null,
+            'from_date' => $request->from_date ?? null,
+            'to_date' => $request->to_date ?? null,
+            'search' => $request->search ?? null,
+        ];
+
+        $response = $this->OrderManagementService->RefundOrders($request_data);
+
+        $data = $response['data'] ?? collect();
+
+        $refunds = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
+            ? collect($data->items())
+            : collect($data);
+
+        $fileName = 'refund_orders_' . now()->format('Y_m_d_H_i_s') . '.csv';
+
+        $headers = [
+            "Content-Type" => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+        ];
+
+        return response()->stream(function () use ($refunds) {
+
+            $file = fopen('php://output', 'w');
+
+            // UTF-8 fix
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            // CSV Headers
+            fputcsv($file, [
+                'Sr No',
+                'Transaction ID',
+                'Order ID',
+                'Order Date & Time',
+                'Cancellation Date & Time',
+                'Seller Name',
+                'User Name',
+                'User Country',
+                'Reason',
+                'Amount(KD)',
+                'Status'
+            ]);
+
+            foreach ($refunds as $index => $data) {
+
+                $transactionId = '="' . ($data->order->transaction_id ?? 'N/A') . '"';
+                $orderId = $data->order->order_id ?? 'N/A';
+
+                $sellerName = trim(
+                    ($data->product_details->seller_details->first_name ?? '') . ' ' .
+                    ($data->product_details->seller_details->last_name ?? '')
+                ) ?: 'N/A';
+
+                $userName = $data->user_details->full_name ?? 'N/A';
+
+                $country = $data->user_details->country_info->name ?? 'N/A';
+
+                $orderDate = $data->created_at
+                    ? $data->created_at->format('jS F Y | g:i A')
+                    : '-';
+
+                $cancelDate = $data->updated_at
+                    ? $data->updated_at->format('jS F Y | g:i A')
+                    : '-';
+
+                $reason = $data->cancel_reason ?? 'N/A';
+
+                $amount = ($data->amount ?? 0);
+
+                $status = 'Pending';
+
+                fputcsv($file, [
+                    $index + 1,
+                    $transactionId,
+                    $orderId,
+                    $orderDate,
+                    $cancelDate,
+                    $sellerName,
+                    $userName,
+                    $country,
+                    $reason,
+                    $amount,
+                    $status
+                ]);
+            }
+
+            fclose($file);
+
+        }, 200, $headers);
+    }
+
 }

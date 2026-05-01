@@ -1,6 +1,15 @@
 @extends('admin.layout.app')
 @section('content')
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
@@ -8,11 +17,13 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-12">
+            @if(in_array(32, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
-                <a class="btn btn-dark customBtn" href="">
-                    <span>Export in Excel</span>
+                <a href="{{ route('admin.export_refund_data', request()->all()) }}" class="btn btn-dark customBtn" href="">
+                    <span>Export</span>
                 </a>
             </div>
+            @endif
         </div>
     </div>
 
@@ -61,6 +72,7 @@
                             <span>Reset</span></a>
                     </div>
                 </div>
+                
 
             </div>
             </form>
