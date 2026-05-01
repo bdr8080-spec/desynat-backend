@@ -71,7 +71,7 @@
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-4 col-12">
+                    <!-- <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">Country Name</label>
                             <select class="form-select form-select-lg" aria-label="Large select example">
@@ -81,7 +81,7 @@
                                 <option value="3">country Three</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                     <div class=" col-lg-3">
                         <div class="d-flex  gap-3 mt-5">
                             <a href="{{route('admin.dashboard')}}" class="btn btn-dark customBtn w-50 mt-2">
