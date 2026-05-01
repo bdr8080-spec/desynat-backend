@@ -37,11 +37,10 @@ class AppServiceProvider extends ServiceProvider
 private function loadHeaderCountryData()
 {
     View::composer('user.layout.header', function ($view) {
-        $view->with('GetsellerCountry', \App\Models\all_countrie::whereIn('id', function($query) {
-            $query->selectRaw('MIN(id)')
-                  ->from('all_countries')
-                  ->groupBy('currency_code');
-        })->get());
+        $view->with(
+            'GetsellerCountry',
+            \App\Models\all_countrie::get()->unique('currency_code')->values()
+        );
     });
 }
 
