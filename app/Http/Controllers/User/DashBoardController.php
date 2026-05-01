@@ -566,6 +566,7 @@ public function checkLiveJoinTimeStatus($id)
         }
 
     }
+    
 
 
 }
