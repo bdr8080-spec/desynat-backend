@@ -56,7 +56,7 @@
 
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-12">
-                        <div class="form-group mt-5 w-100">
+                        <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from_date" name="from_date" class="form-control"
                             value="{{ request()->from_date }}"
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-12">
-                        <div class="form-group mt-5 w-100">
+                        <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">To:</label>
                             <input type="date" id="to_date" name="to_date" class="form-control"
                             value="{{ request()->to_date }}"
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-12">
-                        <div class="form-group mt-5 w-100">
+                        <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">Country Name</label>
                             <select class="form-select form-select-lg" aria-label="Large select example">
                                 <option selected>Select Country</option>
@@ -82,18 +82,15 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2 col-lg-3 col-12 mt-5">
-                        <div class="d-dlex justify-content-end">
+                    <div class=" col-lg-3">
+                        <div class="d-flex  gap-3 mt-5">
                             <a href="{{route('admin.dashboard')}}" class="btn btn-dark customBtn w-50 mt-2">
                                 <span>Reset</span></a>
+                                 <a href="{{ route('admin.export_dashboard_data', request()->all()) }}" class="btn btn-dark customBtns w-50 mt-2" >
+                                <span>Export</span></a>
                         </div>
                     </div>
-                    <div class="col-md-2 col-lg-3 col-12 mt-5">
-                        <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a href="{{ route('admin.export_dashboard_data', request()->all()) }}" class="btn btn-dark customBtns w-100" style="margin-top: 30px">
-                                <span>Export in Excel or PDF</span></a>
-                        </div>
-                    </div>
+                   
                 </div>
                 </form>
 

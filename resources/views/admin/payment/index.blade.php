@@ -2,12 +2,12 @@
 @section('content')
 
 @php
-    $admin = auth('admin')->user();
+$admin = auth('admin')->user();
 
-    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
-        ->where('can_action', 1)
-        ->pluck('module_id')
-        ->toArray();
+$permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+->where('can_action', 1)
+->pluck('module_id')
+->toArray();
 @endphp
 
 <div class="inner-content management">
@@ -55,19 +55,19 @@
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
                 <form method="GET" action="{{ route('admin.paymentManagement') }}" id="filterForm">
-                    <div class="row mb-4">
+                    <div class="row mt-4">
                         <!-- From Date Filter -->
-                        <div class="col-lg-2 col-md-4 col-12">
-                                <div class="form-group mt-4 w-100">
-                                    <label for="from_date" class="form-label">From:</label>
-                                    <input type="date" id="from_date" name="from_date" class="form-control"
-                                        value="{{ request()->from_date }}"
-                                        onchange="updateToDate(); document.getElementById('filterForm').submit();" />
-                                </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <div class="form-group mt-4 w-100">
+                                <label for="from_date" class="form-label">From:</label>
+                                <input type="date" id="from_date" name="from_date" class="form-control"
+                                    value="{{ request()->from_date }}"
+                                    onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                             </div>
+                        </div>
 
                         <!-- To Date Filter -->
-                        <div class="col-lg-2 col-md-4 col-12">
+                        <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date" class="form-label">To:</label>
                                 <input type="date" id="to_date" name="to_date" class="form-control"
@@ -79,45 +79,54 @@
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Country</label>
 
-                                <select name="country_id" id="country_id" onchange="document.getElementById('filterForm').submit();" class="form-select form-select-lg">
+                                <select name="country_id" id="country_id"
+                                    onchange="document.getElementById('filterForm').submit();"
+                                    class="form-select form-select-lg">
                                     <option value="">Select country</option>
 
                                     @foreach($userCountry as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ request('country_id') == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }}
-                                        </option>
+                                    <option value="{{ $country->id }}"
+                                        {{ request('country_id') == $country->id ? 'selected' : '' }}>
+                                        {{ $country->name }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
-                            <div class="d-dlex justify-content-end mt-5">
-                                <a href="{{route('admin.paymentManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
+                        <div class="col-lg-1">
+                            <div style="
+    margin-top: 48px;
+">
+                                <a href="{{route('admin.paymentManagement')}}"
+                                    class="btn btn-dark customBtn w-100 mt-2">
                                     <span>Reset</span></a>
                             </div>
                         </div>
-                         <div class="col-lg-3 col-md-12 col-12">
-                        @if(in_array(27, $permissions) || $admin->type == 1)
-                        <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a href="{{ route('admin.export_order_payment_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
-                                <span>Export</span></a>
+                        <div class="col-lg-1 ">
+                            @if(in_array(27, $permissions) || $admin->type == 1)
+                            <div style="
+    margin-top: 48px;
+">
+                                <a href="{{ route('admin.export_order_payment_data', request()->all()) }}"
+                                    class="btn btn-dark customBtn w-100 mt-2">
+                                    <span>Export</span></a>
+                            </div>
+                            @endif
                         </div>
-                        @endif
-                    </div>
 
                         <div class="col-lg-3 col-md-12 col-12">
-                            <div class="d-flex gap-3 justify-content-start" style="text-align: start">
+                            <div class=" mt-2">
 
                                 <a class="btn btn-dark customBtn">
-                                    <span>Total Revenue:- {{ number_format($orderPayment['total_revenue'], 2) }} KD</span>
+                                    <span>Total Revenue:- {{ number_format($orderPayment['total_revenue'], 2) }}
+                                        KD</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-3">
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
@@ -146,7 +155,8 @@
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                                 <td>{{ $payment->updated_at->format('jS F Y | g:i A') }}</td>
                                 <td>{{$payment->user_details->full_name}}</td>
-                                <td>{{$payment->product_details->seller_details->first_name?? ''}} {{$payment->product_details->seller_details->last_name??''}}</td>
+                                <td>{{$payment->product_details->seller_details->first_name?? ''}}
+                                    {{$payment->product_details->seller_details->last_name??''}}</td>
                                 <td>#{{$payment->id}}</td>
                                 <td>{{$payment->user_details->country_info->name}}</td>
                                 <td>{{$payment->total_paid_amount}} KD</td>
@@ -158,13 +168,13 @@
                                 <td>{{$payment->affiliate_admin_commission ?? '0'}} KD</td>
                                 <td>
                                     @if($payment->order?->payment_method == 1)
-                                        Online
+                                    Online
                                     @elseif($payment->order?->payment_method == 2)
-                                        Wallet
+                                    Wallet
                                     @elseif($payment->order?->payment_method == 3)
-                                        COD
+                                    COD
                                     @else
-                                        -
+                                    -
                                     @endif
                                 </td>
                             </tr>
@@ -181,17 +191,17 @@
                 <form method="GET" action="{{ route('admin.paymentManagement') }}" id="filterForm1">
                     <div class="row mb-4">
                         <!-- From Date Filter -->
-                        <div class="col-lg-2 col-md-4 col-12">
-                                <div class="form-group mt-4 w-100">
-                                    <label for="from_date" class="form-label">From:</label>
-                                    <input type="date" id="from_date1" name="from_date1" class="form-control"
-                                        value="{{ request()->from_date1 }}"
-                                        onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
-                                </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <div class="form-group mt-4 w-100">
+                                <label for="from_date" class="form-label">From:</label>
+                                <input type="date" id="from_date1" name="from_date1" class="form-control"
+                                    value="{{ request()->from_date1 }}"
+                                    onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
                             </div>
+                        </div>
 
                         <!-- To Date Filter -->
-                        <div class="col-lg-2 col-md-4 col-12">
+                        <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date" class="form-label">To:</label>
                                 <input type="date" id="to_date1" name="to_date1" class="form-control"
@@ -203,43 +213,50 @@
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Country</label>
 
-                                <select name="country_id1" id="country_id1" onchange="document.getElementById('filterForm1').submit();" class="form-select form-select-lg">
+                                <select name="country_id1" id="country_id1"
+                                    onchange="document.getElementById('filterForm1').submit();"
+                                    class="form-select form-select-lg">
                                     <option value="">Select country</option>
 
                                     @foreach($sellerCountry as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ request('country_id1') == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }}
-                                        </option>
+                                    <option value="{{ $country->id }}"
+                                        {{ request('country_id1') == $country->id ? 'selected' : '' }}>
+                                        {{ $country->name }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
-                            <div class="d-dlex justify-content-end mt-5">
-                                <a href="{{route('admin.paymentManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
+                        <div class="col-lg-1 col-md-12 col-12">
+                            <div class="">
+                                <a href="{{route('admin.paymentManagement')}}" class="btn btn-dark customBtn w-100 " style="margin-top: 63px">
                                     <span>Reset</span></a>
                             </div>
                         </div>
                         @if(in_array(27, $permissions) || $admin->type == 1)
-                        <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a href="{{ route('admin.export_plan_payment_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                        <div  class="col-lg-1 col-md-12 col-12" >
+                            <div class="">
+
+                            <a href="{{ route('admin.export_plan_payment_data', request()->all()) }}"
+                                class="btn btn-dark customBtn w-100" style="margin-top: 63px">
                                 <span>Export</span></a>
+</div>
                         </div>
                         @endif
 
                         <div class="col-lg-3 col-md-12 col-12">
-                            <div class="d-flex gap-3 justify-content-start" style="text-align: start">
+                            <div class=" mt-2">
 
                                 <a class="btn btn-dark customBtn">
-                                    <span>Total Revenue:- {{ number_format($planPayment['total_revenue'], 2) }} KD</span>
+                                    <span>Total Revenue:- {{ number_format($planPayment['total_revenue'], 2) }}
+                                        KD</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-3">
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
@@ -257,10 +274,11 @@
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>#{{ $payment->transaction_id }}</td>
-                                <td>{{ $payment->seller_details->first_name }} {{ $payment->seller_details->last_name }}</td>
+                                <td>{{ $payment->seller_details->first_name }} {{ $payment->seller_details->last_name }}
+                                </td>
                                 <td>{{ $payment->seller_details->store_info->country_info->name }}</td>
                                 <td>{{ $payment->amount }} KD</td>
-                                <td>{{ $payment->plan_info->plan_name_english }}</td>                           
+                                <td>{{ $payment->plan_info->plan_name_english }}</td>
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                             </tr>
                             @empty
@@ -279,16 +297,16 @@
                     <div class="row mb-4">
                         <!-- From Date Filter -->
                         <div class="col-lg-2 col-md-4 col-12">
-                                <div class="form-group mt-4 w-100">
-                                    <label for="from_date" class="form-label">From:</label>
-                                    <input type="date" id="from_date2" name="from_date2" class="form-control"
-                                        value="{{ request()->from_date2 }}"
-                                        onchange="updateToDate2(); document.getElementById('filterForm2').submit();" />
-                                </div>
+                            <div class="form-group mt-4 w-100">
+                                <label for="from_date" class="form-label">From:</label>
+                                <input type="date" id="from_date2" name="from_date2" class="form-control"
+                                    value="{{ request()->from_date2 }}"
+                                    onchange="updateToDate2(); document.getElementById('filterForm2').submit();" />
                             </div>
+                        </div>
 
                         <!-- To Date Filter -->
-                        <div class="col-lg-2 col-md-4 col-12">
+                        <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date" class="form-label">To:</label>
                                 <input type="date" id="to_date2" name="to_date2" class="form-control"
@@ -300,43 +318,49 @@
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Country</label>
 
-                                <select name="country_id2" id="country_id2" onchange="document.getElementById('filterForm2').submit();" class="form-select form-select-lg">
+                                <select name="country_id2" id="country_id2"
+                                    onchange="document.getElementById('filterForm2').submit();"
+                                    class="form-select form-select-lg">
                                     <option value="">Select country</option>
 
                                     @foreach($userCountry as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ request('country_id2') == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }}
-                                        </option>
+                                    <option value="{{ $country->id }}"
+                                        {{ request('country_id2') == $country->id ? 'selected' : '' }}>
+                                        {{ $country->name }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
-                            <div class="d-dlex justify-content-end mt-5">
-                                <a href="{{route('admin.paymentManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
+                        <div class="col-lg-1 col-md-12 col-12">
+                            <div class="">
+                                <a href="{{route('admin.paymentManagement')}}" class="btn btn-dark customBtn w-100 " style="margin-top: 63px">
                                     <span>Reset</span></a>
                             </div>
                         </div>
                         @if(in_array(27, $permissions) || $admin->type == 1)
+                        <div class="col-lg-1">
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a href="{{ route('admin.export_giftcard_payment_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                            <a href="{{ route('admin.export_giftcard_payment_data', request()->all()) }}"
+                                class="btn btn-dark customBtn w-100" style="margin-top: 63px">
                                 <span>Export</span></a>
                         </div>
+</div>
                         @endif
 
                         <div class="col-lg-3 col-md-12 col-12">
-                            <div class="d-flex gap-3 justify-content-start" style="text-align: start">
+                            <div class=" mt-2">
 
                                 <a class="btn btn-dark customBtn">
-                                    <span>Total Revenue:- {{ number_format($giftCardPayment['total_revenue'], 2) }} KD</span>
+                                    <span>Total Revenue:- {{ number_format($giftCardPayment['total_revenue'], 2) }}
+                                        KD</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-3">
                     <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
@@ -373,17 +397,17 @@
                 <form method="GET" action="{{ route('admin.paymentManagement') }}" id="filterForm3">
                     <div class="row mb-4">
                         <!-- From Date Filter -->
-                        <div class="col-lg-2 col-md-4 col-12">
-                                <div class="form-group mt-4 w-100">
-                                    <label for="from_date" class="form-label">From:</label>
-                                    <input type="date" id="from_date3" name="from_date3" class="form-control"
-                                        value="{{ request()->from_date3 }}"
-                                        onchange="updateToDate3(); document.getElementById('filterForm3').submit();" />
-                                </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <div class="form-group mt-4 w-100">
+                                <label for="from_date" class="form-label">From:</label>
+                                <input type="date" id="from_date3" name="from_date3" class="form-control"
+                                    value="{{ request()->from_date3 }}"
+                                    onchange="updateToDate3(); document.getElementById('filterForm3').submit();" />
                             </div>
+                        </div>
 
                         <!-- To Date Filter -->
-                        <div class="col-lg-2 col-md-4 col-12">
+                        <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date" class="form-label">To:</label>
                                 <input type="date" id="to_date3" name="to_date3" class="form-control"
@@ -395,43 +419,49 @@
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">Country</label>
 
-                                <select name="country_id3" id="country_id3" onchange="document.getElementById('filterForm3').submit();" class="form-select form-select-lg">
+                                <select name="country_id3" id="country_id3"
+                                    onchange="document.getElementById('filterForm3').submit();"
+                                    class="form-select form-select-lg">
                                     <option value="">Select country</option>
 
                                     @foreach($sellerCountry as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ request('country_id3') == $country->id ? 'selected' : '' }}>
-                                            {{ $country->name }}
-                                        </option>
+                                    <option value="{{ $country->id }}"
+                                        {{ request('country_id3') == $country->id ? 'selected' : '' }}>
+                                        {{ $country->name }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-12 col-12">
-                            <div class="d-dlex justify-content-end mt-5">
-                                <a href="{{route('admin.paymentManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
+                        <div class="col-lg-1 col-md-12 col-12">
+                            <div class="">
+                                <a href="{{route('admin.paymentManagement')}}" class="btn btn-dark customBtn w-100 " style="margin-top: 63px">
                                     <span>Reset</span></a>
                             </div>
                         </div>
                         @if(in_array(27, $permissions) || $admin->type == 1)
-                        <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a href="{{ route('admin.export_banner_payment_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                        <div class="col-lg-1">
+                        <div class="">
+                            <a href="{{ route('admin.export_banner_payment_data', request()->all()) }}"
+                                class="btn btn-dark customBtn w-100" style="margin-top: 63px">
                                 <span>Export</span></a>
+                        </div>
                         </div>
                         @endif
 
                         <div class="col-lg-3 col-md-12 col-12">
-                            <div class="d-flex gap-3 justify-content-start" style="text-align: start">
+                            <div class=" mt-2">
 
                                 <a class="btn btn-dark customBtn">
-                                    <span>Total Revenue:- {{ number_format($bannerPayment['total_revenue'], 2) }} KD</span>
+                                    <span>Total Revenue:- {{ number_format($bannerPayment['total_revenue'], 2) }}
+                                        KD</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-3">
                     <table id="myTable3" class="table w-100">
                         <thead>
                             <tr>
@@ -450,7 +480,8 @@
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>#{{ $payment->transaction_id }}</td>
                                 <td>#{{ $payment->order_id }}</td>
-                                <td>{{ $payment->seller_details->first_name ?? '' }} {{ $payment->seller_details->last_name ?? '' }}</td>
+                                <td>{{ $payment->seller_details->first_name ?? '' }}
+                                    {{ $payment->seller_details->last_name ?? '' }}</td>
                                 <td>{{ $payment->seller_details->store_info->country_info->name ?? 'N/A' }}</td>
                                 <td>{{ $payment->price }} KD</td>
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
@@ -506,67 +537,63 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <script>
-    function updateToDate() {
-        const fromDate = document.getElementById('from_date').value;
-        const toDateInput = document.getElementById('to_date');
-        if (fromDate) {
-            toDateInput.setAttribute('min', fromDate);
-        } else {
-            toDateInput.removeAttribute('min');
-        }
+function updateToDate() {
+    const fromDate = document.getElementById('from_date').value;
+    const toDateInput = document.getElementById('to_date');
+    if (fromDate) {
+        toDateInput.setAttribute('min', fromDate);
+    } else {
+        toDateInput.removeAttribute('min');
     }
-    document.addEventListener('DOMContentLoaded', function() {
-        updateToDate();
-    });
-
+}
+document.addEventListener('DOMContentLoaded', function() {
+    updateToDate();
+});
 </script>
 
 <script>
-    function updateToDate1() {
-        const fromDate = document.getElementById('from_date1').value;
-        const toDateInput = document.getElementById('to_date1');
-        if (fromDate) {
-            toDateInput.setAttribute('min', fromDate);
-        } else {
-            toDateInput.removeAttribute('min');
-        }
+function updateToDate1() {
+    const fromDate = document.getElementById('from_date1').value;
+    const toDateInput = document.getElementById('to_date1');
+    if (fromDate) {
+        toDateInput.setAttribute('min', fromDate);
+    } else {
+        toDateInput.removeAttribute('min');
     }
-    document.addEventListener('DOMContentLoaded', function() {
-        updateToDate();
-    });
-
+}
+document.addEventListener('DOMContentLoaded', function() {
+    updateToDate();
+});
 </script>
 
 <script>
-    function updateToDate2() {
-        const fromDate = document.getElementById('from_date2').value;
-        const toDateInput = document.getElementById('to_date2');
-        if (fromDate) {
-            toDateInput.setAttribute('min', fromDate);
-        } else {
-            toDateInput.removeAttribute('min');
-        }
+function updateToDate2() {
+    const fromDate = document.getElementById('from_date2').value;
+    const toDateInput = document.getElementById('to_date2');
+    if (fromDate) {
+        toDateInput.setAttribute('min', fromDate);
+    } else {
+        toDateInput.removeAttribute('min');
     }
-    document.addEventListener('DOMContentLoaded', function() {
-        updateToDate();
-    });
-
+}
+document.addEventListener('DOMContentLoaded', function() {
+    updateToDate();
+});
 </script>
 
 <script>
-    function updateToDate3() {
-        const fromDate = document.getElementById('from_date3').value;
-        const toDateInput = document.getElementById('to_date3');
-        if (fromDate) {
-            toDateInput.setAttribute('min', fromDate);
-        } else {
-            toDateInput.removeAttribute('min');
-        }
+function updateToDate3() {
+    const fromDate = document.getElementById('from_date3').value;
+    const toDateInput = document.getElementById('to_date3');
+    if (fromDate) {
+        toDateInput.setAttribute('min', fromDate);
+    } else {
+        toDateInput.removeAttribute('min');
     }
-    document.addEventListener('DOMContentLoaded', function() {
-        updateToDate();
-    });
-
+}
+document.addEventListener('DOMContentLoaded', function() {
+    updateToDate();
+});
 </script>
 
 
