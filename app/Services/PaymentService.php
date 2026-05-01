@@ -315,6 +315,7 @@ class PaymentService
                 'seller_details.store_info.country_info',
             ])
             ->where('payment_status', '1')
+            ->where('added_by', '0')
             ->where('Admin_verify', '1');   
 
             if (!empty($request->search)) {

@@ -16,13 +16,6 @@
         <div class="col-lg-6 col-md-6 col-12">
             <h2 class="h2">Payment Management </h2>
         </div>
-        <div class="col-lg-3 col-md-4 col-12">
-            <div class="d-flex justify-content-end">
-                <a class="btn btn-dark customBtn" href="#" role="button">
-                    <span>Export in Excel or PDF</span>
-                </a>
-            </div>
-        </div>
 
 
     </div>
@@ -104,6 +97,14 @@
                                     <span>Reset</span></a>
                             </div>
                         </div>
+                         <div class="col-lg-3 col-md-12 col-12">
+                        @if(in_array(27, $permissions) || $admin->type == 1)
+                        <div class="d-dlex justify-content-end" style="text-align: end">
+                            <a href="{{ route('admin.export_order_payment_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                                <span>Export</span></a>
+                        </div>
+                        @endif
+                    </div>
 
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="d-flex gap-3 justify-content-start" style="text-align: start">
@@ -220,6 +221,12 @@
                                     <span>Reset</span></a>
                             </div>
                         </div>
+                        @if(in_array(27, $permissions) || $admin->type == 1)
+                        <div class="d-dlex justify-content-end" style="text-align: end">
+                            <a href="{{ route('admin.export_plan_payment_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                                <span>Export</span></a>
+                        </div>
+                        @endif
 
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="d-flex gap-3 justify-content-start" style="text-align: start">
@@ -311,6 +318,12 @@
                                     <span>Reset</span></a>
                             </div>
                         </div>
+                        @if(in_array(27, $permissions) || $admin->type == 1)
+                        <div class="d-dlex justify-content-end" style="text-align: end">
+                            <a href="{{ route('admin.export_giftcard_payment_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                                <span>Export</span></a>
+                        </div>
+                        @endif
 
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="d-flex gap-3 justify-content-start" style="text-align: start">
@@ -400,6 +413,12 @@
                                     <span>Reset</span></a>
                             </div>
                         </div>
+                        @if(in_array(27, $permissions) || $admin->type == 1)
+                        <div class="d-dlex justify-content-end" style="text-align: end">
+                            <a href="{{ route('admin.export_banner_payment_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                                <span>Export</span></a>
+                        </div>
+                        @endif
 
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="d-flex gap-3 justify-content-start" style="text-align: start">

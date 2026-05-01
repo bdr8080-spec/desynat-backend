@@ -292,6 +292,11 @@ Route::group(['prefix'=>'admin'], function(){
      Route::get('/export_new_tickets_data', [TicketController::class, 'export_new_tickets_data'])->name('admin.export_new_tickets_data'); 
      Route::get('/export_ongoing_tickets_data', [TicketController::class, 'export_ongoing_tickets_data'])->name('admin.export_ongoing_tickets_data'); 
      Route::get('/export_past_tickets_data', [TicketController::class, 'export_past_tickets_data'])->name('admin.export_past_tickets_data'); 
+     //payment export
+     Route::get('/export_order_payment_data', [PaymentController::class, 'export_order_payment_data'])->name('admin.export_order_payment_data');
+     Route::get('/export_plan_payment_data', [PaymentController::class, 'export_plan_payment_data'])->name('admin.export_plan_payment_data');
+     Route::get('/export_giftcard_payment_data', [PaymentController::class, 'export_giftcard_payment_data'])->name('admin.export_giftcard_payment_data');
+     Route::get('/export_banner_payment_data', [PaymentController::class, 'export_banner_payment_data'])->name('admin.export_banner_payment_data');
 
         
 
