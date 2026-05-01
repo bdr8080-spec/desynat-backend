@@ -61,6 +61,7 @@
                         <div class="product-content">
                             <p> {{$store_details['store']->seller_information->first_name}}
                                 {{$store_details['store']->seller_information->last_name}}</p>
+
                             @php
                                 $totalReviews = 0;
 
@@ -1390,6 +1391,33 @@ $(document).ready(function(){
         .catch(function(){
             toastr.error('Failed to copy link');
         });
+    });
+
+});
+</script>
+
+<script>
+$(document).ready(function () {
+
+    let seller_id = $('#seller_id').val();
+
+    // get store_id from URL (last segment)
+    let store_id = window.location.pathname.split('/').pop();
+
+    $.ajax({
+        url: "{{ route('user.CaptureSellerStoreVisitorWeb') }}",
+        type: "POST",
+        data: {
+            seller_id: seller_id,
+            store_id: store_id,
+            _token: "{{ csrf_token() }}"
+        },
+        success: function (response) {
+           // console.log('Visitor captured:', response);
+        },
+        error: function (xhr) {
+           // console.log('Error:', xhr.responseJSON);
+        }
     });
 
 });

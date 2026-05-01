@@ -201,6 +201,8 @@ Route::post('/save_new_card', [ProfileController::class, 'save_new_card'])->name
 Route::post('/mark_all_chat_msg_as_read', [ChatController::class,'mark_all_chat_msg_as_read'])->name('user.mark_all_chat_msg_as_read');
 Route::get('/chat_unread_count', [ChatController::class,'chat_unread_count'])->name('user.chat_unread_count');
 
+Route::post('CaptureSellerStoreVisitorWeb',[DashBoardController::class, 'CaptureSellerStoreVisitorWeb'])->name('user.CaptureSellerStoreVisitorWeb');
+
 
 });
 
@@ -256,6 +258,8 @@ Route::get('user/return-policy', [DashBoardController::class, 'returnPolicy'])->
 Route::get('user/exchange-policy', [DashBoardController::class, 'exchangePolicy'])->name('user.exchangePolicy');
 Route::get('user/cancellation-policy', [DashBoardController::class, 'cancellationPolicy'])->name('user.cancellationPolicy');
 Route::get('user/faq', [DashBoardController::class, 'faq'])->name('user.faq');
+
+
 
 
 

@@ -17,6 +17,7 @@ use App\Http\Controllers\CommonController;
 
 use App\Models\LiveRequest;
 use App\Models\User;
+use App\Models\SellerStoreVisitor;
 
 use Carbon\Carbon;
 
@@ -567,6 +568,46 @@ public function checkLiveJoinTimeStatus($id)
 
     }
     
+    public function CaptureSellerStoreVisitorWeb(Request $request)
+    {
+        try {
+
+            $userId = optional($request->user())->id;
+
+            $validator = Validator::make($request->all(), [
+                'seller_id' => 'required|integer',
+                'store_id' => 'required|integer',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $validator->errors()->first()
+                ], 422);
+            }
+
+            $userId = !empty($userId) ? $userId : null;
+
+            $visitor = SellerStoreVisitor::create([
+                'user_id' => $userId,
+                'seller_id' => $request->seller_id,
+                'store_id' => $request->store_id,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Visitor captured successfully',
+                'data' => $visitor
+            ], 200);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 
 
 }
