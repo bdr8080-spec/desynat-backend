@@ -738,6 +738,18 @@ class CommonController extends Controller
         }
     }
 
+    public function all_country_unique_currency(Request $request){
+        
+        $all_country = all_countrie::whereIn('id', function($query) {
+            $query->selectRaw('MIN(id)')
+                ->from('all_countries')
+                ->groupBy('currency_code');
+        })->get();
+        
+        return ApiResponse::generateResponse('success', 'All Country Details fetch Successfully', $all_country, 200);
+        
+    }
+
 
 
  

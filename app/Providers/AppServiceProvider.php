@@ -27,10 +27,21 @@ class AppServiceProvider extends ServiceProvider
        
     }
 
-    private function loadHeaderCountryData()
+//     private function loadHeaderCountryData()
+// {
+//     View::composer('user.layout.header', function ($view) {
+//         $view->with('GetsellerCountry', \App\Models\all_countrie::get());
+//     });
+// }
+
+private function loadHeaderCountryData()
 {
     View::composer('user.layout.header', function ($view) {
-        $view->with('GetsellerCountry', \App\Models\all_countrie::get());
+        $view->with('GetsellerCountry', \App\Models\all_countrie::whereIn('id', function($query) {
+            $query->selectRaw('MIN(id)')
+                  ->from('all_countries')
+                  ->groupBy('currency_code');
+        })->get());
     });
 }
 

@@ -385,6 +385,7 @@ Route::post('uploadWithResolution', [CommonController::class, 'uploadWithResolut
 Route::post('uploadWithResolutionPromotional', [CommonController::class, 'uploadWithResolutionPromotional']);
 Route::get('country', [CommonController::class, 'country']);
 Route::get('all_country', [CommonController::class, 'all_country']);
+Route::get('all_country_unique_currency', [CommonController::class, 'all_country_unique_currency']);
 
 
 Route::get('category',[CommonController::class, 'getCategories']);
