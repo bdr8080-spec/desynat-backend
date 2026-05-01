@@ -55,9 +55,11 @@
                             style="margin-top: 60px">
                             <span>Reset</span>
                         </a>
-                         <a class="btn btn-dark customBtn" style="margin-top: 60px">
+                        @if(in_array(9, $permissions) || $admin->type == 1)
+                         <a href="{{ route('admin.export_driver_data', request()->all()) }}" class="btn btn-dark customBtn" style="margin-top: 60px">
                     <span>Export</span>
                 </a>
+                @endif
                     </div>
                 </div>
                 @if(in_array(9, $permissions) || $admin->type == 1)

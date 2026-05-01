@@ -267,11 +267,25 @@ Route::group(['prefix'=>'admin'], function(){
      Route::get('/refund-managemnet', [AuthController::class, 'refundManagement'])->name('admin.refundManagement');
 
      //m14
+     //dashboard export
      Route::get('/export_dashboard_data', [DashboardController::class, 'export_dashboard_data'])->name('admin.export_dashboard_data');
+     //user export
      Route::get('/export_user_data', [UserController::class, 'export_user_data'])->name('admin.export_user_data');
+     //seller export
      Route::get('/export_new_seller_data', [SellerController::class, 'export_new_seller_data'])->name('admin.export_new_seller_data');
      Route::get('/export_approved_seller_data', [SellerController::class, 'export_approved_seller_data'])->name('admin.export_approved_seller_data');
      Route::get('/export_rejected_seller_data', [SellerController::class, 'export_rejected_seller_data'])->name('admin.export_rejected_seller_data');
+     //affiliate export
+     Route::get('/export_new_affiliate_data', [AffiliateUserController::class, 'export_new_affiliate_data'])->name('admin.export_new_affiliate_data');
+     Route::get('/export_approved_affiliate_data', [AffiliateUserController::class, 'export_approved_affiliate_data'])->name('admin.export_approved_affiliate_data');
+     Route::get('/export_rejected_affiliate_data', [AffiliateUserController::class, 'export_rejected_affiliate_data'])->name('admin.export_rejected_affiliate_data');
+     //driver export
+     Route::get('/export_driver_data', [DeliveryBoyController::class, 'export_driver_data'])->name('admin.export_driver_data');
+     //order export
+     Route::get('/export_active_orders_data', [OrderController::class, 'export_active_orders_data'])->name('admin.export_active_orders_data');
+     Route::get('/export_return_exchange_orders_data', [OrderController::class, 'export_return_exchange_orders_data'])->name('admin.export_return_exchange_orders_data');
+     Route::get('/export_completed_orders_data', [OrderController::class, 'export_completed_orders_data'])->name('admin.export_completed_orders_data');
+     Route::get('/export_cancelled_orders_data', [OrderController::class, 'export_cancelled_orders_data'])->name('admin.export_cancelled_orders_data');
             
         
 

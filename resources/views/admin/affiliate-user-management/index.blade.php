@@ -85,7 +85,7 @@
                                     <span>Reset</span>
                                 </a>
                         
-                                <a class="btn btn-dark customBtn mt-2">
+                                <a href="{{ route('admin.export_new_affiliate_data', request()->all()) }}" class="btn btn-dark customBtn mt-2">
                                     <span>Export</span>
                                 </a>
                             </div>
@@ -244,7 +244,7 @@
                                            >
                                             <span>Reset</span>
                                         </a>
-                                        <a class="btn btn-dark customBtn mt-2" >
+                                        <a href="{{ route('admin.export_approved_affiliate_data', request()->all()) }}" class="btn btn-dark customBtn mt-2" >
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -407,7 +407,7 @@
                                             >
                                             <span>Reset</span>
                                         </a>
-                                          <a class="btn btn-dark customBtn mt-2">
+                                          <a href="{{ route('admin.export_rejected_affiliate_data', request()->all()) }}" class="btn btn-dark customBtn mt-2">
                                             <span>Export</span>
                                         </a>
                                     </div>

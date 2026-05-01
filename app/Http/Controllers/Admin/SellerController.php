@@ -322,23 +322,19 @@ class SellerController extends Controller
 
             foreach ($sellers as $index => $seller) {
 
-                // Country
                 $country = 'N/A';
                 if (!empty($seller['store_info']['country'])) {
                     $countryModel = \App\Models\Country::find($seller['store_info']['country']);
                     $country = $countryModel->name ?? 'N/A';
                 }
 
-                // Date safe
                 $mobile = '="' . ($seller['country_code'] . $seller['mobile']) . '"';
 
                 $joiningDate = '="' . \Carbon\Carbon::parse($seller['created_at'])->format('d-m-Y') . '"';
 
-                // Bio safe (fix row breaking issue)
                 $bio = $seller['store_info']['bio'] ?? 'N/A';
                 $bio = str_replace(["\r", "\n"], ' ', $bio);
 
-                // Reject reason safe
                 $rejectReason = $seller['reject_reason'] ?? 'N/A';
 
                 fputcsv($file, [

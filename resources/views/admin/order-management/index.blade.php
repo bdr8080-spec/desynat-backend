@@ -111,10 +111,12 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
+                        @if(in_array(15, $permissions) || $admin->type == 1)
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                            <a href="{{ route('admin.export_active_orders_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                 <span>Export</span></a>
                         </div>
+                        @endif
                     </div>
                 </div>
                 </form>
@@ -150,13 +152,15 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $data['id'] }}</td>
+
                                 <td>
                                     @php
-                                        $firstOrderDetail = $data['product_details']->first();
+                                        $product = $data['product_details'] ?? null;
+                                        $seller = $product->seller_details ?? null;
                                     @endphp
-                                    @if($firstOrderDetail && $firstOrderDetail['seller_details'])
-                                        {{ $firstOrderDetail['seller_details']['first_name'] }}
-                                        {{ $firstOrderDetail['seller_details']['last_name'] }}
+
+                                    @if($seller)
+                                        {{ $seller->first_name ?? '' }} {{ $seller->last_name ?? '' }}
                                     @else
                                         Seller not found
                                     @endif
@@ -305,10 +309,12 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
+                        @if(in_array(15, $permissions) || $admin->type == 1)
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                            <a href="{{ route('admin.export_return_exchange_orders_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                 <span>Export</span></a>
                         </div>
+                        @endif
                     </div>
                 </div>
                 </form>
@@ -349,11 +355,12 @@
                                 <td>#{{ $data['id'] }}</td>
                                 <td>
                                     @php
-                                        $firstOrderDetail = $data['product_details']->first();
+                                        $product = $data['product_details'] ?? null;
+                                        $seller = $product->seller_details ?? null;
                                     @endphp
-                                    @if($firstOrderDetail && $firstOrderDetail['seller_details'])
-                                        {{ $firstOrderDetail['seller_details']['first_name'] }}
-                                        {{ $firstOrderDetail['seller_details']['last_name'] }}
+
+                                    @if($seller)
+                                        {{ $seller->first_name ?? '' }} {{ $seller->last_name ?? '' }}
                                     @else
                                         Seller not found
                                     @endif
@@ -535,10 +542,12 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
+                        @if(in_array(15, $permissions) || $admin->type == 1)
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                            <a href="{{ route('admin.export_completed_orders_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                 <span>Export</span></a>
                         </div>
+                        @endif
                     </div>
                 </div>
                 </form>
@@ -570,11 +579,12 @@
                                 <td>#{{ $data['id'] }}</td>
                                 <td>
                                     @php
-                                        $firstOrderDetail = $data['product_details']->first();
+                                        $product = $data['product_details'] ?? null;
+                                        $seller = $product->seller_details ?? null;
                                     @endphp
-                                    @if($firstOrderDetail && $firstOrderDetail['seller_details'])
-                                        {{ $firstOrderDetail['seller_details']['first_name'] }}
-                                        {{ $firstOrderDetail['seller_details']['last_name'] }}
+
+                                    @if($seller)
+                                        {{ $seller->first_name ?? '' }} {{ $seller->last_name ?? '' }}
                                     @else
                                         Seller not found
                                     @endif
@@ -698,10 +708,12 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
+                        @if(in_array(15, $permissions) || $admin->type == 1)
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-50" style="margin-top: 63px">
+                            <a href="{{ route('admin.export_cancelled_orders_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                 <span>Export</span></a>
                         </div>
+                        @endif
                     </div>
                 </div>
                 </form>
@@ -732,11 +744,12 @@
                                 <td>#{{ $data['id'] }}</td>
                                 <td>
                                     @php
-                                        $firstOrderDetail = $data['product_details']->first();
+                                        $product = $data['product_details'] ?? null;
+                                        $seller = $product->seller_details ?? null;
                                     @endphp
-                                    @if($firstOrderDetail && $firstOrderDetail['seller_details'])
-                                        {{ $firstOrderDetail['seller_details']['first_name'] }}
-                                        {{ $firstOrderDetail['seller_details']['last_name'] }}
+
+                                    @if($seller)
+                                        {{ $seller->first_name ?? '' }} {{ $seller->last_name ?? '' }}
                                     @else
                                         Seller not found
                                     @endif

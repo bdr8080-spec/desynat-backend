@@ -660,6 +660,83 @@ class DeliveryBoyController extends Controller
         return response()->json(["success"=>true,"message"=>"Delivery Boy updated successfully."]);
     }
 
+    public function export_driver_data(Request $request)
+    {
+        $response = $this->DeliveryBoyManagementService->getDeliveryBoys($request);
+
+        $data = $response['data'] ?? collect();
+
+        // Handle paginator or collection
+        $users = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
+            ? collect($data->items())
+            : collect($data);
+
+        $fileName = 'delivery_boys_' . now()->format('Y_m_d_H_i_s') . '.csv';
+
+        $headers = [
+            "Content-Type" => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+        ];
+
+        return response()->stream(function () use ($users) {
+
+            $file = fopen('php://output', 'w');
+
+            // Excel UTF-8 fix
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            // Headers
+            fputcsv($file, [
+                'Sr No',
+                'Joining Date',
+                'Image URL',
+                'Name',
+                'Mobile Number',
+                'Email',
+                'Zone',
+                'Address',
+                'Vechicle Name',
+                'Registration Number',
+                'Total Order Delivered',
+            ]);
+
+            foreach ($users as $index => $user) {
+
+
+                $mobile = '="' . ($user['country_code'] . $user['mobile']) . '"';
+
+                $joiningDate = '="' . \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') . '"';
+
+                $address = 
+                    ($user['address_line1'] ?? '') . ' ' .
+                    ($user['address_line2'] ?? '') . ' ' .
+                    ($user['city'] ?? '') . ' ' .
+                    ($user['state'] ?? '');
+
+                $address = str_replace(["\r", "\n"], ' ', $address);
+                $address = trim($address);
+
+
+                fputcsv($file, [
+                    $index + 1,
+                    $joiningDate,
+                    $user['profile_pic'] ?? 'N/A',   
+                    $user['full_name_english'] ?? 'N/A',
+                    $mobile,
+                    $user['email'] ?? 'N/A',
+                    $user['zone_info']['name_english'] ?? 'N/A',
+                    $address,
+                    $user['vehicle_name'] ?? 'N/A',
+                    $user['vehicle_reg_no'] ?? 'N/A',
+                    $user['Total_order_delivered'] ?? '0'
+                ]);
+            }
+
+            fclose($file);
+
+        }, 200, $headers);
+    }
+
 
 
 
