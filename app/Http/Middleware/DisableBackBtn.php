@@ -43,14 +43,28 @@ class DisableBackBtn
 
 //                     }
 
+// public function handle(Request $request, Closure $next): Response
+// {
+//     $response = $next($request);
+
+//     // Disable caching
+//     $response->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+//              ->header('Pragma', 'no-cache')
+//              ->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+
+//     return $response;
+// }
+
 public function handle(Request $request, Closure $next): Response
 {
     $response = $next($request);
 
-    // Disable caching
-    $response->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-             ->header('Pragma', 'no-cache')
-             ->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+    // Only modify headers if method exists
+    if (method_exists($response, 'header')) {
+        $response->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+                 ->header('Pragma', 'no-cache')
+                 ->header('Expires', 'Fri, 01 Jan 1990 00:00:00 GMT');
+    }
 
     return $response;
 }

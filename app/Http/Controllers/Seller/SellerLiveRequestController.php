@@ -300,6 +300,92 @@ class SellerLiveRequestController extends Controller
         
     }
 
+    public function export_live_request_data(Request $request)
+    {
+        $seller_id = sellerAndStaffId();
+
+        $request_data = (object) [
+            'seller_id' => $seller_id,
+            'from' => $request->from ?? null,
+            'to' => $request->to ?? null,
+            'filter' => $request->filter ?? null,
+        ];
+
+        $response = $this->SellerLiveRequestService->getLiveRequests($request_data);
+
+        $paginator = $response['data'] ?? null;
+
+        $records = ($paginator instanceof \Illuminate\Pagination\LengthAwarePaginator)
+            ? collect($paginator->items())
+            : collect($paginator);
+
+        $fileName = 'live_requests_seller_' . now()->format('Y_m_d_H_i_s') . '.csv';
+
+        $headers = [
+            "Content-Type" => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+        ];
+
+        return response()->stream(function () use ($records) {
+
+            $file = fopen('php://output', 'w');
+
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            fputcsv($file, [
+                'S.No',
+                'Request ID',
+                'Requested On',
+                'Live Request',
+                'Status'
+            ]);
+
+            foreach ($records as $index => $req) {
+
+                $timeslot = $req->timeslot_details ?? [];
+
+                $createdAt = isset($req->created_at)
+                    ? \Carbon\Carbon::parse($req->created_at)->format('Y/m/d \a\t h:i A')
+                    : '-';
+
+                $liveRequest = (!empty($timeslot['date']) && !empty($timeslot['from']))
+                    ? str_replace('-', '/', $timeslot['date']) . ' at ' . $timeslot['from']
+                    : '-';
+
+                $now = \Carbon\Carbon::now();
+
+                $timeslotDateTime = null;
+
+                if (!empty($timeslot['date']) && !empty($timeslot['to'])) {
+                    $timeslotDateTime = \Carbon\Carbon::parse($timeslot['date'] . ' ' . $timeslot['to']);
+                }
+
+                if (($req->admin_verify ?? null) == '0') {
+                    $status = 'Pending';
+                } elseif (($req->admin_verify ?? null) == '2') {
+                    $status = 'Rejected';
+                } elseif (($req->admin_verify ?? null) == '3') {
+                    $status = 'Cancelled';
+                } elseif ($timeslotDateTime && $timeslotDateTime->lessThanOrEqualTo($now)) {
+                    $status = 'Completed';
+                } else {
+                    $status = 'Confirmed';
+                }
+
+                fputcsv($file, [
+                    $index + 1,
+                    '#' . ($req->order_id ?? '-'),
+                    $createdAt,
+                    $liveRequest,
+                    $status
+                ]);
+            }
+
+            fclose($file);
+
+        }, 200, $headers);
+    }
+
     
     
 

@@ -22,6 +22,7 @@ use App\Services\TicketService;
 use App\Services\CMSManagementService;
 use App\Services\SellerOrderService;
 use App\Services\SellerNotificationService;
+use App\Services\SellerDashboardService;
 
 
 use App\Helpers\ApiResponse;
@@ -32,7 +33,7 @@ use App\Http\Controllers\CommonController;
 class WebSellerDashboard extends Controller
 {
 
-    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService, CMSManagementService $CMSManagementService, SellerOrderService $SellerOrderService, SellerNotificationService $SellerNotificationService){
+    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService, CMSManagementService $CMSManagementService, SellerOrderService $SellerOrderService, SellerNotificationService $SellerNotificationService, SellerDashboardService $SellerDashboardService){
         $this->SellerAuthService=$SellerAuthService;
        $this->SellerProductService=$SellerProductService;
        $this->StoryManagementService=$StoryManagementService;
@@ -40,6 +41,7 @@ class WebSellerDashboard extends Controller
        $this->CMSManagementService = $CMSManagementService;
        $this->SellerOrderService = $SellerOrderService;
        $this->SellerNotificationService = $SellerNotificationService;
+       $this->SellerDashboardService = $SellerDashboardService;
 
     }
 
@@ -89,7 +91,18 @@ class WebSellerDashboard extends Controller
         
     }
 
-          return view('dealer.index',compact('seller_details'));
+       $request_data1 = (object)[
+                'seller_id'=>$seller_details->id,
+                'from_date' => $request->from_date??null,
+                'to_date' => $request->to_date??null,
+                'filter' => $request->filter??null,
+                'from_date_analytics' => $request->from_date_analytics??null,
+                'to_date_analytics' => $request->to_date_analytics??null,
+            ];
+  
+          $data= $this->SellerDashboardService->GetDashboardData($request_data1)['data'];
+
+          return view('dealer.index',compact('seller_details','data'));
       }
 
 
@@ -1353,6 +1366,87 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
             return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
         }
 
+    }
+
+
+    public function export_refund_management_data(Request $request)
+    {
+        $seller_id = sellerAndStaffId();
+
+        $request_data = (object) [
+            'seller_id' => $seller_id,
+            'limit' => null,
+            'search' => $request->search ?? null,
+            'country_name' => $request->country_name ?? null,
+            'from_date' => $request->from_date ?? null,
+            'to_date' => $request->to_date ?? null,
+        ];
+
+        $response = $this->SellerOrderService->GetRefundOrders($request_data);
+
+        $data = $response['data'] ?? [];
+
+        $orders = $data['orders'] ?? collect();
+
+        $refunds = ($orders instanceof \Illuminate\Pagination\LengthAwarePaginator)
+            ? collect($orders->items())
+            : collect($orders);
+
+        $fileName = 'refund_orders_seller_' . now()->format('Y_m_d_H_i_s') . '.csv';
+
+        $headers = [
+            "Content-Type" => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+        ];
+
+        return response()->stream(function () use ($refunds) {
+
+            $file = fopen('php://output', 'w');
+
+            // UTF-8 fix for Excel
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            // CSV headers
+            fputcsv($file, [
+                'S.No',
+                'Refund ID',
+                'Transaction ID',
+                'Order Date & Time',
+                'Customer Name',
+                'Order ID',
+                'Total Amount(KD)',
+                'Status'
+            ]);
+
+            foreach ($refunds as $index => $item) {
+
+                $orderDate = $item->updated_at
+                    ? \Carbon\Carbon::parse($item->updated_at)->format('d/m/y \a\t h:iA')
+                    : '-';
+
+                $customerName = $item->user_details->full_name ?? '-';
+
+                $transactionId = $item->order->transaction_id ?? 'N/A';
+
+                $orderId = $item->order->order_id ?? '-';
+
+                $status = 'Pending'; // change if dynamic status exists
+
+                fputcsv($file, [
+                    $index + 1,
+                    $orderId,
+                    $transactionId,
+                    $orderDate,
+                    $customerName,
+                    $item->id ?? '-',
+                    ($item->amount ?? 0),
+                    $status
+                ]);
+            }
+
+            fclose($file);
+
+        }, 200, $headers);
     }
       
 

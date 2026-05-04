@@ -190,6 +190,7 @@ Route::group(['prefix' => 'seller'], function () {
     Route::post('cancelLiveRequest', [SellerLiveRequestController::class, 'cancelLiveRequest'])->name('seller.cancelLiveRequest');
     Route::post('getTimeslots', [SellerLiveRequestController::class, 'getTimeslots'])->name('seller.getTimeslots');
     Route::post('sendLiveRequest', [SellerLiveRequestController::class, 'sendLiveRequest'])->name('seller.sendLiveRequest');
+    Route::get('export_live_request_data', [SellerLiveRequestController::class, 'export_live_request_data'])->name('seller.export_live_request_data');
 
     //M10
     Route::post('mark_notification_as_read', [NotificationController::class, 'mark_notification_as_read'])->name('seller.mark_notification_as_read');
@@ -233,6 +234,7 @@ Route::group(['prefix' => 'seller'], function () {
     Route::match(['get', 'post'], '/delete-staff',[WebSellerStuffManagementController::class,'deleteStaff'])->name('dealer.deleteStaff');
 
     Route::get('refund-management', [WebSellerDashboard::class, 'refundManagement'])->name('seller.refundManagement');
+    Route::get('export_refund_management_data', [WebSellerDashboard::class, 'export_refund_management_data'])->name('seller.export_refund_management_data');
  
     Route::match(['get', 'post'], '/edit-staff/{id}',[WebSellerStuffManagementController::class,'editStaff'])->name('dealer.editStaff');
 

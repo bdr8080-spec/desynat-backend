@@ -3,7 +3,7 @@
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Refund Management</div>
-        <a href="#" class="btn btn-success">Export</a>
+        <a href="{{ route('seller.export_refund_management_data', request()->all()) }}" class="btn btn-success">Export</a>
     </div>
 
     <div class="datatable-wapper mt-5">

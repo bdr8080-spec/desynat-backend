@@ -5,7 +5,7 @@
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Live Coverage Requests</div>
         <a href="{{ route('seller.liveRequests') }}" class="btn btn-success exportbtn">Reset</a>
-        <!-- <a href="#" class="btn btn-success exportbtn">Export</a> -->
+        <a href="{{ route('seller.export_live_request_data', request()->all()) }}"" class="btn btn-success exportbtn">Export</a>
 
     </div>
     <div class="datatable-wapper mt-4">
