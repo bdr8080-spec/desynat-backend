@@ -85,7 +85,16 @@ class UserGiftCardService
                 ]);
 
                 // send whatsapp msg
-                // $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
+                // dd(
+                //     config('services.twilio.sid'),
+                //     config('services.twilio.token'),
+                //     config('services.twilio.from')
+                // );
+
+                // $twilio = new Client(
+                //     config('services.twilio.sid'),
+                //     config('services.twilio.token')
+                // );
 
                 // $receiverNumber = 'whatsapp:' . $request->country_code . $request->mobile;
 
@@ -99,7 +108,7 @@ class UserGiftCardService
                 // $message = $twilio->messages->create(
                 //     $receiverNumber,
                 //     [
-                //         "from" => env('TWILIO_PHONE'),
+                //         "from" => config('services.twilio.from'),
                 //         "body" => $messageBody
                 //     ]
                 // );
