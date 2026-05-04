@@ -5,6 +5,13 @@
         <div class="title24">Dashboard
         </div>
     </div>
+    <div class=" col-lg-3">
+        <div class="d-flex  gap-3 mt-5">
+            <a href="{{route('affiliate.affiliateDashboard')}}" class="btn btn-success">
+                <span>Reset</span>
+            </a>
+        </div>
+    </div>
 
 
 

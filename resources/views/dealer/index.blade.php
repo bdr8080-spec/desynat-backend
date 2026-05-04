@@ -72,6 +72,13 @@ $can_action=$menu_permission['can_action'];
         <div class="title24">Dashboard
         </div>
     </div>
+    <div class=" col-lg-3">
+        <div class="d-flex  gap-3 mt-5">
+            <a href="{{route('seller.dashboard')}}" class="btn btn-success">
+                <span>Reset</span>
+            </a>
+        </div>
+    </div>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
