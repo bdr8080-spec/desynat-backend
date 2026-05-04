@@ -822,7 +822,8 @@ if ($validator->fails()) {
     'user_id'=>$affilatedUser->id,
     'from_date'=>$request->from_date??null,
     'to_date'=>$request->to_date??null,
-    'filter_type'=>$request->filter_type??null
+    // 'filter_type'=>$request->filter_type??null,
+    'filter'=>$request->filter??null
     ];
     //dd($request_data);
 
