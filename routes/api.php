@@ -340,7 +340,7 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
 
   //m14
   Route::get('/affiliate_dashboard_data', [UserAffilatedControlller::class,'affiliate_dashboard_data']);
-  Route::post('/delete_account', [UserAffilatedControlller::class,'delete_account']);
+  Route::post('/delete_affiliate_account', [UserAffilatedControlller::class,'delete_affiliate_account']);
 
 
 

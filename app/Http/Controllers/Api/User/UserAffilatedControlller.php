@@ -1057,7 +1057,7 @@ public function get_raised_tickets(Request $request){
   
     }
 
-    public function delete_account(Request $request){
+    public function delete_affiliate_account(Request $request){
 
 
          $user_id= $request->user()->id;
