@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class AffilatedUser extends Authenticatable
 {
-     use HasFactory, Notifiable, HasApiTokens;
+     use HasFactory, Notifiable, HasApiTokens, SoftDeletes;
 
      protected $guarded=[];
+     protected $dates = ['deleted_at'];
 
      public function address_details(){
       return $this->hasOne(AffilatedUserAddress::class,'affiliate_id','id');

@@ -1057,6 +1057,25 @@ public function get_raised_tickets(Request $request){
   
     }
 
+    public function delete_account(Request $request){
+
+
+         $user_id= $request->user()->id;
+
+         $request_data = (object)[
+                'user_id' => $user_id,
+            ];
+  
+          $data= $this->UserAffilatedAuthService->DeleteAccount($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
 
 
 
