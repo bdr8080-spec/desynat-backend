@@ -21,12 +21,13 @@ use App\Services\NotificationManagementService;
 use App\Services\UserAffiliatedProductService;
 use App\Services\TicketService;
 use App\Services\CMSManagementService;
+use App\Services\AffiliateDashboardService;
 use App\Http\Controllers\CommonController;
 
 class UserAffilatedController extends Controller
 {
 
-    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, NotificationManagementService $NotificationManagementService, UserAffiliatedProductService $UserAffiliatedProductService, TicketService $TicketService, CMSManagementService $CMSManagementService)
+    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, NotificationManagementService $NotificationManagementService, UserAffiliatedProductService $UserAffiliatedProductService, TicketService $TicketService, CMSManagementService $CMSManagementService, AffiliateDashboardService $AffiliateDashboardService)
     {
         $this->UserAffilatedAuthService = $UserAffilatedAuthService;
         $this->UserOrderService = $UserOrderService;
@@ -34,6 +35,7 @@ class UserAffilatedController extends Controller
         $this->UserAffiliatedProductService = $UserAffiliatedProductService;
         $this->TicketService = $TicketService;
         $this->CMSManagementService = $CMSManagementService;
+        $this->AffiliateDashboardService = $AffiliateDashboardService;
     }
 
 
@@ -824,7 +826,7 @@ if ($validator->fails()) {
     ];
     //dd($request_data);
 
-    $dashboardData= $this->UserAffiliatedProductService->getAffiliateDashboardData($request_data)['data'];
+    $dashboardData= $this->AffiliateDashboardService->GetDashboardData($request_data)['data'];
     //dd($dashboardData);
     if ($request->ajax()) {
         return view('affiliatedUser.dashboard_data', compact('dashboardData'))->render();

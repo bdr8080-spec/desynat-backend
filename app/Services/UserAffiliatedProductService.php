@@ -1088,9 +1088,16 @@ return [
             $totalOrders = (clone $ordersQuery)->count();
 
             // Revenue & earning
-            $orderStats = (clone $ordersQuery)->selectRaw(
-                'SUM(amount) as total_revenue, SUM(affiliate_commission) as total_earning'
-            )->first();
+            // $orderStats = (clone $ordersQuery)->where('payment_status', '1')->selectRaw(
+            //     'SUM(amount) as total_revenue, SUM(affiliate_commission) as total_earning'
+            // )->first();
+            $orderStats = (clone $ordersQuery)
+                ->where('payment_status', '1')
+                ->selectRaw(
+                    'SUM(amount + tax + shipping_fees) as total_revenue,
+                    SUM(affiliate_commission) as total_earning'
+                )
+                ->first();
 
             // Status counts
             $statusCounts = (clone $ordersQuery)->selectRaw("

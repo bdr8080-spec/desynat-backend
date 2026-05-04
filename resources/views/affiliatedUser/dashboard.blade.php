@@ -11,6 +11,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="bg-header mt-3 visitor-pnl">
+                <form method="GET" action="{{ route('affiliate.affiliateDashboard') }}" id="filterForm">
                 <div class="group-radio-btn d-flex gap-4 justify-content-between flex-wrap">
 
                     <!-- FILTER RADIO -->
@@ -18,7 +19,12 @@
 
                         <div class="check_radio">
                             <label class="radio-group">
-                                <input type="radio" name="filter_type" value="1">
+                                <input class="form-check-input"
+                                    type="radio"
+                                    name="filter"
+                                    value="1"
+                                    {{ request()->filter == 1 ? 'checked' : '' }}
+                                    onchange="document.getElementById('filterForm').submit();">
                                 <span class="custom-radio"></span>
                                 <span class="radio-label">Today</span>
                             </label>
@@ -26,7 +32,12 @@
 
                         <div class="check_radio">
                             <label class="radio-group">
-                                <input type="radio" name="filter_type" value="2">
+                                <input class="form-check-input"
+                                    type="radio"
+                                    name="filter"
+                                    value="2"
+                                    {{ request()->filter == 2 ? 'checked' : '' }}
+                                    onchange="document.getElementById('filterForm').submit();">
                                 <span class="custom-radio"></span>
                                 <span class="radio-label">This Week</span>
                             </label>
@@ -34,7 +45,12 @@
 
                         <div class="check_radio">
                             <label class="radio-group">
-                                <input type="radio" name="filter_type" value="3">
+                                <input class="form-check-input"
+                                    type="radio"
+                                    name="filter"
+                                    value="3"
+                                    {{ request()->filter == 3 ? 'checked' : '' }}
+                                    onchange="document.getElementById('filterForm').submit();">
                                 <span class="custom-radio"></span>
                                 <span class="radio-label">This Month</span>
                             </label>
@@ -45,19 +61,24 @@
                     <!-- DATE FILTER -->
                     <div class="show-date d-flex gap-2 flex-wrap">
                         <div class="date-form-pnl">
-                            <input type="date" id="from_date" class="form-control">
+                            <input type="date" id="from_date" name="from_date" class="form-control"
+                            value="{{ request()->from_date }}"
+                            onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                         </div>
                         <div class="date-form-pnl">
-                            <input type="date" id="to_date" class="form-control">
+                            <input type="date" id="to_date" name="to_date" class="form-control"
+                            value="{{ request()->to_date }}"
+                            onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                         </div>
                     </div>
 
                 </div>
+                </form>
             </div>
         </div>
     </div>
 
-<!-- <div id="dashboard-data">
+<div id="dashboard-data">
     <div class="row">
         <div class="col-lg-6 col-xxl-6">
             <div class="py-4">
@@ -95,7 +116,7 @@
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-4">
                     <div class="dash-content">
                         <h5>Ongoing </h5>
-                        <div class="title30">{{$dashboardData['total_ongoing']}}</div>
+                        <div class="title30">{{$dashboardData['total_ongoing_orders']}}</div>
                     </div>
                     <div class="dash-circle">
                         <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
@@ -106,7 +127,7 @@
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-3">
                     <div class="dash-content">
                         <h5>Completed</h5>
-                        <div class="title30">{{$dashboardData['total_completed']}}</div>
+                        <div class="title30">{{$dashboardData['total_completed_orders']}}</div>
                     </div>
                     <div class="dash-circle">
                         <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
@@ -117,7 +138,7 @@
                 <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
                         <h5>Returned </h5>
-                        <div class="title30">{{$dashboardData['total_returned']}}</div>
+                        <div class="title30">{{$dashboardData['total_returned_orders']}}</div>
                     </div>
                     <div class="dash-circle">
                         <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
@@ -128,7 +149,7 @@
                 <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
                         <h5 style="color:#CD0E26;">Cancelled</h5>
-                        <div class="title30">{{$dashboardData['total_cancelled']}}</div>
+                        <div class="title30">{{$dashboardData['total_cancelled_orders']}}</div>
                     </div>
                     <div class="dash-circle">
                         <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
@@ -137,9 +158,6 @@
             </div>
         </div>
     </div>
-</div> -->
-<div id="dashboard-data">
-    @include('affiliatedUser.dashboard_data')
 </div>
 
 
@@ -170,7 +188,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
+<!-- <script>
 $(document).ready(function () {
 
     function loadDashboardData() {
@@ -209,9 +227,9 @@ $(document).ready(function () {
     });
 
 });
-</script>
+</script> -->
 
-<script>
+<!-- <script>
 function updateToDate() {
     const fromDate = document.getElementById('from_date').value;
     const toDateInput = document.getElementById('to_date');
@@ -231,6 +249,22 @@ function updateToDate() {
 document.getElementById('from_date').addEventListener('change', updateToDate);
 
 document.addEventListener('DOMContentLoaded', updateToDate);
+</script> -->
+
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('from_date').value;
+        const toDateInput = document.getElementById('to_date');
+        if (fromDate) {
+            toDateInput.setAttribute('min', fromDate);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate();
+    });
+
 </script>
 
 <!-- tidio chatbot -->
