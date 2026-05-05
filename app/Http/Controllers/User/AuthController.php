@@ -20,15 +20,17 @@ use Session;
 use App\Services\UserDashboardService;
 use App\Helpers\ApiResponse;
 use App\Services\UserAuthService;
+use App\Services\TwilioService;
 
 
 
 class AuthController extends Controller
 {
-     public function __construct(UserDashboardService $UserDashboardService, UserAuthService $UserAuthService)
+     public function __construct(UserDashboardService $UserDashboardService, UserAuthService $UserAuthService, TwilioService $TwilioService)
     {
         $this->UserDashboardService = $UserDashboardService;
         $this->UserAuthService = $UserAuthService;
+        $this->TwilioService=$TwilioService;
     }
 
 
@@ -127,6 +129,9 @@ class AuthController extends Controller
                 $id  = Crypt::encryptString($data->id);
 
                 Session::put('verify-password', '1');
+                $phone = $request->country_code . $request->mobile;
+                $message = "Your verification Code Is $otp";
+                $this->TwilioService->sendOtp($phone, $message);
                 return response()->json([
                                 'status'=>true,
                                 'message'=>'OTP sent to your mobile number succesfully ',
@@ -358,6 +363,9 @@ class AuthController extends Controller
                     $user->save();
                     $id = Crypt::encryptString($user->id);
                     Session::put('verify-password', '1');
+                    $phone = $user->country_code . $user->mobile;
+                    $message = "Your verification Code Is $otp";
+                    $this->TwilioService->sendOtp($phone, $message);
                     return response()->json([
                         'status' => true,
                         'message' => 'OTP sent successfully',
@@ -503,6 +511,9 @@ class AuthController extends Controller
 
                     $id = Crypt::encryptString($user->id);
                     Session::put('verify-password', '1');
+                    $phone = $user->country_code . $user->mobile;
+                    $message = "Your verification Code Is $otp";
+                    $this->TwilioService->sendOtp($phone, $message);
                     return response()->json([
                         'status' => true,
                         'message' => 'OTP sent successfully',
@@ -563,6 +574,9 @@ class AuthController extends Controller
             $otp= config('services.otp');
             $user->otp = $otp;
             $user->save();
+            $phone = $user->country_code . $user->mobile;
+            $message = "Your verification Code Is $otp";
+            $this->TwilioService->sendOtp($phone, $message);
 
        
             return response()->json([
