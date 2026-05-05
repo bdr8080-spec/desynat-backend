@@ -274,6 +274,11 @@ Route::match(['get', 'post'], '/chats', function () {
 
 })->name('dealer.chats');
 
+Route::match(['get', 'post'], '/change-password', function () {
+    return view('dealer.change-password.index');
+
+})->name('dealer.change-password');
+
 
 // Route::match(['get', 'post'], '/add-products', function () {
 //     return view('dealer.dealMgt.dealadd');
