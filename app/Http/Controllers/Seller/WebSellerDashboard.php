@@ -1448,6 +1448,25 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
         }, 200, $headers);
     }
+
+    public function delete_account(Request $request){
+
+
+         $seller_id = sellerAndStaffId();
+
+         $request_data = (object)[
+                'user_id'  => $seller_id,
+            ];
+  
+          $data= $this->SellerAuthService->DeleteAccount($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
       
 
       

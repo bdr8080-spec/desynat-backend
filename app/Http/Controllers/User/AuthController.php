@@ -18,14 +18,17 @@ use Auth;
 use Validator;
 use Session;
 use App\Services\UserDashboardService;
+use App\Helpers\ApiResponse;
+use App\Services\UserAuthService;
 
 
 
 class AuthController extends Controller
 {
-     public function __construct(UserDashboardService $UserDashboardService)
+     public function __construct(UserDashboardService $UserDashboardService, UserAuthService $UserAuthService)
     {
         $this->UserDashboardService = $UserDashboardService;
+        $this->UserAuthService = $UserAuthService;
     }
 
 
@@ -651,6 +654,25 @@ class AuthController extends Controller
             'status' => 'success',
             'message' => 'Banner marked as viewed'
         ]);
+    }
+
+    public function delete_account(Request $request){
+
+
+         $user_id = auth()->guard('web')->id();
+
+         $request_data = (object)[
+                'user_id' => $user_id,
+            ];
+  
+          $data= $this->UserAuthService->DeleteAccount($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
     }
 
 }

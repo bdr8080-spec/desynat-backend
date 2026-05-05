@@ -107,6 +107,8 @@ Route::post('/mark_notification_as_read', [UserAffilatedController::class, 'mark
 Route::get('/affiliate/ticket-management', [UserAffilatedController::class, 'ticket_management'])->name('affiliate.ticket_management');
 Route::post('/affiliate/raise_ticket', [UserAffilatedController::class, 'raise_ticket'])->name('affiliate.raise_ticket');
 
+Route::post('/delete_affiliate_account', [UserAffilatedController::class, 'delete_affiliate_account'])->name('affiliate.delete_affiliate_account');
+
 // });
 
 Route::get('affiliate/about-us', [UserAffilatedController::class, 'aboutUs'])->name('affiliate.aboutUs');

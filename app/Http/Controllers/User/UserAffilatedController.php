@@ -1350,6 +1350,26 @@ public function ticket_management(REQUEST $request){
 
     }
 
+    public function delete_affiliate_account(Request $request){
+
+
+          $affilatedUser=Auth::guard('affilated_user')->user();
+            $user = $affilatedUser->id;
+
+         $request_data = (object)[
+                'user_id' => $user,
+            ];
+  
+          $data= $this->UserAffilatedAuthService->DeleteAccount($request_data);
+
+          if(isset($data['status']) && $data['status']=='error' ){
+              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+          }
+  
+          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
 
 
 
