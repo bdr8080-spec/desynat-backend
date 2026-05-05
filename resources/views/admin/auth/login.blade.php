@@ -14,7 +14,7 @@
 
 </head>
 
-<style>
+<!-- <style>
 
         iframe#\:1\.container {
     visibility: hidden !important;
@@ -38,7 +38,7 @@
   body {
     visibility: hidden;
   }
-</style>
+</style> -->
 
 <body>
 
@@ -152,7 +152,7 @@
 
     </div>
 
-    <div id="google_translate_element" style="display:none;"></div>
+    <!-- <div id="google_translate_element" style="display:none;"></div>
 <div id="loaderTrans"
         style="display:none;
         position:fixed;
@@ -169,7 +169,7 @@
         <iframe src="https://lottie.host/embed/7629c0ed-9538-4b83-b7ab-5870d7aae0ab/KLkQkV2bNW.lottie"
                 style="border:none; width:200px; height:200px;">
         </iframe>
-    </div>
+    </div> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{asset('admin/js/bootstrap.bundle.min.js')}}"></script>
     <script>
@@ -327,7 +327,7 @@ $(document).ready(function() {
 </script>
 
 <!-- translator -->
-<script>
+<!-- <script>
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({
         pageLanguage: 'en',
@@ -524,7 +524,7 @@ const observer = new MutationObserver((mutations) => {
 
 observer.observe(document.body, { childList: true, subtree: true });
 
-</script>
+</script> -->
 </body>
 
 </html>

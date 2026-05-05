@@ -19,7 +19,7 @@
     <link href="{{ asset('dealer') }}/assets/custom-file/css/style.css" rel="stylesheet">
 </head>
 
-<style>
+<!-- <style>
 
         iframe#\:1\.container {
     visibility: hidden !important;
@@ -43,7 +43,7 @@
   body {
     visibility: hidden;
   }
-</style>
+</style> -->
 
 <body>
     <div class="login-header">
@@ -257,7 +257,7 @@
         </div>
     </div>
 
-    <div id="google_translate_element" style="display:none;"></div>
+    <!-- <div id="google_translate_element" style="display:none;"></div>
 <div id="loaderTrans"
         style="display:none;
         position:fixed;
@@ -274,7 +274,7 @@
         <iframe src="https://lottie.host/embed/7629c0ed-9538-4b83-b7ab-5870d7aae0ab/KLkQkV2bNW.lottie"
                 style="border:none; width:200px; height:200px;">
         </iframe>
-    </div>
+    </div> -->
 
 
 
@@ -304,7 +304,7 @@
 </script>
 
 <!-- translator -->
-<script>
+<!-- <script>
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({
         pageLanguage: 'en',
@@ -501,6 +501,6 @@ const observer = new MutationObserver((mutations) => {
 
 observer.observe(document.body, { childList: true, subtree: true });
 
-</script>
+</script> -->
 
 </html>

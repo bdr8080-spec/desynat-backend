@@ -3,7 +3,7 @@
 
 @section('content')
 
-   <style>
+   <!-- <style>
 
 
         iframe#\:1\.container {
@@ -28,7 +28,7 @@
   body {
     visibility: hidden;
   }
-</style>
+</style> -->
 <div class="login_contenar">
     <header class="inner-header">
         <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
@@ -111,7 +111,7 @@
     </div>
 </div>
 
-<div id="google_translate_element" style="display:none;"></div>
+<!-- <div id="google_translate_element" style="display:none;"></div>
 <div id="loaderTrans"
         style="display:none;
         position:fixed;
@@ -128,7 +128,7 @@
         <iframe src="https://lottie.host/embed/7629c0ed-9538-4b83-b7ab-5870d7aae0ab/KLkQkV2bNW.lottie"
                 style="border:none; width:200px; height:200px;">
         </iframe>
-    </div>
+    </div> -->
 
 
 <script>
@@ -189,7 +189,7 @@ document.querySelectorAll('.toggle-password').forEach(toggle => {
 </script>
 
 <!-- translator -->
-<script>
+<!-- <script>
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({
         pageLanguage: 'en',
@@ -386,7 +386,7 @@ const observer = new MutationObserver((mutations) => {
 
 observer.observe(document.body, { childList: true, subtree: true });
 
-</script>
+</script> -->
 
 
 @endsection
