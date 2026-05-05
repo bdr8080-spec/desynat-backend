@@ -445,8 +445,10 @@
                                                         @foreach ($item->subCategories as $value)
                                                         <div class="col-lg-3 col-md-4 col-12">
                                                             <div class="clothes_content">
+                                                                <a href="{{ route('user.category_wise_store', $value->category_id) }}">
                                                                 <p>{{$value->name_english}}</p>
-                                                                <ul class="list-unstyled">
+                                                                </a>
+                                                                <!-- <ul class="list-unstyled">
                                                                     <li>
                                                                         <a href="">Shirt</a>
                                                                     </li>
@@ -456,7 +458,7 @@
                                                                     <li>
                                                                         <a href="">Shirt</a>
                                                                     </li>
-                                                                </ul>
+                                                                </ul> -->
                                                             </div>
                                                         </div>
                                                         @endforeach
