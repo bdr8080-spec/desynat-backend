@@ -11,6 +11,7 @@ use App\Models\SellerSubcriptionPlanBuy;
 use Illuminate\Support\Facades\DB;
 
 use Carbon\carbon;
+use App\Services\TwilioService;
 
 
 
@@ -18,6 +19,12 @@ use Hash;
 
 class SellerAuthService
 {
+
+   public function __construct(TwilioService $TwilioService){
+
+        $this->TwilioService=$TwilioService;
+
+    }
 
     function register($request){
 
@@ -43,6 +50,10 @@ class SellerAuthService
         ];
 
        $check=  seller::create($record);
+
+        $phone = $request->country_code . $request->mobile;
+        $message = "Your verification Code Is $otp";
+        $this->TwilioService->sendOtp($phone, $message);
 
         if($check){
             return ['status'=>'success','message'=>"OTP sent succesfully",'data'=>$check];            
@@ -330,7 +341,12 @@ class SellerAuthService
 
                 $get_user_details->update(['otp'=>$otp]);
     
-                $get_user_details->accessToken ='';            
+                $get_user_details->accessToken ='';
+
+                 $phone = $get_user_details->country_code . $get_user_details->mobile;
+                $message = "Your verification Code Is $otp";
+                $this->TwilioService->sendOtp($phone, $message);
+
                 return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
             
               }else{
@@ -372,7 +388,12 @@ class SellerAuthService
 
                 $get_user_details->update(['otp'=>$otp]);
     
-                $get_user_details->accessToken ='';            
+                $get_user_details->accessToken =''; 
+                
+                 $phone = $get_user_details->country_code . $get_user_details->mobile;
+                $message = "Your verification Code Is $otp";
+                $this->TwilioService->sendOtp($phone, $message);
+                
                 return ['status'=>'success','message'=>"Otp Send Successfully",'data'=>$get_user_details];            
             
               }else{

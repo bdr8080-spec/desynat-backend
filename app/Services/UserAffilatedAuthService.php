@@ -17,9 +17,15 @@ use App\Models\{AffilatedUser,AffilatedUserAddress,Bankdetails,AffiliateProduct}
 
 use DB;
 use Auth;
+use App\Services\TwilioService;
 class UserAffilatedAuthService
 {
+ 
+public function __construct(TwilioService $TwilioService){
 
+        $this->TwilioService=$TwilioService;
+
+    }
 
 function RegisterAffilatedUser($request){
 
@@ -88,6 +94,11 @@ if($checkphone){
       $check=  AffilatedUser::UpdateOrCreate($insert_Data);
 
         if($check){
+
+            $phone = $request->country_code . $request->mobile;
+            $message = "Your verification Code Is $otp";
+            $this->TwilioService->sendOtp($phone, $message);
+
             return ['status'=>'success','message'=>"OTP sent succesfully",'data'=>$check];            
         }
 
@@ -295,7 +306,12 @@ try{
 
                 $get_user_details->update(['otp'=>$otp]);
     
-                $get_user_details->affiliated_accessToken ='';            
+                $get_user_details->affiliated_accessToken ='';
+
+                $phone = $get_user_details->country_code . $get_user_details->mobile;
+                $message = "Your verification Code Is $otp";
+                $this->TwilioService->sendOtp($phone, $message);
+
                 return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
             
               }else{
@@ -346,7 +362,12 @@ try{
 
                 $get_user_details->update(['otp'=>$otp]);
     
-                $get_user_details->affiliated_accessToken ='';            
+                $get_user_details->affiliated_accessToken =''; 
+                
+                $phone = $get_user_details->country_code . $get_user_details->mobile;
+                $message = "Your verification Code Is $otp";
+                $this->TwilioService->sendOtp($phone, $message);
+                
                 return ['status'=>'success','message'=>"Otp Send Successfully",'data'=>$get_user_details];            
             
               }else{
