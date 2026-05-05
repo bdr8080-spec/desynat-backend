@@ -5,6 +5,7 @@ use App\Models\DeliveryBoy;
 
 use Carbon\carbon;
 use Illuminate\Support\Facades\DB;
+use App\Services\TwilioService;
 
 
 
@@ -12,6 +13,12 @@ use Hash;
 
 class DeliveryBoyAuthService
 {
+
+    public function __construct(TwilioService $TwilioService){
+
+        $this->TwilioService=$TwilioService;
+
+    }
 
 
     public function loginCheck($request){
@@ -73,7 +80,10 @@ class DeliveryBoyAuthService
 
             $get_user_details->update(['otp'=>$otp]);
 
-            $get_user_details->accessToken ='';            
+            $get_user_details->accessToken ='';    
+            $phone = $get_user_details->country_code . $get_user_details->mobile;
+            $message = "Your verification Code Is $otp";
+            $this->TwilioService->sendOtp($phone, $message);        
             return ['status'=>'success','message'=>"OTP Sent Successfully",'data'=>$get_user_details];            
         
             }else{
@@ -115,7 +125,10 @@ class DeliveryBoyAuthService
 
         $get_user_details->update(['otp'=>$otp]);
 
-        $get_user_details->accessToken ='';            
+        $get_user_details->accessToken ='';    
+        $phone = $get_user_details->country_code . $get_user_details->mobile;
+            $message = "Your verification Code Is $otp";
+            $this->TwilioService->sendOtp($phone, $message);        
         return ['status'=>'success','message'=>"OTP Resent Successfully",'data'=>$get_user_details];            
     
         }else{
