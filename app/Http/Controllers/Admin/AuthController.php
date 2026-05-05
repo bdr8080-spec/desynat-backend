@@ -14,6 +14,8 @@ use App\Services\OrderManagementService;
 use App\Services\CountryService;
 use App\Services\AdminAuthService;
 use App\Http\Controllers\CommonController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdminOtpMail;
  
 class AuthController extends Controller
 {
@@ -144,6 +146,7 @@ class AuthController extends Controller
             $otp= config('services.otp');
             $admin->otp = $otp;
             $admin->save();
+            Mail::to($admin->email)->send(new AdminOtpMail($admin, $otp));
 
             session(['admin_email' => $admin->email]);
 

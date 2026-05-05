@@ -83,7 +83,15 @@ class DeliveryBoyAuthService
             $get_user_details->accessToken ='';    
             $phone = $get_user_details->country_code . $get_user_details->mobile;
             $message = "Your verification Code Is $otp";
-            $this->TwilioService->sendOtp($phone, $message);        
+            if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                    try {
+                        $this->TwilioService->sendOtp($phone, $message);
+                    } catch (\Exception $e) {
+                        // ❌ silently skip (no return, no error)
+                        // Optional: log for debugging
+                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                    }
+                }       
             return ['status'=>'success','message'=>"OTP Sent Successfully",'data'=>$get_user_details];            
         
             }else{
@@ -128,7 +136,15 @@ class DeliveryBoyAuthService
         $get_user_details->accessToken ='';    
         $phone = $get_user_details->country_code . $get_user_details->mobile;
             $message = "Your verification Code Is $otp";
-            $this->TwilioService->sendOtp($phone, $message);        
+            if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                    try {
+                        $this->TwilioService->sendOtp($phone, $message);
+                    } catch (\Exception $e) {
+                        // ❌ silently skip (no return, no error)
+                        // Optional: log for debugging
+                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                    }
+                }       
         return ['status'=>'success','message'=>"OTP Resent Successfully",'data'=>$get_user_details];            
     
         }else{

@@ -147,7 +147,15 @@ class AuthController extends Controller
                 Session::put('verify-password', '1');
                 $phone = $request->country_code . $request->mobile;
                 $message = "Your verification Code Is $otp";
-                $this->TwilioService->sendOtp($phone, $message);
+                if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                    try {
+                        $this->TwilioService->sendOtp($phone, $message);
+                    } catch (\Exception $e) {
+                        // ❌ silently skip (no return, no error)
+                        // Optional: log for debugging
+                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                    }
+                }
                 return response()->json([
                                 'status'=>true,
                                 'message'=>'OTP sent to your mobile number succesfully ',
@@ -381,7 +389,15 @@ class AuthController extends Controller
                     Session::put('verify-password', '1');
                     $phone = $user->country_code . $user->mobile;
                     $message = "Your verification Code Is $otp";
-                    $this->TwilioService->sendOtp($phone, $message);
+                    if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                    try {
+                        $this->TwilioService->sendOtp($phone, $message);
+                    } catch (\Exception $e) {
+                        // ❌ silently skip (no return, no error)
+                        // Optional: log for debugging
+                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                    }
+                }
                     return response()->json([
                         'status' => true,
                         'message' => 'OTP sent successfully',
@@ -529,7 +545,15 @@ class AuthController extends Controller
                     Session::put('verify-password', '1');
                     $phone = $user->country_code . $user->mobile;
                     $message = "Your verification Code Is $otp";
-                    $this->TwilioService->sendOtp($phone, $message);
+                    if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                    try {
+                        $this->TwilioService->sendOtp($phone, $message);
+                    } catch (\Exception $e) {
+                        // ❌ silently skip (no return, no error)
+                        // Optional: log for debugging
+                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                    }
+                }
                     return response()->json([
                         'status' => true,
                         'message' => 'OTP sent successfully',
@@ -592,7 +616,15 @@ class AuthController extends Controller
             $user->save();
             $phone = $user->country_code . $user->mobile;
             $message = "Your verification Code Is $otp";
-            $this->TwilioService->sendOtp($phone, $message);
+            if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                    try {
+                        $this->TwilioService->sendOtp($phone, $message);
+                    } catch (\Exception $e) {
+                        // ❌ silently skip (no return, no error)
+                        // Optional: log for debugging
+                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                    }
+                }
 
        
             return response()->json([

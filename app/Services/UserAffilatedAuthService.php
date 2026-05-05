@@ -97,7 +97,15 @@ if($checkphone){
 
             $phone = $request->country_code . $request->mobile;
             $message = "Your verification Code Is $otp";
-            $this->TwilioService->sendOtp($phone, $message);
+            if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                    try {
+                        $this->TwilioService->sendOtp($phone, $message);
+                    } catch (\Exception $e) {
+                        // ❌ silently skip (no return, no error)
+                        // Optional: log for debugging
+                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                    }
+                }
 
             return ['status'=>'success','message'=>"OTP sent succesfully",'data'=>$check];            
         }
@@ -310,7 +318,15 @@ try{
 
                 $phone = $get_user_details->country_code . $get_user_details->mobile;
                 $message = "Your verification Code Is $otp";
-                $this->TwilioService->sendOtp($phone, $message);
+                if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                    try {
+                        $this->TwilioService->sendOtp($phone, $message);
+                    } catch (\Exception $e) {
+                        // ❌ silently skip (no return, no error)
+                        // Optional: log for debugging
+                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                    }
+                }
 
                 return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
             
@@ -366,7 +382,15 @@ try{
                 
                 $phone = $get_user_details->country_code . $get_user_details->mobile;
                 $message = "Your verification Code Is $otp";
-                $this->TwilioService->sendOtp($phone, $message);
+                if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                    try {
+                        $this->TwilioService->sendOtp($phone, $message);
+                    } catch (\Exception $e) {
+                        // ❌ silently skip (no return, no error)
+                        // Optional: log for debugging
+                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                    }
+                }
                 
                 return ['status'=>'success','message'=>"Otp Send Successfully",'data'=>$get_user_details];            
             

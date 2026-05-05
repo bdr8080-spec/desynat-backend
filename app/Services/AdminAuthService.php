@@ -10,6 +10,7 @@ use Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SubAdminCredentialsMail;
 use App\Mail\SubAdminWelcomeMail;
+use App\Mail\AdminOtpMail;
 
 class AdminAuthService
 {
@@ -70,6 +71,7 @@ class AdminAuthService
             $otp= config('services.otp');
 
             $get_user_details->update(['otp'=>$otp]);
+            Mail::to($get_user_details->email)->send(new AdminOtpMail($get_user_details, $otp));
 
             $get_user_details->accessToken ='';            
             return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
