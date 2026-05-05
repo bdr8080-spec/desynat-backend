@@ -40,6 +40,11 @@
     </div>
 
 
+    <div class="cart-panel mt-5 text-center">
+        <button type="submit" class="customBtn customBtn5 w-25"> Delete Account </button>
+    </div>
+
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

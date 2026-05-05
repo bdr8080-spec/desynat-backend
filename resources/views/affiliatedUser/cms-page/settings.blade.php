@@ -38,6 +38,13 @@
         </div>
     </div>
 
+    <div class="payment-box mt-5">
+        <div class="login-btn py-3 text-center">
+            <input type="submit" class="btn btn-success w-25" name="submit" value="Delete Account">
+        </div>
+
+    </div>
+
 
 </div>
 @include('affiliatedUser.layout.footer')
