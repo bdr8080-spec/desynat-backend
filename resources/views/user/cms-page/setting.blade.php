@@ -41,7 +41,7 @@
 
 
     <div class="cart-panel mt-5 text-center">
-        <button type="submit" class="customBtn customBtn5 w-25"> Delete Account </button>
+        <button type="submit" id="userDelete" class="customBtn customBtn5 w-25"> Delete Account </button>
     </div>
 
 
@@ -103,6 +103,55 @@ $(document).on('change', '#switchCheckDefault1', function () {
             toastr.error('Something went wrong');
         }
     });
+});
+</script>
+
+<script>
+$(document).on('click', '#userDelete', function () {
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Your account will be permanently deleted!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#6c757d",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: "{{ route('user.delete_account') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+
+                success: function (response) {
+
+                    if (response.status === 'success') {
+                        toastr.success(response.message);
+
+                        setTimeout(function () {
+                            window.location.href = "{{ route('dashboard') }}";
+                        }, 1000);
+
+                    } else {
+                        toastr.error(response.message || 'Something went wrong');
+                    }
+                },
+
+                error: function () {
+                    toastr.error('Something went wrong');
+                }
+
+            });
+
+        }
+
+    });
+
 });
 </script>
 

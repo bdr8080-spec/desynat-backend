@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 Use Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Models\seller;
 use App\Models\sellerStoreInformation;
@@ -1449,23 +1450,71 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
         }, 200, $headers);
     }
 
-    public function delete_account(Request $request){
+    // public function delete_account(Request $request){
 
 
-         $seller_id = sellerAndStaffId();
+    //      $seller_id = sellerAndStaffId();
 
-         $request_data = (object)[
-                'user_id'  => $seller_id,
-            ];
+    //      $request_data = (object)[
+    //             'user_id'  => $seller_id,
+    //         ];
   
-          $data= $this->SellerAuthService->DeleteAccount($request_data);
+    //       $data= $this->SellerAuthService->DeleteAccount($request_data);
 
-          if(isset($data['status']) && $data['status']=='error' ){
-              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
-          }
+    //       if(isset($data['status']) && $data['status']=='error' ){
+    //           return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+    //       }
   
-          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    //       return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
   
+    // }
+
+
+    public function delete_account(Request $request)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            $seller_id = sellerAndStaffId();
+
+            $seller = seller::find($seller_id); 
+
+            if (!$seller) {
+                return ApiResponse::generateResponse(
+                    'error',
+                    'Seller not found',
+                    [],
+                    400
+                );
+            }
+
+            $seller->delete();
+
+            DB::commit();
+
+            Auth::guard('seller')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return ApiResponse::generateResponse(
+                'success',
+                'Account deleted successfully',
+                [],
+                200
+            );
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return ApiResponse::generateResponse(
+                'error',
+                $e->getMessage(),
+                [],
+                400
+            );
+        }
     }
       
 

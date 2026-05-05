@@ -8,6 +8,7 @@ use App\Models\{all_countrie,AffilatedUser,country,AffilatedUserAddress,Bankdeta
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use Session;
 
@@ -1350,24 +1351,70 @@ public function ticket_management(REQUEST $request){
 
     }
 
-    public function delete_affiliate_account(Request $request){
+    // public function delete_affiliate_account(Request $request){
 
 
-          $affilatedUser=Auth::guard('affilated_user')->user();
-            $user = $affilatedUser->id;
+    //       $affilatedUser=Auth::guard('affilated_user')->user();
+    //         $user = $affilatedUser->id;
 
-         $request_data = (object)[
-                'user_id' => $user,
-            ];
+    //      $request_data = (object)[
+    //             'user_id' => $user,
+    //         ];
   
-          $data= $this->UserAffilatedAuthService->DeleteAccount($request_data);
+    //       $data= $this->UserAffilatedAuthService->DeleteAccount($request_data);
 
-          if(isset($data['status']) && $data['status']=='error' ){
-              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
-          }
+    //       if(isset($data['status']) && $data['status']=='error' ){
+    //           return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+    //       }
   
-          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    //       return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
   
+    // }
+
+
+    public function delete_affiliate_account(Request $request)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            $affilatedUser = Auth::guard('affilated_user')->user();
+
+            if (!$affilatedUser) {
+                return ApiResponse::generateResponse(
+                    'error',
+                    'User not found',
+                    [],
+                    400
+                );
+            }
+
+            $affilatedUser->delete();
+
+            DB::commit();
+
+            Auth::guard('affilated_user')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return ApiResponse::generateResponse(
+                'success',
+                'Account deleted successfully',
+                [],
+                200
+            );
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return ApiResponse::generateResponse(
+                'error',
+                $e->getMessage(),
+                [],
+                400
+            );
+        }
     }
 
 

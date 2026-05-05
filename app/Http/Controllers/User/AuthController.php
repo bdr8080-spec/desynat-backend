@@ -16,6 +16,7 @@ use App\Models\FullBanner;
 use App\Models\all_countrie;
 use Illuminate\Validation\Rule;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use Session;
 use App\Services\UserDashboardService;
@@ -718,23 +719,73 @@ class AuthController extends Controller
         ]);
     }
 
-    public function delete_account(Request $request){
+    // public function delete_account(Request $request){
 
 
-         $user_id = auth()->guard('web')->id();
+    //      $user_id = auth()->guard('web')->id();
 
-         $request_data = (object)[
-                'user_id' => $user_id,
-            ];
+    //      $request_data = (object)[
+    //             'user_id' => $user_id,
+    //         ];
   
-          $data= $this->UserAuthService->DeleteAccount($request_data);
+    //       $data= $this->UserAuthService->DeleteAccount($request_data);
 
-          if(isset($data['status']) && $data['status']=='error' ){
-              return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
-          }
+    //       if(isset($data['status']) && $data['status']=='error' ){
+    //           return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+    //       }
   
-          return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    //       return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
   
+    // }
+
+
+    public function delete_account(Request $request)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            $user = Auth::guard('web')->user();
+
+            if (!$user) {
+                return ApiResponse::generateResponse(
+                    'error',
+                    'User not found',
+                    [],
+                    400
+                );
+            }
+
+            // clear token if exists
+            $user->accessToken = null;
+            $user->save();
+
+            $user->delete();
+
+            DB::commit();
+
+            Auth::guard('web')->logout();
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+
+            return ApiResponse::generateResponse(
+                'success',
+                'Account deleted successfully',
+                [],
+                200
+            );
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return ApiResponse::generateResponse(
+                'error',
+                $e->getMessage(),
+                [],
+                400
+            );
+        }
     }
 
 }

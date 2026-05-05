@@ -44,7 +44,7 @@
     <div class="payment-box mt-5">
     
         <div class="login-btn py-3 text-center">
-            <input type="submit" class="btn btn-success w-25" name="submit" value="Delete Account">
+            <input type="submit" id="sellerDelete" class="btn btn-success w-25" name="submit" value="Delete Account">
         </div>
 
     </div>
@@ -110,6 +110,55 @@ $(document).on('change', '#switchCheckDefault1', function () {
             toastr.error('Something went wrong');
         }
     });
+});
+</script>
+
+<script>
+$(document).on('click', '#sellerDelete', function () {
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Your account will be permanently deleted!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#6c757d",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: "{{ route('seller.delete_account') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+
+                success: function (response) {
+
+                    if (response.status === 'success') {
+                        toastr.success(response.message);
+
+                        setTimeout(function () {
+                            window.location.href = "{{ route('seller.login') }}";
+                        }, 1000);
+
+                    } else {
+                        toastr.error(response.message || 'Something went wrong');
+                    }
+                },
+
+                error: function () {
+                    toastr.error('Something went wrong');
+                }
+
+            });
+
+        }
+
+    });
+
 });
 </script>
 
