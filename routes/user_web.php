@@ -202,6 +202,7 @@ Route::post('/mark_all_chat_msg_as_read', [ChatController::class,'mark_all_chat_
 Route::get('/chat_unread_count', [ChatController::class,'chat_unread_count'])->name('user.chat_unread_count');
 
 Route::post('CaptureSellerStoreVisitorWeb',[DashBoardController::class, 'CaptureSellerStoreVisitorWeb'])->name('user.CaptureSellerStoreVisitorWeb');
+Route::post('/delete_account', [AuthController::class,'delete_account'])->name('user.delete_account');
 
 
 });

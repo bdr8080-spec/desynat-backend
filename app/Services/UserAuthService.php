@@ -5,9 +5,16 @@ use App\Models\{User,AffilatedUser};
 
 use Hash;
 use Illuminate\Support\Facades\DB;
+use App\Services\TwilioService;
 
 class UserAuthService
 {
+
+   public function __construct(TwilioService $TwilioService){
+
+        $this->TwilioService=$TwilioService;
+
+    }
 
     function register($request){
 
@@ -29,6 +36,10 @@ class UserAuthService
         ];
 
        $check=  User::create($record);
+
+      $phone = $request->country_code . $request->mobile;
+      $message = "Your verification Code Is $otp";
+      $this->TwilioService->sendOtp($phone, $message);
 
         if($check){
             return ['status'=>'success','message'=>"OTP sent succesfully",'data'=>$check];            
@@ -143,7 +154,12 @@ class UserAuthService
             $get_user_details->update(['is_login' => 1]);
             $get_user_details->update(['is_visit_app' => 1]);
 
-            $get_user_details->accessToken ='';            
+            $get_user_details->accessToken ='';  
+
+            $phone = $get_user_details->country_code . $get_user_details->mobile;
+            $message = "Your verification Code Is $otp";
+            $this->TwilioService->sendOtp($phone, $message);
+
             return ['status'=>'success','message'=>"OTP sent to mobile number succesfully",'data'=>$get_user_details];            
         
           }else{
@@ -172,7 +188,12 @@ class UserAuthService
 
             $get_user_details->update(['otp'=>$otp]);
 
-            $get_user_details->accessToken ='';            
+            $get_user_details->accessToken =''; 
+
+            $phone = $get_user_details->country_code . $get_user_details->mobile;
+            $message = "Your verification Code Is $otp";
+            $this->TwilioService->sendOtp($phone, $message);
+
             return ['status'=>'success','message'=>"OTP sent to mobile number succesfully ",'data'=>$get_user_details];            
         
           }else{
@@ -199,7 +220,12 @@ class UserAuthService
 
                 $get_user_details->update(['otp'=>$otp]);
     
-                $get_user_details->accessToken ='';            
+                $get_user_details->accessToken ='';
+                
+                $phone = $get_user_details->country_code . $get_user_details->mobile;
+                $message = "Your verification Code Is $otp";
+                $this->TwilioService->sendOtp($phone, $message);
+                
                 return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
             
               }else{
