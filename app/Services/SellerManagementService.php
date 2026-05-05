@@ -16,6 +16,7 @@ class SellerManagementService
             $limit = (int)($request->input('limit')); 
 
             $query = seller::where('admin_verify', '1')
+            ->where('type', '0')
                 ->with([
                     'store_info.country_info',
                     'owner_document',
@@ -95,6 +96,7 @@ class SellerManagementService
             $limit = (int)($request->input('limit')); 
 
             $query = seller::where('admin_verify', '2')
+            ->where('type', '0')
                 ->with([
                     'store_info.country_info',
                     'owner_document',
@@ -208,6 +210,7 @@ class SellerManagementService
             $limit = (int)($request->input('limit')); 
 
             $query = seller::whereIn('admin_verify', ['3', '4'])
+            ->where('type', '0')
                 ->with([
                     'store_info.country_info',
                     'owner_document',
@@ -282,13 +285,15 @@ class SellerManagementService
     public function getSellerDetailsById($sellerId)
     {
         try {
-            $seller = seller::with([
-                'store_info.country_info',
-                'owner_document',
-                'store_document',
-                'seller_bank_details',
-                'subcription_plan.plan_info',
-            ])->find($sellerId);
+            $seller = seller::where('type', 0)
+                    ->with([
+                        'store_info.country_info',
+                        'owner_document',
+                        'store_document',
+                        'seller_bank_details',
+                        'subcription_plan.plan_info',
+                    ])
+                    ->find($sellerId);
 
             if (!$seller) {
                 return [
