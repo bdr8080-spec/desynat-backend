@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CommonController;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\sellerStoreInformation;
@@ -107,11 +108,26 @@ class AuthController extends Controller
                    ]);
                }
 
-               if($request->image){
+            //    if($request->image){
                 
-                 $dir = 'profile_image/';
-                 $image_path = $this->image_upload($request->image, $dir);
+            //      $dir = 'profile_image/';
+            //      $image_path = $this->image_upload($request->image, $dir);
                  
+            //     }
+
+                if ($request->hasFile('image')) {
+                    $commonController = new CommonController();
+                    $uploadResult = $commonController->upload($request);
+                    $uploadResultArray = $uploadResult->getData(true);
+
+                    if ($uploadResultArray['status'] === 'error') {
+                        return response()->json([
+                            'status'  => 'error',
+                            'message' => $uploadResultArray['message']
+                        ], 400);
+                    }
+
+                    $imageUrl = $uploadResultArray['data']['url'];
                 }
     
                 $otp= config('services.otp');
@@ -123,7 +139,7 @@ class AuthController extends Controller
                     'email'         => $request->email,
                     'password'      => bcrypt($request->password),
                     'otp'           => $otp,
-                    'profile_image'=>$image_path??null
+                    'profile_image'=>$imageUrl??null
                 ]);
 
                 $id  = Crypt::encryptString($data->id);
