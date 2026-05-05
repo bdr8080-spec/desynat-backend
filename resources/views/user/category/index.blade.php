@@ -417,7 +417,7 @@
                                                 @endif
                                                 <img src="{{ $val }}" alt="Product">
                                                 @endforeach
-
+                                                <span class="share-btn product" data-link="{{ route('user.product_details',[$item->id]) }}"><i class="fa-solid fa-share"></i></span>
                                                 @if (Auth::guard('web')->user())
                                                 <span class="wishlist-btn" style="cursor: pointer"><i
                                                         id="wishlistProduct{{ $item->id }}"
@@ -1421,6 +1421,50 @@ $(document).ready(function () {
     });
 
 });
+</script>
+
+<script>
+document.addEventListener('click', function (e) {
+
+    var shareBtn = e.target.closest('.share-btn.product');
+
+    if (shareBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        var link = shareBtn.getAttribute('data-link');
+
+        if (!link) {
+            console.error('Share link not found');
+            return;
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(link).then(function () {
+                toastr.success('Link copied to clipboard');
+            }).catch(function () {
+                fallbackCopy(link);
+            });
+        } else {
+            fallbackCopy(link);
+        }
+
+        return false;
+    }
+
+}, true);
+
+function fallbackCopy(text) {
+    var temp = document.createElement("textarea");
+    temp.value = text;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+
+    toastr.success('Link copied to clipboard');
+}
 </script>
 
 
