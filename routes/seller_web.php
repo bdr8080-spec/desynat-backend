@@ -247,6 +247,8 @@ Route::group(['prefix' => 'seller'], function () {
     Route::get('/chat_unread_count', [SellerChatController::class,'chat_unread_count'])->name('seller.chat_unread_count');
 
     Route::post('/delete_account', [WebSellerDashboard::class, 'delete_account'])->name('seller.delete_account');
+    Route::get('/change-password', [WebSellerDashboard::class, 'change_password'])->name('seller.change_password');
+    Route::post('/update_password', [WebSellerDashboard::class, 'update_password'])->name('seller.update_password');
 
     
 
@@ -271,15 +273,15 @@ Route::get('seller/cancellation-policy', [WebSellerDashboard::class, 'cancellati
 Route::get('seller/faq', [WebSellerDashboard::class, 'faq'])->name('seller.faq');
 
 
-Route::match(['get', 'post'], '/chats', function () {
-    return view('dealer.chatmgt.chatlist');
+// Route::match(['get', 'post'], '/chats', function () {
+//     return view('dealer.chatmgt.chatlist');
 
-})->name('dealer.chats');
+// })->name('dealer.chats');
 
-Route::match(['get', 'post'], '/change-password', function () {
-    return view('dealer.change-password.index');
+// Route::match(['get', 'post'], '/change-password', function () {
+//     return view('dealer.change-password.index');
 
-})->name('dealer.change-password');
+// })->name('dealer.change-password');
 
 
 // Route::match(['get', 'post'], '/add-products', function () {

@@ -5,40 +5,48 @@
     <div class="common-title d-flex gap-3 mb-4">
         <h3>Change Password</h3>
     </div>
-
-    <div class="payment-box">
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="form-group position-relative">
-                <label for="password">Old Password</label>
-                <input type="password" class="form-control notapplyspace" id="password"
-                    placeholder="Enter Password" name="password">
-                <i class="toggle-password  bi bi-eye-slash "></i>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="form-group position-relative">
-                <label for="password">Enter New Password</label>
-                <input type="password" class="form-control notapplyspace" id="password"
-                    placeholder="Enter New Password" name="password">
-                <i class="toggle-password  bi bi-eye-slash "></i>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="form-group position-relative">
-                <label for="password">Confirm Password</label>
-                <input type="password" class="form-control notapplyspace" id="password"
-                    placeholder="Re-Enter Password" name="password">
-                <i class="toggle-password  bi bi-eye-slash "></i>
-            </div>
-        </div>
-    </div>
     
-    <div class="login-btn mt-5 mb-3">
-        <input type="submit" class="btn btn-success w-100" name="submit" value="Save">
-    </div>
+    <form id="passwordForm">
+    <div class="payment-box">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group position-relative">
+                    <label for="password">Old Password</label>
+                    <input type="password" class="form-control notapplyspace" id="old_password" name="old_password"
+                        placeholder="Enter Password" >
+                    <i class="toggle-password  bi bi-eye-slash "></i>
+                    <small id="error_old_password" class="text-danger"></small>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group position-relative">
+                    <label for="password">Enter New Password</label>
+                    <input type="password" class="form-control notapplyspace" id="new_password" name="new_password"
+                        placeholder="Enter New Password" >
+                    <i class="toggle-password  bi bi-eye-slash "></i>
+                    <small id="error_new_password" class="text-danger"></small>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group position-relative">
+                    <label for="password">Confirm Password</label>
+                    <input type="password" class="form-control notapplyspace"  id="confirm_password" name="confirm_password"
+                        placeholder="Re-Enter Password" >
+                    <i class="toggle-password  bi bi-eye-slash "></i>
+                    <small id="error_confirm_password" class="text-danger"></small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-btn mt-5 mb-3">
+            <button type="button" class="btn btn-success w-100 savePasswordBtn">
+                Save
+            </button>
+        </div>
 
-</div>
+    </div>
+    </form>
+
 
 
 </div>
@@ -59,6 +67,132 @@
         }
     });
 
+</script>
+
+<!-- update password -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const form = document.querySelector('#passwordForm') || document;
+
+    const oldError = document.getElementById('error_old_password');
+    const newError = document.getElementById('error_new_password');
+    const confirmError = document.getElementById('error_confirm_password');
+
+    const oldInput = document.querySelector('input[name="old_password"]');
+    const newInput = document.querySelector('input[name="new_password"]');
+    const confirmInput = document.querySelector('input[name="confirm_password"]');
+
+    const saveBtn = document.querySelector('.savePasswordBtn');
+
+    if (oldInput) {
+        oldInput.addEventListener('input', () => oldError.innerText = '');
+    }
+
+    if (newInput) {
+        newInput.addEventListener('input', () => newError.innerText = '');
+    }
+
+    if (confirmInput) {
+        confirmInput.addEventListener('input', () => confirmError.innerText = '');
+    }
+
+    if (saveBtn) {
+
+        saveBtn.addEventListener('click', function() {
+
+            oldError.innerText = '';
+            newError.innerText = '';
+            confirmError.innerText = '';
+
+            let hasError = false;
+
+            const old_password = oldInput.value.trim();
+            const new_password = newInput.value.trim();
+            const confirm_password = confirmInput.value.trim();
+
+
+            if (!old_password) {
+                oldError.innerText = 'Please enter old password';
+                hasError = true;
+            }
+
+            if (!new_password) {
+                newError.innerText = 'Please enter new password';
+                hasError = true;
+            } else if (!validatePassword(new_password)) {
+                newError.innerText =
+                    'Password must be 8+ chars with uppercase, number & special character';
+                hasError = true;
+            }
+
+            if (!confirm_password) {
+                confirmError.innerText = 'Please confirm password';
+                hasError = true;
+            } else if (new_password !== confirm_password) {
+                confirmError.innerText = 'Confirm password does not match';
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+
+            let formData = new FormData();
+            formData.append('old_password', old_password);
+            formData.append('new_password', new_password);
+            formData.append('confirm_password', confirm_password);
+
+            fetch("{{ route('seller.update_password') }}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: formData
+                })
+                .then(async (res) => {
+
+                    let text = await res.text();
+
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        toastr.error("Server error occurred");
+                        console.log(text);
+                        throw e;
+                    }
+
+                })
+                .then(data => {
+
+                    if (data.status === 'success') {
+
+                        toastr.success(data.message);
+
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
+
+                    } else {
+                        toastr.error(data.message || 'Something went wrong');
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err);
+                    toastr.error('Request failed');
+                });
+
+        });
+
+    }
+
+
+    function validatePassword(password) {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+        return regex.test(password);
+    }
+
+});
 </script>
 
 

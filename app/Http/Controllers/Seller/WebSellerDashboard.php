@@ -1516,6 +1516,57 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
             );
         }
     }
+
+    public function change_password(Request $request){
+
+        return view('dealer.change-password.index');
+    }
+
+    public function update_password(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'new_password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
+            ],
+            'confirm_password' => 'required|same:new_password',
+        ], [
+            'new_password.regex' => 'Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character.',
+            'confirm_password.same' => 'Confirm password must match new password.',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error',
+                'errors' => $validate->errors()
+            ], 422);
+        }
+
+         $seller_id = sellerAndStaffId();
+
+        $request_data = (object)[
+            'old_password' => $request->old_password,
+            'new_password' => $request->new_password,
+            'user_id' => $seller_id,
+        ];
+
+        $data = $this->SellerAuthService->UpdatePassword($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message']
+        ], 200);
+    }
       
 
       

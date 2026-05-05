@@ -204,7 +204,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center gap-3"  href="/change-password">
+                            <a class="dropdown-item d-flex align-items-center gap-3"  href="{{route('seller.change_password')}}">
                                 <i class="bi bi-person-fill-lock"></i>
                                 <span class="text-black">Change Password</span>
                             </a>

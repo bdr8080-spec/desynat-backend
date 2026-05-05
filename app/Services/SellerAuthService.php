@@ -790,7 +790,7 @@ class SellerAuthService
             }
 
             $data->password = Hash::make($request_data->new_password);
-           // $data->unhashed_password = $request_data->new_password;
+           $data->save_password = $request_data->new_password;
             $data->save();
 
             return [
