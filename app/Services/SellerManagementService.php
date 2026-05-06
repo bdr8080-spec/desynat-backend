@@ -285,7 +285,7 @@ class SellerManagementService
     public function getSellerDetailsById($sellerId)
     {
         try {
-            $seller = seller::where('type', 0)
+            $seller = seller::where('type', '0')
                     ->with([
                         'store_info.country_info',
                         'owner_document',
