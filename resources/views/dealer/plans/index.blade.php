@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Subscription Plans</div>
+        <div class="title24"> {{ __('seller_messages.Subscription_Plans') }}</div>
     </div>
 
     <div class="tabs-panel py-4">
@@ -10,11 +10,11 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link active w-100" id="pills-listed-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-listed" type="button" role="tab" aria-controls="pills-listed"
-                    aria-selected="true">Listed Plans</button>
+                    aria-selected="true">   {{ __('seller_messages.Listed_Plans') }}</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-plan-tab" data-bs-toggle="pill" data-bs-target="#pills-plan"
-                    type="button" role="tab" aria-controls="pills-plan" aria-selected="false">My Plan</button>
+                    type="button" role="tab" aria-controls="pills-plan" aria-selected="false">  {{ __('seller_messages.My_Plan') }}</button>
             </li>
         </ul>
     </div>
@@ -37,7 +37,9 @@
                             <div class="col-lg-4 col-md-4">
                                 <div class="plan-card plan-shadow">
                                     <div class="plan-header {{ $headerClass }} text-center">
-                                        {{ $plan->plan_name_english }}
+                                       {{ app()->getLocale() == 'ar'
+                                            ? $plan->plan_name_arabic
+                                            : $plan->plan_name_english }}
                                     </div>
                                     @php
                                     if ($plan->duration_type == '1') {
@@ -55,53 +57,60 @@
                                 @endphp
 
                                 <div class="plan-content text-center plan-shadow">
-                                    <h4>KD {{ number_format($amount, 2) }}</h4>
+                                    <h4> {{ __('seller_messages.KD') }} {{ number_format($amount, 2) }}</h4>
                                     <div>
-                                        for {{ $plan->duration }}
-                                        {{ $plan->duration_type == 1 ? 'Month' : 'Year' }}
+                                         {{ __('seller_messages.For') }}
+                                          {{ $plan->duration }}
+
+                                         {{ $plan->duration_type == 1
+                                                ? __('seller_messages.Month')
+                                                : __('seller_messages.Year') }}
+
+
                                     </div>
                                 </div>
                                     <div class="plan-body p-3">
                                         <ul class="list-inline">
                                             <li>
                                                 <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
-                                                Number of Products:
+                                                  {{ __('seller_messages.Number_of_Products') }}:
                                                 <span>{{ $plan->no_of_products }}</span>
                                             </li>
 
                                             <li>
                                                 <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
-                                                Number of Videos (Reels):
+                                               {{ __('seller_messages.Number_of_Videos') }}:
                                                 <span>{{ $plan->no_of_videos }}</span>
                                             </li>
 
                                             <li>
                                                 <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
-                                                Number of Highlights:
+                                                {{ __('seller_messages.Number_of_Highlights') }}:
                                                 <span>{{ $plan->no_of_highlights }}</span>
                                             </li>
 
                                             <li>
                                                 <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
-                                                Stories :
+                                                {{ __('seller_messages.Stories') }}:
                                                 <span>{{ $plan->stories == 1 ? 'Yes' : 'No' }}</span>
                                             </li>
 
                                             <li>
                                                 <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
                                                 
-                                                {{ $plan->no_of_employee }} Store Employees
+                                                {{ $plan->no_of_employee }} 
+                                                {{ __('seller_messages.Store_Employees') }}
                                             </li>
 
                                             <li>
                                                 <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
-                                                Commission :
+                                                 {{ __('seller_messages.Commission') }}:
                                                 <span>
                                                     {{ $plan->commission == 1 ? $plan->commission_percentage . '%' : '0%' }}
                                                 </span>
                                             </li>
                                             @if (!empty($plan->no_of_free_months))
-                                                <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">No Of free Months :
+                                                <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">{{ __('seller_messages.No_Of_Free_Months') }}:
                                                     <span>{{ $plan->no_of_free_months }} </span>
                                                 </li>
                                             @endif
@@ -110,7 +119,7 @@
                                             @if($activePlan && $activePlan->plan_id == $plan->id)
 
                                                 <button class="btn btn-secondary w-100" disabled>
-                                                    Currently
+                                                    {{ __('seller_messages.Currently') }}
                                                 </button>
 
                                             @else
@@ -118,7 +127,7 @@
                                                 <a href="{{ route('seller.single_plans', $plan->id) }}" 
                                                 class="btn btn-success w-100"
                                                 data-plan-id="{{ $plan->id }}">
-                                                Purchase
+                                                 {{ __('seller_messages.Purchase') }}
                                                 </a>
 
                                             @endif
@@ -130,7 +139,7 @@
 
                         @empty
                             <div class="col-12 text-center">
-                                <h5>No plan available</h5>
+                                <h5>{{ __('seller_messages.No_Plan_Available') }}</h5>
                             </div>
                         @endforelse
 
@@ -138,68 +147,6 @@
                 </div>
             </div>
 
-            <!-------------  my plan ------------>
-
-            <!-- <div class="tab-pane fade" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab" tabindex="0">
-                
-                <div class="rounded-4 desc-box shadow-sm bg-white mb-4">
-                    <div class="card-header d-flex justify-content-between p-2 planmont">
-                        <div class="monthly-color fw-semibold">Active</div>
-                        <div class="monthly-color fw-semibold">Monthly</div>
-                    </div>
-                    <div class="p-3">
-                        <div class="row mb-2">
-                            <div class="col-6">Purchased On</div>
-                            <div class="col-6">
-                                <div class="text-end">21/03/2026 at 10:00 AM  </div>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-6">Amount </div>
-                            <div class="col-6">
-                                <div class="text-end">200 KD</div>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-6">Plan </div>
-                            <div class="col-6">
-                                <div class="text-end">Pro Plan </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="rounded-4 desc-box shadow-sm bg-white mb-4">
-                    <div class="card-header d-flex justify-content-between p-2 planmont">
-                        <div class="monthly-black fw-semibold">Expired</div>
-                        <div class="monthly-color fw-semibold">Monthly</div>
-                    </div>
-                    <div class="p-3">
-                        <div class="row mb-2">
-                            <div class="col-6">Purchased On</div>
-                            <div class="col-6">
-                                <div class="text-end">21/03/2026 at 10:00 AM  </div>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-6">Amount </div>
-                            <div class="col-6">
-                                <div class="text-end">200 KD</div>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-6">Plan </div>
-                            <div class="col-6">
-                                <div class="text-end">Pro Plan </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                
-
-
-            </div> -->
             <div class="tab-pane fade" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab" tabindex="0">
                 @forelse($myPlans as $plan)
                     @php
@@ -211,13 +158,17 @@
                         
                         <div class="card-header d-flex justify-content-between p-2 planmont">
                             <div class="fw-semibold {{ $isExpired ? 'monthly-black' : 'monthly-color' }}">
-                                {{ $isExpired ? 'Expired' : 'Active' }}
+                              
+                                 {{ $isExpired
+                                    ? __('seller_messages.Expired')
+                                    : __('seller_messages.Active') }}
+
                             </div>
                             <div class="monthly-color fw-semibold">
                                 @if($plan->plan_info->duration_type=='1')
-                                Monthly
+                                 {{ __('seller_messages.Monthly') }}
                                 @elseif($plan->plan_info->duration_type=='2')
-                                Yearly
+                                 {{ __('seller_messages.Yearly') }}
                                 @endif
                             </div>
 
@@ -225,20 +176,19 @@
 
                         <div class="p-3">
                             <div class="row mb-2">
-                                <div class="col-6">Duration</div>
+                                <div class="col-6">   {{ __('seller_messages.Duration') }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        @if($plan->plan_info->duration_type == '1')
-                                            {{ $plan->plan_info->duration  }} Month
-                                        @elseif($plan->plan_info->duration_type == '2')
-                                            {{ $plan->plan_info->duration  }} Year
-                                        @endif
+                                           {{ $plan->plan_info->duration }}
+                                    {{ $plan->plan_info->duration_type == '1'
+                                        ? __('seller_messages.Month')
+                                        : __('seller_messages.Year') }}
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row mb-2">
-                                <div class="col-6">Plan</div>
+                                <div class="col-6">  {{ __('seller_messages.Plan') }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
                                         {{ $plan->plan_info->plan_name_english ?? 'N/A' }}
@@ -247,7 +197,7 @@
                             </div>
 
                             <div class="row mb-2">
-                                <div class="col-6">Purchased On</div>
+                                <div class="col-6">  {{ __('seller_messages.Purchased_On') }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
                                         {{ \Carbon\Carbon::parse($plan->plan_start_date)->format('d/m/Y \a\t h:i A') }}
@@ -255,7 +205,7 @@
                                 </div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-6">Expired on</div>
+                                <div class="col-6">  {{ __('seller_messages.Expired_On') }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
                                         {{ \Carbon\Carbon::parse($plan->plan_end_date)->format('d/m/Y \a\t h:i A') }}
@@ -264,16 +214,17 @@
                             </div>
 
                             <div class="row mb-2">
-                                <div class="col-6">Total Amount</div>
+                                <div class="col-6"> {{ __('seller_messages.Total_Amount') }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        {{ $plan->amount }} KD
+                                        {{ $plan->amount }} 
+                                    {{ __('seller_messages.KD') }}
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row mb-2">
-                                <div class="col-6">Transaction id</div>
+                                <div class="col-6">  {{ __('seller_messages.Transaction_ID') }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
                                        @if(!empty($plan->online_transaction_id))
@@ -285,10 +236,11 @@
                                 </div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-6">Paid By {{ $plan->payment_method ?? '' }}</div>
+                                <div class="col-6">{{ __('seller_messages.Paid_By') }}
+                                     {{ $plan->payment_method ?? '' }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                       {{ $plan->amount }} KD
+                                       {{ $plan->amount }}  {{ __('seller_messages.KD') }}
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +248,7 @@
                                 <div class="col-6"></div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        <a href="#" class="btn btn-success exportbtn renew-plan-btn" data-plan-id="{{ $plan->plan_info->id }}">Renew Plan</a>
+                                        <a href="#" class="btn btn-success exportbtn renew-plan-btn" data-plan-id="{{ $plan->plan_info->id }}"> {{ __('seller_messages.Renew_Plan') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -306,7 +258,7 @@
                     </div>
                 @empty
                     <div class="col-12 text-center">
-                        <h5>No plan found</h5>
+                        <h5> {{ __('seller_messages.No_Plan_Found') }}</h5>
                     </div>
                 @endforelse
 

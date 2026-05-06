@@ -168,5 +168,37 @@ return [
 "Upload_Image" => "رفع صورة",
 
 
+// subcription Plan 
+
+"Subscription_Plans" => "خطط الاشتراك",
+"Listed_Plans" => "الخطط المدرجة",
+"My_Plan" => "خطتي",
+"For" => "لـ",
+"Month" => "شهر",
+"Year" => "سنة",
+"Number_of_Products" => "عدد المنتجات",
+"Number_of_Videos" => "عدد الفيديوهات (ريلز)",
+"Number_of_Highlights" => "عدد المميزات",
+"Stories" => "القصص",
+"Yes" => "نعم",
+"No" => "لا",
+"Store_Employees" => "موظفو المتجر",
+"Commission" => "العمولة",
+"No_Of_Free_Months" => "عدد الأشهر المجانية",
+"Currently" => "حاليًا",
+"Purchase" => "شراء",
+"No_Plan_Available" => "لا توجد خطة متاحة",
+
+"Expired" => "منتهي",
+"Monthly" => "شهري",
+"Yearly" => "سنوي",
+"Duration" => "المدة",
+"Plan" => "الخطة",
+"Purchased_On" => "تم الشراء في",
+"Expired_On" => "ينتهي في",
+"Paid_By" => "تم الدفع بواسطة",
+"Renew_Plan" => "تجديد الخطة",
+"No_Plan_Found" => "لم يتم العثور على خطة"
+
 
 ];
