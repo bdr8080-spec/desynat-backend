@@ -3,7 +3,7 @@
 <section class="section dashboard">
   
     <div class="d-flex justify-content-between mt-4">
-        <a href="#" class="title24 alink"> <i class="bi bi-chevron-left"></i>edit Staff </a>
+        <a href="#" class="title24 alink"> <i class="bi bi-chevron-left"></i> {{ __('seller_messages.edit_Staff') }} </a>
     </div>
 
     <form id="addBanner" action="#" method="post">
@@ -18,12 +18,12 @@
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                              style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
                         <div class="py-2" style="color:#875C3A">
-                            Upload Profile
+                             {{ __('seller_messages.Upload_Profile') }}
                         </div>
                     </div>
 
                     <!-- Uploaded Image -->
-                    <div class="profileImg" style="display:none;" id="showProfile">
+                    <div class="profileImg" style="" id="showProfile">
                     <img id="bannerUploadedImg"
                          src="{{ !empty($view_staff->profile_pic) ? asset($view_staff->profile_pic) : '' }}"
                          class="img-fluid uploadbnr"
@@ -55,20 +55,22 @@
             <div class="col-lg-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Full Name</label>
-                        <span>In English</span>
+                         <label>{{ __('seller_messages.Full_Name') }}</label>
+                        <span>{{ __('seller_messages.In_English') }}</span>
+                    
                     </div>
-                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" name="full_name" class="form-control" placeholder="Enter Full name" value="{{$view_staff->first_name}}">
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" name="full_name" class="form-control" placeholder="{{ __('seller_messages.Enter_Full_Name') }}" value="{{$view_staff->first_name}}">
                    <p class="text-danger" id="error-full_name"></p>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Full Name</label>
-                        <span>In Arabic</span>
+                       <label>{{ __('seller_messages.Full_Name') }}</label>
+                        <span>{{ __('seller_messages.In_Arabic') }}</span>
+                 
                     </div>
-                    <input type="text" dir="rtl" style="text-align: right;" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Full name" name="name_ar" value="{{$view_staff->name_ar}}">
+                    <input type="text" dir="rtl" style="text-align: right;" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="{{ __('seller_messages.Enter_Full_Name_arabic') }}" name="name_ar" value="{{$view_staff->name_ar}}">
                  <p class="text-danger" id="error-name_ar"></p>
                 </div>
             </div>
@@ -94,8 +96,8 @@
 
          <div class="col-lg-6 col-md-6">
                                     <div class="label-flex">
-                                        <label>Store Phone Number </label>
-                                    </div>
+                                       <label>{{ __('seller_messages.Store_Phone_Number') }}</label>
+                                      </div>
 
                                     <div class="form-group d-flex gap-2 w-100">
                                         <div class="dropdown">
@@ -137,7 +139,7 @@
 
                                         <div class="w-100">
                                             <input class="form-control notapplyspace" type="number" id="phone"
-                                                placeholder="Enter mobile Number" name="mobile"
+                                                placeholder="{{ __('seller_messages.Enter_Mobile_Number') }}" name="mobile"
                                                 value="{{$view_staff->mobile}}"
                                                 oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
                                             <p class="text-danger" id="error-mobile"></p>
@@ -150,9 +152,9 @@
             <div class="col-lg-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Email</label>
+                        <label>{{ __('seller_messages.Email') }}</label>
                     </div>
-                    <input type="text"  class="form-control" placeholder="Enter Email" name="email" value="{{$view_staff->email}}">
+                    <input type="text"  class="form-control" placeholder="{{ __('seller_messages.Enter_Email') }}" name="email" value="{{$view_staff->email}}">
                      <p class="text-danger" id="error-email"></p>
                 </div>
             </div>
@@ -160,7 +162,7 @@
 
         <div class="row mt-3">
             <div class="col-md-6">
-                <label class="banner-text">Select Category</label>
+                <label class="banner-text">{{ __('seller_messages.Select_Category') }}</label>
                 <div class="group-radio-btn d-flex gap-5 align-items-center flex-wrap py-3 pe-3">
 
                 @foreach($staff_category as $key=>$val)
@@ -168,7 +170,7 @@
                         <label class="radio-group">
                             <input type="radio" name="select_category" value="{{$val->id}}" @if($val->id==$view_staff->select_category) checked  @endif >
                             <span class="custom-radio"></span>
-                            <span class="radio-label">{{$val->name_en}}</span>
+                            <span class="radio-label">{{ app()->getLocale() == 'ar' ? $val->name_ar : $val->name_en }}</span>
                         </label>
                     </div>
                 @endforeach
@@ -184,9 +186,9 @@
             <div class="col-lg-6">
              <div class="sub-form position-relative">
                     <div class="label-flex">
-                        <label>Password</label>
+                        <label>{{ __('seller_messages.Password') }}</label>
                     </div>
-                    <input type="text"  class="form-control" placeholder="Enter Password" name="password" value="{{$view_staff->save_password}}">
+                    <input type="text"  class="form-control" placeholder="{{ __('seller_messages.Enter_Password') }}" name="password" value="{{$view_staff->save_password}}">
                     <i class="toggle-password  bi bi-eye-slash "></i>  
                     <p class="text-danger" id="error-password"></p>
                 
@@ -195,16 +197,16 @@
             <div class="col-lg-6">
              <div class="sub-form position-relative">
                     <div class="label-flex">
-                        <label>Confirm Password</label>
+                        <label>{{ __('seller_messages.Confirm_Password') }}</label>
                     </div>
-                    <input type="text"  class="form-control" placeholder="Enter Confirm Password" name="confirm_password"  value="{{$view_staff->save_password}}">
+                    <input type="text"  class="form-control" placeholder="{{ __('seller_messages.Enter_Confirm_Password') }}" name="confirm_password"  value="{{$view_staff->save_password}}">
                     <i class="toggle-password  bi bi-eye-slash "></i>  
                     <p class="text-danger" id="error-confirm_password"></p>
                 </div>
             </div>
         </div>
         <div class="module-lists mt-3 mb-4">
-            <label class="banner-text py-3">Access Module</label>
+            <label class="banner-text py-3"> {{ __('seller_messages.Access_Module') }}</label>
 
             <div class="row">
                 <div class="col-lg-5">
@@ -248,7 +250,13 @@
                 type="checkbox"
                 value="{{$menu->id}}"  {{$firstMenu}} hidden>
                 <label class="form-check-label">
-                {{$menu->title}}
+
+                 @if(app()->getLocale() == 'ar')
+                                        {{ $menu->title_ar }}
+                                    @else
+                                        {{ $menu->title }}
+                                    @endif
+
                 </label>
                 </div>
             </div>
@@ -258,7 +266,7 @@
                 <input class="form-check-input view-checkbox"
                 type="checkbox"
                 data-id="{{$menu->id}}"  {{$secondMenu}}>
-                <label class="form-check-label">View</label>
+                <label class="form-check-label">{{ __('seller_messages.View') }}</label>
                 </div>
 
                 <!-- ACTION -->
@@ -266,7 +274,7 @@
                 <input class="form-check-input action-checkbox"
                 type="checkbox"
                 data-id="{{$menu->id}}"  {{$thirdMenu}}>
-                <label class="form-check-label">Action</label>
+                <label class="form-check-label">{{ __('seller_messages.Action') }}</label>
                 </div>
 
                 </div>
@@ -285,7 +293,7 @@
 
         <div class="mb-5">
             <div class="dashboard-button  mt-5 gap-5">
-                <button type="submit" class="btn add-fillbtn w-100">Submit</button>
+                <button type="submit" class="btn add-fillbtn w-100">{{ __('seller_messages.Submit') }}</button>
             </div>
 
         </div>

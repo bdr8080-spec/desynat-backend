@@ -4,7 +4,7 @@
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('seller.dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
-        <h3>Settings</h3>
+        <h3>{{__('seller_messages.Settings')}}</h3>
     </div>
 
     <div class="row">
@@ -13,7 +13,7 @@
                 <div class="d-flex justify-content-between">
                     <div class="inapp-list d-flex gap-3">
                             <div><img src="{{asset('user/assets/images/in-app.png')}}" class="img-fluid"></div>
-                            <h6>In-app Notifications</h6>
+                            <h6>{{__('seller_messages.In_app_Notifications')}}</h6>
                     </div>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" {{ $data->app_notification == 1 ? 'checked' : '' }}>
@@ -21,12 +21,12 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="live-pnl mb-3">
                 <div class="d-flex justify-content-between">
                 <div class="inapp-list d-flex gap-3">
                            <div> <img src="{{asset('user/assets/images/push-icon.png')}}" class="img-fluid"></div>
-                            <h6>Push Notifications</h6>
+                            <h6>{{__('seller_messages.Push_Notifications')}}</h6>
                     </div>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault1" {{ $data->notification == 1 ? 'checked' : '' }}>
@@ -38,17 +38,13 @@
         </div>
     </div>
 
-
-    
   
-    <div class="payment-box mt-5">
+<div class="payment-box mt-5">
     
         <div class="login-btn py-3 text-center">
-            <input type="submit" id="sellerDelete" class="btn btn-success w-25" name="submit" value="Delete Account">
+            <input type="submit" id="sellerDelete" class="btn btn-success w-25" name="submit" value="{{__('seller_messages.delete_account')}}">
         </div>
-
     </div>
-
 
 </div>
 @include('dealer.layout.custom_code');

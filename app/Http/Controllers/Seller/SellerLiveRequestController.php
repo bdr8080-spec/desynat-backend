@@ -186,11 +186,12 @@ class SellerLiveRequestController extends Controller
 
         $result = $this->SellerLiveRequestService->live_room_records($request_data);
 
+      
         if ($result['status'] === 'error') {
         $liverequest['current_requests']=[];
         $liverequest['future_requests']=[];
 
-        }elseif(empty($result['data'])){
+        }elseif(isset($result['data'])){
            $liverequest['current_requests']=[];
            $liverequest['future_requests']=[];
         }else{
@@ -198,11 +199,9 @@ class SellerLiveRequestController extends Controller
 
         }
 
-
         $otherSellerdetails = $this->SellerLiveRequestService->otherSellerLiveRoomRecords($request_data);
 
         $otherSellerdetails=$otherSellerdetails['data'];
-
 
 
     $AllLiverequest= collect($liverequest['current_requests'] ?? [])

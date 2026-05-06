@@ -21,6 +21,11 @@ Route::get('optimize',function(){
 
     env('AGORA_APP_ID');
 
+      // Run Seeder
+    Artisan::call('db:seed', [
+        '--class' => 'SellerMenuSeeder'
+    ]);
+    
     return 'Application optimized successfully!';
 });
 

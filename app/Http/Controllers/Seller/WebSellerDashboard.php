@@ -29,6 +29,7 @@ use App\Services\SellerDashboardService;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\CommonController;
 
+use Illuminate\Support\Facades\App;
 
 
 class WebSellerDashboard extends Controller
@@ -43,11 +44,11 @@ class WebSellerDashboard extends Controller
        $this->SellerOrderService = $SellerOrderService;
        $this->SellerNotificationService = $SellerNotificationService;
        $this->SellerDashboardService = $SellerDashboardService;
-
+       
     }
 
-
     public function seller_dashboard(Request $request){
+
 
         // if i got payment Then Show This message
         if($request->payment=='yes'){

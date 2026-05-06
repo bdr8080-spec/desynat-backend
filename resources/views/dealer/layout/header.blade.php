@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8">
@@ -226,24 +228,23 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif </span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
                                             <span>AR</span> Arabic
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
+                                        <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
                                             <span>EN</span> English
                                         </a>
                                     </li>
-
                                 </ul>
                         </div>
                     </div>
