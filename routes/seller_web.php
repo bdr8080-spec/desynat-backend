@@ -15,7 +15,7 @@ use App\Http\Controllers\Seller\WebDealManagement;
 use App\Http\Controllers\Seller\SellerLiveRequestController;
 use App\Http\Controllers\Seller\NotificationController;
 use App\Http\Controllers\Seller\WebSellerStuffManagementController;
-
+use App\Http\Controllers\Seller\SellerLanguageController;
 
 
 
@@ -26,9 +26,13 @@ use App\Http\Controllers\SaveFirebaseToken;
 
 // Save Admin firebase Token 
 
+Route::middleware(['checkLanguage'])->group(function(){
+
 
 
 Route::get('seller-save-token', [SaveFirebaseToken::class, 'saveSellerToken']);
+
+Route::get('/seller-change-language/{locale}', [SellerLanguageController::class, 'SellerChangelanguage'])->name("sellerLanguage");
 
 
 Route::group(['prefix' => 'seller'], function () {
@@ -49,8 +53,6 @@ Route::group(['prefix' => 'seller'], function () {
     });
     
  
-
-
     Route::middleware(['seller_login','prevent-back-history'])->group(function(){
     
     route::Match(['get','post'],'/store_information/{id}',[LoginController::class,'store_information'])->name('seller.store_information');
@@ -258,11 +260,9 @@ Route::group(['prefix' => 'seller'], function () {
 Route::get('/seller-live-count', [SellerLiveRequestController::class, 'sellerLiveCount'])->name('sellerlivecount');
 
 
-
 Route::post('/send-message-in-chats', [ChatController::class,'SendMessageInChats'])->name("seller.send-chat");
 
-
- Route::get('/seller_langauge', [LanguageController::class, 'seller_lang'])->name('seller_lang');
+Route::get('/seller_langauge', [LanguageController::class, 'seller_lang'])->name('seller_lang');
 
  //cms
  Route::get('seller/about-us', [WebSellerDashboard::class, 'aboutUs'])->name('seller.aboutUs');
@@ -272,6 +272,7 @@ Route::get('seller/exchange-policy', [WebSellerDashboard::class, 'exchangePolicy
 Route::get('seller/cancellation-policy', [WebSellerDashboard::class, 'cancellationPolicy'])->name('seller.cancellationPolicy');
 Route::get('seller/faq', [WebSellerDashboard::class, 'faq'])->name('seller.faq');
 
+});
 
 // Route::match(['get', 'post'], '/chats', function () {
 //     return view('dealer.chatmgt.chatlist');

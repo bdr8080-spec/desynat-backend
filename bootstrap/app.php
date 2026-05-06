@@ -36,7 +36,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'seller_login' =>SellerAuthenticated::class,
             'LowerUrl' => ForceLowercaseUrl::class,
             'Affiliate_user' => AffiliateLoginCheck::class, // Login Route check   
-            'optional.auth' => OptionalAuth::class,          
+            'optional.auth' => OptionalAuth::class,    
+            "checkLanguage"=> SetLanguage::class  
         ]);
     })
 
