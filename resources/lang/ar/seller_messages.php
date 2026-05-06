@@ -15,7 +15,7 @@ return [
 "search" => "بحث",
 "View" => "عرض",
 "Action" => "إجراء",
-
+"Submit" => "إرسال",
 
 
 // Seller Dashboard language code 
@@ -140,10 +140,32 @@ return [
 "Access_Module" => "وحدة الوصول",
 "View" => "عرض",
 "Action" => "إجراء",
-"Submit" => "إرسال",
 
 
 "edit_Staff" => "تعديل الموظف",
+
+// Ticket management
+"Ticket_Management" => "إدارة التذاكر",
+"Ticket_Type" => "نوع التذكرة",
+"Ticket_ID" => "رقم التذكرة",
+"Raised_On" => "تاريخ الإنشاء",
+"Status" => "الحالة",
+"Pending" => "قيد الانتظار",
+"In_Progress" => "قيد المعالجة",
+"Resolved" => "تم الحل",
+"Closed" => "مغلق",
+"No_Ticket_Found" => "لم يتم العثور على تذاكر",
+"Ticket_Details" => "تفاصيل التذكرة",
+"Select_Ticket_Type" => "اختر نوع التذكرة",
+"Please_Select_Ticket_Type" => "يرجى اختيار نوع التذكرة",
+"Title" => "العنوان",
+"Enter_Title" => "أدخل العنوان",
+"Please_Enter_Title" => "يرجى إدخال العنوان",
+"Description" => "الوصف",
+"Enter_Description" => "أدخل الوصف",
+"Please_Enter_Description" => "يرجى إدخال الوصف",
+"Upload_Attachment" => "رفع مرفق (إن وجد)",
+"Upload_Image" => "رفع صورة",
 
 
 

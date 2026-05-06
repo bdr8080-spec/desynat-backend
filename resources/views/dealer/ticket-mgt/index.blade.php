@@ -11,7 +11,7 @@ $can_action=$menu_permission['can_action'];
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Ticket Management</div>
+        <div class="title24">  {{ __('seller_messages.Ticket_Management') }}</div>
     </div>
    
     <form method="GET" action="{{ route('seller.ticket_management') }}">
@@ -19,9 +19,9 @@ $can_action=$menu_permission['can_action'];
             <div class="search-field d-flex align-items-center w-100">
                 <div class="from-group position-relative w-100">
                     <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon2">
-                    <input type="search" name="search" class="form-control py-3" placeholder="Search"  value="{{ request('search') }}">
+                    <input type="search" name="search" class="form-control py-3" placeholder="{{ __('seller_messages.Search') }}"  value="{{ request('search') }}">
                 </div>
-                <button type="submit" class="btn btn-success searchlin"> Search </button>
+                <button type="submit" class="btn btn-success searchlin"> {{ __('seller_messages.Search') }} </button>
             </div>    
                @if($can_action == '1')
 
@@ -36,7 +36,7 @@ $can_action=$menu_permission['can_action'];
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between">
                         <div class="ticket">
-                            <p class="text-muted mb-1">Ticket Type</p>
+                            <p class="text-muted mb-1"> {{ __('seller_messages.Ticket_Type') }}</p>
                         </div>
                         <div class="ticket">
                             <p class="text-muted mb-1">
@@ -47,19 +47,19 @@ $can_action=$menu_permission['can_action'];
 
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1">Ticket ID</p>
+                            <p class="text-muted mb-1">  {{ __('seller_messages.Ticket_ID') }}</p>
                             <p class="fst-500">{{ $ticket->ticket_id }}</p>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1">Raised on</p>
+                            <p class="text-muted mb-1"> {{ __('seller_messages.Raised_On') }}</p>
                             <p class="fst-500">
                                 {{ \Carbon\Carbon::parse($ticket->created_at)->format('d M Y, h:i A') }}
                             </p>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1">Status</p>
+                            <p class="text-muted mb-1">  {{ __('seller_messages.Status') }}</p>
                             <p class="fst-500">
                                 @php
                                     $createdDate = \Carbon\Carbon::parse($ticket->created_at)->toDateString();
@@ -67,16 +67,16 @@ $can_action=$menu_permission['can_action'];
                                 @endphp
 
                                 @if($ticket->status == 0 && $createdDate == $todayDate)
-                                    <span class="text-warning">Pending</span>
+                                    <span class="text-warning">    {{ __('seller_messages.Pending') }}</span>
 
                                 @elseif($ticket->status == 0 && $createdDate < $todayDate)
-                                    <span class="text-danger">In Progress</span>
+                                    <span class="text-danger"> {{ __('seller_messages.In_Progress') }}</span>
 
                                 @elseif($ticket->status == 1)
-                                    <span class="text-success">Resolved</span>
+                                    <span class="text-success">{{ __('seller_messages.Resolved') }}</span>
 
                                 @else
-                                    <span class="text-danger">Closed</span>
+                                    <span class="text-danger"> {{ __('seller_messages.Closed') }}</span>
                                 @endif
                             </p>
                         </div>
@@ -84,7 +84,7 @@ $can_action=$menu_permission['can_action'];
                 </div>
             @empty
                 <div class="text-center py-5">
-                    <p class="text-muted">No Ticket Found</p>
+                    <p class="text-muted">   {{ __('seller_messages.No_Ticket_Found') }}</p>
                 </div>
             @endforelse
 
@@ -107,7 +107,7 @@ $can_action=$menu_permission['can_action'];
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Ticket deatils </h1>
+                <h1 class="modal-title fs-5"> {{ __('seller_messages.Ticket_Details') }} </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
            <form id="ticketModalForm" enctype="multipart/form-data">
@@ -115,41 +115,42 @@ $can_action=$menu_permission['can_action'];
                 <div class="modal-body">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Ticket Type</label>
+                            <label>{{ __('seller_messages.Ticket_Type') }}</label>
                         </div>
                         <select id="ticket_type_id" name="ticket_type_id" class="form-select form-control" aria-label="Default select example">
-                            <option value="">Select Ticket Type</option>
+                            <option value=""> {{ __('seller_messages.Select_Ticket_Type') }}</option>
                             @foreach($ticketTypes as $type)
                                 <option value="{{ $type->id }}">{{ $type->name }}</option>
                             @endforeach
                         </select>
-                        <span class="text-danger small d-none" id="ticket_type_error">Please select ticket type</span>
+                        <span class="text-danger small d-none" id="ticket_type_error"> {{ __('seller_messages.Please_Select_Ticket_Type') }}</span>
                     </div>
 
                     <div class="sub-form">
                         <div class="label-flex">
                             <label>Title</label>
                         </div>
-                        <input type="text" id="title" name="title" class="form-control" placeholder="Enter title name">
-                        <span class="text-danger small d-none" id="title_error">Please enter title</span>
+                        <input type="text" id="title" name="title" class="form-control" placeholder="{{ __('seller_messages.Enter_Title') }}">
+                        <span class="text-danger small d-none" id="title_error"> {{ __('seller_messages.Please_Enter_Title') }}</span>
                     </div>
 
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Description</label>
+                              <label>{{ __('seller_messages.Description') }}</label>
+
                         </div>
-                        <textarea id="description" class="form-control" name="description" rows="4" placeholder="Enter description"></textarea>
-                        <span class="text-danger small d-none" id="description_error">Please enter description</span>
+                        <textarea id="description" class="form-control" name="description" rows="4" placeholder="{{ __('seller_messages.Enter_Description') }}"></textarea>
+                        <span class="text-danger small d-none" id="description_error"> {{ __('seller_messages.Please_Enter_Description') }}</span>
                     </div>
 
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Upload attachment (if any)</label>
+                            <label> {{ __('seller_messages.Upload_Attachment') }}</label>
                         </div>
                         <div class="upload-image w-100 mt-2">
                             <label class="uploadLabel" style="cursor:pointer;text-align:center;">
                                 <img src="{{ asset('user/assets/images/upload-icon.svg') }}">
-                                <div class="text-color-upload">Upload image</div>
+                                <div class="text-color-upload">  {{ __('seller_messages.Upload_Image') }}</div>
                                 <input type="file" accept="image/*" name="file" hidden onchange="showPreview(event)">
                             </label>
                             <div class="imgshow">
@@ -160,7 +161,7 @@ $can_action=$menu_permission['can_action'];
                     </div>
 
                     <div class="cmn-btn mt-4">
-                        <button type="button" id="submitTicket" class="btn add-fillbtn w-100">Submit</button>
+                        <button type="button" id="submitTicket" class="btn add-fillbtn w-100"> {{ __('seller_messages.Submit') }}</button>
                     </div>
                 </div>
             </form>

@@ -16,6 +16,8 @@ return [
 "search"=>"search",
  "View"=>"View",
 "Action"=>"Action",
+"Submit" => "Submit",
+
 
 
 // Seller dashBoard language code 
@@ -153,12 +155,32 @@ return [
 "Access_Module" => "Access Module",
 "View" => "View",
 "Action" => "Action",
-"Submit" => "Submit",
 
 "edit_Staff"=>"edit Staff",
 
+// Ticket management 
 
-   
+"Ticket_Management" => "Ticket Management",
+"Ticket_Type" => "Ticket Type",
+"Ticket_ID" => "Ticket ID",
+"Raised_On" => "Raised On",
+"Status" => "Status",
+"Pending" => "Pending",
+"In_Progress" => "In Progress",
+"Resolved" => "Resolved",
+"Closed" => "Closed",
+"No_Ticket_Found" => "No Ticket Found",
+"Ticket_Details" => "Ticket Details",
+"Select_Ticket_Type" => "Select Ticket Type",
+"Please_Select_Ticket_Type" => "Please select ticket type",
+"Title" => "Title",
+"Enter_Title" => "Enter title",
+"Please_Enter_Title" => "Please enter title",
+"Description" => "Description",
+"Enter_Description" => "Enter description",
+"Please_Enter_Description" => "Please enter description",
+"Upload_Attachment" => "Upload attachment (if any)",
+"Upload_Image" => "Upload image",
 
 
 
