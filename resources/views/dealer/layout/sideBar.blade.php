@@ -126,7 +126,14 @@
                     <img src="{{ asset($menu->icon) }}" 
                          class="asideicon">
 
-                    <span>{{ $menu->title }}</span>
+                    <span> 
+                    @if(App::getlocale()=='ar')
+                    {{ $menu->title_ar }}
+                    
+                    @else    
+                    {{ $menu->title }}
+                    @endif
+                </span>
                 </a>
 
                 {{-- Submenu --}}

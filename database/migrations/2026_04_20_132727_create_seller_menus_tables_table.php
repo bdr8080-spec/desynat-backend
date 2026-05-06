@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('seller_menus_tables', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('title_ar');
             $table->string('route')->nullable();
             $table->string('icon')->nullable();
             $table->text('active_patterns')->nullable();
