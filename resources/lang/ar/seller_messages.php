@@ -13,6 +13,8 @@ return [
 "All" => "الكل",
 "S.No" => "الرقم",
 "search" => "بحث",
+"View" => "عرض",
+"Action" => "إجراء",
 
 
 
@@ -54,6 +56,94 @@ return [
 "Out_of_Stock" => "غير متوفر في المخزون",
 "No_Product_found" => "لم يتم العثور على منتجات",
 
+
+
+
+
+
+
+// Settings 
+"Settings" => "الإعدادات",
+"In_app_Notifications" => "الإشعارات داخل التطبيق",
+"Push_Notifications" => "الإشعارات الفورية",
+"delete_account" => "حذف الحساب",
+
+// Refund Management
+"Refund_Management" => "إدارة الاسترجاع",
+"export" => "تصدير",
+"Total_Refund" => "إجمالي الاسترجاع",
+"Refund_ID" => "معرّف الاسترجاع",
+"Transaction_ID" => "معرّف المعاملة",
+"Order_Date_Time" => "تاريخ ووقت الطلب",
+"Customer_name" => "اسم العميل",
+"Order_ID" => "معرّف الطلب",
+"Total_Amount" => "إجمالي المبلغ",
+"Status" => "الحالة",
+"Pending" => "قيد الانتظار",
+"Payment_Status" => "حالة الدفع",
+
+// Cancellation Policy management 
+"Cancellation_Policy" => "سياسة الإلغاء",
+
+// Setting CMS
+"Exchange_Policy" => "سياسة الاستبدال",
+"Return_Policy" => "سياسة الإرجاع",
+"FAQ" => "الأسئلة الشائعة",
+"No_FAQ_Found" => "لم يتم العثور على أسئلة شائعة",
+"About_Us" => "معلومات عنا",
+
+"Terms_Conditions"=>"الشروط والأحكام",
+
+
+ // Staff Management
+    "Staff_Management" => "إدارة الموظفين",
+    "Add_New_Staff" => "إضافة موظف جديد",
+    "Search" => "بحث",
+    "Filter_by_status" => "تصفية حسب الحالة",
+    "Filter_by_Role" => "تصفية حسب الدور",
+
+    "Manager" => "مدير",
+    "Officer" => "مسؤول",
+    "Sales_Employee" => "موظف مبيعات",
+
+    "Image" => "الصورة",
+    "Name" => "الاسم",
+    "Phone_Number" => "رقم الهاتف",
+    "Mail_ID" => "البريد الإلكتروني",
+    "Role" => "الدور",
+    "Added_on" => "تاريخ الإضافة",
+    "View_Modules" => "عرض الوحدات",
+    "Edit" => "تعديل",
+    "Inactive_Active" => "نشط / غير نشط",
+    "Delete" => "حذف",
+
+    "Module" => "الوحدة",
+    "No_data_found" => "لا توجد بيانات",
+
+
+"Add_Staff" => "إضافة موظف",
+"Upload_Profile" => "رفع الملف الشخصي",
+"Full_Name" => "الاسم الكامل",
+"In_English" => "باللغة الإنجليزية",
+"In_Arabic" => "باللغة العربية",
+"Enter_Full_Name" => "أدخل الاسم الكامل",
+"Enter_Full_Name_arabic" => "أدخل الاسم الكامل باللغة العربية",
+"Store_Phone_Number" => "رقم هاتف المتجر",
+"Enter_Mobile_Number" => "أدخل رقم الهاتف المحمول",
+"Email" => "البريد الإلكتروني",
+"Enter_Email" => "أدخل البريد الإلكتروني",
+"Select_Category" => "اختر الفئة",
+"Password" => "كلمة المرور",
+"Enter_Password" => "أدخل كلمة المرور",
+"Confirm_Password" => "تأكيد كلمة المرور",
+"Enter_Confirm_Password" => "أدخل تأكيد كلمة المرور",
+"Access_Module" => "وحدة الوصول",
+"View" => "عرض",
+"Action" => "إجراء",
+"Submit" => "إرسال",
+
+
+"edit_Staff" => "تعديل الموظف",
 
 
 

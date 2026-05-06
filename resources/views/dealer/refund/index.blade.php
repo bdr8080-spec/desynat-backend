@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Refund Management</div>
+        <div class="title24">{{__('seller_messages.Refund_Management')}}</div>
         <a href="{{ route('seller.export_refund_management_data', request()->all()) }}" class="btn btn-success">Export</a>
     </div>
 
@@ -12,7 +12,7 @@
                 <div class="from-group position-relative">
                     <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
                     <input type="search" class="dt-input tableSearch form-control" id="customTableSearch"
-                        placeholder="Search" aria-controls="table1">
+                        placeholder="{{__('seller_messages.search')}}" aria-controls="table1">
                 </div>
             </div>
 
@@ -36,15 +36,15 @@
 
                     <div class="from-group">
                         <select class="form-select form-control width-50" aria-label="Default select example">
-                            <option value="">Payment Status</option>
-                            <option value="1"> Complete </option>
-                            <option value="2"> Pending </option>
+                            <option value="">{{__('seller_messages.Payment_Status')}} </option>
+                            <option value="1"> {{__('seller_messages.Complete')}}  </option>
+                            <option value="2"> {{__('seller_messages.Pending')}}  </option>
                         </select>
                     </div>
                     <div class="from-group">
                         <div class="total-refund d-flex gap-3">
-                            <h6>Total Refund</h6>
-                            <h3>{{$refundData['total_refunds']}} KD</h3>
+                            <h6>{{__('seller_messages.Total_Refund')}}</h6>
+                            <h3>{{$refundData['total_refunds']}} {{__('seller_messages.KD')}}</h3>
                              
                              
                         </div>
@@ -61,15 +61,15 @@
             <table class="table table-bordered datatable tablesearch" id="table1">
                 <thead>
                     <tr>
-                        <th class="no-sort">S.No</th>
-                        <th class="no-sort">Refund ID</th>
-                        <th class="no-sort">Transaction ID</th>
-                        <th class="no-sort">Order Date & Time</th>
-                        <th class="no-sort">Customer name</th>
-                        <th class="no-sort">Order ID</th>
-                        <th class="no-sort">Total Amount</th>
+                        <th class="no-sort">{{__('seller_messages.S.No')}}</th>
+                        <th class="no-sort">{{__('seller_messages.Refund_ID')}}</th>
+                        <th class="no-sort">{{__('seller_messages.Transaction_ID')}} </th>
+                        <th class="no-sort">{{__('seller_messages.Order_Date_Time')}}  </th>
+                        <th class="no-sort">{{__('seller_messages.Customer_name')}}  </th>
+                        <th class="no-sort">{{__('seller_messages.Order_ID')}}  </th>
+                        <th class="no-sort">{{__('seller_messages.Total_Amount')}}  </th>
                         <!-- <th class="no-sort">Total Commission</th> -->
-                         <th class="no-sort">Status</th>
+                         <th class="no-sort">{{__('seller_messages.Status')}}  </th>
                     </tr>
                 </thead>
                 <tbody>
