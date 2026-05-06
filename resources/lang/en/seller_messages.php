@@ -183,6 +183,38 @@ return [
 "Upload_Image" => "Upload image",
 
 
+// subcritpion Plan page 
+
+"Subscription_Plans" => "Subscription Plans",
+"Listed_Plans" => "Listed Plans",
+"My_Plan" => "My Plan",
+"For" => "For",
+"Month" => "Month",
+"Year" => "Year",
+"Number_of_Products" => "Number of Products",
+"Number_of_Videos" => "Number of Videos (Reels)",
+"Number_of_Highlights" => "Number of Highlights",
+"Stories" => "Stories",
+"Yes" => "Yes",
+"No" => "No",
+"Store_Employees" => "Store Employees",
+"Commission" => "Commission",
+"No_Of_Free_Months" => "No Of Free Months",
+"Currently" => "Currently",
+"Purchase" => "Purchase",
+"No_Plan_Available" => "No plan available",
+
+"Expired" => "Expired",
+"Monthly" => "Monthly",
+"Yearly" => "Yearly",
+"Duration" => "Duration",
+"Plan" => "Plan",
+"Purchased_On" => "Purchased On",
+"Expired_On" => "Expired On",
+"Paid_By" => "Paid By",
+"Renew_Plan" => "Renew Plan",
+"No_Plan_Found" => "No plan found",
+
 
 
 
