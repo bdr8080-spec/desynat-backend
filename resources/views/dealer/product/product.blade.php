@@ -21,10 +21,10 @@ $can_action=$menu_permission['can_action'];
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Product Management</div>
+        <div class="title24">{{__('seller_messages.Product_Management')}} </div>
     
     @if($can_action=='1')
-        <a href="{{ route('seller.Add_product') }}" class="btn btn-success"  >Add New Product</a>
+        <a href="{{ route('seller.Add_product') }}" class="btn btn-success"  >{{__('seller_messages.Add_new_product')}}</a>
         @endif
     </div>
 
@@ -33,17 +33,17 @@ $can_action=$menu_permission['can_action'];
             <li class="nav-item" role="presentation">
                 <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-allproduct" type="button" role="tab" aria-controls="pills-allproduct"
-                    aria-selected="true">All ({{ $data['all_product_count'] }})</button>
+                    aria-selected="true">{{__('seller_messages.All')}} ({{ $data['all_product_count'] }})</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-active-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-active" type="button" role="tab" aria-controls="pills-active"
-                    aria-selected="false">Active ({{ $data['active_product_count'] }})</button>
+                    aria-selected="false">{{__('seller_messages.Active')}} ({{ $data['active_product_count'] }})</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-inactive-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-inactive" type="button" role="tab" aria-controls="pills-inactive"
-                    aria-selected="false">Inactive ({{ $data['inactive_product_count'] }})</button>
+                    aria-selected="false">{{__('seller_messages.In-Active')}} ({{ $data['inactive_product_count'] }})</button>
             </li>
 
         </ul>
@@ -58,14 +58,15 @@ $can_action=$menu_permission['can_action'];
                 aria-labelledby="pills-allproduct-tab" tabindex="0">
                 <div class="datatable-wapper">
                     <div class="table-header">
-                        <div class="search-field">
-                            <div class="from-group position-relative">
-                                <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
-                                    class="search-icon">
-                                  <input type="search" class="form-control tableSearch" placeholder="Search"  data-table="table1">
-                           
-                            </div>
-                        </div>
+                     
+
+                <div class="search-field">
+                 <div class="from-group position-relative">
+                    <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
+                    <input type="search" class="dt-input tableSearch form-control" id="customTableSearch"
+                        placeholder="{{__('seller_messages.search')}}" aria-controls="table1">
+                </div>
+            </div>
 
                         <form method="GET" action="">
 
@@ -76,10 +77,13 @@ $can_action=$menu_permission['can_action'];
                                     <select class="form-select form-control width-50"
                                         aria-label="Default select example" name="cargory_filter"
                                         onchange="this.form.submit()">
-                                        <option value="">Filter by Category</option>
+                                        <option value="">{{__('seller_messages.filter_by_category')}} </option>
                                         @foreach ($category as $item)
                                             <option value="{{ $item->id }}"
-                                                @if (request()->type == 0 && request()->cargory_filter == $item->id) selected @endif>{{ $item->name }}
+                                                @if (request()->type == 0 && request()->cargory_filter == $item->id) selected @endif>
+                                                
+                                               @if(App::getlocale()=='ar') {{ $item->name_ar }}  @else {{ $item->name }} @endif
+                                            
                                             </option>
                                         @endforeach
                                     </select>
@@ -88,11 +92,14 @@ $can_action=$menu_permission['can_action'];
                                     <select class="form-select form-control width-50"
                                         aria-label="Default select example" name="brand_filter"
                                         onchange="this.form.submit()">
-                                        <option value="">Filter by brand</option>
+                                        <option value="">{{__('seller_messages.filter_by_brand')}} </option>
                                         @foreach ($brand as $item)
                                             <option value="{{ $item->id }}"
                                                 @if (request()->type == 0 && request()->brand_filter == $item->id) selected @endif>
-                                                {{ $item->name_english }}</option>
+                                            
+                                             @if(App::getlocale()=='ar') {{ $item->name_arabic }}  @else {{ $item->name_english }} @endif
+                                            
+                                               </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -106,18 +113,16 @@ $can_action=$menu_permission['can_action'];
                         <table  class="table  table-bordered @if(count($data['all_product_data']) > 0 ) datatable @endif" id="table1">
                             <thead>
                                 <tr>
-                                    <th class="no-sort">S.No</th>
-                                    <th class="no-sort">Image</th>
-                                    <th class="no-sort">Product code</th>
-                                    <th class="no-sort">Product Name</th>
-                                    <th class="no-sort">Brand</th>
-                                    <th class="no-sort">Category</th>
-                                    <th class="no-sort">Added on</th>
-                                    <th class="no-sort">Availability</th>
-                                    <th class="no-sort">Active/Inactive</th>
-                                    <th class="no-sort">
-                                        View more details
-                                    </th>
+                                    <th class="no-sort">{{__('seller_messages.S.No')}} </th>
+                                    <th class="no-sort"> {{__('seller_messages.Image')}}   </th>
+                                    <th class="no-sort"> {{__('seller_messages.Product_code')}} </th>
+                                    <th class="no-sort"> {{__('seller_messages.Product_Name')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Brand')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Category')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Added_on')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Availability')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Active/Inactive')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.View_more_details')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -142,15 +147,31 @@ $can_action=$menu_permission['can_action'];
 
                                             {{ $item->id }}
                                         </td>
-                                        <td> {{ $item->product_name_en }}</td>
-                                        <td>{{ $item->brand->name_english }}</td>
-                                        <td>{{ $item->category->name }}</td>
+                                        <td> 
+                                        
+                                           @if(App::getlocale()=='ar') {{ $item->product_name_ar}}  @else {{ $item->product_name_en }} @endif
+  
+                                      </td>
+                                        <td>
+
+                                        @if(App::getlocale()=='ar') {{ $item->brand->name_arabic }}  @else {{ $item->brand->name_english }} @endif
+
+
+                                        </td>
+                                        <td>
+                                            @if(App::getlocale()=='ar') {{ $item->category->name_ar }}  @else {{ $item->category->name }} @endif
+                                                
+                                        </td>
+
+
                                         <td>{{ $item->created_at }}</td>
                                         <td>
                                             @if ($item->product_variants['0']->total_stock > 1)
-                                                In Stock
+                                                <!-- In Stock -->
+                                                 {{__('seller_messages.In_Stock')}}
                                             @else
-                                                Out of Stock
+                                                <!-- Out of Stock -->
+                                                  {{__('seller_messages.Out_of_Stock')}}
                                             @endif
 
                                         </td>
@@ -175,7 +196,7 @@ $can_action=$menu_permission['can_action'];
 
                                  @empty
                           <tr>
-                              <td colspan="10" class="text-center text-muted">No Product found</td>
+                              <td colspan="10" class="text-center text-muted"> {{__('seller_messages.No_Product_found')}}</td>
                           </tr>
                       @endforelse
 
@@ -191,7 +212,7 @@ $can_action=$menu_permission['can_action'];
                     <div class="table-header">
                         <div class="search-field">
                             <div class="from-group position-relative">
-                                <input type="search" class="form-control tableSearch" placeholder="Search"  data-table="table2">
+                                <input type="search" class="form-control tableSearch" placeholder="{{__('seller_messages.search')}}"  data-table="table2">
                             </div>
                         </div>
                         <form method="GET" action="">
@@ -203,11 +224,12 @@ $can_action=$menu_permission['can_action'];
                                     <select class="form-select form-control width-50"
                                         aria-label="Default select example" name="cargory_filter"
                                         onchange="this.form.submit()">
-                                        <option value="">Filter by Category</option>
+                                        <option value="">{{__('seller_messages.filter_by_category')}}</option>
                                         @foreach ($category as $item)
                                             <option value="{{ $item->id }}"
-                                                @if (request()->type == 1 && request()->cargory_filter == $item->id) selected @endif>
-                                                {{ $item->name }}
+                                                @if (request()->type == 1 && request()->cargory_filter == $item->id) selected @endif>                                    
+              @if(App::getlocale()=='ar') {{ $item->name_ar }}  @else {{ $item->name }} @endif
+
                                             </option>
                                         @endforeach
                                     </select>
@@ -216,11 +238,11 @@ $can_action=$menu_permission['can_action'];
                                     <select class="form-select form-control width-50"
                                         aria-label="Default select example" name="brand_filter"
                                         onchange="this.form.submit()">
-                                        <option value="">Filter by brand</option>
+                                        <option value="">{{__('seller_messages.filter_by_brand')}}</option>
                                         @foreach ($brand as $item)
                                             <option value="{{ $item->id }}"
                                                 @if (request()->type == 1 && request()->brand_filter == $item->id) selected @endif>
-                                                {{ $item->name_english }}</option>
+                                                @if(App::getlocale()=='ar') {{ $item->name_arabic }}  @else {{ $item->name_english }} @endif </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -234,16 +256,17 @@ $can_action=$menu_permission['can_action'];
                         <table class="table table-bordered @if(count($data['active_product']) > 0 ) datatable   @endif" id="table2">
                             <thead>
                                 <tr>
-                                    <th class="no-sort">S.No</th>
-                                    <th class="no-sort">Image</th>
-                                    <th class="no-sort">Product code</th>
-                                    <th class="no-sort">Product Name</th>
-                                    <th class="no-sort">Brand</th>
-                                    <th class="no-sort">Category</th>
-                                    <th class="no-sort">Added on</th>
-                                    <th class="no-sort">Availability</th>
-                                    <th class="no-sort">Active/Inactive</th>
-                                    <th class="no-sort">View more details</th>
+                                    <th class="no-sort">{{__('seller_messages.S.No')}} </th>
+                                    <th class="no-sort"> {{__('seller_messages.Image')}}   </th>
+                                    <th class="no-sort"> {{__('seller_messages.Product_code')}} </th>
+                                    <th class="no-sort"> {{__('seller_messages.Product_Name')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Brand')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Category')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Added_on')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Availability')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Active/Inactive')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.View_more_details')}}</th>
+                               
                                 </tr>
                             </thead>
                             <tbody>
@@ -267,15 +290,20 @@ $can_action=$menu_permission['can_action'];
                                             {{ $item->id }}
 
                                         </td>
-                                        <td> {{ $item->product_name_en }}</td>
-                                        <td>{{ $item->brand->name_english }}</td>
-                                        <td>{{ $item->category->name }}</td>
+                                        <td>                                        
+                                           @if(App::getlocale()=='ar') {{ $item->product_name_ar}}  @else {{ $item->product_name_en }} @endif
+                                        </td>
+                                        <td>
+                                        @if(App::getlocale()=='ar') {{ $item->brand->name_arabic }}  @else {{ $item->brand->name_english }} @endif
+                                        </td>
+                                        <td>
+                                        @if(App::getlocale()=='ar') {{ $item->category->name_ar }}  @else {{ $item->category->name }} @endif </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td>
                                             @if ($item->product_variants['0']->total_stock > 1)
-                                                In Stock
+                                             {{__('seller_messages.In_Stock')}}
                                             @else
-                                                Out of Stock
+                                                   {{__('seller_messages.Out_of_Stock')}}
                                             @endif
 
                                         </td>
@@ -297,7 +325,7 @@ $can_action=$menu_permission['can_action'];
                                 {{-- @endforeach --}}
                                  @empty
                           <tr>
-                              <td colspan="10" class="text-center text-muted">No Product found</td>
+                              <td colspan="10" class="text-center text-muted">{{__('seller_messages.No_Product_found')}}</td>
                           </tr>
                       @endforelse
 
@@ -314,7 +342,7 @@ $can_action=$menu_permission['can_action'];
                     <div class="table-header">
                         <div class="search-field">
                             <div class="from-group position-relative">
-                                <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table3">
+                                <input type="search" class="form-control tableSearch" placeholder="{{__('seller_messages.search')}}" data-table="table3">
                             </div>
                         </div>
 
@@ -327,10 +355,12 @@ $can_action=$menu_permission['can_action'];
                                     <select class="form-select form-control width-50"
                                         aria-label="Default select example" name="cargory_filter"
                                         onchange="this.form.submit()">
-                                        <option value="">Filter by Category</option>
+                                        <option value="">{{__('seller_messages.filter_by_category')}}</option>
                                         @foreach ($category as $item)
                                             <option value="{{ $item->id }}"
-                                                @if (request()->type == 2 && request()->cargory_filter == $item->id) selected @endif>{{ $item->name }}
+                                                @if (request()->type == 2 && request()->cargory_filter == $item->id) selected @endif>
+                                                
+                                                @if(App::getlocale()=='ar') {{ $item->name_ar }}  @else {{ $item->name }} @endif
                                             </option>
                                         @endforeach
                                     </select>
@@ -339,11 +369,12 @@ $can_action=$menu_permission['can_action'];
                                     <select class="form-select form-control width-50"
                                         aria-label="Default select example" name="brand_filter"
                                         onchange="this.form.submit()">
-                                        <option value="">Filter by brand</option>
+                                        <option value="">{{__('seller_messages.filter_by_brand')}}</option>
                                         @foreach ($brand as $item)
                                             <option value="{{ $item->id }}"
                                                 @if (request()->type == 2 && request()->brand_filter == $item->id) selected @endif>
-                                                {{ $item->name_english }}</option>
+                                                @if(App::getlocale()=='ar') {{ $item->name_arabic }}  @else {{ $item->name_english }} @endif
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -356,16 +387,17 @@ $can_action=$menu_permission['can_action'];
                         <table class="table table-bordered  @if(count($data['inactive_product']) > 0 ) datatable  @endif" id="table3">
                             <thead>
                                 <tr>
-                                    <th class="no-sort">S.No</th>
-                                    <th class="no-sort">Image</th>
-                                    <th class="no-sort">Product code</th>
-                                    <th class="no-sort">Product Name</th>
-                                    <th class="no-sort">Brand</th>
-                                    <th class="no-sort">Category</th>
-                                    <th class="no-sort">Added on</th>
-                                    <th class="no-sort">Availability</th>
-                                    <th class="no-sort">Active/Inactive</th>
-                                    <th class="no-sort">View more details</th>
+                                 <th class="no-sort">{{__('seller_messages.S.No')}} </th>
+                                    <th class="no-sort"> {{__('seller_messages.Image')}}   </th>
+                                    <th class="no-sort"> {{__('seller_messages.Product_code')}} </th>
+                                    <th class="no-sort"> {{__('seller_messages.Product_Name')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Brand')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Category')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Added_on')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Availability')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.Active/Inactive')}}  </th>
+                                    <th class="no-sort"> {{__('seller_messages.View_more_details')}}</th>
+                               
                                 </tr>
                             </thead>
                             <tbody>
@@ -389,15 +421,24 @@ $can_action=$menu_permission['can_action'];
                                             {{ $item->id }}
 
                                         </td>
-                                        <td > {{ $item->product_name_en }}</td>
-                                        <td>{{ $item->brand->name_english }}</td>
-                                        <td>{{ $item->category->name }}</td>
+                                        <td >                                         
+                                           @if(App::getlocale()=='ar') {{ $item->product_name_ar}}  @else {{ $item->product_name_en }} @endif
+
+                                        </td>
+                                        <td>
+                                            @if(App::getlocale()=='ar') {{ $item->brand->name_arabic }}  @else {{ $item->brand->name_english }} @endif
+                                        </td>
+
+                                        <td>
+                                            @if(App::getlocale()=='ar') {{ $item->category->name_ar }}  @else {{ $item->category->name }} @endif
+
+                                        </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td>
                                             @if ($item->product_variants['0']->total_stock > 1)
-                                                In Stock
+                                                {{__('seller_messages.In_Stock')}}
                                             @else
-                                                Out of Stock
+                                                {{__('seller_messages.Out_of_Stock')}}
                                             @endif
 
                                         </td>
@@ -421,7 +462,7 @@ $can_action=$menu_permission['can_action'];
 
                                  @empty
                           <tr>
-                              <td colspan="10" class="text-center text-muted">No product found</td>
+                              <td colspan="10" class="text-center text-muted">{{__('seller_messages.No_Product_found')}}</td>
                           </tr>
                       @endforelse
 
@@ -503,7 +544,9 @@ $can_action=$menu_permission['can_action'];
             });
 
         });
-    </script>
+
+</script>
+
 
 
 
