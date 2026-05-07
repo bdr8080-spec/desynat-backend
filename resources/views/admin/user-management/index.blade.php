@@ -14,7 +14,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">USER MANAGEMENT</h2>
+            <h2 class="h2">{{ __('admin_messages.user_management') }}</h2>
         </div>
     </div>
 
@@ -24,23 +24,23 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                             <input type="date" id="from" name="from_date" value="{{ request()->from_date }}" onchange="updateToDate(); document.getElementById('filterForm').submit();" class="form-control" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">To:</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.to') }}:</label>
                             <input type="date" id="to" name="to_date" value="{{ request()->to_date }}" onchange="document.getElementById('filterForm').submit();" class="form-control" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">Country Name</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.country') }}</label>
                             <select name="country_id" id="country_id"
                                 class="form-select form-select-lg "
                                 onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Select country</option>
+                                <option value="">{{ __('admin_messages.select_country') }}</option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country['id'] }}"
                                     {{ request('country_id') == $country['id'] ? 'selected' : '' }}>
@@ -54,10 +54,10 @@
                         <div class="d-flex gap-3 justify-content-end" >
                             <a href="{{route('admin.userManagement')}}" class="btn btn-dark customBtn"
                                 style="margin-top: 60px">
-                                <span>Reset</span>
+                                <span>{{ __('admin_messages.reset') }}</span>
                             </a>
                              <a href="{{ route('admin.export_user_data', request()->all()) }}" class="btn btn-dark customBtn " style="margin-top: 60px">
-                                <span>Export </span></a>
+                                <span>{{ __('admin_messages.export') }} </span></a>
                         </div>
                     </div>
                     <!-- <div class="col-md-2 col-lg-1 col-12 mt-5">
@@ -72,19 +72,19 @@
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
-                            <th scope="col">SR No.</th>
-                            <th scope="col">Joining Date</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Phone number</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Total Number of Completed Order</th>
-                            <th scope="col">Total Number of Cancelled Orders</th>
-                            <th scope="col">Wallet Balance</th>
+                            <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                            <th scope="col">{{ __('admin_messages.joining_date') }}</th>
+                            <th scope="col">{{ __('admin_messages.name') }}</th>
+                            <th scope="col">{{ __('admin_messages.image') }}</th>
+                            <th scope="col">{{ __('admin_messages.phone_number') }}</th>
+                            <th scope="col">{{ __('admin_messages.country') }}</th>
+                            <th scope="col">{{ __('admin_messages.email') }}</th>
+                            <th scope="col">{{ __('admin_messages.total_no_of_completed_orders') }}</th>
+                            <th scope="col">{{ __('admin_messages.total_no_of_cancelled_orders') }}</th>
+                            <th scope="col">{{ __('admin_messages.wallet_balance') }}</th>
                             @if(in_array(7, $permissions) || $admin->type == 1)
-                            <th scope="col">Add Amount in Wallet</th>
-                            <th scope="col">Block/Unblock</th>
+                            <th scope="col">{{ __('admin_messages.add_amount_in_wallet') }}</th>
+                            <th scope="col">{{ __('admin_messages.block') }}/{{ __('admin_messages.unblock') }}</th>
                             @endif
                         </tr>
                     </thead>
@@ -99,7 +99,7 @@
                                 <img src="{{ $user['profile_image'] }}" alt="" width="60px" height="60px" class="square" />
                             </td>
                             <td>{{ $user['country_code'] }}{{ $user['mobile'] }}</td>
-                            <td>{{ $user->country_info ? $user->country_info->name : 'N/A' }}</td>
+                            <td>{{ $user->country_info ? $user->country_info->name : __('admin_messages.n/a') }}</td>
                             <td>{{ $user['email'] }}</td>
                             <td>N/A</td>
                             <td>N/A</td>
@@ -118,12 +118,12 @@
                                 @else
                                     0
                                 @endif
-                                KD
+                                {{ __('admin_messages.kd') }}
                             </td>
                             @if(in_array(7, $permissions) || $admin->type == 1)
                             <td>
                                 <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2" data-user-id="{{ $user['id'] }}">
-                                    <span>Add</span>
+                                    <span>{{ __('admin_messages.add') }}</span>
                                 </a>
                             </td>
                             <td>
@@ -151,19 +151,19 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add Amount</h2>
+                <h2 class="h2">{{ __('admin_messages.add_amount') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body m-auto mb-2">
                 <input type="hidden" id="userIdForWallet">
                 <div class="form-group w-100">
-                    <label for="walletAmount" class="form-label">Enter Amount</label>
-                    <input type="text" id="walletAmount" oninput="this.value=this.value.replace(/[^0-9]/g,'');if(this.value.startsWith('0')){this.value=this.value.substring(1);}this.value=this.value.slice(0,7);" class="form-control w-100" />
-                    <small id="amountError" class="text-danger" style="display:none;">Please Enter Amount</small>
+                    <label for="walletAmount" class="form-label">{{ __('admin_messages.enter_amount') }}</label>
+                    <input type="text" placeholder="{{ __('admin_messages.enter_amount') }}" id="walletAmount" oninput="this.value=this.value.replace(/[^0-9]/g,'');if(this.value.startsWith('0')){this.value=this.value.substring(1);}this.value=this.value.slice(0,7);" class="form-control w-100" />
+                    <small id="amountError" class="text-danger" style="display:none;">{{ __('admin_messages.please_enter_amount') }}</small>
                 </div>
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <button type="button" class="btn btn-dark customBtn" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-dark customBtn" id="submitWalletAmount">Submit</button>
+                    <button type="button" class="btn btn-dark customBtn" data-bs-dismiss="modal">{{ __('admin_messages.cancel') }}</button>
+                    <button type="button" class="btn btn-dark customBtn" id="submitWalletAmount">{{ __('admin_messages.submit') }}</button>
                 </div>
             </div>
         </div>

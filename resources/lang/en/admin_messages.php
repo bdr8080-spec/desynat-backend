@@ -112,6 +112,7 @@ return [
     'no_data_found' => 'No data found',
     'no_documents_available' => 'No documents available',
     'unlimited' => 'Unlimited',
+    'add' => 'Add',
     
     
 
@@ -318,6 +319,7 @@ return [
     'add_amount' => 'Add Amount',
     'enter_amount' => 'Enter Amount',
     'please_enter_amount' => 'Please enter amount',
+    'amount_added_in_wallet_successfully' => 'Amount added in wallet successfully',
 
     //affiliate user management
     'affiliate_user_blocked_successfully' => 'Affiliate user blocked successfully',

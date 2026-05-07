@@ -112,6 +112,7 @@ return [
     'no_data_found' => 'لا توجد بيانات',
     'no_documents_available' => 'لا توجد مستندات متاحة',
     'unlimited' => 'غير محدود',
+    'add' => 'إضافة',
 
 
 
@@ -315,6 +316,7 @@ return [
     'add_amount' => 'إضافة مبلغ',
     'enter_amount' => 'أدخل المبلغ',
     'please_enter_amount' => 'يرجى إدخال المبلغ',
+    'amount_added_in_wallet_successfully' => 'تم إضافة المبلغ إلى المحفظة بنجاح',
 
     //affiliate user management
     'affiliate_user_blocked_successfully' => 'تم حظر المستخدم التابع بنجاح',

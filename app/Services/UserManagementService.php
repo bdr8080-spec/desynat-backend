@@ -197,13 +197,11 @@ class UserManagementService
             $user->status = $user->status == 1 ? 0 : 1;
             $user->save();
 
-            $message = $user->status == 1
-                ? 'User unblocked Successfully'
-                : 'User blocked Successfully';
-
             return [
                 'status' => 'success',
-                'message' => $message,
+                'message' => $user->status == 1
+                    ? __('admin_messages.user_unblocked_successfully')
+                    : __('admin_messages.user_blocked_successfully'),
                 'data' => $user
             ];
         } catch (\Exception $e) {
@@ -232,7 +230,7 @@ class UserManagementService
                     'amount' => $amount,
                 ]);
 
-                $message = 'Amount added in wallet successfully';
+                $message = __('admin_messages.amount_added_in_wallet_successfully');
             }
 
             $transaction = random_int(10000000, 99999999);
