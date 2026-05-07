@@ -111,6 +111,7 @@ return [
     'logout' => 'Logout',
     'no_data_found' => 'No data found',
     'no_documents_available' => 'No documents available',
+    'unlimited' => 'Unlimited',
     
     
 
@@ -303,6 +304,11 @@ return [
     'plan_updated_successfully' => 'Plan updated successfully',
     'plan_has_been_activated_successfully' => 'Plan has been activated successfully',
     'plan_has_been_deactivated_successfully' => 'Plan has been deactivated successfully',
+    'free_months' => 'Free Months',
+    'new_duration' => 'New Duration',
+    'enter_new_duration' => 'Enter New Duration',
+    'plan_deleted_successfully' => 'Plan deleted successfully',
+    'select_duration_type' => 'Select Duration Type',
 
     //user management
     'wallet_balance' => 'Wallet Balance',

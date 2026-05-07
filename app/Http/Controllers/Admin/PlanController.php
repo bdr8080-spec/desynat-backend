@@ -39,12 +39,13 @@ class PlanController extends Controller
         $data = $this->PlanService->changePlanStatus($id);
 
         if ($data['status'] == 'success') {
-            $statusText = $data['data']->status == 1 ? 'Activated' : 'Deactivated';
   
             return response()->json([
                 'success' => true,
                 'status' => $data['data']->status,
-                'message' => "Plan has been {$statusText} Successfully!"
+                'message' => $data['data']->status == 1
+                    ? __('admin_messages.plan_has_been_activated_successfully')
+                    : __('admin_messages.plan_has_been_deactivated_successfully')
             ]);
         } else {
             return response()->json([
@@ -153,7 +154,8 @@ class PlanController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Plan added successfully',
+                // 'message' => 'Plan added successfully',
+                'message' => __('admin_messages.plan_added_successfully'),
                 'data' => $plan
             ]);
 
@@ -250,7 +252,8 @@ class PlanController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Plan updated successfully',
+                // 'message' => 'Plan updated successfully',
+                'message' => __('admin_messages.plan_updated_successfully'),
                 'data' => $plan,
             ]);
         } catch (\Exception $e) {

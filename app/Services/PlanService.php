@@ -71,7 +71,7 @@ class PlanService
 
             return [
                 'status' => 'success',
-                'message' => 'Plan added successfully',
+                'message' => __('admin_messages.plan_added_successfully'),
                 'data' => $plan,
             ];
 
@@ -169,7 +169,7 @@ class PlanService
 
             return [
                 'status' => 'success',
-                'message' => 'Plan updated successfully',
+                'message' => __('admin_messages.plan_updated_successfully'),
                 'data' => $plan,
             ];
 
@@ -255,7 +255,9 @@ class PlanService
 
             return [
                 'status' => 'success',
-                'message' => 'Plan status updated successfully',
+                'message' => $plan->status == 1
+                    ? __('admin_messages.plan_has_been_activated_successfully')
+                    : __('admin_messages.plan_has_been_deactivated_successfully'),
                 'data' => $plan
             ];
         } catch (\Exception $e) {
@@ -283,7 +285,7 @@ class PlanService
 
             return [
                 'status' => 'success',
-                'message' => 'Plan deleted successfully',
+                'message' => __('admin_messages.plan_deleted_successfully'),
                 'data' => []
             ];
 

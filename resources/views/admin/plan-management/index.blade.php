@@ -18,7 +18,7 @@
           <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
               <div class="col-lg-6 col-md-6 col-12">
-                <h2 class="h2">SUBSCRIPTION PLAN MANAGEMENT</h2>
+                <h2 class="h2">{{ __('admin_messages.subscription_plan_management') }}</h2>
               </div>
 
             </div>
@@ -30,10 +30,10 @@
                   <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
-                            <th scope="col">SR No.</th>
-                            <th scope="col">Country Name</th>
+                            <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                            <th scope="col">{{ __('admin_messages.country') }}</th>
                             @if(in_array(6, $permissions) || $admin->type == 1)
-                            <th scope="col">Manage Plan</th>
+                            <th scope="col">{{ __('admin_messages.manage_plan') }}</th>
                             @endif
                         </tr>
                     </thead>
@@ -48,7 +48,7 @@
                                         class="btn btn-dark customBtn"
                                         href="{{ route('managePlans', ['id' => $country->id]) }}"
                                     >
-                                        <span>Manage Plan</span>
+                                        <span>{{ __('admin_messages.manage_plan') }}</span>
                                     </a>
                                 </td>
                                 @endif

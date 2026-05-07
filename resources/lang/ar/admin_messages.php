@@ -111,6 +111,7 @@ return [
     'logout' => 'تسجيل الخروج',
     'no_data_found' => 'لا توجد بيانات',
     'no_documents_available' => 'لا توجد مستندات متاحة',
+    'unlimited' => 'غير محدود',
 
 
 
@@ -300,6 +301,11 @@ return [
     'plan_updated_successfully' => 'تم تحديث الخطة بنجاح',
     'plan_has_been_activated_successfully' => 'تم تفعيل الخطة بنجاح',
     'plan_has_been_deactivated_successfully' => 'تم إلغاء تفعيل الخطة بنجاح',
+    'free_months' => 'أشهر مجانية',
+    'new_duration' => 'المدة الجديدة',
+    'enter_new_duration' => 'أدخل المدة الجديدة',
+    'plan_deleted_successfully' => 'تم حذف الخطة بنجاح',
+    'select_duration_type' => 'اختر نوع المدة',
 
     //user management
     'wallet_balance' => 'رصيد المحفظة',

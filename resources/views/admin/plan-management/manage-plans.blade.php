@@ -15,14 +15,14 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">SUBSCRIPTION PLAN </h6>
+                        <h6 class="m-0">{{ __('admin_messages.manage_plan') }}</h6>
                     </div>
                 </div>
 
                 <div class="col-lg-6 col-md-4 col-12">
                     <div class="d-flex justify-content-end">
                         <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                            <span>Add Subscription Plan</span>
+                            <span>{{ __('admin_messages.add_subscription_plan') }}</span>
                         </a>
                     </div>
                 </div>
@@ -50,19 +50,19 @@
                         <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
-                                    <th scope="col">SR No.</th>
-                                    <th scope="col">Subscription Plan Name(English)</th>
-                                    <th scope="col">Subscription Plan Name(Arabic)</th>
-                                    <th scope="col">Duration</th>
-                                    <th scope="col">No. of Products</th>
-                                    <th scope="col">No. of Videos</th>
-                                    <th scope="col">No. of Highlights</th>
-                                    <th scope="col">Stories</th>
-                                    <th scope="col">No. of Employees</th>
-                                    <th scope="col">Plan Price</th>
-                                    <th scope="col">New Plan Price</th>
-                                    <th scope="col">Commission %</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                    <th scope="col">{{ __('admin_messages.plan_name_english') }}</th>
+                                    <th scope="col">{{ __('admin_messages.plan_name_arabic') }}</th>
+                                    <th scope="col">{{ __('admin_messages.duration') }}</th>
+                                    <th scope="col">{{ __('admin_messages.no_of_products') }}</th>
+                                    <th scope="col">{{ __('admin_messages.no_of_videos') }}</th>
+                                    <th scope="col">{{ __('admin_messages.no_of_highlights') }}</th>
+                                    <th scope="col">{{ __('admin_messages.stories') }}</th>
+                                    <th scope="col">{{ __('admin_messages.no_of_employees') }}</th>
+                                    <th scope="col">{{ __('admin_messages.plan_price') }}</th>
+                                    <th scope="col">{{ __('admin_messages.new_plan_price') }}</th>
+                                    <th scope="col">{{ __('admin_messages.commission(%)') }}</th>
+                                    <th scope="col">{{ __('admin_messages.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,29 +74,43 @@
                                     <td>
                                         {{ $plan->duration }}
                                         @if($plan->duration_type == 1)
-                                        Month
+                                        {{ __('admin_messages.months') }}
                                         @elseif($plan->duration_type == 2)
-                                        Year
+                                        {{ __('admin_messages.years') }}
                                         @else
-                                        N/A
+                                        {{ __('admin_messages.n/a') }}
                                         @endif
                                     </td>
-                                    <td>{{ $plan->no_of_products }}</td>
+                                    <td>
+                                        {{ $plan->product_type == 1 
+                                            ? __('admin_messages.unlimited') 
+                                            : $plan->no_of_products 
+                                        }}
+                                    </td>
                                     <td>{{ $plan->no_of_videos }}</td>
                                     <td>{{ $plan->no_of_highlights }}</td>
                                     <td>
                                         @if($plan->stories == 0)
-                                        Close
+                                        {{ __('admin_messages.no') }}
                                         @elseif($plan->stories == 1)
-                                        Open
+                                        {{ __('admin_messages.yes') }}
                                         @else
-                                        N/A
+                                        {{ __('admin_messages.n/a') }}
                                         @endif
                                     </td>
                                     <td>{{ $plan->no_of_employee }}</td>
-                                    <td>{{ $plan->price }} KD</td>
-                                    <td>{{ $plan->discounted_price ? $plan->discounted_price . ' KD' : 'N/A' }}</td>
-                                    <td>{{ $plan->commission_percentage === null ? 'No' : $plan->commission_percentage . '%' }}
+                                    <td>{{ $plan->price }} {{ __('admin_messages.kd') }}</td>
+                                    <td>
+                                        {{ $plan->discounted_price 
+                                            ? $plan->discounted_price . ' ' . __('admin_messages.kd') 
+                                            : __('admin_messages.n/a') 
+                                        }}
+                                    </td>
+                                    <td>
+                                        {{ $plan->commission_percentage === null
+                                            ? __('admin_messages.no')
+                                            : $plan->commission_percentage . '%'
+                                        }}
                                     </td>
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
@@ -141,9 +155,7 @@
                                     </td>
                                 </tr>
                                 @empty
-                                <tr>
-                                    <td colspan="11" class="text-center">No plans found for this country</td>
-                                </tr>
+
                                 @endforelse
                             </tbody>
 
@@ -162,7 +174,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add Plan</h2>
+                <h2 class="h2">{{ __('admin_messages.add_subscription_plan') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -173,8 +185,8 @@
                             <!-- Plan Name English -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>Plan Name (English)</label>
-                                    <input type="text" name="plan_name_english" placeholder="Enter plan name in English"
+                                    <label>{{ __('admin_messages.plan_name_english') }}</label>
+                                    <input type="text" name="plan_name_english" placeholder="{{ __('admin_messages.enter_plan_name_in_english') }}"
                                         oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
                                         class="form-control">
                                     <span class="text-danger error-text plan_name_english_err"></span>
@@ -184,8 +196,8 @@
                             <!-- Plan Name Arabic -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>Plan Name (Arabic)</label>
-                                    <input type="text" name="plan_name_arabic" placeholder="Enter plan name in Arabic"
+                                    <label>{{ __('admin_messages.plan_name_arabic') }}</label>
+                                    <input type="text" name="plan_name_arabic" placeholder="{{ __('admin_messages.enter_plan_name_in_arabic') }}"
                                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
                                         class="form-control">
                                     <span class="text-danger error-text plan_name_arabic_err"></span>
@@ -195,18 +207,18 @@
                             <!-- Duration -->
                             <div class="col-lg-12">
                                 <div class="form-group mb-3">
-                                    <label>Duration</label>
+                                    <label>{{ __('admin_messages.duration') }}</label>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input type="text" name="duration" placeholder="Set duration"
+                                            <input type="text" name="duration" placeholder="{{ __('admin_messages.set_duration') }}"
                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
                                                 maxlength="2" class="form-control">
                                             <span class="text-danger error-text duration_err"></span>
                                         </div>
                                         <div class="col-lg-6">
                                             <select name="duration_type" class="form-select">
-                                                <option value="1">Months</option>
-                                                <option value="2">Years</option>
+                                                <option value="1">{{ __('admin_messages.months') }}</option>
+                                                <option value="2">{{ __('admin_messages.years') }}</option>
                                             </select>
                                             <span class="text-danger error-text duration_type_err"></span>
                                         </div>
@@ -217,8 +229,8 @@
                             <!-- No. of Videos -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>No. of Videos</label>
-                                    <input type="text" name="no_of_videos" placeholder="Enter number of videos"
+                                    <label>{{ __('admin_messages.no_of_videos') }}</label>
+                                    <input type="text" name="no_of_videos" placeholder="{{ __('admin_messages.enter_no_of_videos') }}"
                                         oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
                                         maxlength="3" class="form-control">
                                     <span class="text-danger error-text no_of_videos_err"></span>
@@ -227,15 +239,15 @@
 
                             <div class="col-lg-12">
                                 <div class="form-group mb-3">
-                                    <label>Product Type</label>
+                                    <label>{{ __('admin_messages.product_type') }}</label>
                                     <div class="row">
                                         <div class="col-lg-4 d-flex align-items-center">
                                             <input type="radio" name="product_type" value="0" class="form-check-input me-2" checked>
-                                            <label class="form-check-label">Defined</label>
+                                            <label class="form-check-label">{{ __('admin_messages.defined') }}</label>
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
                                             <input type="radio" name="product_type" value="1" class="form-check-input me-2">
-                                            <label class="form-check-label">Unlimited</label>
+                                            <label class="form-check-label">{{ __('admin_messages.unlimited') }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -244,8 +256,8 @@
                             <!-- No. of Products -->
                             <div class="col-lg-6" id="productsInput">
                                 <div class="form-group mb-3">
-                                    <label>No. of Products</label>
-                                    <input type="text" name="no_of_products" placeholder="Enter number of products"
+                                    <label>{{ __('admin_messages.no_of_products') }}</label>
+                                    <input type="text" name="no_of_products" placeholder="{{ __('admin_messages.enter_no_of_products') }}"
                                         oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
                                         maxlength="4" class="form-control">
                                     <span class="text-danger error-text no_of_products_err"></span>
@@ -255,8 +267,8 @@
                             <!-- No. of Highlights -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>No. of Highlights</label>
-                                    <input type="text" name="no_of_highlights" placeholder="Enter number of highlights"
+                                    <label>{{ __('admin_messages.no_of_highlights') }}</label>
+                                    <input type="text" name="no_of_highlights" placeholder="{{ __('admin_messages.enter_no_of_highlights') }}"
                                         oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
                                         maxlength="3" class="form-control">
                                     <span class="text-danger error-text no_of_highlights_err"></span>
@@ -266,8 +278,8 @@
                             <!-- No. of Employee -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>No. of Employees</label>
-                                    <input type="text" name="no_of_employee" placeholder="Enter number of employees"
+                                    <label>{{ __('admin_messages.no_of_employees') }}</label>
+                                    <input type="text" name="no_of_employee" placeholder="{{ __('admin_messages.enter_no_of_employees') }}"
                                         oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
                                         maxlength="4" class="form-control">
                                     <span class="text-danger error-text no_of_employee_err"></span>
@@ -277,8 +289,8 @@
                             <!-- Charges -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>Plan Price</label>
-                                    <input type="text" name="price" placeholder="Enter Plan Price"
+                                    <label>{{ __('admin_messages.plan_price') }}</label>
+                                    <input type="text" name="price" placeholder="{{ __('admin_messages.enter_plan_price') }}"
                                         oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')"
                                         class="form-control">
                                     <span class="text-danger error-text price_err"></span>
@@ -288,17 +300,17 @@
                             <!-- Stories -->
                             <div class="col-lg-12">
                                 <div class="form-group mb-3">
-                                    <label>Stories</label>
+                                    <label>{{ __('admin_messages.stories') }}</label>
                                     <div class="row">
                                         <div class="col-lg-4 d-flex align-items-center">
                                             <input type="radio" id="storiesYes" name="stories" value="yes"
                                                 class="form-check-input me-2" checked>
-                                            <label for="storiesYes" class="form-check-label">Yes</label>
+                                            <label for="storiesYes" class="form-check-label">{{ __('admin_messages.yes') }}</label>
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
                                             <input type="radio" id="storiesNo" name="stories" value="no"
                                                 class="form-check-input me-2">
-                                            <label for="storiesNo" class="form-check-label">No</label>
+                                            <label for="storiesNo" class="form-check-label">{{ __('admin_messages.no') }}</label>
                                         </div>
                                     </div>
                                     <span class="text-danger error-text stories_err"></span>
@@ -308,17 +320,17 @@
                             <!-- Commission -->
                             <div class="col-lg-12">
                                 <div class="form-group mb-3">
-                                    <label>Commission</label>
+                                    <label>{{ __('admin_messages.commission(%)') }}</label>
                                     <div class="row">
                                         <div class="col-lg-4 d-flex align-items-center">
                                             <input type="radio" id="commissionYes" name="commission" value="yes"
                                                 class="form-check-input me-2">
-                                            <label for="commissionYes" class="form-check-label">Yes</label>
+                                            <label for="commissionYes" class="form-check-label">{{ __('admin_messages.yes') }}</label>
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
                                             <input type="radio" id="commissionNo" name="commission" value="no"
                                                 class="form-check-input me-2" checked>
-                                            <label for="commissionNo" class="form-check-label">No</label>
+                                            <label for="commissionNo" class="form-check-label">{{ __('admin_messages.no') }}</label>
                                         </div>
                                     </div>
                                     <span class="text-danger error-text commission_err"></span>
@@ -328,7 +340,7 @@
                                         <div class="input-with-percent">
                                             <input type="text" name="commission_percentage"
                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';"
-                                                placeholder="Enter commission percentage" class="form-control w-50">
+                                                placeholder="{{ __('admin_messages.enter_commission_percentage') }}" class="form-control w-50">
                                             <span class="percent-symbol">%</span>
                                         </div>
 
@@ -340,15 +352,15 @@
                             <!-- Free Months -->
                             <div class="col-lg-12">
                                 <div class="form-group mb-3">
-                                    <label>Free Months</label>
+                                    <label>{{ __('admin_messages.free_months') }}</label>
                                     <div class="row">
                                         <div class="col-lg-4 d-flex align-items-center">
                                             <input type="radio" name="free_months_option" value="1" class="form-check-input me-2">
-                                            <label class="form-check-label">Yes</label>
+                                            <label class="form-check-label">{{ __('admin_messages.yes') }}</label>
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
                                             <input type="radio" name="free_months_option" value="0" class="form-check-input me-2" checked>
-                                            <label class="form-check-label">No</label>
+                                            <label class="form-check-label">{{ __('admin_messages.no') }}</label>
                                         </div>
                                     </div>
                                     <span class="text-danger error-text free_months_option_err"></span>
@@ -356,7 +368,7 @@
                                     <!-- Free Months Input -->
                                     <div id="freeMonthsInput" style="display:none; margin-top:10px;">
                                         <input type="text" name="free_months"
-                                            placeholder="Enter number of free months"
+                                            placeholder="{{ __('admin_messages.enter_no_of_free_months') }}"
                                             oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
                                             maxlength="2" class="form-control w-50">
 
@@ -367,7 +379,7 @@
 
                             <!-- Submit Button -->
                             <div class="col-lg-12 d-flex justify-content-center mt-3">
-                                <button type="submit" class="btn btn-dark customBtn">Submit</button>
+                                <button type="submit" class="btn btn-dark customBtn">{{ __('admin_messages.submit') }}</button>
                             </div>
                         </div>
                     </form>
@@ -576,7 +588,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Edit Plan</h2>
+                <h2 class="h2">{{ __('admin_messages.edit_subscription_plan') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -590,10 +602,10 @@
                             <!-- Plan Name English -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>Plan Name (English)</label>
+                                    <label>{{ __('admin_messages.plan_name_english') }}</label>
                                     <input type="text" name="plan_name_english" value=""
                                         oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                                        class="form-control">
+                                        class="form-control" placeholder="{{ __('admin_messages.enter_plan_name_in_english') }}">
                                     <span class="text-danger error-text plan_name_english_err"></span>
                                 </div>
                             </div>
@@ -601,10 +613,10 @@
                             <!-- Plan Name Arabic -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>Plan Name (Arabic)</label>
+                                    <label>{{ __('admin_messages.plan_name_arabic') }}</label>
                                     <input type="text" name="plan_name_arabic" value=""
                                         oninput="this.value=this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                                        class="form-control">
+                                        class="form-control" placeholder="{{ __('admin_messages.enter_plan_name_in_arabic') }}">
                                     <span class="text-danger error-text plan_name_arabic_err"></span>
                                 </div>
                             </div>
@@ -612,19 +624,19 @@
                             <!-- Duration -->
                             <div class="col-lg-12">
                                 <div class="form-group mb-3">
-                                    <label>Duration</label>
+                                    <label>{{ __('admin_messages.duration') }}</label>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input type="text" name="duration" value="" placeholder="Enter duration"
+                                            <input type="text" name="duration" value="" placeholder="{{ __('admin_messages.set_duration') }}"
                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
                                                 maxlength="2" class="form-control">
                                             <span class="text-danger error-text duration_err"></span>
                                         </div>
                                         <div class="col-lg-6">
                                             <select name="duration_type" class="form-select">
-                                                <option value="">Select Duration</option>
-                                                <option value="1">Months</option>
-                                                <option value="2">Years</option>
+                                                <!-- <option value="">Select Duration</option> -->
+                                                <option value="1">{{ __('admin_messages.months') }}</option>
+                                                <option value="2">{{ __('admin_messages.years') }}</option>
                                             </select>
                                             <span class="text-danger error-text duration_type_err"></span>
                                         </div>
@@ -635,20 +647,20 @@
                             <!-- New Duration -->
                             <div class="col-lg-12">
                                 <div class="form-group mb-3">
-                                    <label>New Duration</label>
+                                    <label>{{ __('admin_messages.new_duration') }}</label>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <input type="text" name="new_duration" value=""
-                                                placeholder="Enter new duration"
+                                                placeholder="{{ __('admin_messages.enter_new_duration') }}"
                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
                                                 maxlength="2" class="form-control">
                                             <span class="text-danger error-text new_duration_err"></span>
                                         </div>
                                         <div class="col-lg-6">
                                             <select name="new_duration_type" class="form-select">
-                                                <option value="">Select New Duration</option>
-                                                <option value="1">Months</option>
-                                                <option value="2">Years</option>
+                                                <!-- <option value="">Select New Duration</option> -->
+                                                <option value="1">{{ __('admin_messages.months') }}</option>
+                                                <option value="2">{{ __('admin_messages.years') }}</option>
                                             </select>
                                             <span class="text-danger error-text duration_type_err"></span>
                                         </div>
@@ -659,10 +671,10 @@
                             <!-- Videos -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>No. of Videos</label>
+                                    <label>{{ __('admin_messages.no_of_videos') }}</label>
                                     <input type="text" name="no_of_videos" value=""
                                         oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
-                                        class="form-control">
+                                        class="form-control" placeholder="{{ __('admin_messages.enter_no_of_videos') }}">
                                     <span class="text-danger error-text no_of_videos_err"></span>
                                 </div>
                             </div>
@@ -670,13 +682,13 @@
                             <!-- Product Type (Defined / Unlimited) -->
                             <div class="col-lg-12">
                                 <div class="form-group mb-3">
-                                    <label>Product Type</label>
+                                    <label>{{ __('admin_messages.product_type') }}</label>
                                     <div class="row">
                                         <div class="col-lg-4 d-flex align-items-center">
-                                            <input type="radio" name="product_type" value="0" class="form-check-input me-2"> Defined
+                                            <input type="radio" name="product_type" value="0" class="form-check-input me-2"> {{ __('admin_messages.defined') }}
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" name="product_type" value="1" class="form-check-input me-2"> Unlimited
+                                            <input type="radio" name="product_type" value="1" class="form-check-input me-2"> {{ __('admin_messages.unlimited') }}
                                         </div>
                                     </div>
                                     <span class="text-danger error-text product_type_err"></span>
@@ -686,10 +698,10 @@
                             <!-- Products (only show if Defined) -->
                             <div class="col-lg-6" id="productsInput">
                                 <div class="form-group mb-3">
-                                    <label>No. of Products</label>
+                                    <label>{{ __('admin_messages.no_of_products') }}</label>
                                     <input type="text" name="no_of_products" value=""
                                         oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
-                                        class="form-control">
+                                        class="form-control" placeholder="{{ __('admin_messages.enter_no_of_products') }}">
                                     <span class="text-danger error-text no_of_products_err"></span>
                                 </div>
                             </div>
@@ -697,10 +709,10 @@
                             <!-- Highlights -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>No. of Highlights</label>
+                                    <label>{{ __('admin_messages.no_of_highlights') }}</label>
                                     <input type="text" name="no_of_highlights" value=""
                                         oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
-                                        class="form-control">
+                                        class="form-control" placeholder="{{ __('admin_messages.enter_no_of_highlights') }}">
                                     <span class="text-danger error-text no_of_highlights_err"></span>
                                 </div>
                             </div>
@@ -708,10 +720,10 @@
                             <!-- Employees -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>No. of Employees</label>
+                                    <label>{{ __('admin_messages.no_of_employees') }}</label>
                                     <input type="text" name="no_of_employee" value=""
                                         oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
-                                        class="form-control">
+                                        class="form-control" placeholder="{{ __('admin_messages.enter_no_of_employees') }}">
                                     <span class="text-danger error-text no_of_employee_err"></span>
                                 </div>
                             </div>
@@ -719,10 +731,10 @@
                             <!-- Plan Price -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>Plan Price</label>
+                                    <label>{{ __('admin_messages.plan_price') }}</label>
                                     <input type="text" name="price" value=""
                                         oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')"
-                                        class="form-control">
+                                        class="form-control" placeholder="{{ __('admin_messages.enter_plan_price') }}">
                                     <span class="text-danger error-text price_err"></span>
                                 </div>
                             </div>
@@ -730,23 +742,23 @@
                             <!-- New Plan Price -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
-                                    <label>New Plan Price</label>
+                                    <label>{{ __('admin_messages.new_plan_price') }}</label>
                                     <input type="text" name="discounted_price" value=""
                                         oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')"
-                                        class="form-control">
+                                        class="form-control" placeholder="{{ __('admin_messages.enter_plan_price') }}">
                                     <span class="text-danger error-text discounted_price_err"></span>
                                 </div>
                             </div>
 
                             <!-- Stories -->
                             <div class="col-lg-12">
-                                <label>Stories</label>
+                                <label>{{ __('admin_messages.stories') }}</label>
                                 <div class="row">
                                     <div class="col-lg-4 d-flex align-items-center">
-                                        <input type="radio" name="stories" value="yes" style="margin:7px;"> Yes
+                                        <input type="radio" name="stories" value="yes" style="margin:7px;"> {{ __('admin_messages.yes') }}
                                     </div>
                                     <div class="col-lg-6 d-flex align-items-center">
-                                        <input type="radio" name="stories" value="no" style="margin:7px;"> No
+                                        <input type="radio" name="stories" value="no" style="margin:7px;"> {{ __('admin_messages.no') }}
                                     </div>
                                 </div>
                                 <span class="text-danger error-text stories_err"></span>
@@ -754,13 +766,13 @@
 
                             <!-- Commission -->
                             <div class="col-lg-12">
-                                <label>Commission</label>
+                                <label>{{ __('admin_messages.commission(%)') }}</label>
                                 <div class="row">
                                     <div class="col-lg-4 d-flex align-items-center">
-                                        <input type="radio" class="commissionRadio" name="commission" value="yes" style="margin:7px;"> Yes
+                                        <input type="radio" class="commissionRadio" name="commission" value="yes" style="margin:7px;"> {{ __('admin_messages.yes') }}
                                     </div>
                                     <div class="col-lg-6 d-flex align-items-center">
-                                        <input type="radio" class="commissionRadio" name="commission" value="no" style="margin:7px;"> No
+                                        <input type="radio" class="commissionRadio" name="commission" value="no" style="margin:7px;"> {{ __('admin_messages.no') }}
                                     </div>
                                 </div>
                                 <span class="text-danger error-text commission_err"></span>
@@ -769,7 +781,7 @@
                                     <div class="input-with-percent">
                                         <input type="text" name="commission_percentage" value=""
                                             oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';"
-                                            placeholder="Enter commission percentage" class="form-control w-50">
+                                            placeholder="{{ __('admin_messages.enter_commission_percentage') }}" class="form-control w-50">
                                         <span class="percent-symbol">%</span>
                                     </div>
 
@@ -780,19 +792,19 @@
                             <!-- Free Months -->
                             <div class="col-lg-12">
                                 <div class="form-group mb-3">
-                                    <label>Free Months</label>
+                                    <label>{{ __('admin_messages.free_months') }}</label>
                                     <div class="row">
                                         <div class="col-lg-4 d-flex align-items-center">
-                                            <input type="radio" name="free_months_option" value="1" class="form-check-input me-2"> Yes
+                                            <input type="radio" name="free_months_option" value="1" class="form-check-input me-2"> {{ __('admin_messages.yes') }}
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" name="free_months_option" value="0" class="form-check-input me-2"> No
+                                            <input type="radio" name="free_months_option" value="0" class="form-check-input me-2"> {{ __('admin_messages.no') }}
                                         </div>
                                     </div>
                                     <span class="text-danger error-text free_months_option_err"></span>
 
                                     <div id="freeMonthsInput" style="display:none; margin-top:10px;">
-                                        <input type="text" name="free_months" placeholder="Enter number of free months"
+                                        <input type="text" name="free_months" placeholder="{{ __('admin_messages.enter_no_of_free_months') }}"
                                             oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
                                             maxlength="2" class="form-control w-50">
                                         <span class="text-danger error-text free_months_err"></span>
@@ -802,7 +814,7 @@
 
                             <!-- Submit -->
                             <div class="col-lg-12 d-flex justify-content-center mt-3">
-                                <button type="submit" class="btn btn-dark customBtn">Update</button>
+                                <button type="submit" class="btn btn-dark customBtn">{{ __('admin_messages.update') }}</button>
                             </div>
 
                         </div>
@@ -872,13 +884,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let planId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deletePlan/${planId}`, {
@@ -995,42 +1008,42 @@ $(document).ready(function() {
         let valid = true;
 
         if (!plan_name_english) {
-            $('.plan_name_english_err').text('Please Enter Plan Name (English)');
+            $('.plan_name_english_err').text("{{ __('admin_messages.enter_plan_name_in_english') }}");
             valid = false;
         }
 
         if (!plan_name_arabic) {
-            $('.plan_name_arabic_err').text('Please Enter Plan Name (Arabic)');
+            $('.plan_name_arabic_err').text("{{ __('admin_messages.enter_plan_name_in_arabic') }}");
             valid = false;
         }
 
         if (!duration) {
-            $('.duration_err').text('Please Enter Duration');
+            $('.duration_err').text("{{ __('admin_messages.enter_duration') }}");
             valid = false;
         }
 
         if (!duration_type) {
-            $('.duration_type_err').text('Please Select Duration Type');
+            $('.duration_type_err').text("{{ __('admin_messages.select_duration_type') }}");
             valid = false;
         }
 
         if (!no_of_videos) {
-            $('.no_of_videos_err').text('Please Enter Number Of Videos');
+            $('.no_of_videos_err').text("{{ __('admin_messages.enter_no_of_videos') }}");
             valid = false;
         }
 
         if (product_type == '0' && !no_of_products) {
-            $('.no_of_products_err').text('Please Enter Number Of Products');
+            $('.no_of_products_err').text("{{ __('admin_messages.enter_no_of_products') }}");
             valid = false;
         }
 
         if (!no_of_highlights) {
-            $('.no_of_highlights_err').text('Please Enter Number Of Highlights');
+            $('.no_of_highlights_err').text("{{ __('admin_messages.enter_no_of_highlights') }}");
             valid = false;
         }
 
         if (!no_of_employee) {
-            $('.no_of_employee_err').text('Please Enter Number Of Employees');
+            $('.no_of_employee_err').text("{{ __('admin_messages.enter_no_of_employees') }}");
             valid = false;
         }
 
@@ -1040,7 +1053,7 @@ $(document).ready(function() {
         }
 
         if (!price) {
-            $('.price_err').text('Please Enter Charges');
+            $('.price_err').text("{{ __('admin_messages.enter_plan_price') }}");
             valid = false;
         }
 
@@ -1050,12 +1063,12 @@ $(document).ready(function() {
         }
 
         if (commission === 'yes' && !commission_percentage) {
-            $('.commission_percentage_err').text('Please Enter Commission Percentage');
+            $('.commission_percentage_err').text("{{ __('admin_messages.enter_commission_percentage') }}");
             valid = false;
         }
 
         if (duration_type === '1' && parseInt(duration) > 11) {
-            $('.duration_err').text('Duration cannot be more than 11 months');
+            $('.duration_err').text("{{ __('admin_messages.duration_can_not_be_more_than_11_months') }}");
             valid = false;
         }
 
@@ -1063,17 +1076,17 @@ $(document).ready(function() {
         if (free_months_option == '1') {
 
             if (!free_months) {
-                $('.free_months_err').text('Please enter free months');
+                $('.free_months_err').text("{{ __('admin_messages.enter_no_of_free_months') }}");
                 valid = false;
             }
 
             if (duration_type === '1') {
-                $('.free_months_err').text("You can't provide free months for Monthly plan");
+                $('.free_months_err').text("{{ __('admin_messages.you_can_not_provide_free_months_for_monthly_plan') }}");
                 valid = false;
             }
 
             if (duration_type === '2' && parseInt(free_months) > 11) {
-                $('.free_months_err').text('No of months should not greater than 11');
+                $('.free_months_err').text("{{ __('admin_messages.duration_can_not_be_more_than_11_months') }}");
                 valid = false;
             }
         }
@@ -1521,23 +1534,23 @@ $(document).ready(function() {
 
         // --- Validation ---
         let valid = true;
-        if (!formData.plan_name_english) { modal.find('.plan_name_english_err').text('Please Enter Plan Name (English)'); valid = false; }
-        if (!formData.plan_name_arabic) { modal.find('.plan_name_arabic_err').text('Please Enter Plan Name (Arabic)'); valid = false; }
-        if (!formData.duration) { modal.find('.duration_err').text('Please Enter Duration'); valid = false; }
-        if (!formData.duration_type) { modal.find('.duration_type_err').text('Please Select Duration Type'); valid = false; }
-        if (!formData.no_of_videos) { modal.find('.no_of_videos_err').text('Please Enter Number Of Videos'); valid = false; }
-        if (formData.product_type == '0' && !formData.no_of_products) { modal.find('.no_of_products_err').text('Please Enter Number Of Products'); valid = false; }
-        if (!formData.no_of_highlights) { modal.find('.no_of_highlights_err').text('Please Enter Number Of Highlights'); valid = false; }
-        if (!formData.no_of_employee) { modal.find('.no_of_employee_err').text('Please Enter Number Of Employees'); valid = false; }
+        if (!formData.plan_name_english) { modal.find('.plan_name_english_err').text("{{ __('admin_messages.enter_plan_name_in_english') }}"); valid = false; }
+        if (!formData.plan_name_arabic) { modal.find('.plan_name_arabic_err').text("{{ __('admin_messages.enter_plan_name_in_arabic') }}"); valid = false; }
+        if (!formData.duration) { modal.find('.duration_err').text("{{ __('admin_messages.enter_duration') }}"); valid = false; }
+        if (!formData.duration_type) { modal.find('.duration_type_err').text("{{ __('admin_messages.select_duration_type') }}"); valid = false; }
+        if (!formData.no_of_videos) { modal.find('.no_of_videos_err').text("{{ __('admin_messages.enter_no_of_videos') }}"); valid = false; }
+        if (formData.product_type == '0' && !formData.no_of_products) { modal.find('.no_of_products_err').text("{{ __('admin_messages.enter_no_of_products') }}"); valid = false; }
+        if (!formData.no_of_highlights) { modal.find('.no_of_highlights_err').text("{{ __('admin_messages.enter_no_of_highlights') }}"); valid = false; }
+        if (!formData.no_of_employee) { modal.find('.no_of_employee_err').text("{{ __('admin_messages.enter_no_of_employees') }}"); valid = false; }
         if (!formData.stories) { modal.find('.stories_err').text('Please Select Stories'); valid = false; }
-        if (!formData.price) { modal.find('.price_err').text('Please Enter Charges'); valid = false; }
+        if (!formData.price) { modal.find('.price_err').text("{{ __('admin_messages.enter_plan_price') }}"); valid = false; }
         if (!formData.commission) { modal.find('.commission_err').text('Please Select Commission'); valid = false; }
-        if (formData.commission === 'yes' && !formData.commission_percentage) { modal.find('.commission_percentage_err').text('Please Enter Commission Percentage'); valid = false; }
+        if (formData.commission === 'yes' && !formData.commission_percentage) { modal.find('.commission_percentage_err').text("{{ __('admin_messages.enter_commission_percentage') }}"); valid = false; }
 
         if (formData.is_free_months === '1') {
-            if (!formData.no_of_free_months) { modal.find('.free_months_err').text('Please enter free months'); valid = false; }
-            if (formData.duration_type === '1') { modal.find('.free_months_err').text("You can't provide free months for Monthly plan"); valid = false; }
-            if (formData.duration_type === '2' && parseInt(formData.no_of_free_months) > 11) { modal.find('.free_months_err').text('No of months should not greater than 11'); valid = false; }
+            if (!formData.no_of_free_months) { modal.find('.free_months_err').text("{{ __('admin_messages.enter_no_of_free_months') }}"); valid = false; }
+            if (formData.duration_type === '1') { modal.find('.free_months_err').text("{{ __('admin_messages.you_can_not_provide_free_months_for_monthly_plan') }}"); valid = false; }
+            if (formData.duration_type === '2' && parseInt(formData.no_of_free_months) > 11) { modal.find('.free_months_err').text("{{ __('admin_messages.duration_can_not_be_more_than_11_months') }}"); valid = false; }
         }
 
         if (!valid) return;

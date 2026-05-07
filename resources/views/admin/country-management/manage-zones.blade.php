@@ -208,10 +208,14 @@
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&libraries=places,drawing"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&libraries=places,drawing"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&libraries=places,drawing&language={{ app()->getLocale() }}"></script>
 
 
 
+<script>
+    let mapLocale = "{{ app()->getLocale() }}";
+</script>
 
 <!-- view zone -->
 <script>
@@ -223,7 +227,8 @@
         }
 
         const script = document.createElement('script');
-        script.src = "https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}";
+        // script.src = "https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}";
+        script.src = "https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&language={{ app()->getLocale() }}";
         script.async = true;
         script.defer = true;
         document.head.appendChild(script);
