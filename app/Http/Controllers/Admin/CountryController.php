@@ -64,12 +64,13 @@ class CountryController extends Controller
         $data = $this->CountryService->changeServiceCityStatus($id);
 
         if ($data['status'] == 'success') {
-            $statusText = $data['data']->status == 1 ? 'Activated' : 'Deactivated';
   
             return response()->json([
                 'success' => true,
                 'status' => $data['data']->status,
-                'message' => "City has been {$statusText} Successfully!"
+                'message' => $data['data']->status == 1
+                    ? __('admin_messages.city_has_been_activated_successfully')
+                    : __('admin_messages.city_has_been_deactivated_successfully')
             ]);
         } else {
             return response()->json([
@@ -177,12 +178,13 @@ class CountryController extends Controller
         $data = $this->CountryService->changeZoneStatus($id);
 
         if ($data['status'] == 'success') {
-            $statusText = $data['data']->status == 1 ? 'Activated' : 'Deactivated';
-  
+            
             return response()->json([
                 'success' => true,
                 'status' => $data['data']->status,
-                'message' => "Zone has been {$statusText} Successfully!"
+                'message' => $data['data']->status == 1
+                    ? __('admin_messages.zone_has_been_activated_successfully')
+                    : __('admin_messages.zone_has_been_deactivated_successfully')
             ]);
         } else {
             return response()->json([

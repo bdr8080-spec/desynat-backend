@@ -261,6 +261,9 @@ return [
     'zone_has_been_deactivated_successfully' => 'تم إلغاء تفعيل المنطقة بنجاح',
     'zone_has_been_activated_successfully' => 'تم تفعيل المنطقة بنجاح',
     'please_select_a_city' => 'يرجى اختيار المدينة',
+    'city_added_successfully' => 'تمت إضافة المدينة بنجاح',
+    'city_deleted_successfully' => 'تم حذف المدينة بنجاح',
+    'zone_deleted_successfully' => 'تم حذف المنطقة بنجاح',
 
     //subscription plan management
     'manage_plan' => 'إدارة الخطط',

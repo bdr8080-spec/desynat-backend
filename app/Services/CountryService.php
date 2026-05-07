@@ -194,7 +194,8 @@ class CountryService
 
             return [
                 'status' => 'success',
-                'message' => 'City added successfully',
+                // 'message' => 'City added successfully',
+                'message' => __('admin_messages.city_added_successfully'),
                 'data' => $serviceCity
             ];
 
@@ -223,7 +224,9 @@ class CountryService
 
             $city->status = $city->status == 1 ? 0 : 1;
             $city->save();
-            $message = $city->status == 1 ? 'City unblock successfully' : 'City block successfully';
+           $message = $city->status == 1
+                ? __('admin_messages.city_has_been_activated_successfully')
+                : __('admin_messages.city_has_been_deactivated_successfully');
 
             return [
                 'status' => 'success',
@@ -255,7 +258,8 @@ class CountryService
 
             return [
                 'status' => 'success',
-                'message' => 'City deleted successfully',
+                // 'message' => 'City deleted successfully',
+                'message' => __('admin_messages.city_deleted_successfully'),
                 'data' => null
             ];
 
@@ -281,7 +285,8 @@ class CountryService
 
             return [
                 'status' => 'success',
-                'message' => 'Zone added successfully',
+                // 'message' => 'Zone added successfully',
+                'message' => __('admin_messages.zone_added_successfully'),
                 'data' => $zone,
             ];
 
@@ -382,7 +387,8 @@ class CountryService
 
             return [
                 'status' => 'success',
-                'message' => 'Zone updated successfully',
+                // 'message' => 'Zone updated successfully',
+                'message' => __('admin_messages.zone_updated_successfully'),
                 'data' => $zone,
             ];
 
@@ -410,7 +416,9 @@ class CountryService
 
             $zone->status = $zone->status == 1 ? 0 : 1;
             $zone->save();
-            $message = $zone->status == 1 ? 'Zone unblock successfully' : 'Zone block successfully';
+            $message = $zone->status == 1
+                ? __('admin_messages.zone_has_been_activated_successfully')
+                : __('admin_messages.zone_has_been_deactivated_successfully');
 
             return [
                 'status' => 'success',
@@ -442,7 +450,8 @@ class CountryService
 
             return [
                 'status' => 'success',
-                'message' => 'Zone deleted successfully',
+                // 'message' => 'Zone deleted successfully',
+                'message' => __('admin_messages.zone_deleted_successfully'),
                 'data' => []
             ];
 

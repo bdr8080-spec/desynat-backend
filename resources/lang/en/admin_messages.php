@@ -264,6 +264,9 @@ return [
     'zone_has_been_deactivated_successfully' => 'Zone has been deactivated successfully',
     'zone_has_been_activated_successfully' => 'Zone has been activated successfully',
     'please_select_a_city' => 'Please select a city',
+    'city_added_successfully' => 'City added successfully',
+    'city_deleted_successfully' => 'City deleted successfully',
+    'zone_deleted_successfully' => 'Zone deleted successfully',
 
     //subscription plan management
     'manage_plan' => 'Manage Plans',
