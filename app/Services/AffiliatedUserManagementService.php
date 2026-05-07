@@ -298,7 +298,8 @@ class AffiliatedUserManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Affiliate User Approved Successfully',
+                // 'message' => 'Affiliate User Approved Successfully',
+                'message' => __('admin_messages.affiliate_user_approved_successfully'),
                 'data' => $user
             ];
 
@@ -347,7 +348,8 @@ class AffiliatedUserManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Affiliate User Rejected Successfully',
+                // 'message' => 'Affiliate User Rejected Successfully',
+                'message' => __('admin_messages.affiliate_user_rejected_successfully'),
                 'data' => $user
             ];
 
@@ -401,8 +403,8 @@ class AffiliatedUserManagementService
             ]);
 
             $message = $user->status == 1
-                ? 'Affiliate User Unblocked Successfully'
-                : 'Affiliate User Blocked Successfully';
+                ? __('admin_messages.affiliate_user_unblocked_successfully')
+                : __('admin_messages.affiliate_user_blocked_successfully');
 
             return [
                 'status' => 'success',

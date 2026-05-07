@@ -23,7 +23,7 @@ class AffilatedUser extends Authenticatable
      }
 
      public function bank_details(){
-      return $this->hasMany(Bankdetails::class,'user_id','id')->where('type','3');
+      return $this->hasMany(Bankdetails::class,'user_id','id')->where('type','3')->where('type','3');
      }
 
      public function country_details(){

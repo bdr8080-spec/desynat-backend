@@ -321,6 +321,8 @@ return [
     //affiliate user management
     'affiliate_user_blocked_successfully' => 'تم حظر المستخدم التابع بنجاح',
     'affiliate_user_unblocked_successfully' => 'تم إلغاء حظر المستخدم التابع بنجاح',
+    'affiliate_user_approved_successfully' => 'تمت الموافقة على المستخدم التابع بنجاح',
+    'affiliate_user_rejected_successfully' => 'تم رفض المستخدم التابع بنجاح',
 
     //delivery_boy_management
     'vehicle_name' => 'اسم المركبة',

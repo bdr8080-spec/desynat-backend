@@ -9,21 +9,21 @@
         ->toArray();
 @endphp
 <div class="inner-content management">
-    <h2 class="h2">Affiliate User Management</h2>
+    <h2 class="h2">{{ __('admin_messages.affiliate_user_management') }}</h2>
     <div class="d-flex justify-content-center">
         <ul class="nav nav-pills mb-3 tabs-pnl custom" id="pills-tab" role="tablist">
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="true">
-                    New
+                    {{ __('admin_messages.new') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="false">
-                    Approved
+                    {{ __('admin_messages.approved') }}
                 </button>
             </li>
 
@@ -31,7 +31,7 @@
                 <button class="nav-link customBtn2 m-0" id="pills-return-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-return" type="button" role="tab" aria-controls="pills-return"
                     aria-selected="false">
-                    Rejected
+                    {{ __('admin_messages.rejected') }}
                 </button>
             </li>
         </ul>
@@ -44,7 +44,7 @@
                         <!-- From Date Filter -->
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="from" class="form-label">From:</label>
+                                <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                                 <input type="date" id="from" name="from_date" class="form-control"
                                     value="{{ request()->from_date }}"
                                     onchange="document.getElementById('filterForm').submit();" />
@@ -54,7 +54,7 @@
                         <!-- To Date Filter -->
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">To:</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                                 <input type="date" id="to" name="to_date" class="form-control"
                                     value="{{ request()->to_date }}"
                                     onchange="document.getElementById('filterForm').submit();" />
@@ -64,11 +64,11 @@
                         <!-- Country Filter -->
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Select Country</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.country') }}</label>
                                 <select name="country" id="country"
                                     class="form-select form-select-lg "
                                     onchange="document.getElementById('filterForm').submit();">
-                                    <option value="">Select country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
                                     @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('country') == $country['name'] ? 'selected' : '' }}>
@@ -82,11 +82,11 @@
                             <div class="d-flex gap-3 mt-5" >
                                 <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn mt-2"
                                     >
-                                    <span>Reset</span>
+                                    <span>{{ __('admin_messages.reset') }}</span>
                                 </a>
                         
                                 <a href="{{ route('admin.export_new_affiliate_data', request()->all()) }}" class="btn btn-dark customBtn mt-2">
-                                    <span>Export</span>
+                                    <span>{{ __('admin_messages.export') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -97,19 +97,19 @@
                     <table id="myTable" class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Joining Date</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Mobile Number</th>
-                                <th scope="col">Email ID</th>
-                                <th scope="col">Country</th>
-                                <th scope="col"> Address</th>
-                                <th scope="col">Uploaded ID</th>
-                                <th scope="col">Bank Account Details</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.joining_date') }}</th>
+                                <th scope="col">{{ __('admin_messages.image') }}</th>
+                                <th scope="col">{{ __('admin_messages.name') }}</th>
+                                <th scope="col">{{ __('admin_messages.phone_number') }}</th>
+                                <th scope="col">{{ __('admin_messages.email') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col"> {{ __('admin_messages.address') }}</th>
+                                <th scope="col">{{ __('admin_messages.uploaded_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.bank_account_details') }}</th>
                                 <!-- <th scope="col">Upload Account Proof</th> -->
                                  @if(in_array(8, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -134,7 +134,7 @@
                                      {{$user['address_details']['pincode']}}
                                      {{$user['address_details']['state']}}
                                     @else
-                                    N/A
+                                    {{ __('admin_messages.n/a') }}
                                     @endif
                                 </td>
                                     <td>
@@ -150,18 +150,20 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                         @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                         @endif
                                     </td>
 
                                 <td>
                                 @if(!empty($user['bank_details']))
-                                <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#bankModal" data-bank='@json($user['bank_details'])'>
+                                <a class="table-button view-bank-btn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#bankModal"
+                                data-bank="{{ base64_encode(json_encode($user['bank_details'][0] ?? [])) }}">
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
                                 @else
-                                N/A
+                                {{ __('admin_messages.n/a') }}
                                 @endif
                                 </td>
                                 <!-- <td>
@@ -203,7 +205,7 @@
                                 <!-- From Date Filter -->
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="from" class="form-label">From:</label>
+                                        <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                                         <input type="date" id="from" name="from_date1" class="form-control"
                                             value="{{ request()->from_date1 }}"
                                             onchange="document.getElementById('filterForm1').submit();" />
@@ -213,7 +215,7 @@
                                 <!-- To Date Filter -->
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label">To:</label>
+                                        <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                                         <input type="date" id="to" name="to_date1" class="form-control"
                                             value="{{ request()->to_date1 }}"
                                             onchange="document.getElementById('filterForm1').submit();" />
@@ -223,12 +225,12 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                    <label for="to" class="form-label">Select Country</label>
+                                    <label for="to" class="form-label">{{ __('admin_messages.country') }}</label>
 
                                         <select name="country1" id="country1"
                                             class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm1').submit();">
-                                            <option value="">Select country</option>
+                                            <option value="">{{ __('admin_messages.select_country') }}</option>
                                             @foreach($countries as $country)
                                             <option value="{{ $country['name'] }}"
                                                 {{ request('country1') == $country['name'] ? 'selected' : '' }}>
@@ -242,10 +244,10 @@
                                     <div class="d-flex gap-3 mt-5" >
                                         <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn mt-2"
                                            >
-                                            <span>Reset</span>
+                                            <span>{{ __('admin_messages.reset') }}</span>
                                         </a>
                                         <a href="{{ route('admin.export_approved_affiliate_data', request()->all()) }}" class="btn btn-dark customBtn mt-2" >
-                                            <span>Export</span>
+                                            <span>{{ __('admin_messages.export') }}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -257,21 +259,21 @@
                     <table id="myTable1" class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Joining Date</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Mobile Number</th>
-                                <th scope="col">Email ID</th>
-                                <th scope="col">Country</th>
-                                <th scope="col"> Address</th>
-                                <th scope="col">Uploaded ID</th>
-                                <th scope="col">Bank Account Details</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.joining_date') }}</th>
+                                <th scope="col">{{ __('admin_messages.image') }}</th>
+                                <th scope="col">{{ __('admin_messages.name') }}</th>
+                                <th scope="col">{{ __('admin_messages.phone_number') }}</th>
+                                <th scope="col">{{ __('admin_messages.email') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col"> {{ __('admin_messages.address') }}</th>
+                                <th scope="col">{{ __('admin_messages.uploaded_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.bank_account_details') }}</th>
                                 <!-- <th scope="col">Upload Account Proof</th> -->
-                                <th scope="col">Total Number of Orders</th>
-                                <th scope="col">Total Earning</th>
+                                <th scope="col">{{ __('admin_messages.total_no_of_completed_orders') }}</th>
+                                <th scope="col">{{ __('admin_messages.total_earning') }}</th>
                                 @if(in_array(8, $permissions) || $admin->type == 1)
-                                <th scope="col">Block/Unblock</th>
+                                <th scope="col">{{ __('admin_messages.block') }}/{{ __('admin_messages.unblock') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -296,7 +298,7 @@
                                      {{$user['address_details']['pincode']}}
                                      {{$user['address_details']['state']}}
                                     @else
-                                    N/A
+                                    {{ __('admin_messages.n/a') }}
                                     @endif
                                 </td>
 
@@ -313,17 +315,19 @@
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
                                     @else
-                                        N/A
+                                        {{ __('admin_messages.n/a') }}
                                     @endif
                                 </td>
                                 <td> 
                                     @if(!empty($user['bank_details']))
-                                    <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#bankModal" data-bank='@json($user['bank_details'])'>
+                                    <a class="table-button view-bank-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#bankModal"
+                                    data-bank="{{ base64_encode(json_encode($user['bank_details'][0] ?? [])) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                     @else
-                                    N/A
+                                    {{ __('admin_messages.n/a') }}
                                     @endif
                                 </td>
                                 <!-- <td>
@@ -338,7 +342,7 @@
                                     @endif
                                 </td> -->
                                 <td>0</td>
-                                <td>0 KD</td>
+                                <td>0 {{ __('admin_messages.kd') }}</td>
                                 @if(in_array(8, $permissions) || $admin->type == 1)
                                  <td>
                                 <div class="form-check form-switch" style="justify-content: center;">
@@ -366,7 +370,7 @@
                                 <!-- From Date Filter -->
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="from" class="form-label">From:</label>
+                                        <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                                         <input type="date" id="from" name="from_date2" class="form-control"
                                             value="{{ request()->from_date2 }}"
                                             onchange="document.getElementById('filterForm2').submit();" />
@@ -376,7 +380,7 @@
                                 <!-- To Date Filter -->
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label">To:</label>
+                                        <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                                         <input type="date" id="to" name="to_date2" class="form-control"
                                             value="{{ request()->to_date2 }}"
                                             onchange="document.getElementById('filterForm2').submit();" />
@@ -386,12 +390,12 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label">Select Country</label>
+                                        <label for="to" class="form-label">{{ __('admin_messages.country') }}</label>
 
                                         <select name="country2" id="country2"
                                             class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm2').submit();">
-                                            <option value="">Select country</option>
+                                            <option value="">{{ __('admin_messages.select_country') }}</option>
                                             @foreach($countries as $country)
                                             <option value="{{ $country['name'] }}"
                                                 {{ request('country2') == $country['name'] ? 'selected' : '' }}>
@@ -405,10 +409,10 @@
                                     <div class="d-flex gap-3 mt-5" >
                                         <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn mt-2"
                                             >
-                                            <span>Reset</span>
+                                            <span>{{ __('admin_messages.reset') }}</span>
                                         </a>
                                           <a href="{{ route('admin.export_rejected_affiliate_data', request()->all()) }}" class="btn btn-dark customBtn mt-2">
-                                            <span>Export</span>
+                                            <span>{{ __('admin_messages.export') }}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -420,18 +424,18 @@
                     <table id="myTable2" class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Joining Date</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Mobile Number</th>
-                                <th scope="col">Email ID</th>
-                                <th scope="col">Country</th>
-                                <th scope="col"> Address</th>
-                                <th scope="col">Uploaded ID</th>
-                                <th scope="col">Bank Account Details</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.joining_date') }}</th>
+                                <th scope="col">{{ __('admin_messages.image') }}</th>
+                                <th scope="col">{{ __('admin_messages.name') }}</th>
+                                <th scope="col">{{ __('admin_messages.phone_number') }}</th>
+                                <th scope="col">{{ __('admin_messages.email') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col"> {{ __('admin_messages.address') }}</th>
+                                <th scope="col">{{ __('admin_messages.uploaded_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.bank_account_details') }}</th>
                                 <!-- <th scope="col">Upload Account Proof</th> -->
-                                <th scope="col">Reason</th>
+                                <th scope="col">{{ __('admin_messages.reason') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -455,7 +459,7 @@
                                      {{$user['address_details']['pincode']}}
                                      {{$user['address_details']['state']}}
                                     @else
-                                    N/A
+                                    {{ __('admin_messages.n/a') }}
                                     @endif
                                 </td>
                                 <td>
@@ -471,17 +475,19 @@
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
                                     @else
-                                        N/A
+                                        {{ __('admin_messages.n/a') }}
                                     @endif
                                 </td>
                                 <td> 
                                     @if(!empty($user['bank_details']))
-                                    <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#bankModal" data-bank='@json($user['bank_details'])'>
+                                    <a class="table-button view-bank-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#bankModal"
+                                    data-bank="{{ base64_encode(json_encode($user['bank_details'][0] ?? [])) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                     @else
-                                    N/A
+                                    {{ __('admin_messages.n/a') }}
                                     @endif
                                 </td>
                                 <!-- <td>
@@ -495,7 +501,7 @@
                                     N/A
                                     @endif
                                 </td> -->
-                                <td>{{ $user['reject_reason'] ?? 'N/A' }} </td>
+                                <td>{{ $user['reject_reason'] ??  __('admin_messages.n/a')  }} </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -521,7 +527,7 @@
                         <div class="mb-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="reject_type" id="rejectComplete" value="complete" checked>
-                                <label class="form-check-label" for="rejectComplete">Complete Reject</label>
+                                <label class="form-check-label" for="rejectComplete">{{ __('admin_messages.complete_reject') }}</label>
                             </div>
                         </div>
                     </div>
@@ -529,7 +535,7 @@
                         <div class="mb-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="reject_type" id="rejectDocument" value="document">
-                                <label class="form-check-label" for="rejectDocument">Document Reject</label>
+                                <label class="form-check-label" for="rejectDocument">{{ __('admin_messages.document_reject') }}</label>
                             </div>
                         </div>
                     </div>
@@ -538,16 +544,16 @@
                     <div class="col-lg-12">
                         <div class="div">
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Reason For Rejection</label>
+                                <label for="exampleFormControlInput1" class="form-label">{{ __('admin_messages.reason_for_rejection') }}</label>
                                 <textarea class="form-control" id="rejectReason" rows="3"></textarea>
-                                <div id="error-message" class="text-danger mt-2" style="display:none;">Please Enter Reason</div>
+                                <div id="error-message" class="text-danger mt-2" style="display:none;">{{ __('admin_messages.please_enter_reason') }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
              
                   <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mt-3">
-                                        <a type="button" class="btn btn-dark customBtn" id="submitReject">Reject Seller</a>
+                                        <a type="button" class="btn btn-dark customBtn" id="submitReject">{{ __('admin_messages.submit') }}</a>
                                     </div>
             </div>
          
@@ -559,7 +565,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Documents</h2>
+                <h2 class="h2">{{ __('admin_messages.uploaded_id') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -575,7 +581,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Uploaded Account Proof</h2>
+                <h2 class="h2">{{ __('admin_messages.uploaded_account_proof') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
@@ -593,30 +599,30 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title fs-5">Bank Details</h3>
+                <h3 class="modal-title fs-5">{{ __('admin_messages.bank_account_details') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
          
                 <table class="details-table">
                     <tr>
-                        <th>IBAN</th>
-                        <td id="modalIban">N/A</td>
+                        <th>{{ __('admin_messages.iban') }}</th>
+                        <td id="modalIban">{{ __('admin_messages.n/a') }}</td>
                     </tr>
                     <tr>
-                        <th>SWIFT</th>
-                        <td id="modalSwift">N/A</td>
+                        <th>{{ __('admin_messages.swift') }}</th>
+                        <td id="modalSwift">{{ __('admin_messages.n/a') }}</td>
                     </tr>
                     <tr>
-                        <th>Bank Name</th>
-                        <td id="modalBankName">N/A</td>
+                        <th>{{ __('admin_messages.bank_name') }}</th>
+                        <td id="modalBankName">{{ __('admin_messages.n/a') }}</td>
                     </tr>
                     <tr>
-                        <th>Account Holder Name</th>
-                        <td id="modalHolderName">N/A</td>
+                        <th>{{ __('admin_messages.account_holder_name') }}</th>
+                        <td id="modalHolderName">{{ __('admin_messages.n/a') }}</td>
                     </tr>
                     <tr>
-                        <th>Account Number</th>
-                        <td id="modalAccountNumber">N/A</td>
+                        <th>{{ __('admin_messages.account_number') }}</th>
+                        <td id="modalAccountNumber">{{ __('admin_messages.n/a') }}</td>
                     </tr>
                 </table>
 
@@ -691,17 +697,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- bank details -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+
     document.querySelectorAll('.view-bank-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const bank = JSON.parse(this.getAttribute('data-bank') || '{}');
-            document.getElementById('modalIban').textContent = bank.iban || 'N/A';
-            document.getElementById('modalSwift').textContent = bank.swift || 'N/A';
-            document.getElementById('modalBankName').textContent = bank.bank_name || 'N/A';
-            document.getElementById('modalHolderName').textContent = bank.account_holder_name || 'N/A';
-            document.getElementById('modalAccountNumber').textContent = bank.account_no || 'N/A';
+
+        button.addEventListener('click', function () {
+
+            let bank = {};
+
+            try {
+                const encoded = this.getAttribute('data-bank');
+
+                if (encoded) {
+                    bank = JSON.parse(atob(encoded));
+                }
+
+            } catch (error) {
+                console.error('Bank parse error:', error);
+                return;
+            }
+
+            const NA = "{{ __('admin_messages.n/a') }}";
+
+            document.getElementById('modalIban').textContent = bank?.iban || NA;
+            document.getElementById('modalSwift').textContent = bank?.swift || NA;
+            document.getElementById('modalBankName').textContent = bank?.bank_name || NA;
+            document.getElementById('modalHolderName').textContent = bank?.account_holder_name || NA;
+            document.getElementById('modalAccountNumber').textContent = bank?.account_no || NA;
+
         });
+
     });
+
 });
 </script>
 

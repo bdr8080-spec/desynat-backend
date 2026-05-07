@@ -324,6 +324,8 @@ return [
     //affiliate user management
     'affiliate_user_blocked_successfully' => 'Affiliate user blocked successfully',
     'affiliate_user_unblocked_successfully' => 'Affiliate user unblocked successfully',
+    'affiliate_user_approved_successfully' => 'Affiliate user approved successfully',
+    'affiliate_user_rejected_successfully' => 'Affiliate user rejected successfully',
 
     //delivery boy management
     'vehicle_name' => 'Vehicle Name',

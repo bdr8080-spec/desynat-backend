@@ -902,10 +902,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.view-bank-btn').forEach(button => {
         button.addEventListener('click', function() {
             const bank = JSON.parse(this.getAttribute('data-bank') || '{}');
-            document.getElementById('modalIban').textContent = bank.iban || 'N/A';
-            document.getElementById('modalSwift').textContent = bank.swift || 'N/A';
-            document.getElementById('modalBankName').textContent = bank.bank_name || 'N/A';
-            document.getElementById('modalHolderName').textContent = bank.account_holder_name || 'N/A';
+            const NA = "{{ __('admin_messages.n/a') }}";
+            document.getElementById('modalIban').textContent = bank.iban || NA;
+            document.getElementById('modalSwift').textContent = bank.swift || NA;
+            document.getElementById('modalBankName').textContent = bank.bank_name || NA;
+            document.getElementById('modalHolderName').textContent = bank.account_holder_name || NA;
         });
     });
 });
