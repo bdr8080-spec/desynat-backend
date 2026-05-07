@@ -14,28 +14,28 @@
 
 
         <div class="inner-content management">
-            <h2 class="h2">SELLER MANAGEMENT</h2> 
+            <h2 class="h2">{{ __('admin_messages.seller_management') }}</h2> 
             <div class="d-flex justify-content-center">
                 <ul class="nav nav-pills tabs-pnl custom" id="pills-tab" role="tablist">
                     <li class="nav-item m-1" role="presentation">
                         <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                             aria-selected="false">
-                            New
+                            {{ __('admin_messages.new') }}
                         </button>
                     </li>
                     <li class="nav-item m-1" role="presentation">
                         <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                             aria-selected="true">
-                            Approved
+                            {{ __('admin_messages.approved') }}
                         </button>
                     </li>
                     <li class="nav-item m-1" role="presentation">
                         <button class="nav-link customBtn2 m-0" id="pills-return-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-return" type="button" role="tab" aria-controls="pills-return"
                             aria-selected="false">
-                            Rejected
+                            {{ __('admin_messages.rejected') }}
                         </button>
                     </li>
                 </ul>
@@ -50,7 +50,7 @@
                                 <!-- From Date Filter -->
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="from" class="form-label">From:</label>
+                                        <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                                         <input type="date" id="from" name="from_date" class="form-control"
                                             value="{{ request()->from_date }}"
                                             onchange="document.getElementById('filterForm').submit();" />
@@ -60,7 +60,7 @@
                                 <!-- To Date Filter -->
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label">To:</label>
+                                        <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                                         <input type="date" id="to" name="to_date" class="form-control"
                                             value="{{ request()->to_date }}"
                                             onchange="document.getElementById('filterForm').submit();" />
@@ -70,11 +70,11 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label">Select Country</label>
+                                        <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                                         <select name="country_id" id="country_id"
                                             class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm').submit();">
-                                            <option value="">Select country</option>
+                                            <option value="">{{ __('admin_messages.select_country') }}</option>
                                             @foreach($countries as $country)
                                             <option value="{{ $country['id'] }}"
                                                 {{ request('country_id') == $country['id'] ? 'selected' : '' }}>
@@ -87,11 +87,11 @@
                                 <div class="col-lg-3 ">
                                     <div class="d-flex gap-3 mt-5">
                                         <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn mt-2">
-                                            <span>Reset</span>
+                                            <span>{{ __('admin_messages.reset') }}</span>
                                         </a>
                                 
                                         <a href="{{ route('admin.export_new_seller_data', request()->all()) }}" class="btn btn-dark customBtn mt-2">
-                                            <span>Export</span>
+                                            <span>{{ __('admin_messages.export') }}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -101,24 +101,24 @@
                             <table id="myTable" class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Sr.No</th>
-                                        <th scope="col">Joining Date</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Mobile Number</th>
-                                        <th scope="col">Email ID</th>
-                                        <th scope="col">Country</th>
-                                        <th scope="col">Store Name</th>
-                                        <th scope="col">Store Address</th>
-                                        <th scope="col">Store Mail ID</th>
-                                        <th scope="col">Bio</th>
-                                        <th scope="col">Uploaded ID</th>
-                                        <th scope="col">Uploaded Store Document</th>
-                                        <th scope="col">Bank Account Details</th>
-                                        <th scope="col">Upload Account Proof</th>
+                                        <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                        <th scope="col">{{ __('admin_messages.joining_date') }}</th>
+                                        <th scope="col">{{ __('admin_messages.image') }}</th>
+                                        <th scope="col">{{ __('admin_messages.first_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.last_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.mobile_number') }}</th>
+                                        <th scope="col">{{ __('admin_messages.email') }}</th>
+                                        <th scope="col">{{ __('admin_messages.country') }}</th>
+                                        <th scope="col">{{ __('admin_messages.store_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.store_address') }}</th>
+                                        <th scope="col">{{ __('admin_messages.store_mail_id') }}</th>
+                                        <th scope="col">{{ __('admin_messages.bio') }}</th>
+                                        <th scope="col">{{ __('admin_messages.uploaded_id') }}</th>
+                                        <th scope="col">{{ __('admin_messages.uploaded_store_document') }}</th>
+                                        <th scope="col">{{ __('admin_messages.bank_account_details') }}</th>
+                                        <th scope="col">{{ __('admin_messages.uploaded_account_proof') }}</th>
                                         @if(in_array(4, $permissions) || $admin->type == 1)
-                                        <th scope="col">Action</th>
+                                        <th scope="col">{{ __('admin_messages.action') }}</th>
                                         @endif
                                     </tr>
                                 </thead>
@@ -138,14 +138,14 @@
                                         @php
                                         if (!empty($seller['store_info']['country'])) {
                                         $country = \App\Models\Country::find($seller['store_info']['country']);
-                                        $countryName = $country->name ?? 'N/A';
+                                        $countryName = $country->name ?? __('admin_messages.n/a');
                                         }
                                         @endphp
-                                        <td>{{ $countryName ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['store_name'] ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['store_address'] ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['store_mail_id'] ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['bio'] ?? 'N/A' }}</td>
+                                        <td>{{ $countryName ??  __('admin_messages.n/a') }}</td>
+                                        <td>{{ $seller['store_info']['store_name'] ??  __('admin_messages.n/a') }}</td>
+                                        <td>{{ $seller['store_info']['store_address'] ??  __('admin_messages.n/a')  }}</td>
+                                        <td>{{ $seller['store_info']['store_mail_id'] ??  __('admin_messages.n/a')  }}</td>
+                                        <td>{{ $seller['store_info']['bio'] ?? __('admin_messages.n/a')  }}</td>
                                         <td>
                                             @if(!empty($seller['owner_document']))
                                             <a class="table-button view-owner-btn" type="button" data-bs-toggle="modal"
@@ -153,7 +153,7 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         <!-- <td>
@@ -176,7 +176,7 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         <td>
@@ -186,7 +186,7 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         <td>
@@ -197,7 +197,7 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         @if(in_array(4, $permissions) || $admin->type == 1)
@@ -229,7 +229,7 @@
                                 <!-- From Date Filter -->
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="from" class="form-label">From:</label>
+                                        <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                                         <input type="date" id="from" name="from_date1" class="form-control"
                                             value="{{ request()->from_date1 }}"
                                             onchange="document.getElementById('filterForm1').submit();" />
@@ -239,7 +239,7 @@
                                 <!-- To Date Filter -->
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label">To:</label>
+                                        <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                                         <input type="date" id="to" name="to_date1" class="form-control"
                                             value="{{ request()->to_date1 }}"
                                             onchange="document.getElementById('filterForm1').submit();" />
@@ -249,12 +249,12 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label">Select Country</label>
+                                        <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
 
                                         <select name="country_id1" id="country_id"
                                             class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm1').submit();">
-                                            <option value="">Select country</option>
+                                            <option value="">{{ __('admin_messages.select_country') }}</option>
                                             @foreach($countries as $country)
                                             <option value="{{ $country['id'] }}"
                                                 {{ request('country_id1') == $country['id'] ? 'selected' : '' }}>
@@ -267,10 +267,10 @@
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="d-flex gap-3 mt-5" >
                                         <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn mt-2">
-                                            <span>Reset</span>
+                                            <span>{{ __('admin_messages.reset') }}</span>
                                         </a>
                                         <a href="{{ route('admin.export_approved_seller_data', request()->all()) }}" class="btn btn-dark customBtn mt-2">
-                                            <span>Export</span>
+                                            <span>{{ __('admin_messages.export') }}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -282,32 +282,32 @@
                             <table id="myTable1" class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Sr.No</th>
-                                        <th scope="col">Joining Date</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Mobile Number</th>
-                                        <th scope="col">Email ID</th>
-                                        <th scope="col">Country</th>
-                                        <th scope="col">Store Name</th>
-                                        <th scope="col">Store Address</th>
-                                        <th scope="col">Store Mail ID</th>
-                                        <th scope="col">Bio</th>
-                                        <th scope="col">Uploaded ID</th>
-                                        <th scope="col">Uploaded Store Document</th>
-                                        <th scope="col">Bank Account Details</th>
-                                        <th scope="col">Upload Account Proof</th>
-                                        <th scope="col">Active Plan</th>
-                                        <th scope="col">Total Number of Completed</th>
-                                        <th scope="col">Total Number of Cancelled Order</th>
-                                        <th scope="col">Total Earning</th>
-                                        <th scope="col">Total Commission Paid</th>
-                                        <th scope="col">Average Rating</th>
-                                        <th scope="col">View Reels</th>
-                                        <th scope="col">View Highlights</th>
+                                        <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                        <th scope="col">{{ __('admin_messages.joining_date') }}</th>
+                                        <th scope="col">{{ __('admin_messages.image') }}</th>
+                                        <th scope="col">{{ __('admin_messages.first_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.last_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.mobile_number') }}</th>
+                                        <th scope="col">{{ __('admin_messages.email') }}</th>
+                                        <th scope="col">{{ __('admin_messages.country') }}</th>
+                                        <th scope="col">{{ __('admin_messages.store_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.store_address') }}</th>
+                                        <th scope="col">{{ __('admin_messages.store_mail_id') }}</th>
+                                        <th scope="col">{{ __('admin_messages.bio') }}</th>
+                                        <th scope="col">{{ __('admin_messages.uploaded_id') }}</th>
+                                        <th scope="col">{{ __('admin_messages.uploaded_store_document') }}</th>
+                                        <th scope="col">{{ __('admin_messages.bank_account_details') }}</th>
+                                        <th scope="col">{{ __('admin_messages.uploaded_account_proof') }}</th>
+                                        <th scope="col">{{ __('admin_messages.active_plan') }}</th>
+                                        <th scope="col">{{ __('admin_messages.total_no_of_completed_orders') }}</th>
+                                        <th scope="col">{{ __('admin_messages.total_no_of_cancelled_orders') }}</th>
+                                        <th scope="col">{{ __('admin_messages.total_earning') }}</th>
+                                        <th scope="col">{{ __('admin_messages.total_commission_paid') }}</th>
+                                        <th scope="col">{{ __('admin_messages.average_rating') }}</th>
+                                        <!-- <th scope="col">{{ __('admin_messages.view_reels') }}</th>
+                                        <th scope="col">{{ __('admin_messages.view_highlights') }}</th> -->
                                         @if(in_array(4, $permissions) || $admin->type == 1)
-                                        <th scope="col">Block/Unblock</th>
+                                        <th scope="col">{{ __('admin_messages.block') }}/{{ __('admin_messages.unblock') }}</th>
                                         @endif
 
                                     </tr>
@@ -328,21 +328,21 @@
                                         @php
                                         if (!empty($seller['store_info']['country'])) {
                                         $country = \App\Models\Country::find($seller['store_info']['country']);
-                                        $countryName = $country->name ?? 'N/A';
+                                        $countryName = $country->name ??  __('admin_messages.n/a');
                                         }
                                         @endphp
                                         <td>{{ $countryName ?? 'N/A'}}</td>
-                                        <td>{{ $seller['store_info']['store_name'] ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['store_address'] ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['store_mail_id'] ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['bio'] ?? 'N/A' }}</td>
+                                        <td>{{ $seller['store_info']['store_name'] ??  __('admin_messages.n/a')  }}</td>
+                                        <td>{{ $seller['store_info']['store_address'] ??  __('admin_messages.n/a') }}</td>
+                                        <td>{{ $seller['store_info']['store_mail_id'] ??  __('admin_messages.n/a')  }}</td>
+                                        <td>{{ $seller['store_info']['bio'] ??  __('admin_messages.n/a')  }}</td>
                                         <td>
                                             @if(!empty($seller['owner_document']))
                                             <a class="table-button view-owner-btn" type="button" data-bs-toggle="modal" data-bs-target="#sentModal4" data-documents='@json($seller['owner_document'])'>
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         <!-- <td>
@@ -365,7 +365,7 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         <td>
@@ -375,7 +375,7 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         <td>
@@ -386,19 +386,23 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
-                                        @php
-                                        $planName = 'N/A';
-                                        if (!empty($seller['subcription_plan'])) {
-                                        $plan = \App\Models\Plan::find($seller['subcription_plan'][0]['plan_id']);
-                                        if ($plan) {
-                                        $planName = $plan->plan_name_english;
-                                        }
-                                        }
+                                       @php
+                                            $planName = __('admin_messages.n/a');
+
+                                            if (!empty($seller['subcription_plan'])) {
+                                                $plan = \App\Models\Plan::find($seller['subcription_plan'][0]['plan_id']);
+
+                                                if ($plan) {
+                                                    $planName = app()->getLocale() == 'ar'
+                                                        ? $plan->plan_name_arabic
+                                                        : $plan->plan_name_english;
+                                                }
+                                            }
                                         @endphp
-                                        <td>{{ $planName ?? 'N/A'}}</td>
+                                        <td>{{ $planName ?? __('admin_messages.n/a') }}</td>
                                         <td>0</td>
                                         <td>0</td>
                                         <td>0 KD</td>
@@ -407,12 +411,12 @@
                                             <i class="bi bi-star-fill"></i>
 
                                         </td>
-                                        <td> <a class="table-button" type="button">
+                                        <!-- <td> <a class="table-button" type="button">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a></td>
                                         <td> <a class="table-button" type="button">
                                                 <i class="bi bi-eye-fill"></i>
-                                            </a></td>
+                                            </a></td> -->
                                         @if(in_array(4, $permissions) || $admin->type == 1)
                                         <td>
                                             <div class="form-check form-switch" style="justify-content: center;">
@@ -439,7 +443,7 @@
                                 <!-- From Date Filter -->
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="from" class="form-label">From:</label>
+                                        <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                                         <input type="date" id="from" name="from_date2" class="form-control"
                                             value="{{ request()->from_date2 }}"
                                             onchange="document.getElementById('filterForm2').submit();" />
@@ -449,7 +453,7 @@
                                 <!-- To Date Filter -->
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label">To:</label>
+                                        <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                                         <input type="date" id="to" name="to_date2" class="form-control"
                                             value="{{ request()->to_date2 }}"
                                             onchange="document.getElementById('filterForm2').submit();" />
@@ -459,12 +463,12 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                                                              <label for="to" class="form-label">Select Country</label>
+                                                                              <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
 
                                         <select name="country_id2" id="country_id"
                                             class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm2').submit();">
-                                            <option value="">Select country</option>
+                                            <option value="">{{ __('admin_messages.select_country') }}</option>
                                             @foreach($countries as $country)
                                             <option value="{{ $country['id'] }}"
                                                 {{ request('country_id2') == $country['id'] ? 'selected' : '' }}>
@@ -478,10 +482,10 @@
                                     <div class="d-flex gap-3 mt-5">
                                         <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn mt-2"
                                             >
-                                            <span>Reset</span>
+                                            <span>{{ __('admin_messages.reset') }}</span>
                                         </a>
                                           <a href="{{ route('admin.export_rejected_seller_data', request()->all()) }}" class="btn btn-dark customBtn mt-2" >
-                                            <span>Export</span>
+                                            <span>{{ __('admin_messages.export') }}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -493,23 +497,23 @@
                             <table id="myTable2" class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Sr.No</th>
-                                        <th scope="col">Joining Date</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Last Name</th>
-                                        <th scope="col">Mobile Number</th>
-                                        <th scope="col">Email ID</th>
-                                        <th scope="col">Country</th>
-                                        <th scope="col">Store Name</th>
-                                        <th scope="col">Store Address</th>
-                                        <th scope="col">Store Mail ID</th>
-                                        <th scope="col">Bio</th>
-                                        <th scope="col">Uploaded ID</th>
-                                        <th scope="col">Uploaded Store Document</th>
-                                        <th scope="col">Bank Account Details</th>
-                                        <th scope="col">Upload Account Proof</th>
-                                        <th scope="col">Rejection Reason</th>
+                                        <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                        <th scope="col">{{ __('admin_messages.joining_date') }}</th>
+                                        <th scope="col">{{ __('admin_messages.image') }}</th>
+                                        <th scope="col">{{ __('admin_messages.first_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.last_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.mobile_number') }}</th>
+                                        <th scope="col">{{ __('admin_messages.email') }}</th>
+                                        <th scope="col">{{ __('admin_messages.country') }}</th>
+                                        <th scope="col">{{ __('admin_messages.store_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.store_address') }}</th>
+                                        <th scope="col">{{ __('admin_messages.store_mail_id') }}</th>
+                                        <th scope="col">{{ __('admin_messages.bio') }}</th>
+                                        <th scope="col">{{ __('admin_messages.uploaded_id') }}</th>
+                                        <th scope="col">{{ __('admin_messages.uploaded_store_document') }}</th>
+                                        <th scope="col">{{ __('admin_messages.bank_account_details') }}</th>
+                                        <th scope="col">{{ __('admin_messages.uploaded_account_proof') }}</th>
+                                        <th scope="col">{{ __('admin_messages.rejection_reason') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -528,14 +532,14 @@
                                         @php
                                         if (!empty($seller['store_info']['country'])) {
                                         $country = \App\Models\Country::find($seller['store_info']['country']);
-                                        $countryName = $country->name ?? 'N/A';
+                                        $countryName = $country->name ??  __('admin_messages.n/a');
                                         }
                                         @endphp
                                         <td>{{ $countryName ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['store_name'] ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['store_address'] ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['store_mail_id'] ?? 'N/A' }}</td>
-                                        <td>{{ $seller['store_info']['bio'] ?? 'N/A' }}</td>
+                                        <td>{{ $seller['store_info']['store_name'] ??  __('admin_messages.n/a')  }}</td>
+                                        <td>{{ $seller['store_info']['store_address'] ??  __('admin_messages.n/a')  }}</td>
+                                        <td>{{ $seller['store_info']['store_mail_id'] ??  __('admin_messages.n/a')  }}</td>
+                                        <td>{{ $seller['store_info']['bio'] ??  __('admin_messages.n/a')  }}</td>
                                         <td>
                                             @if(!empty($seller['owner_document']))
                                             <a class="table-button view-owner-btn" type="button" data-bs-toggle="modal"
@@ -543,7 +547,7 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         <!-- <td>
@@ -566,7 +570,7 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         <td>
@@ -576,7 +580,7 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         <td>
@@ -587,7 +591,7 @@
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
-                                            N/A
+                                            {{ __('admin_messages.n/a') }}
                                             @endif
                                         </td>
                                         <td>{{ $seller['reject_reason'] ?? 'N/A' }}</td>
@@ -611,7 +615,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title fs-5">Bank Details</h3>
+                <h3 class="modal-title fs-5">{{ __('admin_messages.bank_account_details') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <!-- <div class="modal-body">
@@ -634,19 +638,19 @@
             </div> -->
                 <table class="details-table">
                     <tr>
-                        <th>IBAN</th>
+                        <th>{{ __('admin_messages.iban') }}</th>
                         <td id="modalIban"></td>
                     </tr>
                     <tr>
-                        <th>SWIFT</th>
+                        <th>{{ __('admin_messages.swift') }}</th>
                         <td id="modalSwift"></td>
                     </tr>
                     <tr>
-                        <th>Bank Name</th>
+                        <th>{{ __('admin_messages.bank_name') }}</th>
                         <td id="modalBankName"></td>
                     </tr>
                     <tr>
-                        <th>Account Holder Name</th>
+                        <th>{{ __('admin_messages.account_holder_name') }}</th>
                         <td id="modalHolderName"></td>
                     </tr>
                 </table>
@@ -662,7 +666,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Documents</h2>
+                <h2 class="h2">{{ __('admin_messages.uploaded_id') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -694,7 +698,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Store Details</h2>
+                <h2 class="h2">{{ __('admin_messages.store_details') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -702,7 +706,7 @@
 
                 <!-- Store Image Section -->
                 <div id="storeImageSection" class="text-center mb-4" style="display: none;">
-                    <h5>Store Image</h5>
+                    <h5>{{ __('admin_messages.store_image') }}</h5>
                     <img id="storeImage" src="" alt="Store Image"
                         class="img-fluid rounded border shadow-sm mt-2"
                         style="width: 250px;height: 177px;">
@@ -710,7 +714,7 @@
 
                 <!--  Store Documents Section -->
                 <div class="text-center mb-3">
-                    <h5>Store Documents</h5>
+                    <h5>{{ __('admin_messages.uploaded_store_document') }}</h5>
                 </div>
                 <div id="documentContainer1"
                     class="appointment-container d-flex flex-wrap justify-content-center">
@@ -734,7 +738,7 @@
                         <div class="mb-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="reject_type" id="rejectComplete" value="complete" checked>
-                                <label class="form-check-label" for="rejectComplete">Complete Reject</label>
+                                <label class="form-check-label" for="rejectComplete">{{ __('admin_messages.complete_reject') }}</label>
                             </div>
                         </div>
                     </div>
@@ -742,7 +746,7 @@
                         <div class="mb-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="reject_type" id="rejectDocument" value="document">
-                                <label class="form-check-label" for="rejectDocument">Document Reject</label>
+                                <label class="form-check-label" for="rejectDocument">{{ __('admin_messages.document_reject') }}</label>
                             </div>
                         </div>
                     </div>
@@ -751,16 +755,16 @@
                     <div class="col-lg-12">
                         <div class="div">
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Reason For Rejection</label>
+                                <label for="exampleFormControlInput1" class="form-label">{{ __('admin_messages.reason_for_rejection') }}</label>
                                 <textarea class="form-control" id="rejectReason" rows="3"></textarea>
-                                <div id="error-message" class="text-danger mt-2" style="display:none;">Please Enter Reason</div>
+                                <div id="error-message" class="text-danger mt-2" style="display:none;">{{ __('admin_messages.please_enter_reason') }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
              
                   <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mt-3">
-                                        <a type="button" class="btn btn-dark customBtn" id="submitReject">Reject Seller</a>
+                                        <a type="button" class="btn btn-dark customBtn" id="submitReject">{{ __('admin_messages.reject_seller') }}</a>
                                     </div>
             </div>
          
@@ -773,7 +777,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Uploaded Account Proof</h2>
+                <h2 class="h2">{{ __('admin_messages.uploaded_account_proof') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
@@ -810,7 +814,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (documents.length === 0) {
                 documentContainer.innerHTML =
-                    '<p class="text-muted">No documents available.</p>';
+                    '<p class="text-muted">{{ __('admin_messages.no_documents_available') }}</p>';
                 return;
             }
             documents.forEach(doc => {
@@ -866,9 +870,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Failed to parse documents JSON', e);
             }
 
+
             if (documents.length === 0) {
                 documentContainer.innerHTML =
-                    '<p class="text-muted">No documents available.</p>';
+                    '<p class="text-muted">{{ __('admin_messages.no_documents_available') }}</p>';
                 return;
             }
 

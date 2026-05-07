@@ -110,6 +110,7 @@ return [
     'kd' => 'دينار كويتي',
     'logout' => 'تسجيل الخروج',
     'no_data_found' => 'لا توجد بيانات',
+    'no_documents_available' => 'لا توجد مستندات متاحة',
 
 
 
@@ -229,6 +230,15 @@ return [
     'rejection_reason' => 'سبب الرفض',
     'seller_blocked_successfully' => 'تم حظر البائع بنجاح',
     'seller_unblocked_successfully' => 'تم إلغاء حظر البائع بنجاح',
+    'store_details' => 'تفاصيل المتجر',
+    'store_image' => 'صورة المتجر',
+    'complete_reject' => 'رفض كامل',
+    'document_reject' => 'رفض المستند',
+    'reason_for_rejection' => 'سبب الرفض',
+    'please_enter_reason' => 'يرجى إدخال السبب',
+    'reject_seller' => 'رفض البائع',
+    'seller_rejected_successfully' => 'تم رفض البائع بنجاح',
+    'seller_approved_successfully' => 'تمت الموافقة على البائع بنجاح',
 
     //country,city zone management
     'manage_city' => 'إدارة المدن',

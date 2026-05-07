@@ -109,6 +109,7 @@ return [
     'kd' => 'KWD',
     'logout' => 'Logout',
     'no_data_found' => 'No data found',
+    'no_documents_available' => 'No documents available',
     
     
 
@@ -231,6 +232,15 @@ return [
     'rejection_reason' => 'Rejection Reason',
     'seller_blocked_successfully' => 'Seller blocked successfully',
     'seller_unblocked_successfully' => 'Seller unblocked successfully',
+    'store_details' => 'Store Details',
+    'store_image' => 'Store Image',
+    'complete_reject' => 'Complete Reject',
+    'document_reject' => 'Document Reject',
+    'reason_for_rejection' => 'Reason for Rejection',
+    'please_enter_reason' => 'Please enter reason',
+    'reject_seller' => 'Reject Seller',
+    'seller_rejected_successfully' => 'Seller rejected successfully',
+    'seller_approved_successfully' => 'Seller approved successfully',
 
     //country,city zone management
     'manage_city' => 'Manage Cities',

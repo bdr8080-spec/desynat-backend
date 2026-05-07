@@ -360,7 +360,8 @@ class SellerManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Seller Approve Successfully',
+                // 'message' => 'Seller Approve Successfully',
+                'message' => __('admin_messages.seller_approved_successfully'),
                 'data' => $seller
             ];
 
@@ -411,7 +412,8 @@ class SellerManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Seller Rejected Successfully',
+                // 'message' => 'Seller Rejected Successfully',
+                'message' => __('admin_messages.seller_rejected_successfully'),
                 'data' => $seller
             ];
 
@@ -442,9 +444,12 @@ class SellerManagementService
             $seller->is_block = $seller->is_block == 0 ? 1 : 0;
             $seller->save();
 
+            // $message = $seller->is_block == 1
+            //     ? 'Seller Blocked Successfully'
+            //     : 'Seller Unblocked Successfully';
             $message = $seller->is_block == 1
-                ? 'Seller Blocked Successfully'
-                : 'Seller Unblocked Successfully';
+                    ? __('admin_messages.seller_blocked_successfully')
+                    : __('admin_messages.seller_unblocked_successfully');
 
             return [
                 'status' => 'success',
