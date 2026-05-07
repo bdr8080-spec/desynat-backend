@@ -54,14 +54,14 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">MANAGE SUB-CATEGORY</h6>
+                        <h6 class="m-0">{{ __('admin_messages.manage_sub_category') }}</h6>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="d-flex justify-content-end">
                         <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                            <span>Add Sub-Category</span>
+                            <span>{{ __('admin_messages.add_sub_category') }}</span>
                         </a>
                     </div>
                 </div>
@@ -96,61 +96,81 @@
                 </div> -->
 
                     <div class="table-responsive w-100">
-                        <table id="myTable" class="table w-100 ">
+                        <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
-                                    <th scope="col">SR No.</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Sub-Category name(English)</th>
-                                    <th scope="col">Sub-Category name(Arabic)</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                    <th scope="col">{{ __('admin_messages.image') }}</th>
+
+                                    @if(app()->getLocale() == 'en')
+                                        <th scope="col">{{ __('admin_messages.sub_category_name_english') }}</th>
+                                    @else
+                                        <th scope="col">{{ __('admin_messages.sub_category_name_arabic') }}</th>
+                                    @endif
+
+                                    <th scope="col">{{ __('admin_messages.status') }}</th>
+                                    <th scope="col">{{ __('admin_messages.action') }}</th>
                                 </tr>
                             </thead>
+
                             <tbody>
                                 @forelse ($subcategories as $key => $scat)
-                                <thello by Paras Jain QA
-r>
-                                    <th scope="row">{{ $key + 1 }}</th>
-                                    <td>
-                                        <img src="{{ $scat->image }}" width="40px" height="40px" class="square" />
-                                    </td>
-                                    <td>{{ $scat->name_english }}</td>
-                                    <td>{{ $scat->name_arabic }}</td>
-                                    <td>{{ $scat->status == 1 ? 'Active' : 'Inactive' }}</td>
-                                    <td>
-                                        <div class="d-flex gap-3 justify-content-center">
-                                            <!-- Edit button -->
-                                            <a class="table-button editBrandBtn" href="javascript:void(0);"
-                                                data-bs-toggle="modal" data-bs-target="#editBrandModal"
-                                                data-id="{{ $scat->id }}" data-name-english="{{ $scat->name_english }}"
-                                                data-name-arabic="{{ $scat->name_arabic }}"
-                                                data-image="{{ $scat->image }}">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
+                                    <tr>
+                                        <th scope="row">{{ $key + 1 }}</th>
 
-                                            <!-- Delete button  -->
-                                            <a href="javascript:void(0);" class="table-button text-danger deleteBrand mt-1 mb-1"
-                                                data-id="{{ $scat->id }}">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </a>
+                                        <td>
+                                            <img src="{{ $scat->image }}" width="40" height="40" class="square" />
+                                        </td>
 
-                                            <!-- Toggle switch -->
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input toggleStatus" type="checkbox"
-                                                    role="switch" id="switch{{ $scat->id }}" data-id="{{ $scat->id }}"
-                                                    {{ $scat->status == 1 ? 'checked' : '' }} />
+                                        @if(app()->getLocale() == 'en')
+                                            <td>{{ $scat->name_english }}</td>
+                                        @else
+                                            <td>{{ $scat->name_arabic }}</td>
+                                        @endif
+
+                                        <td>
+                                            {{ $scat->status == 1
+                                                ? __('admin_messages.active')
+                                                : __('admin_messages.inactive')
+                                            }}
+                                        </td>
+
+                                        <td>
+                                            <div class="d-flex gap-3 justify-content-center">
+
+                                                <a class="table-button editBrandBtn" href="javascript:void(0);"
+                                                    data-bs-toggle="modal" data-bs-target="#editBrandModal"
+                                                    data-id="{{ $scat->id }}"
+                                                    data-name-english="{{ $scat->name_english }}"
+                                                    data-name-arabic="{{ $scat->name_arabic }}"
+                                                    data-image="{{ $scat->image }}">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+
+                                                <a href="javascript:void(0);" class="table-button text-danger deleteBrand"
+                                                    data-id="{{ $scat->id }}">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </a>
+
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input toggleStatus" type="checkbox"
+                                                        role="switch"
+                                                        id="switch{{ $scat->id }}"
+                                                        data-id="{{ $scat->id }}"
+                                                        {{ $scat->status == 1 ? 'checked' : '' }} />
+                                                </div>
+
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 @empty
-                                <tr>
-                                    <td colspan="4" class="text-center text-muted">No Sub Category found</td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            {{ __('admin_messages.no_data_found') }}
+                                        </td>
+                                    </tr>
                                 @endforelse
                             </tbody>
-
                         </table>
                     </div>
                 </div>
@@ -165,7 +185,7 @@ r>
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add New Sub Category</h2>
+                <h2 class="h2">{{ __('admin_messages.add_sub_category') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -177,7 +197,7 @@ r>
 
                             <!-- Upload Image -->
                             <div class="col-lg-12">
-                                <div class="upload-title text-center">Upload Image</div>
+                                <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
 
                                 <!-- <div class="upload-new text-center"> -->
                                     <label for="fileUpload" class="upload-box" style="cursor:pointer;">
@@ -185,7 +205,7 @@ r>
                                             id="uploadIcon"  class="upload-icon" />
                                         <img id="previewImage" class="preview-image"
                                             style="display:none; max-width:216px; margin-top:-2px;" />
-                                        <div class="upload-text">Upload Image</div>
+                                        <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
                                         <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
                                     </label>
                                     <div class="text-danger text-center" id="imageError"></div>
@@ -195,9 +215,9 @@ r>
                             <!-- Brand Name English -->
                             <div class="col-lg-12 col-md-12 col-12">
                                 <div class="form-group">
-                                    <label class="form-label">Sub Category Name (English)</label>
+                                    <label class="form-label">{{ __('admin_messages.sub_category_name_english') }}</label>
                                     <input type="text" name="name_english" class="form-control"
-                                        placeholder="Sub Sub Category Name in English"
+                                        placeholder="{{ __('admin_messages.please_enter_sub_category_name_in_english') }}"
                                         oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" />
                                     <div class="text-danger" id="nameEnError"></div>
                                 </div>
@@ -206,9 +226,9 @@ r>
                             <!-- Brand Name Arabic -->
                             <div class="col-lg-12 col-md-12 col-12">
                                 <div class="form-group">
-                                    <label class="form-label">Sub Category Name (Arabic)</label>
+                                    <label class="form-label">{{ __('admin_messages.sub_category_name_arabic') }}</label>
                                     <input type="text" name="name_arabic" class="form-control"
-                                        placeholder="Enter Sub Category Name in Arabic"
+                                        placeholder="{{ __('admin_messages.please_enter_sub_category_name_in_arabic') }}"
                                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                     <div class="text-danger" id="nameArError"></div>
                                 </div>
@@ -216,7 +236,7 @@ r>
 
                             <!-- Submit Button -->
                             <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                <a type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">Submit</a>
+                                <a type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">{{ __('admin_messages.submit') }}</a>
                             </div>
 
                         </div>
@@ -232,7 +252,7 @@ r>
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Edit Sub Category</h2>
+                <h2 class="h2">{{ __('admin_messages.edit_sub_category') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -244,12 +264,12 @@ r>
                         <div class="row">
                             <!-- Upload Image -->
                             <div class="col-lg-12">
-                                <div class="upload-title text-center">Upload Image</div>
+                                <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
                                 <label for="editFileUpload" class="upload-box" style="cursor:pointer;">
                                     <img src="/admin/image/imge-upload.svg"
                                         id="editPreviewImage" class="preview-image"
                                         style="max-width:216px; margin-top:-2px;" />
-                                    <div class="upload-text">Upload Image</div>
+                                    <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
                                     <input type="file" id="editFileUpload" name="image" accept="image/*" hidden />
                                 </label>
                                 <div class="text-danger" id="editImageError"></div>
@@ -258,9 +278,9 @@ r>
                             <!-- Brand Name English -->
                             <div class="col-lg-12 col-md-12 col-12">
                                 <div class="form-group">
-                                    <label class="form-label">Sub Category Name (English)</label>
+                                    <label class="form-label">{{ __('admin_messages.sub_category_name_english') }}</label>
                                     <input type="text" name="name_english" class="form-control" id="editNameEnglish"
-                                        placeholder="Enter Sub Category Name in English"
+                                        placeholder="{{ __('admin_messages.please_enter_sub_category_name_in_english') }}"
                                         oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" />
                                     <div class="text-danger" id="editNameEnError"></div>
                                 </div>
@@ -269,9 +289,9 @@ r>
                             <!-- Brand Name Arabic -->
                             <div class="col-lg-12 col-md-12 col-12">
                                 <div class="form-group">
-                                    <label class="form-label">Sub Category Name (Arabic)</label>
+                                    <label class="form-label">{{ __('admin_messages.sub_category_name_arabic') }}</label>
                                     <input type="text" name="name_arabic" class="form-control" id="editNameArabic"
-                                        placeholder="Enter Sub Category Name in Arabic"
+                                        placeholder="{{ __('admin_messages.please_enter_sub_category_name_in_arabic') }}"
                                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                     <div class="text-danger" id="editNameArError"></div>
                                 </div>
@@ -279,7 +299,7 @@ r>
 
                             <!-- Submit Button -->
                             <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mt-3">
-                                <a type="button" class="btn btn-dark customBtn" id="editBrandSubmit">Update</a>
+                                <a type="button" class="btn btn-dark customBtn" id="editBrandSubmit">{{ __('admin_messages.update') }}</a>
                             </div>
                         </div>
                     </form>
@@ -301,13 +321,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let scatId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteSubCategory/${scatId}`, {
@@ -432,15 +453,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let hasError = false;
         if (!formData.get('image').name) {
-            document.getElementById('imageError').innerText = 'Please Upload Image';
+            document.getElementById('imageError').innerText = "{{ __('admin_messages.please_upload_image') }}";
             hasError = true;
         }
         if (!formData.get('name_english').trim()) {
-            document.getElementById('nameEnError').innerText = 'Please Enter Sub Category in English';
+            document.getElementById('nameEnError').innerText = "{{ __('admin_messages.please_enter_sub_category_name_in_english') }}";
             hasError = true;
         }
         if (!formData.get('name_arabic').trim()) {
-            document.getElementById('nameArError').innerText = 'Please Enter Sub Category in Arabic';
+            document.getElementById('nameArError').innerText = "{{ __('admin_messages.please_enter_sub_category_name_in_arabic') }}";
             hasError = true;
         }
         if (hasError) return;
@@ -523,12 +544,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let hasError = false;
         if (!formData.get('name_english').trim()) {
             document.getElementById('editNameEnError').innerText =
-                'Please Enter Sub Category in English';
+                "{{ __('admin_messages.please_enter_sub_category_name_in_english') }}";
             hasError = true;
         }
         if (!formData.get('name_arabic').trim()) {
             document.getElementById('editNameArError').innerText =
-            'Please Enter Sub Category in Arabic';
+            "{{ __('admin_messages.please_enter_sub_category_name_in_arabic') }}";
             hasError = true;
         }
         if (hasError) return;

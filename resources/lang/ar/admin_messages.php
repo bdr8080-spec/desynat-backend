@@ -109,6 +109,7 @@ return [
     'n/a' => 'غير متوفر',
     'kd' => 'دينار كويتي',
     'logout' => 'تسجيل الخروج',
+    'no_data_found' => 'لا توجد بيانات',
 
 
 
@@ -202,6 +203,7 @@ return [
     'please_enter_sub_category_name_in_arabic' => 'يرجى إدخال اسم الفئة الفرعية بالعربية',
     'sub_category_added_successfully' => 'تمت إضافة الفئة الفرعية بنجاح',
     'sub_category_updated_successfully' => 'تم تحديث الفئة الفرعية بنجاح',
+    'sub_category_deleted_successfully' => 'تم حذف الفئة الفرعية بنجاح',
     'category_has_been_activated_successfully' => 'تم تفعيل الفئة بنجاح',
     'category_has_been_deactivated_successfully' => 'تم إلغاء تفعيل الفئة بنجاح',
     'sub_category_has_been_activated_successfully' => 'تم تفعيل الفئة الفرعية بنجاح',

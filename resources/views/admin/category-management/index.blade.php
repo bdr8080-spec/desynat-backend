@@ -15,7 +15,7 @@
           <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
               <div class="col-lg-6 col-md-6 col-12">
-                <h2 class="h2">CATEGORY & SUB-CATEGORY MANAGEMENT</h2> 
+                <h2 class="h2">{{ __('admin_messages.category_sub_category_management') }}</h2> 
               </div>
             </div>
 
@@ -48,15 +48,15 @@
                   <table id="myTable" class="table w-100">
                     <thead>
                       <tr>
-                        <th scope="col">SR No.</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Category Name</th>
+                        <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                        <th scope="col">{{ __('admin_messages.image') }}</th>
+                        <th scope="col">{{ __('admin_messages.category_name') }}</th>
                         @if(in_array(3, $permissions) || $admin->type == 1)
-                        <th scope="col">Manage Sub-Category</th>
+                        <th scope="col">{{ __('admin_messages.manage_sub_category') }}</th>
                         @endif
-                        <th scope="col">Status</th>
+                        <th scope="col">{{ __('admin_messages.status') }}</th>
                         @if(in_array(3, $permissions) || $admin->type == 1)
-                        <th scope="col">Action</th>
+                        <th scope="col">{{ __('admin_messages.action') }}</th>
                         @endif
                       </tr>
                     </thead>
@@ -72,19 +72,28 @@
                                 class="square"
                             />
                         </td>
-
+                         @if(app()->getLocale() == 'en')
                         <td>{{$category->name}}</td>
+                        @endif
+                         @if(app()->getLocale() == 'ar')
+                        <td>{{$category->name_ar}}</td>
+                        @endif
                         @if(in_array(3, $permissions) || $admin->type == 1)
                         <td>
                           <a
                             class="btn btn-dark customBtn"
                              href="{{ route('manageSubCategory', ['id' => $category->id]) }}"
                           >
-                            <span>Manage</span>
+                            <span>{{ __('admin_messages.manage') }}</span>
                           </a>
                         </td>
                         @endif
-                        <td>{{ $category->status == 1 ? 'Active' : 'Inactive' }}</td>
+                        <td>
+                            {{ $category->status == 1
+                                ? __('admin_messages.active')
+                                : __('admin_messages.inactive')
+                            }}
+                        </td>
                         @if(in_array(3, $permissions) || $admin->type == 1)
                         <td>
                           <div class="form-check form-switch" style="justify-content: center;">

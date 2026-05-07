@@ -108,8 +108,12 @@
                       <tr>
                         <th scope="col">{{ __('admin_messages.s_no') }}</th>
                         <th scope="col">{{ __('admin_messages.image') }}</th>
+                        @if(app()->getLocale() == 'en')
                         <th scope="col">{{ __('admin_messages.brand_name_english') }}</th>
+                        @endif
+                        @if(app()->getLocale() == 'ar')
                         <th scope="col">{{ __('admin_messages.brand_name_arabic') }}</th>
+                        @endif
                         <th scope="col">{{ __('admin_messages.status') }}</th>
                          @if(in_array(2, $permissions) || $admin->type == 1)
                         <th scope="col">{{ __('admin_messages.action') }}</th>
@@ -128,8 +132,12 @@
                                       class="square"
                                   />
                               </td>
+                              @if(app()->getLocale() == 'en')
                               <td>{{ $brand->name_english }}</td>
+                              @endif
+                              @if(app()->getLocale() == 'ar')
                               <td>{{ $brand->name_arabic }}</td>
+                              @endif
                               <td>
                                 {{ $brand->status == 1 
                                     ? __('admin_messages.active') 
@@ -210,7 +218,7 @@
 
                                   <!-- Upload Image -->
                                   <div class="col-lg-12">
-                                      <div class="upload-title text-center">{{ __('admin_messages.add_new_brand') }}</div>
+                                      <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
 
                                       <label for="fileUpload" class="upload-box" style="cursor:pointer;">
                                           <img src="/admin/image/imge-upload.svg" id="uploadIcon" />

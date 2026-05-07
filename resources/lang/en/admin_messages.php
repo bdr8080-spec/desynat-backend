@@ -108,6 +108,7 @@ return [
     'n/a' => 'N/A',
     'kd' => 'KWD',
     'logout' => 'Logout',
+    'no_data_found' => 'No data found',
     
     
 
@@ -204,6 +205,7 @@ return [
     'please_enter_sub_category_name_in_arabic' => 'Please enter sub category name in Arabic',
     'sub_category_added_successfully' => 'Sub category added successfully',
     'sub_category_updated_successfully' => 'Sub category updated successfully',
+    'sub_category_deleted_successfully' => 'Sub category deleted successfully',
     'category_has_been_activated_successfully' => 'Category has been activated successfully',
     'category_has_been_deactivated_successfully' => 'Category has been deactivated successfully',
     'sub_category_has_been_activated_successfully' => 'Sub category has been activated successfully',

@@ -32,12 +32,13 @@ class CategoryController extends Controller
         }
         $category->status = $category->status == 1 ? 0 : 1;
         $category->save();
-        $statusText = $category->status == 1 ? 'Activated' : 'Deactivated';
 
         return response()->json([
             'success' => true,
             'status' => $category->status,
-            'message' => "Category has been {$statusText} Successfully!"
+            'message' => $category->status == 1
+                ? __('admin_messages.category_has_been_activated_successfully')
+                : __('admin_messages.category_has_been_deactivated_successfully')
         ]);
     }
 
@@ -48,7 +49,7 @@ class CategoryController extends Controller
             return response()->json(['success' => false, 'message' => 'Sub Category not found.']);
         }
         $scat->delete();
-        return response()->json(['success' => true, 'message' => 'Sub Category deleted successfully!']);
+        return response()->json(['success' => true, 'message' => __('admin_messages.sub_category_deleted_successfully')]);
     }
 
     public function updateSubCategoryStatus($id)
@@ -59,12 +60,13 @@ class CategoryController extends Controller
         }
         $scat->status = $scat->status == 1 ? 0 : 1;
         $scat->save();
-        $statusText = $scat->status == 1 ? 'Activated' : 'Deactivated';
 
         return response()->json([
             'success' => true,
             'status' => $scat->status,
-            'message' => "Sub Category has been {$statusText} Successfully!"
+            'message' => $scat->status == 1
+                ? __('admin_messages.sub_category_has_been_activated_successfully')
+                : __('admin_messages.sub_category_has_been_deactivated_successfully')
         ]);
     }
 
@@ -101,7 +103,7 @@ class CategoryController extends Controller
         $scat->status = 1;
         $scat->save();
 
-        return response()->json(['success' => true, 'message' => 'Sub Category added successfully!']);
+        return response()->json(['success' => true, 'message' => __('admin_messages.sub_category_added_successfully')]);
     }
 
     public function updateSubCategory(Request $request, $id)
@@ -137,6 +139,6 @@ class CategoryController extends Controller
 
         $scat->save();
 
-        return response()->json(['success' => true, 'message' => 'Sub Category updated successfully!']);
+        return response()->json(['success' => true, 'message' => __('admin_messages.sub_category_updated_successfully')]);
     }
 }
