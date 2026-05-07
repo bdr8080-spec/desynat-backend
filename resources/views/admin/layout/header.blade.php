@@ -46,7 +46,7 @@
             <li>
                 <a class="dropdown-item d-flex align-items-center gap-3 logout-item" href="{{route('adminLogout')}}">
                     <img src="/admin/image/logout-profile.svg">
-                    <span class="text-red">LogOut</span>
+                    <span class="text-red">{{ __('admin_messages.logout') }}</span>
                 </a>
             </li>
         </ul>
@@ -62,20 +62,20 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('adminLanguage','ar')}}">
                                             <span>AR</span> Arabic
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
+                                        <a class="dropdown-item" data-lang="en" href="{{route('adminLanguage','en')}}">
                                             <span>EN</span> English
                                         </a>
                                     </li>

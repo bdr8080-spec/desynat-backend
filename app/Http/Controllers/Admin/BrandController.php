@@ -26,7 +26,7 @@ class BrandController extends Controller
             return response()->json(['success' => false, 'message' => 'Brand not found.']);
         }
         $brand->delete();
-        return response()->json(['success' => true, 'message' => 'Brand deleted successfully!']);
+        return response()->json(['success' => true, 'message' => __('admin_messages.brand_deleted_successfully')]);
     }
 
     public function updateBrandStatus($id)
@@ -37,12 +37,13 @@ class BrandController extends Controller
         }
         $brand->status = $brand->status == 1 ? 0 : 1;
         $brand->save();
-        $statusText = $brand->status == 1 ? 'Activated' : 'Deactivated';
 
         return response()->json([
             'success' => true,
             'status' => $brand->status,
-            'message' => "Brand has been {$statusText} Successfully!"
+            'message' => $brand->status == 1
+                ? __('admin_messages.brand_has_been_activated_successfully')
+                : __('admin_messages.brand_has_been_deactivated_successfully')
         ]);
     }
 
@@ -87,7 +88,7 @@ class BrandController extends Controller
         $brand->status = 1;
         $brand->save();
 
-        return response()->json(['success' => true, 'message' => 'Brand added successfully!']);
+        return response()->json(['success' => true, 'message' => __('admin_messages.brand_added_successfully')]);
     }
 
     public function updateBrand(Request $request, $id)
@@ -122,7 +123,7 @@ class BrandController extends Controller
 
         $brand->save();
 
-        return response()->json(['success' => true, 'message' => 'Brand updated successfully!']);
+        return response()->json(['success' => true, 'message' => __('admin_messages.brand_updated_successfully')]);
     }
 
 

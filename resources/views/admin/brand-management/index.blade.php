@@ -56,7 +56,7 @@
           <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
               <div class="col-lg-6 col-md-6 col-12">
-                <h2 class="h2">BRANDS MANAGEMENT</h2> 
+                <h2 class="h2">{{ __('admin_messages.brands_management') }}</h2> 
               </div>
 
               <div class="col-lg-3 col-md-4 col-12">
@@ -67,7 +67,7 @@
                     data-bs-toggle="modal"
                     data-bs-target="#sentModal2"
                   >
-                    <span>Add New Brands</span>
+                    <span>{{ __('admin_messages.add_new_brand') }}</span>
                   </a>
                 </div>
                 @endif
@@ -106,13 +106,13 @@
                   <table id="myTable" class="table w-100">
                     <thead>
                       <tr>
-                        <th scope="col">SR No.</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Brand name(English)</th>
-                        <th scope="col">Brand name(Arabic)</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                        <th scope="col">{{ __('admin_messages.image') }}</th>
+                        <th scope="col">{{ __('admin_messages.brand_name_english') }}</th>
+                        <th scope="col">{{ __('admin_messages.brand_name_arabic') }}</th>
+                        <th scope="col">{{ __('admin_messages.status') }}</th>
                          @if(in_array(2, $permissions) || $admin->type == 1)
-                        <th scope="col">Action</th>
+                        <th scope="col">{{ __('admin_messages.action') }}</th>
                         @endif
                       </tr>
                     </thead>
@@ -130,7 +130,12 @@
                               </td>
                               <td>{{ $brand->name_english }}</td>
                               <td>{{ $brand->name_arabic }}</td>
-                              <td>{{ $brand->status == 1 ? 'Active' : 'Inactive' }}</td>
+                              <td>
+                                {{ $brand->status == 1 
+                                    ? __('admin_messages.active') 
+                                    : __('admin_messages.inactive') 
+                                }}
+                              </td>
                                @if(in_array(2, $permissions) || $admin->type == 1)
                               <td>
                                   <div class="d-flex gap-3 justify-content-center">
@@ -174,7 +179,7 @@
                           </tr>
                       @empty
                           <tr>
-                              <td colspan="4" class="text-center text-muted">No brands found</td>
+                              <td colspan="4" class="text-center text-muted">{{ __('admin_messages.no_brand_found') }}</td>
                           </tr>
                       @endforelse
                   </tbody>
@@ -193,7 +198,7 @@
           <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                   <div class="modal-header management border-0">
-                      <h2 class="h2">Add New Brands</h2>
+                      <h2 class="h2">{{ __('admin_messages.add_new_brand') }}</h2>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
 
@@ -205,12 +210,12 @@
 
                                   <!-- Upload Image -->
                                   <div class="col-lg-12">
-                                      <div class="upload-title text-center">Upload Image</div>
+                                      <div class="upload-title text-center">{{ __('admin_messages.add_new_brand') }}</div>
 
                                       <label for="fileUpload" class="upload-box" style="cursor:pointer;">
                                           <img src="/admin/image/imge-upload.svg" id="uploadIcon" />
                                           <img id="previewImage" class="preview-image" style="display:none; max-width:216px; margin-top:-2px;" />
-                                          <div class="upload-text">Upload Image</div>
+                                          <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
                                           <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
                                       </label>
                                       <div class="text-danger text-center" id="imageError"></div>
@@ -219,8 +224,8 @@
                                   <!-- Brand Name English -->
                                   <div class="col-lg-12 col-md-12 col-12">
                                       <div class="form-group">
-                                          <label class="form-label" for="brand name" >Brand Name (English)</label>
-                                          <input type="text" name="name_english" class="form-control" placeholder="Enter Brand Name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" />
+                                          <label class="form-label" for="brand name" >{{ __('admin_messages.brand_name_english') }}</label>
+                                          <input type="text" name="name_english" class="form-control" placeholder="{{ __('admin_messages.enter_brand_name_in_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" />
                                           <div class="text-danger" id="nameEnError"></div>
                                       </div>
                                   </div>
@@ -228,15 +233,15 @@
                                   <!-- Brand Name Arabic -->
                                   <div class="col-lg-12 col-md-12 col-12">
                                       <div class="form-group">
-                                          <label class="form-label" for="brand name">Brand Name (Arabic)</label>
-                                          <input type="text" name="name_arabic" class="form-control" placeholder="Enter Brand Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
+                                          <label class="form-label" for="brand name">{{ __('admin_messages.brand_name_arabic') }}</label>
+                                          <input type="text" name="name_arabic" class="form-control" placeholder="{{ __('admin_messages.enter_brand_name_in_arabic') }}" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
                                           <div class="text-danger" id="nameArError"></div>
                                       </div>
                                   </div>
 
                                   <!-- Submit Button -->
                                   <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                      <a type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">Submit</a>
+                                      <a type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">{{ __('admin_messages.submit') }}</a>
                                   </div>
                  
 
@@ -253,7 +258,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header management border-0">
-                        <h2 class="h2">Edit Brand</h2>
+                        <h2 class="h2">{{ __('admin_messages.edit_brand') }}</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -265,10 +270,10 @@
                                 <div class="row">
                                     <!-- Upload Image -->
                                     <div class="col-lg-12">
-                                        <div class="upload-title text-center">Upload Image</div>
+                                        <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
                                         <label for="editFileUpload" class="upload-box" style="cursor:pointer;">
                                             <img src="/admin/image/imge-upload.svg" id="editPreviewImage" class="preview-image"  style="max-width:216px; margin-top:-2px;" />
-                                            <div class="upload-text">Upload Image</div>
+                                            <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
                                             <input type="file" id="editFileUpload" name="image" accept="image/*" hidden />
                                         </label>
                                         <div class="text-danger" id="editImageError"></div>
@@ -277,8 +282,8 @@
                                     <!-- Brand Name English -->
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
-                                            <label class="form-label" for="brand name">Brand Name (English)</label>
-                                            <input type="text" name="name_english" class="form-control" id="editNameEnglish" placeholder="Enter Brand Name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  />
+                                            <label class="form-label" for="brand name">{{ __('admin_messages.brand_name_english') }}</label>
+                                            <input type="text" name="name_english" class="form-control" id="editNameEnglish" placeholder="{{ __('admin_messages.enter_brand_name_in_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  />
                                             <div class="text-danger" id="editNameEnError"></div>
                                         </div>
                                     </div>
@@ -286,15 +291,15 @@
                                     <!-- Brand Name Arabic -->
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
-                                            <label class="form-label" for="brand name">Brand Name (Arabic)</label>
-                                            <input type="text" name="name_arabic" class="form-control" id="editNameArabic" placeholder="Enter Brand Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
+                                            <label class="form-label" for="brand name">{{ __('admin_messages.brand_name_arabic') }}</label>
+                                            <input type="text" name="name_arabic" class="form-control" id="editNameArabic" placeholder="{{ __('admin_messages.enter_brand_name_in_arabic') }}" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                             <div class="text-danger" id="editNameArError"></div>
                                         </div>
                                     </div>
 
                                     <!-- Submit Button -->
                                     <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mt-3">
-                                        <button type="button" class="btn btn-dark customBtn" id="editBrandSubmit">Update</button>
+                                        <button type="button" class="btn btn-dark customBtn" id="editBrandSubmit">{{ __('admin_messages.update') }}</button>
                                     </div>
                                 </div>
                             </form>
@@ -318,13 +323,14 @@ document.addEventListener('DOMContentLoaded', function () {
             let brandId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteBrand/${brandId}`, {
@@ -449,15 +455,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let hasError = false;
         if(!formData.get('image').name){
-            document.getElementById('imageError').innerText = 'Please Upload Image';
+            document.getElementById('imageError').innerText = "{{ __('admin_messages.please_upload_image') }}";
             hasError = true;
         }
         if(!formData.get('name_english').trim()){
-            document.getElementById('nameEnError').innerText = 'Please Enter Brand Name in English';
+            document.getElementById('nameEnError').innerText = "{{ __('admin_messages.please_enter_brand_name_in_english') }}";
             hasError = true;
         }
         if(!formData.get('name_arabic').trim()){
-            document.getElementById('nameArError').innerText = 'Please Enter Brand Name in Arabic';
+            document.getElementById('nameArError').innerText = "{{ __('admin_messages.please_enter_brand_name_in_arabic') }}";
             hasError = true;
         }
         if(hasError) return;
@@ -539,11 +545,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let hasError = false;
         if(!formData.get('name_english').trim()){
-            document.getElementById('editNameEnError').innerText = 'Please Enter Brand Name in English';
+            document.getElementById('editNameEnError').innerText = "{{ __('admin_messages.please_enter_brand_name_in_english') }}";
             hasError = true;
         }
         if(!formData.get('name_arabic').trim()){
-            document.getElementById('editNameArError').innerText = 'Please Enter Brand Name in Arabic';
+            document.getElementById('editNameArError').innerText = "{{ __('admin_messages.please_enter_brand_name_in_arabic') }}";
             hasError = true;
         }
         if(hasError) return;

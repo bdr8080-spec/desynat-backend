@@ -101,6 +101,13 @@ return [
     'expired' => 'Expired',
     'category' => 'Category',
     'sub_category' => 'Sub Category',
+    'send' => 'Send',
+    'date' => 'Date',
+    'view' => 'View',
+    'edit' => 'Edit',
+    'n/a' => 'N/A',
+    'kd' => 'KWD',
+    'logout' => 'Logout',
     
     
 
@@ -143,6 +150,8 @@ return [
     'refund_management' => 'Refund Management',
 
     //dashboard
+    'welcome_to_dashboard' => 'Welcome to Dashboard',
+    'you_do_not_have_dashboard_access' => 'You do not have dashboard access',
     'today' => 'Today',
     'this_week' => 'This Week',
     'this_month' => 'This Month',
@@ -179,8 +188,10 @@ return [
     'edit_brand' => 'Edit Brand',
     'brand_updated_successfully' => 'Brand updated successfully',
     'brand_added_successfully' => 'Brand added successfully',
+    'brand_deleted_successfully' => 'Brand deleted successfully',
     'brand_has_been_deactivated_successfully' => 'Brand has been deactivated successfully',
     'brand_has_been_activated_successfully' => 'Brand has been activated successfully',
+    'no_brand_found' => 'No Brand Found',
 
     //category & sub-category management
     'category_name' => 'Category Name',
@@ -614,6 +625,106 @@ return [
     'enter_whatsapp_number' => 'Enter WhatsApp number',
     'please_enter_contact_number' => 'Please enter contact number',
     'please_enter_whatsapp_number' => 'Please enter WhatsApp number',
+
+    //notification management
+    'received_notification' => 'Received Notification',
+    'sent_notification' => 'Sent Notification',
+    'send_notification' => 'Send Notification',
+    'no_notification_found' => 'No Notification Found',
+    'title_english' => 'Title (English)',
+    'title_arabic' => 'Title (Arabic)',
+    'sent_to' => 'Sent To',
+    'all_type' => 'All Types',
+    'english_description' => 'English Description',
+    'arabic_description' => 'Arabic Description',
+    'date_&_time' => 'Date & Time',
+    'notification_title_english' => 'Notification Title (English)',
+    'notification_title_arabic' => 'Notification Title (Arabic)',
+    'notification_description_english' => 'Notification Description (English)',
+    'notification_description_arabic' => 'Notification Description (Arabic)',
+    'enter_title_english' => 'Enter Title (English)',
+    'enter_title_arabic' => 'Enter Title (Arabic)',
+    'enter_description_english' => 'Enter Description (English)',
+    'enter_description_arabic' => 'Enter Description (Arabic)',
+    'please_enter_notification_title_in_english' => 'Please enter notification title in English',
+    'please_enter_notification_title_in_arabic' => 'Please enter notification title in Arabic',
+    'please_enter_notification_description_in_english' => 'Please enter notification description in English',
+    'please_enter_notification_description_in_arabic' => 'Please enter notification description in Arabic',
+    'search_users' => 'Search Users',
+    'search_affiliate_users' => 'Search Affiliate Users',
+    'search_sellers' => 'Search Sellers',
+    'search_delivery_boy' => 'Search Delivery Boy',
+    'select_all' => 'Select All',
+    'please_select_at_least_one_recipient' => 'Please select at least one recipient',
+    'notification_sent_successfully' => 'Notification sent successfully',
+
+    //ticket management
+    'new' => 'New',
+    'ongoing' => 'Ongoing',
+    'past' => 'Past',
+    'ticket_type' => 'Ticket Type',
+    'submitted_by' => 'Submitted By',
+    'select_ticket_type' => 'Select Ticket Type',
+    'select_submitted_by' => 'Select Submitted By',
+    'ticket_id' => 'Ticket ID',
+    'raise_date_and_time' => 'Raise Date and Time',
+    'view_details_&_attachment' => 'View Details & Attachment',
+    'update_status' => 'Update Status',
+    'pending' => 'Pending',
+    'resolved' => 'Resolved',
+
+    //payment management
+    'by_order' => 'By Order',
+    'by_subscription_plan' => 'By Subscription Plan',
+    'by_gift_card' => 'By Gift Card',
+    'by_banner' => 'By Banner',
+    'total_revenue' => 'Total Revenue',
+    'transaction_id' => 'Transaction ID',
+    'order_date_time' => 'Order Date & Time',
+    'transaction_date_time' => 'Transaction Date & Time',
+    'customer_name' => 'Customer Name',
+    'total_charges' => 'Total Charges',
+    'applied_promo_code' => 'Applied Promo Code',
+    'applied_gift_card' => 'Applied Gift Card',
+    'discount' => 'Discount',
+    'commission' => 'Commission',
+    'payment_mode' => 'Payment Mode',
+    'plan_name' => 'Plan Name',
+    'gift_card_name' => 'Gift Card Name',
+    'purchased_by' => 'Purchased By',
+
+    //current live seller
+    'watch_live' => 'Watch Live',
+    'lived_on' => 'Lived On',
+
+    //account setting
+    'account_seeting' => 'Account Setting',
+    'chaqnge_password' => 'Change Password',
+    'please_enter_full_name' => 'Please enter full name',
+    'profile_picture' => 'Profile Picture',
+    'confirm_password_does_not_match' => 'Confirm password does not match',
+    'password_updated_successfully' => 'Password updated successfully',
+    'account_setting_updated_successfully' => 'Account setting updated successfully',
+    'email_already_assigned_to_another_sub_admin' => 'Email already assigned to another sub admin',
+    'mobile_number_already_assigned_to_another_sub_admin' => 'Mobile number already assigned to another sub admin',
+
+    //sub admin management
+    'add_sub_admin' => 'Add Sub Admin',
+    'view_module' => 'View Module',
+    'view_credential' => 'View Credential',
+    'send_credential' => 'Send Credential',
+    'status_updated_to_active' => 'Status updated to Active',
+    'status_updated_to_inactive' => 'Status updated to Inactive',
+    'edit_sub_admin' => 'Edit Sub Admin',
+    'access_modules' => 'Access Modules',
+    'modules' => 'Modules',
+    'please_select_at_least_one_module' => 'Please select at least one module',
+
+    //refund management
+    'cancellation_date_&_time' => 'Cancellation Date & Time',
+    'user_country' => 'User Country',
+
+
 
 
     
