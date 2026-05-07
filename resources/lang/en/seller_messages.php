@@ -181,6 +181,7 @@ return [
 "Please_Enter_Description" => "Please enter description",
 "Upload_Attachment" => "Upload attachment (if any)",
 "Upload_Image" => "Upload image",
+"Billing"=>"Billing",
 
 
 // subcritpion Plan page 
@@ -215,7 +216,73 @@ return [
 "Renew_Plan" => "Renew Plan",
 "No_Plan_Found" => "No plan found",
 
+// Live Request
 
+"Live_Join_Requests"=>"Live Join Requests",
+"No_Live_Request_Found"=>"No Live Request Found",
+"Other_Seller_Live_Requests"=>"Other Seller Live Requests",
+"Other_seller_No_Live_Request_Found"=>"Other seller No Live Request Found",
+
+
+  // Deal management 
+  
+  'deal_management' => 'Deal Management',
+
+    'listed_deals' => 'Listed Deals',
+    'enrolled' => 'Enrolled',
+    'expired' => 'Expired',
+
+    'search' => 'Search',
+
+    's_no' => 'S.No',
+    'banner_image' => 'Banner Image',
+    'date' => 'Date',
+    'duration' => 'Duration',
+    'discount' => 'Discount',
+    'add_products' => 'Add Products',
+    'products_added' => 'Products Added',
+    'status' => 'Status',
+    'view_details' => 'View Details',
+    'add_more_products' => 'Add More Products',
+
+    'active' => 'Active',
+    'upcoming' => 'Upcoming',
+    'expired_status' => 'Expired',
+
+
+    // order_management
+
+    'order_management' => 'Order Management',
+
+    'all' => 'All',
+    'ongoing_orders' => 'Ongoing Orders',
+    'past_orders' => 'Past Orders',
+
+    'search' => 'Search',
+
+    'filter_by_status' => 'Filter by status',
+
+    'confirmed' => 'Confirmed',
+    'packed' => 'Packed',
+    'shipped' => 'Shipped',
+    'exchange' => 'Exchange',
+
+    's_no' => 'S.No',
+    'image' => 'Image',
+    'order_id' => 'Order ID',
+    'date_time' => 'Date & Time',
+    'product_name' => 'Product Name',
+    'order_type' => 'Order Type',
+    'quantity' => 'Quantity',
+    'customer_name' => 'Customer Name',
+    'location' => 'Location',
+    'total_amount' => 'Total Amount',
+    'admin_commission' => 'Admin Commission',
+    'view_details' => 'View Details',
+    'product_status' => 'Product Status',
+
+    'normal' => 'Normal',
+    'custom' => 'Custom',
 
 
 ];

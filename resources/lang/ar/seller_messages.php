@@ -167,6 +167,8 @@ return [
 "Upload_Attachment" => "رفع مرفق (إن وجد)",
 "Upload_Image" => "رفع صورة",
 
+"Billing"=>"الفوترة",
+
 
 // subcription Plan 
 
@@ -198,7 +200,73 @@ return [
 "Expired_On" => "ينتهي في",
 "Paid_By" => "تم الدفع بواسطة",
 "Renew_Plan" => "تجديد الخطة",
-"No_Plan_Found" => "لم يتم العثور على خطة"
+"No_Plan_Found" => "لم يتم العثور على خطة",
 
+
+// Live Request
+"Live_Join_Requests"=>"طلبات الانضمام المباشر",
+"No_Live_Request_Found"=>"لم يتم العثور على طلب مباشر",
+"Other_Seller_Live_Requests"=>"طلبات البث المباشر للبائعين الآخرين",
+"Other_seller_No_Live_Request_Found"=>"لم يتم العثور على طلبات مباشرة للبائعين الآخرين",
+
+// deal_management
+
+  'deal_management' => 'إدارة العروض',
+
+    'listed_deals' => 'العروض المدرجة',
+    'enrolled' => 'المسجل',
+    'expired' => 'منتهي الصلاحية',
+
+    'search' => 'بحث',
+
+    's_no' => 'الرقم التسلسلي',
+    'banner_image' => 'صورة البانر',
+    'date' => 'التاريخ',
+    'duration' => 'المدة',
+    'discount' => 'الخصم',
+    'add_products' => 'إضافة منتجات',
+    'products_added' => 'المنتجات المضافة',
+    'status' => 'الحالة',
+    'view_details' => 'عرض التفاصيل',
+    'add_more_products' => 'إضافة المزيد من المنتجات',
+
+    'active' => 'نشط',
+    'upcoming' => 'قادم',
+    'expired_status' => 'منتهي الصلاحية',
+
+
+    // order_management
+
+    'order_management' => 'إدارة الطلبات',
+
+    'all' => 'الكل',
+    'ongoing_orders' => 'الطلبات الجارية',
+    'past_orders' => 'الطلبات السابقة',
+
+    'search' => 'بحث',
+
+    'filter_by_status' => 'تصفية حسب الحالة',
+
+    'confirmed' => 'مؤكد',
+    'packed' => 'معبأ',
+    'shipped' => 'تم الشحن',
+    'exchange' => 'استبدال',
+
+    's_no' => 'الرقم التسلسلي',
+    'image' => 'الصورة',
+    'order_id' => 'رقم الطلب',
+    'date_time' => 'التاريخ والوقت',
+    'product_name' => 'اسم المنتج',
+    'order_type' => 'نوع الطلب',
+    'quantity' => 'الكمية',
+    'customer_name' => 'اسم العميل',
+    'location' => 'الموقع',
+    'total_amount' => 'إجمالي المبلغ',
+    'admin_commission' => 'عمولة الإدارة',
+    'view_details' => 'عرض التفاصيل',
+    'product_status' => 'حالة المنتج',
+
+    'normal' => 'عادي',
+    'custom' => 'مخصص',
 
 ];

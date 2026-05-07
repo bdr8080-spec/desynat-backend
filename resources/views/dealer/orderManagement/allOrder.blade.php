@@ -2,22 +2,11 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Order Management </div>
+        <div class="title24"> {{ __('seller_messages.order_management') }} </div>
     </div>
 
     <div class="tabs-panel py-4">
-        <!-- <ul class="nav nav-pills mb-3 nav-justified maintabs" id="pills-tab-Main" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
-                    data-bs-target="#pills-Normal-Order" type="button" role="tab" aria-controls="pills-allproduct"
-                    aria-selected="true">Normal Orders </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link w-100" id="pills-active-tab" data-bs-toggle="pill"
-                    data-bs-target="#pills-Custom-Order" type="button" role="tab" aria-controls="pills-Custom-Order"
-                    aria-selected="false">Customised Orders</button>
-            </li>
-        </ul> -->
+      
     </div>
 
     <div class="tab-body-wapper">
@@ -29,17 +18,17 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active w-100" id="pills-all-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all"
-                                aria-selected="true">All ({{count($normal['All_order'])}}) </button>
+                                aria-selected="true">{{ __('seller_messages.all') }} ({{count($normal['All_order'])}}) </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link w-100" id="pills-ongoing-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-ongoing" type="button" role="tab" aria-controls="pills-ongoing"
-                                aria-selected="false">Ongoing orders ({{count($normal['ongoing_order'])}})</button>
+                                aria-selected="false"> {{ __('seller_messages.ongoing_orders') }} ({{count($normal['ongoing_order'])}})</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link w-100" id="pills-past-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-past" type="button" role="tab" aria-controls="pills-past"
-                                aria-selected="false">Past orders ({{count($normal['past_order'])}})</button>
+                                aria-selected="false">{{ __('seller_messages.past_orders') }} ({{count($normal['past_order'])}})</button>
                         </li>
                     </ul>
                 </div>
@@ -55,7 +44,7 @@
                                         <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                             class="search-icon">
                                         <input type="search" class="dt-input tableSearch form-control"
-                                            placeholder="Search" name="search">
+                                            placeholder="{{ __('seller_messages.search') }}" name="search">
                                     </div>
                                 </div>
 
@@ -85,19 +74,19 @@
                                             <select class="form-select form-control width-50"
                                                 aria-label="Default select example" onchange="this.form.submit()"
                                                 name="filters">
-                                                <option value="">Filter by status</option>
+                                                <option value=""> {{ __('seller_messages.filter_by_status') }} </option>
                                                 <option value="1" @if(request()->type==1 &&
                                                     request()->tabs==1 && request()->filters==1) selected @endif>
-                                                    Confirmed </option>
+                                                     {{ __('seller_messages.confirmed') }} </option>
                                                 <option value="2" @if(request()->type==1 &&
-                                                    request()->tabs==1 && request()->filters==2) selected @endif> Packed
+                                                    request()->tabs==1 && request()->filters==2) selected @endif>  {{ __('seller_messages.packed') }}
                                                 </option>
                                                 <option value="3" @if(request()->type==1 &&
                                                     request()->tabs==1 && request()->filters==3) selected @endif>
-                                                    Shipped </option>
+                                                      {{ __('seller_messages.shipped') }} </option>
                                                 <option value="4" @if(request()->type==1 &&
                                                     request()->tabs==1 && request()->filters==4) selected @endif>
-                                                    Exchange </option>
+                                                      {{ __('seller_messages.exchange') }} </option>
                                             </select>
                                         </div>
                                     </div>
@@ -109,19 +98,20 @@
                                 <table class="table table-bordered datatable">
                                     <thead>
                                         <tr>
-                                            <th class="no-sort">S.No</th>
-                                            <th class="no-sort">Image</th>
-                                            <th class="no-sort">Order ID</th>
-                                            <th class="no-sort">Date & Time</th>
-                                            <th class="no-sort">Product Name</th>
-                                            <th class="no-sort">Order Type</th>
-                                            <th class="no-sort">Quantity</th>
-                                            <th class="no-sort">Customer Name</th>
-                                            <th class="no-sort">Location</th>
-                                            <th class="no-sort">Total Amount</th>
-                                            <th class="no-sort">Admin Commission</th>
-                                            <th class="no-sort">View Details</th>
-                                            <th class="no-sort">Product Status</th>
+                                             <th>{{ __('seller_messages.s_no') }}</th>
+                                            <th>{{ __('seller_messages.image') }}</th>
+                                            <th>{{ __('seller_messages.order_id') }}</th>
+                                            <th>{{ __('seller_messages.date_time') }}</th>
+                                            <th>{{ __('seller_messages.product_name') }}</th>
+                                            <th>{{ __('seller_messages.order_type') }}</th>
+                                            <th>{{ __('seller_messages.quantity') }}</th>
+                                            <th>{{ __('seller_messages.customer_name') }}</th>
+                                            <th>{{ __('seller_messages.location') }}</th>
+                                            <th>{{ __('seller_messages.total_amount') }}</th>
+                                            <th>{{ __('seller_messages.admin_commission') }}</th>
+                                            <th>{{ __('seller_messages.view_details') }}</th>
+                                            <th>{{ __('seller_messages.product_status') }}</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -140,9 +130,9 @@
                                             <td>{{$val->product_details->product_name_en??'N/A'}}</td>
                                             <td>
                                                 @if($val->order_type=='1')
-                                                Normal
+                                                 {{ __('seller_messages.normal') }}
                                                 @elseif($val->order_type=='2')
-                                                Custom
+                                                  {{ __('seller_messages.custom') }}
                                                 @endif
                                             </td>
                                             <td> {{$val->quantity}}</td>
@@ -157,8 +147,8 @@
 
                                             @endphp
 
-                                            <td>{{$Total_Amount}} KD</td>
-                                            <td>{{$val->admin_commission}} KD</td>
+                                            <td>{{$Total_Amount}}  {{ __('seller_messages.KD') }}</td>
+                                            <td>{{$val->admin_commission}}  {{ __('seller_messages.KD') }}</td>
 
                                             <td>
                                                 <a href="{{ route('seller.single_order_View', $val->id ) }}"
@@ -194,7 +184,7 @@
                                         <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                             class="search-icon">
                                         <input type="search" class="dt-input tableSearch form-control"
-                                            placeholder="Search">
+                                            placeholder=" {{ __('seller_messages.search') }}">
                                     </div>
                                 </div>
 
@@ -224,19 +214,19 @@
                                             <select class="form-select form-control width-50"
                                                 aria-label="Default select example" onchange="this.form.submit()"
                                                 name="filters">
-                                                <option value="">Filter by status</option>
+                                                <option value=""> {{ __('seller_messages.filter_by_status') }} </option>
                                                 <option value="1" @if(request()->type==1 &&
                                                     request()->tabs==2 && request()->filters==1) selected @endif>
-                                                    Confirmed </option>
+                                                     {{ __('seller_messages.confirmed') }}  </option>
                                                 <option value="2" @if(request()->type==1 &&
-                                                    request()->tabs==2 && request()->filters==2) selected @endif> Packed
+                                                    request()->tabs==2 && request()->filters==2) selected @endif>  {{ __('seller_messages.packed') }}
                                                 </option>
                                                 <option value="3" @if(request()->type==1 &&
                                                     request()->tabs==2 && request()->filters==3) selected @endif>
-                                                    Shipped </option>
+                                                      {{ __('seller_messages.shipped') }}  </option>
                                                 <option value="4" @if(request()->type==1 &&
                                                     request()->tabs==2 && request()->filters==4) selected @endif>
-                                                    Exchange </option>
+                                                     {{ __('seller_messages.exchange') }} </option>
                                             </select>
                                         </div>
                                     </div>
@@ -249,19 +239,22 @@
                                 <table class="table table-bordered datatable">
                                     <thead>
                                         <tr>
-                                            <th class="no-sort">S.No</th>
-                                            <th class="no-sort">Image</th>
-                                            <th class="no-sort">Order ID</th>
-                                            <th class="no-sort">Date & Time</th>
-                                            <th class="no-sort">Product Name</th>
-                                            <th class="no-sort">Order Type</th>
-                                            <th class="no-sort">Quantity</th>
-                                            <th class="no-sort">Customer Name</th>
-                                            <th class="no-sort">Location</th>
-                                            <th class="no-sort">Total Amount</th>
-                                            <th class="no-sort">Admin Commission</th>
-                                            <th class="no-sort">View Details</th>
-                                            <th class="no-sort">Product Status</th>
+
+                                            <th class="no-sort" >{{ __('seller_messages.s_no') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.image') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.order_id') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.date_time') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.product_name') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.order_type') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.quantity') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.customer_name') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.location') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.total_amount') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.admin_commission') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.view_details') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.product_status') }}</th>
+
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -280,9 +273,9 @@
                                             <td>{{$val->product_details->product_name_en??'N/A'}}</td>
                                             <td>
                                                 @if($val->order_type=='1')
-                                                Normal
+                                                  {{ __('seller_messages.normal') }}
                                                 @elseif($val->order_type=='2')
-                                                Custom
+                                                  {{ __('seller_messages.custom') }}
                                                 @endif
                                             </td>
                                             <td> {{$val->quantity}}</td>
@@ -334,7 +327,7 @@
                                         <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                             class="search-icon">
                                         <input type="search" class="dt-input tableSearch form-control"
-                                            placeholder="Search">
+                                            placeholder="  {{ __('seller_messages.search') }}">
                                     </div>
                                 </div>
 
@@ -364,19 +357,19 @@
                                             <select class="form-select form-control width-50"
                                                 aria-label="Default select example" onchange="this.form.submit()"
                                                 name="filters">
-                                                <option value="">Filter by status</option>
+                                                <option value="">  {{ __('seller_messages.filter_by_status') }}</option>
                                                 <option value="1" @if(request()->type==1 &&
                                                     request()->tabs==3 && request()->filters==1) selected @endif>
-                                                    Confirmed </option>
+                                                        {{ __('seller_messages.confirmed') }} </option>
                                                 <option value="2" @if(request()->type==1 &&
-                                                    request()->tabs==3 && request()->filters==2) selected @endif> Packed
+                                                    request()->tabs==3 && request()->filters==2) selected @endif>   {{ __('seller_messages.packed') }}
                                                 </option>
                                                 <option value="3" @if(request()->type==1 &&
                                                     request()->tabs==3 && request()->filters==3) selected @endif>
-                                                    Shipped </option>
+                                                      {{ __('seller_messages.shipped') }} </option>
                                                 <option value="4" @if(request()->type==1 &&
                                                     request()->tabs==3 && request()->filters==4) selected @endif>
-                                                    Exchange </option>
+                                                     {{ __('seller_messages.exchange') }} </option>
                                             </select>
                                         </div>
                                     </div>
@@ -388,19 +381,20 @@
                                 <table class="table table-bordered datatable">
                                     <thead>
                                         <tr>
-                                            <th class="no-sort">S.No</th>
-                                            <th class="no-sort">Image</th>
-                                            <th class="no-sort">Order ID</th>
-                                            <th class="no-sort">Date & Time</th>
-                                            <th class="no-sort">Product Name</th>
-                                            <th class="no-sort">Order Type</th>
-                                            <th class="no-sort">Quantity</th>
-                                            <th class="no-sort">Customer Name</th>
-                                            <th class="no-sort">Location</th>
-                                            <th class="no-sort">Total Amount</th>
-                                            <th class="no-sort">Admin Commission</th>
-                                            <th class="no-sort">View Details</th>
-                                            <th class="no-sort">Product Status</th>
+                                               <th class="no-sort" >{{ __('seller_messages.s_no') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.image') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.order_id') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.date_time') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.product_name') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.order_type') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.quantity') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.customer_name') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.location') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.total_amount') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.admin_commission') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.view_details') }}</th>
+                                            <th class="no-sort" >{{ __('seller_messages.product_status') }}</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>

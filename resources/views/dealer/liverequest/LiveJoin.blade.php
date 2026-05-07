@@ -3,7 +3,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Live Join Requests</div>
+        <div class="title24">{{ __('seller_messages.Live_Join_Requests') }}</div>
         <!-- <a href="#" class="btn btn-success exportbtn">Export</a> -->
 
     </div>
@@ -52,7 +52,7 @@
 
                 @empty
                 <div class="col-12 text-center">
-                    <h5>No Live Request Found</h5>
+                    <h5>{{ __('seller_messages.No_Live_Request_Found') }}</h5>
                 </div>
                 @endforelse
 
@@ -130,7 +130,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Other Seller Live Requests</div>
+        <div class="title24">   {{ __('seller_messages.Other_Seller_Live_Requests') }}   </div>
     </div>
     <div class="datatable-wapper mt-4">
         <div class="table-header-3">
@@ -179,7 +179,7 @@
 
                     @empty
                     <div class="col-12 text-center">
-                        <h5>Other seller No Live Request Found</h5>
+                         <h5>{{ __('seller_messages.Other_seller_No_Live_Request_Found') }}</h5>
                     </div>
                     @endforelse
 
