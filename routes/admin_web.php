@@ -32,13 +32,17 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\AdminLiveStreamController;
+use App\Http\Controllers\Admin\AdminLanguageController;
 
 
 use App\Http\Controllers\SaveFirebaseToken;
 
 // Save Admin firebase Token 
+Route::middleware(['checkLanguage'])->group(function(){
 
 Route::get('admin-save-token', [SaveFirebaseToken::class, 'saveAdminToken']);
+
+Route::get('/admin-change-language/{locale}', [AdminLanguageController::class, 'AdminChangelanguage'])->name("adminLanguage");
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -309,6 +313,8 @@ Route::group(['prefix'=>'admin'], function(){
 
 
     });
+
+});
 
 });
 

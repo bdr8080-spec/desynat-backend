@@ -102,6 +102,13 @@ return [
     'expired' => 'منتهي الصلاحية',
     'category' => 'الفئة',
     'sub_category' => 'الفئة الفرعية',
+    'send' => 'إرسال',
+    'date' => 'التاريخ',
+    'view' => 'عرض',
+    'edit' => 'تعديل',
+    'n/a' => 'غير متوفر',
+    'kd' => 'دينار كويتي',
+    'logout' => 'تسجيل الخروج',
 
 
 
@@ -141,6 +148,8 @@ return [
     'refund_management' => 'إدارة الاسترجاعات',
 
     //dashboard
+    'welcome_to_dashboard' => 'مرحبًا بك في لوحة التحكم',
+    'you_do_not_have_dashboard_access' => 'ليس لديك صلاحية الوصول إلى لوحة التحكم',
     'today' => 'اليوم',
     'this_week' => 'هذا الأسبوع',
     'this_month' => 'هذا الشهر',
@@ -177,8 +186,10 @@ return [
     'edit_brand' => 'تعديل العلامة التجارية',
     'brand_updated_successfully' => 'تم تحديث العلامة التجارية بنجاح',
     'brand_added_successfully' => 'تمت إضافة العلامة التجارية بنجاح',
+    'brand_deleted_successfully' => 'تم حذف العلامة التجارية بنجاح',
     'brand_has_been_deactivated_successfully' => 'تم إلغاء تفعيل العلامة التجارية بنجاح',
     'brand_has_been_activated_successfully' => 'تم تفعيل العلامة التجارية بنجاح',
+    'no_brand_found' => 'لا توجد علامة تجارية',
 
     //category & sub-category management
     'category_name' => 'اسم الفئة',
@@ -612,6 +623,104 @@ return [
     'enter_whatsapp_number' => 'أدخل رقم الواتساب',
     'please_enter_contact_number' => 'يرجى إدخال رقم التواصل',
     'please_enter_whatsapp_number' => 'يرجى إدخال رقم الواتساب',
+
+    //notification management
+    'received_notification' => 'الإشعارات المستلمة',
+    'sent_notification' => 'الإشعارات المرسلة',
+    'send_notification' => 'إرسال إشعار',
+    'no_notification_found' => 'لا توجد إشعارات',
+    'title_english' => 'العنوان (بالإنجليزية)',
+    'title_arabic' => 'العنوان (بالعربية)',
+    'sent_to' => 'تم الإرسال إلى',
+    'all_type' => 'جميع الأنواع',
+    'english_description' => 'الوصف باللغة الإنجليزية',
+    'arabic_description' => 'الوصف باللغة العربية',
+    'date_&_time' => 'التاريخ والوقت',
+    'notification_title_english' => 'عنوان الإشعار (بالإنجليزية)',
+    'notification_title_arabic' => 'عنوان الإشعار (بالعربية)',
+    'notification_description_english' => 'وصف الإشعار (بالإنجليزية)',
+    'notification_description_arabic' => 'وصف الإشعار (بالعربية)',
+    'enter_title_english' => 'أدخل العنوان (بالإنجليزية)',
+    'enter_title_arabic' => 'أدخل العنوان (بالعربية)',
+    'enter_description_english' => 'أدخل الوصف (بالإنجليزية)',
+    'enter_description_arabic' => 'أدخل الوصف (بالعربية)',
+    'please_enter_notification_title_in_english' => 'يرجى إدخال عنوان الإشعار باللغة الإنجليزية',
+    'please_enter_notification_title_in_arabic' => 'يرجى إدخال عنوان الإشعار باللغة العربية',
+    'please_enter_notification_description_in_english' => 'يرجى إدخال وصف الإشعار باللغة الإنجليزية',
+    'please_enter_notification_description_in_arabic' => 'يرجى إدخال وصف الإشعار باللغة العربية',
+    'search_users' => 'بحث عن المستخدمين',
+    'search_affiliate_users' => 'بحث عن المستخدمين التابعين',
+    'search_sellers' => 'بحث عن البائعين',
+    'search_delivery_boy' => 'بحث عن مندوبي التوصيل',
+    'select_all' => 'تحديد الكل',
+    'please_select_at_least_one_recipient' => 'يرجى اختيار مستلم واحد على الأقل',
+    'notification_sent_successfully' => 'تم إرسال الإشعار بنجاح',
+
+    //ticket management
+    'new' => 'جديد',
+    'ongoing' => 'قيد التنفيذ',
+    'past' => 'سابق',
+    'ticket_type' => 'نوع التذكرة',
+    'submitted_by' => 'مقدم بواسطة',
+    'select_ticket_type' => 'اختر نوع التذكرة',
+    'select_submitted_by' => 'اختر مقدم الطلب',
+    'ticket_id' => 'رقم التذكرة',
+    'raise_date_and_time' => 'تاريخ ووقت الإنشاء',
+    'view_details_&_attachment' => 'عرض التفاصيل والمرفقات',
+    'update_status' => 'تحديث الحالة',
+    'pending' => 'قيد الانتظار',
+    'resolved' => 'تم الحل',
+
+    //payment management
+    'by_order' => 'حسب الطلب',
+    'by_subscription_plan' => 'حسب خطة الاشتراك',
+    'by_gift_card' => 'حسب بطاقة الهدايا',
+    'by_banner' => 'حسب البانر',
+    'total_revenue' => 'إجمالي الإيرادات',
+    'transaction_id' => 'رقم المعاملة',
+    'order_date_time' => 'تاريخ ووقت الطلب',
+    'transaction_date_time' => 'تاريخ ووقت المعاملة',
+    'customer_name' => 'اسم العميل',
+    'total_charges' => 'إجمالي الرسوم',
+    'applied_promo_code' => 'كود الخصم المستخدم',
+    'applied_gift_card' => 'بطاقة الهدايا المستخدمة',
+    'discount' => 'الخصم',
+    'commission' => 'العمولة',
+    'payment_mode' => 'طريقة الدفع',
+    'plan_name' => 'اسم الخطة',
+    'gift_card_name' => 'اسم بطاقة الهدايا',
+    'purchased_by' => 'تم الشراء بواسطة',
+
+    //current live seller
+    'watch_live' => 'مشاهدة مباشرة',
+    'lived_on' => 'بث مباشر في',
+
+    //account setting
+    'account_seeting' => 'إعدادات الحساب',
+    'chaqnge_password' => 'تغيير كلمة المرور',
+    'please_enter_full_name' => 'يرجى إدخال الاسم الكامل',
+    'profile_picture' => 'صورة الملف الشخصي',
+    'confirm_password_does_not_match' => 'تأكيد كلمة المرور غير متطابق',
+    'password_updated_successfully' => 'تم تحديث كلمة المرور بنجاح',
+    'account_setting_updated_successfully' => 'تم تحديث إعدادات الحساب بنجاح',
+    'email_already_assigned_to_another_sub_admin' => 'البريد الإلكتروني مُستخدم بالفعل من قبل مشرف فرعي آخر',
+    'mobile_number_already_assigned_to_another_sub_admin' => 'رقم الجوال مُستخدم بالفعل من قبل مشرف فرعي آخر',
+
+    //sub admin management
+    'add_sub_admin' => 'إضافة مشرف فرعي',
+    'view_module' => 'عرض الوحدة',
+    'view_credential' => 'عرض بيانات الاعتماد',
+    'send_credential' => 'إرسال بيانات الاعتماد',
+    'status_updated_to_active' => 'تم تحديث الحالة إلى نشط',
+    'status_updated_to_inactive' => 'تم تحديث الحالة إلى غير نشط',
+    'edit_sub_admin' => 'تعديل المشرف الفرعي',
+    'access_modules' => 'الوصول إلى الوحدات',
+    'modules' => 'الوحدات',
+    'please_select_at_least_one_module' => 'يرجى اختيار وحدة واحدة على الأقل',
+
+    //refund management
+    'cancellation_date_&_time' => 'تاريخ ووقت الإلغاء',
+    'user_country' => 'بلد المستخدم',
 
 
     
