@@ -14,14 +14,14 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">MANAGE CITY({{$country->name}})</h6> 
+                        <h6 class="m-0">{{ __('admin_messages.manage_city') }}({{$country->name}})</h6> 
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="d-flex justify-content-end">
                         <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                            <span>Add City</span>
+                            <span>{{ __('admin_messages.add_city') }}</span>
                         </a>
                     </div>
                 </div>
@@ -49,10 +49,10 @@
                         <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
-                                    <th scope="col">SR No.</th>
-                                    <th scope="col">City Name</th>
-                                    <th scope="col">Manage Zones</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                    <th scope="col">{{ __('admin_messages.city_name') }}</th>
+                                    <th scope="col">{{ __('admin_messages.manage_zones') }}</th>
+                                    <th scope="col">{{ __('admin_messages.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,7 +63,7 @@
                                         <td>
                                             <a class="btn btn-dark customBtn"
                                             href="{{ route('manageZones', ['id' => $city->id ]) }}">
-                                                <span>Manage</span>
+                                                <span>{{ __('admin_messages.manage') }}</span>
                                             </a>
                                         </td>
                                         <td>
@@ -82,9 +82,7 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center">No cities found for this country.</td>
-                                    </tr>
+
                                 @endforelse
                             </tbody>
                         </table>
@@ -103,7 +101,7 @@
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
-                <h2 class="h2">Add City</h2>
+                <h2 class="h2">{{ __('admin_messages.add_city') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body m-auto mb-4">
@@ -122,7 +120,7 @@
                             <span class="text-danger error-text city_id_err"></span>
                         </div> -->
                         <div class="form-group w-100">
-                            <label for="city_id" class="form-label">City Name</label>
+                            <label for="city_id" class="form-label">{{ __('admin_messages.city_name') }}</label>
 
                             <select name="city_id"
                                     id="city_id"
@@ -131,9 +129,9 @@
                                     {{ $allAdded ? 'disabled' : '' }}>
 
                                 @if ($allAdded)
-                                    <option selected disabled>All cities already added</option>
+                                    <option selected disabled>{{ __('admin_messages.all_cities_already_added') }}</option>
                                 @else
-                                    <option value="" selected disabled>Select City</option>
+                                    <option value="" selected disabled>{{ __('admin_messages.select_city') }}</option>
                                     @foreach ($cities as $city)
                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
                                     @endforeach
@@ -149,7 +147,7 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
                         <div class="d-flex align-items-center justify-content-center gap-3 mt-3" style="margin-top: 30px">
-                            <a type="button" id="addServiceCityBtn" class="btn btn-dark customBtn">Submit</a>
+                            <a type="button" id="addServiceCityBtn" class="btn btn-dark customBtn">{{ __('admin_messages.submit') }}</a>
                         </div>
                     </div>
                 </div>
@@ -174,8 +172,8 @@ $(document).ready(function() {
 
         let cityId = $('#city_id').val();
 
-        if (!cityId) {
-            $('.city_id_err').text('Please select a city.');
+       if (!cityId) {
+            $('.city_id_err').text("{{ __('admin_messages.please_select_a_city') }}");
             return;
         }
 
@@ -258,13 +256,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let cityId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteServiceCity/${cityId}`, {

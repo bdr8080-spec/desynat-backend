@@ -36,6 +36,7 @@ return [
     'approved' => 'Approved',
     'rejected' => 'Rejected',
     'select_country' => 'Select Country',
+    'select_city' => 'Select City',
     'joining_date' => 'Joining Date',
     'first_name' => 'First Name',
     'last_name' => 'Last Name',
@@ -262,6 +263,7 @@ return [
     'zone_added_successfully' => 'Zone added successfully',
     'zone_has_been_deactivated_successfully' => 'Zone has been deactivated successfully',
     'zone_has_been_activated_successfully' => 'Zone has been activated successfully',
+    'please_select_a_city' => 'Please select a city',
 
     //subscription plan management
     'manage_plan' => 'Manage Plans',

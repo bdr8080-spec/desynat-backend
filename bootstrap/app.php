@@ -19,6 +19,9 @@ use App\Http\Middleware\SetLanguage;
 
 use App\Http\Middleware\OptionalAuth;
 
+use App\Http\Middleware\ApiLang;
+ 
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
@@ -37,7 +40,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'LowerUrl' => ForceLowercaseUrl::class,
             'Affiliate_user' => AffiliateLoginCheck::class, // Login Route check   
             'optional.auth' => OptionalAuth::class,    
-            "checkLanguage"=> SetLanguage::class  
+            "checkLanguage"=> SetLanguage::class,
+            "ApiLang"=> ApiLang::class   
         ]);
     })
 

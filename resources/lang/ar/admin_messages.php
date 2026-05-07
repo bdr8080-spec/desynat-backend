@@ -36,7 +36,7 @@ return [
     'approved' => 'موافق عليه',
     'rejected' => 'مرفوض',
     'select_country' => 'اختر الدولة',
-    'select_country' => 'اختر الدولة',
+    'select_city' => 'اختر المدينة',
     'joining_date' => 'تاريخ الانضمام',
     'first_name' => 'الاسم الأول',
     'last_name' => 'الاسم الأخير',
@@ -260,6 +260,7 @@ return [
     'zone_added_successfully' => 'تمت إضافة المنطقة بنجاح',
     'zone_has_been_deactivated_successfully' => 'تم إلغاء تفعيل المنطقة بنجاح',
     'zone_has_been_activated_successfully' => 'تم تفعيل المنطقة بنجاح',
+    'please_select_a_city' => 'يرجى اختيار المدينة',
 
     //subscription plan management
     'manage_plan' => 'إدارة الخطط',

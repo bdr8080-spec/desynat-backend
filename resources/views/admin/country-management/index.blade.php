@@ -14,7 +14,7 @@
         <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
                 <div class="col-lg-6 col-md-6 col-12">
-                    <h2 class="h2">COUNTRY , CITY & ZONE MANAGEMENT</h2>
+                    <h2 class="h2">{{ __('admin_messages.country_city_zone_management') }}</h2>
                 </div>
             </div>
 
@@ -40,10 +40,10 @@
                         <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
-                                    <th scope="col">SR No.</th>
-                                    <th scope="col">Country Name</th>
+                                    <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                    <th scope="col">{{ __('admin_messages.country') }}</th>
                                     @if(in_array(5, $permissions) || $admin->type == 1)
-                                    <th scope="col">Manage City</th>
+                                    <th scope="col">{{ __('admin_messages.manage_city') }}</th>
                                     @endif
                                     <!-- <th scope="col">Action</th> -->
                                 </tr>
@@ -57,7 +57,7 @@
                                         @if(in_array(5, $permissions) || $admin->type == 1)
                                         <td>
                                             <a class="btn btn-dark customBtn" href="{{ route('manageCities', ['id' => $country->id]) }}">
-                                                <span>Manage</span>
+                                                <span>{{ __('admin_messages.manage') }}</span>
                                             </a>
                                         </td>
                                         @endif
@@ -79,9 +79,7 @@
                                         </td> -->
                                     </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center text-muted">No countries found</td>
-                                    </tr>
+
                                 @endforelse
                             </tbody>
                         </table>

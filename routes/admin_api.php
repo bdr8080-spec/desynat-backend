@@ -30,7 +30,7 @@ use App\Http\Controllers\Api\Admin\TicketController;
 use App\Http\Controllers\Api\Admin\PaymentController;
 use App\Http\Controllers\Api\Admin\DashboardController;
 
-
+Route::middleware(['ApiLang'])->group(function(){
 // Admin APi M1
 Route::group(['prefix' => 'admin'], function () {   
     Route::post('/admin_login',[AuthController::class,'admin_login']);
@@ -309,5 +309,7 @@ Route::group(['prefix' => 'admin'], function () {
 
    });
 
+
+});
 
 });
