@@ -69,7 +69,9 @@ class BrandService
 
             return [
                 'status' => 'success',
-                'message' => 'Brand status updated successfully',
+                'message' => $brand->status == 1
+                    ? __('admin_messages.brand_has_been_activated_successfully')
+                    : __('admin_messages.brand_has_been_deactivated_successfully'),
                 'data' => $brand
             ];
         } catch (\Exception $e) {
@@ -94,7 +96,8 @@ class BrandService
 
             return [
                 'status' => 'success',
-                'message' => 'Brand created successfully',
+                // 'message' => 'Brand created successfully',
+                'message' => __('admin_messages.brand_added_successfully'),
                 'data' => $brand
             ];
 
@@ -128,7 +131,8 @@ class BrandService
 
             return [
                 'status' => 'success',
-                'message' => 'Brand updated successfully',
+                // 'message' => 'Brand updated successfully',
+                'message' => __('admin_messages.brand_updated_successfully'),
                 'data' => $brand
             ];
 
@@ -157,7 +161,8 @@ class BrandService
 
             return [
                 'status' => 'success',
-                'message' => 'Brand deleted successfully',
+                // 'message' => 'Brand deleted successfully',
+                'message' => __('admin_messages.brand_deleted_successfully'),
                 'data' => []
             ];
 

@@ -95,7 +95,9 @@ class CategoryService
 
             return [
                 'status' => 'success',
-                'message' => 'Category status updated successfully',
+                'message' => $category->status == 1
+                    ? __('admin_messages.category_has_been_activated_successfully')
+                    : __('admin_messages.category_has_been_deactivated_successfully'),
                 'data' => $category
             ];
         } catch (\Exception $e) {
@@ -125,7 +127,9 @@ class CategoryService
 
             return [
                 'status' => 'success',
-                'message' => 'Sub Category status updated successfully',
+                'message' => $subCategory->status == 1
+                    ? __('admin_messages.sub_category_has_been_activated_successfully')
+                    : __('admin_messages.sub_category_has_been_deactivated_successfully'),
                 'data' => $subCategory
             ];
         } catch (\Exception $e) {
@@ -150,7 +154,8 @@ class CategoryService
 
             return [
                 'status' => 'success',
-                'message' => 'Subcategory created successfully',
+                // 'message' => 'Subcategory created successfully',
+                'message' => __('admin_messages.sub_category_added_successfully'),
                 'data' => $subCategory
             ];
 
@@ -184,7 +189,8 @@ class CategoryService
 
             return [
                 'status' => 'success',
-                'message' => 'Sub Category updated successfully',
+                // 'message' => 'Sub Category updated successfully',
+                'message' => __('admin_messages.sub_category_updated_successfully'),
                 'data' => $subCategory
             ];
 
@@ -213,7 +219,8 @@ class CategoryService
 
             return [
                 'status' => 'success',
-                'message' => 'Subcategory deleted successfully',
+                // 'message' => 'Subcategory deleted successfully',
+                'message' => __('admin_messages.sub_category_deleted_successfully'),
                 'data' => []
             ];
 
