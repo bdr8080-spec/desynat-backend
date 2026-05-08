@@ -167,6 +167,44 @@ return [
     'accept_terms_required' => 'Please accept the terms and conditions',
     'must_accept_terms' => 'You must agree to the terms and conditions to continue',
 
+    //category wise store
+    'filter' => 'Filter',
+    'search' => 'Search',
+    'ratings' => 'Ratings',
+    'upto_2_star' => 'Upto 2 Star',
+    'upto_3_star' => 'Upto 3 Star',
+    'availability' => 'Availability',
+    'open' => 'Open',
+    'busy' => 'Busy',
+    'sort_preference' => 'Sort & Preference',
+    'shortest_delivery_time' => 'Shortest Delivery Time',
+    'highest_sale' => 'Highest Sale',
+    'apply' => 'Apply',
+    'clear' => 'Clear',
+
+    //single store
+    'copy_link' => 'Copy Link',
+    'product' => 'Product',
+    'reels' => 'Reels',
+    'sort_by' => 'Sort By',
+    'filters' => 'Filters',
+    'category' => 'Category',
+    'brand' => 'Brand',
+    'a_z' => 'A-Z',
+    'see_more' => 'See More',
+    'price' => 'Price',
+    'color' => 'Color',
+    'discount_range' => 'Discount Range',
+    'sizes' => 'Sizes',
+    'today_2_days' => 'Today - 2 Days',
+    '3_5_days' => '3 - 5 Days',
+    'available' => 'Available',
+    'busy' => 'Busy',
+    'no_highlights' => 'No Highlights',
+    'kd' => 'KWD',
+    'delivery_time' => 'Delivery Time',
+    'no_reels_found' => 'No Reels Found',
+
     
 
     

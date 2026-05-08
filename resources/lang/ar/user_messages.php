@@ -166,6 +166,44 @@ return [
     'accept_terms_required' => 'الرجاء قبول الشروط والأحكام',
     'must_accept_terms' => 'يجب الموافقة على الشروط والأحكام للمتابعة',
 
+    //category wise store
+    'filter' => 'تصفية',
+    'search' => 'بحث',
+    'ratings' => 'التقييمات',
+    'upto_2_star' => 'حتى نجمتين',
+    'upto_3_star' => 'حتى 3 نجوم',
+    'availability' => 'التوفر',
+    'open' => 'مفتوح',
+    'busy' => 'مشغول',
+    'sort_preference' => 'الترتيب والتفضيل',
+    'shortest_delivery_time' => 'أقصر وقت توصيل',
+    'highest_sale' => 'الأعلى مبيعًا',
+    'apply' => 'تطبيق',
+    'clear' => 'مسح',
+
+    //single store
+    'copy_link' => 'نسخ الرابط',
+    'product' => 'المنتج',
+    'reels' => 'ريلز',
+    'sort_by' => 'ترتيب حسب',
+    'filters' => 'تصفية',
+    'category' => 'الفئة',
+    'brand' => 'العلامة التجارية',
+    'a_z' => 'أ-ي',
+    'see_more' => 'عرض المزيد',
+    'price' => 'السعر',
+    'color' => 'اللون',
+    'discount_range' => 'نطاق الخصم',
+    'sizes' => 'المقاسات',
+    'today_2_days' => 'اليوم - يومين',
+    '3_5_days' => '3 - 5 أيام',
+    'available' => 'متوفر',
+    'busy' => 'مشغول',
+    'no_highlights' => 'لا يوجد أبرز',
+    'kd' => 'د.ك',
+    'delivery_time' => 'وقت التوصيل',
+    'no_reels_found' => 'لا توجد ريلز',
+
 
 
     
