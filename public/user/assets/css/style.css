@@ -3484,3 +3484,8 @@ img.img-fluid.circle-image {
     --bs-dropdown-link-active-color: #c19e73 !important;
     --bs-dropdown-link-active-bg: #f3f0ec !important;
 }
+
+[dir="rtl"] .header_nav_button_dropdown .dropdown-menu.show{
+    width:max-content;
+    direction:rtl;
+}
