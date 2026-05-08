@@ -51,7 +51,7 @@
   } */
 
 
-    .custom-radio input[type="radio"] {
+    /* .custom-radio input[type="radio"] {
         display: none;
     }
 
@@ -60,14 +60,14 @@
         padding: 8px 12px;
         border-radius: 6px;
         cursor: pointer;
-    }
+    } 
 
-    /* Selected state */
     .custom-radio input[type="radio"]:checked+span {
         background-color: #c19e73;
         color: #000;
+    } */
 
-    }
+
     </style>
 
     @php

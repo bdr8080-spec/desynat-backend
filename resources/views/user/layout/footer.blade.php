@@ -436,6 +436,7 @@ $('.customOwlcarousel').owlCarousel({
     responsiveClass: true,
     nav: false,
     dots: true,
+    rtl: $('html').attr('dir') === 'rtl',
     responsive: {
         0: {
             items: 1,
@@ -456,6 +457,7 @@ $('.bannerpop').owlCarousel({
     responsiveClass: true,
     dots: true,
     autoplay: true,
+    rtl: $('html').attr('dir') === 'rtl',
     autoplayTimeout: 3000,
     smartSpeed: 3000,
     responsive: {
@@ -471,12 +473,16 @@ $('.bannerpop').owlCarousel({
         }
     }
 })
+
+
 $('.storeBanner').owlCarousel({
     loop: true,
     margin: 10,
     nav: false,
     dots: true,
     autoplay: true,
+    rtl: $('html').attr('dir') === 'rtl',
+
     autoplayTimeout: 5000,
     smartSpeed: 2000,
     responsive: {
@@ -501,6 +507,7 @@ $('.adsbannerpop2').owlCarousel({
     autoplay: true,
     autoplayTimeout: 5000,
     smartSpeed: 5000,
+    rtl: $('html').attr('dir') === 'rtl',
     responsive: {
         0: {
             items: 1,
@@ -527,6 +534,7 @@ $('.storeCarousel').owlCarousel({
     // autoplayTimeout: 2000, 
     autoplayHoverPause: true,
     slideTransition: 'linear',
+    rtl: $('html').attr('dir') === 'rtl',
     smartSpeed: 1000, // smooth transition
     responsive: {
         0: {
@@ -551,6 +559,7 @@ $('.bestSellingCarousel').owlCarousel({
     // autoplayTimeout: 2000, 
     autoplayHoverPause: true,
     slideTransition: 'linear',
+    rtl: $('html').attr('dir') === 'rtl',
     smartSpeed: 1000, // smooth transition
     responsive: {
         0: {
@@ -574,6 +583,7 @@ $('.topRatedCarousel').owlCarousel({
     // autoplay: true,
     // autoplayTimeout: 2000, 
     autoplayHoverPause: true,
+    rtl: $('html').attr('dir') === 'rtl',
     slideTransition: 'linear',
     smartSpeed: 1000, // smooth transition
     responsive: {
