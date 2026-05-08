@@ -29,7 +29,7 @@ class product extends Model
     }
 
     public function seller_details(){
-        return $this->hasOne(seller::class,'id','seller_id');
+        return $this->hasOne(seller::class,'id','seller_id')->where('type','0');
     }
 
     public function store(){

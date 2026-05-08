@@ -27,35 +27,35 @@
                      <span class="d-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                          tempor
                          incididunt ut labore et dolore magna aliqua. Ut enim ad minim </span>
-                     <button class="customBtn1 become-ln">Become an Affiliate Customer</button>
+                     <button class="customBtn1 become-ln">{{ __('user_messages.become_an_affiliate') }}</button>
                  </div>
                  <div class="col-lg-5 col-md-5 col-12">
                      <div class="footerNavLink ms-20percenter">
                          <div class="footerNavLink_content">
-                             <h6>Customer Policy</h6>
+                             <h6>{{ __('user_messages.customer_policy') }}</h6>
                              <ul class="navs list-unstyled">
                                  <li>
-                                     <a href="{{route('user.aboutUs')}}">About Us</a>
+                                     <a href="{{route('user.aboutUs')}}">{{ __('user_messages.about_us') }}</a>
                                  </li>
                                  <li>
-                                     <a href="{{route('user.termCondition')}}">Terms & Condition</a>
+                                     <a href="{{route('user.termCondition')}}">{{ __('user_messages.terms_&_conditions') }}</a>
                                  </li>
                                  <li>
-                                     <a href="{{route('user.returnPolicy')}}">Return Policy</a>
+                                     <a href="{{route('user.returnPolicy')}}">{{ __('user_messages.return_policy') }}</a>
                                  </li>
                                  <li>
-                                     <a href="{{route('user.exchangePolicy')}}">Exchange Policy</a>
+                                     <a href="{{route('user.exchangePolicy')}}">{{ __('user_messages.exchange_policy') }}</a>
                                  </li>
                                  <li>
-                                     <a href="{{route('user.cancellationPolicy')}}">Cancellation Policy</a>
+                                     <a href="{{route('user.cancellationPolicy')}}">{{ __('user_messages.cancellation_policy') }}</a>
                                  </li>
                                  <li>
-                                     <a href="{{route('user.faq')}}">FAQs</a>
+                                     <a href="{{route('user.faq')}}">{{ __('user_messages.faqs') }}</a>
                                  </li>
                              </ul>
                          </div>
                          <div class="footerNavLink_content">
-                             <h6>Customer Policy</h6>
+                             <h6>{{ __('user_messages.support') }}</h6>
                              <ul class="navs list-unstyled">
                                 @php
                                     $contact = \App\Models\Content::where('slug', 'contact_us')->where('type','1')->first();
@@ -79,7 +79,7 @@
                  <div class="col-lg-3 col-md-3 col-12">
                      <div class="footerNavLink">
                          <div class="footerNavLink_content ms-lg-auto ms-md-auto">
-                             <h6>Get the App</h6>
+                             <h6>{{ __('user_messages.get_the_app') }}</h6>
                              <div class="getTheApp gap-2 ">
                                  <div style="width: 80%;">
                                      <img src="{{ asset('user/assets/images/play-store.svg') }}"
@@ -225,9 +225,12 @@
      <!-- <script src="{{ asset('user/assets/js/custom.js') }}"></script> -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-     <script async defer
+     <!-- <script async defer
          src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places">
-     </script>
+     </script> -->
+     <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places&language={{ app()->getLocale() == 'ar' ? 'ar' : 'en' }}">
+    </script>
 
      <script>
 let map, marker, autocomplete;

@@ -23,6 +23,8 @@ use App\Services\UserDashboardService;
 use App\Helpers\ApiResponse;
 use App\Services\UserAuthService;
 use App\Services\TwilioService;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserOtpMail;
 
 
 
@@ -180,8 +182,10 @@ class AuthController extends Controller
                 'id'=>'required',
                 'otp' => 'required|array',
             ], [
-                'otp.required' => 'Please enter OTP',
-                'otp.*.required' => 'Please enter OTP',
+                // 'otp.required' => 'Please enter OTP',
+                // 'otp.*.required' => 'Please enter OTP',
+                'otp.required' => __('user_messages.enter_otp'),
+            'otp.*.required' => __('user_messages.enter_otp'),
             ]);
 
 
@@ -200,7 +204,8 @@ class AuthController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid user reference',
+                    // 'message' => 'Invalid user reference',
+                    'message' => __('user_messages.invalid_user_reference'),
                 ], 400);
             }
 
@@ -211,7 +216,8 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'User not found.',
+                    // 'message' => 'User not found.',
+                    'message' => __('user_messages.user_not_found'),
                 ], 404);
             }
 
@@ -231,7 +237,8 @@ class AuthController extends Controller
                  Session::forget('verify-password');
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP verified successfully',
+                        // 'message' => 'OTP verified successfully',
+                        'message' => __('user_messages.otp_verified_success'),
                         'redirect_url' => route('userCreatePassword', ['temp_user_id' => $request->id]),
                     ]);
                     
@@ -240,9 +247,12 @@ class AuthController extends Controller
                     Session::forget('verify-password');
                     return response()->json([
                     'status' => true,
-                    'message' => $request->type == 1 
-                        ? 'Login successfully' 
-                        : 'User registered successfully',
+                    // 'message' => $request->type == 1 
+                    //     ? 'Login successfully' 
+                    //     : 'User registered successfully',
+                    'message' => $request->type == 1
+                        ? __('user_messages.login_success')
+                        : __('user_messages.user_registered_success'),
                     'redirect_url' => route('dashboard'),
                 ]);
 
@@ -251,7 +261,8 @@ class AuthController extends Controller
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid OTP, please try again',
+                    // 'message' => 'Invalid OTP, please try again',
+                    'message' => __('user_messages.invalid_otp'),
                 ], 422);
             }
 
@@ -271,9 +282,12 @@ class AuthController extends Controller
                 'mobileOrEmail' => 'required',
                 'password' => 'required|min:6',
             ], [
-                'mobileOrEmail.required' => 'Please enter your mobile number or email address',
-                'password.required' => 'Please enter your password',
-                'password.min' => 'Password must be at least 6 characters long',
+                // 'mobileOrEmail.required' => 'Please enter your mobile number or email address',
+                // 'password.required' => 'Please enter your password',
+                // 'password.min' => 'Password must be at least 6 characters long',
+                'mobileOrEmail.required' => __('user_messages.please_enter_mobile_number_or_email_address'),
+                'password.required' => __('user_messages.please_enter_password'),
+                'password.min' => __('user_messages.password_min'),
             ]);
 
             if ($validator->fails()) {
@@ -307,14 +321,16 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'User is not Regsiter',
+                    // 'message' => 'User is not Regsiter',
+                    'message' => __('user_messages.user_not_registered'),
                 ], 401);
             }
 
             if ($user->otp_verify == '0') {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Please verify your ' . $loginField . ' with OTP to login',
+                    // 'message' => 'Please verify your ' . $loginField . ' with OTP to login',
+                    'message' => __('user_messages.verify_otp', ['field' => $loginField]),
                 ], 401);
             }
 
@@ -325,14 +341,15 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'Login successfully',
+                    // 'message' => 'Login successfully',
+                    'message' => __('user_messages.login_success'),
                 ]);
             }
 
             return response()->json([
                 'status' => false,
-                'message' => 'Invalid ' . $loginField . ' or password',
-                // 'message'=>'User is not Regsiter'
+                // 'message' => 'Invalid ' . $loginField . ' or password',
+                'message' => __('user_messages.invalid_credentials', ['field' => $loginField]),
             ], 401);
         }
 
@@ -346,17 +363,25 @@ class AuthController extends Controller
             }else{   
             
                 if ($request->forgetPassword == '1') {
+                    // $rules['mobile'] = 'required|digits_between:7,15|exists:users,mobile';
+                    // $messages['mobile.required'] = 'Please enter your mobile number';
+                    // $messages['mobile.digits_between'] = 'Mobile number must be between 7 and 15 digits';
+                    // $messages['mobile.exists'] = 'This mobile number is not registered';
                     $rules['mobile'] = 'required|digits_between:7,15|exists:users,mobile';
-                    $messages['mobile.required'] = 'Please enter your mobile number';
-                    $messages['mobile.digits_between'] = 'Mobile number must be between 7 and 15 digits';
-                    $messages['mobile.exists'] = 'This mobile number is not registered';
+                    $messages['mobile.required'] = __('user_messages.mobile_required');
+                    $messages['mobile.digits_between'] = __('user_messages.mobile_digits');
+                    $messages['mobile.exists'] = __('user_messages.mobile_exists');
                 }
 
                 if ($request->forgetPassword == '2') {
-                    $rules['email'] = 'required|email|exists:users,email';
-                    $messages['email.required'] = 'Please enter your email address';
-                    $messages['email.email'] = 'Please enter a valid email address';
-                    $messages['email.exists'] = 'This email is not registered';
+                    // $rules['email'] = 'required|email|exists:users,email';
+                    // $messages['email.required'] = 'Please enter your email address';
+                    // $messages['email.email'] = 'Please enter a valid email address';
+                    // $messages['email.exists'] = 'This email is not registered';
+                     $rules['email'] = 'required|email|exists:users,email';
+                    $messages['email.required'] = __('user_messages.email_required');
+                    $messages['email.email'] = __('user_messages.email_invalid');
+                    $messages['email.exists'] = __('user_messages.email_exists');
                 }
 
                 $validator = Validator::make($request->all(), $rules, $messages);
@@ -391,17 +416,19 @@ class AuthController extends Controller
                     $phone = $user->country_code . $user->mobile;
                     $message = "Your verification Code Is $otp";
                     if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
-                    try {
-                        $this->TwilioService->sendOtp($phone, $message);
-                    } catch (\Exception $e) {
-                        // ❌ silently skip (no return, no error)
-                        // Optional: log for debugging
-                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                        try {
+                            $this->TwilioService->sendOtp($phone, $message);
+                        } catch (\Exception $e) {
+                            // ❌ silently skip (no return, no error)
+                            // Optional: log for debugging
+                            //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                        }
                     }
-                }
+                    Mail::to($user->email)->send(new UserOtpMail($user, $otp));
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP sent successfully',
+                        // 'message' => 'OTP sent successfully',
+                        'message' => __('user_messages.otp_sent_success'),
                         'id' => $id,
                         'type'=>$request->forgetPassword
                     ]);
@@ -409,7 +436,7 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status' => false,
-                    'message' => 'User not found'
+                    'message' => __('user_messages.user_not_found')
                 ],403);
 
      
@@ -502,9 +529,12 @@ class AuthController extends Controller
                     ];
 
                     $messages = [
-                        'country_code.required' => 'Please select your country code',
-                        'mobile.required' => 'Please enter your mobile number',
-                        'mobile.digits' => 'Mobile number must be between 7 and 15 digits',
+                        // 'country_code.required' => 'Please select your country code',
+                        // 'mobile.required' => 'Please enter your mobile number',
+                        // 'mobile.digits' => 'Mobile number must be between 7 and 15 digits',
+                        'country_code.required' => __('user_messages.country_code_required'),
+                        'mobile.required' => __('user_messages.mobile_required'),
+                        'mobile.digits' => __('user_messages.mobile_digits'),
                     ];
                 } else {
                     $rules = [
@@ -512,8 +542,10 @@ class AuthController extends Controller
                     ];
 
                     $messages = [
-                        'email.required' => 'Please enter your email address',
-                        'email.email' => 'Please enter a valid email address',
+                        // 'email.required' => 'Please enter your email address',
+                        // 'email.email' => 'Please enter a valid email address',
+                        'email.required' => __('user_messages.email_required'),
+                        'email.email' => __('user_messages.email_invalid'),
                     ];
                 }
 
@@ -547,27 +579,33 @@ class AuthController extends Controller
                     $phone = $user->country_code . $user->mobile;
                     $message = "Your verification Code Is $otp";
                     if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
-                    try {
-                        $this->TwilioService->sendOtp($phone, $message);
-                    } catch (\Exception $e) {
-                        // ❌ silently skip (no return, no error)
-                        // Optional: log for debugging
-                        //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                        try {
+                            $this->TwilioService->sendOtp($phone, $message);
+                        } catch (\Exception $e) {
+                            // ❌ silently skip (no return, no error)
+                            // Optional: log for debugging
+                            //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                        }
                     }
-                }
+                     Mail::to($user->email)->send(new UserOtpMail($user, $otp));
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP sent successfully',
+                        // 'message' => 'OTP sent successfully',
+                        'message' => __('user_messages.otp_sent_success'),
                         'id' => $id,
                         'type'=> $request->forgetPassword
                     ]);
+
                 }
 
                 return response()->json([
                     'status' => false,
+                    // 'message' => $request->forgetPassword == '1'
+                    //     ? 'This mobile number is not registered'
+                    //     : 'This email address is not registered',
                     'message' => $request->forgetPassword == '1'
-                        ? 'This mobile number is not registered'
-                        : 'This email address is not registered',
+                        ? __('user_messages.mobile_not_registered')
+                        : __('user_messages.email_not_registered'),
                 ], 403);
             }
         }
@@ -627,10 +665,13 @@ class AuthController extends Controller
                     }
                 }
 
+                Mail::to($user->email)->send(new UserOtpMail($user, $otp));
+
        
             return response()->json([
                 'status' => true,
-                'message' => 'OTP resent successfully',
+                // 'message' => 'OTP resent successfully',
+                'message' => __('user_messages.otp_resent_successfully'),
             ]);
         }
 

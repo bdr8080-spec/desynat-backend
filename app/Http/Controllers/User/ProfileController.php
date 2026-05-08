@@ -426,7 +426,8 @@ class ProfileController extends Controller
 
         return response()->json([
             'status'  => true,
-            'message' => 'Address changed successfully!',
+            // 'message' => 'Address changed successfully!',
+            'message' => __('user_messages.address_changed_successfully'),
             'data'    => $data,
         ]);
     }

@@ -2,29 +2,7 @@
     
 @section('content')
 
-<!-- <style>
- iframe#\:1\.container {
-    visibility: hidden !important;
-}
 
-/* Hide the Google Translate tooltip */
-.goog-te-banner-frame.skiptranslate,
-.goog-tooltip,
-.goog-tooltip:hover,
-.goog-tooltip-vertical {
-    display: none !important;
-}
-
-/* Hide the feedback popup on selected text */
-#goog-gt-tt {
-    display: none !important;
-}
-</style>
-<style>
-  body {
-    visibility: hidden;
-  }
-</style> -->
     <div class="login_contenar">
         <header class="inner-header">
             <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
@@ -35,20 +13,20 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
                                             <span>AR</span> Arabic
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
+                                        <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
                                             <span>EN</span> English
                                         </a>
                                     </li>
@@ -56,7 +34,7 @@
                                 </ul>
 
                             </div>
-                <a href="{{url('/seller/login')}}" class="customBtn1">Become a seller</a>
+                <a href="{{url('/seller/login')}}" class="customBtn1">{{ __('user_messages.become_a_seller') }}</a>
             </div>
         </header>
         <div class="login_content login_content_left">
@@ -74,18 +52,18 @@
                         <label class="custom-radio">
                             <input type="radio" name="forgetPassword" class="emailandmobile notapplyspace" value="1"  checked />
                             <span class="radio-mark"></span>
-                            <span class="label-text">Mobile Number</span>
+                            <span class="label-text">{{ __('user_messages.mobile_number') }}</span>
                         </label>
 
                         <label class="custom-radio">
                             <input type="radio" name="forgetPassword"  class="emailandmobile" value="2" />
                             <span class="radio-mark"></span>
-                            <span class="label-text">Email Address</span>
+                            <span class="label-text">{{ __('user_messages.email_address') }}</span>
                         </label>
                     </div>
                    
                     <div class="form-group position-relative mt-3 mobileInput">
-                        <label for="">Enter Mobile Number</label>
+                        <label for="">{{ __('user_messages.enter_mobile_number') }}</label>
                         <div class="d-flex align-items-center">
                             <div class="">
                                 {{-- <select name="country_code" id="" class="country" class="form-control">
@@ -174,7 +152,7 @@
 
                             </div>
                             <div class="w-100">
-                                <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile" maxlength="15"
+                                <input type="number" class="form-control"  value="" placeholder="{{ __('user_messages.enter_mobile_number') }}" name="mobile" maxlength="15"
                                         oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
                             </div>
                         </div>
@@ -183,11 +161,11 @@
                     </div>
 
                     <div class="form-group position-relative password_icon mt-3 d-none emailInput">
-                        <label for="">Enter Email Id</label>
-                        <input class="form-control notapplyspace" type="email" placeholder="Enter Mobile Number" name="email">
+                        <label for="">{{ __('user_messages.enter_email_id') }}</label>
+                        <input class="form-control notapplyspace" type="email" placeholder="{{ __('user_messages.enter_email_id') }}" name="email">
                           <p class="text-danger" id="error-email"></p>
                     </div>
-                    <button type="submit" class="customBtn customBtn5 mt-4">Continue</button>
+                    <button type="submit" class="customBtn customBtn5 mt-4">{{ __('user_messages.continue') }}</button>
                     </form>
 
                 </div>
@@ -195,24 +173,6 @@
         </div>
     </div>
 
-    <!-- <div id="google_translate_element" style="display:none;"></div>
-<div id="loaderTrans"
-        style="display:none;
-        position:fixed;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background:#ffffff; 
-        z-index:999999;   
-        /* display:flex;    */
-        align-items:center;
-        justify-content:center;">
-
-        <iframe src="https://lottie.host/embed/7629c0ed-9538-4b83-b7ab-5870d7aae0ab/KLkQkV2bNW.lottie"
-                style="border:none; width:200px; height:200px;">
-        </iframe>
-    </div> -->
 
     <script>
 
@@ -312,204 +272,5 @@
 
      </script>
 
-<!-- google translator code -->
-<!-- <script>
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        autoDisplay: false
-    }, 'google_translate_element');
-}
-</script>
-
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<script>
-
-let currentLang = localStorage.getItem("selectedLang") || "en";
-let translateReady = false;
-
-/* WAIT FOR GOOGLE DROPDOWN (ROBUST VERSION) */
-function waitForCombo(callback) {
-
-    let attempts = 0;
-
-    const timer = setInterval(() => {
-
-        const combo = document.querySelector(".goog-te-combo");
-
-        if (combo && combo.options.length > 1) {
-            clearInterval(timer);
-            translateReady = true;
-            callback(combo);
-        }
-
-        attempts++;
-
-        if (attempts > 30) {
-            clearInterval(timer);
-            console.warn("Google Translate not ready");
-        }
-
-    }, 200);
-}
-
-
-/* APPLY TRANSLATION (FIXED FIRST TIME ISSUE) */
-function applyTranslation(lang) {
-
-    const loader = document.getElementById("loaderTrans");
-    if (loader) loader.style.display = "flex";
-
-    currentLang = lang;
-    localStorage.setItem("selectedLang", lang);
-
-    updateUI(lang);
-
-    waitForCombo(function(combo) {
-
-        function trigger(value) {
-            combo.value = value;
-            combo.dispatchEvent(new Event("change"));
-        }
-
-        // STEP 1: RESET
-        trigger("en");
-
-        setTimeout(() => {
-
-            // STEP 2: APPLY LANGUAGE
-            trigger(lang);
-
-            // STEP 3: RETRY (VERY IMPORTANT FIX)
-            setTimeout(() => {
-
-                if (combo.value !== lang) {
-                    trigger(lang);
-                }
-
-                if (loader) loader.style.display = "none";
-
-            }, 500);
-
-        }, 300);
-
-    });
-}
-
-
-/* UPDATE UI */
-function updateUI(lang) {
-
-    const current = document.getElementById("currentLang");
-    if (current) current.innerText = lang.toUpperCase();
-
-    document.querySelectorAll(".langu .dropdown-item")
-        .forEach(el => el.style.background = "");
-
-    const active = document.querySelector(`.langu .dropdown-item[data-lang="${lang}"]`);
-
-    if (active) {
-        active.style.background =
-            "linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%)";
-    }
-}
-
-
-/* CLICK EVENTS */
-document.querySelectorAll(".langu .dropdown-item").forEach(item => {
-
-    item.addEventListener("click", function () {
-
-        const lang = this.getAttribute("data-lang");
-
-        // PREVENT CLICK BEFORE READY
-        if (!translateReady) {
-            console.log("Translate still loading...");
-            return;
-        }
-
-        applyTranslation(lang);
-
-    });
-
-});
-
-
-/* INITIAL LOAD */
-function initLanguage() {
-
-    const lang = localStorage.getItem("selectedLang") || "en";
-    const loader = document.getElementById("loaderTrans");
-
-    if (loader) loader.style.display = "flex";
-
-    updateUI(lang);
-
-    waitForCombo(function(combo) {
-
-        function trigger(value) {
-            combo.value = value;
-            combo.dispatchEvent(new Event("change"));
-        }
-
-        // RESET FIRST
-        trigger("en");
-
-        setTimeout(() => {
-
-            trigger(lang);
-
-            // RETRY FIX
-            setTimeout(() => {
-
-                if (combo.value !== lang) {
-                    trigger(lang);
-                }
-
-                // SHOW PAGE ONLY AFTER TRANSLATION
-                document.body.style.visibility = "visible";
-
-                if (loader) loader.style.display = "none";
-
-            }, 600);
-
-        }, 300);
-
-    });
-
-}
-
-window.addEventListener("load", initLanguage);
-
-
-/* BACK/FORWARD CACHE FIX */
-window.addEventListener("pageshow", function (event) {
-
-    if (event.persisted ||
-        performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
-
-        setTimeout(() => {
-            initLanguage();
-        }, 200);
-    }
-
-});
-
-
-/* HIDE GOOGLE TOOLTIP */
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-            if (node.id === 'goog-gt-tt') {
-                node.style.display = 'none';
-            }
-        });
-    });
-});
-
-observer.observe(document.body, { childList: true, subtree: true });
-
-</script> -->
 
 @endsection

@@ -24,6 +24,8 @@ use App\Http\Controllers\AgoraController;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\Artisan;
 
+Route::middleware(['ApiLang'])->group(function(){
+
 Route::match(['get','post'],'/agora/token', [AgoraController::class, 'generateToken']);
 
 // Route::match(['get','post'],'/agora/tokenWeb', [AgoraController::class, 'generateTokenWeb']);
@@ -408,3 +410,5 @@ Route::get('faqs',[CommonController::class, 'faqs']);
 Route::post('sendPushNotificationApp',[CommonController::class, 'sendPushNotificationApp']);
 
 Route::post('CaptureSellerStoreVisitor',[CommonController::class, 'CaptureSellerStoreVisitor']);
+
+});

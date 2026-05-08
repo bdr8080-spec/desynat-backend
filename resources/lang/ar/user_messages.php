@@ -1,0 +1,128 @@
+<?php
+
+return [
+    'entries_per_page' => 'Show _MENU_ entries per page',
+    'zero_records' => 'No records found',
+    'info' => 'Showing page _PAGE_ of _PAGES_',
+    'info_empty' => 'No records available',
+    'info_filtered' => '(filtered from _MAX_ total records)',
+
+
+    'arabic' => 'Arabic',
+    'english' => 'English',
+
+    //common
+    'sign_in' => 'تسجيل الدخول',
+    'sign_up' => 'إنشاء حساب',
+    'my_wallet' => 'محفظتي',
+    'my_orders' => 'طلباتي',
+    'my_saved_cards' => 'بطاقاتي المحفوظة',
+    'saved_addresses' => 'العناوين المحفوظة',
+    'terms_&_conditions' => 'الشروط والأحكام',
+    'return_policy' => 'سياسة الإرجاع',
+    'about_us' => 'من نحن',
+    'faqs' => 'الأسئلة الشائعة',
+    'cancellation_policy' => 'سياسة الإلغاء',
+    'exchange_policy' => 'سياسة الاستبدال',
+    'support' => 'الدعم',
+    'become_an_affiliate' => 'كن شريكًا بالعمولة',
+    'settings' => 'الإعدادات',
+    'logout' => 'تسجيل الخروج',
+    'change_country' => 'تغيير الدولة',
+    'change_currency' => 'تغيير العملة',
+    'save' => 'حفظ',
+    'location' => 'الموقع',
+    'link_copied_to_clipboard' => 'تم نسخ الرابط إلى الحافظة',
+    'product_add_to_wishlist' => 'تمت إضافة المنتج إلى قائمة الرغبات',
+    'product_remove_from_wishlist' => 'تمت إزالة المنتج من قائمة الرغبات',
+    'otp' => 'رمز التحقق',
+
+    //landing_page
+    'best_selling' => 'الأكثر مبيعًا',
+    'live' => 'مباشر',
+    'gift_card' => 'بطاقة هدايا',
+    'stores' => 'المتاجر',
+    'deliver_to' => 'التوصيل إلى',
+    'categories' => 'الفئات',
+    'suggested_stores' => 'المتاجر المقترحة',
+    'browse_some_premium_stores' => 'تصفح بعض المتاجر المميزة',
+    'top_rated' => 'الأعلى تقييمًا',
+    'browse_some_discounted_deals' => 'تصفح بعض العروض المخفضة',
+    'newest_products' => 'أحدث المنتجات',
+    'get_the_app' => 'احصل على التطبيق',
+    'customer_policy' => 'سياسة العملاء',
+    'support' => 'الدعم',
+    'latest_search_result' => 'أحدث نتائج البحث',
+    'search' => 'بحث',
+    'recommended' => 'موصى به',
+    'recent_search' => 'عمليات البحث الأخيرة',
+    'search_product' => 'البحث عن منتج',
+    'change_location' => 'تغيير الموقع',
+    'address_changed_successfully' => 'تم تغيير العنوان بنجاح',
+    'no_category_found' => 'لم يتم العثور على فئة',
+
+    //sign in
+    'become_a_seller' => 'كن بائعًا',
+    'welcome_back' => 'مرحبًا بعودتك',
+    'mobile_number_or_email_address' => 'رقم الجوال أو البريد الإلكتروني',
+    'please_enter_mobile_number_or_email_address' => 'الرجاء إدخال رقم الجوال أو البريد الإلكتروني',
+    'password' => 'كلمة المرور',
+    'please_enter_password' => 'الرجاء إدخال كلمة المرور',
+    'forgot_password' => 'نسيت كلمة المرور',
+    'login' => 'تسجيل الدخول',
+    'login_via_otp' => 'تسجيل الدخول عبر رمز التحقق',
+    'or_sign_in_with' => 'أو سجل الدخول باستخدام',
+    'do_not_have_an_account' => 'ليس لديك حساب؟',
+    'sign_up_small' => 'إنشاء حساب',
+    'continue_as_a_guest' => 'المتابعة كزائر',
+    'sign_in_small' => 'تسجيل الدخول',
+    'password_min' => 'يجب أن تكون كلمة المرور 6 أحرف على الأقل',
+    'user_not_registered' => 'المستخدم غير مسجل',
+    'verify_otp' => 'يرجى التحقق من :field باستخدام OTP لتسجيل الدخول',
+    'login_success' => 'تم تسجيل الدخول بنجاح',
+    'invalid_credentials' => 'بيانات :field أو كلمة المرور غير صحيحة',
+
+    //login via otp
+    'mobile_number' => 'رقم الجوال',
+    'email_address' => 'البريد الإلكتروني',
+    'continue' => 'متابعة',
+    'enter_mobile_number' => 'أدخل رقم الجوال',
+    'please_enter_your_mobile_number' => 'الرجاء إدخال رقم الجوال',
+    'please_enter_your_email_address' => 'الرجاء إدخال البريد الإلكتروني',
+    'enter_email_id' => 'أدخل البريد الإلكتروني',
+    'country_code_required' => 'الرجاء اختيار رمز الدولة',
+    'mobile_required' => 'الرجاء إدخال رقم الجوال',
+    'mobile_digits' => 'يجب أن يكون رقم الجوال بين 7 و 15 رقم',
+
+    'email_required' => 'الرجاء إدخال البريد الإلكتروني',
+    'email_invalid' => 'الرجاء إدخال بريد إلكتروني صالح',
+    'otp_sent_success' => 'تم إرسال رمز التحقق بنجاح',
+    'mobile_not_registered' => 'رقم الجوال غير مسجل',
+    'email_not_registered' => 'البريد الإلكتروني غير مسجل',
+
+    //verify otp
+    'otp_sent_to_mobile' => 'تم إرسال رمز تحقق مكون من 6 أرقام إلى رقم الجوال المسجل لديك',
+    'otp_sent_to_email' => 'تم إرسال رمز تحقق مكون من 6 أرقام إلى بريدك الإلكتروني المسجل',
+    'otp_sent' => 'تم إرسال رمز التحقق المكون من 6 أرقام إلى حسابك المسجل',
+    'resend' => 'إعادة الإرسال',
+    'verify_otp' => 'التحقق من رمز OTP',
+    'otp_resent_successfully' => 'تم إعادة إرسال رمز التحقق بنجاح',
+    'enter_otp' => 'الرجاء إدخال رمز التحقق',
+    'invalid_user_reference' => 'مرجع المستخدم غير صالح',
+    'user_not_found' => 'المستخدم غير موجود',
+    'otp_verified_success' => 'تم التحقق من رمز OTP بنجاح',
+    'login_success' => 'تم تسجيل الدخول بنجاح',
+    'user_registered_success' => 'تم تسجيل المستخدم بنجاح',
+    'invalid_otp' => 'رمز OTP غير صحيح، حاول مرة أخرى',
+    'resend_otp' => 'إعادة إرسال رمز التحقق',
+
+    //forgot password
+    'mobile_exists'   => 'رقم الجوال غير مسجل',
+    'email_exists'    => 'هذا البريد الإلكتروني غير مسجل',
+
+
+    
+
+
+
+];

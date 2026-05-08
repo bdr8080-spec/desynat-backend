@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8">
@@ -191,79 +192,79 @@
                                         <div class="profile_buttons">
                                             <div class="row">
                                                 <div class="col-lg-6 my-2">
-                                                    <a href="{{route('user.myWallet')}}" class="custom-btn3">My
-                                                        wallet</a>
+                                                    <a href="{{route('user.myWallet')}}" class="custom-btn3">
+                                                        {{ __('user_messages.my_wallet') }}</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
-                                                    <a href="{{route('user.myOrders')}}" class="custom-btn3">My
-                                                        Orders</a>
+                                                    <a href="{{route('user.myOrders')}}" class="custom-btn3">
+                                                        {{ __('user_messages.my_orders') }}</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
-                                                    <a href="{{route('user.saved_cards')}}" class="custom-btn3">My Saved
-                                                        Cards</a>
+                                                    <a href="{{route('user.saved_cards')}}" class="custom-btn3">
+                                                        {{ __('user_messages.my_saved_cards') }}</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
-                                                    <a href="{{route('user.view_address')}}" class="custom-btn3">Saved
-                                                        Addresses</a>
+                                                    <a href="{{route('user.view_address')}}" class="custom-btn3">
+                                                        {{ __('user_messages.saved_addresses') }}</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <ul class="list-unstyled profile_links">
                                             <li><a href="{{route('user.termCondition')}}">
                                                     <img src="{{asset('user/assets/images/profile-icon/terms.svg')}}" />
-                                                    Terms & Condition
+                                                    {{ __('user_messages.terms_&_conditions') }}
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li><a href="{{route('user.returnPolicy')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/return.svg')}}" />
-                                                    Return Policy
+                                                    {{ __('user_messages.return_policy') }}
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li><a href="{{route('user.aboutUs')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/about-us.svg')}}" />
-                                                    About Us
+                                                    {{ __('user_messages.about_us') }}
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li><a href="{{route('user.faq')}}">
                                                     <img src="{{asset('user/assets/images/profile-icon/faq.svg')}}" />
-                                                    FAQ's
+                                                    {{ __('user_messages.faqs') }}
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li><a href="{{route('user.cancellationPolicy')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/cancel-policy.svg')}}" />
-                                                    Cancellation Policy
+                                                    {{ __('user_messages.cancellation_policy') }}
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li><a href="{{route('user.exchangePolicy')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/exchange.svg')}}" />
-                                                    Exchange Policy
+                                                    {{ __('user_messages.exchange_policy') }}
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li><a href="{{route('user.support')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/support.svg')}}" />
-                                                    Support
+                                                    {{ __('user_messages.support') }}
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li><a href="{{route('affiliate.affiliate_startPage')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/becom-affilit.svg')}}" />
-                                                    Become An Affiliate
+                                                    {{ __('user_messages.become_an_affiliate') }}
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li><a href="{{route('user.setting')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/setting.svg')}}" />
-                                                    Settings
+                                                    {{ __('user_messages.settings') }}
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li>
                                                 <a class="dropdown-item text-center" href="{{route('userLogout')}}"><i
-                                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                                                        class="fa-solid fa-arrow-right-from-bracket"></i> {{ __('user_messages.logout') }}</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -272,7 +273,7 @@
                             </div>
                             @else
                             <a class="customBtn1 mobileSignup" href="{{route('userLogin')}}"><i
-                                    class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
+                                    class="fa-regular fa-user"></i> {{ __('user_messages.sign_in') }}/{{ __('user_messages.sign_up') }}</a>
                             @endif
 
                             <!-- Country code  -->
@@ -285,7 +286,7 @@
 
                                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu">
                                     <li class="topDropdonw">
-                                        <p>Change Country <i class="fa-solid fa-xmark"></i></p>
+                                        <p>{{ __('user_messages.change_country') }} <i class="fa-solid fa-xmark"></i></p>
                                     </li>
 
                                     @foreach($GetsellerCountry as $key=>$val)
@@ -293,7 +294,11 @@
                                         <label class="custom-radio d-flex justify-content-between">
                                             <input type="radio" name="country_language" value="{{$val->id}}"
                                                 {{ session('country_id', $GetsellerCountry[0]->id) == $val->id ? 'checked' : '' }}>
+                                            @if(app()->getLocale() == 'en')
                                             <span>{{$val->name}}</span>
+                                            @else
+                                            <span>{{$val->name_ar}}</span>
+                                            @endif
                                             <img src="{{$val->flag}}" width="20">
                                         </label>
                                     </li>
@@ -314,7 +319,7 @@
 
                                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu currency">
                                     <li class="topDropdonw">
-                                        <p>Change Currency <i class="fa-solid fa-xmark close-dropdown"></i></p>
+                                        <p>{{ __('user_messages.change_currency') }} <i class="fa-solid fa-xmark close-dropdown"></i></p>
                                     </li>
 
                                     @foreach($GetsellerCountry as $key=>$val)
@@ -327,7 +332,7 @@
                                     </li>
                                     @endforeach
                                     <li>
-                                        <button class="customBtn customBtn5">Save</button>
+                                        <button class="customBtn customBtn5">{{ __('user_messages.save') }}</button>
                                     </li>
 
                                 </ul>
@@ -342,20 +347,20 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
                                             <span>AR</span> Arabic
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
+                                        <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
                                             <span>EN</span> English
                                         </a>
                                     </li>
@@ -380,7 +385,7 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-6  d-lg-block d-md-block d-none">
                                 <div class="track_location">
-                                    <h6>Deliver to {{@Auth::guard('web')->user()->full_name ?? 'Guest'}}</h6>
+                                    <h6>{{ __('user_messages.deliver_to') }} {{@Auth::guard('web')->user()->full_name ?? 'Guest'}}</h6>
                                     <div class="d-flex align-self-center w-100" data-bs-toggle="modal"
                                         data-bs-target="#changeLocation">
                                         <button type="button" class="customBtnLocation btn">
@@ -398,21 +403,21 @@
 
                                     <div class="form-group position-relative search">
                                         <input type="text" id="headerSearchInput" autocomplete="off"
-                                            class="form-control" placeholder="Search Product" />
+                                            class="form-control" placeholder="{{ __('user_messages.search_product') }}" />
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </div>
                                     <div class="searchdrop" style="display: none;">
                                         <div class="latestsearch">
-                                            <h6>Latest Search Result</h6>
+                                            <h6>{{ __('user_messages.latest_search_result') }}</h6>
                                             <div class="latest-lists" id="latestSearchResults"></div>
                                         </div>
                                         <div class="latestsearch">
-                                            <h6>Recommended</h6>
+                                            <h6>{{ __('user_messages.recommended') }}</h6>
                                             <div class="latest-lists" id="recommendedResults"></div>
                                         </div>
 
                                         <div class="latestsearch">
-                                            <h6>Recent-search</h6>
+                                            <h6>{{ __('user_messages.recent_search') }}</h6>
                                             <div class="latest-lists" id="recentSearchResults"></div>
                                         </div>
 
@@ -432,7 +437,11 @@
                                             <a class="nav-link dropdown-toggle position-relative {{ $index == 0 ? 'active' : '' }}"
                                                 href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                                 onclick="handleSubCategory({{$item->id}})">
-                                                {{$item->name}}
+                                                @if(app()->getLocale() == 'ar')
+                                                    {{ $item->name_ar }}
+                                                @else
+                                                    {{ $item->name }}
+                                                @endif
                                             </a>
                                             <div class="dropdown-menu sell_clothes">
                                                 <div class="scroll-wrapper">
@@ -446,7 +455,14 @@
                                                         <div class="col-lg-3 col-md-4 col-12">
                                                             <div class="clothes_content">
                                                                 <a href="{{ route('user.category_wise_store', $value->category_id) }}">
-                                                                <p>{{$value->name_english}}</p>
+                                                                <!-- <p>{{$value->name_english}}</p> -->
+                                                                 <p>
+                                                                     @if(app()->getLocale() == 'ar')
+                                                                        {{ $value->name_arabic }}
+                                                                    @else
+                                                                        {{ $value->name_english }}
+                                                                    @endif
+                                                                 </p>
                                                                 </a>
                                                                 <!-- <ul class="list-unstyled">
                                                                     <li>
@@ -474,19 +490,19 @@
                                         @endforeach
 
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="#">Best Selling</a>
+                                            <a class="nav-link active" aria-current="page" href="#">{{ __('user_messages.best_selling') }}</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{route('user.getLiveSellerRecords')}}">Live</a>
+                                            <a class="nav-link" href="{{route('user.getLiveSellerRecords')}}">{{ __('user_messages.live') }}</a>
                                         </li>
                                         @if (Auth::guard('web')->check())
                                         <li class="nav-item">
                                             <a class="nav-link active" aria-current="page"
-                                                href="{{route('user.gift_cards')}}">Gift Card</a>
+                                                href="{{route('user.gift_cards')}}">{{ __('user_messages.gift_card') }}</a>
                                         </li>
                                         @endif
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{route('user.category_wise_store')}}">Stores</a>
+                                            <a class="nav-link" href="{{route('user.category_wise_store')}}">{{ __('user_messages.stores') }}</a>
                                         </li>
 
                                     </ul>
@@ -509,7 +525,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-0">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Change Location</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ __('user_messages.change_location') }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -532,11 +548,11 @@
                             <i class="bi bi-crosshair"></i> Use Current Location
                         </div> -->
 
-                        <h5>Location</h5>
+                        <h5>{{ __('user_messages.location') }}</h5>
                         <p id="locationUpdate"></p>
                     </div>
 
-                    <button class="customBtn saveCurrentAddress mt-3">Change Location</button>
+                    <button class="customBtn saveCurrentAddress mt-3">{{ __('user_messages.change_location') }}</button>
                 </div>
             </div>
         </div>

@@ -666,11 +666,13 @@ class UserManagementService
 
             if($wishlist){
                 $wishlist->delete();
-                $msg="Product remove from Wishlist";
+                // $msg="Product remove from Wishlist";
+                $msg = __('user_messages.product_remove_from_wishlist');
                 $update_status=0;
             }else{
                $wishlist= wishlist::create($data);
-                $msg="Product Add From Wishlist";
+                // $msg="Product Add to Wishlist";
+                $msg = __('user_messages.product_add_to_wishlist');
                 $update_status=1;
             }
 

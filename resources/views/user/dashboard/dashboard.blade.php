@@ -33,7 +33,7 @@
 </div>
 
 <section class="customContainer categorie_contenar" id="subCategorySection">
-    <h3 class="mid-headng">Categories</h3>
+    <h3 class="mid-headng">{{ __('user_messages.categories') }}</h3>
     <div class="row">
         @forelse ($subCategory as $item)
         <div class="col-lg-4 col-md-4 col-6 my-lg-3 my-2 text-center">
@@ -42,21 +42,25 @@
                     <div class="categorie_cotent-img">
                         <img src="{{ $item->image }}" class="img-fluid" />
                     </div>
-                    <h3 class="mt-3">{{ $item->name_english }}</h3>
+                    @if(app()->getLocale() == 'en')
+                        <h3 class="mt-3">{{ $item->name_english }}</h3>
+                    @else
+                        <h3 class="mt-3">{{ $item->name_arabic }}</h3>
+                    @endif
                 </div>
             </a>
         </div>
         @empty
         <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
             {{-- <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" /> --}}
-            <h3>No Category Found</h3>
+            <h3>{{ __('user_messages.no_category_found') }}</h3>
         </div>
         @endforelse
     </div>
 </section>
 
 <div class="customContainer suggestStore">
-    <h3 class="mid-headng mb-3">Suggested Stores</h3>
+    <h3 class="mid-headng mb-3">{{ __('user_messages.suggested_stores') }}</h3>
     <div class="suggestStore_contenar">
         <div class="owl-carousel storeCarousel">
             @foreach($stores as $store)
@@ -82,7 +86,7 @@
 
 
 <section class="bestSelling customContainer">
-    <h3 class="mid-headng mb-3">Best Selling</h3>
+    <h3 class="mid-headng mb-3">{{ __('user_messages.best_selling') }}</h3>
     <div class="owl-carousel bestSellingCarousel">
 
         @foreach($bestSellingProduct as $key=>$item)
@@ -117,7 +121,11 @@
 
                       <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                     <div class="product-content">
+                        @if(app()->getLocale() == 'en')
                         <h5>{{ $item->product_name_en }}</h5>
+                        @else
+                        <h5>{{ $item->product_name_ar }}</h5>
+                        @endif
                         <div class="rating">
                             @php
                                 $rating = $item->product_avg_rating ?? 0;
@@ -186,7 +194,7 @@
 </section>
 
 <div class="customContainer">
-    <h3 class="mid-headng mb-3">Browse some Premium stores</h3>
+    <h3 class="mid-headng mb-3">{{ __('user_messages.browse_some_premium_stores') }}</h3>
 
     <div class="owl-carousel owl-theme customOwlcarousel2 storeBanner">
         @if(empty($bottomBanners['data']) || count($bottomBanners['data']) == 0)
@@ -211,7 +219,7 @@
 </div>
 
 <section class="bestSelling customContainer mt-3">
-    <h3 class="mid-headng mb-3">Top Rated</h3>
+    <h3 class="mid-headng mb-3">{{ __('user_messages.top_rated') }}</h3>
     <div class="owl-carousel topRatedCarousel">
 
         @foreach($TopRatingProduct as $key=>$item)
@@ -247,7 +255,11 @@
                      <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
             
                     <div class="product-content">
+                        @if(app()->getLocale() == 'en')
                         <h5>{{ $item->product_name_en }}</h5>
+                        @else
+                        <h5>{{ $item->product_name_ar }}</h5>
+                        @endif
                         <div class="rating">
                             @php
                                 $rating = $item->product_avg_rating ?? 0;
@@ -314,7 +326,7 @@
 </section>
 
 <div class="customContainer">
-    <h3 class="mid-headng mb-3">Browse some discounted deals</h3>
+    <h3 class="mid-headng mb-3">{{ __('user_messages.browse_some_discounted_deals') }}</h3>
 
     <div class="owl-carousel owl-theme customOwlcarousel2 storeBanner">
         <!-- <div class="item">
@@ -340,7 +352,7 @@
 </div>
 
 <section class="customContainer mt-3">
-    <h3 class="mid-headng mb-0">Newest Products</h3>
+    <h3 class="mid-headng mb-0">{{ __('user_messages.newest_products') }}</h3>
     <div class="row">
 
         @foreach($userNewestProduct as $key=>$item)
@@ -374,7 +386,11 @@
                      <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
            
                     <div class="product-content">
+                        @if(app()->getLocale() == 'en')
                         <h5>{{ $item->product_name_en }}</h5>
+                        @else
+                        <h5>{{ $item->product_name_ar }}</h5>
+                        @endif
                         <div class="rating">
                             @php
                                 $rating = $item->product_avg_rating ?? 0;
@@ -555,7 +571,7 @@ document.addEventListener('click', function (e) {
 
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(link).then(function () {
-                toastr.success('Link copied to clipboard');
+                toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
             }).catch(function () {
                 fallbackCopy(link);
             });
@@ -576,7 +592,7 @@ function fallbackCopy(text) {
     document.execCommand("copy");
     document.body.removeChild(temp);
 
-    toastr.success('Link copied to clipboard');
+    toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
 }
 </script>
 

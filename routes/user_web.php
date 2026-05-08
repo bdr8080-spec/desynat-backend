@@ -14,6 +14,7 @@ use App\Http\Controllers\User\DashBoardController;
 use App\Http\Controllers\User\ChatController;
 use App\Http\Controllers\User\UserAffilatedController;
 use App\Http\Controllers\User\WalletController;
+use App\Http\Controllers\User\UserLanguageController;
 
 
 use App\Http\Controllers\GoogleTranslateController;
@@ -24,6 +25,10 @@ use App\Http\Controllers\SaveFirebaseToken;
 
 use App\Http\Controllers\AgoraController;
 
+
+Route::middleware(['checkLanguage'])->group(function(){
+
+Route::get('/user-change-language/{locale}', [UserLanguageController::class, 'UserChangelanguage'])->name("userLanguage");
 
 // Save User firebase Token 
 Route::get('user-save-token', [SaveFirebaseToken::class, 'saveUserToken']);
@@ -283,7 +288,7 @@ Route::match(['get', 'post'], '/order-place', function () {
 })->name('user.order-place');
 
 
-
+});
 
 Route::fallback(function (Request $request) {
     $uri = $request->getRequestUri();
