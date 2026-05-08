@@ -10,7 +10,7 @@ $can_action=$menu_permission['can_action'];
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Affiliated Commission</div>
+        <div class="title24">{{ __('seller_messages.Affiliated_Commission') }} </div>
     </div>
 
     <form id="editcommison" action="{{ route('seller.update_commison') }}" method="post">
@@ -21,9 +21,10 @@ $can_action=$menu_permission['can_action'];
                 <div class="col-lg-12 col-md-12">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Set Commission % for affiliated customer</label>
+                            <label> {{ __('seller_messages.Set_Commission_For_Affiliated_Customer') }}</label>
                         </div>
-                        <input type="text" class="form-control" placeholder="Eg. 5%"
+                        <input type="text" class="form-control"
+                            placeholder="{{ __('seller_messages.Eg_Commission') }}"
                             value="{{$seller_details->affilate_commission}}" name="affilate_commission" min="0"
                             max="100" oninput="this.value = this.value.replace(/[^0-9]/g, ''); 
                 if(this.value > 100) this.value = 100;" @if($can_action=='0') disabled @endif>
@@ -35,13 +36,12 @@ $can_action=$menu_permission['can_action'];
             @if($can_action=='1')
             
             <div class="dashboard-button mt-4">
-                <button type="submit" class="btn add-fillbtn w-100">Save</button>
+                <button type="submit" class="btn add-fillbtn w-100"> {{ __('seller_messages.Save') }}</button>
             </div>
             @endif
 
         </div>
     </form>
-
 
 </section>
 <script>

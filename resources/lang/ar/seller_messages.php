@@ -269,4 +269,125 @@ return [
     'normal' => 'عادي',
     'custom' => 'مخصص',
 
+    // Inventory management
+    
+    'Inventory_Management' => 'إدارة المخزون',
+    'All' => 'الكل',
+    'Active' => 'نشط',
+    'In_Active' => 'غير نشط',
+
+    'search' => 'بحث',
+    'Filter_By' => 'تصفية حسب',
+
+    'S.No' => 'الرقم',
+    'Image' => 'الصورة',
+    'Product_code' => 'رمز المنتج',
+    'Product_Name' => 'اسم المنتج',
+    'Brand' => 'العلامة التجارية',
+    'Category' => 'الفئة',
+    'Added_on' => 'تاريخ الإضافة',
+    'Availability' => 'التوفر',
+
+    'Active_Inactive' => 'نشط / غير نشط',
+    'View_more_details' => 'عرض المزيد من التفاصيل',
+
+    'In_Stock' => 'متوفر',
+    'Out_of_Stock' => 'غير متوفر',
+
+    'No_Product_found' => 'لم يتم العثور على منتجات',
+
+  // Banner_Management
+
+  'Banner_Management' => 'إدارة البنرات',
+'Add_New_Banner' => 'إضافة بانر جديد',
+'Search' => 'بحث',
+'Filter_By_Status' => 'تصفية حسب الحالة',
+'Banner_Image' => 'صورة البانر',
+'Request_ID' => 'رقم الطلب',
+'Requested_On' => 'تاريخ الطلب',
+'View_More_Details' => 'عرض المزيد من التفاصيل',
+'Confirmed' => 'مؤكد',
+'Rejected' => 'مرفوض',
+'Banner_Purchased_Successfully' => 'تم شراء البانر بنجاح',
+'Status' => 'الحالة',
+'S_No' => 'الرقم',
+
+
+// ADD  Banner_Management
+
+'Banner_Position' => 'موضع البانر',
+'Home_Top' => 'أعلى الصفحة الرئيسية',
+'Home_Bottom' => 'أسفل الصفحة الرئيسية',
+'Category_Name' => 'اسم الفئة',
+'Sub_Category_Name' => 'اسم الفئة الفرعية',
+'Select_Duration' => 'اختر المدة',
+'Total_Days' => 'إجمالي الأيام',
+'From' => 'من',
+'To' => 'إلى',
+'Upload_Banner' => 'رفع البانر',
+'Total_Price' => 'السعر الإجمالي',
+'Send_Request' => 'إرسال الطلب',
+'Request_Send_Successfully' => 'تم إرسال الطلب بنجاح',
+
+'Select_Sub_Category' => 'اختر الفئة الفرعية',
+'Unexpected_response_from_server' => 'استجابة غير متوقعة من الخادم',
+'Fail' => 'فشل',
+
+'Total_Days_Default' => 'إجمالي الأيام - 00',
+
+'Start_Date_Earlier_Today' => 'لا يمكن أن يكون تاريخ البدء قبل اليوم',
+'End_Date_Earlier_Start' => 'لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ البدء',
+
+'Loading' => 'جاري التحميل...',
+'Upload' => 'رفع',
+
+'Total_Days_count' => 'إجمالي الأيام - :name',
+
+// Affiliated_Commission
+'Affiliated_Commission' => 'عمولة الإحالة',
+
+'Set_Commission_For_Affiliated_Customer' => 
+  'حدد نسبة العمولة للعميل التابع',
+
+'Eg_Commission' => 'مثال: 5٪',
+
+'Save' => 'حفظ',
+
+
+// Live_Coverage_Requests
+
+'Live_Coverage_Requests' => 'طلبات التغطية المباشرة',
+'Reset' => 'إعادة تعيين',
+'Export' => 'تصدير',
+'Search' => 'بحث',
+'Filter_By_Status' => 'تصفية حسب الحالة',
+'Pending' => 'قيد الانتظار',
+'Completed' => 'مكتمل',
+'Cancelled' => 'ملغي',
+'Rejected' => 'مرفوض',
+'Select_Date' => 'اختر التاريخ',
+'S_No' => 'الرقم التسلسلي',
+'Request_ID' => 'رقم الطلب',
+'Requested_On' => 'تم الطلب في',
+'Live_Request' => 'طلب مباشر',
+'Status' => 'الحالة',
+'Action' => 'إجراء',
+'At' => 'في',
+'Confirmed' => 'مؤكد',
+'Send_New_Live_Request' => 'إرسال طلب مباشر جديد',
+'Total_Coverages' => 'إجمالي التغطيات',
+'Select_Time' => 'اختر الوقت',
+'Send_Request' => 'إرسال الطلب',
+'Reason' => 'السبب',
+'Cancel_Reason' => 'سبب الإلغاء',
+'Write_Here' => 'اكتب هنا',
+'Submit' => 'إرسال',
+'Request_Sent_Successfully' => 'تم إرسال الطلب بنجاح',
+
+'complete'=>"مكتمل",
+
+
+
+
+
 ];

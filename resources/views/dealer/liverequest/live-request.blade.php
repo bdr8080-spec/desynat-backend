@@ -3,9 +3,9 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Live Coverage Requests</div>
-        <a href="{{ route('seller.liveRequests') }}" class="btn btn-success exportbtn">Reset</a>
-        <a href="{{ route('seller.export_live_request_data', request()->all()) }}"" class="btn btn-success exportbtn">Export</a>
+        <div class="title24">{{ __('seller_messages.Live_Coverage_Requests') }}</div>
+        <a href="{{ route('seller.liveRequests') }}" class="btn btn-success exportbtn"> {{ __('seller_messages.Reset') }}</a>
+        <a href="{{ route('seller.export_live_request_data', request()->all()) }}"" class="btn btn-success exportbtn"> {{ __('seller_messages.Export') }}</a>
 
     </div>
     <div class="datatable-wapper mt-4">
@@ -15,40 +15,11 @@
                     <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
                     <input type="search"
                         class="dt-input tableSearch form-control  tableSearch"
-                        id="customTableSearch" data-table="table1" placeholder="Search" aria-controls="table1">
+                        id="customTableSearch" data-table="table1" placeholder=" {{ __('seller_messages.search') }}" aria-controls="table1">
                 </div>
             </div>
 
-            <!-- <form method="GET" action="">
-
-                <div class="search-filter">
-                    <div class="from-group">
-                        <div class="show-date d-flex gap-2  flex-wrap">
-                            <div class="date-form-pnl">
-                                <input type="date" class="form-control" name="from" id="fromDate"
-                                    value="{{request()->from }}">
-                                <p class="text-danger" id="error-start_date"></p>
-                            </div>
-                            <div class="date-form-pnl">
-                                <input type="date" class="form-control" name="to" id="toDate"
-                                    value="{{request()->to }}">
-
-                                <p class="text-danger" id="error-end_date"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="from-group">
-                        <select class="form-select form-control width-50" aria-label="Default select example">
-                            <option value="">Filter by status</option>
-                            <option value="1">Pending</option>
-                            <option value="2">Completed</option>
-                            <option value="3">Cancelled</option>
-                            <option value="4">Rejected</option>
-
-                        </select>
-                    </div>
-                </div>
-            </form> -->
+          
             <form method="GET" action="{{ route('seller.liveRequests') }}" id="liveRequestFilterForm">
                 <div class="search-filter d-flex flex-wrap align-items-center gap-3">
 
@@ -72,11 +43,11 @@
                     <div class="from-group">
                         <select name="filter" id="filterStatus" class="form-select form-control width-50" 
                             onchange="document.getElementById('liveRequestFilterForm').submit();">
-                            <option value="">Filter by status</option>
-                            <option value="1" {{ request('filter') == '1' ? 'selected' : '' }}>Pending</option>
-                            <option value="2" {{ request('filter') == '2' ? 'selected' : '' }}>Completed</option>
-                            <option value="3" {{ request('filter') == '3' ? 'selected' : '' }}>Cancelled</option>
-                            <option value="4" {{ request('filter') == '4' ? 'selected' : '' }}>Rejected</option>
+                            <option value="">{{ __('seller_messages.Filter_By_Status') }}</option>
+                            <option value="1" {{ request('filter') == '1' ? 'selected' : '' }}>  {{ __('seller_messages.Pending') }}</option>
+                            <option value="2" {{ request('filter') == '2' ? 'selected' : '' }}>  {{ __('seller_messages.Completed') }}</option>
+                            <option value="3" {{ request('filter') == '3' ? 'selected' : '' }}>  {{ __('seller_messages.Cancelled') }}</option>
+                            <option value="4" {{ request('filter') == '4' ? 'selected' : '' }}> {{ __('seller_messages.Rejected') }}</option>
                         </select>
                     </div>
 
@@ -88,7 +59,7 @@
             <div class="date-card">
                 <!-- <div class="date-header" data-bs-toggle="modal" data-bs-target="#sendlives"> -->
                     <div class="date-header">
-                    <span>Select Date</span>
+                    <span>{{ __('seller_messages.Select_Date') }}</span>
                     <h3 id="selectedDate"></h3>
                 </div>
                 <div class="month-row date-form-pnl">
@@ -106,12 +77,12 @@
             <table class="table table-bordered datatable tablesearch" id="table1">
                 <thead>
                     <tr>
-                        <th class="no-sort">S.No</th>
-                        <th class="no-sort">Request ID</th>
-                        <th class="no-sort">Requested On </th>
-                        <th class="no-sort">Live Request </th>
-                        <th class="no-sort">Status</th>
-                        <th class="no-sort">Action</th>
+                       <th>{{ __('seller_messages.S_No') }}</th>
+                        <th>{{ __('seller_messages.Request_ID') }}</th>
+                        <th>{{ __('seller_messages.Requested_On') }}</th>
+                        <th>{{ __('seller_messages.Live_Request') }}</th>
+                        <th>{{ __('seller_messages.Status') }}</th>
+                        <th>{{ __('seller_messages.Action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -141,15 +112,15 @@
                             @endphp
 
                             @if($req['admin_verify'] == '0')
-                            <span style="color: #f97316;">Pending</span>
+                            <span style="color: #f97316;"> {{ __('seller_messages.Pending') }}</span>
                             @elseif($req['admin_verify'] == '2')
-                            <span style="color: #ef4444;">Rejected</span>
+                            <span style="color: #ef4444;"> {{ __('seller_messages.Rejected') }}</span>
                             @elseif($req['admin_verify'] == '3')
-                            <span style="color: #ef4444;">Cancelled</span>
+                            <span style="color: #ef4444;"> {{ __('seller_messages.Cancelled') }}</span>
                             @elseif($timeslotDateTime && $timeslotDateTime->lessThanOrEqualTo($now))
-                            <span style="color: #22c55e;">Completed</span>
+                            <span style="color: #22c55e;">  {{ __('seller_messages.complete') }}</span>
                             @else
-                            <span style="color: #22c55e;">Confirmed</span>
+                            <span style="color: #22c55e;">  {{ __('seller_messages.Confirmed') }}</span>
                             @endif
                         </td>
                         <td>
@@ -189,18 +160,18 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h3>Send new live request </h3>
+                <h3>{{ __('seller_messages.Send_New_Live_Request') }} </h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="from-group py-3">
-                    <label>Total Coverages - <span id="totalSlots">0</span></label>
+                    <label>   {{ __('seller_messages.Total_Coverages') }} - <span id="totalSlots">0</span></label>
                     <!-- <input type="date" class="form-control" id="live_requestDate"> -->
                      <div class="form-control" id="modalSelectedDate" readonly></div>
                     <input type="hidden" id="live_requestDate">
                 </div>
                 <div class="from-group mb-4">
-                    <label for="time">Select Time</label>
+                    <label for="time">{{ __('seller_messages.Select_Time') }}</label>
                     <div class="time-slot mt-2">
                         <!-- <button class="btn btn-time-outline">10:00 AM To 11:30 AM</button>
                         <button class="btn btn-time-outline">10:00 AM To 11:30 AM</button> -->
@@ -210,7 +181,7 @@
                 </div>
 
                 <div class="py-3">
-                    <button type="submit" class="btn add-fillbtn w-100">Send Request </button>
+                    <button type="submit" class="btn add-fillbtn w-100"> {{ __('seller_messages.Send_Request') }} </button>
                 </div>
 
             </div>
@@ -223,7 +194,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h3>Reason</h3>
+                  <h3>{{ __('seller_messages.Reason') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

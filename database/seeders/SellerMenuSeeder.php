@@ -64,7 +64,10 @@ SellerMenus_table::insert([
         'title_ar' => 'إدارة البنرات',
         'route' => 'seller.show_banner',
         'icon' => 'dealer/assets/img/all-icons/banner.svg',
-        'active_patterns' => json_encode(['seller/show-banner']),
+        'active_patterns' => json_encode([
+            'seller/show-banner',
+            'seller/add-banner'    
+        ]),
         'order_by' => 5,
         'status' => 1
     ],

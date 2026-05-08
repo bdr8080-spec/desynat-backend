@@ -37,8 +37,8 @@ table#table1 {
     @endif
 
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24">Banner Management</div>
-        <a href="{{route('seller.add_banner')}}" class="btn btn-success">Add New Banner</a>
+        <div class="title24"> {{ __('seller_messages.Banner_Management') }}</div>
+        <a href="{{route('seller.add_banner')}}" class="btn btn-success"> {{ __('seller_messages.Add_New_Banner') }}</a>
 
     </div>
     <div class="datatable-wapper mt-4">
@@ -47,7 +47,7 @@ table#table1 {
                 <div class="from-group position-relative">
                     <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
                     <input type="search" class="dt-input tableSearch form-control" id="customTableSearch"
-                        placeholder="Search" aria-controls="table1">
+                        placeholder="{{ __('seller_messages.Search') }}" aria-controls="table1">
                 </div>
             </div>
 
@@ -74,12 +74,31 @@ table#table1 {
                     <div class="from-group">
                         <select class="form-select form-control width-50" aria-label="Default select example"
                             name="banner_filter" onchange="this.form.submit()">
-                            <option value="">Filter by status</option>
-                            <option value="1" @if(request()->banner_filter==1 ) selected @endif > Active </option>
-                            <option value="2" @if(request()->banner_filter==2 ) selected @endif > confirmed </option>
-                            <option value="3" @if(request()->banner_filter==3 ) selected @endif > Pending </option>
-                            <option value="4" @if(request()->banner_filter==4 ) selected @endif > Expired </option>
-                            <option value="5" @if(request()->banner_filter==5 ) selected @endif > Rejected </option>
+                           
+                            <option value="">
+                                {{ __('seller_messages.Filter_By_Status') }}
+                            </option>
+
+                            <option value="1" @if(request()->banner_filter==1) selected @endif>
+                                {{ __('seller_messages.Active') }}
+                            </option>
+
+                            <option value="2" @if(request()->banner_filter==2) selected @endif>
+                                {{ __('seller_messages.Confirmed') }}
+                            </option>
+
+                            <option value="3" @if(request()->banner_filter==3) selected @endif>
+                                {{ __('seller_messages.Pending') }}
+                            </option>
+
+                            <option value="4" @if(request()->banner_filter==4) selected @endif>
+                                {{ __('seller_messages.Expired') }}
+                            </option>
+
+                            <option value="5" @if(request()->banner_filter==5) selected @endif>
+                                {{ __('seller_messages.Rejected') }}
+                            </option>
+
                         </select>
                     </div>
 
@@ -94,15 +113,14 @@ table#table1 {
             <table class="table table-bordered datatable tablesearch" id="table1">
                 <thead>
                     <tr>
-                        <th class="no-sort">S.No</th>
-                        <th class="no-sort"> Banner Image</th>
-                        <th class="no-sort">Request Id</th>
-                        <th class="no-sort">Requested On</th>
-                        <th class="no-sort">Total Amount</th>
-                        <th class="no-sort">status</th>
-                        <th class="no-sort">
-                            View more details
-                        </th>
+                         <th>{{ __('seller_messages.S_No') }}</th>
+                        <th>{{ __('seller_messages.Banner_Image') }}</th>
+                        <th>{{ __('seller_messages.Request_ID') }}</th>
+                        <th>{{ __('seller_messages.Requested_On') }}</th>
+                        <th>{{ __('seller_messages.Total_Amount') }}</th>
+                        <th>{{ __('seller_messages.Status') }}</th>
+                        <th>{{ __('seller_messages.View_More_Details') }}</th>
+                 
                     </tr>
                 </thead>
                 <tbody>
@@ -118,33 +136,37 @@ table#table1 {
                         </td>
                         <td> {{$val->order_id}}</td>
                         <td>{{$val->created_at->format('d/m/Y \a\t h:i A') }}</td>
-                        <td> {{$val->price}} KD </td>
+                        <td> {{$val->price}} {{ __('seller_messages.KD') }} </td>
                         <td>
                             @if ($val->Admin_verify == '0')
-                            Pending
+                            {{ __('seller_messages.Pending') }}
 
                             @elseif (
                             $val->Admin_verify == '1' &&
                             $val->payment_status == '1' &&
                             $val->start_date <= now() && $val->end_date >= now()
                                 )
-                                Active
+                                 {{ __('seller_messages.Active') }}
 
                                 @elseif (
                                 $val->Admin_verify == '1' &&
                                 $val->payment_status == '1' &&
-                                $val->end_date < now() ) Expired @elseif ($val->Admin_verify == '1' &&
+                                $val->end_date < now() ) 
+                                 {{ __('seller_messages.Expired') }}
+                                
+                                @elseif ($val->Admin_verify == '1' &&
                                     $val->payment_status == '1')
-                                    Confirmed
+                                     {{ __('seller_messages.Confirmed') }}
 
                                     @elseif ($val->Admin_verify == '1' && $val->payment_status == '3' )
-                                    Rejected
+                                     {{ __('seller_messages.Rejected') }}
 
                                     @elseif ($val->Admin_verify == '1' && $val->payment_status == '0' )
-                                    Confirmed
+                                    {{ __('seller_messages.Confirmed') }}
 
                                     @else
-                                    Rejected
+                                      {{ __('seller_messages.Rejected') }}
+
                                     @endif
                         </td>
                         <td>
@@ -171,7 +193,7 @@ table#table1 {
                 <div class="modal-body">
                     <div class="p-4 text-center">
                         <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
-                        <h5 class="mt-3">Banner Purchased Successfully</h5>
+                        <h5 class="mt-3">  {{ __('seller_messages.Banner_Purchased_Successfully') }}</h5>
                     </div>
                 </div>
 
