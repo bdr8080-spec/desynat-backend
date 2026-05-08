@@ -269,6 +269,32 @@ return [
     'normal' => 'عادي',
     'custom' => 'مخصص',
 
+    // Inventory management
+    
+    'Inventory_Management' => 'إدارة المخزون',
+    'All' => 'الكل',
+    'Active' => 'نشط',
+    'In_Active' => 'غير نشط',
+
+    'search' => 'بحث',
+    'Filter_By' => 'تصفية حسب',
+
+    'S.No' => 'الرقم',
+    'Image' => 'الصورة',
+    'Product_code' => 'رمز المنتج',
+    'Product_Name' => 'اسم المنتج',
+    'Brand' => 'العلامة التجارية',
+    'Category' => 'الفئة',
+    'Added_on' => 'تاريخ الإضافة',
+    'Availability' => 'التوفر',
+
+    'Active_Inactive' => 'نشط / غير نشط',
+    'View_more_details' => 'عرض المزيد من التفاصيل',
+
+    'In_Stock' => 'متوفر',
+    'Out_of_Stock' => 'غير متوفر',
+
+    'No_Product_found' => 'لم يتم العثور على منتجات',
 
   // Banner_Management
 
@@ -316,6 +342,19 @@ return [
 'Upload' => 'رفع',
 
 'Total_Days_count' => 'إجمالي الأيام - :name',
+
+// Affiliated_Commission
+'Affiliated_Commission' => 'عمولة الإحالة',
+
+'Set_Commission_For_Affiliated_Customer' => 
+  'حدد نسبة العمولة للعميل التابع',
+
+'Eg_Commission' => 'مثال: 5٪',
+
+'Save' => 'حفظ',
+
+
+
 
 
 

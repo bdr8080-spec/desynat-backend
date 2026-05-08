@@ -285,6 +285,35 @@ return [
     'custom' => 'Custom',
 
 
+
+// Inventory management
+  'Inventory_Management' => 'Inventory Management',
+    'All' => 'All',
+    'Active' => 'Active',
+    'In_Active' => 'Inactive',
+
+    'search' => 'Search',
+    'Filter_By' => 'Filter by',
+
+    'S.No' => 'S.No',
+    'Image' => 'Image',
+    'Product_code' => 'Product code',
+    'Product_Name' => 'Product Name',
+    'Brand' => 'Brand',
+    'Category' => 'Category',
+    'Added_on' => 'Added on',
+    'Availability' => 'Availability',
+
+    'Active_Inactive' => 'Active/Inactive',
+    'View_more_details' => 'View more details',
+
+    'In_Stock' => 'In Stock',
+    'Out_of_Stock' => 'Out of Stock',
+
+    'No_Product_found' => 'No Product found',
+
+
+
     // Banner_Management
 
 'Banner_Management' => 'Banner Management',
@@ -330,6 +359,19 @@ return [
 'Upload' => 'Upload',
 
 'Total_Days_count' => 'Total days - :name',
+
+
+
+// Affiliated_Commission
+
+'Affiliated_Commission' => 'Affiliated Commission',
+
+'Set_Commission_For_Affiliated_Customer' => 
+    'Set Commission % for affiliated customer',
+
+'Eg_Commission' => 'Eg. 5%',
+
+'Save' => 'Save',
 
 
 
