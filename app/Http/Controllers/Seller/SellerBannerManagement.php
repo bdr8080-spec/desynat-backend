@@ -174,8 +174,6 @@ public function seller_banner_price(Request $request){
 
             $uploadResultArray = $uploadResult->getData(true);
 
-            dd($uploadResultArray);
-
             if ($uploadResultArray['status'] === 'error') {
                 return response()->json([
                     'success' => false,
