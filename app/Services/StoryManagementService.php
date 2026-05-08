@@ -949,7 +949,7 @@ class StoryManagementService
 
                 return [
                     'status' => 'success',
-                    'message' => 'Reel removed from wishlist',
+                    'message' => __('user_messages.reel_removed_from_whishlist'),
                     'data' => (object)[]
                 ];
             } else {
@@ -960,7 +960,7 @@ class StoryManagementService
 
                 return [
                     'status' => 'success',
-                    'message' => 'Reel added to wishlist',
+                    'message' => __('user_messages.reel_added_to_whishlist'),
                     'data' => $data
                 ];
             }

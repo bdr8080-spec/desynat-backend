@@ -203,6 +203,8 @@ return [
     'kd' => 'د.ك',
     'delivery_time' => 'وقت التوصيل',
     'no_reels_found' => 'لا توجد ريلز',
+    'reel_added_to_whishlist' => 'تمت إضافة الريل إلى المفضلة',
+    'reel_removed_from_whishlist' => 'تمت إزالة الريل من المفضلة',
 
 
 

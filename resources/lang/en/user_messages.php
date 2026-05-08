@@ -204,6 +204,8 @@ return [
     'kd' => 'KWD',
     'delivery_time' => 'Delivery Time',
     'no_reels_found' => 'No Reels Found',
+    'reel_added_to_whishlist' => 'Reel added to wishlist',
+    'reel_removed_from_whishlist' => 'Reel removed from wishlist',
 
     
 
