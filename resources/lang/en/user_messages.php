@@ -81,6 +81,7 @@ return [
     'verify_otp' => 'Please verify your :field with OTP to login',
     'login_success' => 'Login successfully',
     'invalid_credentials' => 'Invalid :field or password',
+    'please_enter_correct_password' => 'Please enter correct password',
 
     //login via otp
     'mobile_number' => 'Mobile Number',
@@ -99,6 +100,7 @@ return [
     'otp_sent_success' => 'OTP sent successfully',
     'mobile_not_registered' => 'This mobile number is not registered',
     'email_not_registered' => 'This email address is not registered',
+    'account_does_not_exists' => 'Account does not exist',
 
     //verify otp
     'otp_sent_to_mobile' => '6 digit OTP has been sent to your registered mobile number',
@@ -119,6 +121,52 @@ return [
     //forgot_password
     'mobile_exists'   => 'This mobile number is not registered',
     'email_exists'    => 'This email is not registered',
+
+    //create password
+    'reset_password' => 'Reset Password',
+    'create_new_password' => 'Create New Password',
+    'enter_new_password' => 'Enter New Password',
+    'please_enter_new_password' => 'Please enter new password',
+    'confirm_password' => 'Confirm Password',
+    'enter_confirm_password' => 'Enter Confirm Password',
+    'please_enter_confirm_password' => 'Please enter confirm password',
+    'done' => 'Done',
+    'password_do_not_match' => 'Password do not match',
+    'password_updated_successfully' => 'Password updated successfully',
+    'new_password_cannot_be_same_as_old_password' => 'New password cannot be the same as the old password',
+
+    //delete account
+    'account_deleted_successfully' => 'Account deleted successfully',
+
+    //register
+    'create_your_account' => 'Create your account',
+    'upload_profile_image' => 'Upload profile image',
+    'full_name' => 'Full name',
+    'enter_full_name' => 'Enter full name',
+    'i_accept_the' => 'I accept the',
+    'policies' => 'policies',
+    'already_have_an_account' => 'Already have an account',
+
+    'enter_email' => 'Please enter your email address',
+    'enter_valid_email' => 'Please enter a valid email address',
+    'email_already_registered' => 'This email is already registered',
+    'enter_mobile_number1' => 'Please enter your mobile number',
+    'enter_password' => 'Please enter your password',
+    'select_country_code' => 'Please select your country code',
+    'accept_terms_required' => 'Please accept the terms and conditions',
+    'must_accept_terms' => 'You must agree to the terms and conditions to continue',
+    'otp_sent_successfully' => 'OTP sent successfully',
+
+    'full_name_required' => 'Please enter your full name',
+    'country_code_required' => 'Please select your country code',
+    'mobile_already_registered' => 'This mobile number is already registered',
+    'password_min' => 'Password must be at least 8 characters long',
+    'password_regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
+    'confirm_password_required' => 'Please confirm your password',
+    'password_do_not_match' => 'Password do not match',
+    'accept_terms_required' => 'Please accept the terms and conditions',
+    'must_accept_terms' => 'You must agree to the terms and conditions to continue',
+
     
 
     

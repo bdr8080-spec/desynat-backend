@@ -3,29 +3,6 @@
 
 @section('content')
 
-<!-- <style>
- iframe#\:1\.container {
-    visibility: hidden !important;
-}
-
-/* Hide the Google Translate tooltip */
-.goog-te-banner-frame.skiptranslate,
-.goog-tooltip,
-.goog-tooltip:hover,
-.goog-tooltip-vertical {
-    display: none !important;
-}
-
-/* Hide the feedback popup on selected text */
-#goog-gt-tt {
-    display: none !important;
-}
-</style>
-<style>
-  body {
-    visibility: hidden;
-  }
-</style> -->
     <div class="login_contenar">
         <header class="inner-header">
             <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
@@ -36,20 +13,20 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
                                             <span>AR</span> Arabic
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
+                                        <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
                                             <span>EN</span> English
                                         </a>
                                     </li>
@@ -57,7 +34,7 @@
                                 </ul>
 
                             </div>
-                <a href="{{url('/seller/login')}}" class="customBtn1">Become a seller</a>
+                <a href="{{url('/seller/login')}}" class="customBtn1">{{ __('user_messages.become_a_seller') }}</a>
             </div>
         </header>
         <div class="login_content login_content_left">
@@ -71,26 +48,26 @@
                     @csrf
                 <input type="hidden" name="id" value="{{request()->temp_user_id}}">
                 <div>
-                    <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> Reset Password</h3>
+                    <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> {{ __('user_messages.reset_password') }}</h3>
                     <div class="form-group position-relative password_icon mt-3">
-                        <label for="createPassword">Create New Password</label>
+                        <label for="createPassword">{{ __('user_messages.create_new_password') }}</label>
                         <input type="password" id="createPassword" class="form-control custom-password notapplyspace"
-                            placeholder="Enter New Password" style="padding-right: 40px;" name="password" />
+                            placeholder="{{ __('user_messages.enter_new_password') }}" style="padding-right: 40px;" name="password" />
                         <i class="fa-solid fa-eye toggle-passwordtwo" id="toggleCreate"></i>
                     </div>
                      <span class="text-danger" id="error-password"></span>
 
 
                     <div class="form-group position-relative password_icon mt-3">
-                        <label for="confirmPassword">Confirm Password</label>
+                        <label for="confirmPassword">{{ __('user_messages.confirm_password') }}</label>
                         <input type="password" id="confirmPassword" class="form-control custom-password notapplyspace"
-                            placeholder="Enter confirm password" style="padding-right: 40px;" name="confirm_password" />
+                            placeholder="{{ __('user_messages.enter_confirm_password') }}" style="padding-right: 40px;" name="confirm_password" />
                         <i class="fa-solid fa-eye toggle-passwordtwo" id="toggleConfirm"></i>
                         {{-- <span class="text-danger" id="error-confirm_password"></span> --}}
                     </div>
                     <span class="text-danger" id="error-confirm_password"></span>
 
-                    <button type="submit" class="customBtn customBtn5 mt-4">Done</a>
+                    <button type="submit" class="customBtn customBtn5 mt-4">{{ __('user_messages.done') }}</a>
                 </div>
                 </form>
             </div>
@@ -103,7 +80,7 @@
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <img src="assets/images/success.svg" class="img-fluid" />
-                    <p>Password Reset Successfully !</p>
+                    <p>{{ __('user_messages.password_updated_successfully') }} !</p>
                 </div>
             </div>
         </div>

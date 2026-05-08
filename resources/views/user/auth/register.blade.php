@@ -2,29 +2,6 @@
 
 @section('content')
 
-<!-- <style>
- iframe#\:1\.container {
-    visibility: hidden !important;
-}
-
-/* Hide the Google Translate tooltip */
-.goog-te-banner-frame.skiptranslate,
-.goog-tooltip,
-.goog-tooltip:hover,
-.goog-tooltip-vertical {
-    display: none !important;
-}
-
-/* Hide the feedback popup on selected text */
-#goog-gt-tt {
-    display: none !important;
-}
-</style>
-<style>
-  body {
-    visibility: hidden;
-  }
-</style> -->
 <div class="login_contenar">
     <header class="inner-header">
         <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
@@ -34,20 +11,20 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
                                             <span>AR</span> Arabic
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
+                                        <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
                                             <span>EN</span> English
                                         </a>
                                     </li>
@@ -66,13 +43,13 @@
         <div class="login_content_content">
             <form id="signup">
                 @csrf
-                <h4>Sign Up</h4>
-                <h3>Create your account !</h3>
+                <h4>{{ __('user_messages.sign_up') }}</h4>
+                <h3>{{ __('user_messages.create_your_account') }} !</h3>
 
                 <div class="upload-image w-100">
                     <label class="uploadLabel" style="cursor:pointer;text-align:center;">
                         <img src="{{ asset('user/assets/images/upload-icon.svg') }}">
-                        <div class="text-color-upload">Upload profile image</div>
+                        <div class="text-color-upload">{{ __('user_messages.upload_profile_image') }}</div>
                         <input type="file" accept="image/*" name="image" enctype="multipart/form-data" hidden
                             onchange="showPreview(event)">
                     </label>
@@ -85,14 +62,14 @@
 
                 <!-- <input type="file" name="image" enctype="multipart/form-data"> -->
                 <div class="form-group position-relative password_icon mt-3">
-                    <label for="">Full Name</label>
+                    <label for="">{{ __('user_messages.full_name') }}</label>
                     <input type="text" name="full_name" class="form-control custom-password blockFirstTime"
-                        placeholder="Enter Full Name" style="padding-right: 40px;" />
+                        placeholder="{{ __('user_messages.enter_full_name') }}" style="padding-right: 40px;" />
                 </div>
                 <span class="text-danger" id="error-full_name"></span>
 
                 <div class="form-group mt-3">
-                    <label class="d-block" for="">Mobile Number</label>
+                    <label class="d-block" for="">{{ __('user_messages.mobile_number') }}</label>
                     <div class="d-flex align-items-center">
                         <div class="">
                             {{-- <select name="country_code" id="" class="country" class="form-control">
@@ -141,7 +118,7 @@
 
                         </div>
                         <div class="w-100">
-                            <input type="number" class="form-control" value="" placeholder="Enter Mobile Number"
+                            <input type="number" class="form-control" value="" placeholder="{{ __('user_messages.enter_mobile_number') }}"
                                 name="mobile"
                                 oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
                         </div>
@@ -150,22 +127,22 @@
                 </div>
                 <span class="text-danger" id="error-mobile"></span>
                 <div class="form-group position-relative verify mt-3">
-                    <label class="d-block" for="">Email Address</label>
+                    <label class="d-block" for="">{{ __('user_messages.email_address') }}</label>
                     <input type="text" class="form-control custom-password notapplyspace"
-                        placeholder="Please enter email address" style="padding-right: 40px;" name="email" />
+                        placeholder="{{ __('user_messages.please_enter_your_email_address') }}" style="padding-right: 40px;" name="email" />
                 </div>
                 <span class="text-danger" id="error-email"></span>
                 <div class="form-group position-relative password_icon mt-3">
-                    <label for="">Create Password</label>
+                    <label for="">{{ __('user_messages.create_new_password') }}</label>
                     <input type="password" id="login-password" class="form-control custom-password notapplyspace"
-                        placeholder="Please enter password" style="padding-right: 40px;" name="password" />
+                        placeholder="{{ __('user_messages.enter_new_password') }}" style="padding-right: 40px;" name="password" />
                     <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
                 </div>
                 <span class="text-danger" id="error-password"></span>
                 <div class="form-group position-relative password_icon mt-3">
-                    <label for="">Confirm Password</label>
+                    <label for="">{{ __('user_messages.confirm_password') }}</label>
                     <input type="password" id="login-password" class="form-control custom-password notapplyspace"
-                        placeholder="Please enter confirm password" style="padding-right: 40px;"
+                        placeholder="{{ __('user_messages.enter_confirm_password') }}" style="padding-right: 40px;"
                         name="confirm_password" />
                     <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
                 </div>
@@ -174,35 +151,17 @@
                     <input class="form-check-input" type="checkbox" value="1" id="checkIndeterminate"
                         name="accept_terms">
                     <label class="form-check-label" for="checkIndeterminate">
-                        I accept the <a href="">Terms & Conditions</a> and <a href="">Policies</a>
+                        {{ __('user_messages.i_accept_the') }} <a href="{{route('user.termCondition')}}">{{ __('user_messages.terms_&_conditions') }}</a> and <a href="{{route('user.returnPolicy')}}">{{ __('user_messages.policies') }}</a>
                     </label>
                 </div>
                 <span class="text-danger" id="error-accept_terms"></span>
-                <button type="submit" class="customBtn" id="signBtn">Sign Up</button>
+                <button type="submit" class="customBtn" id="signBtn">{{ __('user_messages.sign_up_small') }}</button>
             </form>
-            <p class="mt-3 dontAccount">Don’t have an account? <a href="{{ route('userLogin') }}">Sign In</a></p>
+            <p class="mt-3 dontAccount">{{ __('user_messages.already_have_an_account') }}? <a href="{{ route('userLogin') }}">{{ __('user_messages.sign_in_small') }}</a></p>
         </div>
     </div>
 </div>
 
-<!-- <div id="google_translate_element" style="display:none;"></div>
-<div id="loaderTrans"
-        style="display:none;
-        position:fixed;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background:#ffffff; 
-        z-index:999999;   
-        /* display:flex;    */
-        align-items:center;
-        justify-content:center;">
-
-        <iframe src="https://lottie.host/embed/7629c0ed-9538-4b83-b7ab-5870d7aae0ab/KLkQkV2bNW.lottie"
-                style="border:none; width:200px; height:200px;">
-        </iframe>
-    </div> -->
 
 <script>
 $(document).on('submit', '#signup', function(e) {
@@ -320,204 +279,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- google translator code -->
-<!-- <script>
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        autoDisplay: false
-    }, 'google_translate_element');
-}
-</script>
-
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<script>
-
-let currentLang = localStorage.getItem("selectedLang") || "en";
-let translateReady = false;
-
-/* WAIT FOR GOOGLE DROPDOWN (ROBUST VERSION) */
-function waitForCombo(callback) {
-
-    let attempts = 0;
-
-    const timer = setInterval(() => {
-
-        const combo = document.querySelector(".goog-te-combo");
-
-        if (combo && combo.options.length > 1) {
-            clearInterval(timer);
-            translateReady = true;
-            callback(combo);
-        }
-
-        attempts++;
-
-        if (attempts > 30) {
-            clearInterval(timer);
-            console.warn("Google Translate not ready");
-        }
-
-    }, 200);
-}
-
-
-/* APPLY TRANSLATION (FIXED FIRST TIME ISSUE) */
-function applyTranslation(lang) {
-
-    const loader = document.getElementById("loaderTrans");
-    if (loader) loader.style.display = "flex";
-
-    currentLang = lang;
-    localStorage.setItem("selectedLang", lang);
-
-    updateUI(lang);
-
-    waitForCombo(function(combo) {
-
-        function trigger(value) {
-            combo.value = value;
-            combo.dispatchEvent(new Event("change"));
-        }
-
-        // STEP 1: RESET
-        trigger("en");
-
-        setTimeout(() => {
-
-            // STEP 2: APPLY LANGUAGE
-            trigger(lang);
-
-            // STEP 3: RETRY (VERY IMPORTANT FIX)
-            setTimeout(() => {
-
-                if (combo.value !== lang) {
-                    trigger(lang);
-                }
-
-                if (loader) loader.style.display = "none";
-
-            }, 500);
-
-        }, 300);
-
-    });
-}
-
-
-/* UPDATE UI */
-function updateUI(lang) {
-
-    const current = document.getElementById("currentLang");
-    if (current) current.innerText = lang.toUpperCase();
-
-    document.querySelectorAll(".langu .dropdown-item")
-        .forEach(el => el.style.background = "");
-
-    const active = document.querySelector(`.langu .dropdown-item[data-lang="${lang}"]`);
-
-    if (active) {
-        active.style.background =
-            "linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%)";
-    }
-}
-
-
-/* CLICK EVENTS */
-document.querySelectorAll(".langu .dropdown-item").forEach(item => {
-
-    item.addEventListener("click", function () {
-
-        const lang = this.getAttribute("data-lang");
-
-        // PREVENT CLICK BEFORE READY
-        if (!translateReady) {
-            console.log("Translate still loading...");
-            return;
-        }
-
-        applyTranslation(lang);
-
-    });
-
-});
-
-
-/* INITIAL LOAD */
-function initLanguage() {
-
-    const lang = localStorage.getItem("selectedLang") || "en";
-    const loader = document.getElementById("loaderTrans");
-
-    if (loader) loader.style.display = "flex";
-
-    updateUI(lang);
-
-    waitForCombo(function(combo) {
-
-        function trigger(value) {
-            combo.value = value;
-            combo.dispatchEvent(new Event("change"));
-        }
-
-        // RESET FIRST
-        trigger("en");
-
-        setTimeout(() => {
-
-            trigger(lang);
-
-            // RETRY FIX
-            setTimeout(() => {
-
-                if (combo.value !== lang) {
-                    trigger(lang);
-                }
-
-                // SHOW PAGE ONLY AFTER TRANSLATION
-                document.body.style.visibility = "visible";
-
-                if (loader) loader.style.display = "none";
-
-            }, 600);
-
-        }, 300);
-
-    });
-
-}
-
-window.addEventListener("load", initLanguage);
-
-
-/* BACK/FORWARD CACHE FIX */
-window.addEventListener("pageshow", function (event) {
-
-    if (event.persisted ||
-        performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
-
-        setTimeout(() => {
-            initLanguage();
-        }, 200);
-    }
-
-});
-
-
-/* HIDE GOOGLE TOOLTIP */
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-            if (node.id === 'goog-gt-tt') {
-                node.style.display = 'none';
-            }
-        });
-    });
-});
-
-observer.observe(document.body, { childList: true, subtree: true });
-
-</script> -->
 
 @endsection

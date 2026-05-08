@@ -6,6 +6,8 @@ use App\Models\{User,AffilatedUser};
 use Hash;
 use Illuminate\Support\Facades\DB;
 use App\Services\TwilioService;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserOtpMail;
 
 class UserAuthService
 {
@@ -48,9 +50,10 @@ class UserAuthService
                         //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
                     }
                 }
+        Mail::to($check->email)->send(new UserOtpMail($check, $otp));
 
         if($check){
-            return ['status'=>'success','message'=>"OTP sent succesfully",'data'=>$check];            
+            return ['status'=>'success','message' => __('user_messages.otp_sent_success'),'data'=>$check];            
         }
 
 
@@ -71,10 +74,10 @@ class UserAuthService
         $get_user_details->accessToken ='';  
       }  
         
-        return ['status'=>'success','message'=>"Otp Verified Successfully",'data'=>$get_user_details];            
+        return ['status'=>'success','message' => __('user_messages.otp_verified_success'),'data'=>$get_user_details];            
     
       }else{
-        return ['status'=>'error','message'=>"Invalid OTP",'data'=>(object)[]];                
+        return ['status'=>'error','message' => __('user_messages.invalid_otp'),'data'=>(object)[]];                
       }
 
     }
@@ -127,13 +130,13 @@ class UserAuthService
 
               
               
-            return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];                            
+            return ['status'=>'success','message' => __('user_messages.login_success'),'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message'=>"Please enter correct password",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('user_messages.please_enter_correct_password'),'data'=>(object)[]];                
             }
         
           }else{
-            return ['status'=>'error','message'=>"Account does not exist",'data'=>(object)[]];                
+            return ['status'=>'error','message' => __('user_messages.account_does_not_exists'),'data'=>(object)[]];                
           }
     
         }
@@ -176,10 +179,12 @@ class UserAuthService
                     }
                 }
 
-            return ['status'=>'success','message'=>"OTP sent to mobile number succesfully",'data'=>$get_user_details];            
+            Mail::to($get_user_details->email)->send(new UserOtpMail($get_user_details, $otp));
+
+            return ['status'=>'success','message' => __('user_messages.otp_sent_success'),'data'=>$get_user_details];            
         
           }else{
-            return ['status'=>'error','message'=>"Account does not exist",'data'=>(object)[]];                
+            return ['status'=>'error','message' => __('user_messages.account_does_not_exists'),'data'=>(object)[]];                
           }
     
         }
@@ -218,10 +223,12 @@ class UserAuthService
                     }
                 }
 
-            return ['status'=>'success','message'=>"OTP sent to mobile number succesfully ",'data'=>$get_user_details];            
+            Mail::to($get_user_details->email)->send(new UserOtpMail($get_user_details, $otp));
+
+            return ['status'=>'success','message' => __('user_messages.otp_resent_successfully'),'data'=>$get_user_details];            
         
           }else{
-            return ['status'=>'error','message'=>"Account does not exist",'data'=>(object)[]];                
+            return ['status'=>'error','message' => __('user_messages.account_does_not_exists'),'data'=>(object)[]];                
           }
     
         }
@@ -257,11 +264,12 @@ class UserAuthService
                         //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
                     }
                 }
+                Mail::to($get_user_details->email)->send(new UserOtpMail($get_user_details, $otp));
                 
-                return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
+                return ['status'=>'success','message' => __('user_messages.otp_sent_success'),'data'=>$get_user_details];            
             
               }else{
-                return ['status'=>'error','message'=>"Account does not exist",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('user_messages.account_does_not_exists'),'data'=>(object)[]];                
               }
         
             }
@@ -277,7 +285,7 @@ class UserAuthService
                   if (Hash::check($request->password, $get_user_details->password)) {
                     return [
                         'status' => 'error',
-                        'message' => 'New password cannot be the same as the old password',
+                        'message' => __('user_messages.new_password_cannot_be_same_as_old_password'),
                         'data' => (object)[],
                     ];
                 }
@@ -285,10 +293,10 @@ class UserAuthService
                     $get_user_details->update(['password'=>hash::make($request->password)]);
                     
                     $get_user_details->accessToken ='';            
-                    return ['status'=>'success','message'=>"Forgot Password change Successfully",'data'=>$get_user_details];            
+                    return ['status'=>'success','message' => __('user_messages.password_updated_successfully'),'data'=>$get_user_details];            
                 
                   }else{
-                    return ['status'=>'error','message'=>"Account does not exist",'data'=>(object)[]];                
+                    return ['status'=>'error','message' => __('user_messages.account_does_not_exists'),'data'=>(object)[]];                
                   }
             
                 }
@@ -320,7 +328,7 @@ class UserAuthService
 
           return [
               'status' => 'success',
-              'message' => 'Account deleted successfully',
+              'message' => __('user_messages.account_deleted_successfully'),
               'data' => $data
           ];
 

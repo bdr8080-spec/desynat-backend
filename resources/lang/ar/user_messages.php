@@ -81,6 +81,7 @@ return [
     'verify_otp' => 'يرجى التحقق من :field باستخدام OTP لتسجيل الدخول',
     'login_success' => 'تم تسجيل الدخول بنجاح',
     'invalid_credentials' => 'بيانات :field أو كلمة المرور غير صحيحة',
+    'please_enter_correct_password' => 'يرجى إدخال كلمة المرور الصحيحة',
 
     //login via otp
     'mobile_number' => 'رقم الجوال',
@@ -99,6 +100,7 @@ return [
     'otp_sent_success' => 'تم إرسال رمز التحقق بنجاح',
     'mobile_not_registered' => 'رقم الجوال غير مسجل',
     'email_not_registered' => 'البريد الإلكتروني غير مسجل',
+    'account_does_not_exists' => 'الحساب غير موجود',
 
     //verify otp
     'otp_sent_to_mobile' => 'تم إرسال رمز تحقق مكون من 6 أرقام إلى رقم الجوال المسجل لديك',
@@ -119,6 +121,51 @@ return [
     //forgot password
     'mobile_exists'   => 'رقم الجوال غير مسجل',
     'email_exists'    => 'هذا البريد الإلكتروني غير مسجل',
+
+    //create password
+    'reset_password' => 'إعادة تعيين كلمة المرور',
+    'create_new_password' => 'إنشاء كلمة مرور جديدة',
+    'enter_new_password' => 'أدخل كلمة المرور الجديدة',
+    'please_enter_new_password' => 'يرجى إدخال كلمة المرور الجديدة',
+    'confirm_password' => 'تأكيد كلمة المرور',
+    'enter_confirm_password' => 'أدخل تأكيد كلمة المرور',
+    'please_enter_confirm_password' => 'يرجى إدخال تأكيد كلمة المرور',
+    'done' => 'تم',
+    'password_do_not_match' => 'كلمتا المرور غير متطابقتين',
+    'password_updated_successfully' => 'تم تحديث كلمة المرور بنجاح',
+    'new_password_cannot_be_same_as_old_password' => 'لا يمكن أن تكون كلمة المرور الجديدة هي نفسها كلمة المرور القديمة',
+
+    //delete account
+    'account_deleted_successfully' => 'تم حذف الحساب بنجاح',
+
+    //register
+    'create_your_account' => 'إنشاء حسابك',
+    'upload_profile_image' => 'تحميل صورة الملف الشخصي',
+    'full_name' => 'الاسم الكامل',
+    'enter_full_name' => 'أدخل الاسم الكامل',
+    'i_accept_the' => 'أوافق على',
+    'policies' => 'السياسات',
+    'already_have_an_account' => 'لديك حساب بالفعل',
+    'enter_email' => 'يرجى إدخال البريد الإلكتروني',
+    'enter_valid_email' => 'يرجى إدخال بريد إلكتروني صالح',
+    'email_already_registered' => 'هذا البريد الإلكتروني مسجل بالفعل',
+    'enter_mobile_number1' => 'يرجى إدخال رقم الجوال',
+    'enter_password' => 'يرجى إدخال كلمة المرور',
+    'select_country_code' => 'يرجى اختيار رمز الدولة',
+    'accept_terms_required' => 'يرجى قبول الشروط والأحكام',
+    'must_accept_terms' => 'يجب الموافقة على الشروط والأحكام للمتابعة',
+    'otp_sent_successfully' => 'تم إرسال رمز التحقق بنجاح',
+
+    'full_name_required' => 'الرجاء إدخال الاسم الكامل',
+    'country_code_required' => 'الرجاء اختيار رمز الدولة',
+    'mobile_already_registered' => 'هذا الرقم مسجل بالفعل',
+    'password_min' => 'يجب أن تكون كلمة المرور 8 أحرف على الأقل',
+    'password_regex' => 'يجب أن تحتوي كلمة المرور على حرف كبير وصغير ورقم ورمز خاص',
+    'confirm_password_required' => 'الرجاء تأكيد كلمة المرور',
+    'password_do_not_match' => 'كلمات المرور غير متطابقة',
+    'accept_terms_required' => 'الرجاء قبول الشروط والأحكام',
+    'must_accept_terms' => 'يجب الموافقة على الشروط والأحكام للمتابعة',
+
 
 
     

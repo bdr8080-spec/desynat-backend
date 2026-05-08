@@ -87,19 +87,34 @@ class AuthController extends Controller
                 ];
 
                 $messages = [      
-                    'full_name.required'    => 'Please enter your full name',
-                    'country_code.required' => 'Please select your country code',
-                    'email.required'        => 'Please enter your email address',
-                    'email.email'           => 'Please enter a valid email address',
-                    'email.unique'          => 'This email address is already registered',
-                    'mobile.required'       => 'Please enter your mobile number',
-                    'password.required'     => 'Please enter your password',
-                    'password.min' => 'Password must be at least 8 characters long',
-                    'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
-                    'confirm_password.required' => 'Please confirm your password',
-                    'confirm_password.same' => 'Password do not match',
-                    'accept_terms.required' => 'Please accept the terms and conditions',
-                    'accept_terms.in' => 'You must agree to the terms and conditions to continue',
+                    // 'full_name.required'    => 'Please enter your full name',
+                    // 'country_code.required' => 'Please select your country code',
+                    // 'email.required'        => 'Please enter your email address',
+                    // 'email.email'           => 'Please enter a valid email address',
+                    // 'email.unique'          => 'This email address is already registered',
+                    // 'mobile.required'       => 'Please enter your mobile number',
+                    // 'password.required'     => 'Please enter your password',
+                    // 'password.min' => 'Password must be at least 8 characters long',
+                    // 'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
+                    // 'confirm_password.required' => 'Please confirm your password',
+                    // 'confirm_password.same' => 'Password do not match',
+                    // 'accept_terms.required' => 'Please accept the terms and conditions',
+                    // 'accept_terms.in' => 'You must agree to the terms and conditions to continue',
+                    'full_name.required' => __('user_messages.full_name_required'),
+                    'country_code.required' => __('user_messages.country_code_required'),
+                    'email.required' => __('user_messages.enter_email'),
+                    'email.email' => __('user_messages.enter_valid_email'),
+                    'email.unique' => __('user_messages.email_already_registered'),
+                    'mobile.required' => __('user_messages.enter_mobile_number1'),
+                    'mobile.digits_between' => __('user_messages.mobile_digits'),
+                    'mobile.unique' => __('user_messages.mobile_already_registered'),
+                    'password.required' => __('user_messages.enter_password'),
+                    'password.min' => __('user_messages.password_min'),
+                    'password.regex' => __('user_messages.password_regex'),
+                    'confirm_password.required' => __('user_messages.confirm_password_required'),
+                    'confirm_password.same' => __('user_messages.password_do_not_match'),
+                    'accept_terms.required' => __('user_messages.accept_terms_required'),
+                    'accept_terms.in' => __('user_messages.must_accept_terms'),
                 ];
 
                 $validator = Validator::make($request->all(), $rules, $messages);
@@ -159,9 +174,11 @@ class AuthController extends Controller
                         //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
                     }
                 }
+                Mail::to($data->email)->send(new UserOtpMail($data, $otp));
                 return response()->json([
                                 'status'=>true,
-                                'message'=>'OTP sent to your mobile number succesfully ',
+                                // 'message'=>'OTP sent to your mobile number succesfully ',
+                                'message' => __('user_messages.otp_sent_successfully'),
                                 'id'=>$id,
                             ]);
 
@@ -465,8 +482,8 @@ class AuthController extends Controller
                  'password.required' => 'Please Enter New password',
                 // 'password.min' => 'Password must be at least 8 characters long',
                 // 'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
-                'confirm_password.required' => 'Please enter confirm password',
-                'confirm_password.same' => 'Passwords do not match',
+                'confirm_password.required' => __('user_messages.please_enter_confirm_password'),
+                'confirm_password.same' => __('user_messages.password_do_not_match'),
                 ];
 
 
@@ -484,7 +501,7 @@ class AuthController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid user reference',
+                    'message' => __('user_messages.invalid_user_reference'),
                 ], 400);
             }
 
@@ -497,13 +514,13 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'Password updated successfully'
+                    'message' => __('user_messages.password_updated_successfully')
                 ]);
             }
 
             return response()->json([
                 'status' => false,
-                'message' => 'User not found.'
+                'message' => __('user_messages.user_not_found')
             ]);
             
                
