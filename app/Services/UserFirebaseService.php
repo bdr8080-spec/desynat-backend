@@ -191,6 +191,7 @@ foreach ($check_chatRecord as $key => $val) {
          $val->message_type = StrVal($lastMessage['type']) ?? null;
 
         $val->last_chat = $lastMessage['message'] ?? null;
+        $val->last_chat_ar = $lastMessage['messageAr'] ?? null;
         // $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
         $val->last_chat_time = $lastMessage['times']
                     ? \Carbon\Carbon::parse($lastMessage['times'])
@@ -212,6 +213,7 @@ foreach ($check_chatRecord as $key => $val) {
     } else {
         $val->message_type=null;
         $val->last_chat = null;
+        $val->last_chat_ar = null;
         $val->last_chat_time = null;
         $val->last_chat_by = null;
     }

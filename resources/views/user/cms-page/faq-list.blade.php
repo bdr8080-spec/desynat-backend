@@ -5,7 +5,7 @@
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="/"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
-        <h3> FAQ </h3>
+        <h3> {{ __('user_messages.faqs') }} </h3>
     </div>
 
     <div class="row">
@@ -78,8 +78,12 @@
                                             data-bs-target="#collapse{{ $faq->id }}"
                                             aria-expanded="{{ $key == 0 ? 'true' : 'false' }}"
                                             aria-controls="collapse{{ $faq->id }}">
-
+                                            
+                                            @if(app()->getLocale() == 'en')
                                             {{ $faq->question_english }}
+                                            @else
+                                            {{ $faq->question_arabic }}
+                                            @endif
 
                                         </button>
 
@@ -90,7 +94,11 @@
                                         data-bs-parent="#accordionExample">
 
                                         <div class="accordion-body">
+                                            @if(app()->getLocale() == 'en')
                                             {!! $faq->answer_english !!}
+                                            @else
+                                            {!! $faq->answer_arabic !!}
+                                            @endif
                                         </div>
 
                                     </div>
