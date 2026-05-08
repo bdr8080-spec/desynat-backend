@@ -374,6 +374,38 @@ return [
 'Save' => 'Save',
 
 
+  // Live_Coverage_Requests
+
+  'Live_Coverage_Requests' => 'Live Coverage Requests',
+    'Reset' => 'Reset',
+    'Export' => 'Export',
+    'Search' => 'Search',
+    'Filter_By_Status' => 'Filter by status',
+    'Pending' => 'Pending',
+    'Completed' => 'Completed',
+    'Cancelled' => 'Cancelled',
+    'Rejected' => 'Rejected',
+    'Select_Date' => 'Select Date',
+    'S_No' => 'S.No',
+    'Request_ID' => 'Request ID',
+    'Requested_On' => 'Requested On',
+    'Live_Request' => 'Live Request',
+    'Status' => 'Status',
+    'Action' => 'Action',
+    'At' => 'at',
+    'Confirmed' => 'Confirmed',
+    'Send_New_Live_Request' => 'Send New Live Request',
+    'Total_Coverages' => 'Total Coverages',
+    'Select_Time' => 'Select Time',
+    'Send_Request' => 'Send Request',
+    'Reason' => 'Reason',
+    'Cancel_Reason' => 'Cancel Reason',
+    'Write_Here' => 'Write Here',
+    'Submit' => 'Submit',
+    'Request_Sent_Successfully' => 'Request Sent Successfully',
+
+    'complete'=>"Complete"
+
 
 
 

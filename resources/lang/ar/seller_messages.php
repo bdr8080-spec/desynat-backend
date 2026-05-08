@@ -354,6 +354,38 @@ return [
 'Save' => 'حفظ',
 
 
+// Live_Coverage_Requests
+
+'Live_Coverage_Requests' => 'طلبات التغطية المباشرة',
+'Reset' => 'إعادة تعيين',
+'Export' => 'تصدير',
+'Search' => 'بحث',
+'Filter_By_Status' => 'تصفية حسب الحالة',
+'Pending' => 'قيد الانتظار',
+'Completed' => 'مكتمل',
+'Cancelled' => 'ملغي',
+'Rejected' => 'مرفوض',
+'Select_Date' => 'اختر التاريخ',
+'S_No' => 'الرقم التسلسلي',
+'Request_ID' => 'رقم الطلب',
+'Requested_On' => 'تم الطلب في',
+'Live_Request' => 'طلب مباشر',
+'Status' => 'الحالة',
+'Action' => 'إجراء',
+'At' => 'في',
+'Confirmed' => 'مؤكد',
+'Send_New_Live_Request' => 'إرسال طلب مباشر جديد',
+'Total_Coverages' => 'إجمالي التغطيات',
+'Select_Time' => 'اختر الوقت',
+'Send_Request' => 'إرسال الطلب',
+'Reason' => 'السبب',
+'Cancel_Reason' => 'سبب الإلغاء',
+'Write_Here' => 'اكتب هنا',
+'Submit' => 'إرسال',
+'Request_Sent_Successfully' => 'تم إرسال الطلب بنجاح',
+
+'complete'=>"مكتمل",
+
 
 
 
