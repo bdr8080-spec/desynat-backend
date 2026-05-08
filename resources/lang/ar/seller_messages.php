@@ -269,4 +269,54 @@ return [
     'normal' => 'عادي',
     'custom' => 'مخصص',
 
+
+  // Banner_Management
+
+  'Banner_Management' => 'إدارة البنرات',
+'Add_New_Banner' => 'إضافة بانر جديد',
+'Search' => 'بحث',
+'Filter_By_Status' => 'تصفية حسب الحالة',
+'Banner_Image' => 'صورة البانر',
+'Request_ID' => 'رقم الطلب',
+'Requested_On' => 'تاريخ الطلب',
+'View_More_Details' => 'عرض المزيد من التفاصيل',
+'Confirmed' => 'مؤكد',
+'Rejected' => 'مرفوض',
+'Banner_Purchased_Successfully' => 'تم شراء البانر بنجاح',
+'Status' => 'الحالة',
+'S_No' => 'الرقم',
+
+
+// ADD  Banner_Management
+
+'Banner_Position' => 'موضع البانر',
+'Home_Top' => 'أعلى الصفحة الرئيسية',
+'Home_Bottom' => 'أسفل الصفحة الرئيسية',
+'Category_Name' => 'اسم الفئة',
+'Sub_Category_Name' => 'اسم الفئة الفرعية',
+'Select_Duration' => 'اختر المدة',
+'Total_Days' => 'إجمالي الأيام',
+'From' => 'من',
+'To' => 'إلى',
+'Upload_Banner' => 'رفع البانر',
+'Total_Price' => 'السعر الإجمالي',
+'Send_Request' => 'إرسال الطلب',
+'Request_Send_Successfully' => 'تم إرسال الطلب بنجاح',
+
+'Select_Sub_Category' => 'اختر الفئة الفرعية',
+'Unexpected_response_from_server' => 'استجابة غير متوقعة من الخادم',
+'Fail' => 'فشل',
+
+'Total_Days_Default' => 'إجمالي الأيام - 00',
+
+'Start_Date_Earlier_Today' => 'لا يمكن أن يكون تاريخ البدء قبل اليوم',
+'End_Date_Earlier_Start' => 'لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ البدء',
+
+'Loading' => 'جاري التحميل...',
+'Upload' => 'رفع',
+
+'Total_Days_count' => 'إجمالي الأيام - :name',
+
+
+
 ];

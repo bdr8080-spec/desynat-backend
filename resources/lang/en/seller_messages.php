@@ -285,4 +285,57 @@ return [
     'custom' => 'Custom',
 
 
+    // Banner_Management
+
+'Banner_Management' => 'Banner Management',
+'Add_New_Banner' => 'Add New Banner',
+'Search' => 'Search',
+'Filter_By_Status' => 'Filter by Status',
+'Banner_Image' => 'Banner Image',
+'Request_ID' => 'Request ID',
+'Requested_On' => 'Requested On',
+'View_More_Details' => 'View More Details',
+'Confirmed' => 'Confirmed',
+'Rejected' => 'Rejected',
+'Banner_Purchased_Successfully' => 'Banner Purchased Successfully',
+'Status' => 'Status',
+'S_No' => 'S.No',
+
+// ADD  Banner_Management
+'Banner_Position' => 'Banner Position',
+'Home_Top' => 'Home Top',
+'Home_Bottom' => 'Home Bottom',
+'Category_Name' => 'Category Name',
+'Sub_Category_Name' => 'Sub-category Name',
+'Select_Duration' => 'Select Duration',
+'Total_Days' => 'Total Days',
+'From' => 'From',
+'To' => 'To',
+'Upload_Banner' => 'Upload Banner',
+'Total_Price' => 'Total Price',
+'Send_Request' => 'Send Request',
+'Request_Send_Successfully' => 'Request Sent Successfully',
+
+'Select_Sub_Category' => 'Select Sub Category',
+'Unexpected_response_from_server' => 'Unexpected response from server',
+'Fail' => 'Fail',
+
+'Total_Days_Default' => 'Total days - 00',
+
+
+'Start_Date_Earlier_Today' => 'Start date cannot be earlier than today',
+'End_Date_Earlier_Start' => 'End date cannot be earlier than start date',
+
+'Loading' => 'Loading...',
+'Upload' => 'Upload',
+
+'Total_Days_count' => 'Total days - :name',
+
+
+
+
+
+
+
+
 ];

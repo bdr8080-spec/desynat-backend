@@ -1,13 +1,9 @@
 @include('dealer.layout.header')
 
 <section class="section dashboard">
-    <!-- <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <a class="title24 alink"> <i class="bi bi-chevron-left"></i>Details</a>
- 
-    </div> -->
+  
     <div class="d-flex justify-content-between mt-4">
-        <a href="{{route('seller.show_banner')}}" class="title24 alink"> <i class="bi bi-chevron-left"></i>Add New
-            Banner</a>
+        <a href="{{route('seller.show_banner')}}" class="title24 alink"> <i class="bi bi-chevron-left"></i> {{ __('seller_messages.Add_New_Banner') }}</a>
     </div>
 
     <form id="addBanner" action="{{ route('seller.add_banner') }}" method="post">
@@ -18,14 +14,14 @@
                 <div class="col-md-6">
 
                     <!-- Banner Position -->
-                    <label class="banner-text">Banner position</label>
+                    <label class="banner-text">  {{ __('seller_messages.Banner_Position') }}</label>
                     <div class="group-radio-btn d-flex gap-5 align-items-center flex-wrap py-3 pe-3">
 
                         <div class="check_radio">
                             <label class="radio-group">
                                 <input type="radio" name="banner_position" value="1" checked>
                                 <span class="custom-radio"></span>
-                                <span class="radio-label">Home Top</span>
+                                <span class="radio-label"> {{ __('seller_messages.Home_Top') }}</span>
                             </label>
                         </div>
 
@@ -33,7 +29,7 @@
                             <label class="radio-group">
                                 <input type="radio" name="banner_position" value="2">
                                 <span class="custom-radio"></span>
-                                <span class="radio-label">Home Bottom</span>
+                                <span class="radio-label"> {{ __('seller_messages.Home_Bottom') }}</span>
                             </label>
                         </div>
 
@@ -41,7 +37,7 @@
                             <label class="radio-group">
                                 <input type="radio" name="banner_position" value="3">
                                 <span class="custom-radio"></span>
-                                <span class="radio-label">Category</span>
+                                <span class="radio-label">  {{ __('seller_messages.Category') }}</span>
                             </label>
                         </div>
                     </div>
@@ -52,7 +48,7 @@
                 <!-- CATEGORY FIELDS -->
                 <div id="categoryFields" class="row mt-3" style="display: none;">
                     <div class="col-md-6">
-                        <label>Category name</label>
+                        <label>  {{ __('seller_messages.Category_Name') }}</label>
                         <select class="form-control" name="category" onclick="catgoryFunction(this.value)">
                             @foreach($category as $cat)
                             <option value="{{$cat->id}}">{{$cat->name}}
@@ -66,7 +62,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label>Sub-category name</label>
+                        <label>  {{ __('seller_messages.Sub_Category_Name') }}</label>
                         <select class="form-control" name="subcatgory" id="getSubcategry">
 
                         </select>
@@ -78,15 +74,15 @@
                 <div class="col-lg-12">
                     <!-- Duration -->
                     <div class="d-flex justify-content-between mt-4">
-                        <h6 class="banner-texts">Select Duration</h6>
+                        <h6 class="banner-texts"> {{ __('seller_messages.Select_Duration') }}</h6>
                         <input type="hidden" name="total_days" id="totalDaysValue" value="">
-                        <span class="banner-texts" id="totalDays">Total days - 00</span>
+                        <span class="banner-texts" id="totalDays"> {{ __('seller_messages.Total_Days') }} - 00</span>
                     </div>
                     <!-- <p class="text-danger" id="error-total_days"></p> -->
 
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <label class="banner-text">From</label>
+                            <label class="banner-text"> {{ __('seller_messages.From') }}</label>
                             <input type="date" id="fromDate" class="form-control" min="<?= date('Y-m-d');?>"
                                 name="start_date">
 
@@ -94,7 +90,7 @@
 
                         </div>
                         <div class="col-md-6">
-                            <label class="banner-text">To</label>
+                            <label class="banner-text"> {{ __('seller_messages.To') }}</label>
                             <input type="date" id="toDate" class="form-control" min="<?= date('Y-m-d');?>"
                                 name="end_date">
                             <p class="text-danger" id="error-end_date"></p>
@@ -116,7 +112,7 @@
                                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                                         style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
                                     <div class="py-2" style="color:#875C3A">
-                                        Upload Banner
+                                          {{ __('seller_messages.Upload_Banner') }}
                                     </div>
                                 </div>
 
@@ -143,9 +139,9 @@
             <div class="dashboard-button d-flex mt-5 gap-5">
                 <input type="hidden" name="price" id="amount">
 
-                <button type="button" class="btn total-outline w-100">Total Price <strong id="AmountPrice">
-                        0 </strong> KD</button>
-                <button type="submit" class="btn add-fillbtn w-100">Send Request</button>
+                <button type="button" class="btn total-outline w-100"> {{ __('seller_messages.Total_Price') }} <strong id="AmountPrice">
+                        0 </strong>{{ __('seller_messages.KD') }} </button>
+                <button type="submit" class="btn add-fillbtn w-100"> {{ __('seller_messages.Send_Request') }}</button>
             </div>
 
         </div>
@@ -162,7 +158,7 @@
             <div class="modal-body">
                 <div class="p-4 text-center">
                     <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
-                    <h5 class="mt-3">Request Send Successfully</h5>
+                    <h5 class="mt-3"> {{ __('seller_messages.Request_Send_Successfully') }}</h5>
                 </div>
             </div>
 
@@ -223,7 +219,14 @@ function calculateDays() {
 
         if (diffTime >= 0) {
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-            totalDays.textContent = `Total days - ${String(diffDays).padStart(2, '0')}`;
+    // totalDays.textContent = `Total days - ${String(diffDays).padStart(2, '0')}`;
+
+const totalDaysText = "{{ __('seller_messages.Total_Days_count', ['name' => ':days']) }}";
+
+totalDays.textContent = totalDaysText.replace(
+    ':days',
+    String(diffDays).padStart(2, '0')
+);
 
             // call ajax Code for price 
 
@@ -263,7 +266,8 @@ function calculateDays() {
 
 
                     } else {
-                        toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
+                        // toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
+                        toastr.error("{{ __('seller_messages.Unexpected_response_from_server') }}");
                     }
 
                     // setInterval(() => {
@@ -285,7 +289,8 @@ function calculateDays() {
 
 
         } else {
-            totalDays.textContent = 'Total days - 00';
+            // totalDays.textContent = 'Total days - 00';
+            totalDays.textContent = "{{ __('seller_messages.Total_Days_Default') }}";
         }
     }
 }
@@ -330,7 +335,7 @@ function catgoryFunction(val) {
 
                 var subcatgory_record = data.data;
 
-                var htmlcontent = ' <option value="">Select Sub Category</option>';
+                var htmlcontent = ' <option value="">{{ __("seller_messages.Select_Sub_Category") }}</option>';
 
                 subcatgory_record.forEach(function(item, val) {
                     htmlcontent +=
@@ -342,7 +347,8 @@ function catgoryFunction(val) {
 
 
             } else {
-                toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
+                // toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
+                toastr.error("{{ __('seller_messages.Unexpected_response_from_server') }}");
             }
 
             // setInterval(() => {
@@ -372,7 +378,7 @@ $(document).on('submit', 'form#addBanner', function(event) {
     var form = $(this);
     var data = new FormData($(this)[0]);
     var url = form.attr("action");
-    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> {{ __("seller_messages.Loading") }}';
 
     $('.submit').attr('disabled', true);
     // $('.form-control').attr('readonly', true).addClass('disabled-link');
@@ -493,7 +499,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (startDate < today) {
             this.value = '';
             document.getElementById('error-start_date').innerText =
-                'Start date cannot be earlier than today';
+                // 'Start date cannot be earlier than today';
+                '{{ __("seller_messages.Start_Date_Earlier_Today") }}';
+
             return;
         } else {
             document.getElementById('error-start_date').innerText = '';
@@ -506,7 +514,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (toDate.value && toDate.value < startDate) {
             toDate.value = '';
             document.getElementById('error-end_date').innerText =
-                'End date cannot be earlier than start date';
+                // 'End date cannot be earlier than start date';
+                '{{ __("seller_messages.End_Date_Earlier_Start") }}';
         } else {
             document.getElementById('error-end_date').innerText = '';
         }
@@ -517,7 +526,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (fromDate.value && this.value < fromDate.value) {
             this.value = '';
             document.getElementById('error-end_date').innerText =
-                'End date cannot be earlier than start date';
+                // 'End date cannot be earlier than start date';
+                '{{ __("seller_messages.End_Date_Earlier_Start") }}';
         } else {
             document.getElementById('error-end_date').innerText = '';
         }
