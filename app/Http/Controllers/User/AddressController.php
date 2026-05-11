@@ -51,17 +51,29 @@ class AddressController extends Controller
         ];
 
 
-                    $messages = [
-                'name.required'            => 'Please Enter Name',
-                'mobile.required'          => 'Please Enter Mobile Number',
-                'address.required'         => 'Please Enter Address',
-                'house_no.required'        => 'Please Enter House No.',
-                'country_name.required'       => 'Please Enter Country Name.',
-                'city.required'            => 'Please Enter City',
-                'state.required'           => 'Please Enter State',
-                'country_code.required'    => 'Please Select Country Code',
-                'save_address_as.required' => 'Please Select Save Address As',
-                'mobile.digits_between'    => 'Mobile number must be between 7 to 15 digits',
+            //         $messages = [
+            //     'name.required'            => 'Please Enter Name',
+            //     'mobile.required'          => 'Please Enter Mobile Number',
+            //     'address.required'         => 'Please Enter Address',
+            //     'house_no.required'        => 'Please Enter House No.',
+            //     'country_name.required'       => 'Please Enter Country Name.',
+            //     'city.required'            => 'Please Enter City',
+            //     'state.required'           => 'Please Enter State',
+            //     'country_code.required'    => 'Please Select Country Code',
+            //     'save_address_as.required' => 'Please Select Save Address As',
+            //     'mobile.digits_between'    => 'Mobile number must be between 7 to 15 digits',
+            // ];
+            $messages = [
+                'name.required'            => __('user_messages.please_enter_name'),
+                'mobile.required'          => __('user_messages.please_enter_mobile_number'),
+                'address.required'         => __('user_messages.please_enter_address'),
+                'house_no.required'        => __('user_messages.please_enter_house_no'),
+                'country_name.required'    => __('user_messages.please_enter_country_name'),
+                'city.required'            => __('user_messages.please_enter_city'),
+                'state.required'           => __('user_messages.please_enter_state'),
+                'country_code.required'    => __('user_messages.please_select_country_code'),
+                'save_address_as.required' => __('user_messages.please_select_save_address_as'),
+                'mobile.digits_between'    => __('user_messages.mobile_digits_between'),
             ];
 
 

@@ -14,7 +14,7 @@
                         ? route('user.userChat', ['id' => request()->get('chat')]) 
                         : route('dashboard') }}" 
             style="text-decoration: none;">
-                <i class="fa-solid fa-chevron-left"></i> My Saved Address
+                <i class="fa-solid fa-chevron-left"></i> {{ __('user_messages.my_saved_addresses') }}
             </a>
         </div>
 
@@ -24,7 +24,7 @@
             <div class="saved_address_content">
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
-                        <span><i class="bi bi-building"></i> {{$item->save_address_as == 1 ? 'Home' : 'Office'}}</span>
+                        <span><i class="bi bi-building"></i> {{ $item->save_address_as == 1 ? __('user_messages.home') : __('user_messages.office') }}</span>
                     </div>
                     <div>
                         <a href="{{route('user.update_address',[$item->id])}}"><img
@@ -34,7 +34,7 @@
 
                         @if($item->set_as_default == '0')
                         <button class="setAsdefault custom-btn3 cursor-pointer" data-id="{{ $item->id }}">
-                            Set as Default
+                            {{ __('user_messages.set_as_default') }}
                         </button>
                         @endif
                     </div>
@@ -44,10 +44,10 @@
                     {{$item->state}} {{$item->country}}</p>
             </div>
             @empty
-            <h3 class="text-center my-5" style="font-weight:500 !important;">No address added</h3>
+            <h3 class="text-center my-5" style="font-weight:500 !important;">{{ __('user_messages.no_address_added_yet') }}</h3>
             @endforelse
 
-            <a href="{{route('user.save_address')}}" class="custom-btn3 add_new_address mb-45">+ Add New Address</a>
+            <a href="{{route('user.save_address')}}" class="custom-btn3 add_new_address mb-45">+ {{ __('user_messages.add_new_address') }}</a>
         </div>
        
     </div>
@@ -60,7 +60,7 @@
     <div class="my-profile customContainer">
         <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
             <a class="text-black" href="{{ route('user.view_cart') }}" style="text-decoration: none;">
-                <i class="fa-solid fa-chevron-left"></i> Select Address
+                <i class="fa-solid fa-chevron-left"></i> {{ __('user_messages.select_address') }}
             </a>
         </div>
 
@@ -78,7 +78,7 @@
                     <div class="label-content w-100">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <h5><i class="bi bi-building"></i> {{$item->save_address_as == 1 ? 'Home' : 'Office'}}</h5>
+                                <h5><i class="bi bi-building"></i> {{ $item->save_address_as == 1 ? __('user_messages.home') : __('user_messages.office') }}</h5>
                             </div>
                             <div>
                                 <a href="{{ route('user.update_address', [$item->id]) }}"><img
@@ -94,13 +94,13 @@
                 </label>
             </div>
             @empty
-            <h3 class="text-center my-5" style="font-weight:500 !important;">No address added</h3>
+            <h3 class="text-center my-5" style="font-weight:500 !important;">{{ __('user_messages.no_address_added_yet') }}</h3>
             @endforelse
 
-            <a href="{{ route('user.save_address') }}" class="custom-btn3 add_new_address mb-45 py-3">+ Add New Address</a>
+            <a href="{{ route('user.save_address') }}" class="custom-btn3 add_new_address mb-45 py-3">+ {{ __('user_messages.add_new_address') }}</a>
         </div>
         <div>
-            <a href="javascript:void(0);" class="btn paybtn-common w-100" id="proceedBtn">Proceed</a>
+            <a href="javascript:void(0);" class="btn paybtn-common w-100" id="proceedBtn">{{ __('user_messages.proceed') }}</a>
         </div>
     </div>
 </div>

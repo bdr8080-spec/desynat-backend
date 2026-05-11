@@ -346,12 +346,18 @@ foreach ($data->product_variants as $item) {
 
         $product_id = wishlist::where('user_id', $id)->pluck('product_id');
 
-        $wishListProduct = product::with('product_variants')->whereIn('id',$product_id)->get();
+        $wishListProduct = product::with('product_variants','review')->whereIn('id',$product_id)->get();
         
        $wishListProduct->map(function ($item) use ($request) {
-                $item->user_name = $request->user()->full_name;
-                return $item;
-            });
+
+            $item->user_name = $request->user()->full_name;
+
+            $item->product_avg_rating = $item->review->avg('product_rating') ?? 0;
+
+            $item->review_count = $item->review->count() ?? 0;
+
+            return $item;
+        });
 
         $request_data=(object)[
             'user_id'=>$id,

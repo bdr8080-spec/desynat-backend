@@ -17,7 +17,7 @@ input[type=number] {
 <div class="my-profile customContainer">
     <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
         <a class="text-black" href="{{route('user.view_address')}}" style="text-decoration: none;"><i
-                class="fa-solid fa-chevron-left"></i> Add New Address</a>
+                class="fa-solid fa-chevron-left"></i> {{ __('user_messages.add_new_address') }}</a>
     </div>
 
     <form id="saveAddress">
@@ -27,16 +27,16 @@ input[type=number] {
             <input type="hidden" name="id" value="{{request()->id}}">
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label for="">Name</label>
-                    <input type="text" name="name" class="form-control notapplyspace" placeholder="Enter Name"
+                    <label for="">{{ __('user_messages.name') }}</label>
+                    <input type="text" name="name" class="form-control notapplyspace" placeholder="{{ __('user_messages.please_enter_name') }}"
                         value="{{@$address->name}}" />
                     <span class="text-danger" id="error-name"></span>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label for="">Mobile No.</label>
-                    <input id="phone" type="tel" placeholder="Enter Mobile Number" name="mobile" class="form-control"
+                    <label for="">{{ __('user_messages.mobile_number') }}</label>
+                    <input id="phone" type="tel" placeholder="{{ __('user_messages.please_enter_mobile_number') }}" name="mobile" class="form-control"
                         value="{{ @$address->mobile ? @$address->mobile : '' }}" minlength="7" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '');"/>
                     <input type="hidden" id="country_code" name="country_code"
                         value="{{ @$address->country_code ? @$address->country_code : '' }}">
@@ -108,9 +108,9 @@ input[type=number] {
 
             <div class="col-lg-6 mt-3">
                 <div class="form-group position-relative">
-                    <label for="">Address</label>
+                    <label for="">{{ __('user_messages.address') }}</label>
                     <input type="text" id="full_address" name="address" class="form-control notapplyspace"
-                        placeholder="Enter Address" value="{{@$address->address}}" />
+                        placeholder="{{ __('user_messages.please_enter_address') }}" value="{{@$address->address}}" />
                     <a class="saved_track_address" data-bs-toggle="modal" data-bs-target="#locationModal">
                         <i class="bi bi-crosshair"></i>
                     </a>
@@ -120,9 +120,9 @@ input[type=number] {
 
             <div class="col-lg-6 mt-3">
                 <div class="form-group">
-                    <label for="">House no./Building no/Area</label>
+                    <label for="">{{ __('user_messages.house_no') }}/{{ __('user_messages.building_no') }}/{{ __('user_messages.area') }}</label>
                     <input type="text" id="block" name="house_no" class="form-control notapplyspace"
-                        placeholder="Enter House no./Building no/Area" value="{{@$address->house_no}}" />
+                        placeholder="{{ __('user_messages.please_enter_house_no') }}" value="{{@$address->house_no}}" />
                     <span class="text-danger" id="error-house_no"></span>
                 </div>
             </div>
@@ -138,17 +138,17 @@ input[type=number] {
 
 <div class="col-lg-6 mt-3">
     <div class="form-group">
-        <label for="">Postal Code (optional)</label>
+        <label for="">{{ __('user_messages.postal_code_optional') }}</label>
         <input type="text" id="pincode" name="postal_code" class="form-control notapplyspace"
-            placeholder="Enter Postal Code" value="{{@$address->postal_code}}" />
+            placeholder="{{ __('user_messages.enter_postal_code') }}"{{@$address->postal_code}}" />
         <span class="text-danger" id="error-postal_code"></span>
     </div>
 </div>
 
 <div class="col-lg-6 mt-3">
     <div class="form-group">
-        <label for="">City/District</label>
-        <input type="text" id="city" name="city" class="form-control notapplyspace" placeholder="Enter City/District"
+        <label for="">{{ __('user_messages.city') }}/{{ __('user_messages.district') }}</label>
+        <input type="text" id="city" name="city" class="form-control notapplyspace" placeholder="{{ __('user_messages.please_enter_city') }}"
             value="{{@$address->city}}" />
         <span class="text-danger" id="error-city"></span>
     </div>
@@ -156,8 +156,8 @@ input[type=number] {
 
 <div class="col-lg-6 mt-3">
     <div class="form-group">
-        <label for="">State</label>
-        <input type="text" id="state" name="state" class="form-control notapplyspace" placeholder="Enter State"
+        <label for="">{{ __('user_messages.state') }}</label>
+        <input type="text" id="state" name="state" class="form-control notapplyspace" placeholder="{{ __('user_messages.please_enter_state') }}"
             value="{{@$address->state}}" />
         <span class="text-danger" id="error-state"></span>
     </div>
@@ -165,16 +165,16 @@ input[type=number] {
 
 <div class="col-lg-6 mt-3">
     <div class="form-group">
-        <label for="">Country</label>
+        <label for="">{{ __('user_messages.country') }}</label>
         <input type="text" id="country" class="form-control notapplyspace" value="{{@$address->country_name}}"
-            placeholder="Enter Country Name" name="country_name" />
+            placeholder="{{ __('user_messages.please_enter_country_name') }}" name="country_name" />
         <span class="text-danger" id="error-country_name"></span>
     </div>
 </div>
 
 <div class="col-lg-12 mt-3">
     <div class="form-group">
-        <label for="">Save Address As</label>
+        <label for="">{{ __('user_messages.save_address_as') }}</label>
     </div>
 </div>
 
@@ -184,7 +184,7 @@ input[type=number] {
         <input type="radio" name="save_address_as" value="1" class="form-control notapplyspace"
             style="background: transparent;"
             {{ (isset($address) && $address->save_address_as == 1) ? 'checked' : '' }} />
-        <span class="selectAddress_"><i class="bi bi-house"></i> Home</span>
+        <span class="selectAddress_"><i class="bi bi-house"></i> {{ __('user_messages.home') }}</span>
     </div>
     <span class="text-danger" id="error-save_address_as"></span>
 </div>
@@ -195,7 +195,7 @@ input[type=number] {
         <input type="radio" name="save_address_as" value="0" class="form-control notapplyspace"
             style="background: transparent;"
             {{ (isset($address) && $address->save_address_as == 0) ? 'checked' : '' }} />
-        <span class="selectAddress_"><i class="bi bi-building"></i> Office</span>
+        <span class="selectAddress_"><i class="bi bi-building"></i> {{ __('user_messages.office') }}</span>
     </div>
 </div>
 
@@ -203,7 +203,7 @@ input[type=number] {
 <input type="hidden" name="longitude" id="longitude">
 
 <div class="col-lg-12">
-    <button class="customBtn w-100 mt-4 mb-45">Add Address</button>
+    <button class="customBtn w-100 mt-4 mb-45">{{ __('user_messages.submit') }}</button>
 </div>
 </div>
 </form>
@@ -216,7 +216,7 @@ input[type=number] {
         <div class="modal-content">
 
             <div class="modal-header border-0">
-                <h1 class="modal-title fs-5" id="locationModalLabel">Change Location</h1>
+                <h1 class="modal-title fs-5" id="locationModalLabel">{{ __('user_messages.change_location') }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -235,14 +235,14 @@ input[type=number] {
                 <!-- Selected Address -->
                 <div class="mt-3">
                       <div id="useCurrentLocation" class="use-lc">
-                            <i class="bi bi-crosshair"></i> Use Current Location
+                            <i class="bi bi-crosshair"></i> {{ __('user_messages.use_current_location') }}
                         </div>
                     <!-- <h5 id="currentLocation">Current Location</h5> -->
-                    <p id="selectedLocationText" class="text-dark">Select a location…</p>
+                    <p id="selectedLocationText" class="text-dark">{{ __('user_messages.select_a_location') }}…</p>
                 </div>
 
                 <button type="button" id="applyLocationBtn" class="customBtn mt-2" data-bs-dismiss="modal">
-                    save
+                    {{ __('user_messages.save') }}
                 </button>
 
                 <!-- Hidden Fields -->
@@ -261,8 +261,9 @@ input[type=number] {
 
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&libraries=places">
-</script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&libraries=places">
+</script> -->
+<script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&libraries=places&language={{ app()->getLocale() }}"></script>
 
 
 <script>

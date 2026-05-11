@@ -22,7 +22,7 @@ class UserAddressService
              return ['status'=>'error','message'=>"Failed to save address. Please try again",'data'=>[]];
               }
 
-        return ['status'=>'success','message'=>"Saved address successfully",'data'=>$saveAddress];
+        return ['status'=>'success','message' => __('user_messages.address_saved_successfully'),'data'=>$saveAddress];
       
     }
 
@@ -35,7 +35,7 @@ class UserAddressService
              return ['status'=>'error','message'=>"Address not found",'data'=>[]];
               }
 
-        return ['status'=>'success','message'=>"Update address successfully",'data'=>$updateAddress];
+        return ['status'=>'success','message' => __('user_messages.update_address_successfully'),'data'=>$updateAddress];
       
     }
 
@@ -74,7 +74,7 @@ class UserAddressService
 
         return [
             'status' => 'success',
-            'message' => "Address deleted successfully",
+            'message' => __('user_messages.address_deleted_successfully'),
             'data' => []
         ];
 
@@ -93,7 +93,7 @@ class UserAddressService
 
         return [
             'status' => 'success',
-            'message' => "Address set as default successfully",
+            'message' => __('user_messages.address_set_as_default_successfully'),
             'data' => $addresses
         ];
 
