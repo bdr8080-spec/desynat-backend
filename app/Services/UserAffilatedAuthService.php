@@ -92,8 +92,20 @@ if($checkphone){
     ];
 
       $check=  AffilatedUser::UpdateOrCreate($insert_Data);
-
+         
         if($check){
+            CreateNotification([
+                'sender_id'             => $check->id,
+                'sender_type'           => 4,
+
+                'receiver_id'           => 1,
+                'receiver_type'         => 1,
+
+                'title_english'         => 'New Affiliated User Registered',
+                'description_english'   => $check->full_name . ' has registered as an affiliated user',
+
+                'notification_type'     => 'new_affiliated_user_registration'
+            ]);
 
             $phone = $request->country_code . $request->mobile;
             $message = "Your verification Code Is $otp";

@@ -39,6 +39,19 @@ class UserAuthService
 
        $check=  User::create($record);
 
+       CreateNotification([
+        'sender_id'             => $check->id, 
+        'sender_type'           => 2,
+
+        'receiver_id'           => 1,
+        'receiver_type'         => 1,
+
+        'title_english'         => 'New User Registered',
+        'description_english'   => $check->full_name . ' has registered as a user',
+
+        'notification_type'     => 'new_user_registration'
+    ]);
+
       $phone = $request->country_code . $request->mobile;
       $message = "Your verification Code Is $otp";
       if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {

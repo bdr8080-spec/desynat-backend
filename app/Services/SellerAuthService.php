@@ -50,6 +50,18 @@ class SellerAuthService
         ];
 
        $check=  seller::create($record);
+       CreateNotification([
+            'sender_id'             => $check->id, 
+            'sender_type'           => 3,
+
+            'receiver_id'           => 1,
+            'receiver_type'         => 1,
+
+            'title_english'         => 'New Seller Registered',
+            'description_english'   => $check->first_name . ' ' . $check->last_name . ' has registered as a seller',
+
+            'notification_type'     => 'new_seller_registration'
+        ]);
 
         $phone = $request->country_code . $request->mobile;
         $message = "Your verification Code Is $otp";
