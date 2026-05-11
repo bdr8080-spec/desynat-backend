@@ -62,10 +62,12 @@
         cursor: pointer;
     } 
 
-    .custom-radio input[type="radio"]:checked+span {
-        background-color: #c19e73;
-        color: #000;
-    } */
+     */
+
+    .mobileLang .custom-radio input[type="radio"]:checked+span {
+        color: #9e7750;
+        font-weight: 700;
+    } 
 
 
     </style>
