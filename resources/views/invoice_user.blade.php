@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
   <meta charset="utf-8" />
-  <title>Invoice</title>
+  <title>{{ __('user_messages.invoice') }}</title>
   <style>
     * {
       box-sizing: border-box;
@@ -140,16 +141,16 @@
             margin-top: 5px;
                font-size: 0.75rem;
           ">
-        multi-vendor fashion platform
+        {{ __('user_messages.multi_vendor_fashion_platform') }}
       </p>
 
       <p style="margin: 5px auto">
-        customer support: support@desynat.com<br />
-                phone / whatsapp: +965 XXXXXXX
+        {{ __('user_messages.customer_support') }}: support@desynat.com<br />
+                {{ __('user_messages.phone') }} / {{ __('user_messages.whatsapp') }}: +965 XXXXXXX
       </p>
-      <p><b>Invoice Number:</b> #{{$checkOrder->order_id}}</p>
-      <p><b>Order Date:</b> {{$checkOrder->created_at->format('Y-m-d') }}</p>
-      <p><b>Order Time :</b> {{ $checkOrder->created_at->format('h:i A') }}</p>
+      <p><b>{{ __('user_messages.invoice_number') }}:</b> #{{$checkOrder->order_id}}</p>
+      <p><b>{{ __('user_messages.order_date') }}:</b> {{$checkOrder->created_at->format('Y-m-d') }}</p>
+      <p><b>{{ __('user_messages.order_time') }} :</b> {{ $checkOrder->created_at->format('h:i A') }}</p>
       <hr style="border: 1px dashed rgb(131, 131, 131); margin: 15px 0px 10px" />
     </div>
 
@@ -169,13 +170,13 @@
     </table> -->
     <!-- <hr style="border: 1px dashed rgb(131, 131, 131); margin: 1px 0px 10px" /> -->
 
-    <div style="text-align: center; font-weight: 600;">Customer Info </div>
+    <div style="text-align: center; font-weight: 600;">{{ __('user_messages.customer_info') }} </div>
     <table style="width: 100%;margin-top: 10px;">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Mobile</th>
-          <th>Email</th>
+          <th>{{ __('user_messages.name') }}</th>
+          <th>{{ __('user_messages.mobile') }}</th>
+          <th>{{ __('user_messages.email') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -190,7 +191,7 @@
     <table style="width: 100%;">
       <thead>
         <tr>
-          <th>Delivery Address</th>
+          <th>{{ __('user_messages.delivery_address') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -205,30 +206,47 @@
     <table style="width: 100%; table-layout: fixed">
       <thead>
         <tr>
-          <th>Image</th>
-          <th>Item</th>
-          <th>Store</th>
-          <th>Type</th>
-          <th>Size</th>
-          <th>Color</th>
-          <th>Qty</th>
-          <th>Price</th>
+          <th>{{ __('user_messages.image') }}</th>
+          <th>{{ __('user_messages.item') }}</th>
+          <th>{{ __('user_messages.store') }}</th>
+          <th>{{ __('user_messages.type') }}</th>
+          <th>{{ __('user_messages.size') }}</th>
+          <th>{{ __('user_messages.color') }}</th>
+          <th>{{ __('user_messages.qty') }}</th>
+          <th>{{ __('user_messages.price') }}</th>
         </tr>
       </thead>
       <tbody>
         @foreach($checkOrder->order_details as $key=>$val)
         <tr class="invoice-items">
           <td><img src="{{$val->variation_details->variant_image[0]}}" style="width: 30px; height: 30px;"></td>
-          <td>{{$val->product_details->product_name_en}}</td>
+          <td>
+            @if(app()->getLocale() == 'en')
+            {{$val->product_details->product_name_en}}
+            @else
+            {{$val->product_details->product_name_ar}}
+            @endif
+          </td>
           <td>{{$val->product_details->seller_details->store_info->store_name}}</td>
           <td>@if($val->order_type=='1')
-                Normal
+                {{ __('user_messages.normal') }}
                 @elseif($val->order_type=='2')
-                Custom
+                {{ __('user_messages.custom') }}
                 @endif
             </td>
-          <td>{{$val->variation_details->size->name}}</td>
-          <td>{{$val->variation_details->color->name}}</td>
+          <td>
+            @if(app()->getLocale() == 'en')
+            {{$val->variation_details->size->name}}
+            @else
+            {{$val->variation_details->size->name_ar}}
+            @endif
+          </td>
+          <td>
+            @if(app()->getLocale() == 'en')
+            {{$val->variation_details->color->name}}
+            @else{{$val->variation_details->color->name_ar}}
+            @endif
+          </td>
           <td>{{$val->quantity}}</td>
           <td>
            @if($val->order_type=='1')
@@ -244,7 +262,7 @@
     </table>
 
    
-    <div style="font-weight: 600; margin-top: 15px;">Order Summary </div>
+    <div style="font-weight: 600; margin-top: 15px;">{{ __('user_messages.order_summary') }} </div>
     <table style="
           width: 100%;
           margin-top: 5px;
@@ -253,93 +271,99 @@
         ">
       <thead>
         <tr>
-          <td>SubTotal:</td>
+          <td>{{ __('user_messages.sub_total') }}:</td>
           <td style="text-align: right"> {{ number_format($checkOrder->total_mrp * $rate, 2) }} {{ $currencyCode }}</td>
         </tr>
         <tr>
-          <td>Discount:</td>
+          <td>{{ __('user_messages.discount') }}:</td>
           <td style="text-align: right"> {{ number_format($checkOrder->discount_mrp * $rate, 2) }} {{ $currencyCode }}</td>
         </tr>
         @if($checkOrder->promocode_details)
 
-        <td>Promo Code</td>
-        <td style="text-align: right">{{@$checkOrder->promocode_details->name_english }}</td>
+        <td>{{ __('user_messages.promo_code') }}</td>
+        <td style="text-align: right">
+          @if(app()->getLocale() == 'en')
+          {{@$checkOrder->promocode_details->name_english }}
+          @else
+          {{@$checkOrder->promocode_details->name_arabic }}
+          @endif
+        </td>
 
         @endif
         <tr>
-          <td>Delivery Fee:</td>
+          <td>{{ __('user_messages.delivery_fee') }}:</td>
           <td style="text-align: right">   {{ number_format($checkOrder->shipping_fees * $rate, 2) }} {{ $currencyCode }}</td>
         </tr>
         <tr>
-          <td>Tax (VAT)</td>
+          <td>{{ __('user_messages.tax_vat') }}</td>
           <td style="text-align: right">  {{ number_format($checkOrder->tax * $rate, 2) }} {{ $currencyCode }}</td>
         </tr>
         <tr>
-          <td style="font-weight: 600;"> Total Amount:  </td>
+          <td style="font-weight: 600;"> {{ __('user_messages.total_amount') }}:  </td>
           <td style="text-align: right;font-weight: 600;">   {{ number_format($checkOrder->total_amount * $rate, 2) }} {{ $currencyCode }}</td>
       </tr>
       </thead>
     </table>
 
-    <div style="font-weight: 600; margin-top: 15px;">Payment Information </div>
+    <div style="font-weight: 600; margin-top: 15px;">{{ __('user_messages.payment_information') }}</div>
     <table style="width: 100%;margin-top: 5px;">
       <thead>
         <tr>
-          <td>Payment Method:</td>
+          <td>{{ __('user_messages.payment_method') }}:</td>
           <td style="text-align: right">
             @if($checkOrder->payment_method==1)
-                    VISA / MASTERCARD
+                    {{ __('user_messages.visa') }} / {{ __('user_messages.mastercard') }}
                     @elseif($checkOrder->payment_method==2)
-                    WALLET
+                    {{ __('user_messages.wallet') }}
                     @elseif($checkOrder->payment_method==3)
-                    COD
+                    {{ __('user_messages.cod') }}
                     @endif
           </td>
         </tr>
         <tr>
-          <td>Payment Status:</td>
+          <td>{{ __('user_messages.payment_status') }}:</td>
           <td style="text-align: right">
             @if($checkOrder->payment_status==0)
-                    Pending
+                    {{ __('user_messages.pending') }}
                     @elseif($checkOrder->payment_status==1)
-                    Paid
+                    {{ __('user_messages.paid') }}
                     @elseif($checkOrder->payment_status==2)
-                    Cancelled
+                    {{ __('user_messages.cancelled') }}
                     @elseif($checkOrder->payment_status==3)
-                    Refund
+                    {{ __('user_messages.refund') }}
                     @endif
           </td>
         </tr>
       </thead>
     </table>
 
-    <div style=" font-weight: 600; margin-top: 15px;">Delivery Information </div>
+    <div style=" font-weight: 600; margin-top: 15px;">{{ __('user_messages.delivery_information') }} </div>
     <table style="width: 100%;margin-top: 5px;">
       <thead>
         <tr>
-          <td>Expected Delivery Date:</td>
+          <td>{{ __('user_messages.expected_delivery_date') }}:</td>
           <td style="text-align: right">{{$checkOrder->created_at->addDays(6)->format('d M Y') }}</td>
         </tr>
         <tr>
-          <td>Expected Delivery Time:</td>
+          <td>{{ __('user_messages.expected_delivery_time') }}:</td>
           <td style="text-align: right">{{$checkOrder->created_at->addDays(6)->format('h:i:s') }}</td>
         </tr>
         <tr>
-          <td>Delivery Managed By:</td>
+          <td>{{ __('user_messages.delivery_managed_by') }}:</td>
           <td style="text-align: right">Desynat</td>
         </tr>
       </thead>
     </table>
 
-    <div style="font-weight: 600; margin-top: 15px;">Return & Exchange Policy </div>
+    <div style="font-weight: 600; margin-top: 15px;">{{ __('user_messages.return_&_exchange_policy') }} </div>
     <table style="width: 100%;margin-top: 1px;">
       <thead>
         <tr>
           <td>
-              <div>Exchange & return within 7 days from delivery date.</div>
-              <div>Non-refundable unless defective.</div>
-              <div>Item must be unused and in original packaging.</div>
-              <div>Delivery fee is non-refundable.</div>
+              <div>{{ __('user_messages.exchange_&_return_within_7_days_from_delivery_date') }}.</div>
+              <div>{{ __('user_messages.non_refundable_unless_defective') }}.</div>
+              <div>{{ __('user_messages.item_must_be_unused_and_in_original_packaging') }}.</div>
+              <div>{{ __('user_messages.delivery_fee_is_non_refundable') }}.</div>
           </td>
         </tr>
        
@@ -347,8 +371,7 @@
     </table>
 
     <hr style="border: 1px dashed rgb(131, 131, 131); margin: 10px auto" />
-    <div style="text-align: center; font-weight: 600; font-size: 0.75rem;">This invoice is generated electronically by DESYNAT and does not require
-      a signature.</div>
+    <div style="text-align: center; font-weight: 600; font-size: 0.75rem;">{{ __('user_messages.this_invoice_is_generated_electronically_by') }} DESYNAT {{ __('user_messages.and_does_not_require_a_signature') }}.</div>
 
 
   </section>

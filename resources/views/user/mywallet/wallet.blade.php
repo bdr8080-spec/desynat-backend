@@ -12,18 +12,18 @@
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
-        <h3>My Wallet</h3>
+        <h3>{{ __('user_messages.my_wallet') }}</h3>
     </div>
 
     <div class="main-content categoryDetail">
         <div class="cart-panel position-relative">
             <div class="gift-pnl mt-0">
-                <h6>Wallet Transactions</h6>
+                <h6>{{ __('user_messages.wallet_transactions') }}</h6>
 
                 <div class="border-1 mb-3 mt-3 bg-multiple p-3">
                     <div class="total-w d-flex justify-content-between">
                         <div class="total-balance">
-                            <div class="balance-title">Total Balance</div>
+                            <div class="balance-title">{{ __('user_messages.total_balance') }}</div>
                             <div class="walletic d-flex gap-2 align-items-center mt-3">
                                 <div class="wallet-ic">
                                     <img src="{{asset('user/assets/images/wallet-ic.svg')}}" class="img-fluid">
@@ -33,9 +33,9 @@
                             </div>
                         </div>
                         <div class="total-balance-2">
-                            <a href="{{route('user.addWalletMoney')}}" class="btn btn-top">Top-up Wallet</a>
+                            <a href="{{route('user.addWalletMoney')}}" class="btn btn-top">{{ __('user_messages.top_up_wallet') }}</a>
                             <button type="button" class="btn btn-top" data-bs-target="#RedeemModal"
-                                data-bs-toggle="modal">Redeem Gift Card</button>
+                                data-bs-toggle="modal">{{ __('user_messages.reedem_gift_card') }}</button>
                         </div>
                     </div>
 
@@ -51,11 +51,11 @@
 
                         <div style="color: {{ $isCredit ? '#48DB8F' : '#FF6B6B' }}">
                             @if($history->type == 1)
-                            Credit
+                            {{ __('user_messages.credit') }}
                             @elseif($history->type == 3)
-                            Reedem Gift Card
+                            {{ __('user_messages.reedem_gift_card') }}
                             @else
-                            Debit
+                            {{ __('user_messages.debit') }}
                             @endif
                         </div>
 
@@ -66,12 +66,12 @@
                     </div>
 
                     <div class="giftinfo">
-                        <div>Transaction Id</div>
-                        <div>{{ $history->transaction_id }}</div>
+                        <div>{{ __('user_messages.transaction_id') }}</div>
+                        <div>{{ $history->transaction_id ?? __('user_messages.na') }}</div>
                     </div>
 
                     <div class="giftinfo">
-                        <div>Credited On</div>
+                        <div>{{ __('user_messages.date_&_time') }}</div>
                         <div>
                             {{ \Carbon\Carbon::parse($history->created_at)->timezone('Asia/Kolkata')->format('d/m/Y, h:i A') }}
                         </div>
@@ -80,7 +80,7 @@
                 @endforeach
                 @else
                 <div class="text-center text-muted mt-3">
-                    No wallet history found
+                    {{ __('user_messages.no_wallet_history_found') }}
                 </div>
                 @endif
 
@@ -100,29 +100,29 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Gift Card </h1>
+                <h1 class="modal-title fs-5">{{ __('user_messages.gift_card') }} </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="ReddemgiftCardMoney" method="post" action="{{route('user.redeemgiftCardinUser')}}">
                 @csrf
 
                 <div class="modal-body">
-                    <h5>Enter Gift Card Deatils </h5>
+                    <h5>{{ __('user_messages.enter_gift_card_details') }} </h5>
                     <div class="form-group w-100 py-2">
-                        <label>16 Digit Gift Card Number </label>
+                        <label>{{ __('user_messages.16_digit_gift_card_number') }} </label>
                         <input type="text" class="form-control pline-10" name="giftCardNo"
-                            placeholder="16 Digit Gift Card Number ">
+                            placeholder="{{ __('user_messages.16_digit_gift_card_number') }}">
                         <p class="text-danger" id="error-giftCardNo"></p>
                     </div>
 
                     <div class="form-group w-100 py-2">
-                        <label>Enter PIN </label>
-                        <input type="text" class="form-control pline-10" name="giftCardPin" placeholder="Enter PIN">
+                        <label>{{ __('user_messages.enter_pin') }} </label>
+                        <input type="text" class="form-control pline-10" name="giftCardPin" placeholder="{{ __('user_messages.enter_pin') }}">
                         <p class="text-danger" id="error-giftCardPin"></p>
                     </div>
 
                     <div class="cmn-btn mt-4">
-                        <button type="submit" class="btn paybtn-common w-100">Redeem </button>
+                        <button type="submit" class="btn paybtn-common w-100">{{ __('user_messages.reedem') }} </button>
                     </div>
 
                 </div>

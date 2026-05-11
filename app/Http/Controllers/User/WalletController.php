@@ -49,7 +49,7 @@ class WalletController extends Controller
         $walletData = $this->UserOrderService->AddMoneyFromTheUserSide($data)['data'];
 
         if($request->payment=='yes'){
-        $msg="Payment Paid Successfully";
+        $msg = __('user_messages.payment_paid_successfully');
         $status='success';
 
         Session::flash('message', $msg);
@@ -58,7 +58,7 @@ class WalletController extends Controller
 
         }elseif($request->payment=='no'){
 
-        $msg="Payment Cancalled";
+        $msg = __('user_messages.payment_cancelled');
         $status='error';
 
         Session::flash('message', $msg);
@@ -75,7 +75,9 @@ class WalletController extends Controller
 
           $validate = Validator::make($request->all(), [
                 'amount' => 'required',
-                "payment_method"=>'required|in:1'
+                "payment_method" => 'required|in:1'
+            ], [
+                'amount.required' => __('user_messages.please_select_or_enter_amount'),
             ]);
 
         if($validate->fails()){
@@ -114,10 +116,19 @@ class WalletController extends Controller
 
         try {
    
+        // $validate = Validator::make($request->all(), [
+        //         'giftCardNo' => 'required|min:16|max:16',
+        //         "giftCardPin"=>'required'
+        //     ]);
         $validate = Validator::make($request->all(), [
-                'giftCardNo' => 'required|min:16|max:16',
-                "giftCardPin"=>'required'
-            ]);
+            'giftCardNo' => 'required|min:16|max:16',
+            'giftCardPin' => 'required'
+        ], [
+            'giftCardNo.required' => __('user_messages.please_enter_16_digit_gift_card_number'),
+            'giftCardNo.min' => __('user_messages.please_enter_16_digit_gift_card_number'),
+            'giftCardNo.max' => __('user_messages.please_enter_16_digit_gift_card_number'),
+            'giftCardPin.required' => __('user_messages.please_enter_4_digit_pin'),
+        ]);
 
         if($validate->fails()){
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);

@@ -60,8 +60,8 @@
                     <div class="col-lg-4">
                         <div class="category_filter">
                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="mb-0">Filter</h3>
-                                <a href="{{route('user.myOrders')}}">Clear</a>
+                                <h3 class="mb-0">{{ __('user_messages.filter') }}</h3>
+                                <a href="{{route('user.myOrders')}}">{{ __('user_messages.clear') }}</a>
                             </div>
                             <form method="GET" action="{{ route('user.myOrders') }}">
                                 <div class="orderfilter">
@@ -70,7 +70,7 @@
                                             {{ request('filter') == null ? 'checked' : '' }}>
                                         <span class="radio-mark"></span>
                                         <div class="label-content">
-                                            <div class="title">All</div>
+                                            <div class="title">{{ __('user_messages.all') }}</div>
                                         </div>
                                     </label>
                                     <label class="custom-radio mb-3">
@@ -78,7 +78,7 @@
                                             {{ request('filter') == '2' ? 'checked' : '' }}>
                                         <span class="radio-mark"></span>
                                         <div class="label-content">
-                                            <div class="title">Ongoing</div>
+                                            <div class="title">{{ __('user_messages.ongoing') }}</div>
                                         </div>
                                     </label>
                                     <label class="custom-radio mb-3">
@@ -86,7 +86,7 @@
                                             {{ request('filter') == '3' ? 'checked' : '' }}>
                                         <span class="radio-mark"></span>
                                         <div class="label-content">
-                                            <div class="title">Delivered</div>
+                                            <div class="title">{{ __('user_messages.delivered') }}</div>
                                         </div>
                                     </label>
                                     <label class="custom-radio mb-3">
@@ -94,7 +94,7 @@
                                             {{ request('filter') == '4' ? 'checked' : '' }}>
                                         <span class="radio-mark"></span>
                                         <div class="label-content">
-                                            <div class="title">Cancelled</div>
+                                            <div class="title">{{ __('user_messages.cancelled') }}</div>
                                         </div>
                                     </label>
                                     <label class="custom-radio mb-3">
@@ -102,14 +102,14 @@
                                             {{ request('filter') == '5' ? 'checked' : '' }}>
                                         <span class="radio-mark"></span>
                                         <div class="label-content">
-                                            <div class="title">Return</div>
+                                            <div class="title">{{ __('user_messages.return') }}</div>
                                         </div>
                                     </label>
 
                                 </div>
 
                                 <button type="submit" class="customBtn customBtn5 mt-5">
-                                    Apply
+                                    {{ __('user_messages.apply') }}
                                 </button>
                             </form>
                         </div>
@@ -120,12 +120,12 @@
                             <form action="{{ route('user.myOrders') }}" method="GET">
                                 <div class="seArch">
                                     <div class="form-group position-relative search">
-                                        <input type="text" class="form-control" placeholder="Search" name="search"
+                                        <input type="text" class="form-control" placeholder="{{ __('user_messages.search') }}" name="search"
                                             value="{{ request()->search }}" />
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </div>
                                     <button type="submit" class="customBtn customBtn5">
-                                        Search
+                                        {{ __('user_messages.search') }}
                                     </button>
                                 </div>
                             </form>
@@ -197,57 +197,57 @@
 
                             // 1 → Cancelled Order
                             $orderdetail->payment_status == '2' || $orderdetail->payment_status == '3'
-                            => 'Cancelled',
+                            => __('user_messages.cancelled'),
 
                             // 2 → confirmed
                             $orderdetail->delivery_status == '1' &&
                             $orderdetail->return_type == '0'
-                            => 'Ongoing',
+                            => __('user_messages.ongoing'),
 
                             // 2 → Ongoing
                             $orderdetail->delivery_status == '2' || $orderdetail->delivery_status == '1' &&
                             $orderdetail->return_type == '0'
-                            => 'Ongoing',
+                            => __('user_messages.ongoing'),
 
                             // 2.1 → shipped
                             $orderdetail->delivery_status == '2.1' &&
                             $orderdetail->return_type == '0'
-                            => 'Shipped',
+                            => __('user_messages.shipped'),
 
                             // 2.2 → shipped
                             $orderdetail->delivery_status == '2.2' &&
                             $orderdetail->return_type == '0'
-                            => 'On The Way',
+                            => __('user_messages.on_the_way'),
 
                             // 3 → Delivered
                             $orderdetail->delivery_status == '3' &&
                             $orderdetail->return_type == '0'
-                            => 'Delivered',
+                            => __('user_messages.delivered'),
 
                             // 4 → Cancelled
                             $orderdetail->payment_status == '2'
-                            => 'Cancelled',
+                            => __('user_messages.cancelled'),
 
                             // 5 → Returned / Failed
                             $orderdetail->delivery_status == '3' && $orderdetail->return_type == '2'
-                            => 'Exchange Request',
+                            => __('user_messages.exchange_request'),
 
                             // 5 → Exchange / Failed
                             $orderdetail->delivery_status == '3' && $orderdetail->return_type == '1'
-                            => 'Return Request',
+                            => __('user_messages.return_request'),
 
                             // Default
-                            default => 'On Going',
+                            default => __('user_messages.ongoing'),
                             };
 
                             [$statusColor, $bgColor] = match ($statusText) {
 
-                            'Delivered' => ['#28a745', '#28a7451A'],
+                            __('user_messages.delivered') => ['#28a745', '#28a7451A'],
 
-                            'Cancelled' => ['#E70000', '#E700001A'],
+                            __('user_messages.cancelled') => ['#E70000', '#E700001A'],
 
-                            "Exchange Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-                            "Return Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
+                            __('user_messages.exchange_request')=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
+                            __('user_messages.return_request')=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
 
                             default => ['#FF5F1B', '#79d69d1a'],
                             };
@@ -275,22 +275,26 @@
                                                 <div class="card-right d-flex w-100 justify-content-between">
                                                     <div class="product-info">
                                                         <h5 class="product-title">
-                                                            Order ID :#
+                                                            {{ __('user_messages.order_id') }} :#
                                                             <span>{{ $orderDetail->id }}</span>
                                                         </h5>
 
                                                         <div class="price-current">
-                                                            {{ $product->product_name_en ?? 'N/A' }}
+                                                            @if(app()->getLocale() == 'en')
+                                                            {{ $product->product_name_en ?? __('user_messages.na') }}
+                                                            @else
+                                                            {{ $product->product_name_ar ?? __('user_messages.na') }}
+                                                            @endif
                                                         </div>
 
                                                         <div class="psize d-flex gap-4 mt-2">
                                                             @if($size)
-                                                            <span>Size: {{ $size->name }}</span>
+                                                            <span>{{ __('user_messages.size') }}: @if(app()->getLocale() == 'en'){{ $size->name }}@else{{ $size->name_ar }}@endif</span>
                                                             @endif
 
                                                             @if($color)
                                                             <span class="d-flex align-items-center gap-2">
-                                                                Color:
+                                                                {{ __('user_messages.color') }}:
                                                                 <div class="colorbox"
                                                                     style="width:15px;height:15px;border-radius:3px;
                                                                                     background:{{ $color->hex_code }};">
@@ -298,7 +302,7 @@
                                                             </span>
                                                             @endif
 
-                                                            <span>Qnt: {{ $orderDetail->quantity }}</span>
+                                                            <span>{{ __('user_messages.qty') }}: {{ $orderDetail->quantity }}</span>
                                                         </div>
                                                     </div>
 
@@ -311,7 +315,7 @@
 
                                                 <div class="d-flex justify-content-between">
                                                     <!-- <p class="delivery-label mb-2">{{ $statusText }}</p> -->
-                                                    <p class="delivery-label mb-2">Placed</p>
+                                                    <p class="delivery-label mb-2">{{ __('user_messages.placed') }}</p>
                                                     <p class="delivery-date mb-2">
                                                         {{ $order->created_at->timezone('Asia/Kolkata')->format('h:i A | d-m-Y') }}
                                                     </p>
@@ -325,23 +329,23 @@
                                     <div class="expert-date" style="background:{{ $bgColor }}; color:#28a745">
                                         <!-- Expected Delivery Date : -->
                                         <!-- {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }} -->
-                                        Expected Delivery Date : 3-5 Working Days
+                                        {{ __('user_messages.expected_delivery_date') }} : {{ __('user_messages.3_5_working_days') }}
                                     </div>
                                     @elseif($orderdetail->payment_status == '2' || $orderdetail->payment_status == '3' )
                                     <div class="expert-date"
                                         style="background:{{ $bgColor }}; color:{{ $statusColor }}">
-                                        Cancelled Date : {{ $orderdetail->updated_at->format('d M Y') }}
+                                        {{ __('user_messages.cancelled_date') }} : {{ $orderdetail->updated_at->format('d M Y') }}
                                     </div>
                                     @elseif($orderdetail->delivery_status == '3' && $orderdetail->return_type == '2')
                                     <div class="expert-date"
                                         style="background:{{ $bgColor }}; color:{{ $statusColor }}">
-                                        Exchange Date :
+                                        {{ __('user_messages.exchange_date') }} :
                                         {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }}
                                     </div>
                                     @elseif($orderdetail->delivery_status == '3' && $orderdetail->return_type == '1')
                                     <div class="expert-date"
                                         style="background:{{ $bgColor }}; color:{{ $statusColor }}">
-                                        Pickup Date :
+                                        {{ __('user_messages.pickup_date') }} :
                                         {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }}
 
                                     </div>
@@ -349,7 +353,7 @@
                                     && $orderdetail->return_type == '0')
                                     <div class="expert-date"
                                         style="background:{{ $bgColor }}; color:{{ $statusColor }}">
-                                        Delivered Date : {{ $orderdetail->updated_at->format('d M Y') }}
+                                        {{ __('user_messages.delivered_date') }} : {{ $orderdetail->updated_at->format('d M Y') }}
                                     </div>
                                     @endif
                                 </a>
@@ -357,7 +361,7 @@
 
                             @empty
                             <div class="text-center py-5">
-                                <h5 class="mt-3">No Order Found</h5>
+                                <h5 class="mt-3">{{ __('user_messages.no_order_found') }}</h5>
                             </div>
                             @endforelse
                         </div>

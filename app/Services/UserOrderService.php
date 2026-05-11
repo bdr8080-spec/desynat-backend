@@ -1047,11 +1047,11 @@ $orders = $orders->orderBy('id', 'desc')->get();
     }
 
     if($checkOrder->order->payment_status!=='1' && $checkOrder->order->payment_method!=='3'){
-       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('user_messages.order_payment_is_not_paid'),'data'=>(object)[]];
     }
 
      if($checkOrder->delivery_status!=='1' && $checkOrder->delivery_status!=='2' && $checkOrder->delivery_status!=='2.1' ){
-       return ['status'=>'error','message'=>"Delivery is Already proceeed  You Can't Cancel order ",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('user_messages.delivery_already_proceeded_cant_cancel_order'),'data'=>(object)[]];
     }
     
     // Cutom Order if The Order create before 3 Hours then Don't Cancel Order in Custom Order 
@@ -1063,7 +1063,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
         if ($orderCreatedFutureDate->lt($nowDateTime)) {
             return [
                 'status' => 'error',
-                'message' => 'Custom Order cancel time is Over',
+                'message' => __('user_messages.custom_order_cancel_time_is_over'),
                 'data' => (object)[]
             ];
         }   
@@ -1152,7 +1152,7 @@ if($checkOrder->order_type=='2'){
 
     DB::commit();
 
-    return ['status'=>'success','message'=>"Order cancelled Successfully",'data'=>$checkOrder];
+    return ['status'=>'success','message' => __('user_messages.order_cancelled_successfully'),'data'=>$checkOrder];
     
     } catch (\Exception $e) {
         return [
@@ -1206,22 +1206,22 @@ if($checkOrder->order_type=='2'){
     }
 
     if($checkOrder->payment_status!=='1'){
-       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('user_messages.order_payment_is_not_paid'),'data'=>(object)[]];
     }
     // check order is Alredy in return and exchange state 
 
      if($checkOrder->return_type!=='0'){
-       return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('user_messages.product_already_in_return_exchange_state'),'data'=>(object)[]];
      }
      
     
     // check delivery status
     if($checkOrder->delivery_status!=='3'){
-       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('user_messages.product_not_delivered_wait_for_delivery'),'data'=>(object)[]];
     }
     
     if($checkOrder->product_details->product_return=='0'){
-       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+       return ['status'=>'error','message' => __('user_messages.product_return_not_available'),'data'=>(object)[]];     
     }
 
     // Check Product Return days Availbility
@@ -1240,7 +1240,7 @@ if($checkOrder->order_type=='2'){
     // Check if today is greater than return date
     if ($today->greaterThan($returnLastDate)) {
                
-        return ['status'=>'error','message'=>"Product return Period Is Over",'data'=>(object)[]];     
+        return ['status'=>'error','message' => __('user_messages.product_return_period_over'),'data'=>(object)[]];     
 
     }
 
@@ -1248,7 +1248,7 @@ if($checkOrder->order_type=='2'){
 
     $checkOrder->update(['return_type'=>'1','return_reason'=> $request->return_reason,'return_image'=>$request->return_image]);    
 
-    return ['status'=>'success','message'=>"Product return Request Send Successfully",'data'=>$checkOrder];
+    return ['status'=>'success','message' => __('user_messages.product_return_request_sent_successfully'),'data'=>$checkOrder];
     
     } catch (\Exception $e) {
         return [
@@ -1278,22 +1278,22 @@ if($checkOrder->order_type=='2'){
     }
 
     if($checkOrder->payment_status!=='1' ){
-       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('user_messages.order_payment_is_not_paid'),'data'=>(object)[]];
     }
     // check order is Alredy in return and exchange state 
 
      if($checkOrder->return_type!=='0'){
-       return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('user_messages.product_already_in_return_exchange_state'),'data'=>(object)[]];
      }
      
     
     // check delivery status
     if($checkOrder->delivery_status!=='3'){
-       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('user_messages.product_not_delivered_wait_for_delivery'),'data'=>(object)[]];
     }
     
     if($checkOrder->product_details->product_exchangable=='0'){
-       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+       return ['status'=>'error','message' => __('user_messages.product_return_not_available'),'data'=>(object)[]];     
     }
 
     // Check Product product_exchangable days Availbility
@@ -1312,7 +1312,7 @@ if($checkOrder->order_type=='2'){
     // Check if today is greater than return date
     if ($today->greaterThan($returnLastDate)) {
                
-        return ['status'=>'error','message'=>"Product Exchange Period Is Over",'data'=>(object)[]];     
+        return ['status'=>'error','message' => __('user_messages.product_exchange_period_over'),'data'=>(object)[]];     
 
     }
 
@@ -1320,7 +1320,7 @@ if($checkOrder->order_type=='2'){
 
     $checkOrder->update(['return_type'=>'2','exchange_reason'=> $request->exchange_reason,'exchange_new_size'=>$request->new_size]);    
 
-    return ['status'=>'success','message'=>"Product Exchange Request Send Successfully",'data'=>$checkOrder];
+    return ['status'=>'success','message' => __('user_messages.product_exchange_request_sent_successfully'),'data'=>$checkOrder];
     
     } catch (\Exception $e) {
         return [
@@ -1463,7 +1463,7 @@ if($checkOrder->order_type=='2'){
     }
 
     if($checkOrder->payment_status!=='1' ){
-       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('user_messages.order_payment_is_not_paid'),'data'=>(object)[]];
     }
     // check order is Alredy in return and exchange state 
 
@@ -1474,7 +1474,7 @@ if($checkOrder->order_type=='2'){
     
     // check delivery status
     if($checkOrder->delivery_status!=='3'){
-       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('user_messages.product_not_delivered_wait_for_delivery'),'data'=>(object)[]];
     }
 
 
@@ -1495,7 +1495,7 @@ if($checkOrder->order_type=='2'){
     if($check_review){
         return [
             'status' => 'error',
-            'message' => "This product Already Have review",
+            'message' => __('user_messages.product_already_has_review'),
             'data' => (object)[]
         ];
 
@@ -1558,7 +1558,7 @@ if($checkOrder->order_type=='2'){
                 ]);
 
     if($create_review){
-        return ['status'=>'success','message'=>"Product Review Save Successfully",'data'=>$create_review];
+        return ['status'=>'success','message' => __('user_messages.product_review_saved_successfully'),'data'=>$create_review];
     }
 
     
@@ -1794,7 +1794,7 @@ $checkGiftCard->update(['giftCardUse'=>'1']);
     DB::commit();
         return [
         'status'  => 'success',
-        'message' => "Gift card reddem Successfully",
+        'message' => __('user_messages.gift_card_redeemed_successfully'),
         'data'    => $checkGiftCard
     ];
 
@@ -1803,7 +1803,7 @@ $checkGiftCard->update(['giftCardUse'=>'1']);
 
         return [
             'status'  => 'error',
-            'message' => "Invalid Gift card and Expired",
+            'message' => __('user_messages.invalid_or_expired_gift_card'),
             'data'    => (object)[]
         ];
 

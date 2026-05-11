@@ -24,8 +24,8 @@
                             <img src="{{ asset('user/assets/images/left-ic.svg') }}" class="img-fluid mt-1">
                         </a>
                         <div class="order-subtitle">
-                            <h3>#{{ $orderData->id ?? 'N/A' }}</h3>
-                            <p>Placed on
+                            <h3>#{{ $orderData->id ??  __('user_messages.na')  }}</h3>
+                            <p>{{ __('user_messages.placed_on') }}
                                 {{ \Carbon\Carbon::parse($orderData->order->created_at ?? now())
                             ->timezone('Asia/Kolkata')
                             ->format('d/m/Y \a\t h:ia') }}
@@ -40,16 +40,16 @@
 
 
                     @if($orderData->payment_status == '2' || $orderData->payment_status == '3')
-                    <div class="btn-outline1 btn-outline-red">Cancelled</div>
+                    <div class="btn-outline1 btn-outline-red">{{ __('user_messages.cancelled') }}</div>
                     @elseif(in_array($orderData->delivery_status, ['1', '2']) && $orderData->payment_status !== '2' &&
                     $orderData->payment_status !== '3' )
-                    <div class="btn-outline1 btn-ongoing">Ongoing</div>
+                    <div class="btn-outline1 btn-ongoing">{{ __('user_messages.ongoing') }}</div>
                     @elseif($orderData->delivery_status == '3' && $orderData->return_type == '0')
-                    <div class="btn-outline1 btn-outline-de">Delivered</div>
+                    <div class="btn-outline1 btn-outline-de">{{ __('user_messages.delivered') }}</div>
                     @elseif($orderData->delivery_status == '3' && $orderData->return_type == '1')
-                    <div class="btn-outline1 btn-ongoing">Return Request</div>
+                    <div class="btn-outline1 btn-ongoing">{{ __('user_messages.return_request') }}</div>
                     @elseif($orderData->delivery_status == '3' && $orderData->return_type == '2')
-                    <div class="btn-outline1 btn-ongoing">Exchange Request</div>
+                    <div class="btn-outline1 btn-ongoing">{{ __('user_messages.exchange_request') }}</div>
                     @endif
                 </div>
 
@@ -75,19 +75,24 @@
                             <div class="card-right d-flex w-100 justify-content-between ">
                                 <div class="product-info">
                                     <h5 class="product-title">
-                                        {{ $orderData->product_details->product_name_en ?? 'N/A' }}</h5>
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $orderData->product_details->product_name_en ?? __('user_messages.na') }}
+                                        @else
+                                        {{ $orderData->product_details->product_name_ar ?? __('user_messages.na') }}
+                                        @endif
+                                    </h5>
 
                                     <div class="psize d-flex gap-4">
-                                        <span>Size: {{ $orderData->variation_details->size->name ?? 'N/A' }}</span>
+                                        <span>{{ __('user_messages.size') }}: @if(app()->getLocale() == 'en'){{ $orderData->variation_details->size->name ?? __('user_messages.na') }}@else{{ $orderData->variation_details->size->name_ar ?? __('user_messages.na') }}@endif</span>
 
                                         <span class="d-flex align-items-center gap-2">
-                                            Color:
+                                            {{ __('user_messages.color') }}:
                                             <div class="colorbox"
                                                 style="width:15px; height:15px; border-radius:3px; background: {{ $orderData->variation_details->color->hex_code ?? '#000' }};">
                                             </div>
                                         </span>
 
-                                        <span>Qnt: {{ $orderData->quantity ?? 1 }}</span>
+                                        <span>{{ __('user_messages.qty') }}: {{ $orderData->quantity ?? 1 }}</span>
                                     </div>
 
                                     {{-- Price --}}
@@ -104,7 +109,7 @@
                                             </span>
                                         @if($orderData->variation_details->discount_type == '1')
                                         <span class="discount ms-2">{{ $orderData->variation_details->discount_value }}%
-                                            Off</span>
+                                            {{ __('user_messages.off') }}</span>
                                         @endif
                                         @endif
                                     </div>
@@ -123,13 +128,12 @@
                                     <div class="return-green">
                                         @if(isset($orderData->product_details))
                                         @if($orderData->product_details->product_return == '1')
-                                        {{ $orderData->product_details->return_days }} day return policy available
+                                        {{ $orderData->product_details->return_days }} {{ __('user_messages.days_return_policy_available') }}
                                         <br>
                                         @endif
 
                                         @if($orderData->product_details->product_exchangable == '1')
-                                        {{ $orderData->product_details->exchangable_days }} day exchange policy
-                                        available
+                                        {{ $orderData->product_details->exchangable_days }} {{ __('user_messages.days_exchange_policy_available') }}
                                         @endif
                                         @endif
                                     </div>
@@ -140,7 +144,7 @@
                                         <button class="btn btn-outline-red w-100 cancelBtn" data-bs-toggle="modal"
                                             data-bs-target="#cancelModal" data-order-id="{{ $orderData->order_id }}"
                                             data-order-details-id="{{ $orderData->id }}">
-                                            Cancel Order
+                                            {{ __('user_messages.cancel_order') }}
                                         </button>
                                     </div>
                                     @elseif($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
@@ -162,7 +166,7 @@
                                         <button class="btn btn-outline-red w-100 cancelBtn" data-bs-toggle="modal"
                                             data-bs-target="#cancelModal" data-order-id="{{ $orderData->order_id }}"
                                             data-order-details-id="{{ $orderData->id }}">
-                                            Cancel Order
+                                            {{ __('user_messages.cancel_order') }}
                                         </button>
                                     </div>
                                     @endif
@@ -197,7 +201,7 @@
 
                             @if(!$orderData->UserRatingReviewProvide)
 
-                            <h5 class="product-title">Rate this product</h5>
+                            <h5 class="product-title">{{ __('user_messages.rate_this_product') }}</h5>
                             <div class="order-ratings rating-widget">
                                 <div class="rating" data-bs-toggle="modal" data-bs-target="#ratingModal"
                                     data-order-id="{{ $orderData->order_id }}"
@@ -254,7 +258,7 @@
                                 data-product-id="{{ $orderData->product_id }}"
                                 data-size-id="{{ $orderData->variation_details->size->id }}"
                                 data-color-id="{{ $orderData->variation_details->color->id }}" style="width:130px;">
-                                Exchange
+                                {{ __('user_messages.exchange') }}
                             </button>
                             @endif
                             @if($returnAllowed)
@@ -262,7 +266,7 @@
                                 data-bs-target="#returnModal" data-order-id="{{ $orderData->order_id }}"
                                 data-order-details-id="{{ $orderData->id }}"
                                 style="width:130px; background:#D53B36; color:#fff;">
-                                Return
+                                {{ __('user_messages.return') }}
                             </button>
                             @endif
                         </div>
@@ -301,19 +305,24 @@
                         <div class="card-right d-flex w-100 justify-content-between">
                             <div class="product-info">
                                 <h5 class="product-title">
-                                    {{ $val->product_details->product_name_en ?? 'N/A' }}</h5>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $val->product_details->product_name_en ?? __('user_messages.na') }}
+                                    @else
+                                    {{ $val->product_details->product_name_ar ?? __('user_messages.na') }}
+                                    @endif
+                                </h5>
 
                                 <div class="psize d-flex gap-4">
-                                    <span>Size: {{ $val->variation_details->size->name ?? 'N/A' }}</span>
+                                    <span>{{ __('user_messages.size') }}: @if(app()->getLocale() == 'en'){{ $val->variation_details->size->name ?? __('user_messages.na') }}@else{{ $val->variation_details->size->name_ar ?? __('user_messages.na') }}@endif</span>
 
                                     <span class="d-flex align-items-center gap-2">
-                                        Color:
+                                        {{ __('user_messages.color') }}:
                                         <div class="colorbox"
                                             style="width:15px; height:15px; border-radius:3px; background: {{ $val->variation_details->color->hex_code ?? '#000' }};">
                                         </div>
                                     </span>
 
-                                    <span>Qnt: {{ $val->quantity ?? 1 }}</span>
+                                    <span>{{ __('user_messages.qty') }}: {{ $val->quantity ?? 1 }}</span>
                                 </div>
 
                                 {{-- Price --}}
@@ -330,7 +339,7 @@
                                         </span>
                                     @if($val->variation_details->discount_type == '1')
                                     <span class="discount ms-2">{{ $val->variation_details->discount_value }}%
-                                        Off</span>
+                                        {{ __('user_messages.off') }}</span>
                                     @endif
                                     @endif
                                 </div>
@@ -357,7 +366,7 @@
                 <div class="gift-pnl mt-4">
                     <div class="border-1">
                         <div class="giftinfo">
-                            <div>Total Quantity</div>
+                            <div>{{ __('user_messages.total_quantity') }}</div>
                             <div>{{$orderData->quantity}}</div>
                         </div>
                         @if($orderData->order_type == '2')
@@ -371,7 +380,7 @@
                             </div>
                         </div> -->
                         <div class="giftinfo">
-                            <div>Custom details</div>
+                            <div>{{ __('user_messages.custom_details') }}</div>
                             <div>{{$orderData->ChatroomRecordtable->custom_details}}</div>
                         </div>
                         @endif
@@ -393,10 +402,10 @@
 
                     @if((isset($orderData->return_type) && in_array($orderData->return_type, ['1','2'])))
 
-                    <h6>Pickup Address</h6>
+                    <h6>{{ __('user_messages.pickup_address') }}</h6>
 
                     @else
-                    <h6>Delivery Address</h6>
+                    <h6>{{ __('user_messages.delivery_address') }}</h6>
 
                     @endif
 
@@ -418,25 +427,25 @@
                 <div class="gift-pnl mt-4">
                     <h6>
                         @if($orderData->return_type == '1')
-                        Return Details
+                        {{ __('user_messages.return_details') }}
                         @elseif($orderData->return_type == '2')
-                        Exchange Details
+                        {{ __('user_messages.exchange_details') }}
                         @elseif($orderData->payment_status == '2')
-                        Cancellation Details
+                        {{ __('user_messages.cancellation_details') }}
                         @endif
                     </h6>
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>
                                 @if($orderData->return_type == '1')
-                                Returned on
+                                {{ __('user_messages.returned_on') }}
                                 @elseif($orderData->return_type == '2')
-                                Exchange on
+                                {{ __('user_messages.exchanged_on') }}
                                 @elseif($orderData->payment_status == '2')
-                                Cancelled on
+                                {{ __('user_messages.cancelled_on') }}
 
                                 </br>
-                                Cancellation Id
+                                {{ __('user_messages.cancellation_id') }}
 
                                 @endif
                             </div>
@@ -462,28 +471,28 @@
                 @if(isset($orderData->return_type))
                 @if($orderData->return_type == '1')
                 <div class="gift-pnl mt-4">
-                    <h6>Return Reason</h6>
+                    <h6>{{ __('user_messages.return_reason') }}</h6>
                     <div class="border-1">
                         <div class="giftinfo">
-                            <p>{{ $orderData->return_reason ?? 'N/A' }}</p>
+                            <p>{{ $orderData->return_reason ?? __('user_messages.na') }}</p>
                         </div>
                     </div>
                 </div>
                 @elseif($orderData->return_type == '2')
                 <div class="gift-pnl mt-4">
-                    <h6>Exchange Reason</h6>
+                    <h6>{{ __('user_messages.exchange_reason') }}</h6>
                     <div class="border-1">
                         <div class="giftinfo">
-                            <p>{{ $orderData->exchange_reason ?? 'N/A' }}</p>
+                            <p>{{ $orderData->exchange_reason ?? __('user_messages.na') }}</p>
                         </div>
                     </div>
                 </div>
                 @elseif($orderData->payment_status == '2')
                 <div class="gift-pnl mt-4">
-                    <h6>Cancellation Reason</h6>
+                    <h6>{{ __('user_messages.cancellation_reason') }}</h6>
                     <div class="border-1">
                         <div class="giftinfo">
-                            <p>{{ $orderData->cancel_reason ?? 'N/A' }}</p>
+                            <p>{{ $orderData->cancel_reason ?? __('user_messages.na') }}</p>
                         </div>
                     </div>
                 </div>
@@ -500,7 +509,7 @@
 
                 @if(!empty($returnImages))
                 <div class="gift-pnl mt-4">
-                    <h6>Uploaded images</h6>
+                    <h6>{{ __('user_messages.uploaded_images') }}</h6>
                     <div class="border-1">
                         <div class="giftinfo d-flex flex-wrap gap-2">
                             @foreach($returnImages as $img)
@@ -524,19 +533,19 @@
             <div class="col-lg-4">
                 <div class="orderstatus p-3 mb-4">
                     <div class="d-flex justify-content-between">
-                        <div class="order-t">Order Status</div>
+                        <div class="order-t">{{ __('user_messages.order_status') }}</div>
                         @if($orderData->payment_status=='2' || $orderData->payment_status=='3' ||
                         $orderData->delivery_status=='4')
-                        <div class="order-14">Cancelled On
+                        <div class="order-14">{{ __('user_messages.cancelled_on') }}
                             {{ \Carbon\Carbon::parse($orderData->updated_at)->format('d/m/Y') }}</div>
                         @elseif($orderData->return_type!=='0')
-                        <div class="order-14">Expected Picked Date:
+                        <div class="order-14">{{ __('user_messages.expected_pickup_date') }}:
                             <!-- 3-5 Working Days -->
                             {{ $orderData->updated_at->copy()->addDays(6)->format('d M Y') }}
 
                         </div>
                         @else
-                        <div class="order-14">Expected Delivery:
+                        <div class="order-14">{{ __('user_messages.expected_delivery') }}:
                             <!-- {{ \Carbon\Carbon::parse($orderData->created_at)->addDays(6)->format('d/m/Y') }}</div> -->
                             <!-- 3-5 Working Days -->
 
@@ -557,7 +566,7 @@
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                                 </div>
-                                <div>Confirmed</div>
+                                <div>{{ __('user_messages.confirmed') }}</div>
                             </div>
 
                             <div class="or-box">
@@ -565,7 +574,7 @@
                                     <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid"
                                         style="filter: brightness(26);">
                                 </div>
-                                <div style="color:#D72E04;">Cancelled</div>
+                                <div style="color:#D72E04;">{{ __('user_messages.cancelled') }}</div>
                             </div>
                         </div>
                     </div>
@@ -585,7 +594,7 @@
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                                 </div>
-                                <div>Confirm </div>
+                                <div>{{ __('user_messages.confirmed') }} </div>
                             </div>
 
                             @else
@@ -595,7 +604,7 @@
                                     <img src="{{ asset('user/assets/images/order-ic/confirm-white.svg') }}"
                                         class="img-fluid">
                                 </div>
-                                <div>Confirm</div>
+                                <div>{{ __('user_messages.confirmed') }}</div>
                             </div>
 
                             @endif
@@ -606,7 +615,7 @@
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
                                 </div>
-                                <div>In progress</div>
+                                <div>{{ __('user_messages.in_progress') }}</div>
                             </div>
                             @else
                             <div class="or-box">
@@ -614,7 +623,7 @@
                                     <img src="{{ asset('user/assets/images/order-ic/shipped-white.svg') }}"
                                         class="img-fluid">
                                 </div>
-                                <div>In progress</div>
+                                <div>{{ __('user_messages.in_progress') }}</div>
                             </div>
                             @endif
                             @if($orderData->return_type!=='0' && $orderData->r_e_approve=='1' &&
@@ -625,9 +634,9 @@
                                 </div>
 
                                 @if($orderData->return_type==1)
-                                <div>Picked up </div>
+                                <div>{{ __('user_messages.picked_up') }} </div>
                                 @else
-                                <div>Pickup & Exchange</div>
+                                <div>{{ __('user_messages.pickup_&_exchange') }}</div>
                                 @endif
 
                             </div>
@@ -639,9 +648,9 @@
                                 </div>
 
                                 @if($orderData->return_type==1)
-                                <div>Picked up </div>
+                                <div>{{ __('user_messages.picked_up') }} </div>
                                 @else
-                                <div>Picked up</div>
+                                <div>{{ __('user_messages.picked_up') }}</div>
                                 @endif
 
                             </div>
@@ -656,7 +665,7 @@
                                     <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}"
                                         class="img-fluid">
                                 </div>
-                                <div>Completed</div>
+                                <div>{{ __('user_messages.completed') }}</div>
                             </div>
 
                             @else
@@ -666,7 +675,7 @@
                                     <img src="{{ asset('user/assets/images/order-ic/delivered-white.svg') }}"
                                         class="img-fluid">
                                 </div>
-                                <div>Completed</div>
+                                <div>{{ __('user_messages.completed') }}</div>
                             </div>
                             @endif
 
@@ -684,7 +693,7 @@
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                             </div>
-                            <div>Confirmed</div>
+                            <div>{{ __('user_messages.confirmed') }}</div>
                         </div>
                         @if($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2' ||
                         $orderData->delivery_status=='3' || $orderData->delivery_status=='7')
@@ -692,7 +701,7 @@
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
                             </div>
-                            <div>Shipped</div>
+                            <div>{{ __('user_messages.shipped') }}</div>
                         </div>
                         @else
                         <div class="or-box">
@@ -700,7 +709,7 @@
                                 <img src="{{ asset('user/assets/images/order-ic/shipped-white.svg') }}"
                                     class="img-fluid">
                             </div>
-                            <div>Shipped</div>
+                            <div>{{ __('user_messages.shipped') }}</div>
                         </div>
                         @endif
                         @if($orderData->delivery_status=='7' || $orderData->delivery_status=='3')
@@ -708,14 +717,14 @@
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/van.svg') }}" class="img-fluid">
                             </div>
-                            <div>On the Way</div>
+                            <div>{{ __('user_messages.on_the_way') }}</div>
                         </div>
                         @else
                         <div class="or-box">
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/on-the-way.svg') }}" class="img-fluid">
                             </div>
-                            <div>On the Way</div>
+                            <div>{{ __('user_messages.on_the_way') }}</div>
                         </div>
                         @endif
 
@@ -726,7 +735,7 @@
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}" class="img-fluid">
                             </div>
-                            <div>Delivered</div>
+                            <div>{{ __('user_messages.delivered') }}</div>
                         </div>
 
                         @else
@@ -736,7 +745,7 @@
                                 <img src="{{ asset('user/assets/images/order-ic/delivered-white.svg') }}"
                                     class="img-fluid">
                             </div>
-                            <div>Delivered</div>
+                            <div>{{ __('user_messages.delivered') }}</div>
                         </div>
                         @endif
                     </div>
@@ -767,7 +776,7 @@
                 </div> -->
 
 
-                <h6>Billing Details</h6>
+                <h6>{{ __('user_messages.billing_details') }}</h6>
                 <div class="gift-pnl mt-0">
                     <!-- <div class="border-1">
                         <div class="giftinfo">
@@ -845,12 +854,12 @@
                         {{-- ORDER TYPE 1 --}}
                         @if($hasOrderType1)
                             <div class="giftinfo">
-                                <div>Total MRP</div>
+                                <div>{{ __('user_messages.total_mrp') }}</div>
                                 <div> {{ number_format(convertPriceInUserWeb($totalMrp ), 2) }}  {{ $currency }}</div>
                             </div>
 
                             <div class="giftinfo">
-                                <div>Discount on MRP</div>
+                                <div>{{ __('user_messages.discount_on_mrp') }}</div>
                                 <div class="discount"> {{ number_format(convertPriceInUserWeb($discountMrp ), 2) }}  {{ $currency }} </div>
                             </div>
                         @endif
@@ -858,7 +867,7 @@
                         {{-- ORDER TYPE 2 --}}
                         @if($hasOrderType2)
                             <div class="giftinfo">
-                                <div>Custom Item price</div>
+                                <div>{{ __('user_messages.custom_item_price') }}</div>
                                 <div> {{ number_format(convertPriceInUserWeb($customAmount ), 2) }} {{ $currency }}</div>
                             </div>
                         @endif
@@ -866,7 +875,7 @@
                         {{-- COUPON --}}
                         @if(!empty($orderData->order->promocode_value))
                             <div class="giftinfo">
-                                <div>Coupon Discount</div>
+                                <div>{{ __('user_messages.coupon_discount') }}</div>
                                 <div class="discount"> {{ number_format(convertPriceInUserWeb($orderData->order->promocode_value ), 2) }} {{ $currency }}</div>
                             </div>
                         @endif
@@ -874,20 +883,20 @@
                         {{-- GIFT CARD --}}
                         @if(!empty($orderData->order->giftcard_amount))
                             <div class="giftinfo">
-                                <div>Gift Card Discount</div>
+                                <div>{{ __('user_messages.gift_card_discount') }}</div>
                                 <div class="discount">{{ number_format(convertPriceInUserWeb($orderData->order->giftcard_amount ), 2) }} {{ $currency }}</div>
                             </div>
                         @endif
 
                         @if(($orderData->order->shipping_fees ?? 0) > 0)
                             <div class="giftinfo">
-                                <div>Shipping Fee</div>
+                                <div>{{ __('user_messages.shipping_fee') }}</div>
                                 <div> {{ number_format(convertPriceInUserWeb($orderData->order->shipping_fees ), 2) }} {{ $currency }}</div>
                             </div>
                         @else
                             <div class="giftinfo">
-                                <div>Shipping Fee</div>
-                                <div>Free Shipping</div>
+                                <div>{{ __('user_messages.shipping_fee') }}</div>
+                                <div>{{ __('user_messages.free_shipping') }}</div>
                             </div>
                         @endif
 
@@ -895,13 +904,13 @@
                         {{-- Tax --}}
                         @if(($orderData->order->tax ?? 0) > 0)
                             <div class="giftinfo">
-                                <div>Tax (if any)</div>
+                                <div>{{ __('user_messages.tax_if_any') }}</div>
                                 <div> {{ number_format(convertPriceInUserWeb($orderData->order->tax ), 2) }} {{ $currency }}</div>
                             </div>
                         @endif
 
                         <div class="giftinfo">
-                            <div>Total Amount</div>
+                            <div>{{ __('user_messages.total_amount') }}</div>
                             <div>
                                  {{ number_format(convertPriceInUserWeb($orderData->order->total_amount ), 2) }} {{ $currency }}
                             </div>
@@ -925,9 +934,9 @@
 
                 <div class="gift-pnl mt-3">
                     <div class="giftinfo">
-                        <h6>Paid by</h6>
+                        <h6>{{ __('user_messages.paid_by') }}</h6>
                         @if(isset($orderData->order->transaction_id) && $orderData->order->transaction_id != 0)
-                        <div class="trans" style="color:#714829;font-size:12px;">Transaction Id:
+                        <div class="trans" style="color:#714829;font-size:12px;">{{ __('user_messages.transaction_id') }}:
                             {{$orderData->order->transaction_id }}</div>
                         @endif
                     </div>
@@ -942,17 +951,17 @@
                                 @endphp
 
                                 @if($paymentMethod == '1')
-                                Paid By Card
+                                {{ __('user_messages.paid_by_card') }}
                                 @elseif($paymentMethod == '2')
-                                Paid By Wallet
+                                {{ __('user_messages.paid_by_wallet') }}
                                 @elseif($paymentMethod == '3')
                                 @if($paymentStatus == '1')
-                                Cash On Delivery
+                                {{ __('user_messages.cash_on_delivery') }}
                                 @else
-                                COD
+                                {{ __('user_messages.cod') }}
                                 @endif
                                 @else
-                                Payment Info Not Available
+                                {{ __('user_messages.payment_info_not_available') }}
                                 @endif
                             </div>
                         </div>
@@ -963,7 +972,7 @@
                 <div class="mt-4 text-center">
                     <a href="{{ url('InvoiceUser', ['order_id' => $orderData->order->order_id]) }}" target="_blank"
                         class="customBtn8 mb-3 text-decoration-none">
-                        Download Invoice
+                        {{ __('user_messages.download_invoice') }}
                     </a>
                 </div>
                 <!-- @endif -->
@@ -997,7 +1006,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Select Reason</h4>
+                <h4 class="modal-title">{{ __('user_messages.select_reason') }}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -1006,11 +1015,17 @@
 
                     @foreach ($cancelReasons as $index => $reason)
                     <label class="custom-radio mb-3">
-                        <input type="radio" name="cancel_reason" value="{{ $reason->reason_english }}"
+                        <input type="radio" name="cancel_reason" value="{{ app()->getLocale() == 'en' ? $reason->reason_english : $reason->reason_arabic }}"
                             {{ $index === 0 ? 'checked' : '' }}>
                         <span class="radio-mark"></span>
                         <div class="label-content">
-                            <div class="title">{{ $reason->reason_english }}</div>
+                            <div class="title">
+                                @if(app()->getLocale() == 'en')
+                                {{ $reason->reason_english }}
+                                @else
+                                {{ $reason->reason_arabic }}
+                                @endif
+                            </div>
                         </div>
                     </label>
                     @endforeach
@@ -1019,23 +1034,23 @@
                         <input type="radio" name="cancel_reason" value="other">
                         <span class="radio-mark"></span>
                         <div class="label-content">
-                            <div class="title">Other</div>
+                            <div class="title">{{ __('user_messages.other') }}</div>
                         </div>
                     </label>
                 </div>
 
                 <!-- Textarea -->
                 <div class="form-group mt-2 d-none" id="otherReasonWrapper">
-                    <textarea id="otherReason" rows="4" class="form-control" placeholder="Write here"></textarea>
+                    <textarea id="otherReason" rows="4" class="form-control" placeholder="{{ __('user_messages.write_here') }}"></textarea>
 
                     <small class="text-danger d-none" id="otherReasonError">
-                        Please provide the reason for cancellation
+                        {{ __('user_messages.please_provide_the_reason_for_cancellation') }}
                     </small>
                 </div>
 
                 <div class="mt-4">
                     <button type="button" class="customBtn white-btn" id="submitCancel">
-                        Submit
+                        {{ __('user_messages.submit') }}
                     </button>
                 </div>
             </div>
@@ -1052,21 +1067,27 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title fs-5">Return Request</h4>
+                <h4 class="modal-title fs-5">{{ __('user_messages.return_request') }}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="gift-panel-list">
-                    <h6>Select Reason</h6>
+                    <h6>{{ __('user_messages.select_reason') }}</h6>
 
                     <div class="reason-list" id="returnReasonList">
                         @foreach ($returnReasons as $index => $reason)
                         <label class="custom-radio mb-3">
-                            <input type="radio" name="return_reason" value="{{ $reason->reason_english }}"
+                            <input type="radio" name="return_reason" value="{{ app()->getLocale() == 'en' ? $reason->reason_english : $reason->reason_arabic }}"
                                 {{ $index === 0 ? 'checked' : '' }}>
                             <span class="radio-mark"></span>
                             <div class="label-content">
-                                <div class="title">{{ $reason->reason_english }}</div>
+                                <div class="title">
+                                    @if(app()->getLocale() == 'en')
+                                {{ $reason->reason_english }}
+                                @else
+                                {{ $reason->reason_arabic }}
+                                @endif
+                                </div>
                             </div>
                         </label>
                         @endforeach
@@ -1074,19 +1095,19 @@
                             <input type="radio" name="return_reason" value="other">
                             <span class="radio-mark"></span>
                             <div class="label-content">
-                                <div class="title">Other</div>
+                                <div class="title">{{ __('user_messages.other') }}</div>
                             </div>
                         </label>
                     </div>
 
                     <div class="form-group w-100 py-2 mb-3 d-none" id="returnOtherWrapper">
                         <textarea id="returnOtherText" rows="3" class="form-control pline-10"
-                            placeholder="Write here"></textarea>
-                        <small class="text-danger d-none" id="returnOtherError">Please provide the reason for
-                            return</small>
+                            placeholder="{{ __('user_messages.write_here') }}"></textarea>
+                        <small class="text-danger d-none" id="returnOtherError">{{ __('user_messages.please_provide_the_reason_for_return') }}
+                            </small>
                     </div>
 
-                    <h6>Upload Image (Optional)</h6>
+                    <h6>{{ __('user_messages.upload_image_optional') }}</h6>
                     <div class="border-1 p-3">
                         <div class="text-center">
                             <label for="returnImg" class="requestbox">
@@ -1094,7 +1115,7 @@
                                     <img src="{{ asset('user/assets/images/upload-icon.svg') }}" class="img-fluid"
                                         alt="upload">
                                 </div>
-                                <div style="font-size:13px;color:#7a7979;">Click to upload images</div>
+                                <div style="font-size:13px;color:#7a7979;">{{ __('user_messages.click_to_upload_image') }}</div>
                                 <input type="file" id="returnImg" multiple accept="image/*" style="display:none;">
                             </label>
                         </div>
@@ -1105,7 +1126,7 @@
                     </div>
 
                     <div class="mt-4">
-                        <button type="button" class="customBtn white-btn" id="submitReturn">Submit</button>
+                        <button type="button" class="customBtn white-btn" id="submitReturn">{{ __('user_messages.submit') }}</button>
                     </div>
                 </div>
             </div>
@@ -1121,22 +1142,28 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title">Exchange Request</h4>
+                <h4 class="modal-title">{{ __('user_messages.exchange_request') }}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
-                <h6>Select Reason</h6>
+                <h6>{{ __('user_messages.select_reason') }}</h6>
 
                 <div class="reason-list">
 
                     @foreach ($exchangeReasons as $index => $reason)
                     <label class="custom-radio mb-3">
-                        <input type="radio" name="exchange_reason" value="{{ $reason->reason_english }}"
+                        <input type="radio" name="exchange_reason" value="{{ app()->getLocale() == 'en' ? $reason->reason_english : $reason->reason_arabic }}"
                             {{ $index === 0 ? 'checked' : '' }}>
                         <span class="radio-mark"></span>
                         <div class="label-content">
-                            <div class="title">{{ $reason->reason_english }}</div>
+                            <div class="title">
+                                @if(app()->getLocale() == 'en')
+                                {{ $reason->reason_english }}
+                                @else
+                                {{ $reason->reason_arabic }}
+                                @endif
+                            </div>
                         </div>
                     </label>
                     @endforeach
@@ -1146,7 +1173,7 @@
                         <input type="radio" name="exchange_reason" value="other">
                         <span class="radio-mark"></span>
                         <div class="label-content">
-                            <div class="title">Other</div>
+                            <div class="title">{{ __('user_messages.other') }}</div>
                         </div>
                     </label>
 
@@ -1154,13 +1181,13 @@
 
                 <!-- Textarea -->
                 <div class="form-group mb-3 d-none" id="exchangeOtherWrapper">
-                    <textarea id="exchangeOtherText" rows="3" class="form-control" placeholder="Write here"></textarea>
+                    <textarea id="exchangeOtherText" rows="3" class="form-control" placeholder="{{ __('user_messages.write_here') }}"></textarea>
 
                     <small class="text-danger d-none" id="exchangeOtherError">
-                        Please provide the reason for exchange
+                        {{ __('user_messages.please_provide_the_reason_for_exchange') }}
                     </small>
                 </div>
-                <h6>Select Available Size</h6>
+                <h6>{{ __('user_messages.select_available_size') }}</h6>
                 <!-- <div class="reason-list">
                         <label class="custom-radio mb-3">
                             <input type="radio" name="filter" value="1" checked>
@@ -1182,7 +1209,7 @@
 
                 <div class="mt-4">
                     <button type="button" class="customBtn white-btn" id="submitExchange">
-                        Submit
+                        {{ __('user_messages.submit') }}
                     </button>
                 </div>
 
@@ -1198,7 +1225,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title fs-5">Rate this product</h4>
+                <h4 class="modal-title fs-5">{{ __('user_messages.rate_this_product') }}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -1206,7 +1233,7 @@
 
                     <!-- Product Rating -->
                     <div class="reason-list rating-widget ">
-                        <h6>Rate Product</h6>
+                        <h6>{{ __('user_messages.rate_product') }}</h6>
                         <div class="rating py-2">
                             <input id="product-rating-1" type="radio" name="raterating" value="1" />
                             <label for="product-rating-1"><i class="fas fa-2x fa-star"></i></label>
@@ -1223,8 +1250,8 @@
 
                     <!-- Product Review Text & Image -->
                     <div class="form-group w-100 py-2 mb-3 position-relative">
-                        <p>Write Review</p>
-                        <textarea rows="1" class="form-control pline-10" placeholder="Write here"></textarea>
+                        <p>{{ __('user_messages.write_review') }}</p>
+                        <textarea rows="1" class="form-control pline-10" placeholder="{{ __('user_messages.write_here') }}"></textarea>
                         <small class="text-danger product-error" style="display:none;"></small>
                         <div class="paperhover">
                             <label><input type="file" id="images" multiple accept="image/*">
@@ -1238,7 +1265,7 @@
 
                     <!-- Store Rating -->
                     <div class="reason-list rating-widget mt-2">
-                        <h6>Rate Store</h6>
+                        <h6>{{ __('user_messages.rate_store') }}</h6>
                         <div class="rating py-2">
                             <input id="store-rating-1" type="radio" name="storerating" value="1" />
                             <label for="store-rating-1"><i class="fas fa-2x fa-star"></i></label>
@@ -1255,8 +1282,8 @@
 
                     <!-- Store Review Text & Image -->
                     <div class="form-group w-100 py-2 mb-3 position-relative">
-                        <p>Write Review</p>
-                        <textarea rows="1" class="form-control pline-10" placeholder="Write here"></textarea>
+                        <p>{{ __('user_messages.write_review') }}</p>
+                        <textarea rows="1" class="form-control pline-10" placeholder="{{ __('user_messages.write_here') }}"></textarea>
                         <small class="text-danger store-error" style="display:none;"></small>
                         <div class="paperhover">
                             <label><input type="file" id="reviewpic" multiple accept="image/*">
@@ -1270,7 +1297,7 @@
 
                     <!-- Submit Review Button -->
                     <div class="mt-4">
-                        <button type="button" class="customBtn mb-3 white-btn">Submit Review</button>
+                        <button type="button" class="customBtn mb-3 white-btn">{{ __('user_messages.write_here') }}</button>
                     </div>
 
                 </div>
@@ -1336,7 +1363,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedRadio = document.querySelector('input[name="cancel_reason"]:checked');
 
         if (!selectedRadio) {
-            toastr.error('Please select a reason');
+            toastr.error("{{ __('user_messages.please_select_a_reason') }}");
             return;
         }
 
@@ -1445,7 +1472,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const selectedSize = document.querySelector('input[name="exchange_size"]:checked');
         if (!selectedSize) {
-            toastr.error('Please select a size');
+            toastr.error("{{ __('user_messages.please_select_a_size') }}");
             return;
         }
 
@@ -1483,7 +1510,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch available sizes function
     function fetchAvailableSizes(productId, sizeId, colorId) {
         // Show loading text
-        sizeWrapper.innerHTML = '<p>Loading...</p>';
+        // sizeWrapper.innerHTML = '<p>Loading...</p>';
+        sizeWrapper.innerHTML = '<p>{{ __("user_messages.loading") }}...</p>';
 
         fetch("{{ route('user.getAvailableSize') }}", {
                 method: "POST",
@@ -1512,14 +1540,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             <input type="radio" name="exchange_size" value="${size.id}" ${index === 0 ? 'checked' : ''}>
                             <span class="radio-mark"></span>
                             <div class="label-content">
-                                <div class="title">${size.name}</div>
+                                <div class="title">
+                                {{ app()->getLocale() == 'en' ? '${size.name}' : '${size.name_ar}' }}
+                                </div>
                             </div>
                         </label>
                     `;
                     });
                     sizeWrapper.innerHTML = html;
                 } else {
-                    sizeWrapper.innerHTML = '<p>No available sizes</p>';
+                    sizeWrapper.innerHTML = '<p>{{ __("user_messages.no_size_available") }}</p>';
                 }
             })
             .catch(err => {
@@ -1628,7 +1658,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedReason = document.querySelector('input[name="return_reason"]:checked');
 
         if (!selectedReason) {
-            toastr.error('Please select a reason');
+            toastr.error("{{ __('user_messages.please_select_a_reason') }}");
             return;
         }
 
