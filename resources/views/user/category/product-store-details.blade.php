@@ -139,12 +139,24 @@
         <div class="col-lg-7">
             <div class="productList_content ps-3">
                 <div class="d-flex justify-content-between">
-                    <h4 class="fw-semibold text-capitalize">{{$data->brand->name_english}}</h4>
-                    <button class="cd-change-btn">100+ Bought</button>
+                    <h4 class="fw-semibold text-capitalize">
+                        @if(app()->getLocale() == 'en')
+                        {{$data->brand->name_english}}
+                        @else
+                        {{$data->brand->name_arabic}}
+                        @endif
+                    </h4>
+                    <button class="cd-change-btn">{{ __('user_messages.100+_bought') }}</button>
 
                 </div>
 
-                <p class="text-muted mb-1">{{$data->product_name_en}}</p>
+                <p class="text-muted mb-1">
+                    @if(app()->getLocale() == 'en')
+                    {{$data->product_name_en}}
+                    @else
+                    {{$data->product_name_ar}}
+                    @endif
+                </p>
 
                 <div class="d-flex align-items-center mb-1">
 
@@ -160,12 +172,12 @@
 
                 </div>
 
-                <p class="text-muted mb-1">{{$data->store->store_name}}/{{$data->category->name}}</p>
+                <p class="text-muted mb-1">{{$data->store->store_name}}/@if(app()->getLocale() == 'en'){{$data->category->name}}@else{{$data->category->name_ar}}@endif</p>
 
 
                 <hr>
 
-                <h6 class="fw-semibold mb-2">More Color</h6>
+                <h6 class="fw-semibold mb-2">{{ __('user_messages.more_color') }}</h6>
                 <div class="d-flex gap-2 mb-4 color-tabs">
 
                     @foreach ($product_variants as $variant)
@@ -177,10 +189,10 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="fw-semibold">Select Size</h6>
+                    <h6 class="fw-semibold">{{ __('user_messages.select_size') }}</h6>
                     <h6 class="cd-size" id="sizeGuideBtn" data-bs-toggle="modal" data-bs-target="#sizechart"
                         data-size-chart="{{ $data->upload_size_chart }}">
-                        Size Guide
+                        {{ __('user_messages.size_guide') }}
                     </h6>
 
 
@@ -203,7 +215,7 @@
                 <p class="text-muted mb-1">{{$data->description_en}}</p> --}}
                 <div id="optionError" style="color:red; font-size:14px; display:none;"></div>
                 @if ($data->customized_product==1)
-                <button class="customBtn2" id="customOrder">Custom Order</button>
+                <button class="customBtn2" id="customOrder">{{ __('user_messages.custom_order') }}</button>
                 @endif
 
                 @endif
@@ -214,7 +226,7 @@
 
                     <!-- VIEW MY BAG (ALWAYS FULL WIDTH) -->
                     <div class="bag-topbar-full d-flex justify-content-between align-items-center" id="bagTopbar">
-                        <div><strong>({{$cartCount}} Items)</strong> View My Bag</div>
+                        <div><strong>({{$cartCount}} {{ __('user_messages.items') }})</strong> {{ __('user_messages.view_my_bag') }}</div>
                         <a href="{{route('user.view_cart')}}"><i class="bi bi-arrow-right arrow-icon"></i></a>
                     </div>
 
@@ -225,7 +237,7 @@
                         <div class="left-action w-50">
 
                             <!-- ADD TO BAG -->
-                            <button class="customBtn2 w-100 addToBagBtnRemove" id="addToBagBtn">Add to Bag</button>
+                            <button class="customBtn2 w-100 addToBagBtnRemove" id="addToBagBtn">{{ __('user_messages.add_to_bag') }}</button>
 
                             <!-- QUANTITY BOX -->
                             <div class="quantity-box">
@@ -239,7 +251,7 @@
                         </div>
 
                         <!-- BUY NOW BUTTON -->
-                        <button class="customBtn w-50" id="buyNowBtn">Buy Now</button>
+                        <button class="customBtn w-50" id="buyNowBtn">{{ __('user_messages.buy_now') }}</button>
 
                         @else
 
@@ -247,7 +259,7 @@
                           <div class="left-action w-50">
 
                             <!-- ADD TO BAG -->
-                          <a href="{{route('userLogin')}}" class="customBtn2 w-100 addToBagBtnRemove text-center" id="addToBagBtn">Add to Bag </a>
+                          <a href="{{route('userLogin')}}" class="customBtn2 w-100 addToBagBtnRemove text-center" id="addToBagBtn">{{ __('user_messages.add_to_bag') }} </a>
 
                             <!-- QUANTITY BOX -->
                             <div class="quantity-box">
@@ -261,7 +273,7 @@
                         </div>
 
                         <!-- BUY NOW BUTTON -->
-                    <a href="{{route('userLogin')}}" class="customBtn w-50" id="buyNowBtn">Buy Now</a>
+                    <a href="{{route('userLogin')}}" class="customBtn w-50" id="buyNowBtn">{{ __('user_messages.buy_now') }}</a>
                     @endif
 
                     </div>
@@ -271,15 +283,19 @@
 
                 <div class="my-4">
                     <div class="desc-box p-4 rounded-4">
-                        <h5 class="fw-semibold">Description</h5>
+                        <h5 class="fw-semibold">{{ __('user_messages.description') }}</h5>
                         <p class="mt-3 text-muted">
+                            @if(app()->getLocale() == 'en')
                             {{ $data->description_en }}
+                            @else
+                            {{ $data->description_ar }}
+                            @endif
                         </p>
-                        <h5 class="fw-semibold mt-4">Specification</h5>
+                        <h5 class="fw-semibold mt-4">{{ __('user_messages.specification') }}</h5>
                         <ul class="mt-3 spec-list">
                             @foreach ($data->product_specifications as $item)
 
-                            <li>{{$item->name_en}} - {{$item->feature_en}}</li>
+                            <li>@if(app()->getLocale() == 'en'){{$item->name_en}}@else{{$item->name_ar}}@endif - @if(app()->getLocale() == 'en'){{$item->feature_en}}@else{{$item->feature_ar}}@endif</li>
 
                             @endforeach
                         </ul>
@@ -287,8 +303,8 @@
                 </div>
                 <div class="check-delivery-box">
                     <div class="cd-header">
-                        <h4>Check delivery</h4>
-                        <button class="cd-change-btnss">Change</button>
+                        <h4>{{ __('user_messages.check_delivery') }}</h4>
+                        <button class="cd-change-btnss">{{ __('user_messages.change') }}</button>
                     </div>
 
                     <div class="cd-input">
@@ -298,15 +314,15 @@
                     <ul class="cd-info">
                         <li>
                             <i class="bi bi-truck"></i>
-                            Get it by <strong>24/12/2024</strong>
+                            {{ __('user_messages.get_it_buy') }} <strong>24/12/2024</strong>
                         </li>
                         <li>
                             <i class="bi bi-cash-coin"></i>
-                            Cash on Delivery Available
+                            {{ __('user_messages.cash_on_delivery_available') }}
                         </li>
                         <li>
                             <i class="bi bi-arrow-repeat"></i>
-                            7 Days Return & Exchange
+                            {{ __('user_messages.7_days_return_&_exchange') }}
                         </li>
                     </ul>
                 </div>
@@ -397,8 +413,8 @@
 
     <div class="container my-4">
         <div class="cd-header">
-            <h4>Customers Ratings</h4>
-            <h6 class="cd-size">View All</h6>
+            <h4>{{ __('user_messages.customer_ratings') }}</h4>
+            <h6 class="cd-size">{{ __('user_messages.view_all') }}</h6>
         </div>
         <div class="desc-box p-4 rounded-4">
             @forelse($data->review as $review)
@@ -422,7 +438,7 @@
                     <span class="text-muted">{{ \Carbon\Carbon::parse($review->created_at)->format('d M Y') }}</span>
                 </div>
                 <p class="mt-3 text-muted">
-                    {{ $review->product_review ?? 'No review provided' }}
+                    {{ $review->product_review ?? __('user_messages.no_review_provided') }}
                 </p>
                 <div class="d-flex gap-3 mt-3">
                     <!-- Render Product Images (if any) -->
@@ -441,7 +457,7 @@
                 </div>
             </div>
             @empty
-            <p>No reviews yet. Be the first to review this product!</p>
+            <p>{{ __('user_messages.no_reviews_yet') }}. {{ __('user_messages.be_the_first_to_review_this_product') }}!</p>
             @endforelse
 
 
@@ -495,7 +511,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header border-0">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Size Chart</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">{{ __('user_messages.size_chart') }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 

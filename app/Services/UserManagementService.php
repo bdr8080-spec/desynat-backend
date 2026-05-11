@@ -1538,7 +1538,7 @@ public function addtoCart_Increment_decrement($request)
         if (!$variant) {
             return [
                 'status'  => 'error',
-                'message' => 'Product variant not found.',
+                'message' => __('user_messages.product_variant_not_found'),
                 'data'    => (object)[]
             ];
         }
@@ -1547,7 +1547,7 @@ public function addtoCart_Increment_decrement($request)
             if (intval($variant->total_stock) < $request->quantity) {
                 return [
                     'status'  => 'error',
-                    'message' => 'Product stock is too low.',
+                    'message' => __('user_messages.product_stock_is_too_low'),
                     'data'    => (object)[]
                 ];
             }
@@ -1601,14 +1601,14 @@ public function addtoCart_Increment_decrement($request)
 
                 return [
                     'status'  => 'error',
-                    'message' => 'Item removed from cart successfully.',
+                    'message' => __('user_messages.item_removed_from_cart_successfully'),
                     'data'    => (object)[]
                 ];
             }
 
             return [
                 'status'  => 'error',
-                'message' => 'Item not found in cart.',
+                'message' => __('user_messages.item_not_found_in_cart'),
                 'data'    => (object)[]
             ];
         }
@@ -1639,7 +1639,7 @@ public function addtoCart_Increment_decrement($request)
 
             $cartItem->update($updateData);
 
-            $msg = "Cart updated successfully";
+            $msg = __('user_messages.cart_updated_successfully');
 
         } else {
 
@@ -1647,7 +1647,7 @@ public function addtoCart_Increment_decrement($request)
 
             $cartItem = Addtocart::create($data);
 
-            $msg = "Added to cart successfully";
+            $msg = __('user_messages.added_to_cart_successfully');
         }
 
         // Save affiliate session

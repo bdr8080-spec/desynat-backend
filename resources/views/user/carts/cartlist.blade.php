@@ -50,7 +50,7 @@
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
-        <h3>Home</h3>
+        <h3>{{ __('user_messages.home') }}</h3>
     </div>
 
     <div class="main-content">
@@ -85,7 +85,7 @@
 
         {{-- EMPTY CART MESSAGE --}}
         <div class="text-center py-5">
-            <h4 class="moreshop">There is nothing in your bag.Let's add some items</h4>
+            <h4 class="moreshop">{{ __('user_messages.bag_empty_message') }}</h4>
         </div>
 
         @else
@@ -116,19 +116,19 @@
 
                                 <div class="product-info">
 
-                                    <h5 class="product-title">{{ $item->product->product_name_en}}</h5>
+                                    <h5 class="product-title">@if(app()->getLocale() == 'en'){{ $item->product->product_name_en}}@else{{ $item->product->product_name_ar}}@endif</h5>
 
                                     <div class="psize d-flex gap-4">
-                                        <span>Size: {{ $item->product_variants->size->name ?? '-' }}</span>
+                                        <span>{{ __('user_messages.size') }}: @if(app()->getLocale() == 'en'){{ $item->product_variants->size->name ?? '-' }}@else{{ $item->product_variants->size->name_ar ?? '-' }}@endif</span>
 
                                         <span class="d-flex align-items-center gap-2">
-                                            Color:
+                                            {{ __('user_messages.color') }}:
                                             <div class="colorbox" style="width:15px;height:15px;border-radius:3px;
                                                     background: {{ $item->product_variants->color->hex_code }};">
                                             </div>
                                         </span>
 
-                                        <span>Qnt: {{ $item->quantity }}</span>
+                                        <span>{{ __('user_messages.qty') }}: {{ $item->quantity }}</span>
                                     </div>
 
                                     {{-- Price --}}
@@ -187,25 +187,25 @@
                         </div>
 
                         @if($item->product->product_return == 1)
-                        <p class="return-text mb-2">{{ $item->product->return_days }} days return available</p>
+                        <p class="return-text mb-2">{{ $item->product->return_days }} {{ __('user_messages.days_return_available') }}</p>
                         @else
-                        <p class="return-text mb-2">Non Returnable</p>
+                        <p class="return-text mb-2">{{ __('user_messages.non_returnable') }}</p>
                         @endif
 
                         <div class="d-flex justify-content-between">
-                            <p class="delivery-label mb-2">Delivery by</p>
-                            <p class="delivery-date mb-2">3-5 Working Days</p>
+                            <p class="delivery-label mb-2">{{ __('user_messages.delivery_by') }}</p>
+                            <p class="delivery-date mb-2">{{ __('user_messages.3_5_working_days') }}</p>
                         </div>
 
                         <div class="d-flex justify-content-between">
                             <p class="seller d-flex gap-4 mb-2">
-                                <span>Seller</span>
+                                <span>{{ __('user_messages.seller') }}</span>
                                 {{ $item->product->seller_details->first_name }}
                                 {{ $item->product->seller_details->last_name }}
                             </p>
 
                             <a href="{{ route('user.store_details', $item->product->store_id) }}" class="moreshop">
-                                Shop More <i class="bi bi-arrow-right"></i>
+                                {{ __('user_messages.shop_more') }} <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
 
@@ -215,7 +215,7 @@
 
                 <!-- Custom Product SHow In screen  -->
                 @if($item->order_type=='2')
-                <h6> Custom Product</h6>
+                <h6> {{ __('user_messages.custom_product') }}</h6>
                 @endif
 
                 @foreach($cartData['cart_data'] as $item)
@@ -239,19 +239,19 @@
 
                                 <div class="product-info">
 
-                                    <h5 class="product-title">{{ $item->product->product_name_en}}</h5>
+                                    <h5 class="product-title">@if(app()->getLocale() == 'en'){{ $item->product->product_name_en}}@else{{ $item->product->product_name_ar}}@endif</h5>
 
                                     <div class="psize d-flex gap-4">
-                                        <span>Size: {{ $item->product_variants->size->name ?? '-' }}</span>
+                                        <span>{{ __('user_messages.size') }}: @if(app()->getLocale() == 'en'){{ $item->product_variants->size->name ?? '-' }}@else{{ $item->product_variants->size->name_ar ?? '-' }}@endif</span>
 
                                         <span class="d-flex align-items-center gap-2">
-                                            Color:
+                                            {{ __('user_messages.color') }}:
                                             <div class="colorbox" style="width:15px;height:15px;border-radius:3px;
                                                     background: {{ $item->product_variants->color->hex_code }};">
                                             </div>
                                         </span>
 
-                                        <span>Qnt: {{ $item->quantity }}</span>
+                                        <span>{{ __('user_messages.qty') }}: {{ $item->quantity }}</span>
                                     </div>
 
                                     {{-- Price --}}
@@ -315,24 +315,24 @@
                         @endif -->
 
                         <div class="d-flex justify-content-between">
-                            <p class="delivery-label mb-2">Delivery by</p>
-                            <p class="delivery-date mb-2">3-5 Working Days</p>
+                            <p class="delivery-label mb-2">{{ __('user_messages.delivery_by') }}</p>
+                            <p class="delivery-date mb-2">{{ __('user_messages.3_5_working_days') }}</p>
                         </div>
 
                         <div class="d-flex justify-content-between">
                             <p class="seller d-flex gap-4 mb-2">
-                                <span>Seller</span>
+                                <span>{{ __('user_messages.seller') }}</span>
                                 {{ $item->product->seller_details->first_name }}
                                 {{ $item->product->seller_details->last_name }}
                             </p>
 
                             <a href="{{ route('user.store_details', $item->product->store_id) }}" class="moreshop">
-                                Shop More <i class="bi bi-arrow-right"></i>
+                                {{ __('user_messages.shop_more') }} <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
                         @if($item->order_type=='2')
                         <div class="giftinfo">
-                            <div>Custom details</div>
+                            <div>{{ __('user_messages.custom_details') }}</div>
                             <div>{{$item->chatroom_data->custom_details}}</div>
                         </div>
                         @endif
@@ -346,7 +346,7 @@
 
                 {{-- DELIVERY ADDRESS --}}
                 <div class="gift-pnl mt-4">
-                    <h6>Delivering Address</h6>
+                    <h6>{{ __('user_messages.delivering_address') }}</h6>
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>
@@ -364,7 +364,7 @@
                             <input type="hidden" id="deliveryAddressId" value="{{ @$cartData['user_address']->id }}">
 
                             <a href="{{ route('user.view_address', ['type' => 'cart']) }}" class="moreshop">
-                                Change <i class="bi bi-arrow-right"></i>
+                                {{ __('user_messages.change') }} <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -376,16 +376,16 @@
                         <div class="giftinfo">
                             <div>
                                 <img src="{{ asset('user/assets/images/ticket-01.svg') }}" class="img-fluid">
-                                <span id="applyPromoText">Apply PromoCode</span>
+                                <span id="applyPromoText">{{ __('user_messages.apply_promocode') }}</span>
                             </div>
 
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#promoModal"
                                 class="moreshop" id="promoApplyLink">
-                                Apply <i class="bi bi-arrow-right"></i>
+                                {{ __('user_messages.apply') }} <i class="bi bi-arrow-right"></i>
                             </a>
 
                             <div id="cancelPromoSection" class="d-none">
-                                <a href="javascript:void(0)" class="btn btn-outline cancelPromoBtn">Remove</a>
+                                <a href="javascript:void(0)" class="btn btn-outline cancelPromoBtn">{{ __('user_messages.remove') }}</a>
                                 <!-- Same styling as Apply button -->
                             </div>
                         </div>
@@ -394,7 +394,7 @@
 
                 {{-- BILLING DETAILS --}}
                 <div class="gift-pnl mt-4">
-                    <h6>Billing Details</h6>
+                    <h6>{{ __('user_messages.billing_details') }}</h6>
                     @php
                         $hasOrderType1 = $cartData['cart_data']->contains('order_type', '1');
                         $hasOrderType2 = $cartData['cart_data']->contains('order_type', '2');
@@ -408,7 +408,7 @@
                     <div class="border-1">
                         @if($hasOrderType1)
                         <div class="giftinfo">
-                            <div>Total MRP</div>
+                            <div>{{ __('user_messages.total_mrp') }}</div>
                             <div>{{ convertPriceInUserWeb($cartData['total_mrp']); }} {{ $currency }} 
             
                             </div>
@@ -416,52 +416,52 @@
                         @endif
                         @if($hasOrderType1)
                         <div class="giftinfo">
-                            <div>Discount on MRP</div>
+                            <div>{{ __('user_messages.discount_on_mrp') }}</div>
                             <div class="red-color">{{ convertPriceInUserWeb($cartData['discount_on_mrp']); }} {{ $currency }}</div>
                         </div>
                         @endif
                         @if($hasOrderType2)
                         <div class="giftinfo">
-                            <div>Custom Item price</div>
+                            <div>{{ __('user_messages.custom_item_price') }}</div>
                             <div> {{ number_format(convertPriceInUserWeb($customAmount), 2) }}  {{ $currency }} </div>
                         </div>
                         @endif
                         <div class="giftinfo d-none" id="couponDiscountRow">
-                            <div>Coupon Discount</div>
+                            <div>{{ __('user_messages.coupon_discount') }}</div>
                             <div class="red-color" id="couponDiscountAmount">{{ number_format(convertPriceInUserWeb($cartData['discount_coupon']), 2) }}  {{ $currency }}
                             </div>
                         </div>
                         <div class="giftinfo d-none" id="giftCardDiscountRow">
-                            <div>Gift Card Discount</div>
+                            <div>{{ __('user_messages.gift_card_discount') }}</div>
                             <div class="red-color" id="giftCardDiscountAmount">0 {{$currency}}</div>
                         </div>
                         @if(!empty($cartData['shipping_fees']) && $cartData['shipping_fees'] > 0)
                         <div class="giftinfo">
-                            <div>Shipping Fee</div>
+                            <div>{{ __('user_messages.shipping_fee') }}</div>
                             <div>{{ number_format(convertPriceInUserWeb($cartData['shipping_fees']), 2) }}  {{ $currency }}
                             </div>
                         </div>
                         @else
                         <div class="giftinfo">
-                            <div>Shipping Fee</div>
-                            <div>Free Shipping</div>
+                            <div>{{ __('user_messages.shipping_fee') }}</div>
+                            <div>{{ __('user_messages.free_shipping') }}</div>
                         </div>
                         @endif
                         @if(!empty($cartData['tax']) && $cartData['tax'] > 0)
                         <div class="giftinfo">
-                            <div>TAX (if any)</div>
+                            <div>{{ __('user_messages.tax_if_any') }}</div>
                             <div>{{ number_format(convertPriceInUserWeb($cartData['tax']), 2) }}    {{ $currency }}</div>
                         </div>
                         @endif
                         <div class="giftinfo">
-                            <div>Total Amount</div>
+                            <div>{{ __('user_messages.total_amount') }}</div>
                             <div>{{ $cartData['total_amount'] }}  {{ $currency }}</div>
                         </div>
                     </div>
                 </div>
                 @if($hasOrderType1)
                 <p id="promoSavingsText" class="return-text mb-2">
-                    You will save {{ $cartData['discount_on_mrp'] }}  {{ $currency }} on this
+                    {{ __('user_messages.you_will_save') }} {{ $cartData['discount_on_mrp'] }}  {{ $currency }} {{ __('user_messages.on_this') }}
                 </p>
                 @endif
             </div>
@@ -478,7 +478,7 @@
                                 <input type="radio" name="payment_method" value="1" checked>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
-                                    <div class="title">Online</div>
+                                    <div class="title">{{ __('user_messages.online') }}</div>
                                 </div>
                             </label>
                             <!-- <label class="custom-radio mb-3">
@@ -495,8 +495,8 @@
                                 <div class="label-content d-flex gap-3">
                                     <img src="{{ asset('user/assets/images/wallet.svg') }}" class="img-fluid">
                                     <div class="title">
-                                        In -App Wallet
-                                        <div class="small-14">Available Balance : ( {{$walletBalance}} )</div>
+                                        {{ __('user_messages.in_app_wallet') }}
+                                        <div class="small-14">{{ __('user_messages.available_balance') }} : ( {{$walletBalance}} )</div>
                                     </div>
                                 </div>
                             </label>
@@ -505,7 +505,7 @@
                                 <input type="radio" name="payment_method" value="3">
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
-                                    <div class="title"><span class="code-title">COD</span> Cash On Delivery</div>
+                                    <div class="title"><span class="code-title">{{ __('user_messages.cod') }}</span> {{ __('user_messages.cash_on_delivery') }}</div>
                                 </div>
                             </label>
                         </div>
@@ -530,15 +530,15 @@
                         <div class="giftinfo">
                             <div>
                                 <img src="{{ asset('user/assets/images/gift-ic.svg') }}" class="img-fluid">
-                                <span id="applyGiftCardText">Have a Gift Card</span>
+                                <span id="applyGiftCardText">{{ __('user_messages.have_a_gift_card') }}</span>
                             </div>
 
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#giftModal"
                                 class="moreshop" id="applyGiftCardBtn">
-                                Apply Gift Card <i class="bi bi-arrow-right"></i>
+                                {{ __('user_messages.apply_gift_card') }} <i class="bi bi-arrow-right"></i>
                             </a>
                             <a href="javascript:void(0)" class="moreshop d-none" id="cancelGiftCardBtn">
-                                Remove Gift Card <i class="bi bi-arrow-right"></i>
+                                {{ __('user_messages.remove_gift_card') }} <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -546,7 +546,7 @@
 
                 <div class="mt-4">
                     <button type="submit" id="placeOrderBtn" class="customBtn mb-3">
-                        Place Order
+                        {{ __('user_messages.place_order') }}
                     </button>
                 </div>
 
@@ -565,7 +565,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title fs-5" id="promoModalLabel">Promocode</h4>
+                <h4 class="modal-title fs-5" id="promoModalLabel">{{ __('user_messages.promocode') }}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -587,21 +587,21 @@
                         <div class="gift-cupon-list my-3">
                             <div class="gift-cupon-content d-flex justify-content-between align-items-center">
                                 <div class="title-flat">
-                                    <h6>{{ $promo->name_english }}</h6>
+                                    <h6>@if(app()->getLocale() == 'en'){{ $promo->name_english }}@else{{ $promo->name_arabic }}@endif</h6>
                                     <p>
                                         @if($promo->discount_percent)
-                                        Flat {{ $promo->discount_percent }}% off on minimum order
+                                        {{ __('user_messages.flat') }} {{ $promo->discount_percent }}{{ __('user_messages.%_off_on_minimum_order') }}
                                         {{ $promo->min_order_value }} {{$currency}}
                                         @else
-                                        Discount details not available
+                                        {{ __('user_messages.discount_details_not_available') }}
                                         @endif
                                     </p>
                                 </div>
                                 <!-- <button type="button" class="btn btn-outline applyPromoBtn" data-id="{{ $promo->id }}">Apply</button> -->
                                 <button type="button" class="btn btn-outline applyPromoBtn" data-id="{{ $promo->id }}"
-                                    data-name="{{ $promo->name_english }}">Apply</button>
+                                    data-name="{{ $promo->name_english }}">{{ __('user_messages.apply') }}</button>
                             </div>
-                            <p class="mb-0">{{ $promo->description_english }}</p>
+                            <p class="mb-0">@if(app()->getLocale() == 'en'){{ $promo->description_english }}@else{{ $promo->description_arabic }}@endif</p>
                         </div>
                         @endforeach
                     </div>
@@ -609,7 +609,7 @@
                     @else
                     {{-- No promocode found --}}
                     <div class="text-center py-3">
-                        <p>No Promo Code Found.</p>
+                        <p>{{ __('user_messages.no_promo_code_found') }}</p>
                     </div>
                     @endif
 
@@ -625,26 +625,26 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title fs-5" id="exampleModalLabel">Gift Card</h4>
+                <h4 class="modal-title fs-5" id="exampleModalLabel">{{ __('user_messages.gift_card') }}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="gift-panel-list">
                     <div class="form-group w-100 py-2">
-                        <label>16 Digit Gift Card Number</label>
+                        <label>{{ __('user_messages.16_digit_gift_card_number') }}</label>
                         <input type="text" id="giftCardNumber"
                             oninput="this.value=this.value.replace(/\D/g,'').slice(0,16)" class="form-control pline-10"
-                            placeholder="16 Digit Gift Card Number">
+                            placeholder="{{ __('user_messages.16_digit_gift_card_number') }}">
                         <div id="giftCardNumberError" class="text-danger text-center" style="display: none;"></div>
                     </div>
                     <div class="form-group w-100 py-2">
-                        <label>Enter PIN</label>
+                        <label>{{ __('user_messages.enter_pin') }}</label>
                         <input type="text" id="giftCardPin" oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)"
-                            class="form-control pline-10" placeholder="Enter PIN">
+                            class="form-control pline-10" placeholder="{{ __('user_messages.enter_pin') }}">
                         <div id="giftCardPinError" class="text-danger text-center" style="display: none;"></div>
                     </div>
                     <div class="mt-4">
-                        <button type="button" id="redeemGiftCardBtn" class="customBtn mb-3 white-btn">Redeem</button>
+                        <button type="button" id="redeemGiftCardBtn" class="customBtn mb-3 white-btn">{{ __('user_messages.reedem') }}</button>
                     </div>
                 </div>
             </div>
@@ -694,7 +694,7 @@ if (performance.navigation.type === 2) {
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".qty-box").forEach(box => {
 
-        debugger
+        
 
 
         const productId = box.dataset.productId;
@@ -764,13 +764,15 @@ $(document).ready(function() {
     
 
     $(document).on('click', '.applyPromoBtn', function() {
-        debugger
+       // debugger
         
         var promoId = $(this).data('id');
         var totalAmountText = $('.giftinfo').filter(function() {
-            return $(this).find('div').first().text().trim() === 'Total Amount';
+           // return $(this).find('div').first().text().trim() === 'Total Amount';
+           return $(this).find('div').first().text().trim() === "{{ __('user_messages.total_amount') }}";
         }).find('div').last().text().replace(' '+currencySymbal, '').trim();
         var amount = parseFloat(totalAmountText);
+        console.log(amount);
 
         $.ajax({
             url: '/user/apply_promocode',
@@ -806,7 +808,7 @@ $(document).ready(function() {
                         }, 1000);
                         // refreshDiscountUI();
                     } else {
-                        toastr.error("Discount code not in response");
+                        toastr.error("{{ __('user_messages.discount_code_not_in_response') }}");
                     }
                 } else {
                     toastr.error(response.message);
@@ -819,7 +821,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.cancelPromoBtn', function() {
-        toastr.error("Promo code removed.");
+        toastr.error("{{ __('user_messages.promo_code_removed') }}");
         localStorage.removeItem('appliedPromo');
         refreshDiscountUI();
         setTimeout(() => {
@@ -844,11 +846,11 @@ $(document).ready(function() {
         $('#giftCardNumberError, #giftCardPinError').text('');
 
         if (!/^\d{16}$/.test(giftCardNumber)) {
-            $('#giftCardNumberError').text('Please enter 16 digit gift card number').show();
+            $('#giftCardNumberError').text("{{ __('user_messages.please_enter_16_digit_gift_card_number') }}").show();
             isValid = false;
         }
         if (!/^\d{4}$/.test(giftCardPin)) {
-            $('#giftCardPinError').text('Please enter 4 digit pin').show();
+            $('#giftCardPinError').text("{{ __('user_messages.please_enter_4_digit_pin') }}").show();
             isValid = false;
         }
 
@@ -895,7 +897,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '#cancelGiftCardBtn', function() {
-        toastr.error("Gift card removed.");
+        toastr.error("{{ __('user_messages.gift_card_removed') }}");
         localStorage.removeItem('appliedGiftCard');
         refreshDiscountUI();
         setTimeout(() => {
@@ -916,7 +918,7 @@ $(document).ready(function() {
 <script>
 function refreshDiscountUI() {
 
-    debugger
+    
         
     var savedPromo = JSON.parse(localStorage.getItem('appliedPromo') || 'null');
     var savedGiftCard = JSON.parse(localStorage.getItem('appliedGiftCard') || 'null');
@@ -924,9 +926,9 @@ function refreshDiscountUI() {
     // Update Promo
     if (savedPromo) {
 
-        debugger
         
-        $('#applyPromoText').text(savedPromo.promoCode + ' applied');
+        
+        $('#applyPromoText').text(savedPromo.promoCode + " {{ __('user_messages.applied') }}");
         $('#promoApplyLink').hide();
         $('#cancelPromoSection').removeClass('d-none');
         // $('.giftinfo').filter(function() {
@@ -936,7 +938,7 @@ function refreshDiscountUI() {
         $('#couponDiscountAmount').text(savedPromo.discountValue + ' '+currencySymbal);
         $('#couponDiscountRow').removeClass('d-none');
     } else {
-        $('#applyPromoText').text('Apply PromoCode');
+        $('#applyPromoText').text("{{ __('user_messages.apply_promocode') }}");
         $('#promoApplyLink').show();
         $('#cancelPromoSection').addClass('d-none');
         // $('.giftinfo').filter(function() {
@@ -949,7 +951,7 @@ function refreshDiscountUI() {
 
     // Update Gift Card
     if (savedGiftCard) {
-        $('#applyGiftCardText').text('Gift Card Applied');
+        $('#applyGiftCardText').text("{{ __('user_messages.gift_card_applied') }}");
         $('#applyGiftCardBtn').hide();
         $('#cancelGiftCardBtn').removeClass('d-none');
         // $('.giftinfo').filter(function() {
@@ -960,7 +962,7 @@ function refreshDiscountUI() {
             .text(formatKD(savedGiftCard.giftCardAmount));
         $('#giftCardDiscountRow').removeClass('d-none');
     } else {
-        $('#applyGiftCardText').text('Have a Gift Card');
+        $('#applyGiftCardText').text("{{ __('user_messages.have_a_gift_card') }}");
         $('#applyGiftCardBtn').show();
         $('#cancelGiftCardBtn').addClass('d-none');
         // $('.giftinfo').filter(function() {
@@ -972,23 +974,41 @@ function refreshDiscountUI() {
     }
 
     // Recalculate Total Amount
+    // var baseTotal = parseFloat($('.giftinfo').filter(function() {
+    //     return $(this).find('div').first().text().trim() === 'Total MRP';
+    // }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
+    // var discountOnMRP = parseFloat($('.giftinfo').filter(function() {
+    //     return $(this).find('div').first().text().trim() === 'Discount on MRP';
+    // }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
+    // var shippingFee = parseFloat($('.giftinfo').filter(function() {
+    //     return $(this).find('div').first().text().trim() === 'Shipping Fee';
+    // }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
+    // var tax = parseFloat($('.giftinfo').filter(function() {
+    //     return $(this).find('div').first().text().trim() === 'TAX (if any)';
+    // }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
+    // var custom = parseFloat($('.giftinfo').filter(function() {
+    //     return $(this).find('div').first().text().trim() === 'Custom Item price';
+    // }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
     var baseTotal = parseFloat($('.giftinfo').filter(function() {
-        return $(this).find('div').first().text().trim() === 'Total MRP';
-    }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
-    var discountOnMRP = parseFloat($('.giftinfo').filter(function() {
-        return $(this).find('div').first().text().trim() === 'Discount on MRP';
-    }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
-    var shippingFee = parseFloat($('.giftinfo').filter(function() {
-        return $(this).find('div').first().text().trim() === 'Shipping Fee';
-    }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
-    var tax = parseFloat($('.giftinfo').filter(function() {
-        return $(this).find('div').first().text().trim() === 'TAX (if any)';
-    }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
-    var custom = parseFloat($('.giftinfo').filter(function() {
-        return $(this).find('div').first().text().trim() === 'Custom Item price';
-    }).find('div').last().text().replace(' '+currencySymbal, '')) || 0;
+        return $(this).find('div').first().text().trim() === "{{ __('user_messages.total_mrp') }}";
+    }).find('div').last().text().replace(' ' + currencySymbol, '')) || 0;
 
-    debugger
+    var discountOnMRP = parseFloat($('.giftinfo').filter(function() {
+        return $(this).find('div').first().text().trim() === "{{ __('user_messages.discount_on_mrp') }}";
+    }).find('div').last().text().replace(' ' + currencySymbol, '')) || 0;
+
+    var shippingFee = parseFloat($('.giftinfo').filter(function() {
+        return $(this).find('div').first().text().trim() === "{{ __('user_messages.shipping_fee') }}";
+    }).find('div').last().text().replace(' ' + currencySymbol, '')) || 0;
+
+    var tax = parseFloat($('.giftinfo').filter(function() {
+        return $(this).find('div').first().text().trim() === "{{ __('user_messages.tax_if_any') }}";
+    }).find('div').last().text().replace(' ' + currencySymbol, '')) || 0;
+
+    var custom = parseFloat($('.giftinfo').filter(function() {
+        return $(this).find('div').first().text().trim() === "{{ __('user_messages.custom_item_price') }}";
+    }).find('div').last().text().replace(' ' + currencySymbol, '')) || 0;
+
         
 
     var promoDiscount = savedPromo ? savedPromo.discountValue : 0;
@@ -996,16 +1016,16 @@ function refreshDiscountUI() {
 
     var finalTotal = baseTotal - discountOnMRP - promoDiscount - giftCardDiscount + shippingFee + tax + custom;
     $('.giftinfo').filter(function() {
-            return $(this).find('div').first().text().trim() === 'Total Amount';
+            return $(this).find('div').first().text().trim() === "{{ __('user_messages.total_amount') }}";
         })
         .find('div').last().text(finalTotal.toFixed(2) + ' '+currencySymbal);
 
-        debugger
+        
         
 
     // Total Savings
     var totalSavings = discountOnMRP + promoDiscount + giftCardDiscount;
-    $('#promoSavingsText').text("You will save " + totalSavings.toFixed(2) + currencySymbal +" on this");
+    $('#promoSavingsText').text("{{ __('user_messages.you_will_save') }} " + totalSavings.toFixed(2) + currencySymbol + " {{ __('user_messages.on_this') }}");
 }
 </script>
 
@@ -1018,13 +1038,13 @@ function formatKD(amount) {
         return amount.toFixed(0) + ' '+currencySymbal;
     }
 
-    debugger
+    
         
 
     // Otherwise show 2 decimals
     return amount.toFixed(2) + ' '+currencySymbal;
 
-    debugger
+    
         
 }
 </script>
@@ -1041,9 +1061,9 @@ $(document).ready(function() {
         var deliveryAddressId = document.getElementById('deliveryAddressId').value;
 
         if (deliveryAddressId.length == 0) {
-            console.log("delivery Address check");
+            //console.log("delivery Address check");
 
-            toastr.error("delivery Address is required");
+            toastr.error("{{ __('user_messages.delivery_address_required') }}");
             return false;
 
         }
@@ -1063,27 +1083,61 @@ $(document).ready(function() {
             var valueText = $(this).find('div').last().text().replace(' '+currencySymbal, '').trim();
             var value = parseFloat(valueText) || 0;
 
+            // switch (title) {
+            //     case 'Total MRP':
+            //         cartSummary.totalMRP = value/currencyrate;
+            //         break;
+            //     case 'Discount on MRP':
+            //         cartSummary.discountOnMRP = value/currencyrate;
+            //         break;
+            //     case 'Coupon Discount':
+            //         cartSummary.couponDiscount = value/currencyrate;
+            //         break;
+            //     case 'Gift Card Discount':
+            //         cartSummary.giftCardDiscount = value/currencyrate;
+            //         break;
+            //     case 'Shipping Fee':
+            //         cartSummary.shippingFee = value/currencyrate;
+            //         break;
+            //     case 'TAX (if any)':
+            //         cartSummary.tax = value/currencyrate;
+            //         break;
+            //     case 'Total Amount':
+            //         cartSummary.totalAmount = value/currencyrate;
+            //         break;
+            // }
             switch (title) {
-                case 'Total MRP':
-                    cartSummary.totalMRP = value/currencyrate;
+
+                case "{{ __('user_messages.total_mrp') }}":
+                    cartSummary.totalMRP = value / currencyrate;
                     break;
-                case 'Discount on MRP':
-                    cartSummary.discountOnMRP = value/currencyrate;
+
+                case "{{ __('user_messages.discount_on_mrp') }}":
+                    cartSummary.discountOnMRP = value / currencyrate;
                     break;
-                case 'Coupon Discount':
-                    cartSummary.couponDiscount = value/currencyrate;
+
+                case "{{ __('user_messages.coupon_discount') }}":
+                    cartSummary.couponDiscount = value / currencyrate;
                     break;
-                case 'Gift Card Discount':
-                    cartSummary.giftCardDiscount = value/currencyrate;
+
+                case "{{ __('user_messages.gift_card_discount') }}":
+                    cartSummary.giftCardDiscount = value / currencyrate;
                     break;
-                case 'Shipping Fee':
-                    cartSummary.shippingFee = value/currencyrate;
+
+                case "{{ __('user_messages.shipping_fee') }}":
+                    cartSummary.shippingFee = value / currencyrate;
                     break;
-                case 'TAX (if any)':
-                    cartSummary.tax = value/currencyrate;
+
+                case "{{ __('user_messages.tax_if_any') }}":
+                    cartSummary.tax = value / currencyrate;
                     break;
-                case 'Total Amount':
-                    cartSummary.totalAmount = value/currencyrate;
+
+                case "{{ __('user_messages.total_amount') }}":
+                    cartSummary.totalAmount = value / currencyrate;
+                    break;
+
+                case "{{ __('user_messages.custom_item_price') }}":
+                    cartSummary.customAmount = value / currencyrate;
                     break;
             }
         });
@@ -1093,8 +1147,8 @@ $(document).ready(function() {
             var wallet_Amount = $('#WalletBalance').val();
             var PayAmount = cartSummary.totalAmount;
             if (wallet_Amount < PayAmount) {
-                console.log("Wallet Amount is Low Please Choose Another Method");
-                toastr.error('Wallet Amount is Low Please Choose Another Method');
+                //console.log("Wallet Amount is Low Please Choose Another Method");
+                toastr.error("{{ __('user_messages.wallet_amount_is_low_choose_another_method') }}");
 
                 return false;
             }
@@ -1112,7 +1166,7 @@ $(document).ready(function() {
             deliveryAddressId: deliveryAddressId
         };
 
-        debugger;
+        
 
         // Send AJAX request
         $.ajax({

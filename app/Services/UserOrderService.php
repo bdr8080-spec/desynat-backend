@@ -93,7 +93,7 @@ class UserOrderService
 
         return [
             'status' => 'error',
-            'message' => 'Promo Code is Invalid',
+            'message' => __('user_messages.promo_code_is_invalid'),
             'data' => (object)[]
         ];
        }
@@ -101,7 +101,7 @@ class UserOrderService
        if($get_promo_codes->status=='0'){
         return [
             'status' => 'error',
-            'message' => 'Promo Code is Not Active',
+            'message' => __('user_messages.promo_code_is_not_active'),
             'data' => (object)[]
         ];
        }
@@ -109,7 +109,7 @@ class UserOrderService
        if($get_promo_codes->min_order_value > $amount){
         return [
             'status' => 'error',
-            'message' => 'This Promo Code is Not Apply on This Amount',
+            'message' => __('user_messages.this_promo_code_is_not_apply_on_this_amount'),
             'data' => (object)[]
         ];
        }
@@ -123,7 +123,7 @@ class UserOrderService
         if($orderCount > 0 ){
             return [
                 'status' => 'error',
-                'message' => 'This Promo Code is Apply on Your First order Only',
+                'message' => __('user_messages.this_promo_code_is_apply_on_your_first_order_only'),
                 'data' => (object)[]
             ];
         }
@@ -168,7 +168,7 @@ class UserOrderService
                     'notification_type' => 'promocode_applied'
                 ]);
 
-    return ['status'=>'success','message'=>"promocode Apply Successfully",'data'=>$response];
+    return ['status'=>'success','message' => __('user_messages.promo_code_applied_successfully'),'data'=>$response];
 
         
     } catch (\Exception $e) {
@@ -251,7 +251,7 @@ $checkDataInCart =Addtocart::with('product.seller_details')->where('user_id',$us
 if($checkDataInCart->isEmpty()){
     return [
         'status' => 'error',
-        'message' => 'Add to Cart Is Empty',
+        'message' => __('user_messages.add_to_cart_is_empty'),
         'data' => []
     ];
 }
@@ -319,7 +319,7 @@ foreach($checkDataInCart as $key=>$val){
 
 DB::commit();
    
-return ['status'=>'success','message'=>"Order Create Successfully",'data'=>$createOrder];
+return ['status'=>'success','message' => __('user_messages.order_created_successfully'),'data'=>$createOrder];
 
         
     } catch (\Exception $e) {
@@ -376,7 +376,7 @@ $checkGiftCard=  UserGiftCards::where('giftCardNo',$request->giftCardNo)
                     'notification_type' => 'giftcard_applied'
                 ]);
 
-return ['status'=>'success','message'=>"Gift Card Apply Successfully",'data'=>$response];
+return ['status'=>'success','message' => __('user_messages.gift_card_applied_successfully'),'data'=>$response];
 
 
 
@@ -391,7 +391,7 @@ return ['status'=>'success','message'=>"Gift Card Apply Successfully",'data'=>$r
  }else{
     return [
         'status' => 'error',
-        'message' => "Gift card is not valid",
+        'message' => __('user_messages.gift_card_is_not_valid'),
         'data' => []
     ];
  }

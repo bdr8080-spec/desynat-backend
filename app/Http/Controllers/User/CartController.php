@@ -154,7 +154,7 @@ class CartController extends Controller
 
     public function create_order(Request $request)
     {
-        //dd($request->all());
+       // dd($request->all());
 
         try {
               $user=  $request->user();
