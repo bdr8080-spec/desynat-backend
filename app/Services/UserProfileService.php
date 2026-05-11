@@ -149,7 +149,7 @@ class UserProfileService
             if ($exists) {
                 return [
                     'status' => 'error',
-                    'message' => 'This card is already added',
+                    'message' => __('user_messages.this_card_is_already_added'),
                     'data' => (object)[]
                 ];
             }
@@ -165,21 +165,26 @@ class UserProfileService
 
             if (preg_match('/^4/', $cardNumber)) {
                 $cardType = 'Visa';
+                $cardTypeAr = 'فيزا';
                 $cardImage = 'https://d79swovq1y56s.cloudfront.net/uploads/YX7SxfDU2T.png';
             } elseif (
                 preg_match('/^5[1-5]/', $cardNumber) ||
                 preg_match('/^2(2[2-9]|[3-6]|7[01]|720)/', $cardNumber)
             ) {
                 $cardType = 'MasterCard';
+                $cardTypeAr = 'ماستركارد';
                 $cardImage = 'https://d79swovq1y56s.cloudfront.net/uploads/oEciJYvB06.png';
             } elseif (preg_match('/^3[47]/', $cardNumber)) {
                 $cardType = 'American Express';
+                $cardTypeAr = 'أمريكان إكسبريس';
                 $cardImage = 'https://d79swovq1y56s.cloudfront.net/uploads/2RZBMl6VK4.png';
             } elseif (preg_match('/^6/', $cardNumber)) {
                 $cardType = 'Discover';
+                $cardTypeAr = 'ديسكفر';
                 $cardImage = 'https://d79swovq1y56s.cloudfront.net/uploads/OnoRBD3rjD.png';
             } else {
                 $cardType = 'Unknown';
+                $cardTypeAr = 'غير معروف';
                 $cardImage = 'https://d79swovq1y56s.cloudfront.net/uploads/ECtnpFqIDd.png';
             }
 
@@ -191,6 +196,7 @@ class UserProfileService
                 'cvv'              => $request_data->cvv,
                 'is_future'        => $request_data->is_future,
                 'card_type'        => $cardType,
+                'card_type_ar'        => $cardTypeAr,
                 'card_image'        => $cardImage,
                 
             ]);
@@ -199,7 +205,7 @@ class UserProfileService
 
             return [
                 'status' => 'success',
-                'message' => 'Card added successfully',
+                'message' => __('user_messages.card_added_successfully'),
                 'data' => $card
             ];
 
@@ -265,7 +271,7 @@ class UserProfileService
 
             return [
                 'status' => 'success',
-                'message' => 'Card deleted successfully',
+                'message' => __('user_messages.card_deleted_successfully'),
                 'data' => (object)[]
             ];
 
@@ -302,7 +308,7 @@ class UserProfileService
 
             return [
                 'status' => 'success',
-                'message' => 'Card updated to default successfully',
+                'message' => __('user_messages.card_updated_to_default_successfully'),
                 'data' => $card
             ];
 

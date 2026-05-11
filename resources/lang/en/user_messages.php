@@ -483,6 +483,29 @@ return [
     'payment_cancelled' => 'Payment cancelled',
     'please_select_or_enter_amount' => 'Please select or enter an amount',
 
+    //my cards
+    'my_saved_cards' => 'My Saved Cards',
+    'no_cards_added' => 'No cards added',
+    'add_new_card' => 'Add New Card',
+    'card_holder_name' => 'Card Holder Name',
+    'card_number' => 'Card Number',
+    'expiry_date' => 'Expiry Date',
+    'cvv' => 'CVV',
+    'save_card_for_future' => 'Save card for future',
+    'save' => 'Save',
+    'please_enter_card_holder_name' => 'Please enter card holder name',
+    'please_enter_card_number' => 'Please enter card number',
+    'please_enter_expiry_date' => 'Please enter expiry date',
+    'please_enter_cvv' => 'Please enter CVV',
+    'card_updated_to_default_successfully' => 'Card updated to default successfully',
+    'card_deleted_successfully' => 'Card deleted successfully',
+    'this_card_is_already_added' => 'This card is already added',
+    'card_added_successfully' => 'Card added successfully',
+    'card_number_must_be_13_to_19_digits' => 'Card number must be 13 to 19 digits',
+    'expiry_must_be_mm_yy_format' => 'Expiry must be in MM/YY format',
+    'invalid_month_in_expiry_date' => 'Invalid month in expiry date',
+    'cvv_should_be_3_4_digits' => 'CVV should be 3-4 digits',
+
     
 
     

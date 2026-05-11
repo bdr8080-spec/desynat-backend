@@ -6,57 +6,21 @@
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('user.saved_cards')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
-        <h3>Add New Cards</h3>
+        <h3>{{ __('user_messages.add_new_card') }}</h3>
     </div>
 
-    <!-- <div class="main-content categoryDetail">
-        <div class="form-group w-100 py-2">
-            <label>Card Holder Name </label>
-            <input type="text" class="form-control pline-10" placeholder="Card Holder Name">
-        </div>   
-        <div class="form-group w-100 py-2">
-            <label>Card Number</label>
-            <input type="text" class="form-control pline-10" placeholder="Card Number">
-        </div>   
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group w-100 py-2">
-                    <label>Expiry Date</label>
-                    <input type="text" class="form-control pline-10" placeholder="Expiration Date ">
-                </div>  
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group w-100 py-2">
-                    <label>CVV</label>
-                    <input type="text" class="form-control pline-10" placeholder="CVV">
-                </div>  
-            </div>
-        </div>
-        <div class="form-check py-1 form-group">
-            <input class="form-check-input" type="checkbox" value="1" id="savecard" name="accept">
-            <label class="form-check-label mt-0" for="savecard"> Save Card for Future</label>
-        </div>
-
-        <div class="cmn-btn mt-4">
-            <button type="submit" class="btn paybtn-common w-100">Save</button>
-        </div>
-
-
-
-
-    </div> -->
 
     <div class="main-content categoryDetail">
 
         <div class="form-group w-100 py-2">
-            <label>Card Holder Name</label>
-            <input type="text" id="card_holder_name" class="form-control pline-10" placeholder="Card Holder Name" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
+            <label>{{ __('user_messages.card_holder_name') }}</label>
+            <input type="text" id="card_holder_name" class="form-control pline-10" placeholder="{{ __('user_messages.card_holder_name') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
             <small class="text-danger" id="error_card_holder_name"></small>
         </div>   
 
         <div class="form-group w-100 py-2">
-            <label>Card Number</label>
-            <input type="text" id="card_number" class="form-control pline-10" placeholder="Card Number" oninput="this.value = this.value.replace(/\D/g,'').slice(0,19)">
+            <label>{{ __('user_messages.card_number') }}</label>
+            <input type="text" id="card_number" class="form-control pline-10" placeholder="{{ __('user_messages.card_number') }}" oninput="this.value = this.value.replace(/\D/g,'').slice(0,19)">
             <small class="text-danger" id="error_card_number"></small>
         </div>   
 
@@ -64,16 +28,16 @@
 
             <div class="col-lg-6">
                 <div class="form-group w-100 py-2">
-                    <label>Expiry Date</label>
-                    <input type="text" id="expiry_date" class="form-control pline-10" placeholder="Expiration Date" oninput="this.value = this.value.replace(/[^0-9\/]/g,'').slice(0,5)">
+                    <label>{{ __('user_messages.expiry_date') }}</label>
+                    <input type="text" id="expiry_date" class="form-control pline-10" placeholder="{{ __('user_messages.expiry_date') }}" oninput="this.value = this.value.replace(/[^0-9\/]/g,'').slice(0,5)">
                     <small class="text-danger" id="error_expiry_date"></small>
                 </div>  
             </div>
 
             <div class="col-lg-6">
                 <div class="form-group w-100 py-2">
-                    <label>CVV</label>
-                    <input type="text" id="cvv" class="form-control pline-10" placeholder="CVV" oninput="this.value = this.value.replace(/\D/g,'').slice(0,4)">
+                    <label>{{ __('user_messages.cvv') }}</label>
+                    <input type="text" id="cvv" class="form-control pline-10" placeholder="{{ __('user_messages.cvv') }}" oninput="this.value = this.value.replace(/\D/g,'').slice(0,4)">
                     <small class="text-danger" id="error_cvv"></small>
                 </div>  
             </div>
@@ -83,13 +47,13 @@
         <div class="form-check py-1 form-group">
             <input class="form-check-input" type="checkbox" value="1" id="savecard" name="accept">
             <label class="form-check-label mt-0" for="savecard">
-                Save Card for Future
+                {{ __('user_messages.save_card_for_future') }}
             </label>
         </div>
 
         <div class="cmn-btn mt-4">
             <button type="button" id="saveCardBtn" class="btn paybtn-common w-100">
-                Save
+                {{ __('user_messages.save') }}
             </button>
         </div>
 
@@ -127,25 +91,25 @@ document.addEventListener('DOMContentLoaded', function () {
         let cvv = document.getElementById('cvv').value.trim();
 
         if (!holder) {
-            showError('card_holder_name', 'Please enter card holder name');
+            showError('card_holder_name', "{{ __('user_messages.please_enter_card_holder_name') }}");
             valid = false;
         }
 
         if (!number) {
-            showError('card_number', 'Please enter card number');
+            showError('card_number', "{{ __('user_messages.please_enter_card_number') }}");
             valid = false;
         } 
         else if (!/^\d{13,19}$/.test(number.replace(/\s+/g, ''))) {
-            showError('card_number', 'Card number must be 13 to 19 digits');
+            showError('card_number', "{{ __('user_messages.card_number_must_be_13_to_19_digits') }}");
             valid = false;
         }
 
         if (!expiry) {
-            showError('expiry_date', 'Please enter expiry date');
+            showError('expiry_date', "{{ __('user_messages.please_enter_expiry_date') }}");
             valid = false;
         } 
         else if (!/^\d{2}\/\d{2}$/.test(expiry)) {
-            showError('expiry_date', 'Expiry must be in MM/YY format');
+            showError('expiry_date', "{{ __('user_messages.expiry_must_be_mm_yy_format') }}");
             valid = false;
         } 
         else {
@@ -154,16 +118,16 @@ document.addEventListener('DOMContentLoaded', function () {
             let year = parseInt(parts[1], 10);
 
             if (month < 1 || month > 12) {
-                showError('expiry_date', 'Invalid month in expiry date');
+                showError('expiry_date', "{{ __('user_messages.invalid_month_in_expiry_date') }}");
                 valid = false;
             }
         }
 
         if (!cvv) {
-            showError('cvv', 'Please enter CVV');
+            showError('cvv', "{{ __('user_messages.please_enter_cvv') }}");
             valid = false;
         } else if (!/^\d{3,4}$/.test(cvv)) {
-            showError('cvv', 'CVV should be 3-4 digits');
+            showError('cvv', "{{ __('user_messages.cvv_should_be_3_4_digits') }}");
             valid = false;
         }
 

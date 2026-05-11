@@ -482,6 +482,29 @@ return [
     'payment_cancelled' => 'تم إلغاء الدفع',
     'please_select_or_enter_amount' => 'يرجى اختيار أو إدخال المبلغ',
 
+    //my cards
+    'my_saved_cards' => 'بطاقاتي المحفوظة',
+    'no_cards_added' => 'لا توجد بطاقات مضافة',
+    'add_new_card' => 'إضافة بطاقة جديدة',
+    'card_holder_name' => 'اسم حامل البطاقة',
+    'card_number' => 'رقم البطاقة',
+    'expiry_date' => 'تاريخ الانتهاء',
+    'cvv' => 'رمز التحقق',
+    'save_card_for_future' => 'حفظ البطاقة للاستخدام المستقبلي',
+    'save' => 'حفظ',
+    'please_enter_card_holder_name' => 'يرجى إدخال اسم حامل البطاقة',
+    'please_enter_card_number' => 'يرجى إدخال رقم البطاقة',
+    'please_enter_expiry_date' => 'يرجى إدخال تاريخ الانتهاء',
+    'please_enter_cvv' => 'يرجى إدخال رمز التحقق',
+    'card_updated_to_default_successfully' => 'تم تعيين البطاقة كافتراضية بنجاح',
+    'card_deleted_successfully' => 'تم حذف البطاقة بنجاح',
+    'this_card_is_already_added' => 'تمت إضافة هذه البطاقة بالفعل',
+    'card_added_successfully' => 'تمت إضافة البطاقة بنجاح',
+    'card_number_must_be_13_to_19_digits' => 'يجب أن يتكون رقم البطاقة من 13 إلى 19 رقمًا',
+    'expiry_must_be_mm_yy_format' => 'يجب أن يكون تاريخ الانتهاء بصيغة (شهر/سنة)',
+    'invalid_month_in_expiry_date' => 'شهر غير صالح في تاريخ الانتهاء',
+    'cvv_should_be_3_4_digits' => 'يجب أن يكون رمز CVV مكونًا من 3 إلى 4 أرقام',
+
 
 
 

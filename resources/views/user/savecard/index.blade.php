@@ -6,7 +6,7 @@
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
-        <h3>My Saved Cards</h3>
+        <h3>{{ __('user_messages.my_saved_cards') }}</h3>
     </div>
 
     <div class="main-content categoryDetail">
@@ -44,7 +44,13 @@
                         </div>
 
                         <div class="master-card">
-                            <div class="mst-title">{{ $item->card_type }}</div>
+                            <div class="mst-title">
+                                @if(app()->getLocale() == 'en')
+                                {{ $item->card_type }}
+                                @else
+                                {{ $item->card_type_ar }}
+                                @endif
+                            </div>
                             <div class="mst-title">{{ $item->card_number }}</div>
                         </div>
 
@@ -75,14 +81,14 @@
         @empty
 
             <div class="text-center text-muted mt-3 mb-3">
-                No cards added
+                {{ __('user_messages.no_cards_added') }}
             </div>
 
         @endforelse
 
         <div class="border-11 mb-3 mt-4">
             <a href="{{route('user.add_new_card')}}" class="card-color">
-                <div> <i class="bi bi-plus-lg"></i> Add New Card</div>
+                <div> <i class="bi bi-plus-lg"></i> {{ __('user_messages.add_new_card') }}</div>
             </a>
         </div>
 
