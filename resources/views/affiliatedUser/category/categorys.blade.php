@@ -2,15 +2,15 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl">
-        <div class="title24">Category </div>
+        <div class="title24">{{ __('affiliate_messages.category') }} </div>
     </div>
 
     <div class="search-field d-flex align-items-center py-4">
         <div class="from-group position-relative w-100">
             <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon2">
-            <input type="search" class="form-control py-3" placeholder="Search">
+            <input type="search" class="form-control py-3" placeholder="{{ __('affiliate_messages.search') }}">
         </div>
-        <button type="button" class="btn btn-success searchlin">Search</button>
+        <button type="button" class="btn btn-success searchlin">{{ __('affiliate_messages.search') }}</button>
     </div>
 
     <div class="tabs-panel py-3">
@@ -22,7 +22,11 @@
                 <li class="nav-item">
                     <button class="nav-link w-100 category-tab @if($key=='0') active @endif"
                         data-category="{{$val->id}}">
+                        @if(app()->getLocale() == 'en')
                         {{$val->name}}
+                        @else
+                        {{$val->name_ar}}
+                        @endif
                     </button>
                 </li>
 
@@ -65,7 +69,7 @@ $(document).ready(function() {
                  search: searchValue 
             },
             beforeSend: function() {
-                $('#show-subcategory').html('<p>Loading...</p>');
+                $('#show-subcategory').html('<p>{{ __("affiliate_messages.loading") }}</p>');
             },
             success: function(response) {
                 $('#show-subcategory').html(response);

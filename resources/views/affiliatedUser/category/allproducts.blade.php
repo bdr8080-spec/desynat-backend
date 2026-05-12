@@ -3,15 +3,15 @@
 <section class="section dashboard">
     <div class="d-flex justify-content-between mt-4 mb-5">
         <a href="{{route('affiliate.affiliateCategory')}}" class="title24 alink">
-            <i class="bi bi-chevron-left"></i> All Products
+            <i class="bi bi-chevron-left"></i> {{ __('affiliate_messages.all_products') }}
         </a>
     </div>
     <div class="search-field d-flex align-items-center">
         <div class="from-group position-relative w-100">
             <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon2">
-            <input type="search" class="form-control py-3" placeholder="Search">
+            <input type="search" class="form-control py-3" placeholder="{{ __('affiliate_messages.search') }}">
         </div>
-        <button type="button" class="btn btn-success searchlin">Search</button>
+        <button type="button" class="btn btn-success searchlin">{{ __('affiliate_messages.search') }}</button>
     </div>
 
     <div class="allproduct-wapper pt-5">
@@ -30,16 +30,22 @@
                             
                         @isset($product['affiliated_commission'])
                         {{$product['affiliated_commission']}}%
-                        Commission
+                        {{ __('affiliate_messages.commission') }}
                     @else
                         0%
-                        Commission
+                        {{ __('affiliate_messages.commission') }}
                    
                     @endisset 
                    </div>
                     </div>
                     <div class="af-content p-2">
-                        <div class="sub-title"> {{ substr($product['product_name_en'],0,20)}}</div>
+                        <div class="sub-title"> 
+                            @if(app()->getLocale() == 'en')
+                            {{ substr($product['product_name_en'],0,20)}}
+                            @else
+                            {{ substr($product['product_name_ar'],0,20)}}
+                            @endif
+                        </div>
                         <div class="af-rating">
                         
                               @for($i=0;$i<$product['product_avg_rating']; $i++)
@@ -49,23 +55,23 @@
                             <span>({{$product['review_count']}}) </span>
 
                         </div>
-                        <div class="af-price"> {{$product['product_variants'][0]['final_price']}} KD</div>
+                        <div class="af-price"> {{$product['product_variants'][0]['final_price']}} {{ __('affiliate_messages.kwd') }}</div>
                         <div class="af-price-line"><span class="text-decoration-line-through">
-                                {{$product['product_variants'][0]['actual_price']}} KD </span>
+                                {{$product['product_variants'][0]['actual_price']}} {{ __('affiliate_messages.kwd') }} </span>
 
                             {{$product['product_variants'][0]['discount_value']}}
 
                             @if($product['product_variants'][0]['discount_type']=='1')
                             %
                             @else
-                            Off
+                            {{ __('affiliate_messages.off') }}
                             @endif
 
                         </div>
                         <div class="text-center mt-2">
                             <button type="button" class="btn btn-success w-100 lh-sm get-link-btn"
-                                data-bs-toggle="modal" data-bs-target="#getlink" data-product="{{$product['id']}}">Get
-                                Link</button>
+                                data-bs-toggle="modal" data-bs-target="#getlink" data-product="{{$product['id']}}">
+                                {{ __('affiliate_messages.get_link') }}</button>
                         </div>
                     </div>
                 </div>
@@ -73,7 +79,7 @@
 
             @empty
              <div class="col-lg-3 col-md-6">
-                <p>No product found</p>
+                <p>{{ __('affiliate_messages.no_product_found') }}</p>
              </div>
 
             @endforelse
@@ -89,7 +95,7 @@
     <div class="modal-dialog modal-dialog-centered w-75">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Affiliate link</h1>
+                <h1 class="modal-title fs-5">{{ __('affiliate_messages.affiliate_link') }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -104,10 +110,10 @@
 
                             <input type="hidden" class="form-control py-3" name="product_id" id="product_id">
                         </div>
-                        <button type="button" class="btn btn-success" id="copyLinkBtn">Copy link</button>
+                        <button type="button" class="btn btn-success" id="copyLinkBtn">{{ __('affiliate_messages.copy_link') }}</button>
                     </div>
                     <div class="text-center mt-2">
-                        <button type="submit" class="btn btn-success w-100 lh-2">Add product</button>
+                        <button type="submit" class="btn btn-success w-100 lh-2">{{ __('affiliate_messages.add_product') }}</button>
                     </div>
                 </div>
             </form>
@@ -150,7 +156,7 @@ $(document).on('click', '#copyLinkBtn', function() {
     let copyText = $('#generate_url_link').val();
 
     navigator.clipboard.writeText(copyText).then(function() {
-        toastr.success("Link copied successfully!");
+        toastr.success("{{ __('affiliate_messages.link_copied_successfully') }}");
     }).catch(function() {
         toastr.failed("Failed to copy link");
     });

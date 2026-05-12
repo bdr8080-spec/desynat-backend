@@ -53,6 +53,33 @@ return [
     'loading' => 'Loading',
     'notifications' => 'Notifications',
     'no_notification_found' => 'No notification found',
+    'all' => 'All',
+    'off' => 'Off',
+    'no_product_found' => 'No product found',
+    'item_performance' => 'Item Performance',
+    'size' => 'Size',
+    'color' => 'Color',
+    'quick_summary' => 'Quick Summary',
+    'total_revenue' => 'Total Revenue',
+    'my_earnings' => 'My Earnings',
+    'total_clicks' => 'Total Clicks',
+    'total_orders' => 'Total Orders',
+    'conversion_rate' => 'Conversion Rate',
+    'link' => 'Link',
+    'link_copied' => 'Link copied!',
+
+    //category
+    'category' => 'Category',
+    'sub_category' => 'Sub Category',
+    'all_products' => 'All Products',
+    'get_link' => 'Get Link',
+    'no_product_found' => 'No product found',
+    'affiliate_link' => 'Affiliate Link',
+    'copy_link' => 'Copy Link',
+    'add_product' => 'Add Product',
+    'link_copied_successfully' => 'Link copied successfully!',
+    'product_already_added_to_affiliate' => 'Product already added to this affiliate',
+    'product_added_to_affiliate_successfully' => 'Product added to affiliate successfully',
     
     
 

@@ -742,7 +742,7 @@ return [
             if ($alreadyAdded) {
                 return [
                     'status' => 'error',
-                    'message' => 'Product already added to this affiliate',
+                    'message' => __('affiliate_messages.product_already_added_to_affiliate'),
                     'data' => []
                 ];
             }
@@ -755,7 +755,7 @@ return [
 
             return [
                 'status' => 'success',
-                'message' => 'Product added to affiliate successfully',
+                'message' => __('affiliate_messages.product_added_to_affiliate_successfully'),
                 'data' => $affiliateProduct
             ];
 

@@ -15,14 +15,14 @@
         <!-- <a href="/category" class="title24 alink">
             <i class="bi bi-chevron-left"></i> My Product
         </a> -->
-        <div class="title24">My Product </div>
+        <div class="title24">{{ __('affiliate_messages.my_product') }} </div>
     </div>
     <div class="search-field d-flex align-items-center mb-4">
         <div class="from-group position-relative w-100">
             <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon2">
-            <input type="search" class="form-control py-3" placeholder="Search">
+            <input type="search" class="form-control py-3" placeholder="{{ __('affiliate_messages.search') }}">
         </div>
-        <button type="button" class="btn btn-success searchlin">Search</button>
+        <button type="button" class="btn btn-success searchlin">{{ __('affiliate_messages.search') }}</button>
     </div>
 
     <div class="tabs-panel py-3">
@@ -32,7 +32,7 @@
 
                 <li class="nav-item">
                     <button class="nav-link active w-100 category-tab" data-category="all">
-                        All
+                        {{ __('affiliate_messages.all') }}
                     </button>
                 </li>
 
@@ -40,7 +40,11 @@
 
                 <li class="nav-item">
                     <button class="nav-link w-100 category-tab " data-category="{{$val->id}}">
+                        @if(app()->getLocale() == 'en')
                         {{$val->name}}
+                        @else
+                        {{$val->name_ar}}
+                        @endif
                     </button>
                 </li>
 
@@ -110,7 +114,7 @@ $(document).ready(function() {
                 category: selectedCategory
             },
             beforeSend: function() {
-                $('#product-subcategory').html('<p>Loading...</p>');
+                $('#product-subcategory').html('<p>{{ __("affiliate_messages.loading") }}</p>');
             },
             success: function(response) {
                 $('#product-subcategory').html(response);
@@ -132,7 +136,7 @@ $(document).ready(function() {
                 search:searchValue,
             },
             beforeSend: function() {
-                $('#product-container').html('<p>Loading...</p>');
+                $('#product-container').html('<p>{{ __("affiliate_messages.loading") }}</p>');
             },
             success: function(response) {
                 $('#product-container').html(response);

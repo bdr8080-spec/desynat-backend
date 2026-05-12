@@ -3,7 +3,7 @@
 <section class="section dashboard">
     <div class="d-flex justify-content-between mt-4 mb-5">
         <a href="{{route('affiliate.affiliateMyProduct')}}" class="title24 alink">
-            <i class="bi bi-chevron-left"></i> Item Performance
+            <i class="bi bi-chevron-left"></i> {{ __('affiliate_messages.item_performance') }}
         </a>
     </div>
     
@@ -13,7 +13,13 @@
                 <img src="{{ $performace->product->product_variants['0']->variant_image['0'] }}" alt="icon" class="img-fluid">
             </div>
             <div class="performance-content">
-                <div class="sub-title"> {{ $performace->product->product_name_en}}</div>
+                <div class="sub-title"> 
+                    @if(app()->getLocale() == 'en')
+                    {{ $performace->product->product_name_en}}
+                    @else
+                    {{ $performace->product->product_name_ar}}
+                    @endif
+                </div>
                 <!-- <div class="af-rating">
 
                        @for($i=0;$i<$performace->product->product_avg_rating; $i++)
@@ -44,11 +50,11 @@
                     <span>({{ $performace->product->review_count ?? 0 }})</span>
                 </div>
                 <div class="per-size d-flex gap-2 py-1">
-                    <div class="per-1">Size: <span>  {{ $performace->product->product_variants['0']->size->name }}  </span></div>
-                    <div class="per-1">Color: <span>   {{ $performace->product->product_variants['0']->color->name }} </span></div>
+                    <div class="per-1">{{ __('affiliate_messages.size') }}: <span>  @if(app()->getLocale() == 'en'){{ $performace->product->product_variants['0']->size->name }}@else{{ $performace->product->product_variants['0']->size->name_ar }}@endif  </span></div>
+                    <div class="per-1">{{ __('affiliate_messages.color') }}: <span>   @if(app()->getLocale() == 'en'){{ $performace->product->product_variants['0']->color->name }}@else{{ $performace->product->product_variants['0']->color->name_ar }}@endif </span></div>
                     <!-- <div class="per-1">Qnt: <span> 0</span></div> -->
                 </div>
-                <div class="af-price-line"><span class="af-price text-black">{{ $performace->product->product_variants['0']->final_price }} KD</span> <span class="text-decoration-line-through"> {{ $performace->product->product_variants['0']->actual_price }} KD </span>
+                <div class="af-price-line"><span class="af-price text-black">{{ $performace->product->product_variants['0']->final_price }} {{ __('affiliate_messages.kwd') }}</span> <span class="text-decoration-line-through"> {{ $performace->product->product_variants['0']->actual_price }} {{ __('affiliate_messages.kwd') }} </span>
 
                     {{$performace->product->product_variants['0']->discount_value}}
 
@@ -56,17 +62,17 @@
                     @if($performace->product->product_variants['0']->discount_type=='1')
                     %
                     @else
-                     OFF
+                     {{ __('affiliate_messages.off') }}
                     @endif
                     </div>
-                <div class="commission-text"> {{ $performace->product->affiliated_commission??'0'}}% Commission </div>
+                <div class="commission-text"> {{ $performace->product->affiliated_commission??'0'}}% {{ __('affiliate_messages.commission') }} </div>
 
             </div>
         </div>
        
         <div class="link-copy">
     <div class="link-title">
-        Link: 
+        {{ __('affiliate_messages.link') }}: 
         <span id="affiliateLink">{{ $performace->affiliate_product_link->link }}</span>
         <i class="bi bi-copy" onclick="copyLink()" style="cursor:pointer;"></i>
     </div>
@@ -76,7 +82,7 @@
 
 
     <div class="group-radio-btn d-flex gap-4 justify-content-between flex-wrap">
-        <div class="title24">Quick Summary</div>
+        <div class="title24">{{ __('affiliate_messages.quick_summary') }}</div>
         <div class="show-date d-flex gap-2  flex-wrap">
             <!-- <div class="date-form-pnl">
                 <input type="date" class="form-control">
@@ -116,8 +122,8 @@
             <div class="py-4 pb-0">
                 <div class="dash-box border20 shadow20 p20 pnl-flex total-revenue-bg">
                     <div class="dash-content ">
-                        <h5 class="text-white">Total Revenue</h5>
-                        <div class="title30 text-white">{{ $Total_revenue }} KD</div>
+                        <h5 class="text-white">{{ __('affiliate_messages.total_revenue') }}</h5>
+                        <div class="title30 text-white">{{ $Total_revenue }} {{ __('affiliate_messages.kwd') }}</div>
                     </div>
                     <div class="dash-circle-2">
                         <img src="{{ asset('dealer/assets/img/m3-icon/ren-icon.svg') }}" alt="icon" class="img-fluid">
@@ -130,8 +136,8 @@
             <div class="border20 shadow20 p20 mt-4 my-earning-bg">
                 <div class="total-revenu-box pnl-flex">
                     <div class="dash-content ">
-                        <h5 class="text-white">My Earnings</h5>
-                        <h1 class="font-34 py-3 text-white">{{ $my_earning }} KD</h1>
+                        <h5 class="text-white">{{ __('affiliate_messages.my_earnings') }}</h5>
+                        <h1 class="font-34 py-3 text-white">{{ $my_earning }} {{ __('affiliate_messages.kwd') }}</h1>
                     </div>
                     <div class="total-revenu-image">
                         <img src="{{ asset('dealer/assets/img/m3-icon/white-ic.svg') }}" alt="icon" class="img-fluid">
@@ -146,7 +152,7 @@
             <div class="col-lg-4 col-md-4">
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-4 click-bg">
                     <div class="dash-content">
-                        <h5>Total Clicks</h5>
+                        <h5>{{ __('affiliate_messages.total_clicks') }}</h5>
                         <div class="title30">{{ $affiliate_clicks }}</div>
                     </div>
                     <div class="dash-circle-2">
@@ -158,7 +164,7 @@
             <div class="col-lg-4 col-md-4">
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-3 order-bg-box">
                     <div class="dash-content">
-                        <h5>Total Orders</h5>
+                        <h5>{{ __('affiliate_messages.total_orders') }}</h5>
                         <div class="title30">{{ $Total_order }}</div>
                     </div>
                     <div class="dash-circle-2">
@@ -171,7 +177,7 @@
                 <div class="total-revenu border20 shadow20 p20 mb-3">
                     <div class="total-revenu-box pnl-flex">
                         <div class="dash-content">
-                            <h5>Conversion Rate</h5>
+                            <h5>{{ __('affiliate_messages.conversion_rate') }}</h5>
                             <div class="title30">{{ $conversionrate }}%</div>
                         </div>
                         <div class="total-revenu-image">
@@ -198,7 +204,7 @@
 function copyLink() {
     let text = document.getElementById("affiliateLink").innerText;
     navigator.clipboard.writeText(text).then(function() {
-        toastr.success("Link copied!");
+        toastr.success("{{ __('affiliate_messages.link_copied') }}");
     });
 }
 </script>

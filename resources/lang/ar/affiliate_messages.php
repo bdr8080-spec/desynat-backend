@@ -53,6 +53,33 @@ return [
     'loading' => 'جارٍ التحميل',
     'notifications' => 'الإشعارات',
     'no_notification_found' => 'لا توجد إشعارات',
+    'all' => 'الكل',
+    'off' => 'إيقاف',
+    'no_product_found' => 'لا يوجد منتجات',
+    'item_performance' => 'أداء المنتج',
+    'size' => 'المقاس',
+    'color' => 'اللون',
+    'quick_summary' => 'ملخص سريع',
+    'total_revenue' => 'إجمالي الإيرادات',
+    'my_earnings' => 'أرباحي',
+    'total_clicks' => 'إجمالي النقرات',
+    'total_orders' => 'إجمالي الطلبات',
+    'conversion_rate' => 'معدل التحويل',
+    'link' => 'رابط',
+    'link_copied' => 'تم نسخ الرابط!',
+
+    //category
+    'category' => 'التصنيف',
+    'sub_category' => 'التصنيف الفرعي',
+    'all_products' => 'جميع المنتجات',
+    'get_link' => 'الحصول على الرابط',
+    'no_product_found' => 'لا يوجد منتجات',
+    'affiliate_link' => 'رابط التسويق بالعمولة',
+    'copy_link' => 'نسخ الرابط',
+    'add_product' => 'إضافة منتج',
+    'link_copied_successfully' => 'تم نسخ الرابط بنجاح!',
+    'product_already_added_to_affiliate' => 'المنتج مضاف بالفعل إلى هذا المسوّق',
+    'product_added_to_affiliate_successfully' => 'تمت إضافة المنتج إلى المسوّق بنجاح',
 
     
 

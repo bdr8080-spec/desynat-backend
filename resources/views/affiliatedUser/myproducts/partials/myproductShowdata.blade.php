@@ -16,17 +16,21 @@
 
                         @isset($product['product']['affiliated_commission'])
                         {{$product['product']['affiliated_commission']}}%
-                        Commission
+                        {{ __('affiliate_messages.commission') }}
                     @else
                         0%
-                        Commission
+                        {{ __('affiliate_messages.commission') }}
                    
                     @endisset
                     </div>
                 </div>
                 <div class="af-content p-2">
                     <div class="sub-title">
+                        @if(app()->getLocale() == 'en')
                         {{$product['product']['product_name_en']}}
+                        @else
+                        {{$product['product']['product_name_ar']}}
+                        @endif
                     </div>
                     <!-- <div class="af-rating">
                         
@@ -59,23 +63,23 @@
                     </div>
                     <div class="af-price">
                         {{$product['product']['product_variants'][0]['final_price']}}
-                        KD</div>
+                        {{ __('affiliate_messages.kwd') }}</div>
                     <div class="af-price-line"><span class="text-decoration-line-through">
                             {{$product['product']['product_variants'][0]['actual_price']}}
-                            KD </span>
+                            {{ __('affiliate_messages.kwd') }} </span>
 
                         {{$product['product']['product_variants'][0]['discount_value']}}
 
                         @if($product['product']['product_variants'][0]['discount_type']=='1')
                         %
                         @else
-                        Off
+                        {{ __('affiliate_messages.off') }}
                         @endif
                     </div>
                     <div class="text-center mt-2">
                         <a href="{{route('affiliate.ProductPerformance', $product['id'])}}"
-                            class="btn btn-success w-100 lh-sm text-white">Track
-                            Performance</a>
+                            class="btn btn-success w-100 lh-sm text-white">{{ __('affiliate_messages.track_performance') }}
+                            </a>
                     </div>
                 </div>
             </div>
@@ -85,7 +89,7 @@
         @empty
         <div class="col-lg-4 col-md-6">
 
-          <p>No product found</p>
+          <p>{{ __('affiliate_messages.no_product_found') }}</p>
 
         </div>
 
