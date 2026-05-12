@@ -53,7 +53,7 @@
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('user.gift_cards')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
                 class="img-fluid"></a>
-        <h3>Add Gift Card</h3>
+        <h3>{{ __('user_messages.add_gift_card') }}</h3>
     </div>
 
     <div class="row">
@@ -61,12 +61,16 @@
             <div class="giftcard-type">
                 <div class="row">
                     <div class="col-lg-7 col-md-6">
-                        <h6>Select Occasion Type</h6>
+                        <h6>{{ __('user_messages.select_occasion_type') }}</h6>
                         <div class="occasion-buttons">
                             @foreach($giftCardCategory as $index => $category)
                             <button class="occasion-btn {{ $index === 0 ? 'active' : '' }}"
                                 data-img="{{ $category['image'] }}" data-id="{{ $category['id'] }}">
+                                @if(app()->getLocale() == 'en')
                                 {{ $category['name_english'] }}
+                                @else
+                                {{ $category['name_arabic'] }}
+                                @endif
                             </button>
                             @endforeach
                         </div>
@@ -78,17 +82,17 @@
                     </div>
                 </div>
                 <div class="gift-pnl">
-                    <h6>Choose Amount</h6>
+                    <h6>{{ __('user_messages.choose_amount') }}</h6>
                     <div class="occasion-buttons">
                         <button type="button" class="amount-btn active" data-value="{{ number_format(convertPriceInUserWeb(50), 2) }}">{{ number_format(convertPriceInUserWeb(50), 2) }} {{ $currency }}</button>
                         <button type="button" class="amount-btn" data-value="{{ number_format(convertPriceInUserWeb(100), 2) }}">{{ number_format(convertPriceInUserWeb(100), 2) }} {{ $currency }}</button>
                         <button type="button" class="amount-btn" data-value="{{ number_format(convertPriceInUserWeb(200), 2) }}">{{ number_format(convertPriceInUserWeb(200), 2) }} {{ $currency }}</button>
                         <button type="button" class="amount-btn" data-value="{{ number_format(convertPriceInUserWeb(500), 2) }}">{{ number_format(convertPriceInUserWeb(500), 2) }} {{ $currency }}</button>
-                        <button type="button" class="amount-btn" data-value="">Enter Amount</button>
+                        <button type="button" class="amount-btn" data-value="">{{ __('user_messages.enter_amount') }}</button>
                     </div>
 
                     <div class="form-group w-100 py-2 amountpnl" style="display:none;">
-                        <input type="text" class="form-control pline-10" id="customAmount" placeholder="Enter Amount">
+                        <input type="text" class="form-control pline-10" id="customAmount" placeholder="{{ __('user_messages.enter_amount') }}">
                         <span class="text-danger error-text amount-error"></span>
                     </div>
                 </div>
@@ -103,23 +107,23 @@
                         <input type="hidden" name="user_id" id="user_id" value="{{ auth()->id() }}">
                         <!-- <h6>Recipient Details</h6> -->
                         <div class="gift-pnl mt-4">
-                            <h6>Recipient Details</h6>
+                            <h6>{{ __('user_messages.recipient_details') }}</h6>
                             <div class="form-group w-100 py-2">
-                                <label>Name</label>
+                                <label>{{ __('user_messages.name') }}</label>
                                 <input type="text" name="receiver_name" class="form-control pline-10"
-                                    placeholder="Enter Name" oninput="this.value = this.value.replace(/^\s+/,'');">
+                                    placeholder="{{ __('user_messages.enter_name') }}" oninput="this.value = this.value.replace(/^\s+/,'');">
                                 <span class="text-danger error-text receiver_name_error"></span>
                             </div>
                             <div class="form-group w-100 py-2">
-                                <label>Email ID</label>
+                                <label>{{ __('user_messages.email_id') }}</label>
                                 <input type="text" name="receiver_email"
                                     oninput="this.value = this.value.replace(/\s+/g, '');" class="form-control pline-10"
-                                    placeholder="Enter Email ID">
+                                    placeholder="{{ __('user_messages.enter_email_id') }}">
                                 <span class="text-danger error-text receiver_email_error"></span>
                             </div>
 
                             <div class="form-group position-relative py-2 mobileInput">
-                                <label>WhatsApp Number</label>
+                                <label>{{ __('user_messages.whatsapp_number') }}</label>
                                 <div class="d-flex align-items-center mt-1">
                                     <div class="">
                                         <div class="dropdown">
@@ -162,7 +166,7 @@
                                         </div>
                                     </div>
                                     <div class="w-100">
-                                        <input type="number" class="form-control pline-10" name="mobile" placeholder="Enter WhatsApp Number" name="" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
+                                        <input type="number" class="form-control pline-10" name="mobile" placeholder="{{ __('user_messages.enter_whatsapp_number') }}" name="" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
                                         <span class="text-danger error-text mobile_error"></span>
                                     </div>
                                 </div>
@@ -173,24 +177,24 @@
                     </div>
 
                     <div class="gift-pnl mt-3">
-                        <h6>From</h6>
+                        <h6>{{ __('user_messages.from') }}</h6>
                         <div class="form-group w-100 py-2">
-                            <label>Name</label>
+                            <label>{{ __('user_messages.name') }}</label>
                             <input type="text" name="sender_name" oninput="this.value = this.value.replace(/^\s+/,'');"
-                                class="form-control pline-10" placeholder="Enter Name">
+                                class="form-control pline-10" placeholder="{{ __('user_messages.enter_name') }}">
                             <span class="text-danger error-text sender_name_error"></span>
                         </div>
                         <div class="form-group w-100 py-2">
-                            <label>Email ID</label>
+                            <label>{{ __('user_messages.email_id') }}</label>
                             <input type="text" name="sender_email"
                                 oninput="this.value = this.value.replace(/\s+/g, '');" class="form-control pline-10"
-                                placeholder="Enter Email ID">
+                                placeholder="{{ __('user_messages.enter_email_id') }}">
                             <span class="text-danger error-text sender_email_error"></span>
                         </div>
                         <div class="form-group w-100 py-2">
-                            <label>Wish Message</label>
+                            <label>{{ __('user_messages.wish_message') }}</label>
                             <textarea name="wish_message" oninput="this.value = this.value.replace(/^\s+/,'');" rows="3"
-                                class="form-control pline-10" placeholder="Write here"></textarea>
+                                class="form-control pline-10" placeholder="{{ __('user_messages.write_here') }}"></textarea>
                             <span class="text-danger error-text wish_message_error"></span>
                         </div>
                     </div>
@@ -205,7 +209,7 @@
                         <input type="radio" name="payment" id="onlinePayment" value="1" checked>
                         <span class="radio-mark"></span>
                         <div class="label-content">
-                            <div class="title">Online Payment</div>
+                            <div class="title">{{ __('user_messages.online_payment') }}</div>
                         </div>
                     </label>
                 </div>
@@ -222,8 +226,8 @@
                         <div class="label-content d-flex gap-3">
                             <img src="{{ asset('user/assets/images/wallet.svg') }}" class="img-fluid">
                             <div class="title">
-                                In -App Wallet
-                                <div class="small-14">Available Balance : {{ number_format(convertPriceInUserWeb($walletBalance), 2) }} {{ $currency }}</div>
+                                {{ __('user_messages.in_app_wallet') }}
+                                <div class="small-14">{{ __('user_messages.available_balance') }} : {{ number_format(convertPriceInUserWeb($walletBalance), 2) }} {{ $currency }}</div>
                             </div>
                         </div>
                     </label>
@@ -251,12 +255,12 @@
             </div>
 
             <div class="cmn-btn mt-4">
-                <button type="submit" class="btn paybtn-common w-100">Pay Now</button>
+                <button type="submit" class="btn paybtn-common w-100">{{ __('user_messages.pay_now') }}</button>
             </div>
             </form>
 
             <div class="gift-pnl mt-4">
-                <h6>Note</h6>
+                <h6>{{ __('user_messages.note') }}</h6>
                 <div class="note-bg">
                     <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto vero sint, odit neque
                         placeat natus voluptates assumenda, molestiae incidunt quos deserunt illum sequi. Laborum culpa
@@ -452,7 +456,7 @@ $(document).ready(function() {
         if (amount === "") {
             let customAmount = $("#customAmount").val().trim();
             if (customAmount === "" || isNaN(customAmount) || Number(customAmount) <= 0) {
-                $(".amount-error").text("Please Enter Amount");
+                $(".amount-error").text("{{ __('user_messages.please_enter_amount') }}");
                 hasError = true;
             } else {
                 $("#amount").val(customAmount); // set hidden input
@@ -469,33 +473,51 @@ $(document).ready(function() {
 
         let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (receiver_name === "") {
-            $("input[name='receiver_name']").siblings(".error-text").text("Please enter Receiver Name");
+       if (receiver_name === "") {
+            $("input[name='receiver_name']")
+                .siblings(".error-text")
+                .text("{{ __('user_messages.please_enter_receiver_name') }}");
+
             hasError = true;
         }
+
         if (receiver_email === "" || !emailRegex.test(receiver_email)) {
-            $("input[name='receiver_email']").siblings(".error-text").text(
-                "Please Enter Valid Email Id ");
+            $("input[name='receiver_email']")
+                .siblings(".error-text")
+                .text("{{ __('user_messages.please_enter_valid_email_id') }}");
+
             hasError = true;
         }
+
         if (sender_name === "") {
-            $("input[name='sender_name']").siblings(".error-text").text("Please enter Sender Name");
+            $("input[name='sender_name']")
+                .siblings(".error-text")
+                .text("{{ __('user_messages.please_enter_sender_name') }}");
+
             hasError = true;
         }
+
         if (sender_email === "" || !emailRegex.test(sender_email)) {
-            $("input[name='sender_email']").siblings(".error-text").text(
-                "Please Enter Valid Email Id ");
+            $("input[name='sender_email']")
+                .siblings(".error-text")
+                .text("{{ __('user_messages.please_enter_valid_email_id') }}");
+
             hasError = true;
         }
+
         if (wish_message === "") {
-            $("textarea[name='wish_message']").siblings(".error-text").text(
-                "Please enter Wish Message");
+            $("textarea[name='wish_message']")
+                .siblings(".error-text")
+                .text("{{ __('user_messages.please_enter_wish_message') }}");
+
             hasError = true;
         }
 
         if (mobile === "") {
-            $("input[name='mobile']").siblings(".error-text").text(
-                "Please enter whatsapp number");
+            $("input[name='mobile']")
+                .siblings(".error-text")
+                .text("{{ __('user_messages.please_enter_whatsapp_number') }}");
+
             hasError = true;
         }
 
@@ -510,8 +532,8 @@ $(document).ready(function() {
             var wallet_Amount = $('#WalletBalance').val();
             var PayAmount = amount;
             if (wallet_Amount < PayAmount) {
-                console.log("Wallet Amount is Low Please Choose Another Method");
-                toastr.error('Wallet Amount is Low Please Choose Another Method');
+                //console.log("Wallet Amount is Low Please Choose Another Method");
+                toastr.error(__('user_messages.wallet_amount_is_low_choose_another_method'));
 
                 return false;
             }
@@ -556,7 +578,7 @@ $(document).ready(function() {
                         // setTimeout(function() {
                         //     window.location.href = url;
                         // }, 2000);
-                        toastr.success('Payment Paid Successfully');
+                        toastr.success("{{ __('user_messages.payment_paid_successfully') }}");
 
                         var url = "{{ route('user.giftcard_complete_Payment') }}" +
                                 "?order_id=" + orderid + "&type=giftCard";

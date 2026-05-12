@@ -13,11 +13,11 @@
                     @csrf
                     <input type="hidden" value="{{request()->id}}" name="id">
                 <div class="otp-page">
-                    <h3 class="h3-heading"><span><a href="{{ url()->previous() }}"><i class="fa-solid fa-chevron-left"></i></a></span> OTP</h3>
+                    <h3 class="h3-heading"><span><a href="{{ url()->previous() }}"><i class="fa-solid fa-chevron-left"></i></a></span> {{ __('user_messages.otp') }}</h3>
                     @if (request()->email)
-                          <h5 class="otp_sent">To change email address. a verification code has been sent <span>{{request()->email}}</span></h5>
+                          <h5 class="otp_sent">{{ __('user_messages.to_change_email_address') }}. {{ __('user_messages.a_verification_code_has_been_sent') }} <span>{{request()->email}}</span></h5>
                     @else
-                          <h5 class="otp_sent">To change mobile no. a verification code has been sent <span>{{request()->country_code}} {{request()->mobile}}</span></h5>
+                          <h5 class="otp_sent">{{ __('user_messages.to_change_mobile_number') }}. {{ __('user_messages.a_verification_code_has_been_sent') }} <span>{{request()->country_code}} {{request()->mobile}}</span></h5>
                     @endif
                      <div class="otp-container mt-3">
                         <input type="text" maxlength="1" class="otp-input" id="otp1" name="otp[]" />
@@ -30,12 +30,12 @@
                         <div class="resend-otp-container"
                             style="display: flex;justify-content: center;margin-top:20px !important;xmargin:0 auto; align-items: center; gap: 10px;">
                            <button type="button" class="customBtnresend" data-id="{{ request()->id }}" id="resendOtp">
-                                Resend OTP
+                                {{ __('user_messages.resend_otp') }}
                             </button>
 
                             <span id="otpTimer" style="color: red;"></span>
                         </div>
-                    <button type="submit" class="customBtn customBtn5 mt-5" id="verifyBtn">Verify OTP</button>
+                    <button type="submit" class="customBtn customBtn5 mt-5" id="verifyBtn">{{ __('user_messages.verify_otp') }}</button>
                 </div>
                 </form>
             </div>
@@ -47,7 +47,7 @@
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <img src="assets/images/success.svg" class="img-fluid" />
-                    <p id="updateMessage">Mobile Number Changed successfully !</p>
+                    <p id="updateMessage">{{ __('user_messages.mobile_number_changed_successfully') }} !</p>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <img src="assets/images/success.svg" class="img-fluid" />
-                    <p id="updateMessage">Email Address Change Successfully !</p>
+                    <p id="updateMessage">{{ __('user_messages.email_address_change_successfully') }} !</p>
                 </div>
             </div>
         </div>
@@ -73,21 +73,25 @@
     let seconds = 30;
 
  
-    $btn.prop('disabled', true).text(`Resend OTP (${seconds}s)`);
+    // $btn.prop('disabled', true).text(`Resend OTP (${seconds}s)`);
+    $btn.prop('disabled', true).text(`{{ __('user_messages.resend_otp') }} (${seconds}s)`);
 
 
     let initialTimer = setInterval(function() {
         seconds--;
-        $btn.text(`Resend OTP (${seconds}s)`);
+        // $btn.text(`Resend OTP (${seconds}s)`);
+        $btn.text(`{{ __('user_messages.resend_otp') }} (${seconds}s)`);
         if (seconds <= 0) {
             clearInterval(initialTimer);
-            $btn.prop('disabled', false).text('Resend OTP');
+            // $btn.prop('disabled', false).text('Resend OTP');
+            $btn.prop('disabled', false).text("{{ __('user_messages.resend_otp') }}");
         }
     }, 1000);
 
     $(document).on('click', '#resendOtp', function() {
         let id = $(this).data('id');
-        $btn.prop('disabled', true).text('Sending...');
+        // $btn.prop('disabled', true).text('Sending...');
+        $btn.prop('disabled', true).text("{{ __('user_messages.sending') }}");
 
         $.ajax({
             url: "{{ route('updateResendOtp') }}",
@@ -98,21 +102,25 @@
 
                 // Restart 30s countdown after success
                 let seconds = 30;
-                $btn.text(`Resend OTP (${seconds}s)`);
+                // $btn.text(`Resend OTP (${seconds}s)`);
+                $btn.text(`{{ __('user_messages.resend_otp') }} (${seconds}s)`);
 
                 let countdown = setInterval(function() {
                     seconds--;
-                    $btn.text(`Resend OTP (${seconds}s)`);
+                    // $btn.text(`Resend OTP (${seconds}s)`);
+                    $btn.text(`{{ __('user_messages.resend_otp') }} (${seconds}s)`);
 
                     if (seconds <= 0) {
                         clearInterval(countdown);
-                        $btn.prop('disabled', false).text('Resend OTP');
+                        // $btn.prop('disabled', false).text('Resend OTP');
+                        $btn.prop('disabled', false).text("{{ __('user_messages.resend_otp') }}");
                     }
                 }, 1000);
             },
             error: function(xhr) {
                 toastr.error(xhr.responseJSON?.message || 'Something went wrong');
-                $btn.prop('disabled', false).text('Resend OTP');
+                // $btn.prop('disabled', false).text('Resend OTP');
+                $btn.prop('disabled', false).text("{{ __('user_messages.resend_otp') }}");
             }
         });
     });

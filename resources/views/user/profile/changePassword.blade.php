@@ -6,15 +6,15 @@
     <div class="my-profile customContainer">
         <div class="d-lg-flex d-md-flex d-block align-items-center mt-3 justify-content-between">
             <div class="my-profie-nav">
-                <a class="text-black" href="{{route('userProfile')}}"><i class="fa-solid fa-chevron-left"></i></a>Change Password</div>
+                <a class="text-black" href="{{route('userProfile')}}"><i class="fa-solid fa-chevron-left"></i></a>{{ __('user_messages.change_password') }}</div>
         </div>
         <form id="changePassword">
             @csrf
         <div class="row mt-5">
             <div class="col-lg-6">
                 <div class="form-group position-relative">
-                <label for="">Old Password</label>
-                <input type="password" class="form-control notapplyspace" placeholder="Enter Password" name="old_password" />
+                <label for="">{{ __('user_messages.old_password') }}</label>
+                <input type="password" class="form-control notapplyspace" placeholder="{{ __('user_messages.enter_password') }}" name="old_password" />
                 <i class="fa-solid fa-eye toggle-password" data-target="old_password"></i>
                 <p class="text-danger" id="error-old_password"></p>
                 </div>
@@ -22,8 +22,8 @@
 
             <div class="col-lg-6">
                 <div class="form-group position-relative">
-                <label for="">Enter New Password</label>
-                <input type="password" class="form-control notapplyspace" placeholder="Enter New Password" name="new_password" />
+                <label for="">{{ __('user_messages.new_password') }}</label>
+                <input type="password" class="form-control notapplyspace" placeholder="{{ __('user_messages.enter_new_password') }}" name="new_password" />
                 <i class="fa-solid fa-eye toggle-password" data-target="new_password"></i>
                 <p class="text-danger" id="error-new_password"></p>
                 </div>
@@ -31,14 +31,14 @@
 
             <div class="col-lg-6 mt-3">
                 <div class="form-group position-relative">
-                <label for="">Confirm Password</label>
-                <input type="password" class="form-control notapplyspace" placeholder="Re-Enter Password" name="confirm_password" />
+                <label for="">{{ __('user_messages.confirm_password') }}</label>
+                <input type="password" class="form-control notapplyspace" placeholder="{{ __('user_messages.re_enter_new_password') }}" name="confirm_password" />
                 <i class="fa-solid fa-eye toggle-password" data-target="confirm_password"></i>
                 <p class="text-danger" id="error-confirm_password"></p>
                 </div>
             </div>
             <div class="col-lg-12">
-                <button  type="submit"  class="customBtn w-100 mt-4" id="loginButtom">Update</button>
+                <button  type="submit"  class="customBtn w-100 mt-4" id="loginButtom">{{ __('user_messages.update') }}</button>
             </div>
         </div>
         </form>

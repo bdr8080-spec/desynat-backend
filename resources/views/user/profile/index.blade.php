@@ -4,9 +4,9 @@
 @section('content')
     <div class="my-profile customContainer my-lg-5 my-2 mb-4">
         <div class="d-lg-flex d-md-flex d-block align-items-center mt-3 justify-content-between">
-            <div class="my-profie-nav"><a class="text-black" href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i></a> My Profile (edit)</div>
+            <div class="my-profie-nav"><a class="text-black" href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i></a> {{ __('user_messages.my_profile_edit') }}</div>
             <div>
-                <a href="{{route('userChangePassword')}}" class="customBtn2"><i class="fa-solid fa-lock pe-3"></i>Change Password</a>
+                <a href="{{route('userChangePassword')}}" class="customBtn2"><i class="fa-solid fa-lock pe-3"></i>{{ __('user_messages.change_password') }}</a>
             </div>
         </div>
 
@@ -23,26 +23,26 @@
                             alt="Profile Image"
                         />
                      </div>
-                    <label for="fileInput" class="changeImageText">Change Image</label>
+                    <label for="fileInput" class="changeImageText">{{ __('user_messages.change_image') }}</label>
                     <input type="file" id="fileInput" accept="image/*" hidden  name="image"/>
                     <input type="hidden" value="{{$user->profile_image}}" name="old_image">
                 </div>
             </div>
             <div class="col-lg-6 mt-3">
                 <div class="form-group">
-                    <label for="">Name</label>
-                    <input type="text" class="form-control" placeholder="Please enter full name" value="{{$user->full_name}}"  name="full_name"/>
+                    <label for="">{{ __('user_messages.name') }}</label>
+                    <input type="text" class="form-control" placeholder="{{ __('user_messages.enter_name') }}" value="{{$user->full_name}}"  name="full_name"/>
                     <span class="text-danger" id="error-full_name"></span>
                 </div>
             </div>
             <div class="col-lg-6 mt-3">
                 <div class="form-group mobile position-relative">
-                    <label for="">Mobile No.</label>
+                    <label for="">{{ __('user_messages.mobile_number') }}</label>
                     <div class="d-flex align-items-center gap-2 mb-2 tag" >
                         <img src="{{$user->country_info->flag}}" alt="country_flag"  >
                     <input type="text" name="country_code" value="{{$user->country_code}}" readonly>
                     </div>
-                    <input type="text" class="form-control number" placeholder="Please enter mobile number" value="{{$user->mobile}}" name="mobile" readonly/>            
+                    <input type="text" class="form-control number" placeholder="{{ __('user_messages.enter_mobile_number') }}" value="{{$user->mobile}}" name="mobile" readonly/>            
                     </span>
                     <a class="change"
                     href="{{ route('userOldNumberSendOtp', [
@@ -51,26 +51,26 @@
                         'for' => 'mobile',
                         'type' => '0'
                     ]) }}">
-                    Change
+                    {{ __('user_messages.change') }}
                     </a>
                 </div>
             </div>
             <div class="col-lg-12 mt-3">
                 <div class="form-group mobile position-relative">
-                    <label for="">Email Id</label>
-                    <input type="email" class="form-control" placeholder="Please enter email address" value="{{$user->email}}"  name="email" readonly/>
+                    <label for="">{{ __('user_messages.email_id') }}</label>
+                    <input type="email" class="form-control" placeholder="{{ __('user_messages.enter_email_id') }}" value="{{$user->email}}"  name="email" readonly/>
                     <a class="change"
                            href="{{ route('userOldNumberSendOtp', [
                         'email' => $user->email,
                         'for' => 'email',
                         'type' => '0'
                     ]) }}">
-                    Change
+                    {{ __('user_messages.change') }}
                     </a>
                 </div>
             </div>
             <div class="col-lg-12">
-                <button type="submit" class="customBtn w-100 mt-4 mb-45" id="updateProfileBtn">Save</button>
+                <button type="submit" class="customBtn w-100 mt-4 mb-45" id="updateProfileBtn">{{ __('user_messages.save') }}</button>
             </div>
         </div>
         </form>

@@ -6,7 +6,7 @@
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
-        <h3>Chat</h3>
+        <h3>{{ __('user_messages.chat') }}</h3>
     </div>
 
     <div class="main-content categoryDetail">
@@ -14,8 +14,8 @@
             <div class="col-lg-4">
                 <div class="category_filter">
                     <div class="d-flex align-items-center justify-content-between mb-3">
-                        <h3 class="mb-0">Filter</h3>
-                        <a href="{{route('user.allChats')}}">Clear</a>
+                        <h3 class="mb-0">{{ __('user_messages.filter') }}</h3>
+                        <a href="{{route('user.allChats')}}">{{ __('user_messages.clear') }}</a>
                     </div>
                     
                     <form>
@@ -25,7 +25,7 @@
                                 {{ request('filters') == '1' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
-                                    <div class="title">All</div>
+                                    <div class="title">{{ __('user_messages.all') }}</div>
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
@@ -33,7 +33,7 @@
                                 {{ request('filters') == '2' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
-                                    <div class="title">Waiting </div>
+                                    <div class="title">{{ __('user_messages.waiting') }} </div>
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
@@ -41,7 +41,7 @@
                                 {{ request('filters') == '3' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
-                                    <div class="title">Quotation Received
+                                    <div class="title">{{ __('user_messages.quotation_received') }}
                                     </div>
                                 </div>
                             </label>
@@ -50,14 +50,14 @@
                                 {{ request('filters') == '4' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
-                                    <div class="title">Quotation Accepted
+                                    <div class="title">{{ __('user_messages.quotation_accepted') }}
                                     </div>
                                 </div>
                             </label>
 
                         </div>
 
-                        <button type="submit" class="customBtn customBtn5 mt-5"> Apply </button>
+                        <button type="submit" class="customBtn customBtn5 mt-5"> {{ __('user_messages.apply') }} </button>
                     </form>
                 </div>
             </div>
@@ -67,12 +67,12 @@
                     <form action="{{ route('user.allChats') }}" method="GET">
                         <div class="seArch">
                             <div class="form-group position-relative search">
-                                <input type="text" class="form-control" placeholder="Search" name="search"
+                                <input type="text" class="form-control" placeholder="{{ __('user_messages.search') }}" name="search"
                                     value="{{ request()->search }}" />
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </div>
                             <button type="submit" class="customBtn customBtn5">
-                                Search
+                                {{ __('user_messages.search') }}
                             </button>
                         </div>
                     </form>
@@ -93,6 +93,7 @@
                                         </div>
                                         <div class="w-100">
                                             <div class="card-right d-flex w-100 justify-content-between">
+                                                @if(app()->getLocale() == 'en')
                                                 <div class="product-info">
                                                     <div class="product-title">{{$chat['seller_details']['first_name']}} {{$chat['seller_details']['last_name']}}</div>
                                                     @if(!empty($chat['last_chat']))
@@ -102,30 +103,41 @@
                                                     <div class="chat-user-light"> {{$chat['last_chat_time']}}</div>
                                                     @endif                                            
                                                 </div>
+                                                @else
+                                                <div class="product-info">
+                                                    <div class="product-title">{{$chat['seller_details']['first_name']}} {{$chat['seller_details']['last_name']}}</div>
+                                                    @if(!empty($chat['last_chat_ar']))
+                                                    <div class="chat-user-light"> {{$chat['last_chat_ar']}}</div>
+                                                    @endif
+                                                    @if(!empty($chat['last_chat_time']))
+                                                    <div class="chat-user-light"> {{$chat['last_chat_time']}}</div>
+                                                    @endif                                            
+                                                </div>
+                                                @endif
                                                 @if($chat['product_request'] == '1' && $chat['action'] == '0' && $chat['order_create_status'] == null)
                                                     <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">
-                                                        Waiting
+                                                        {{ __('user_messages.waiting') }}
                                                     </div>
 
                                                 @elseif($chat['product_request'] == '1' && $chat['action'] == '5' && $chat['order_create_status'] == null)
                                                     <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
-                                                        Quotation Accepted
+                                                        {{ __('user_messages.quotation_accepted') }}
                                                     </div>
 
                                                 @elseif($chat['product_request'] == '1' && $chat['order_create_status'] == null && in_array($chat['action'], ['3','4']))
                                                     <div class="yellow-bg" style="color:#D32F2F;background:#D32F2F1A;">
-                                                        Quotation Rejected
+                                                        {{ __('user_messages.quotation_rejected') }}
                                                     </div>
 
                                                 @elseif($chat['product_request'] == '1' && $chat['order_create_status'] == null && in_array($chat['action'], ['1','2']))
                                                     <div class="yellow-bg" style="color:#172B85;background:#172B851A;">
                                                     <!-- <div class="yellow-bg" style="color:#17854C;background:#17854C1A;"> -->
-                                                        Quotation Received
+                                                        {{ __('user_messages.quotation_received') }}
                                                     </div>
                                                 
                                                 @elseif($chat['type'] == '2' && $chat['product_request'] == '1' && $chat['order_create_status'] !== null)
                                                 <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
-                                                    Order Placed
+                                                    {{ __('user_messages.order_placed') }}
                                                 </div>
 
                                                 @elseif($chat['type'] == '1')
@@ -140,83 +152,10 @@
                         </div>
                     @empty
                         <div class="text-center py-5">
-                            <h6 class="text-muted">No Chat Found</h6>
+                            <h6 class="text-muted">{{ __('user_messages.no_chat_found') }}</h6>
                         </div>
                     @endforelse
 
-                    <!-- <div class="cart-panel position-relative">
-                        <a href="order_details" class="link-content">
-                            <div class="cart-card">
-                                <div class="card-left mb-2 d-flex align-items-center">
-                                    <div>
-                                        <div class="chat-user-circle me-3">
-                                            <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
-                                                class="img-fluid">
-                                        </div>
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="card-right d-flex w-100 justify-content-between">
-                                            <div class="product-info">
-                                                <h6 class="product-title"> Max jacobson</h6>
-                                                <div class="chat-user-light"> Thank you, bro!</div>
-                                                <div class="chat-user-light"> Today 5 PM</div>                                            
-                                            </div>
-                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">Quotation Received</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div> -->
-
-                    <!-- <div class="cart-panel position-relative">
-                        <a href="order_details" class="link-content">
-                            <div class="cart-card">
-                                <div class="card-left mb-2 d-flex align-items-center">
-                                    <div>
-                                        <div class="chat-user-circle me-3">
-                                            <img src="{{asset('user/assets/images/item-2.svg')}}" alt="Product"
-                                                class="img-fluid">
-                                        </div>
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="card-right d-flex w-100 justify-content-between">
-                                            <div class="product-info">
-                                                <h6 class="product-title"> Max jacobson</h6>
-                                                <div class="chat-user-light"> Thank you, bro!</div>
-                                                <div class="chat-user-light"> Today 5 PM</div>                                            
-                                            </div>
-                                            <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">Quotation Accepted</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div> -->
-
-                    <!-- <div class="cart-panel position-relative">
-                        <a href="order_details" class="link-content">
-                            <div class="cart-card">
-                                <div class="card-left mb-2 d-flex align-items-center">
-                                    <div>
-                                        <div class="chat-user-circle me-3">
-                                            <img src="{{asset('user/assets/images/item-1.svg')}}" alt="Product"
-                                                class="img-fluid">
-                                        </div>
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="card-right d-flex w-100 justify-content-between">
-                                            <div class="product-info">
-                                                <h6 class="product-title"> Max jacobson</h6>
-                                                <div class="chat-user-light"> Thank you, bro!</div>
-                                                <div class="chat-user-light"> Today 5 PM</div>                                            
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div> -->
 
 
 

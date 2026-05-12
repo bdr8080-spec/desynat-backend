@@ -14,6 +14,10 @@ use App\Helpers\ApiResponse;
 use Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\CommonController;
+use App\Services\TwilioService;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserOtpMail;
+use Illuminate\Support\Facades\DB;
 
 
 class ProfileController extends Controller
@@ -39,7 +43,7 @@ class ProfileController extends Controller
                 ];
 
                 $messages = [
-                    'full_name.required'     => 'Please enter full name.',
+                    'full_name.required' => __('user_messages.please_enter_full_name'),
                 ];
 
                 $validator = Validator::make($request->all(), $rules, $messages);
@@ -79,7 +83,7 @@ class ProfileController extends Controller
 
                     return response()->json([
                         'status'=>true,
-                        'message'=>"Profile Update Successfully"
+                        'message' => __('user_messages.profile_updated_successfully'),
                     ]);
 
 
@@ -99,12 +103,12 @@ class ProfileController extends Controller
         ];
 
         $messages = [
-            'old_password.required'     => 'Please enter your old password.',
-            'new_password.required'     => 'Please enter your new password.',
-            'new_password.min'          => 'New password must be at least 8 characters long.',
-            'new_password.regex'        => 'New password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol.',
-            'confirm_password.required' => 'Please confirm your new password.',
-            'confirm_password.same'     => 'New password and confirm password do not match.',
+            'old_password.required'     => __('user_messages.please_enter_old_password'),
+            'new_password.required'     => __('user_messages.please_enter_new_password'),
+            'new_password.min'          => __('user_messages.new_password_min_8_chars'),
+            'new_password.regex'        => __('user_messages.new_password_regex'),
+            'confirm_password.required' => __('user_messages.please_confirm_new_password'),
+            'confirm_password.same'     => __('user_messages.passwords_do_not_match'),
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -228,7 +232,19 @@ class ProfileController extends Controller
                     'id'           => encrypt($data->id),
                     'type'         => '0',
                     'for'          => 'mobile',
-                ])->with('success', 'OTP sent successfully to your old mobile number.');
+                ])->with('success', __('user_messages.otp_sent_successfully_old_mobile'));
+                
+                $phone = $user->country_code . $user->mobile;
+                $message = "Your verification Code Is $otp";
+                if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                                try {
+                                    $this->TwilioService->sendOtp($phone, $message);
+                                } catch (\Exception $e) {
+                                    // ❌ silently skip (no return, no error)
+                                    // Optional: log for debugging
+                                    //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                                }
+                            }
             }
 
             return redirect()->back()->with('error', "Old mobile number doesn't match our records.");
@@ -250,14 +266,26 @@ class ProfileController extends Controller
                 'id'           => encrypt($data->id),
                 'type'         => '1',
                 'for'          => 'mobile',
-            ])->with('success', 'OTP sent successfully to your new mobile number.');
+            ])->with('success', __('user_messages.otp_sent_successfully_new_mobile'));
+
+             $phone = $data->country_code . $data->mobile;
+            $message = "Your verification Code Is $otp";
+            if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                try {
+                    $this->TwilioService->sendOtp($phone, $message);
+                } catch (\Exception $e) {
+                    // ❌ silently skip (no return, no error)
+                    // Optional: log for debugging
+                    //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                }
+            }
         }
     }
 
     if ($for === 'email') {
         if ($type == '0') {
             if ($user->email !== $request->email) {
-                return redirect()->back()->with('error', "Old email doesn't match our records.");
+                return redirect()->back()->with('error', __('user_messages.old_email_not_match'));
             }
 
             $data = UserContactChangeHistory::create([
@@ -273,7 +301,10 @@ class ProfileController extends Controller
                 'id'    => encrypt($data->id),
                 'type'  => '0',
                 'for'   => 'email',
-            ])->with('success', 'OTP sent successfully to your old email.');
+            ])->with('success', __('user_messages.otp_sent_successfully_old_email'));
+
+            $check = User::where('email', $data->email)->first();
+            Mail::to($data->email)->send(new UserOtpMail($check, $otp));
         }
 
         if ($type == '1') {
@@ -290,7 +321,10 @@ class ProfileController extends Controller
                 'id'    => encrypt($data->id),
                 'type'  => '1',
                 'for'   => 'email',
-            ])->with('success', 'OTP sent successfully to your new email.');
+            ])->with('success', __('user_messages.otp_sent_successfully_new_email'));
+
+            $check = User::where('email', $data->email)->first();
+            Mail::to($data->email)->send(new UserOtpMail($check, $otp));
         }
     }
 
@@ -310,9 +344,9 @@ class ProfileController extends Controller
                 'otp' => 'required|array',
                 'otp.*' => 'required|digits:1',
             ], [
-                'id.required' => 'Verification ID is missing.',
-                'otp.required' => 'Please enter OTP.',
-                'otp.*.required' => 'Please enter all digits of your OTP',
+                'id.required' => __('user_messages.verification_id_missing'),
+                'otp.required' => __('user_messages.please_enter_otp'),
+                'otp.*.required' => __('user_messages.please_enter_all_otp_digits'),
             ]);
 
             if ($validator->fails()) {
@@ -393,11 +427,28 @@ class ProfileController extends Controller
         $otp = config('services.otp');
         $data->otp = $otp;
         $data->save();
+        if(!empty($data->mobile)){
+         $phone = $data->country_code . $data->mobile;
+            $message = "Your verification Code Is $otp";
+            if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                try {
+                    $this->TwilioService->sendOtp($phone, $message);
+                } catch (\Exception $e) {
+                    // ❌ silently skip (no return, no error)
+                    // Optional: log for debugging
+                    //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                }
+            }
+        }else{
+
+            $check = User::where('email', $data->email)->first();
+            Mail::to($data->email)->send(new UserOtpMail($check, $otp));
+        }
 
 
         return response()->json([
             'status' => true,
-            'message' => 'OTP resent successfully.',
+            'message' => __('user_messages.otp_resent_successfully'),
             'otp' => $otp,
         ]);
 

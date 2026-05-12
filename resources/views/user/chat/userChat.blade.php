@@ -2,15 +2,21 @@
 
 @section('content')
 
+@php
+    $currency = session('currency', 'KWD');
+    $rate = session('rate', '1');
+
+@endphp
+
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('user.allChats')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
                 class="img-fluid"></a>
         @if($chatData['record']['product_request'] == '0' && $chatData['record']['action'] == '0')
-        <h3>Chat Request</h3>
+        <h3>{{ __('user_messages.chat_request') }}</h3>
         @else
-        <h3>Chat</h3>
+        <h3>{{ __('user_messages.chat') }}</h3>
         @endif
     </div>
 
@@ -33,13 +39,21 @@
                                     <div class="card-right d-flex w-100 justify-content-between">
                                         <div class="product-info">
                                             <h5 class="product-title">
+                                                @if(app()->getLocale() == 'en')
                                                 {{$chatData['record']['product_variation']['product_details']['product_name_en']}}
+                                                @else{{$chatData['record']['product_variation']['product_details']['product_name_ar']}}
+                                                @endif
                                             </h5>
                                             <div class="psize d-flex gap-4 mt-2">
-                                                <span>Size:
-                                                    {{$chatData['record']['product_variation']['size']['name']}}</span>
+                                                <span>{{ __('user_messages.size') }}:
+                                                    @if(app()->getLocale() == 'en')
+                                                    {{$chatData['record']['product_variation']['size']['name']}}
+                                                    @else
+                                                    {{$chatData['record']['product_variation']['size']['name_ar']}}
+                                                    @endif
+                                                </span>
                                                 <span class="d-flex align-items-center gap-2">
-                                                    Color:
+                                                    {{ __('user_messages.color') }}:
                                                     <div class="colorbox"
                                                         style="width:15px;height:15px;border-radius:3px;background:{{$chatData['record']['product_variation']['color']['hex_code']}};">
                                                     </div>
@@ -47,11 +61,12 @@
                                                 <!-- <span>Qnt: {{$chatData['record']['quantity']}}</span> -->
                                             </div>
                                             <h6 class="product-title mt-2">
-                                                {{$chatData['record']['product_variation']['final_price']}} KD</h6>
+                                                {{ number_format(convertPriceInUserWeb($chatData['record']['product_variation']['final_price']), 2) }}  {{ $currency }} 
+                                            </h6>
                                         </div>
                                         @if($chatData['record']['action'] == '0' &&
                                         $chatData['record']['product_request'] == '1')
-                                        <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting</div>
+                                        <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">{{ __('user_messages.waiting') }}</div>
                                         @endif
                                     </div>
                                 </div>
@@ -64,19 +79,19 @@
                 <div class="gift-pnl mt-4">
                     <div class="border-1 my-profile" id="customOrderFormContainer">
                         <div class="form-group mb-3">
-                            <label>Add Quantity</label>
-                            <input type="text" name="quantity" class="form-control" placeholder="Eg.200">
-                            <small class="text-danger d-none" id="quantityError">Please enter quantity</small>
+                            <label>{{ __('user_messages.add_quantity') }}</label>
+                            <input type="text" name="quantity" class="form-control" placeholder="{{ __('user_messages.enter_quantity') }}">
+                            <small class="text-danger d-none" id="quantityError">{{ __('user_messages.please_enter_quantity') }}</small>
                         </div>
 
                         <input type="hidden" name="delivery_address" value="{{ $userAddress->id }}">
                         <input type="hidden" name="unique_id" value="{{ $chatData['record']['unique_id'] }}">
 
                         <div class="form-group mb-3">
-                            <label>Custom Details</label>
+                            <label>{{ __('user_messages.custom_details') }}</label>
                             <textarea rows="4" name="custom_details" class="form-control"
-                                placeholder="Write Here"></textarea>
-                            <small class="text-danger d-none" id="detailsError">Please enter custom details</small>
+                                placeholder="{{ __('user_messages.write_here') }}"></textarea>
+                            <small class="text-danger d-none" id="detailsError">{{ __('user_messages.please_enter_custom_details') }}</small>
                         </div>
 
                         <!-- <h6>Delivery Address</h6>
@@ -87,7 +102,7 @@
                         </div> -->
 
                         <div class="pt-4">
-                            <button type="button" class="customBtn w-100" id="sendCustomOrderBtn">Send Request</button>
+                            <button type="button" class="customBtn w-100" id="sendCustomOrderBtn">{{ __('user_messages.send_request') }}</button>
                         </div>
                     </div>
                 </div>
@@ -106,14 +121,14 @@
                                 <h2 class="accordion-header">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#viewRequest" aria-expanded="true" aria-controls="viewRequest">
-                                        View Request
+                                        {{ __('user_messages.view_request') }}
                                     </button>
                                 </h2>
                                 <div id="viewRequest" class="accordion-collapse collapse p-3 show">
                                     <table class="table table-borderless table-font">
                                         <tr>
                                             <td>
-                                                <div class="width-120">Total Quantity</div>
+                                                <div class="width-120">{{ __('user_messages.total_quantity') }}</div>
                                             </td>
                                             <td>
                                                 <div>{{$chatData['record']['quantity']}}</div>
@@ -130,7 +145,7 @@
                                         @if(!empty($chatData['record']['custom_details']))
                                         <tr>
                                             <td>
-                                                <div class="width-120">Custom details</div>
+                                                <div class="width-120">{{ __('user_messages.custom_details') }}</div>
                                             </td>
                                             <td>
                                                 <div>{{$chatData['record']['custom_details']}}</div>
@@ -153,11 +168,16 @@
                             <table class="table table-borderless table-font">
                                 <tr>
                                     <td>
-                                        <div class="width-120">Item Price({{ $chatData['record']['price']}} KD
-                                            *{{$chatData['record']['quantity']}})</div>
+                                        <div class="width-120">
+                                            {{ __('user_messages.item_price') }} (
+                                            {{ number_format(convertPriceInUserWeb($chatData['record']['price']), 2) }} {{ $currency }}
+                                            * {{ $chatData['record']['quantity'] }}
+                                            )
+                                        </div>
                                     </td>
                                     <td>
-                                        <div>{{ $chatData['record']['price'] * $chatData['record']['quantity'] }} KD
+                                        <div>
+                                            {{ number_format(convertPriceInUserWeb($chatData['record']['price']) * $chatData['record']['quantity'], 2) }} {{ $currency }}
                                         </div>
                                     </td>
                                 </tr>
@@ -179,15 +199,15 @@
                                 </tr> -->
                                 <tr>
                                     <td>
-                                        <div class="width-120">Total Amount </div>
+                                        <div class="width-120">{{ __('user_messages.total_amount') }} </div>
                                     </td>
                                     <td>
                                         <div>
                                             {{
                                                 ((float)$chatData['record']['total_amount'] % 1 == 0)
-                                                    ? number_format((float)$chatData['record']['total_amount'], 0, '.', '')
-                                                    : number_format((float)$chatData['record']['total_amount'], 2, '.', '')
-                                            }} KD
+                                                    ? number_format(convertPriceInUserWeb($chatData['record']['total_amount']), 0, '.', '')
+                                                    : number_format(convertPriceInUserWeb($chatData['record']['total_amount']), 2, '.', '')
+                                            }} {{ $currency }}
                                         </div>
                                     </td>
                                 </tr>
@@ -198,15 +218,15 @@
                     @if($chatData['record']['action'] == '1' || $chatData['record']['action'] == '2')
                     <div class="chat-pay d-flex gap-3 pt-4 mb-3">
                         <input type="hidden" id="chatUniqueId" value="{{ $chatData['record']['unique_id'] }}">
-                        <button type="button" class="customBtn2" id="rejectBtn">Reject</button>
-                        <button type="button" class="customBtn" id="acceptBtn">Accept</button>
+                        <button type="button" class="customBtn2" id="rejectBtn">{{ __('user_messages.reject') }}</button>
+                        <button type="button" class="customBtn" id="acceptBtn">{{ __('user_messages.accept') }}</button>
                     </div>
                     @endif
                     @if($chatData['record']['action'] == '5' && $chatData['record']['order_create_status'] == null && $chatData['record']['addtocardStatus'] == '0')
                     <div class="mt-3">
                         <span class="btn customBtn w-100"
                             onclick="custom_ProductAdd_to_bag(`{{ $chatData['record']['unique_id'] }}`)">
-                            Add To Cart
+                            {{ __('user_messages.add_to_cart') }}
                         </span>
 
                     </div>
@@ -264,9 +284,9 @@
                             </div>
 
                             <input type="text" name="message" class="form-control msger-input1"
-                                placeholder="Type Message here...">
+                                placeholder="{{ __('user_messages.type_message_here') }}...">
                             <small class="text-danger d-none" id="chatError1">
-                                Please enter a message or upload an image
+                                {{ __('user_messages.please_enter_a_message_or_upload_an_image') }}
                             </small>
                             <button type="submit" class="msger-send-btn1">
                                 <i class="bi bi-send-fill"></i>
@@ -331,15 +351,15 @@
                             </div>
 
                             <input type="text" name="message" class="form-control msger-input"
-                                placeholder="Type Message here...">
+                                placeholder="{{ __('user_messages.type_message_here') }}...">
                             <small class="text-danger d-none" id="chatError">
-                                Please enter a message or upload an image
+                                {{ __('user_messages.please_enter_a_message_or_upload_an_image') }}
                             </small>
                             <button type="submit" class="msger-send-btn">
                                 <i class="bi bi-send-fill"></i>
                             </button>
                             <div id="textLoader" style="display:none; font-size:14px; color:#6c757d;">
-                                Loading...
+                                {{ __('user_messages.loading') }}...
                             </div>
                         </form>
 
@@ -1169,7 +1189,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
                 if (status == 4) {
-                    toastr.success('Quotation Rejected Successfully');
+                    toastr.success("{{ __('user_messages.quotation_rejected_successfully') }}");
                     setTimeout(() => location.reload(), 1500);
                 }
 

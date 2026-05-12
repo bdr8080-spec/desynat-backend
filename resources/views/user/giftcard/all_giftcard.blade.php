@@ -15,10 +15,10 @@
         <form action="{{ route('user.gift_cards') }}" method="GET" class="w-100 d-flex gap-2">
             <div class="form-group w-100 d-flex">
                 <div class="searchicon"><i class="bi bi-search"></i></div>
-                <input type="search" name="search" class="form-control giftcontrol" placeholder="Search"
+                <input type="search" name="search" class="form-control giftcontrol" placeholder="{{ __('user_messages.search') }}"
                     value="{{ request('search') }}">
             </div>
-            <button type="submit" class="btn btnsearch">Search</button>
+            <button type="submit" class="btn btnsearch">{{ __('user_messages.search') }}</button>
         </form>
 
         <a href="{{ route('user.add_gift_cards') }}" class="add-icon">
@@ -47,12 +47,18 @@
                     </figure>
                     <div class="gift-card-body p-3">
                         <div class="gift-title">
-                            <h5>{{ $gift->sender_name ?? 'N/A' }}</h5>
+                            <h5>{{ $gift->sender_name ??  __('user_messages.na')  }}</h5>
                             <div class="giftdate">{{ $gift->created_at->format('d M y, h:i a') }}</div>
                         </div>
                         <div class="gift-title">
                             <h5>{{ number_format(convertPriceInUserWeb($gift->amount), 2) }}  {{ $currency }}</h5>
-                            <div class="giftdate">{{ $gift->gift_details->name_english ?? 'Gift Card' }}</div>
+                            <div class="giftdate">
+                                @if(app()->getLocale() == 'en')
+                                {{ $gift->gift_details->name_english ?? 'Gift Card' }}
+                                @else
+                                {{ $gift->gift_details->name_arabic ?? 'Gift Card' }}
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -60,7 +66,7 @@
         </div>
         @empty
         <div class="col-12 text-center py-5">
-            <h5>No gift card found</h5>
+            <h5>{{ __('user_messages.no_gift_card_found') }}</h5>
         </div>
         @endforelse
 

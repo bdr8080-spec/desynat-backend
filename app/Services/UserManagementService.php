@@ -1693,7 +1693,7 @@ public function addtoCart_Increment_decrement($request)
 
          return [
                 'status'  => 'error',
-                'message' => 'this is Not a Custom Order',
+                'message' => __('user_messages.not_a_custom_order'),
                 'data'    => (object)[]
             ];
         }
@@ -1702,7 +1702,7 @@ public function addtoCart_Increment_decrement($request)
 
          return [
                 'status'  => 'error',
-                'message' => 'Order is Not Accepted By seller or User Side',
+                'message' => __('user_messages.order_not_accepted_by_user_or_seller'),
                 'data'    => (object)[]
             ];
         }
@@ -1719,7 +1719,7 @@ public function addtoCart_Increment_decrement($request)
 
               return [
                 'status'  => 'error',
-                'message' => 'This Chat Order Is Already proceed 0',
+                'message' => __('user_messages.chat_order_already_proceeded_0'),
                 'data'    => (object)[]
             ];
             }
@@ -1728,7 +1728,7 @@ public function addtoCart_Increment_decrement($request)
                 
               return [
                 'status'  => 'error',
-                'message' => 'This Chat Order Is Already proceed1',
+                'message' => __('user_messages.chat_order_already_proceeded_1'),
                 'data'    => (object)[]
             ];
             }
@@ -1770,14 +1770,14 @@ public function addtoCart_Increment_decrement($request)
             // New record inserted
             return [
                 'status' => "success",
-                'message' => 'Custom Product added to cart successfully',
+                'message' => __('user_messages.custom_product_added_to_cart_successfully'),
                 'data'    => $chat_order
             ];
         } else {
             // Existing record updated
             return [
                 'status' => "error",
-                'message' => 'Product already exists in cart',
+                'message' => __('user_messages.product_already_exists_in_cart'),
                 'data'    => $chat_order
             ];
         }

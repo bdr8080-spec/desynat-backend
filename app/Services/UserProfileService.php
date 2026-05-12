@@ -23,12 +23,12 @@ class UserProfileService
         }
 
         if (!Hash::check($request->old_password, $user->password)) {
-             return ['status'=>'error','message'=>"Old Password is not correct",'data'=>(object)[]];
+             return ['status'=>'error','message' => __('user_messages.old_password_incorrect'),'data'=>(object)[]];
             // return ApiResponse::generateResponse("error", "Old password doesn't match",(object)[],400);
         }
 
         if (Hash::check($request->new_password, $user->password)) {
-            return ['status'=>'error','message'=>"New password cannot be the same as the old password",'data'=>(object)[]];
+            return ['status'=>'error','message' => __('user_messages.new_password_same_as_old'),'data'=>(object)[]];
             // return ApiResponse::generateResponse("error", "New password cannot be the same as the old password",(object)[],400);
         }
 
@@ -48,7 +48,7 @@ class UserProfileService
                     'notification_type' => 'password_update'
                 ]);
 
-        return ['status'=>'success','message'=>"Password changed successfully",'data'=>$user];
+        return ['status'=>'success','message' => __('user_messages.password_changed_successfully'),'data'=>$user];
         // return ApiResponse::generateResponse("success", "Password changed successfully",(object)[], 201);
     }
 
@@ -92,12 +92,12 @@ class UserProfileService
             $user->email = $userDetails->email ?? $user->email;
             $user->save();
 
-            return ['status' => 'success', 'message' => 'OTP verified successfully', 'data' => $userDetails];
+            return ['status' => 'success', 'message' => __('user_messages.otp_verified_successfully'), 'data' => $userDetails];
         }
 
 
 
-         return ['status'=>'error','message'=>"Invalid OTP. Please try again.",'data'=>(object)[]];
+         return ['status'=>'error','message' => __('user_messages.invalid_otp'),'data'=>(object)[]];
         // return ApiResponse::generateResponse('error', 'Invalid OTP. Please try again.', (object)[], 400);
     }
 

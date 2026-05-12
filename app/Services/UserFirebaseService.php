@@ -107,7 +107,7 @@ $check_record = allproductchats::create($request_data);
     if($check_chatRecord->product_request=="1" && $check_chatRecord->action=="0" ){
         return [
             'status'  => 'success',
-            'message' => 'user send Custom Order in Progress',
+            'message' => __('user_messages.custom_order_in_progress'),
             'data'    => $check_chatRecord
         ];  
     }
@@ -133,7 +133,7 @@ $check_record = allproductchats::create($request_data);
     
     return [
         'status'  => 'success',
-        'message' => 'Order request send Successfully',
+        'message' => __('user_messages.order_request_sent_successfully'),
         'data'    => $check_chatRecord
     ];
 
