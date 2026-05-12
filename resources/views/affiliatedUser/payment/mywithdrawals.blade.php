@@ -2,14 +2,14 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl">
-        <div class="title24">My Withdrawals </div>
+        <div class="title24">{{ __('affiliate_messages.my_withdrawls') }} </div>
     </div>
 
 
     <div class="border-12 mb-4 mt-3 choose-date">
         <div class="d-flex justify-content-between date-header">
             <div class="total-balance">
-                <div class="balance-title">Total Withdrawals</div>
+                <div class="balance-title">{{ __('affiliate_messages.total_withdrawls') }}</div>
                 <div class="walletic d-flex gap-2 align-items-center mt-3">
                     <div class="wallet-ic-2">
                     <img src="{{ asset('/dealer') }}/assets/img/wallet-ic.svg" class="img-fluid">
@@ -19,7 +19,7 @@
                             intval($pendingReq['total_withdrawals']) == $pendingReq['total_withdrawals'] 
                                 ? intval($pendingReq['total_withdrawals']) 
                                 : number_format($pendingReq['total_withdrawals'], 2) 
-                        }} KD
+                        }} {{ __('affiliate_messages.kwd') }}
                     </h5>
                 </div>
             </div>
@@ -34,10 +34,10 @@
         <div class="tabs-panel py-3">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item w-50" role="presentation">
-                    <button class="nav-link active w-100" id="pills-upcoming-tab" data-bs-toggle="pill" data-bs-target="#pills-upcoming" type="button" role="tab" aria-controls="pills-upcoming" aria-selected="true">Upcoming</button>
+                    <button class="nav-link active w-100" id="pills-upcoming-tab" data-bs-toggle="pill" data-bs-target="#pills-upcoming" type="button" role="tab" aria-controls="pills-upcoming" aria-selected="true">{{ __('affiliate_messages.upcoming') }}</button>
                 </li>
                 <li class="nav-item w-50" role="presentation">
-                    <button class="nav-link w-100" id="pills-completed-tab" data-bs-toggle="pill" data-bs-target="#pills-completed" type="button" role="tab" aria-controls="pills-completed" aria-selected="false"> Completed</button>
+                    <button class="nav-link w-100" id="pills-completed-tab" data-bs-toggle="pill" data-bs-target="#pills-completed" type="button" role="tab" aria-controls="pills-completed" aria-selected="false"> {{ __('affiliate_messages.completed') }}</button>
                 </li>
             </ul>
         </div>    
@@ -49,33 +49,33 @@
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between">
                             <div class="my-request">
-                                <p class="text-muted mb-1">Request id </p>
+                                <p class="text-muted mb-1">{{ __('affiliate_messages.request_id') }} </p>
                                 <h6>#{{$withdraw['request_id']}}</h6>
                             </div>
                             <div class="my-request">
-                                <p class="text-muted mb-1">Requested On </p>
+                                <p class="text-muted mb-1">{{ __('affiliate_messages.requested_on') }} </p>
                                 <h6>{{ \Carbon\Carbon::parse($withdraw['created_at'])->format('d/m/Y \a\t h:i A') }}</h6>
                             </div>
                         </div>
 
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-1"> Account No. </p>
-                                <p class="fst-500">{{$withdraw['bank_details']['account_no']??'N/A'}} </p>
+                                <p class="text-muted mb-1"> {{ __('affiliate_messages.account_no') }} </p>
+                                <p class="fst-500">{{$withdraw['bank_details']['account_no']?? __('affiliate_messages.na') }} </p>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-1">Total Amount</p>
-                                <p class="fst-500">{{$withdraw['amount']}} KD</p>
+                                <p class="text-muted mb-1">{{ __('affiliate_messages.total_amount') }}</p>
+                                <p class="fst-500">{{$withdraw['amount']}} {{ __('affiliate_messages.kwd') }}</p>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-1">Status</p>
+                                <p class="text-muted mb-1">{{ __('affiliate_messages.status') }}</p>
                                 <p><span class="pending-text">
                                     @if($withdraw['admin_verify']=='0')
-                                    Pending
+                                    {{ __('affiliate_messages.pending') }}
                                     @elseif($withdraw['admin_verify']=='1')
-                                    Accepted
+                                    {{ __('affiliate_messages.accepted') }}
                                     @else
-                                    Rejected
+                                    {{ __('affiliate_messages.rejected') }}
                                     @endif
                                 </span></p>
                             </div>
@@ -83,7 +83,7 @@
                         
                     </div>
                     @empty
-                        <p class="text-center text-muted">No data found.</p>
+                        <p class="text-center text-muted">{{ __('affiliate_messages.no_data_found') }}</p>
                     @endforelse
 
                 </div>
@@ -100,39 +100,39 @@
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between">
                             <div class="my-request">
-                                <p class="text-muted mb-1">Request id </p>
+                                <p class="text-muted mb-1">{{ __('affiliate_messages.request_id') }} </p>
                                 <h6>#{{$withdraw['request_id']}}</h6>
                             </div>
                             <div class="my-request">
-                                <p class="text-muted mb-1">Requested On </p>
+                                <p class="text-muted mb-1">{{ __('affiliate_messages.requested_on') }} </p>
                                 <h6>{{ \Carbon\Carbon::parse($withdraw['created_at'])->format('d/m/Y \a\t h:i A') }}</h6>
                             </div>
                         </div>
 
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-1"> Account No. </p>
-                                <p class="fst-500">{{$withdraw['bank_details']['account_no']??'N/A'}} </p>
+                                <p class="text-muted mb-1"> {{ __('affiliate_messages.account_no') }} </p>
+                                <p class="fst-500">{{$withdraw['bank_details']['account_no']?? __('affiliate_messages.na')}} </p>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-1">Total Amount</p>
-                                <p class="fst-500">{{$withdraw['amount']}} KD</p>
+                                <p class="text-muted mb-1">{{ __('affiliate_messages.total_amount') }}</p>
+                                <p class="fst-500">{{$withdraw['amount']}} {{ __('affiliate_messages.kwd') }}</p>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-1">Status</p>
+                                <p class="text-muted mb-1">{{ __('affiliate_messages.status') }}</p>
                                 <p>
                                     @if($withdraw->admin_verify == '1')
-                                        <span style="color:#28a745;">Credit</span>
+                                        <span style="color:#28a745;">{{ __('affiliate_messages.credit') }}</span>
                                     @elseif($withdraw->admin_verify == '2')
-                                        <span style="color:#E70000;">Rejected</span>
+                                        <span style="color:#E70000;">{{ __('affiliate_messages.rejected') }}</span>
                                     @else
-                                        <span class="pending-text">Pending</span>
+                                        <span class="pending-text">{{ __('affiliate_messages.pending') }}</span>
                                     @endif
                                 </p>
                             </div>
                             @if($withdraw->admin_verify == '2')
                             <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-1">Reason</p>
+                                <p class="text-muted mb-1">{{ __('affiliate_messages.reason') }}</p>
                                 <p>
                                     {{$withdraw->reject_reason }}
                                 </p>
@@ -141,7 +141,7 @@
                         </div>                    
                     </div>
                     @empty
-                        <p class="text-center text-muted">No data found.</p>
+                        <p class="text-center text-muted">{{ __('affiliate_messages.no_data_found') }}</p>
                     @endforelse
  
                 </div>

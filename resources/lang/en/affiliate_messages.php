@@ -125,6 +125,23 @@ return [
     'account_deleted_successfully' => 'Account deleted successfully',
     'notification_on' => 'Notification is set to On',
     'notification_off' => 'Notification is set to Off',
+
+    //my withdrawls
+    'total_withdrawls' => 'Total Withdrawals',
+    'upcoming' => 'Upcoming',
+    'completed' => 'Completed',
+    'request_id' => 'Request ID',
+    'requested_on' => 'Requested On',
+    'account_no' => 'Account No',
+    'total_amount' => 'Total Amount',
+    'status' => 'Status',
+    'pending' => 'Pending',
+    'accepted' => 'Accepted',
+    'rejected' => 'Rejected',
+    'credit' => 'Credit',
+    'reason' => 'Reason',
+    'na' => 'N/A',
+    'no_data_found' => 'No data found',
     
     
 

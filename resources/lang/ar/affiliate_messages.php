@@ -126,6 +126,23 @@ return [
     'notification_on' => 'تم تفعيل الإشعارات',
     'notification_off' => 'تم إيقاف الإشعارات',
 
+    //my withdrawls
+    'total_withdrawls' => 'إجمالي طلبات السحب',
+    'upcoming' => 'قادم',
+    'completed' => 'مكتمل',
+    'request_id' => 'رقم الطلب',
+    'requested_on' => 'تاريخ الطلب',
+    'account_no' => 'رقم الحساب',
+    'total_amount' => 'إجمالي المبلغ',
+    'status' => 'الحالة',
+    'pending' => 'قيد الانتظار',
+    'accepted' => 'مقبول',
+    'rejected' => 'مرفوض',
+    'credit' => 'رصيد',
+    'reason' => 'السبب',
+    'na' => 'غير متاح',
+    'no_data_found' => 'لا توجد بيانات',
+
     
 
 

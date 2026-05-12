@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="total-balance-2 d-flex gap-3 align-items-center">
-                <a href="#" class="btn btn-export">Export</a>
+                <!-- <a href="#" class="btn btn-export">Export</a> -->
                 <a href="#" class="btn btn-export withdraw-bg"  data-bs-toggle="modal" data-bs-target="#Withdrawpop"> Withdraw</a>
             </div>
         </div>
@@ -140,8 +140,8 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Purchased by </p>
-                    <p class="fst-500">{{ $order['user_details']['full_name'] }} </p>
-                </div>
+                    <p class="fst-500">{{ $order['user_details']['full_name'] ?? 'N/A' }} </p>
+                </div> 
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Product name</p>
                     <p class="fst-500">{{ $order['product_details']['product_name_en'] }}</p>
