@@ -231,14 +231,17 @@ class BannerService
             ]);
 
             CreateNotification([
-                'sender_id' => 1, 
-                'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
                 'receiver_id' => $banner->seller_id,
-                'receiver_type' => 3, 
+                'receiver_type' => 3,
 
                 'title_english' => 'New Banner Request',
+                'title_arabic' => 'طلب بانر جديد',
+
                 'description_english' => 'Your banner request approved successfully',
+                'description_arabic' => 'تمت الموافقة على طلب البانر الخاص بك بنجاح',
 
                 'notification_type' => 'banner_approved'
             ]);
@@ -285,14 +288,17 @@ class BannerService
             ]);
 
             CreateNotification([
-                'sender_id' => 1, 
-                'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
                 'receiver_id' => $banner->seller_id,
-                'receiver_type' => 3, 
+                'receiver_type' => 3,
 
                 'title_english' => 'New Banner Request',
+                'title_arabic' => 'طلب بانر جديد',
+
                 'description_english' => "Your banner request rejected, Reason: {$request->reason}",
+                'description_arabic' => "تم رفض طلب البانر الخاص بك، السبب: {$request->reason}",
 
                 'notification_type' => 'banner_rejected'
             ]);

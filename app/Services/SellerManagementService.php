@@ -345,15 +345,18 @@ class SellerManagementService
             $seller->save();
            
             //send push notification
-            CreateNotification([
-                'sender_id' => 1, 
-                'sender_type' => 1, 
+           CreateNotification([
+                'sender_id' => 1,
+                'sender_type' => 1,
 
                 'receiver_id' => $seller->id,
-                'receiver_type' => 3, 
+                'receiver_type' => 3,
 
                 'title_english' => 'New Account Request',
+                'title_arabic' => 'طلب حساب جديد',
+
                 'description_english' => 'Your account approved successfully',
+                'description_arabic' => 'تمت الموافقة على حسابك بنجاح',
 
                 'notification_type' => 'account_approved'
             ]);
@@ -398,14 +401,17 @@ class SellerManagementService
             $seller->save();
             //send notification
             CreateNotification([
-                'sender_id' => 1, 
-                'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
                 'receiver_id' => $seller->id,
-                'receiver_type' => 3, 
+                'receiver_type' => 3,
 
                 'title_english' => 'New Account Request',
-                'description_english' => "Your account rejected,Reason: {$rejectReason}",
+                'title_arabic' => 'طلب حساب جديد',
+
+                'description_english' => "Your account rejected, Reason: {$rejectReason}",
+                'description_arabic' => "تم رفض حسابك، السبب: {$rejectReason}",
 
                 'notification_type' => 'account_rejected'
             ]);

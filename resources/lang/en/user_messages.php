@@ -637,6 +637,7 @@ return [
     'invalid_otp' => 'Invalid OTP. Please try again.',
     'sending' => 'Sending...',
     'otp_resent_successfully' => 'OTP resent successfully.',
+    'no_notification_found' => 'No notification found',
 
     //update password
     'old_password' => 'Old Password',

@@ -144,14 +144,17 @@ class WithdrawRequestManagementService
                 }
 
                CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                    'sender_id' => 1,
+                    'sender_type' => 1,
 
                     'receiver_id' => $data->user_id,
-                    'receiver_type' => $receiverType, 
+                    'receiver_type' => $receiverType,
 
                     'title_english' => 'Withdraw Request',
+                    'title_arabic' => 'طلب السحب',
+
                     'description_english' => "Your withdraw request with request id: #{$data->request_id} is rejected, Reason:{$rejectReason}",
+                    'description_arabic' => "تم رفض طلب السحب الخاص بك برقم الطلب: #{$data->request_id}، السبب: {$rejectReason}",
 
                     'notification_type' => 'withdraw_req_rejected'
                 ]);
@@ -215,14 +218,17 @@ class WithdrawRequestManagementService
                 }
 
                CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                    'sender_id' => 1,
+                    'sender_type' => 1,
 
                     'receiver_id' => $data->user_id,
-                    'receiver_type' => $receiverType, 
+                    'receiver_type' => $receiverType,
 
                     'title_english' => 'Withdraw Request',
+                    'title_arabic' => 'طلب السحب',
+
                     'description_english' => "Your withdraw request with request id: #{$data->request_id} is approved",
+                    'description_arabic' => "تمت الموافقة على طلب السحب الخاص بك برقم الطلب: #{$data->request_id}",
 
                     'notification_type' => 'withdraw_req_approved'
                 ]);

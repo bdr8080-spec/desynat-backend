@@ -40,16 +40,19 @@ class UserAuthService
        $check=  User::create($record);
 
        CreateNotification([
-        'sender_id'             => $check->id, 
-        'sender_type'           => 2,
+        'sender_id' => $check->id,
+        'sender_type' => 2,
 
-        'receiver_id'           => 1,
-        'receiver_type'         => 1,
+        'receiver_id' => 1,
+        'receiver_type' => 1,
 
-        'title_english'         => 'New User Registered',
-        'description_english'   => $check->full_name . ' has registered as a user',
+        'title_english' => 'New User Registered',
+        'title_arabic' => 'تسجيل مستخدم جديد',
 
-        'notification_type'     => 'new_user_registration'
+        'description_english' => $check->full_name . ' has registered as a user',
+        'description_arabic' => $check->full_name . ' قام بالتسجيل كمستخدم جديد',
+
+        'notification_type' => 'new_user_registration'
     ]);
 
       $phone = $request->country_code . $request->mobile;

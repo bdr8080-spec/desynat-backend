@@ -284,14 +284,17 @@ class AffiliatedUserManagementService
             $user->admin_verify = '2'; 
             $user->save();
             CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                    'sender_id' => 1,
+                    'sender_type' => 1,
 
                     'receiver_id' => $user->user_id,
-                    'receiver_type' => 2, 
+                    'receiver_type' => 2,
 
                     'title_english' => 'Affiliate Account',
-                    'description_english' => "Your affiliate account is approved",
+                    'title_arabic' => 'حساب التسويق بالعمولة',
+
+                    'description_english' => 'Your affiliate account is approved',
+                    'description_arabic' => 'تمت الموافقة على حساب التسويق بالعمولة الخاص بك',
 
                     'notification_type' => 'affiliate_account_approved'
                 ]);
@@ -334,17 +337,20 @@ class AffiliatedUserManagementService
             $user->reject_reason = $rejectReason;
             $user->save();
             CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
-                    'receiver_id' => $user->user_id,
-                    'receiver_type' => 2, 
+                'receiver_id' => $user->user_id,
+                'receiver_type' => 2,
 
-                    'title_english' => 'Affiliate Account',
-                    'description_english' => "Your affiliate account is rejected, Reason: {$rejectReason}",
+                'title_english' => 'Affiliate Account',
+                'title_arabic' => 'حساب التسويق بالعمولة',
 
-                    'notification_type' => 'affiliate_account_rejected'
-                ]);
+                'description_english' => "Your affiliate account is rejected, Reason: {$rejectReason}",
+                'description_arabic' => "تم رفض حساب التسويق بالعمولة الخاص بك، السبب: {$rejectReason}",
+
+                'notification_type' => 'affiliate_account_rejected'
+            ]);
 
             return [
                 'status' => 'success',
@@ -385,19 +391,26 @@ class AffiliatedUserManagementService
                 ? "Your affiliate account has been unblocked by Admin"
                 : "Your affiliate account has been blocked by Admin";
 
+            $descriptionArabic = $isUnblocked
+                ? "تم إلغاء حظر حساب التسويق بالعمولة الخاص بك بواسطة الإدارة"
+                : "تم حظر حساب التسويق بالعمولة الخاص بك بواسطة الإدارة";
+
             $notificationType = $isUnblocked
-                ? 'affiliate_account_blocked'
-                : 'affiliate_account_unblocked';
+                ? 'affiliate_account_unblocked'
+                : 'affiliate_account_blocked';
 
             CreateNotification([
-                'sender_id' => 1, 
-                'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
                 'receiver_id' => $user->user_id,
-                'receiver_type' => 2, 
+                'receiver_type' => 2,
 
                 'title_english' => 'Affiliate Account',
+                'title_arabic' => 'حساب التسويق بالعمولة',
+
                 'description_english' => $description,
+                'description_arabic' => $descriptionArabic,
 
                 'notification_type' => $notificationType
             ]);

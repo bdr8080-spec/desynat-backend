@@ -95,16 +95,19 @@ if($checkphone){
          
         if($check){
             CreateNotification([
-                'sender_id'             => $check->id,
-                'sender_type'           => 4,
+                'sender_id' => $check->id,
+                'sender_type' => 4,
 
-                'receiver_id'           => 1,
-                'receiver_type'         => 1,
+                'receiver_id' => 1,
+                'receiver_type' => 1,
 
-                'title_english'         => 'New Affiliated User Registered',
-                'description_english'   => $check->full_name . ' has registered as an affiliated user',
+                'title_english' => 'New Affiliated User Registered',
+                'title_arabic' => 'تسجيل مستخدم تابع جديد',
 
-                'notification_type'     => 'new_affiliated_user_registration'
+                'description_english' => $check->full_name . ' has registered as an affiliated user',
+                'description_arabic' => $check->full_name . ' قام بالتسجيل كمستخدم تابع جديد',
+
+                'notification_type' => 'new_affiliated_user_registration'
             ]);
 
             $phone = $request->country_code . $request->mobile;

@@ -87,45 +87,54 @@ public function SellerbannerPayment($request){
   if($request->payment_status=='1'){
         $msg="Banner Payment Paid Successfully";
         CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+            'sender_id' => 1,
+            'sender_type' => 1,
 
-                    'receiver_id' => $checkBanner->seller_id,
-                    'receiver_type' => 3, 
+            'receiver_id' => $checkBanner->seller_id,
+            'receiver_type' => 3,
 
-                    'title_english' => 'Banner',
-                    'description_english' => "Payment for banner is successfull,Transaction id: #{$request->transaction_id}",
+            'title_english' => 'Banner',
+            'title_arabic' => 'البانر',
 
-                    'notification_type' => 'seller_banner_payment'
-                ]);
+            'description_english' => "Payment for banner is successful, Transaction id: #{$request->transaction_id}",
+            'description_arabic' => "تمت عملية دفع البانر بنجاح، رقم المعاملة: #{$request->transaction_id}",
+
+            'notification_type' => 'seller_banner_payment'
+        ]);
     }elseif($request->payment_status=='2'){
         $msg="Banner Payment Cancelled";
         CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+            'sender_id' => 1,
+            'sender_type' => 1,
 
-                    'receiver_id' => $checkBanner->seller_id,
-                    'receiver_type' => 3, 
+            'receiver_id' => $checkBanner->seller_id,
+            'receiver_type' => 3,
 
-                    'title_english' => 'Banner',
-                    'description_english' => "Payment for banner is failed!",
+            'title_english' => 'Banner',
+            'title_arabic' => 'البانر',
 
-                    'notification_type' => 'seller_banner_payment'
-                ]);
+            'description_english' => "Payment for banner is failed!",
+            'description_arabic' => "فشلت عملية دفع البانر",
+
+            'notification_type' => 'seller_banner_payment'
+        ]);
     }else{
         $msg="Banner Payment Cancelled";  
         CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+            'sender_id' => 1,
+            'sender_type' => 1,
 
-                    'receiver_id' => $checkBanner->seller_id,
-                    'receiver_type' => 3, 
+            'receiver_id' => $checkBanner->seller_id,
+            'receiver_type' => 3,
 
-                    'title_english' => 'Banner',
-                    'description_english' => "Payment for banner is failed!",
+            'title_english' => 'Banner',
+            'title_arabic' => 'البانر',
 
-                    'notification_type' => 'seller_banner_payment'
-                ]);   
+            'description_english' => "Payment for banner is failed!",
+            'description_arabic' => "فشلت عملية دفع البانر",
+
+            'notification_type' => 'seller_banner_payment'
+        ]);  
     }
     
       return [

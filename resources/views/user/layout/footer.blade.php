@@ -186,7 +186,11 @@
 
                      <div class="noti-header d-flex justify-content-between">
                          <div class="noti-title">
-                             {{ $notification->title_english ?? 'Notification' }}
+                            @if(app()->getLocale() == 'en')
+                             {{ $notification->title_english }}
+                             @else
+                             {{ $notification->title_arabic }}
+                             @endif
                          </div>
 
                          <div class="post-date">
@@ -195,7 +199,11 @@
                      </div>
 
                      <p>
+                        @if(app()->getLocale() == 'en')
                          {{ $notification->description_english }}
+                         @else
+                         {{ $notification->description_arabic }}
+                         @endif
                      </p>
 
                  </div>
@@ -204,7 +212,7 @@
 
              @empty
              <div class="text-center text-muted">
-                 No notifications found
+                 {{ __('user_messages.no_notification_found') }}
              </div>
              @endforelse
 

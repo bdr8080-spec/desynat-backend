@@ -388,17 +388,20 @@ class LiveRequestService
                 'admin_verify' => '1',
             ]);
             CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
-                    'receiver_id' => $data->seller_id,
-                    'receiver_type' => 3, 
+                'receiver_id' => $data->seller_id,
+                'receiver_type' => 3,
 
-                    'title_english' => 'Live Request',
-                    'description_english' => "Your live request with request id: #{$data->order_id} is approved",
+                'title_english' => 'Live Request',
+                'title_arabic' => 'طلب البث المباشر',
 
-                    'notification_type' => 'live_req_accepted'
-                ]);
+                'description_english' => "Your live request with request id: #{$data->order_id} is approved",
+                'description_arabic' => "تمت الموافقة على طلب البث المباشر الخاص بك برقم الطلب: #{$data->order_id}",
+
+                'notification_type' => 'live_req_accepted'
+            ]);
 
             return [
                 'status' => 'success',
@@ -434,17 +437,20 @@ class LiveRequestService
             ]);
 
             CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
-                    'receiver_id' => $data->seller_id,
-                    'receiver_type' => 3, 
+                'receiver_id' => $data->seller_id,
+                'receiver_type' => 3,
 
-                    'title_english' => 'Live Request',
-                    'description_english' => "Your live request with request id: #{$data->order_id} is rejected, Reason: {$request->reject_reason}",
+                'title_english' => 'Live Request',
+                'title_arabic' => 'طلب البث المباشر',
 
-                    'notification_type' => 'live_req_rejected'
-                ]);
+                'description_english' => "Your live request with request id: #{$data->order_id} is rejected, Reason: {$request->reject_reason}",
+                'description_arabic' => "تم رفض طلب البث المباشر الخاص بك برقم الطلب: #{$data->order_id}، السبب: {$request->reject_reason}",
+
+                'notification_type' => 'live_req_rejected'
+            ]);
 
             return [
                 'status' => 'success',

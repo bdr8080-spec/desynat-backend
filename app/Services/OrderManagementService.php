@@ -397,28 +397,38 @@ class OrderManagementService
             ]);
 
              $notificationTitle = 'Delivery Boy Assigned';
-             $notificationBody  = "Delivery B0y {$driver->full_name_english} is assigned to deliver your order #{$order->order_id}";
+            $notificationTitleAr = 'تم تعيين مندوب التوصيل';
 
-             $notificationTitle1 = 'New Order Assigned';
-             $notificationBody1  = "New order assigned to you with order id:{$order->order_id}";
+            $notificationBody  = "Delivery Boy {$driver->full_name_english} is assigned to deliver your order #{$order->order_id}";
+            $notificationBodyAr = "تم تعيين مندوب التوصيل {$driver->full_name_arabic} لتوصيل طلبك رقم #{$order->order_id}";
+
+            $notificationTitle1 = 'New Order Assigned';
+            $notificationTitle1Ar = 'تم تعيين طلب جديد';
+
+            $notificationBody1  = "New order assigned to you with order id: {$order->order_id}";
+            $notificationBody1Ar = "تم تعيين طلب جديد لك برقم الطلب: {$order->order_id}";
 
             CreateNotification([
-                'sender_id' => 1, 
+                'sender_id' => 1,
                 'sender_type' => 1,
                 'receiver_id' => $order->user_id,
-                'receiver_type' => 2, 
+                'receiver_type' => 2,
                 'title_english' => $notificationTitle,
+                'title_arabic' => $notificationTitleAr,
                 'description_english' => $notificationBody,
+                'description_arabic' => $notificationBodyAr,
                 'notification_type' => 'order_driver_assigned'
             ]);
 
             CreateNotification([
-                'sender_id' => 1, 
+                'sender_id' => 1,
                 'sender_type' => 1,
                 'receiver_id' => $driver->id,
-                'receiver_type' => 5, 
+                'receiver_type' => 5,
                 'title_english' => $notificationTitle1,
+                'title_arabic' => $notificationTitle1Ar,
                 'description_english' => $notificationBody1,
+                'description_arabic' => $notificationBody1Ar,
                 'notification_type' => 'new_order_assign_to_driver'
             ]);
 

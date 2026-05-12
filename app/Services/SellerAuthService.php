@@ -51,17 +51,20 @@ class SellerAuthService
 
        $check=  seller::create($record);
        CreateNotification([
-            'sender_id'             => $check->id, 
-            'sender_type'           => 3,
+          'sender_id' => $check->id,
+          'sender_type' => 3,
 
-            'receiver_id'           => 1,
-            'receiver_type'         => 1,
+          'receiver_id' => 1,
+          'receiver_type' => 1,
 
-            'title_english'         => 'New Seller Registered',
-            'description_english'   => $check->first_name . ' ' . $check->last_name . ' has registered as a seller',
+          'title_english' => 'New Seller Registered',
+          'title_arabic' => 'تسجيل بائع جديد',
 
-            'notification_type'     => 'new_seller_registration'
-        ]);
+          'description_english' => $check->first_name . ' ' . $check->last_name . ' has registered as a seller',
+          'description_arabic' => $check->first_name . ' ' . $check->last_name . ' قام بالتسجيل كبائع جديد',
+
+          'notification_type' => 'new_seller_registration'
+      ]);
 
         $phone = $request->country_code . $request->mobile;
         $message = "Your verification Code Is $otp";
@@ -586,23 +589,29 @@ class SellerAuthService
                   }
                   
                  $data->update($array_data);
-                 if($request->payment_status=='1'){
-                  $desc="Subcription Plan Payment is Success,Transaction id: {$request->transaction_id}";
-                 }else{
-                  $desc="Subcription Plan Payment is failed";
-                 }
-                 CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                 if ($request->payment_status == '1') {
+                      $desc_en = "Subscription Plan Payment is Success, Transaction id: {$request->transaction_id}";
+                      $desc_ar = "تمت عملية دفع خطة الاشتراك بنجاح، رقم المعاملة: {$request->transaction_id}";
+                  } else {
+                      $desc_en = "Subscription Plan Payment is failed";
+                      $desc_ar = "فشلت عملية دفع خطة الاشتراك";
+                  }
 
-                    'receiver_id' => $seller_id,
-                    'receiver_type' => 3, 
+                  CreateNotification([
+                      'sender_id' => 1,
+                      'sender_type' => 1,
 
-                    'title_english' => 'Subscription Plan',
-                    'description_english' => $desc,
+                      'receiver_id' => $seller_id,
+                      'receiver_type' => 3,
 
-                    'notification_type' => 'subscription_plan'
-                ]);
+                      'title_english' => 'Subscription Plan',
+                      'title_arabic' => 'خطة الاشتراك',
+
+                      'description_english' => $desc_en,
+                      'description_arabic' => $desc_ar,
+
+                      'notification_type' => 'subscription_plan'
+                  ]);
 
                  
                  return ['status'=>'success','message'=>$msg,'data'=>$data];            
@@ -623,30 +632,35 @@ class SellerAuthService
       
                   if($store_information){
 
-                    if($store_information->Store_Availability=='0'){
-                      $status=1;
-                      $message="Seller Store Store Availability On";
-                      $desc = "Your store status has been updated to on duty";
-                    }else{
-                      $status=0;
-                      $message="Seller Store Store Availability Off";
-                      $desc = "Your store status has been updated to off duty";
+                    if ($store_information->Store_Availability == '0') {
+                        $status = 1;
+                        $message = "Seller Store Store Availability On";
+                        $desc_en = "Your store status has been updated to on duty";
+                        $desc_ar = "تم تحديث حالة متجرك إلى متاح للعمل";
+                    } else {
+                        $status = 0;
+                        $message = "Seller Store Store Availability Off";
+                        $desc_en = "Your store status has been updated to off duty";
+                        $desc_ar = "تم تحديث حالة متجرك إلى غير متاح للعمل";
                     }
 
-                    $store_information->update(['Store_Availability'=>$status]);
+                    $store_information->update(['Store_Availability' => $status]);
 
                     CreateNotification([
-                      'sender_id' => 1, 
-                      'sender_type' => 1, 
+                        'sender_id' => 1,
+                        'sender_type' => 1,
 
-                      'receiver_id' => $request->seller_id,
-                      'receiver_type' => 3, 
+                        'receiver_id' => $request->seller_id,
+                        'receiver_type' => 3,
 
-                      'title_english' => 'Store Availability',
-                      'description_english' => $desc,
+                        'title_english' => 'Store Availability',
+                        'title_arabic' => 'حالة المتجر',
 
-                      'notification_type' => 'store_availability'
-                  ]);
+                        'description_english' => $desc_en,
+                        'description_arabic' => $desc_ar,
+
+                        'notification_type' => 'store_availability'
+                    ]);
 
                     return ['status'=>'success','message'=>$message,'data'=>$store_information];            
                   

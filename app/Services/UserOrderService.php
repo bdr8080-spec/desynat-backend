@@ -156,17 +156,20 @@ class UserOrderService
     ];
 
     CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+            'sender_id' => 1,
+            'sender_type' => 1,
 
-                    'receiver_id' => $request->user_id,
-                    'receiver_type' => 2, 
+            'receiver_id' => $request->user_id,
+            'receiver_type' => 2,
 
-                    'title_english' => 'Promocode',
-                    'description_english' => "Promocode applied successfully",
+            'title_english' => 'Promocode',
+            'title_arabic' => 'كود الخصم',
 
-                    'notification_type' => 'promocode_applied'
-                ]);
+            'description_english' => "Promocode applied successfully",
+            'description_arabic' => "تم تطبيق كود الخصم بنجاح",
+
+            'notification_type' => 'promocode_applied'
+        ]);
 
     return ['status'=>'success','message' => __('user_messages.promo_code_applied_successfully'),'data'=>$response];
 
@@ -364,17 +367,20 @@ $checkGiftCard=  UserGiftCards::where('giftCardNo',$request->giftCardNo)
     ];
 
     CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+        'sender_id' => 1,
+        'sender_type' => 1,
 
-                    'receiver_id' => $request->user_id,
-                    'receiver_type' => 2, 
+        'receiver_id' => $request->user_id,
+        'receiver_type' => 2,
 
-                    'title_english' => 'GiftCard',
-                    'description_english' => "GiftCard applied successfully",
+        'title_english' => 'GiftCard',
+        'title_arabic' => 'بطاقة هدية',
 
-                    'notification_type' => 'giftcard_applied'
-                ]);
+        'description_english' => "GiftCard applied successfully",
+        'description_arabic' => "تم تطبيق بطاقة الهدية بنجاح",
+
+        'notification_type' => 'giftcard_applied'
+    ]);
 
 return ['status'=>'success','message' => __('user_messages.gift_card_applied_successfully'),'data'=>$response];
 
@@ -448,6 +454,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
          $msg="COD Order Place Successfully";  
+         $msgAr = "تم إنشاء طلب الدفع عند الاستلام بنجاح";
 
         // return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
     }elseif($checkOrder->payment_method=='2'){ // wallet Payment Code 
@@ -500,7 +507,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
          $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2']);
 
 
-         $msg="Order Place Successfully";  
+         $msg="Order Place Successfully"; 
+         $msgAr = "تم إنشاء الطلب بنجاح"; 
 
     //    return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
 
@@ -511,6 +519,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
         if($request->payment_status=='1'){
         $msg="Order Payment Paid Successfully";
+        $msgAr = "تم دفع الطلب بنجاح";
 
         AddtocartRemoveData($checkOrder->id);
 
@@ -522,43 +531,53 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     }else{
 
-        $msg="Order Payment Cancelled";                
+        $msg="Order Payment Cancelled";  
+        $msgAr = "تم إلغاء دفع الطلب";              
     }
 
     $title='Order Status';
-    $body=$msg;
-    //send push notification to user
+    $body_en = $msg;
+    $body_ar = $msgAr;
+
     CreateNotification([
-                'sender_id' => 1, 
-                'sender_type' => 1, 
+        'sender_id' => 1,
+        'sender_type' => 1,
 
-                'receiver_id' => $checkOrder->user_details->id,
-                'receiver_type' => 2, 
+        'receiver_id' => $checkOrder->user_details->id,
+        'receiver_type' => 2,
 
-                'title_english' => 'Order Place',
-                'description_english' => $body,
+        'title_english' => 'Order Place',
+        'title_arabic' => 'إنشاء الطلب',
 
-                'notification_type' => 'order_place',
-            ]);
+        'description_english' => $body_en,
+        'description_arabic' => $body_ar,
+
+        'notification_type' => 'order_place',
+    ]);
     
     // send Notification to Seller 
     $checkAllproducts=orderdetail::with('product_details.seller_details')->where('order_id', $checkOrder->id)->get();
 
     foreach($checkAllproducts as $key=>$val){
 
-    $body1='You received a new Order';
+    $body1_en = 'You received a new Order';
+    $body1_ar = 'لقد استلمت طلبًا جديدًا';
+
     CreateNotification([
-                'sender_id' => $val->user_id, 
-                'sender_type' => 2, 
+        'sender_id' => $val->user_id,
+        'sender_type' => 2,
 
-                'receiver_id' => $val->product_details->seller_details->id,
-                'receiver_type' => 3, 
+        'receiver_id' => $val->product_details->seller_details->id,
+        'receiver_type' => 3,
 
-                'title_english' => 'Order Place',
-                'description_english' => $body1,
+        'title_english' => 'Order Place',
+        'title_arabic' => 'إنشاء الطلب',
 
-                'notification_type' => 'order_place',
-            ]);
+        'description_english' => $body1_en,
+        'description_arabic' => $body1_ar,
+
+        'notification_type' => 'order_place',
+    ]);
     }
     
     DB::commit();
@@ -1530,32 +1549,42 @@ if($checkOrder->order_type=='2'){
 
    $userName = $user->full_name ?? 'User';
     $storeName = $store->store_name ?? 'Store';
-    $productName = $product->product_name_en ?? 'Product';
+    if (app()->getLocale() == 'en') {
+        $productName = $product->product_name_en ?? 'Product';
+    } else {
+        $productName = $product->product_name_ar ?? 'Product';
+    }
    CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+        'sender_id' => 1,
+        'sender_type' => 1,
 
-                    'receiver_id' => $store->seller_id,
-                    'receiver_type' => 3, 
+        'receiver_id' => $store->seller_id,
+        'receiver_type' => 3,
 
-                    'title_english' => 'Rating & Review',
-                    'description_english' => "Your store:{$storeName} got a new review by {$userName}",
+        'title_english' => 'Rating & Review',
+        'title_arabic' => 'التقييم والمراجعة',
 
-                    'notification_type' => 'store_review'
-                ]);
+        'description_english' => "Your store: {$storeName} got a new review by {$userName}",
+        'description_arabic' => "متجرك: {$storeName} حصل على تقييم جديد من {$userName}",
+
+        'notification_type' => 'store_review'
+    ]);
 
         CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+            'sender_id' => 1,
+            'sender_type' => 1,
 
-                    'receiver_id' => $store->seller_id,
-                    'receiver_type' => 3, 
+            'receiver_id' => $store->seller_id,
+            'receiver_type' => 3,
 
-                    'title_english' => 'Rating & Review',
-                    'description_english' => "Your product:{$productName} got a new review by {$userName}",
+            'title_english' => 'Rating & Review',
+            'title_arabic' => 'التقييم والمراجعة',
 
-                    'notification_type' => 'product_review'
-                ]);
+            'description_english' => "Your product: {$productName} got a new review by {$userName}",
+            'description_arabic' => "منتجك: {$productName} حصل على تقييم جديد من {$userName}",
+
+            'notification_type' => 'product_review'
+        ]);
 
     if($create_review){
         return ['status'=>'success','message' => __('user_messages.product_review_saved_successfully'),'data'=>$create_review];
@@ -1681,31 +1710,37 @@ public function CompleteAddMoneyPayment($request)
 
             $message = 'Add Money in Wallet Complete Successfully';
             CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
-                    'receiver_id' => $history->user_id,
-                    'receiver_type' => 2, 
+                'receiver_id' => $history->user_id,
+                'receiver_type' => 2,
 
-                    'title_english' => 'Add Wallet Money',
-                    'description_english' => "Transaction Success,{$history->amount} KD is added to your wallet,Transaction ID: {$request->transaction_id}",
+                'title_english' => 'Add Wallet Money',
+                'title_arabic' => 'إضافة رصيد إلى المحفظة',
 
-                    'notification_type' => 'wallet_money_added'
-                ]);
+                'description_english' => "Transaction Success, {$history->amount} KD is added to your wallet, Transaction ID: {$request->transaction_id}",
+                'description_arabic' => "نجحت العملية، تم إضافة {$history->amount} دينار كويتي إلى محفظتك، رقم المعاملة: {$request->transaction_id}",
+
+                'notification_type' => 'wallet_money_added'
+            ]);
         } else {
             $message = 'Add Money in Wallet Cancelled / Failed';
             CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
-                    'receiver_id' => $history->user_id,
-                    'receiver_type' => 2, 
+                'receiver_id' => $history->user_id,
+                'receiver_type' => 2,
 
-                    'title_english' => 'Add Wallet Money',
-                    'description_english' => "Transaction Failed,{$history->amount} KD is not added to your wallet,Transaction ID: {$request->transaction_id}",
+                'title_english' => 'Add Wallet Money',
+                'title_arabic' => 'إضافة رصيد إلى المحفظة',
 
-                    'notification_type' => 'wallet_money_not_added'
-                ]);
+                'description_english' => "Transaction Failed, {$history->amount} KD is not added to your wallet, Transaction ID: {$request->transaction_id}",
+                'description_arabic' => "فشلت العملية، لم يتم إضافة {$history->amount} دينار كويتي إلى محفظتك، رقم المعاملة: {$request->transaction_id}",
+
+                'notification_type' => 'wallet_money_not_added'
+            ]);
         }
 
         DB::commit();

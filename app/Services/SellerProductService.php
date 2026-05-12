@@ -1826,17 +1826,20 @@ public function View_seller_profile($request){
         // seller::where('id',$request->user_id)->update(['store_information'=>'1']); // update store information
 
         CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+            'sender_id' => 1,
+            'sender_type' => 1,
 
-                    'receiver_id' => $request->user_id,
-                    'receiver_type' => 3, 
+            'receiver_id' => $request->user_id,
+            'receiver_type' => 3,
 
-                    'title_english' => 'Store Info',
-                    'description_english' => "Your store {$request->store_name} information has been updated",
+            'title_english' => 'Store Info',
+            'title_arabic' => 'معلومات المتجر',
 
-                    'notification_type' => 'store_info_update'
-                ]);
+            'description_english' => "Your store {$request->store_name} information has been updated",
+            'description_arabic' => "تم تحديث معلومات متجرك {$request->store_name}",
+
+            'notification_type' => 'store_info_update'
+        ]);
         
         return ['status'=>'success','message'=>"Profile details updated succesfully",'data'=>$store_information];            
   
@@ -1872,17 +1875,20 @@ public function View_seller_profile($request){
          seller::Updateorcreate($match_seller,$seller_information);
         
         CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+            'sender_id' => 1,
+            'sender_type' => 1,
 
-                    'receiver_id' => $request->user_id,
-                    'receiver_type' => 3, 
+            'receiver_id' => $request->user_id,
+            'receiver_type' => 3,
 
-                    'title_english' => 'Store Info',
-                    'description_english' => "Your store {$request->store_name} information has been updated",
+            'title_english' => 'Store Info',
+            'title_arabic' => 'معلومات المتجر',
 
-                    'notification_type' => 'store_info_update'
-                ]);
+            'description_english' => "Your store {$request->store_name} information has been updated",
+            'description_arabic' => "تم تحديث معلومات متجرك {$request->store_name}",
+
+            'notification_type' => 'store_info_update'
+        ]);
         
         return ['status'=>'success','message'=>"Staff Profile details updated succesfully",'data'=>''];            
   
@@ -1918,17 +1924,20 @@ public function View_seller_profile($request){
     
             //   seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
             CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
-                    'receiver_id' => $request->user_id,
-                    'receiver_type' => 3, 
+                'receiver_id' => $request->user_id,
+                'receiver_type' => 3,
 
-                    'title_english' => 'Store Info',
-                    'description_english' => "Your store {$storeName} bank details has been updated",
+                'title_english' => 'Store Info',
+                'title_arabic' => 'معلومات المتجر',
 
-                    'notification_type' => 'store_bank_details_update'
-                ]);
+                'description_english' => "Your store {$storeName} bank details has been updated",
+                'description_arabic' => "تم تحديث بيانات البنك لمتجرك {$storeName}",
+
+                'notification_type' => 'store_bank_details_update'
+            ]);
       
                 return ['status'=>'success','message'=>"Document and Bank details Save succesfully",'data'=>$store_information];            
       

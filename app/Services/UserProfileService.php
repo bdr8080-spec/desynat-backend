@@ -36,17 +36,20 @@ class UserProfileService
         $user->password = Hash::make($request->new_password);
         $user->save();
         CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+            'sender_id' => 1,
+            'sender_type' => 1,
 
-                    'receiver_id' => $request->id,
-                    'receiver_type' => 2, 
+            'receiver_id' => $request->id,
+            'receiver_type' => 2,
 
-                    'title_english' => 'Password Update',
-                    'description_english' => "Your login password has been updated successfully",
+            'title_english' => 'Password Update',
+            'title_arabic' => 'تحديث كلمة المرور',
 
-                    'notification_type' => 'password_update'
-                ]);
+            'description_english' => "Your login password has been updated successfully",
+            'description_arabic' => "تم تحديث كلمة مرور تسجيل الدخول بنجاح",
+
+            'notification_type' => 'password_update'
+        ]);
 
         return ['status'=>'success','message' => __('user_messages.password_changed_successfully'),'data'=>$user];
         // return ApiResponse::generateResponse("success", "Password changed successfully",(object)[], 201);

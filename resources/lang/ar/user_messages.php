@@ -636,6 +636,7 @@ return [
     'invalid_otp' => 'رمز التحقق غير صحيح. يرجى المحاولة مرة أخرى',
     'sending' => 'جاري الإرسال...',
     'otp_resent_successfully' => 'تم إعادة إرسال رمز التحقق بنجاح',
+    'no_notification_found' => 'لم يتم العثور على إشعارات',
 
     //update password
     'old_password' => 'كلمة المرور القديمة',
