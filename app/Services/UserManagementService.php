@@ -223,7 +223,7 @@ class UserManagementService
                 $wallet->amount += $amount;
                 $wallet->save();
 
-                $message = 'Amount added in wallet successfully';
+                $message = __('admin_messages.amount_added_in_wallet_successfully');
             } else {
                 $wallet = UserWallet::create([
                     'user_id' => $userId,
@@ -245,17 +245,20 @@ class UserManagementService
             ]);
 
             CreateNotification([
-                    'sender_id' => 1, 
-                    'sender_type' => 1, 
+                'sender_id' => 1,
+                'sender_type' => 1,
 
-                    'receiver_id' => $userId,
-                    'receiver_type' => 2, 
+                'receiver_id' => $userId,
+                'receiver_type' => 2,
 
-                    'title_english' => 'Add Wallet Money',
-                    'description_english' => "Amount of {$amount} KD is added in your wallet by Admin, Transaction Id: {$transaction}",
+                'title_english' => 'Add Wallet Money',
+                'title_arabic' => 'إضافة رصيد إلى المحفظة',
 
-                    'notification_type' => 'money_added_in_wallet_by_admin'
-                ]);
+                'description_english' => "Amount of {$amount} KD is added in your wallet by Admin, Transaction Id: {$transaction}",
+                'description_arabic' => "تمت إضافة مبلغ {$amount} دينار كويتي إلى محفظتك بواسطة الإدارة، رقم العملية: {$transaction}",
+
+                'notification_type' => 'money_added_in_wallet_by_admin'
+            ]);
 
             DB::commit();
 

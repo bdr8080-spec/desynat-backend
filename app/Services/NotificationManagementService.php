@@ -272,8 +272,9 @@ class NotificationManagementService
                         sendPushNotificationNew(
                             [$token->fcm_token],
                             $title_english,
+                            $title_arabic,
                             $description_english,
-                           //$token->device_type,
+                            $description_arabic,
                            $deviceType,
                             $badgeCount
                         );
