@@ -2,13 +2,13 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl">
-        <div class="title24">Dashboard
+        <div class="title24">{{ __('affiliate_messages.dashboard') }}
         </div>
     </div>
     <div class=" col-lg-3">
         <div class="d-flex  gap-3 mt-5">
             <a href="{{route('affiliate.affiliateDashboard')}}" class="btn btn-success">
-                <span>Reset</span>
+                <span>{{ __('affiliate_messages.reset') }}</span>
             </a>
         </div>
     </div>
@@ -33,7 +33,7 @@
                                     {{ request()->filter == 1 ? 'checked' : '' }}
                                     onchange="document.getElementById('filterForm').submit();">
                                 <span class="custom-radio"></span>
-                                <span class="radio-label">Today</span>
+                                <span class="radio-label">{{ __('affiliate_messages.today') }}</span>
                             </label>
                         </div>
 
@@ -46,7 +46,7 @@
                                     {{ request()->filter == 2 ? 'checked' : '' }}
                                     onchange="document.getElementById('filterForm').submit();">
                                 <span class="custom-radio"></span>
-                                <span class="radio-label">This Week</span>
+                                <span class="radio-label">{{ __('affiliate_messages.this_week') }}</span>
                             </label>
                         </div>
 
@@ -59,7 +59,7 @@
                                     {{ request()->filter == 3 ? 'checked' : '' }}
                                     onchange="document.getElementById('filterForm').submit();">
                                 <span class="custom-radio"></span>
-                                <span class="radio-label">This Month</span>
+                                <span class="radio-label">{{ __('affiliate_messages.this_month') }}</span>
                             </label>
                         </div>
 
@@ -91,7 +91,7 @@
             <div class="py-4">
                 <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
-                        <h5>Total Products Added</h5>
+                        <h5>{{ __('affiliate_messages.total_products_added') }}</h5>
                         <div class="title30">{{$dashboardData['total_products']}}</div>
                     </div>
                     <div class="dash-circle">
@@ -105,8 +105,8 @@
             <div class="total-revenu border20 shadow20 p20 mt-4">
                 <div class="total-revenu-box pnl-flex">
                     <div class="dash-content">
-                        <h5>Total Revenue Generated</h5>
-                        <h1 class="font-34 py-3">{{$dashboardData['total_revenue']}} KD</h1>
+                        <h5>{{ __('affiliate_messages.total_revenue_generated') }}</h5>
+                        <h1 class="font-34 py-3">{{$dashboardData['total_revenue']}} {{ __('affiliate_messages.kwd') }}</h1>
                     </div>
                     <div class="total-revenu-image">
                         <img src="{{ asset('dealer') }}/assets/img/profit.svg" alt="icon" class="img-fluid">
@@ -117,12 +117,12 @@
     </div>
 
     <div class="py-2">
-        <div class="title24">Total Orders <span class="gold-title">({{$dashboardData['total_orders']}})</span></div>
+        <div class="title24">{{ __('affiliate_messages.total_orders') }} <span class="gold-title">({{$dashboardData['total_orders']}})</span></div>
         <div class="row mt-3">
             <div class="col-lg-3 col-md-3">
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-4">
                     <div class="dash-content">
-                        <h5>Ongoing </h5>
+                        <h5>{{ __('affiliate_messages.ongoing') }} </h5>
                         <div class="title30">{{$dashboardData['total_ongoing_orders']}}</div>
                     </div>
                     <div class="dash-circle">
@@ -133,7 +133,7 @@
             <div class="col-lg-3 col-md-3">
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-3">
                     <div class="dash-content">
-                        <h5>Completed</h5>
+                        <h5>{{ __('affiliate_messages.completed') }}</h5>
                         <div class="title30">{{$dashboardData['total_completed_orders']}}</div>
                     </div>
                     <div class="dash-circle">
@@ -144,7 +144,7 @@
             <div class="col-lg-3 col-md-3">
                 <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
-                        <h5>Returned </h5>
+                        <h5>{{ __('affiliate_messages.returned') }} </h5>
                         <div class="title30">{{$dashboardData['total_returned_orders']}}</div>
                     </div>
                     <div class="dash-circle">
@@ -155,7 +155,7 @@
             <div class="col-lg-3 col-md-3">
                 <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
-                        <h5 style="color:#CD0E26;">Cancelled</h5>
+                        <h5 style="color:#CD0E26;">{{ __('affiliate_messages.cancelled') }}</h5>
                         <div class="title30">{{$dashboardData['total_cancelled_orders']}}</div>
                     </div>
                     <div class="dash-circle">

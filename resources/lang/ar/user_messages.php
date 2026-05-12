@@ -1,15 +1,15 @@
 <?php
 
 return [
-    'entries_per_page' => 'Show _MENU_ entries per page',
-    'zero_records' => 'No records found',
-    'info' => 'Showing page _PAGE_ of _PAGES_',
-    'info_empty' => 'No records available',
-    'info_filtered' => '(filtered from _MAX_ total records)',
+    'entries_per_page' => 'عرض _MENU_ سجلات لكل صفحة',
+    'zero_records' => 'لم يتم العثور على سجلات',
+    'info' => 'عرض الصفحة _PAGE_ من _PAGES_',
+    'info_empty' => 'لا توجد سجلات متاحة',
+    'info_filtered' => '(تمت التصفية من إجمالي _MAX_ سجل)',
 
 
-    'arabic' => 'Arabic',
-    'english' => 'English',
+    'arabic' => 'عربي',
+    'english' => 'إنجليزي',
 
     //common
     'sign_in' => 'تسجيل الدخول',
@@ -36,6 +36,7 @@ return [
     'product_add_to_wishlist' => 'تمت إضافة المنتج إلى قائمة الرغبات',
     'product_remove_from_wishlist' => 'تمت إزالة المنتج من قائمة الرغبات',
     'otp' => 'رمز التحقق',
+    'notifications_marked_read' => 'تم تمييز الإشعارات كمقروءة بنجاح',
 
     //landing_page
     'best_selling' => 'الأكثر مبيعًا',

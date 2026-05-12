@@ -161,16 +161,19 @@ class AuthController extends Controller
                 ]);
 
                 CreateNotification([
-                    'sender_id'             => $data->id, 
-                    'sender_type'           => 2,
+                    'sender_id' => $data->id,
+                    'sender_type' => 2,
 
-                    'receiver_id'           => 1,
-                    'receiver_type'         => 1,
+                    'receiver_id' => 1,
+                    'receiver_type' => 1,
 
-                    'title_english'         => 'New User Registered',
-                    'description_english'   => $data->full_name . ' has registered as a user',
+                    'title_english' => 'New User Registered',
+                    'title_arabic' => 'تسجيل مستخدم جديد',
 
-                    'notification_type'     => 'new_user_registration'
+                    'description_english' => $data->full_name . ' has registered as a user',
+                    'description_arabic' => $data->full_name . ' قام بالتسجيل كمستخدم جديد',
+
+                    'notification_type' => 'new_user_registration'
                 ]);
 
                 $id  = Crypt::encryptString($data->id);

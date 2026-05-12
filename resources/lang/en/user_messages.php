@@ -36,6 +36,7 @@ return [
     'product_add_to_wishlist' => 'Product added to wishlist',
     'product_remove_from_wishlist' => 'Product removed from wishlist',
     'otp' => 'OTP',
+    'notifications_marked_read' => 'Notifications marked as read successfully',
 
     //landing_page
     'best_selling' => 'Best Selling',

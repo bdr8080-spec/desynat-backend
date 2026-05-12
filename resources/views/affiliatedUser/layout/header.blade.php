@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Desynat Affiliate </title>
+    <title>{{ __('affiliate_messages.desynat_affiliate') }}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <!-- Favicons -->
@@ -140,7 +141,7 @@
                                     </div>
                                 </div>
                                 <a class="drop-profile" href="{{route('affiliate.affiliateProfile')}}">
-                                    <span>View Profile</span>
+                                    <span>{{ __('affiliate_messages.view_profile') }}</span>
                                 </a>
                             </div>
                         </li>
@@ -148,13 +149,13 @@
                             <a class="dropdown-item d-flex align-items-center gap-3"
                                 href="{{route('affiliateLogout')}}">
                                 <img src="{{ asset('dealer') }}/assets/img/logout.svg">
-                                <span class="text-red">Logout</span>
+                                <span class="text-red">{{ __('affiliate_messages.logout') }}</span>
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <div class="des-language">
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -319,7 +320,7 @@
                             </ul>
                         </div>
                     </div>
-                </li>
+                </li> -->
 
                 <li>
                     <div class="des-language">
@@ -329,20 +330,20 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
                                             <span>AR</span> Arabic
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
+                                        <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
                                             <span>EN</span> English
                                         </a>
                                     </li>

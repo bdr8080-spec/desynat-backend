@@ -88,7 +88,7 @@
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="notificationDialogAffiliateUser">
     
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Notifications</h5>
+        <h5 class="offcanvas-title">{{ __('affiliate_messages.notifications') }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
@@ -114,7 +114,11 @@
 
                     <div class="noti-header d-flex justify-content-between">
                         <div class="noti-title">
-                            {{ $notification->title_english ?? 'Notification' }}
+                            @if(app()->getLocale() == 'en')
+                            {{ $notification->title_english }}
+                            @else
+                            {{ $notification->title_arabic }}
+                            @endif
                         </div>
 
                         <div class="post-date">
@@ -123,7 +127,11 @@
                     </div>
 
                     <p>
+                        @if(app()->getLocale() == 'en')
                         {{ $notification->description_english }}
+                        @else
+                        {{ $notification->description_arabic }}
+                        @endif
                     </p>
 
                 </div>
@@ -132,7 +140,7 @@
 
             @empty
             <div class="text-center text-muted">
-                No notifications found
+                {{ __('affiliate_messages.no_notification_found') }}
             </div>
             @endforelse
 

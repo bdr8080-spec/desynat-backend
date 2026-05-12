@@ -1106,7 +1106,7 @@ class NotificationManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Notifications marked as read successfully',
+                'message' => __('user_messages.notifications_marked_read'),
                 'data' => $updated
             ];
 
