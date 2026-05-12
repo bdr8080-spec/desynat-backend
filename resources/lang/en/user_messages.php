@@ -657,6 +657,17 @@ return [
     'old_password_incorrect' => 'Old password is not correct',
     'new_password_same_as_old' => 'New password cannot be the same as the old password',
     'password_changed_successfully' => 'Password changed successfully',
+
+    //setting
+    'settings' => 'Settings',
+    'in_app_notifications' => 'In-App Notifications',
+    'push_notifications' => 'Push Notifications',
+    'delete_account' => 'Delete Account',
+    'in_app_notification_on' => 'In-app notification is set to On',
+    'in_app_notification_off' => 'In-app notification is set to Off',
+    'account_deleted_successfully' => 'Account deleted successfully',
+    'notification_on' => 'Notification is set to On',
+    'notification_off' => 'Notification is set to Off',
     
 
     

@@ -1191,8 +1191,10 @@ public function ticket_management(REQUEST $request){
         $validator = Validator::make($request->all(), [
             'file' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ], [
-            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG format',
-            'file.max' => 'Image size should not exceed 5MB',
+            // 'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG format',
+            // 'file.max' => 'Image size should not exceed 5MB',
+             'file.mimes' => __('affiliate_messages.file_mimes'),
+             'file.max'   => __('affiliate_messages.file_max'),
         ]);
 
         $affilatedUser=Auth::guard('affilated_user')->user();
@@ -1399,7 +1401,7 @@ public function ticket_management(REQUEST $request){
 
             return ApiResponse::generateResponse(
                 'success',
-                'Account deleted successfully',
+                __('affiliate_messages.account_deleted_successfully'),
                 [],
                 200
             );

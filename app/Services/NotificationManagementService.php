@@ -1260,9 +1260,9 @@ class NotificationManagementService
 
             $user->update(['notification' => $newStatus]);
 
-            $message = $newStatus == 1 
-                ? 'Push Notification is set to On' 
-                : 'Push Notification is set to Off';
+            $message = $newStatus == 1
+                ? __('user_messages.notification_on')
+                : __('user_messages.notification_off');
 
             return [
                 'status' => 'success',
@@ -1289,9 +1289,9 @@ class NotificationManagementService
 
             $user->update(['app_notification' => $newStatus]);
 
-            $message = $newStatus == 1 
-                ? 'In app Notification is set to On' 
-                : 'In app Notification is set to Off';
+            $message = $newStatus == 1
+                ? __('user_messages.in_app_notification_on')
+                : __('user_messages.in_app_notification_off');
 
             return [
                 'status' => 'success',
@@ -1318,9 +1318,9 @@ class NotificationManagementService
 
             $user->update(['notification' => $newStatus]);
 
-            $message = $newStatus == 1 
-                ? 'Notification is set to On' 
-                : 'Notification is set to Off';
+            $message = $newStatus == 1
+                ? __('affiliate_messages.notification_on')
+                : __('affiliate_messages.notification_off');
 
             return [
                 'status' => 'success',
@@ -1347,9 +1347,9 @@ class NotificationManagementService
 
             $user->update(['app_notification' => $newStatus]);
 
-            $message = $newStatus == 1 
-                ? 'In app Notification is set to On' 
-                : 'In app Notification is set to Off';
+            $message = $newStatus == 1
+                ? __('affiliate_messages.in_app_notification_on')
+                : __('affiliate_messages.in_app_notification_off');
 
             return [
                 'status' => 'success',

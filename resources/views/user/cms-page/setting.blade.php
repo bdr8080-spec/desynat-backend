@@ -5,7 +5,7 @@
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="/"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
-        <h3>Settings</h3>
+        <h3>{{ __('user_messages.settings') }}</h3>
     </div>
 
     <div class="row">
@@ -14,7 +14,7 @@
                 <div class="d-flex justify-content-between">
                     <div class="inapp-list d-flex gap-3">
                             <div><img src="{{asset('user/assets/images/in-app.png')}}" class="img-fluid"></div>
-                            <h6>In-app Notifications</h6>
+                            <h6>{{ __('user_messages.in_app_notifications') }}</h6>
                     </div>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" {{ $data->app_notification == 1 ? 'checked' : '' }}>
@@ -27,7 +27,7 @@
                 <div class="d-flex justify-content-between">
                 <div class="inapp-list d-flex gap-3">
                            <div> <img src="{{asset('user/assets/images/push-icon.png')}}" class="img-fluid"></div>
-                            <h6>Push Notifications</h6>
+                            <h6>{{ __('user_messages.push_notifications') }}</h6>
                     </div>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault1" {{ $data->notification == 1 ? 'checked' : '' }}>
@@ -41,7 +41,7 @@
 
 
     <div class="cart-panel mt-5 text-center">
-        <button type="submit" id="userDelete" class="customBtn customBtn5 w-25"> Delete Account </button>
+        <button type="submit" id="userDelete" class="customBtn customBtn5 w-25"> {{ __('user_messages.delete_account') }} </button>
     </div>
 
 
@@ -110,13 +110,14 @@ $(document).on('change', '#switchCheckDefault1', function () {
 $(document).on('click', '#userDelete', function () {
 
     Swal.fire({
-        title: "Are you sure?",
-        text: "Your account will be permanently deleted!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#6c757d",
-        confirmButtonText: "Yes, delete it!"
+        title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
     }).then((result) => {
 
         if (result.isConfirmed) {

@@ -80,6 +80,51 @@ return [
     'link_copied_successfully' => 'Link copied successfully!',
     'product_already_added_to_affiliate' => 'Product already added to this affiliate',
     'product_added_to_affiliate_successfully' => 'Product added to affiliate successfully',
+
+    //support
+    'support' => 'Support',
+    'contact' => 'Contact',
+    'ticket_management' => 'Ticket Management',
+    'ticket_type' => 'Ticket Type',
+    'ticket_id' => 'Ticket ID',
+    'raised_on' => 'Raised On',
+    'status' => 'Status',
+    'in_progress' => 'In Progress',
+    'pending' => 'Pending',
+    'closed' => 'Closed',
+    'resolved' => 'Resolved',
+    'ticket_details' => 'Ticket Details',
+    'select_ticket_type' => 'Select Ticket Type',
+    'title' => 'Title',
+    'enter_title' => 'Enter Title',
+    'description' => 'Description',
+    'enter_description' => 'Enter Description',
+    'upload_attachment_if_any' => 'Upload Attachment (If Any)',
+    'upload_image' => 'Upload Image',
+    'submit' => 'Submit',
+    'please_select_ticket_type' => 'Please select ticket type',
+    'please_enter_title' => 'Please enter title',
+    'please_enter_description' => 'Please enter description',
+    'support_email_address' => 'Support Email Address',
+    'support_contact_number' => 'Support Contact Number',
+    'no_ticket_found' => 'No ticket found',
+    'file_mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG format',
+    'file_max'   => 'Image size should not exceed 5MB',
+    'ticket_added_successfully' => 'Ticket added successfully',
+
+    //cms
+    'no_faq_found' => 'No FAQ found',
+
+    //setting
+    'settings' => 'Settings',
+    'in_app_notifications' => 'In-App Notifications',
+    'push_notifications' => 'Push Notifications',
+    'delete_account' => 'Delete Account',
+    'in_app_notification_on' => 'In-app notification is set to On',
+    'in_app_notification_off' => 'In-app notification is set to Off',
+    'account_deleted_successfully' => 'Account deleted successfully',
+    'notification_on' => 'Notification is set to On',
+    'notification_off' => 'Notification is set to Off',
     
     
 

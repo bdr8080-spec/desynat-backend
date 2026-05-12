@@ -88,7 +88,7 @@ class TicketService
 
             return [
                 'status' => 'success',
-                'message' => 'Ticket added successfully',
+                'message' => __('affiliate_messages.ticket_added_successfully'),
                 'data' => $data
             ];
 

@@ -844,7 +844,7 @@ class AuthController extends Controller
 
             return ApiResponse::generateResponse(
                 'success',
-                'Account deleted successfully',
+                __('user_messages.account_deleted_successfully'),
                 [],
                 200
             );

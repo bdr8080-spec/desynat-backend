@@ -657,6 +657,17 @@ return [
     'new_password_same_as_old' => 'لا يمكن أن تكون كلمة المرور الجديدة نفس كلمة المرور القديمة',
     'password_changed_successfully' => 'تم تغيير كلمة المرور بنجاح',
 
+    //setting
+    'settings' => 'الإعدادات',
+    'in_app_notifications' => 'الإشعارات داخل التطبيق',
+    'push_notifications' => 'إشعارات الدفع',
+    'delete_account' => 'حذف الحساب',
+    'in_app_notification_on' => 'تم تفعيل إشعارات داخل التطبيق',
+    'in_app_notification_off' => 'تم إيقاف إشعارات داخل التطبيق',
+    'account_deleted_successfully' => 'تم حذف الحساب بنجاح',
+    'notification_on' => 'تم تفعيل الإشعارات',
+    'notification_off' => 'تم إيقاف الإشعارات',
+
 
 
 
