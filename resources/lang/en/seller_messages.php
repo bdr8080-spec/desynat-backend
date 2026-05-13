@@ -945,7 +945,64 @@ return [
     'sku_lte' => 'SKU cannot be greater than stock quantity.',
 
 
+    // WebSellerDashboard  controller 
+      // Subscription
+    'plan_purchase_success' => 'You have successfully purchased a plan!',
+    'payment_failed' => 'Your payment failed. Please try again.',
+    'no_plan_found' => 'No plan found.',
+    'purchase_plan_message' => 'Please purchase a plan for better options.',
+    'payment_method_required' => 'Payment method is required.',
+    'plan_purchase_successfully' => 'You have successfully purchased a plan.',
 
+    // Profile Update
+    'profile_pic_required' => 'Please upload a profile picture.',
+    'old_profile_pic_missing' => 'Previous profile picture is missing.',
+    'store_image_required' => 'Please upload a store image.',
+    'old_store_image_missing' => 'Previous store image is missing.',
+
+    'first_name_required' => 'Please enter first name.',
+    'last_name_required' => 'Please enter last name.',
+    'store_name_required' => 'Please enter store name.',
+    'country_required' => 'Country is required.',
+    'store_address_required' => 'Please enter store address.',
+    'store_phone_required' => 'Please enter store phone number.',
+    'store_email_required' => 'Please enter store email.',
+    'bio_required' => 'Please enter bio.',
+
+    // Bank Details
+    'account_type_required' => 'Account type is required.',
+    'account_type_invalid' => 'Invalid account type selected.',
+    'iban_required' => 'IBAN number is required.',
+    'swift_required' => 'SWIFT code is required.',
+    'bank_name_required' => 'Bank name is required.',
+    'account_holder_name_required' => 'Account holder name is required.',
+    'upload_proof_required' => 'Please upload proof document.',
+    'old_upload_proof_missing' => 'Previous proof document is missing.',
+
+    // Commission
+    'affiliate_commission_required' => 'Affiliate commission is required.',
+    'affiliate_commission_numeric' => 'Affiliate commission must be a number.',
+    'affiliate_commission_min' => 'Affiliate commission cannot be less than 0%.',
+    'affiliate_commission_max' => 'Affiliate commission cannot be more than 100%.',
+
+    // Story / Reel / Highlight
+    'file_required' => 'Please upload an image or video.',
+    'file_invalid_format' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format.',
+    'file_size_exceed' => 'File size should not exceed 5MB.',
+    'caption_required' => 'Please enter caption.',
+
+    // Ticket
+    'ticket_file_invalid' => 'File must be in JPEG, PNG, JPG, GIF, SVG format.',
+    'ticket_file_size' => 'Image size should not exceed 5MB.',
+
+    // Delete Account
+    'seller_not_found' => 'Seller not found.',
+    'account_deleted_successfully' => 'Account deleted successfully.',
+
+    // Password
+    'password_validation' => 'Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character.',
+    'confirm_password_match' => 'Confirm password must match new password.',
+    'validation_error' => 'Validation error',
 
 
 

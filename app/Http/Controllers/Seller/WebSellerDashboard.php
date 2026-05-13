@@ -52,7 +52,7 @@ class WebSellerDashboard extends Controller
 
         // if i got payment Then Show This message
         if($request->payment=='yes'){
-        session()->flash('success', 'You have successfully purchased a plan!');
+        session()->flash('success',  __('seller_messages.plan_purchase_success'));
         return  redirect()->route('seller.dashboard');
         }
 
@@ -80,14 +80,14 @@ class WebSellerDashboard extends Controller
           $plans= $this->SellerAuthService->seller_allPlan($request_data);
     
         if(isset($plans['status']) && $plans['status']=='error' ){
-            return view('dealer.index',compact('seller_details'))->with('error','No Plan Found');
+            return view('dealer.index',compact('seller_details'))->with('error',__('seller_messages.plan_not_found'));
         }
 
         $plans=$plans['data'];
 
         Cache::put('plan_page', 'yes', 10000);
 
-        return redirect()->route('seller.all_plans')->with('success','Please purchase a Plan for Better option');
+        return redirect()->route('seller.all_plans')->with('success',__('seller_messages.purchase_plan_message'));
                    
         }
         
@@ -112,7 +112,7 @@ class WebSellerDashboard extends Controller
 
 
         if($request->payment=='no'){
-            session()->flash('error', 'You payment is failed Please try again');
+            session()->flash('error', __('seller_messages.payment_failed'));
             return  redirect()->route('seller.all_plans');
         }     
 
@@ -132,7 +132,7 @@ class WebSellerDashboard extends Controller
           $plans= $this->SellerAuthService->seller_allPlan($request_data);
     
         if(isset($plans['status']) && $plans['status']=='error' ){
-            return view('dealer.index',compact('seller_details'))->with('error','No Plan Found');
+            return view('dealer.index',compact('seller_details'))->with('error',__('seller_messages.plan_not_found'));
         }
 
         $plans=$plans['data'];
@@ -141,7 +141,7 @@ class WebSellerDashboard extends Controller
            
         }else{
     
-            return  redirect()->route('seller.dashboard')->with('error','No Plan Found');
+            return  redirect()->route('seller.dashboard')->with('error',__('seller_messages.plan_not_found'));
 
         }
 
@@ -159,13 +159,13 @@ class WebSellerDashboard extends Controller
 
       
     if(isset($data['status']) && $data['status']=='error' ){
-        return view('dealer.index',compact('seller_details'))->with('error','No Plan Found');;
+        return view('dealer.index',compact('seller_details'))->with('error',__('seller_messages.plan_not_found'));;
     }
 
     $plans=$plans['data'];
 
     if($request->payment=='yes'){
-        session()->flash('success1', 'You have successfully purchased a plan!');
+        session()->flash('success1', __('seller_messages.plan_purchase_successfully'));
         return  redirect()->route('seller.single_plans', $id);
     }       
 
@@ -191,7 +191,7 @@ class WebSellerDashboard extends Controller
             'plan_id' => 'required|exists:plans,id',
             'payment_method'=>"required"
         ],[
-            'payment_method.required'=>"Payment Method is required"
+            'payment_method.required'=>"__('seller_messages.payment_method_required')"
         ]);
 
         if ($validate->fails()) {
@@ -245,7 +245,7 @@ class WebSellerDashboard extends Controller
 }
 
 
-return  redirect()->route('seller.dashboard')->with('success','You are successfully purchase a Plan');
+return  redirect()->route('seller.dashboard')->with('success', __('seller_messages.plan_purchase_successfully'));
 
     }
 
@@ -369,21 +369,21 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
             // 'long'=>'required'
             
             ],[
-                'profile_pic.required_without'     => 'Please upload a profile picture.',
-    'old_profile_pic.required_without' => 'Previous profile picture missing.',
+     'profile_pic.required_without'     =>__('seller_messages.profile_pic_required') ,
+    'old_profile_pic.required_without' =>__('seller_messages.old_profile_pic_missing'),
 
-    'store_image.required_without'     => 'Please upload a store image.',
-    'old_store_image.required_without' => 'Previous store image missing.',
+    'store_image.required_without'     =>__('seller_messages.store_image_required')  ,
+    'old_store_image.required_without' =>__('seller_messages.old_store_image_missing') ,
 
     // Basic fields
-    'first_name.required'     => 'Please Enter First name',
-    'last_name.required'      => 'Please Enter Last name ',
-    'store_name.required'     => 'Please Enter Store name ',
-    'country.required'        => 'Country is required.',
-    'store_address.required'  => 'Please Enter Store address.',
-    'store_phone.required'    => 'Please Enter Store phone number ',
-    'store_mail_id.required'  => 'Please Enter Store email.',
-    'bio.required'            => 'Please Enter Bio.',
+    'first_name.required'     =>__('seller_messages.first_name_required') ,
+    'last_name.required'      =>__('seller_messages.last_name_required') ,
+    'store_name.required'     =>__('seller_messages.store_name_required') ,
+    'country.required'        =>__('seller_messages.country_required') ,
+    'store_address.required'  =>__('seller_messages.store_address_required') ,
+    'store_phone.required'    =>__('seller_messages.store_phone_required') ,
+    'store_mail_id.required'  =>__('seller_messages.store_email_required') ,
+    'bio.required'            =>__('seller_messages.bio_required') ,
     
             ]);
         
@@ -475,21 +475,22 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
             // 'long'=>'required'
             
             ],[
-                'profile_pic.required_without'     => 'Please upload a profile picture.',
-    'old_profile_pic.required_without' => 'Previous profile picture missing.',
+    
+    'profile_pic.required_without'     => __('seller_messages.profile_pic_required') ,
+    'old_profile_pic.required_without' => __('seller_messages.old_profile_pic_missing'),
 
-    'store_image.required_without'     => 'Please upload a store image.',
-    'old_store_image.required_without' => 'Previous store image missing.',
+    'store_image.required_without'     => __('seller_messages.store_image_required'),
+    'old_store_image.required_without' => __('seller_messages.old_store_image_missing'),
 
     // Basic fields
-    'first_name.required'     => 'Please Enter First name',
-    'last_name.required'      => 'Please Enter Last name ',
-    'store_name.required'     => 'Please Enter Store name ',
-    'country.required'        => 'Country is required.',
-    'store_address.required'  => 'Please Enter Store address.',
-    'store_phone.required'    => 'Please Enter Store phone number ',
-    'store_mail_id.required'  => 'Please Enter Store email.',
-    'bio.required'            => 'Please Enter Bio.',
+    'first_name.required'     => __('seller_messages.first_name_required')   ,
+    'last_name.required'      => __('seller_messages.last_name_required')    ,
+    'store_name.required'     => __('seller_messages.store_name_required')  ,
+    'country.required'        => __('seller_messages.country_required')    ,
+    'store_address.required'  => __('seller_messages.store_address_required')  ,
+    'store_phone.required'    => __('seller_messages.store_phone_required')   ,
+    'store_mail_id.required'  => __('seller_messages.store_email_required')  ,
+    'bio.required'            => __('seller_messages.bio_required'),
     
             ]);
         
@@ -566,17 +567,17 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
             ],[
 
-            'account_type.required' => 'Account type is required.',
-            'account_type.in'       => 'Invalid account type selected.',
+            'account_type.required' => __('seller_messages.account_type_required') ,
+            'account_type.in'       => __('seller_messages.account_type_invalid') ,
 
-            'iban.required'                => 'IBAN number is required.',
-            'swift.required'               => 'SWIFT code is required.',
-            'bank_name.required'           => 'Bank name is required.',
-            'account_holder_name.required' => 'Account holder name is required.',
+            'iban.required'                => __('seller_messages.iban_required') ,
+            'swift.required'               => __('seller_messages.swift_required') ,
+            'bank_name.required'           => __('seller_messages.bank_name_required') ,
+            'account_holder_name.required' => __('seller_messages.account_holder_name_required'),
 
             // Proof upload messages
-            'upload_proof.required_without'     => 'Please upload proof document.',
-            'old_upload_proof.required_without' => 'Previous proof document is missing.',
+            'upload_proof.required_without'     => __('seller_messages.upload_proof_required') ,
+            'old_upload_proof.required_without' => __('seller_messages.old_upload_proof_missing'),
 
             ]);
             
@@ -647,10 +648,10 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
         'affilate_commission'=>'required|numeric|min:0|max:100'        
      ],[
         
-        'affilate_commission.required' => 'Affiliate commission is required.',
-        'affilate_commission.numeric' => 'Affiliate commission must be a number.',
-        'affilate_commission.min' => 'Affiliate commission cannot be less than 0%.',
-        'affilate_commission.max' => 'Affiliate commission cannot be more than 100%.',
+        'affilate_commission.required' => __('seller_messages.affiliate_commission_required') ,
+        'affilate_commission.numeric' => __('seller_messages.affiliate_commission_numeric') ,
+        'affilate_commission.min' => __('seller_messages.affiliate_commission_min') ,
+        'affilate_commission.max' => __('seller_messages.affiliate_commission_max') ,
 
      ]);
     
@@ -783,9 +784,9 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
         $validator = Validator::make($request->all(), [
             'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:5120',
         ], [
-            'file.required' => 'Please Upload an Image or Video',
-            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
-            'file.max' => 'Image size should not exceed 5MB',
+            'file.required' => __('seller_messages.file_required') ,
+            'file.mimes' => __('seller_messages.file_invalid_format') ,
+            'file.max' => __('seller_messages.file_size_exceed') ,
         ]);
 
         // $seller_id=Auth::guard('seller')->user()->id;
@@ -857,9 +858,14 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
         $validator = Validator::make($request->all(), [
             'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:5120',
         ], [
-            'file.required' => 'Please Upload an Image or Video',
-            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
-            'file.max' => 'Image size should not exceed 5MB',
+            'file.required' => __('seller_messages.file_required') ,
+            'file.mimes' => __('seller_messages.file_invalid_format') ,
+            'file.max' => __('seller_messages.file_size_exceed') ,
+    
+
+            // 'file.required' => 'Please Upload an Image or Video',
+            // 'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
+            // 'file.max' => 'Image size should not exceed 5MB',
         ]);
 
         // $seller_id=Auth::guard('seller')->user()->id;
@@ -933,10 +939,17 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
             'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:5120',
             'caption' => 'required',
         ], [
-            'file.required' => 'Please Upload an Image or Video',
-            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
-            'file.max' => 'Image size should not exceed 5MB',
-            'file.required' => 'Please enter caption',
+            // 'file.required' => 'Please Upload an Image or Video',
+            // 'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
+            // 'file.max' => 'Image size should not exceed 5MB',
+          
+            'file.required' => __('seller_messages.file_required') ,
+            'file.mimes' => __('seller_messages.file_invalid_format') ,
+            'file.max' => __('seller_messages.file_size_exceed') ,
+            'caption.required' => __('seller_messages.caption_required'),
+
+    
+
         ]);
 
         // $seller_id=Auth::guard('seller')->user()->id;
@@ -985,9 +998,16 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
             'reel_id' => 'required',
             'file' => 'nullable|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:5120',
         ], [
-            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
-            'file.max' => 'Image size should not exceed 5MB',
-            'caption.required' => 'Please enter caption',
+            // 'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
+            // 'file.max' => 'Image size should not exceed 5MB',
+            // 'caption.required' => 'Please enter caption',
+
+            'file.mimes' => __('seller_messages.file_invalid_format') ,
+            'file.max' => __('seller_messages.file_size_exceed') ,
+            'caption.required' => __('seller_messages.caption_required'),
+
+
+
         ]);
 
         if ($validator->fails()) {
