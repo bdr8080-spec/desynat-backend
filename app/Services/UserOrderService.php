@@ -2098,7 +2098,7 @@ public function submitWithdrawRequest($request_data)
             if ($request_data->amount > 1000) {
                 return [
                     'status' => 'error',
-                    'message' => 'You cannot withdraw more than 1000 KD at a time',
+                    'message' => __('affiliate_messages.withdraw_limit_exceeded'),
                     'data' => (object)[]
                 ];
             }
@@ -2120,7 +2120,7 @@ public function submitWithdrawRequest($request_data)
             if($total_earning<$request_data->amount){
                 return [
                     'status' => 'error',
-                    'message' => 'you can not withdraw more than total earning',
+                    'message' => __('affiliate_messages.withdraw_cannot_exceed_total_earning'),
                     'data' => (object)[]
                 ];
             }                
@@ -2139,7 +2139,7 @@ public function submitWithdrawRequest($request_data)
 
             return [
                 'status' => 'success',
-                'message' => 'Withdraw request submitted successfully',
+                'message' => __('affiliate_messages.withdraw_request_submitted_successfully'),
                 'data' => $withdraw
             ];
 
