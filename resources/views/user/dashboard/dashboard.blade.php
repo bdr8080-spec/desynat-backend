@@ -122,9 +122,9 @@
                       <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                     <div class="product-content">
                         @if(app()->getLocale() == 'en')
-                        <h5>{{ $item->product_name_en }}</h5>
+                        <h5>{{ $item->product_name_en }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
                         @else
-                        <h5>{{ $item->product_name_ar }}</h5>
+                        <h5>{{ $item->product_name_ar }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
                         @endif
                         <div class="rating">
                             @php
@@ -256,9 +256,9 @@
             
                     <div class="product-content">
                         @if(app()->getLocale() == 'en')
-                        <h5>{{ $item->product_name_en }}</h5>
+                        <h5>{{ $item->product_name_en }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
                         @else
-                        <h5>{{ $item->product_name_ar }}</h5>
+                        <h5>{{ $item->product_name_ar }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
                         @endif
                         <div class="rating">
                             @php
@@ -387,9 +387,9 @@
            
                     <div class="product-content">
                         @if(app()->getLocale() == 'en')
-                        <h5>{{ $item->product_name_en }}</h5>
+                        <h5>{{ $item->product_name_en }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
                         @else
-                        <h5>{{ $item->product_name_ar }}</h5>
+                        <h5>{{ $item->product_name_ar }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
                         @endif
                         <div class="rating">
                             @php
