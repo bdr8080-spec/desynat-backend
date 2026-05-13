@@ -24,9 +24,9 @@ class AdminDashboardService
 
             $applyFilters = function ($query) use ($request_data) {
 
-                if (!empty($request_data->country_id)) {
-                    $query->where('country_id', $request_data->country_id);
-                }
+                // if (!empty($request_data->country_id)) {
+                //     $query->where('country_id', $request_data->country_id);
+                // }
 
                 if (!empty($request_data->filter)) {
                     if ($request_data->filter == 1) {
