@@ -513,7 +513,436 @@ return [
     'upload_proof_mimes' => 'Only JPG, JPEG, PNG, and WEBP formats are allowed.',
     'upload_proof_max' => 'The image size must not exceed 2MB.',
 
+     'reset_password_required' => 'Please enter password.',
+    'reset_password_min' => 'Password must be at least 8 characters long.',
+    'reset_password_regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol.',
 
+    'reset_confirm_password_required' => 'Please confirm your password.',
+    'reset_confirm_password_same' => 'Passwords do not match.',
+
+
+    // web-SellerBannerManagement
+    
+
+    'banner_position_required' => 'Please select banner position.',
+    'banner_position_invalid' => 'Invalid banner position selected.',
+
+    'category_required' => 'Please select category.',
+    'category_exists' => 'Selected category does not exist.',
+
+    'subcategory_required' => 'Please select subcategory.',
+    'subcategory_exists' => 'Selected subcategory does not exist.',
+
+    'start_date_required' => 'Please select start date.',
+    'start_date_date' => 'Start date must be a valid date.',
+
+    'end_date_required' => 'Please select end date.',
+    'end_date_date' => 'End date must be a valid date.',
+    'end_date_after' => 'End date must be greater than or equal to start date.',
+
+    'total_days_required' => 'Please enter total days.',
+    'total_days_integer' => 'Total days must be a valid number.',
+
+    'upload_banner_required' => 'Please upload banner image.',
+
+    'price_required' => 'Please enter price.',
+
+
+    // SellerChatController web 
+    'unique_id_required' => 'Please provide chat ID.',
+    'unique_id_exists' => 'Invalid chat ID.',
+    'price_required' => 'Please enter price.',
+    'quantity_required' => 'Please enter quantity.',
+    'total_amount_required' => 'Please enter total amount.',
+
+
+
+    // seller product Controller 
+       // Category / Brand
+    'category_required' => 'Category is required.',
+    'category_invalid' => 'Selected category is invalid.',
+
+    'subcategory_required' => 'Sub-category is required.',
+    'subcategory_invalid' => 'Selected sub-category is invalid.',
+
+    'brand_required' => 'Brand is required.',
+    'brand_invalid' => 'Selected brand is invalid.',
+
+    // Product Name
+    'product_name_en_required' => 'Product name (English) is required.',
+    'product_name_en_unique' => 'English product name already exists.',
+
+    'product_name_ar_required' => 'Product name (Arabic) is required.',
+    'product_name_ar_unique' => 'Arabic product name already exists.',
+
+    // Description
+    'description_en_required' => 'English description is required.',
+    'description_ar_required' => 'Arabic description is required.',
+
+    // Color / Size
+    'color_required' => 'At least one color must be selected.',
+    'size_required' => 'At least one size must be selected.',
+
+    // Variant Image
+    'variant_image_required' => 'Product variant image is required.',
+
+    // Inventory
+    'stock_required' => 'Total stock is required.',
+    'sku_required' => 'SKU value is required.',
+    'price_required' => 'Actual price is required.',
+    'final_price_required' => 'Final price is required.',
+
+    // Product Policy
+    'min_cart_required' => 'Minimum cart quantity is required.',
+    'max_cart_required' => 'Maximum cart quantity is required.',
+
+    'product_return_required' => 'Please select return availability.',
+    'return_days_required' => 'Return days are required.',
+
+    'exchange_required' => 'Please select exchange availability.',
+    'exchange_days_required' => 'Exchange days are required.',
+
+    'review_required' => 'Review & rating option is required.',
+
+    'affiliate_required' => 'Affiliated product option is required.',
+    'affiliate_commission_required' => 'Affiliate commission is required.',
+
+    'customized_required' => 'Customization option is required.',
+    'ready_to_ship_required' => 'Ready to ship status is required.',
+    'cod_required' => 'Cash on delivery availability is required.',
+
+    'size_chart_required' => 'Upload size chart is required.',
+
+    // Body Measurements
+    'bust_required' => 'Bust measurement required.',
+    'waist_required' => 'Waist measurement required.',
+    'hip_required' => 'Hip measurement required.',
+    'shoulder_required' => 'Shoulder measurement required.',
+    'sleeve_required' => 'Sleeve length required.',
+    'length_required' => 'Length measurement required.',
+
+
+     'description_en_required' => 'English description is required.',
+    'description_ar_required' => 'Arabic description is required.',
+
+    // Specification
+    'product_spe_en_required' => 'Product specification (English) is required.',
+    'product_spe_en_array' => 'Product specification (English) format is invalid.',
+    'product_spe_en_value_required' => 'Product specification value (English) is required.',
+
+    'product_spe_feature_en_required' => 'Product feature (English) is required.',
+    'product_spe_feature_en_array' => 'Product feature (English) format is invalid.',
+    'product_spe_feature_en_value_required' => 'Product feature value (English) is required.',
+
+    'product_spe_ar_required' => 'Product specification (Arabic) is required.',
+    'product_spe_ar_array' => 'Product specification (Arabic) format is invalid.',
+    'product_spe_ar_value_required' => 'Product specification value (Arabic) is required.',
+
+    'product_spe_feature_ar_required' => 'Product feature (Arabic) is required.',
+    'product_spe_feature_ar_array' => 'Product feature (Arabic) format is invalid.',
+    'product_spe_feature_ar_value_required' => 'Product feature value (Arabic) is required.',
+
+    // Colors
+    'color_required' => 'At least one color must be selected.',
+    'color_array' => 'Color input format is invalid.',
+    'color_field_required' => 'Color field is required.',
+    'color_invalid' => 'Selected color is invalid.',
+
+    // Variant Images
+    'variant_image_required' => 'Product variant image is required.',
+    'variant_image_array' => 'Variant images format is invalid.',
+    'variant_image_each_required' => 'Please upload image for each color.',
+    'variant_image_invalid' => 'Image format is invalid.',
+
+    // Size
+    'size_required' => 'At least one size must be selected.',
+    'size_array' => 'Size format is invalid.',
+    'size_entry_required' => 'Size entry is missing.',
+    'size_value_required' => 'Size is required.',
+    'size_invalid' => 'Selected size is invalid.',
+
+    // Inventory
+    'stock_required' => 'Total stock is required.',
+    'stock_integer' => 'Total stock must be a valid number.',
+
+    'sku_required' => 'SKU value is required.',
+    'sku_max' => 'SKU must not exceed 50 characters.',
+
+    'actual_price_required' => 'Actual price is required.',
+    'actual_price_numeric' => 'Actual price must be numeric.',
+
+    // Discount
+    'discount_type_required' => 'Discount type is required.',
+    'discount_type_invalid' => 'Discount type must be percentage or fixed.',
+
+    'discount_value_required' => 'Discount value is required.',
+    'discount_value_numeric' => 'Discount value must be numeric.',
+
+    'final_price_required' => 'Final price is required.',
+    'final_price_numeric' => 'Final price must be numeric.',
+
+    // Product Policy
+    'product_return_invalid' => 'Invalid return option.',
+    'return_days_numeric' => 'Return days must be numeric.',
+
+    'exchange_invalid' => 'Invalid exchange option.',
+    'exchange_days_numeric' => 'Exchange days must be numeric.',
+
+    'review_invalid' => 'Invalid review option.',
+
+    'affiliate_invalid' => 'Invalid affiliate option.',
+
+    'customized_invalid' => 'Invalid customization option.',
+
+    'ready_to_ship_invalid' => 'Invalid ready to ship option.',
+
+    'cod_invalid' => 'Invalid cash on delivery option.',
+
+    // Measurements
+    'bust_numeric' => 'Bust measurement must be numeric.',
+    'waist_numeric' => 'Waist measurement must be numeric.',
+    'hip_numeric' => 'Hip measurement must be numeric.',
+    'shoulder_numeric' => 'Shoulder measurement must be numeric.',
+    'sleeve_numeric' => 'Sleeve length must be numeric.',
+    'length_numeric' => 'Length must be numeric.',
+
+
+
+    'variation_image_required' => 'At least one image is required for variation.',
+    'color_sizes_must_be_different' => 'Sizes for each color must be different.',
+    'sku_limit_exceeded' => 'SKU limit should not be greater than total stock.',
+
+
+    // edit Inventory code 
+
+    // Base Fields
+    'category_required' => 'Category is required.',
+    'category_invalid' => 'Selected category is invalid.',
+    'subcategory_required' => 'Sub-category is required.',
+    'subcategory_invalid' => 'Selected sub-category is invalid.',
+    'brand_required' => 'Brand is required.',
+    'brand_invalid' => 'Selected brand is invalid.',
+
+    'product_name_en_required' => 'Product name (English) is required.',
+    'product_name_en_unique' => 'English product name already exists.',
+
+    'product_name_ar_required' => 'Product name (Arabic) is required.',
+    'product_name_ar_unique' => 'Arabic product name already exists.',
+
+    'description_en_required' => 'English description is required.',
+    'description_ar_required' => 'Arabic description is required.',
+
+    // Specifications
+    'product_spe_en_required' => 'English specifications are required.',
+    'product_spe_en_array' => 'Invalid format for English specifications.',
+    'product_spe_en_value_required' => 'Each English specification is required.',
+
+    'product_spe_feature_en_required' => 'English specification features are required.',
+    'product_spe_feature_en_array' => 'Invalid format for English specification features.',
+    'product_spe_feature_en_value_required' => 'Each English feature is required.',
+
+    'product_spe_ar_required' => 'Arabic specifications are required.',
+    'product_spe_ar_array' => 'Invalid format for Arabic specifications.',
+    'product_spe_ar_value_required' => 'Each Arabic specification is required.',
+
+    'product_spe_feature_ar_required' => 'Arabic specification features are required.',
+    'product_spe_feature_ar_array' => 'Invalid format for Arabic specification features.',
+    'product_spe_feature_ar_value_required' => 'Each Arabic feature is required.',
+
+    // Variant Images
+    'variant_image_array' => 'Variant images format is invalid.',
+    'variant_image_group_invalid' => 'Variant image group format is invalid.',
+    'variant_image_file_invalid' => 'Each uploaded file must be an image.',
+    'variant_image_mimes' => 'Images must be jpeg, png, jpg, or gif.',
+    'variant_image_max' => 'Image size must not exceed 2MB.',
+
+    // Colors
+    'color_required' => 'At least one color must be selected.',
+    'color_invalid_format' => 'Color format is invalid.',
+    'color_selection_required' => 'Color selection is required.',
+    'color_not_exist' => 'Selected color does not exist.',
+
+    // Sizes
+    'size_required' => 'At least one size is required.',
+    'size_invalid_format' => 'Size format is invalid.',
+    'size_group_required' => 'Size group is required.',
+    'size_selection_required' => 'Each size must be selected.',
+    'size_invalid' => 'Invalid size selected.',
+
+    // Inventory
+    'stock_required' => 'Total stock is required.',
+    'stock_numeric' => 'Total stock must be a number.',
+    'stock_negative' => 'Stock cannot be negative.',
+
+    'sku_required' => 'SKU is required.',
+    'sku_invalid' => 'SKU format is invalid.',
+    'sku_max' => 'SKU must not exceed 50 characters.',
+
+    'actual_price_required' => 'Actual price is required.',
+    'actual_price_numeric' => 'Actual price must be a number.',
+    'actual_price_negative' => 'Actual price cannot be negative.',
+
+    // Discount
+    'discount_type_required' => 'Discount type is required.',
+    'discount_type_invalid' => 'Invalid discount type.',
+
+    'discount_value_required' => 'Discount value is required.',
+    'discount_value_numeric' => 'Discount value must be numeric.',
+    'discount_value_negative' => 'Discount value cannot be negative.',
+
+    'final_price_required' => 'Final price is required.',
+    'final_price_numeric' => 'Final price must be numeric.',
+    'final_price_negative' => 'Final price cannot be negative.',
+
+    // Product Policies
+    'min_cart_required' => 'Minimum cart quantity is required.',
+    'max_cart_required' => 'Maximum cart quantity is required.',
+
+    'return_required' => 'Return availability is required.',
+    'return_invalid' => 'Invalid return selection.',
+    'return_days_required' => 'Return days required if product is returnable.',
+    'return_days_numeric' => 'Return days must be numeric.',
+
+    'exchange_required' => 'Exchange availability is required.',
+    'exchange_invalid' => 'Invalid exchange selection.',
+    'exchange_days_required' => 'Exchange days required if exchange is available.',
+    'exchange_days_numeric' => 'Exchange days must be numeric.',
+
+    'review_required' => 'Review & rating option required.',
+    'review_invalid' => 'Invalid review & rating value.',
+
+    'affiliate_required' => 'Affiliated product selection required.',
+    'affiliate_invalid' => 'Invalid affiliated product option.',
+    'affiliate_commission_required' => 'Affiliate commission is required.',
+
+    'customization_required' => 'Customization selection required.',
+    'customization_invalid' => 'Invalid customization option.',
+
+    'ready_to_ship_required' => 'Ready to ship status required.',
+    'ready_to_ship_invalid' => 'Invalid ready to ship option.',
+
+    'cod_required' => 'Cash on delivery option required.',
+    'cod_invalid' => 'Invalid COD selection.',
+
+    'size_chart_required' => 'Size chart upload is required.',
+
+    // Measurements
+    'bust_required' => 'Bust measurement required.',
+    'bust_numeric' => 'Bust must be numeric.',
+
+    'waist_required' => 'Waist measurement required.',
+    'waist_numeric' => 'Waist must be numeric.',
+
+    'hip_required' => 'Hip measurement required.',
+    'hip_numeric' => 'Hip must be numeric.',
+
+    'shoulder_required' => 'Shoulder measurement required.',
+    'shoulder_numeric' => 'Shoulder must be numeric.',
+
+    'sleeve_required' => 'Sleeve length required.',
+    'sleeve_numeric' => 'Sleeve length must be numeric.',
+
+    'length_required' => 'Length is required.',
+    'length_numeric' => 'Length must be numeric.',
+
+
+       'variant_image_array' => 'Variant images format is invalid.',
+    'variant_image_group_array' => 'Variant image group format is invalid.',
+    'variant_image_image' => 'Each uploaded file must be an image.',
+    'variant_image_mimes' => 'Images must be jpeg, png, jpg, or gif.',
+    'variant_image_max' => 'Image size must not exceed 2MB.',
+
+    'old_variant_image_array' => 'Old variant images format is invalid.',
+    'old_variant_image_nullable' => 'Old variant image field is invalid.',
+
+    'total_stock_required' => 'Total stock is required.',
+    'total_stock_integer' => 'Total stock must be a number.',
+    'total_stock_min' => 'Stock cannot be negative.',
+
+    'sku_required' => 'SKU is required.',
+    'sku_string' => 'SKU format is invalid.',
+    'sku_max' => 'SKU must not exceed 50 characters.',
+
+    'actual_price_required' => 'Actual price is required.',
+    'actual_price_numeric' => 'Actual price must be a number.',
+    'actual_price_min' => 'Actual price cannot be negative.',
+
+    'discount_type_required' => 'Discount type is required.',
+    'discount_type_invalid' => 'Invalid discount type.',
+
+    'discount_value_required' => 'Discount value is required.',
+    'discount_value_numeric' => 'Discount value must be numeric.',
+    'discount_value_min' => 'Discount value cannot be negative.',
+
+    'final_price_required' => 'Final price is required.',
+    'final_price_numeric' => 'Final price must be numeric.',
+    'final_price_min' => 'Final price cannot be negative.',
+
+    'min_cart_quantity_required' => 'Minimum cart quantity is required.',
+    'max_cart_quantity_required' => 'Maximum cart quantity is required.',
+
+    'product_return_required' => 'Return availability is required.',
+    'product_return_invalid' => 'Invalid return selection.',
+
+    'return_days_required' => 'Return days are required.',
+    'return_days_integer' => 'Return days must be numeric.',
+
+    'product_exchange_required' => 'Exchange availability is required.',
+    'product_exchange_invalid' => 'Invalid exchange selection.',
+
+    'exchange_days_required' => 'Exchange days are required.',
+    'exchange_days_integer' => 'Exchange days must be numeric.',
+
+    'review_rating_required' => 'Review rating option is required.',
+    'review_rating_invalid' => 'Invalid review rating value.',
+
+    'affiliated_product_required' => 'Affiliated product selection is required.',
+    'affiliated_product_invalid' => 'Invalid affiliated product option.',
+
+    'affiliated_commission_required' => 'Affiliated commission is required.',
+
+    'customized_product_required' => 'Customization option is required.',
+    'customized_product_invalid' => 'Invalid customization option.',
+
+    'ready_to_ship_required' => 'Ready to ship status is required.',
+    'ready_to_ship_invalid' => 'Invalid ready to ship option.',
+
+    'cash_on_delivery_required' => 'Cash on delivery option is required.',
+    'cash_on_delivery_invalid' => 'Invalid cash on delivery option.',
+
+    'upload_size_chart_required' => 'Size chart upload is required.',
+    'old_upload_size_chart_required' => 'Old size chart is required.',
+
+    'bust_required' => 'Bust measurement is required.',
+    'bust_numeric' => 'Bust must be numeric.',
+
+    'waist_required' => 'Waist measurement is required.',
+    'waist_numeric' => 'Waist must be numeric.',
+
+    'hip_required' => 'Hip measurement is required.',
+    'hip_numeric' => 'Hip must be numeric.',
+
+    'shoulder_required' => 'Shoulder measurement is required.',
+    'shoulder_numeric' => 'Shoulder must be numeric.',
+
+    'sleeve_length_required' => 'Sleeve length is required.',
+    'sleeve_length_numeric' => 'Sleeve length must be numeric.',
+
+    'length_required' => 'Length is required.',
+    'length_numeric' => 'Length must be numeric.',
+
+
+     'inventory_product_required' => 'Product is required.',
+    'inventory_product_invalid' => 'Selected product is invalid.',
+
+    'variation_required' => 'Product variation is required.',
+    'variation_invalid' => 'Selected product variation is invalid.',
+
+    'stock_quantity_required' => 'Stock quantity is required.',
+    'stock_quantity_integer' => 'Stock quantity must be a valid number.',
+
+    'sku_integer' => 'SKU must be a valid number.',
+    'sku_lte' => 'SKU cannot be greater than stock quantity.',
 
 
 
