@@ -44,7 +44,11 @@ class LoginController extends Controller
         $validate = Validator::make($request->all(), [
             'email_mobile' => 'required',
             'password' => 'required',
-           ]);
+           ],
+         [
+        'email_mobile.required' => __('seller_messages.email_mobile_required'),
+        'password.required' => __('seller_messages.password_required'),
+        ]);
 
         if ($validate->fails()) {
             return redirect()->back()
@@ -82,7 +86,7 @@ class LoginController extends Controller
         // ->withErrors(['error'=>'No Seller Account Found'])
         // ->withInput();
 
-        return redirect()->back()->with('error','No Seller Account Found');
+        return redirect()->back()->with('error',__('seller_messages.no_seller_account'));
 
         }
  
@@ -107,7 +111,7 @@ class LoginController extends Controller
 
 
             return redirect()->back()
-            ->withErrors(['password'=>'Seller Is Not verified By Admin'])
+            ->withErrors(['password'=>__('seller_messages.seller_not_verified')])
             ->withInput();
            }
            
@@ -128,16 +132,15 @@ class LoginController extends Controller
             // ->withErrors(['password'=>'Seller Document is Rejected By Admin'])
             // ->withInput();
             
-            return redirect()->route('seller.upload_document',$seller_details->id)->with('error','Your Document is Rejected By Admin Please Upload Again');
+            return redirect()->route('seller.upload_document',$seller_details->id)->with('error',__('seller_messages.document_rejected'));
         
         }
 
-        return redirect()->route('seller.dashboard')->with('success','Login successfully');
+        return redirect()->route('seller.dashboard')->with('success',__('seller_messages.login_success'));
            
-
         }{
             return redirect()->back()
-            ->withErrors(['password'=>'Please enter correct password'])
+            ->withErrors(['password'=>__('seller_messages.incorrect_password')])
             ->withInput();
 
         }

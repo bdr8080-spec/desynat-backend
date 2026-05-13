@@ -404,7 +404,17 @@ return [
     'Submit' => 'Submit',
     'Request_Sent_Successfully' => 'Request Sent Successfully',
 
-    'complete'=>"Complete"
+    'complete'=>"Complete",
+
+
+    // seller web  Code 
+    // LoginController Controller   
+
+    'email_mobile_required' => 'Email or mobile number is required.',
+    'password_required' => 'Password is required.',
+    
+
+
 
 
 
