@@ -301,6 +301,13 @@ return [
     'please_specify_old_or_new_email' => 'يرجى تحديد ما إذا كان البريد الإلكتروني قديمًا أو جديدًا',
     'type_must_be_old_or_new_email' => 'يجب أن يكون النوع 0 (بريد قديم) أو 1 (بريد جديد)',
 
+    //reg review
+    'desynat' => 'ديسينات',
+    'your_account_registration_is_under_review' => 'طلب تسجيل حسابك قيد المراجعة',
+    'please_wait_for_3_4_hours' => 'يرجى الانتظار لمدة 3–4 ساعات',
+    'thank_you_for_your_patience' => 'شكرًا لصبرك',
+    'team_desynat_app' => 'فريق تطبيق ديسينات',
+
 
 
 

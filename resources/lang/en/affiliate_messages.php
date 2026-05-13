@@ -301,6 +301,13 @@ return [
     'please_specify_old_or_new_email' => 'Please specify whether it is old or new email',
     'type_must_be_old_or_new_email' => 'Type must be 0 (old email) or 1 (new email)',
 
+    //reg review
+    'desynat' => 'Desynat',
+    'your_account_registration_is_under_review' => 'Your account registration is under review',
+    'please_wait_for_3_4_hours' => 'Please wait for 3–4 hours',
+    'thank_you_for_your_patience' => 'Thank you for your patience',
+    'team_desynat_app' => 'Team Desynat App',
+
     
 
     
