@@ -12,11 +12,11 @@
                     <div class="otp-page">
                         <h3 class="h3-heading">
                             <a href="{{ url()->previous() }}" class="text-dark me-2">
-                            <i class="bi bi-chevron-left"></i> </a> Change Mobile Number
+                            <i class="bi bi-chevron-left"></i> </a> {{ __('affiliate_messages.change_mobile_number') }}
                         </h3>
 
                         <h6 class="otp_sent mt-3">
-                            Great! Now enter the mobile number you want to continue with
+                            {{ __('affiliate_messages.great') }}! {{ __('affiliate_messages.now_enter_the_mobile_number_you_want_to_continue_with') }}
                         </h6>
 
                         <div class="form-group mt-3">
@@ -52,7 +52,7 @@
 
                                 <div class="w-100 LoginMobileDesign">
                                     <input type="text" class="form-control notapplyspace"
-                                        placeholder="Please enter mobile number"
+                                        placeholder="{{ __('affiliate_messages.please_enter_mobile_number') }}"
                                         name="mobile" id="LoginMobile" maxlength="15"
                                         oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
                                 </div>
@@ -64,7 +64,7 @@
                         <input type="hidden" name="for" value="mobile">
                         <input type="hidden" name="type" value="1"> 
 
-                        <button type="submit" class="btn btn-success customBtn customBtn5 mt-5 w-100">Continue</button>
+                        <button type="submit" class="btn btn-success customBtn customBtn5 mt-5 w-100">{{ __('affiliate_messages.continue') }}</button>
                     </div>
                 </form>
             </div>

@@ -338,13 +338,13 @@
 
                                     <li>
                                         <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
-                                            <span>AR</span> Arabic
+                                            <span>AR</span> {{ __('affiliate_messages.arabic') }}
                                         </a>
                                     </li>
 
                                     <li>
                                         <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
-                                            <span>EN</span> English
+                                            <span>EN</span> {{ __('affiliate_messages.english') }}
                                         </a>
                                     </li>
 

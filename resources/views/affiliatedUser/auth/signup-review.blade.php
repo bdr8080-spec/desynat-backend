@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Desynat Bank Details </title>
+    <title>{{ __('affiliate_messages.desynat') }}</title>
     <!-- Favicons -->
     <link href="{{ asset('/dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
@@ -61,21 +62,21 @@
 
                         <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                        <span id="currentLang">EN</span>
+                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end langu">
 
                         <li>
-                            <a class="dropdown-item" data-lang="ar">
-                                <span>AR</span> Arabic
+                            <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
+                                <span>AR</span> {{ __('affiliate_messages.arabic') }}
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" data-lang="en">
-                                <span>EN</span> English
+                            <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
+                                <span>EN</span> {{ __('affiliate_messages.english') }}
                             </a>
                         </li>
 
@@ -106,14 +107,14 @@
                                             class="img-fluid">
                                     </div>
                                     <div class="group-radio-btn text-center">
-                                        <h2 class="mb-3">Your account registration is under review !!</h2>
-                                        <p>Please wait for 3-4 hrs. </br /> Thank you for your patience. Team
-                                            Desynat App</p>
+                                        <h2 class="mb-3">{{ __('affiliate_messages.your_account_registration_is_under_review') }}!!</h2>
+                                        <p>{{ __('affiliate_messages.please_wait_for_3_4_hours') }}. </br /> {{ __('affiliate_messages.thank_you_for_your_patience') }}. 
+                                            {{ __('affiliate_messages.team_desynat_app') }}</p>
                                     </div>
 
                                     <div class="login-btn padding-top-60">
                                         <a href="{{ route('affiliateLogout') }}"
-                                            class="btn btn-success w-100">Logout</a>
+                                            class="btn btn-success w-100">{{ __('affiliate_messages.logout') }}</a>
                                     </div>
                                 </form>
                             </div>

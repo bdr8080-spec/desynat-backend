@@ -191,7 +191,7 @@ $match=[
 
     if($check){
     $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['address_update_status'=>'1']);
-     return ['status'=>'success','message'=>"Address Save succesfully",'data'=>$check];            
+     return ['status'=>'success','message' => __('affiliate_messages.address_saved_successfully'),'data'=>$check];            
     }
     
     } catch (\Exception $e) {
@@ -509,7 +509,7 @@ function updateBankDetails($request_data)
 
         return [
             'status'  => 'success',
-            'message' => 'Bank details updated successfully',
+            'message' => __('affiliate_messages.bank_details_updated_successfully'),
             'data'    => $bank
         ];
 
@@ -548,7 +548,7 @@ function addBankDetails($request_data)
 
         return [
             'status'  => 'success',
-            'message' => 'Bank details added successfully',
+            'message' => __('affiliate_messages.bank_details_added_successfully'),
             'data'    => $bank
         ];
 
@@ -641,7 +641,7 @@ function updateProfile($request)
         if ($checkEmail) {
             return [
                 'status' => 'error',
-                'message' => 'This email is already registered by another user',
+                'message' => __('affiliate_messages.email_already_registered'),
                 'data' => (object)[]
             ];
         }
@@ -655,7 +655,7 @@ function updateProfile($request)
         if ($checkMobile) {
             return [
                 'status' => 'error',
-                'message' => 'This mobile number is already registered by another user',
+                'message' => __('affiliate_messages.mobile_already_registered'),
                 'data' => (object)[]
             ];
         }
@@ -674,7 +674,7 @@ function updateProfile($request)
 
         return [
             'status' => 'success',
-            'message' => 'Profile updated successfully',
+            'message' => __('affiliate_messages.profile_updated_successfully'),
             'data' => $affiliate
         ];
 
@@ -741,7 +741,7 @@ function updatePassword($request)
       if (!Hash::check($request->old_password, $user->password)) {
         return [
             'status'  => 'error',
-            'message' => 'Old Password is not correct ',
+            'message' => __('affiliate_messages.old_password_incorrect'),
             'data'    => (object) []
         ];
     }
@@ -749,7 +749,7 @@ function updatePassword($request)
     if (Hash::check($request->password, $user->password)) {
         return [
             'status'  => 'error',
-            'message' => 'Old password cannot be used as new password',
+            'message' => __('affiliate_messages.new_password_same_as_old'),
             'data'    => (object) []
         ];
     }
@@ -761,7 +761,7 @@ function updatePassword($request)
 
     return [
         'status'  => 'success',
-        'message' => 'Password updated successfully',
+        'message' => __('affiliate_messages.password_changed_successfully'),
         'data'    => $user
     ];
 }
@@ -782,7 +782,7 @@ function deleteBankAccount($request)
 
     return [
         'status'  => 'success',
-        'message' => 'Bank Account Deleted successfully',
+        'message' => __('affiliate_messages.bank_account_deleted_successfully'),
         'data'    => (object) []
     ];
 }
@@ -884,7 +884,7 @@ try{
             $user->email = $userDetails->email ?? $user->email;
             $user->save();
 
-            return ['status' => 'success', 'message' => 'OTP verified successfully', 'data' => $userDetails];
+            return ['status' => 'success', 'message' => __('affiliate_messages.otp_verified_successfully'), 'data' => $userDetails];
         }
 
 

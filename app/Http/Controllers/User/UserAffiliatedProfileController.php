@@ -15,8 +15,13 @@ use App\Models\{country,Category,SubCategory,Product,UserContactChangeHistory,al
 use App\Services\UserAffilatedAuthService;
 use App\Services\UserAffiliatedProductService;
 use App\Models\AffiliateProduct;
+use App\Models\AffilatedUser;
 
 use Illuminate\Validation\Rule;
+use App\Services\TwilioService;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserOtpMail;
+use Illuminate\Support\Facades\DB;
 
 class UserAffiliatedProfileController extends Controller
 {
@@ -59,10 +64,10 @@ class UserAffiliatedProfileController extends Controller
     'document2'          => 'required_without:old_document2',
     'old_document2'      => 'nullable',
 ], [
-    'full_name.required' => 'Please enter full name',
-    'document1.required_without' => 'Please upload document 1',
-    'document2.required_without' => 'Please upload document 2',
-    'profile_image.required_without' => 'Please upload a profile image',
+    'full_name.required' => __('affiliate_messages.please_enter_full_name'),
+    'document1.required_without' => __('affiliate_messages.please_upload_document1'),
+    'document2.required_without' => __('affiliate_messages.please_upload_document2'),
+    'profile_image.required_without' => __('affiliate_messages.please_upload_profile_image'),
 ]);
 
     if ($validate->fails()) {
@@ -127,28 +132,23 @@ class UserAffiliatedProfileController extends Controller
     public function affiliateProfilesaveAddress(Request $request){
 
      $validate = Validator::make($request->all(), [
-                'country' => 'required',
-                'locations' => 'required',
-                'address1' => 'required',
-                "address2" =>"nullable",
-                // "pincode" =>"required",
-                // "town"=>"required",
-                // "state"=>"required",
-                // "city"=>"required",
-                "let"=>"required",
-                "long" =>"required"
-                ],
-             [
-        'country.required'   => 'Please select a country.',
-        'locations.required' => 'Please select a location.',
-        'address1.required'  => 'Address line 1 is required.',
-        'address2.required'  => 'Address line 2 is required.',
-        'pincode.required'   => 'Pincode is required.',
-        'town.required'      => 'Town is required.',
-        'state.required'     => 'State is required.',
-        'city.required'      => 'City is required.',
-        'let.required'       => 'Latitude is required.',
-        'long.required'      => 'Longitude is required.',
+        'country'   => 'required',
+        'locations' => 'required',
+        'address1'  => 'required',
+        'address2'  => 'nullable',
+        'let'       => 'required',
+        'long'      => 'required',
+    ], [
+        'country.required'   => __('affiliate_messages.please_select_country'),
+        'locations.required'  => __('affiliate_messages.please_select_location'),
+        'address1.required'   => __('affiliate_messages.address_line1_required'),
+        'address2.required'   => __('affiliate_messages.address_line2_required'),
+        'pincode.required'    => __('affiliate_messages.pincode_required'),
+        'town.required'       => __('affiliate_messages.town_required'),
+        'state.required'      => __('affiliate_messages.state_required'),
+        'city.required'       => __('affiliate_messages.city_required'),
+        'let.required'        => __('affiliate_messages.latitude_required'),
+        'long.required'       => __('affiliate_messages.longitude_required'),
     ]);
             
     if($validate->fails()){
@@ -216,14 +216,13 @@ $affilatedUser=Auth::guard('affilated_user')->user();
     ],
     'confirm_password' => 'required|same:password',
 ],[
-    'old_password.required' => 'Please Enter Old Password',
+    'old_password.required' => __('affiliate_messages.please_enter_old_password'),
 
-    'password.required' => 'Please Enter New Password',
-    // 'password.min' => 'Password must be at least 6 characters long',
-    'password.regex' => 'Password must be at least 6 characters long,contain at least one uppercase letter,one special character and one number',
+    'password.required' => __('affiliate_messages.please_enter_new_password'),
+    'password.regex' => __('affiliate_messages.password_validation_message'),
 
-    'confirm_password.required' => 'Please Enter Confirm Password',
-    'confirm_password.same' => 'Confirm password must match new password',
+    'confirm_password.required' => __('affiliate_messages.please_enter_confirm_password'),
+    'confirm_password.same' => __('affiliate_messages.confirm_password_must_match'),
 ]);
 
 if ($validate->fails()) {
@@ -693,11 +692,11 @@ public function add_to_my_products(Request $request){
             ];
 
             $messages = [
-                'country_code.required' => 'Please enter your country code',
-                'mobile.required'       => 'Please enter your mobile number',
-                'mobile.regex'          => 'Mobile number must contain 7 to 15 digits',
-                'type.required'         => 'Please specify whether it is old or new number',
-                'type.in'               => 'Type must be 0 (old number) or 1 (new number)',
+                'country_code.required' => __('affiliate_messages.please_enter_country_code'),
+                'mobile.required'       => __('affiliate_messages.please_enter_mobile_number'),
+                'mobile.regex'          => __('affiliate_messages.mobile_number_must_be_7_to_15_digits'),
+                'type.required'         => __('affiliate_messages.please_specify_old_or_new_number'),
+                'type.in'               => __('affiliate_messages.type_must_be_old_or_new'),
             ];
 
         
@@ -717,10 +716,10 @@ public function add_to_my_products(Request $request){
             ];
 
             $messages = [
-                'email.required' => 'Please enter your email address',
-                'email.email'    => 'Please enter a valid email address',
-                'type.required'  => 'Please specify whether it is old or new email',
-                'type.in'        => 'Type must be 0 (old email) or 1 (new email)',
+                'email.required' => __('affiliate_messages.please_enter_email_address'),
+                'email.email'    => __('affiliate_messages.please_enter_valid_email_address'),
+                'type.required'  => __('affiliate_messages.please_specify_old_or_new_email'),
+                'type.in'        => __('affiliate_messages.type_must_be_old_or_new_email'),
             ];
 
 
@@ -768,16 +767,28 @@ public function add_to_my_products(Request $request){
                     'status'       => '0',
                 ]);
 
+                 $phone = $user->country_code . $user->mobile;
+                $message = "Your verification Code Is $otp";
+                if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                                try {
+                                    $this->TwilioService->sendOtp($phone, $message);
+                                } catch (\Exception $e) {
+                                    // ❌ silently skip (no return, no error)
+                                    // Optional: log for debugging
+                                    //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                                }
+                            }
+
                 return redirect()->route('affiliate.userOldNumberVerify', [
                     'country_code' => $user->country_code,
                     'mobile'       => $user->mobile,
                     'id'           => encrypt($data->id),
                     'type'         => '0',
                     'for'          => 'mobile',
-                ])->with('success', 'OTP sent successfully to your old mobile number.');
+                ])->with('success', __('affiliate_messages.otp_sent_old_mobile'));
             }
 
-            return redirect()->back()->with('error', "Old mobile number doesn't match our records.");
+            return redirect()->back()->with('error', __('affiliate_messages.old_mobile_not_matched'));
         }
 
         if ($type == '1') {
@@ -791,20 +802,32 @@ public function add_to_my_products(Request $request){
                 'status'       => '0',
             ]);
 
+            $phone = $data->country_code . $data->mobile;
+            $message = "Your verification Code Is $otp";
+            if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                try {
+                    $this->TwilioService->sendOtp($phone, $message);
+                } catch (\Exception $e) {
+                    // ❌ silently skip (no return, no error)
+                    // Optional: log for debugging
+                    //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                }
+            }
+
             return redirect()->route('affiliate.userOldNumberVerify', [
                 'country_code' => $data->country_code,
                 'mobile'       => $data->mobile,
                 'id'           => encrypt($data->id),
                 'type'         => '1',
                 'for'          => 'mobile',
-            ])->with('success', 'OTP sent successfully to your new mobile number.');
+            ])->with('success', __('affiliate_messages.otp_sent_new_mobile'));
         }
     }
 
     if ($for === 'email') {
         if ($type == '0') {
             if ($user->email !== $request->email) {
-                return redirect()->back()->with('error', "Old email doesn't match our records.");
+                return redirect()->back()->with('error', __('affiliate_messages.old_email_not_matched'));
             }
 
             $data = UserContactChangeHistory::create([
@@ -816,12 +839,15 @@ public function add_to_my_products(Request $request){
                 'status'  => '0',
             ]);
 
+            $check = AffilatedUser::where('email', $data->email)->first();
+            Mail::to($data->email)->send(new UserOtpMail($check, $otp));
+
             return redirect()->route('affiliate.userOldNumberVerify', [
                 'email' => $data->email,
                 'id'    => encrypt($data->id),
                 'type'  => '0',
                 'for'   => 'email',
-            ])->with('success', 'OTP sent successfully to your old email.');
+            ])->with('success', __('affiliate_messages.otp_sent_old_email'));
         }
 
         if ($type == '1') {
@@ -834,12 +860,15 @@ public function add_to_my_products(Request $request){
                 'status'  => '0',
             ]);
 
+            $check = AffilatedUser::where('email', $data->email)->first();
+            Mail::to($data->email)->send(new UserOtpMail($check, $otp));
+
             return redirect()->route('affiliate.userOldNumberVerify', [
                 'email' => $data->email,
                 'id'    => encrypt($data->id),
                 'type'  => '1',
                 'for'   => 'email',
-            ])->with('success', 'OTP sent successfully to your new email.');
+            ])->with('success', __('affiliate_messages.otp_sent_new_email'));
         }
     }
 
@@ -858,7 +887,7 @@ public function add_to_my_products(Request $request){
         if(empty(array_filter($otpArray))){
             return response()->json([
                 'status' => false,
-                'error'  => 'Please enter OTP.',
+                'error' => __('affiliate_messages.please_enter_otp'),
             ]);
         }
          
@@ -867,12 +896,10 @@ public function add_to_my_products(Request $request){
                 'otp' => 'required|array|size:6',
                 'otp.*' => 'required|digits:1',
             ], [
-                'id.required' => 'Verification ID is missing.',
-                // 'otp.required' => 'Please enter OTP.',
-                // 'otp.*.required' => 'Please enter all digits of your OTP',
-                'otp.required' => 'Please enter OTP.',
-                'otp.size' => 'Please enter all digits of your OTP',
-                'otp.*.required' => 'Please enter all digits of your OTP',
+                'id.required' => __('affiliate_messages.verification_id_missing'),
+                'otp.required' => __('affiliate_messages.please_enter_otp'),
+                'otp.size' => __('affiliate_messages.otp_size_invalid'),
+                'otp.*.required' => __('affiliate_messages.otp_digits_required'),
             ]);
 
             if ($validator->fails()) {
@@ -944,11 +971,28 @@ public function add_to_my_products(Request $request){
         $otp = config('services.otp');
         $data->otp = $otp;
         $data->save();
+        if(!empty($data->mobile)){
+         $phone = $data->country_code . $data->mobile;
+            $message = "Your verification Code Is $otp";
+            if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                try {
+                    $this->TwilioService->sendOtp($phone, $message);
+                } catch (\Exception $e) {
+                    // ❌ silently skip (no return, no error)
+                    // Optional: log for debugging
+                    //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                }
+            }
+        }else{
+
+            $check = AffilatedUser::where('email', $data->email)->first();
+            Mail::to($data->email)->send(new UserOtpMail($check, $otp));
+        }
 
 
         return response()->json([
             'status' => true,
-            'message' => 'OTP resent successfully.',
+            'message' => __('affiliate_messages.otp_resent_successfully'),
             'otp' => $otp,
         ]);
 

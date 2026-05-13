@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl mb-5">
-        <div class="title24"> Change Password </div>
+        <div class="title24"> {{ __('affiliate_messages.change_password') }} </div>
     </div>
 
     <form id="Affiliate_changePassword" action="{{route('affiliate.change-password')}}" method="Post">
@@ -11,33 +11,33 @@
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Old Password </label>
+                        <label>{{ __('affiliate_messages.old_password') }} </label>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Password" name="old_password">
+                    <input type="text" class="form-control" placeholder="{{ __('affiliate_messages.enter_password') }}" name="old_password">
                 </div>
                 <p class="text-danger" id="error-old_password"></p>
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>New Password</label>
+                        <label>{{ __('affiliate_messages.new_password') }}</label>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter New Password" name="password">
+                    <input type="text" class="form-control" placeholder="{{ __('affiliate_messages.enter_new_password') }}" name="password">
                 </div>
                 <p class="text-danger" id="error-password"></p>
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Confirm Password</label>
+                        <label>{{ __('affiliate_messages.confirm_password') }}</label>
                     </div>
-                    <input type="text" class="form-control" placeholder="Re-enter Password" name="confirm_password">
+                    <input type="text" class="form-control" placeholder="{{ __('affiliate_messages.re_enter_new_password') }}" name="confirm_password">
                 </div>
                 <p class="text-danger" id="error-confirm_password"></p>
             </div>
         </div>
         <div class="dashboard-button mt-5">
-            <button type="submit" class="btn add-fillbtn w-100">Update</button>
+            <button type="submit" class="btn add-fillbtn w-100">{{ __('affiliate_messages.update') }}</button>
         </div>
 
     </form>

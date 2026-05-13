@@ -155,11 +155,11 @@ class ProfileController extends Controller
             ];
 
             $messages = [
-                'country_code.required' => 'Please enter your country code',
-                'mobile.required'       => 'Please enter your mobile number',
-                'mobile.regex'          => 'Mobile number must contain 7 to 15 digits',
-                'type.required'         => 'Please specify whether it is old or new number',
-                'type.in'               => 'Type must be 0 (old number) or 1 (new number)',
+                'country_code.required' => __('affiliate_messages.please_enter_country_code'),
+                'mobile.required'       => __('affiliate_messages.please_enter_mobile_number'),
+                'mobile.regex'          => __('affiliate_messages.mobile_number_must_be_7_to_15_digits'),
+                'type.required'         => __('affiliate_messages.please_specify_old_or_new_number'),
+                'type.in'               => __('affiliate_messages.type_must_be_old_or_new'),
             ];
 
         
@@ -179,10 +179,10 @@ class ProfileController extends Controller
             ];
 
             $messages = [
-                'email.required' => 'Please enter your email address',
-                'email.email'    => 'Please enter a valid email address',
-                'type.required'  => 'Please specify whether it is old or new email',
-                'type.in'        => 'Type must be 0 (old email) or 1 (new email)',
+                'email.required' => __('affiliate_messages.please_enter_email_address'),
+                'email.email'    => __('affiliate_messages.please_enter_valid_email_address'),
+                'type.required'  => __('affiliate_messages.please_specify_old_or_new_email'),
+                'type.in'        => __('affiliate_messages.type_must_be_old_or_new_email'),
             ];
 
             if ($request->type == '0') {
@@ -226,15 +226,7 @@ class ProfileController extends Controller
                     'status'       => '0',
                 ]);
 
-                return redirect()->route('userOldNumberVerify', [
-                    'country_code' => $user->country_code,
-                    'mobile'       => $user->mobile,
-                    'id'           => encrypt($data->id),
-                    'type'         => '0',
-                    'for'          => 'mobile',
-                ])->with('success', __('user_messages.otp_sent_successfully_old_mobile'));
-                
-                $phone = $user->country_code . $user->mobile;
+                 $phone = $user->country_code . $user->mobile;
                 $message = "Your verification Code Is $otp";
                 if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
                                 try {
@@ -245,6 +237,15 @@ class ProfileController extends Controller
                                     //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
                                 }
                             }
+
+                return redirect()->route('userOldNumberVerify', [
+                    'country_code' => $user->country_code,
+                    'mobile'       => $user->mobile,
+                    'id'           => encrypt($data->id),
+                    'type'         => '0',
+                    'for'          => 'mobile',
+                ])->with('success', __('user_messages.otp_sent_successfully_old_mobile'));
+                
             }
 
             return redirect()->back()->with('error', "Old mobile number doesn't match our records.");
@@ -260,15 +261,7 @@ class ProfileController extends Controller
                 'status'       => '0',
             ]);
 
-            return redirect()->route('userOldNumberVerify', [
-                'country_code' => $data->country_code,
-                'mobile'       => $data->mobile,
-                'id'           => encrypt($data->id),
-                'type'         => '1',
-                'for'          => 'mobile',
-            ])->with('success', __('user_messages.otp_sent_successfully_new_mobile'));
-
-             $phone = $data->country_code . $data->mobile;
+            $phone = $data->country_code . $data->mobile;
             $message = "Your verification Code Is $otp";
             if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
                 try {
@@ -279,6 +272,15 @@ class ProfileController extends Controller
                     //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
                 }
             }
+
+            return redirect()->route('userOldNumberVerify', [
+                'country_code' => $data->country_code,
+                'mobile'       => $data->mobile,
+                'id'           => encrypt($data->id),
+                'type'         => '1',
+                'for'          => 'mobile',
+            ])->with('success', __('user_messages.otp_sent_successfully_new_mobile'));
+
         }
     }
 
@@ -296,6 +298,9 @@ class ProfileController extends Controller
                 'status'  => '0',
             ]);
 
+            $check = User::where('email', $data->email)->first();
+            Mail::to($data->email)->send(new UserOtpMail($check, $otp));
+
             return redirect()->route('userOldNumberVerify', [
                 'email' => $data->email,
                 'id'    => encrypt($data->id),
@@ -303,8 +308,6 @@ class ProfileController extends Controller
                 'for'   => 'email',
             ])->with('success', __('user_messages.otp_sent_successfully_old_email'));
 
-            $check = User::where('email', $data->email)->first();
-            Mail::to($data->email)->send(new UserOtpMail($check, $otp));
         }
 
         if ($type == '1') {
@@ -316,6 +319,9 @@ class ProfileController extends Controller
                 'status'  => '0',
             ]);
 
+            $check = User::where('email', $data->email)->first();
+            Mail::to($data->email)->send(new UserOtpMail($check, $otp));
+
             return redirect()->route('userOldNumberVerify', [
                 'email' => $data->email,
                 'id'    => encrypt($data->id),
@@ -323,8 +329,6 @@ class ProfileController extends Controller
                 'for'   => 'email',
             ])->with('success', __('user_messages.otp_sent_successfully_new_email'));
 
-            $check = User::where('email', $data->email)->first();
-            Mail::to($data->email)->send(new UserOtpMail($check, $otp));
         }
     }
 

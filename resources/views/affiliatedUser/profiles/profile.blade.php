@@ -25,7 +25,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl">
-        <div class="title24">Profile Details </div>
+        <div class="title24">{{ __('affiliate_messages.profile_details') }}</div>
     </div>
 
     <div class="tabs-panel py-4">
@@ -33,17 +33,17 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-allproduct" type="button" role="tab" aria-controls="pills-allproduct"
-                    aria-selected="true">Personal Info</button>
+                    aria-selected="true">{{ __('affiliate_messages.personal_info') }}</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-address-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-address" type="button" role="tab" aria-controls="pills-active"
-                    aria-selected="false">Address</button>
+                    aria-selected="false">{{ __('affiliate_messages.address') }}</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-inactive-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-bank" type="button" role="tab" aria-controls="pills-bank"
-                    aria-selected="false">Bank information</button>
+                    aria-selected="false">{{ __('affiliate_messages.bank_information') }}</button>
             </li>
 
         </ul>
@@ -68,7 +68,7 @@
                                     class="img-fluid">
                             </div>
                             <label class="change-title position-relative">
-                                <h6>Change Image </h6>
+                                <h6>{{ __('affiliate_messages.change_image') }}</h6>
                                 <input type="file" accept="image/*" id="profileUpload"
                                     style="opacity:0;position: absolute;" name="profile_image">
                               
@@ -78,7 +78,7 @@
                             </label>
                         </div>
                         <a class="drop-profile change-length" href="{{route('affiliate.change-password')}}">
-                            <span> <i class="bi bi-lock"></i> Change Password </span>
+                            <span> <i class="bi bi-lock"></i> {{ __('affiliate_messages.change_password') }} </span>
                         </a>
 
                     </div>
@@ -86,9 +86,9 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Full Name</label>
+                                    <label>{{ __('affiliate_messages.full_name') }}</label>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter Full Name"
+                                <input type="text" class="form-control" placeholder="{{ __('affiliate_messages.enter_full_name') }}"
                                     value="{{$affilatedUser->full_name }}" name="full_name">
                                 <p class="text-danger" id="error-full_name"></p>
                                        
@@ -97,7 +97,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="sub-form position-relative">
                                 <div class="label-flex">
-                                    <label>Mobile No.</label>
+                                    <label>{{ __('affiliate_messages.mobile_no') }}</label>
                                 </div>
                                 <input type="text" class="form-control readpnl" placeholder="Enter Mobile Number"
                                     value="{{$affilatedUser->country_code }}{{$affilatedUser->mobile }}" readonly>
@@ -107,14 +107,14 @@
                         'for' => 'mobile',
                         'type' => '0'
                     ]) }}">
-                                    <span>Change</span>
+                                    <span>{{ __('affiliate_messages.change') }}</span>
                                 </a>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form position-relative">
                                 <div class="label-flex">
-                                    <label>Email Address</label>
+                                    <label>{{ __('affiliate_messages.email_address') }}</label>
                                 </div>
                                 <input type="text" class="form-control readpnl" placeholder="Enter Email Address"
                                     value="{{$affilatedUser->email}}" readonly>
@@ -123,7 +123,7 @@
                         'for' => 'email',
                         'type' => '0'
                     ]) }}">
-                                    <span>Change</span>
+                                    <span>{{ __('affiliate_messages.change') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -171,7 +171,7 @@
                     </div>
 
                     <div class="dashboard-button mt-5">
-                        <button type="submit" class="btn add-fillbtn w-100">Save Changes</button>
+                        <button type="submit" class="btn add-fillbtn w-100">{{ __('affiliate_messages.save_changes') }}</button>
                     </div>
 
                 </div>
@@ -193,12 +193,12 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Country </label>
+                                <label>{{ __('affiliate_messages.country') }} </label>
                             </div>
                             <select name="country" class="form-control">
                                 @foreach($country as $val)
                                 <option value="{{$val->id}}" @if($val->id== $affilatedUser->address_details->country)
-                                    selected @endif  {{$val->id}} -- {{$affilatedUser->address_details->country}} > {{$val->name}} </option>
+                                    selected @endif  {{$val->id}} -- {{$affilatedUser->address_details->country}} > @if(app()->getLocale() == 'en'){{$val->name}}@else{{$val->name_ar}}@endif </option>
                                 @endforeach
                             </select>
                         </div>
@@ -208,7 +208,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form position-relative">
                             <div class="label-flex">
-                                <label>location </label>
+                                <label>{{ __('affiliate_messages.location') }} </label>
                             </div>
                             <div class="position-relative">
                             <input type="text" class="form-control" placeholder="Enter location"
@@ -233,7 +233,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Address 1</label>
+                                <label>{{ __('affiliate_messages.address_1') }}</label>
                             </div>
                             <input type="text" name="address1" class="form-control" placeholder="Enter address"
                                 value="{{$affilatedUser->address_details->address1 }}" id="address_line1">
@@ -286,7 +286,7 @@
                     </div> -->
                 </div>
                 <div class="dashboard-button mt-5">
-                    <button type="submit" class="btn add-fillbtn w-100">Save Changes</button>
+                    <button type="submit" class="btn add-fillbtn w-100">{{ __('affiliate_messages.save_changes') }}</button>
                 </div>
 
                 </form>
@@ -297,7 +297,7 @@
             
     <div class="offcanvas offcanvas-end" tabindex="-1" id="gpspanel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Set Location</h5>
+            <h5 class="offcanvas-title">{{ __('affiliate_messages.set_location') }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
@@ -306,14 +306,14 @@
                 <div class="setup-maps mb-0 position-relative">
 
 
-                    <input id="searchBox" type="text" placeholder="Search your address"
+                    <input id="searchBox" type="text" placeholder="{{ __('affiliate_messages.search_your_address') }}"
                         class="form-control position-absolute"
                         style="top:10px;left:10px;width:300px;z-index:9999;padding:6px 10px;border-radius:4px;">
 
                     <div id="googleMap" style="width: 100%; height: 500px;"></div>
 
                     <div id="useCurrentLocation" class="mt-3 cursor-pointer">
-                        <i class="bi bi-crosshair"></i> Use Current Location
+                        <i class="bi bi-crosshair"></i> {{ __('affiliate_messages.use_current_location') }}
                     </div>
                 </div>
 
@@ -328,7 +328,7 @@
 
                 <!-- Done button -->
                 <div class="setup-done">
-                    <button type="button" class="btn btn-success w-100" data-bs-dismiss="offcanvas">Done</button>
+                    <button type="button" class="btn btn-success w-100" data-bs-dismiss="offcanvas">{{ __('affiliate_messages.done') }}</button>
                 </div>
             </div>
         </div>
@@ -384,7 +384,7 @@
                 @endforeach
 
                 <div class="addanother d-flex gap-2" data-bs-toggle="modal" data-bs-target="#bankDetails">
-                    <i class="bi bi-plus-lg"></i> <h5 class="mb-0">Add another account</h5>
+                    <i class="bi bi-plus-lg"></i> <h5 class="mb-0">{{ __('affiliate_messages.add_another_account') }}</h5>
                 </div>
 
 
@@ -401,7 +401,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h1 class="modal-title fs-5">Add Account</h1>
+        <h1 class="modal-title fs-5">{{ __('affiliate_messages.add_account') }}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
@@ -410,38 +410,38 @@
         <div class="account-form">
 
           <div class="sub-form mb-2">
-            <label>Bank Name</label>
-            <input type="text" id="bank_name" class="form-control">
+            <label>{{ __('affiliate_messages.bank_name') }}</label>
+            <input type="text" id="bank_name" class="form-control" placeholder="{{ __('affiliate_messages.enter_bank_name') }}">
             <small class="text-danger" id="error_bank_name"></small>
           </div>
 
           <div class="sub-form mb-2">
-            <label>Account Holder Name</label>
-            <input type="text" id="account_holder_name" class="form-control">
+            <label>{{ __('affiliate_messages.account_holder_name') }}</label>
+            <input type="text" id="account_holder_name" class="form-control" placeholder="{{ __('affiliate_messages.enter_account_holder_name') }}">
             <small class="text-danger" id="error_account_holder_name"></small>
           </div>
 
           <div class="sub-form mb-2">
-            <label>Account Number</label>
-            <input type="text" id="account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <label>{{ __('affiliate_messages.account_number') }}</label>
+            <input type="text" id="account_no" placeholder="{{ __('affiliate_messages.enter_account_number') }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <small class="text-danger" id="error_account_no"></small>
           </div>
 
           <div class="sub-form mb-2">
-            <label>Confirm Account Number</label>
-            <input type="text" id="confirm_account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <label>{{ __('affiliate_messages.confirm_account_number') }}</label>
+            <input type="text" id="confirm_account_no" placeholder="{{ __('affiliate_messages.re_enter_account_number') }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <small class="text-danger" id="error_confirm_account_no"></small>
           </div>
 
           <div class="sub-form mb-2">
-            <label>IBAN</label>
-            <input type="text" id="iban" class="form-control">
+            <label>{{ __('affiliate_messages.iban') }}</label>
+            <input type="text" id="iban" class="form-control" placeholder="{{ __('affiliate_messages.enter_iban') }}">
             <small class="text-danger" id="error_iban"></small>
           </div>
 
           <div class="sub-form mb-2">
-            <label>SWIFT / BIC</label>
-            <input type="text" id="swift" class="form-control">
+            <label>{{ __('affiliate_messages.swift_bic') }}</label>
+            <input type="text" id="swift" class="form-control" placeholder="{{ __('affiliate_messages.enter_swift_bic') }}">
             <small class="text-danger" id="error_swift"></small>
           </div>
 
@@ -449,7 +449,7 @@
 
         <div class="text-center mt-4">
           <button type="button" id="submit_bank_btn" class="btn btn-success w-100">
-            Submit 
+            {{ __('affiliate_messages.submit') }} 
           </button>
         </div>
 
@@ -464,7 +464,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h1 class="modal-title fs-5">Edit Account</h1>
+        <h1 class="modal-title fs-5">{{ __('affiliate_messages.edit_account') }}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
@@ -476,42 +476,42 @@
 
           <!-- Bank Name -->
           <div class="sub-form mb-2">
-            <label>Bank Name</label>
+            <label>{{ __('affiliate_messages.bank_name') }}</label>
             <input type="text" id="edit_bank_name" class="form-control">
             <small class="text-danger error-text" id="error_edit_bank_name"></small>
           </div>
 
           <!-- Account Holder Name -->
           <div class="sub-form mb-2">
-            <label>Account Holder Name</label>
+            <label>{{ __('affiliate_messages.account_holder_name') }}</label>
             <input type="text" id="edit_account_holder_name" class="form-control">
             <small class="text-danger error-text" id="error_edit_account_holder_name"></small>
           </div>
 
           <!-- Account Number -->
           <div class="sub-form mb-2">
-            <label>Account Number</label>
+            <label>{{ __('affiliate_messages.account_number') }}</label>
             <input type="text" id="edit_account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <small class="text-danger error-text" id="error_edit_account_no"></small>
           </div>
 
           <!-- Confirm Account Number -->
           <div class="sub-form mb-2">
-            <label>Confirm Account Number</label>
+            <label>{{ __('affiliate_messages.confirm_account_number') }}</label>
             <input type="text" id="edit_confirm_account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <small class="text-danger error-text" id="error_edit_confirm_account_no"></small>
           </div>
 
           <!-- IBAN -->
           <div class="sub-form mb-2">
-            <label>IBAN</label>
+            <label>{{ __('affiliate_messages.iban') }}</label>
             <input type="text" id="edit_iban" class="form-control">
             <small class="text-danger error-text" id="error_edit_iban"></small>
           </div>
 
           <!-- SWIFT -->
           <div class="sub-form mb-2">
-            <label>SWIFT / BIC</label>
+            <label>{{ __('affiliate_messages.swift_bic') }}</label>
             <input type="text" id="edit_swift" class="form-control">
             <small class="text-danger error-text" id="error_edit_swift"></small>
           </div>
@@ -520,7 +520,7 @@
 
         <div class="text-center mt-4">
           <button type="button" id="edit_submit_bank_btn" class="btn btn-success w-100">
-            Update
+            {{ __('affiliate_messages.update') }}
           </button>
         </div>
 
@@ -645,37 +645,37 @@ $('#edit_submit_bank_btn').on('click', function () {
     let isValid = true;
 
     if (bankName === '') {
-        showError('edit_bank_name', 'Please enter bank name');
+        showError('edit_bank_name', "{{ __('affiliate_messages.please_enter_bank_name') }}");
         isValid = false;
     }
 
     if (holder === '') {
-        showError('edit_account_holder_name', 'Please enter account holder name');
+        showError('edit_account_holder_name', "{{ __('affiliate_messages.please_enter_account_holder_name') }}");
         isValid = false;
     }
 
     if (accountNo === '') {
-        showError('edit_account_no', 'Please enter account number');
+        showError('edit_account_no', "{{ __('affiliate_messages.please_enter_account_number') }}");
         isValid = false;
     }
 
     if (confirmAccountNo === '') {
-        showError('edit_confirm_account_no', 'Please confirm account number');
+        showError('edit_confirm_account_no', "{{ __('affiliate_messages.please_confirm_account_number') }}");
         isValid = false;
     }
 
     if (accountNo !== '' && confirmAccountNo !== '' && accountNo !== confirmAccountNo) {
-        showError('edit_confirm_account_no', 'Account numbers do not match');
+        showError('edit_confirm_account_no', "{{ __('affiliate_messages.account_numbers_do_not_match') }}");
         isValid = false;
     }
 
     if (iban === '') {
-        showError('edit_iban', 'Please enter IBAN');
+        showError('edit_iban', "{{ __('affiliate_messages.please_enter_iban') }}");
         isValid = false;
     }
 
     if (swift === '') {
-        showError('edit_swift', 'Please enter SWIFT');
+        showError('edit_swift', "{{ __('affiliate_messages.please_enter_swift_bic') }}");
         isValid = false;
     }
 
@@ -752,37 +752,37 @@ $(document).ready(function() {
         let isValid = true;
 
         if(bankName === '') {
-            showError('bank_name', 'Please enter bank name');
+            showError('bank_name', "{{ __('affiliate_messages.please_enter_bank_name') }}");
             isValid = false;
         }
 
         if(accountHolder === '') {
-            showError('account_holder_name', 'Please enter account holder name');
+            showError('account_holder_name', "{{ __('affiliate_messages.please_enter_account_holder_name') }}");
             isValid = false;
         }
 
         if(accountNo === '') {
-            showError('account_no', 'Please enter account number');
+            showError('account_no', "{{ __('affiliate_messages.please_enter_account_number') }}");
             isValid = false;
         }
 
         if(confirmAccountNo === '') {
-            showError('confirm_account_no', 'Please confirm account number');
+            showError('confirm_account_no', "{{ __('affiliate_messages.please_confirm_account_number') }}");
             isValid = false;
         }
 
         if(accountNo !== '' && confirmAccountNo !== '' && accountNo !== confirmAccountNo) {
-            showError('confirm_account_no', 'Account numbers do not match');
+            showError('confirm_account_no', "{{ __('affiliate_messages.account_numbers_do_not_match') }}");
             isValid = false;
         }
 
         if(iban === '') {
-            showError('iban', 'Please enter IBAN');
+            showError('iban', "{{ __('affiliate_messages.please_enter_iban') }}");
             isValid = false;
         }
 
         if(swift === '') {
-            showError('swift', 'Please enter SWIFT/BIC');
+            showError('swift', "{{ __('affiliate_messages.please_enter_swift_bic') }}");
             isValid = false;
         }
 
@@ -863,13 +863,14 @@ document.addEventListener('DOMContentLoaded', function () {
             let id = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/affiliate/deleteBankAccount/${id}`, {
@@ -1323,9 +1324,8 @@ $(document).on('submit', 'form#Affiliate_AddAddress', function(event) {
                 $('.submit').attr('disabled', true);
 
                 setTimeout(() => {
-                    window.location.reload();
-                    // location.href =
-                    //     `affiliate-add-Bank-details?temp_user_id=${response.id}`;
+                     location.href =
+                        "{{ route('affiliate.affiliateProfile') }}";                  
                 }, 1000);
 
             }
@@ -1379,6 +1379,8 @@ $(document).on('submit', 'form#Affiliate_AddAddress', function(event) {
 
     return false;
 });
+
+</script>
 
 
 // Form save Address Code End here 

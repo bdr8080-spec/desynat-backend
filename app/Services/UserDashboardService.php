@@ -674,7 +674,7 @@ $wishlistIds = wishlist::where('user_id', $user_id)
     ->values(); // 🔥 reindex keys
 
 if($bestSeller){
- $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+ $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color','store'])
   ->withAvg('review as product_avg_rating', 'product_rating')
   ->withCount('review')
  ->whereIn('id',$bestSeller)->limit(10)
@@ -733,7 +733,7 @@ $wishlistIds = wishlist::where('user_id', $user_id)
     ->values(); // 🔥 reindex keys
 
 if($bestSeller){
- $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])->whereIn('id',$bestSeller)
+ $all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color','store'])->whereIn('id',$bestSeller)
  ->withAvg('review as product_avg_rating', 'product_rating')
   ->withCount('review')
  ->limit(10)
@@ -786,7 +786,7 @@ $wishlistIds = wishlist::where('user_id', $user_id)
 
 
 
-$all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+$all_product_fetch=product::with(['category','subcategory','brand','product_specifications','product_variants.color','store'])
 ->withAvg('review as product_avg_rating', 'product_rating')
 ->withCount('review') 
 ->orderBy('created_at','desc')
