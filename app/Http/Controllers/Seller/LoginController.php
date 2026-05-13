@@ -191,24 +191,27 @@ class LoginController extends Controller
             'confirm_password' => 'required|same:password',
             'accept_terms'=>"required|in:1"
         ],[
-            'profile_pic.required'=>'Please Upload profile Picture',
-            'first_name.required'    => 'Please enter first name',
-            'last_name.required'    => 'Please enter last name',
-            'country_code.required' => 'Please select country code',
-            'mobile.required' => 'Please enter mobile number',
-            
-            'email.required'        => 'Please enter email address',
-            'email.email'           => 'Please enter a valid email address',
-            'email.unique'          => 'This email address is already registered', 
+    
+    'profile_pic.required' => __('seller_messages.profile_pic_required'),
+    'first_name.required' => __('seller_messages.first_name_required'),
+    'last_name.required' => __('seller_messages.last_name_required'),
+    'country_code.required' => __('seller_messages.country_code_required'),
+    'mobile.required' => __('seller_messages.mobile_required'),
+    'mobile.unique' => __('seller_messages.mobile_unique'),
 
-            'password.required'     => 'Please enter password',
-            'password.min' => 'Password must be at least 8 characters long',
-            'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
-            'confirm_password.required' => 'Please confirm your password',
-            'confirm_password.same' => 'Password do not match',
+    'email.required' => __('seller_messages.email_required'),
+    'email.email' => __('seller_messages.email_email'),
+    'email.unique' => __('seller_messages.email_unique'),
 
-            'accept_terms.required' => 'Please accept the terms and conditions',
-            'accept_terms.in' => 'You must agree to the terms and conditions to continue',
+    'password.required' => __('seller_messages.password_required'),
+    'password.min' => __('seller_messages.password_min'),
+    'password.regex' => __('seller_messages.password_regex'),
+
+    'confirm_password.required' => __('seller_messages.confirm_password_required'),
+    'confirm_password.same' => __('seller_messages.confirm_password_same'),
+
+    'accept_terms.required' => __('seller_messages.accept_terms_required'),
+    'accept_terms.in' => __('seller_messages.accept_terms_in'),
         
         
         ]);
@@ -229,7 +232,7 @@ class LoginController extends Controller
 
         $seller_id=$data['data']->id;
 
-        return redirect()->route('seller.register_otp_verify',$seller_id)->with('success', 'OTP Sent Succesfully');
+        return redirect()->route('seller.register_otp_verify',$seller_id)->with('success',__('seller_messages.otp_sent_successfully'));
 
     }
 
@@ -238,7 +241,6 @@ class LoginController extends Controller
 
         $seller_details=seller::where('id',$request->id)->first();
        
-
         if ($request->isMethod('get')) {
         return view('dealer.signup_otp',compact('seller_details'));
         }
@@ -256,12 +258,14 @@ class LoginController extends Controller
             'otp' => 'required|array|min:6',
             'otp.*' => 'required|digits:1', // each input must be exactly one digit
         ], [
-            'otp.required' => 'Please enter your OTP.',
-            'otp.array' => 'OTP must be in a valid format.',
-            'otp.min' => 'All 6 OTP digits are required.',
-            'otp.*.required' => 'Please enter OTP',
-            'otp.*.digits' => 'Each OTP box must contain only one number.',
-        ]);
+        'otp.required' => __('seller_messages.otp_required'),
+        'otp.array' => __('seller_messages.otp_array'),
+        'otp.min' => __('seller_messages.otp_min'),
+        'otp.*.required' => __('seller_messages.otp_digit_required'),
+        'otp.*.digits' => __('seller_messages.otp_digit_only'),
+       ]
+    
+    );
         
 
         if ($validate->fails()) {
@@ -283,20 +287,20 @@ class LoginController extends Controller
         
         if($request->forgot=='yes'){
 
-        return redirect()->route('seller.create_password',$seller_details->id)->with('success', 'Otp verify Successfully');
+        return redirect()->route('seller.create_password',$seller_details->id)->with('success', __('seller_messages.otp_verify_successfully'));
 
         }else{
             
         Auth::guard('seller')->login($seller_details); // login with seller details
 
-        return redirect()->route('seller.store_information',$seller_details->id)->with('success', 'Otp verify Successfully');
+        return redirect()->route('seller.store_information',$seller_details->id)->with('success', __('seller_messages.otp_verify_successfully'));
 
         }
 
        }else{
 
         return redirect()->back()
-        ->withErrors(['otp'=>'Invalid OTP'])
+        ->withErrors(['otp'=>" __('seller_messages.invalid_otp')"])
         ->withInput();
 
        }
@@ -337,17 +341,20 @@ class LoginController extends Controller
             // 'long'=>'required|nullable'
             
             ],[
-                'store_image.required'=>'Please Upload Store Image',
-                'store_name.required' => 'Please Enter store name',
-                'country.required'   =>   'please select country',
-                'store_address.required' => 'Please Enter store address',
-                'address_line1.required' => 'Please Enter store Address 1',
-                'address_line2.required' => 'Please Enter store Address 2',
-                'store_phone.required' => 'Please Enter store phone number',
-            
-                'store_mail_id.required'        => 'Please enter store email id',
-                'store_mail_id.email'           => 'Please enter valid store email id',    
-                'bio'=>'Please enter bio',
+            'store_image.required' => __('seller_messages.store_image_required'),
+            'store_name.required' => __('seller_messages.store_name_required'),
+            'country.required' => __('seller_messages.country_required'),
+            'store_address.required' => __('seller_messages.store_address_required'),
+            'address_line1.required' => __('seller_messages.address_line1_required'),
+            'address_line2.required' => __('seller_messages.address_line2_required'),
+
+            'store_phone.required' => __('seller_messages.store_phone_required'),
+            'store_phone.digits_between' => __('seller_messages.store_phone_digits'),
+
+            'store_mail_id.required' => __('seller_messages.store_email_required'),
+            'store_mail_id.email' => __('seller_messages.store_email_valid'),
+
+            'bio.required' => __('seller_messages.bio_required'),
                 
             ]);
 
@@ -369,7 +376,7 @@ class LoginController extends Controller
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
         
-        return redirect()->route('seller.upload_document',$seller_id)->with('success', 'Store Information Save Successfully');
+        return redirect()->route('seller.upload_document',$seller_id)->with('success', __('seller_messages.store_info_saved'));
 
     }
 
@@ -440,19 +447,45 @@ class LoginController extends Controller
         'upload_proof' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048|required_without:old_upload_proof',
         'old_upload_proof' => 'nullable|required_without:upload_proof', 
     ],[
-        'iban.required' =>'please enter IBAN number',
-        'swift.required' =>'please enter SWIFT\BIC number',
+        // 'iban.required' =>'please enter IBAN number',
+        // 'swift.required' =>'please enter SWIFT\BIC number',
         
-        'account_type.required'=>'Please select account type',
-        'bank_name.required'=>'Please enter bank name',
-        'account_holder_name.required'=>'Please enter account holder name',
-        'store_document.required'=>'Please upload store document',
-        'owner_document.required'=>'Please upload owner document',
+        // 'account_type.required'=>'Please select account type',
+        // 'bank_name.required'=>'Please enter bank name',
+        // 'account_holder_name.required'=>'Please enter account holder name',
+        // 'store_document.required'=>'Please upload store document',
+        // 'owner_document.required'=>'Please upload owner document',
 
-        'upload_proof.required_without' => 'Please upload proof of Account',
-        'upload_proof.image' => 'The upload proof must be an image file.',
-        'upload_proof.mimes' => 'Only JPG, JPEG, PNG, and WEBP formats are allowed.',
-        'upload_proof.max' => 'The image size must not exceed 2MB.',
+        // 'upload_proof.required_without' => 'Please upload proof of Account',
+        // 'upload_proof.image' => 'The upload proof must be an image file.',
+        // 'upload_proof.mimes' => 'Only JPG, JPEG, PNG, and WEBP formats are allowed.',
+        // 'upload_proof.max' => 'The image size must not exceed 2MB.',
+
+    'iban.required' => __('seller_messages.iban_required'),
+    'swift.required' => __('seller_messages.swift_required'),
+
+    'account_type.required' => __('seller_messages.account_type_required'),
+    'account_type.in' => __('seller_messages.account_type_invalid'),
+
+    'bank_name.required' => __('seller_messages.bank_name_required'),
+    'account_holder_name.required' => __('seller_messages.account_holder_required'),
+
+    'store_document.required' => __('seller_messages.store_document_required'),
+    'store_document.min' => __('seller_messages.store_document_min'),
+    'store_document.*.image' => __('seller_messages.store_document_image'),
+    'store_document.*.mimes' => __('seller_messages.store_document_mimes'),
+    'store_document.*.max' => __('seller_messages.store_document_max'),
+
+    'owner_document.required' => __('seller_messages.owner_document_required'),
+    'owner_document.min' => __('seller_messages.owner_document_min'),
+    'owner_document.*.image' => __('seller_messages.owner_document_image'),
+    'owner_document.*.mimes' => __('seller_messages.owner_document_mimes'),
+    'owner_document.*.max' => __('seller_messages.owner_document_max'),
+
+    'upload_proof.required_without' => __('seller_messages.upload_proof_required'),
+    'upload_proof.image' => __('seller_messages.upload_proof_image'),
+    'upload_proof.mimes' => __('seller_messages.upload_proof_mimes'),
+    'upload_proof.max' => __('seller_messages.upload_proof_max'),
 
     ]);
 
@@ -512,7 +545,7 @@ class LoginController extends Controller
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
-        return redirect()->route('seller.upload_review',$seller_id)->with('success', 'Store Document and Bank details Save Successfully');
+        return redirect()->route('seller.upload_review',$seller_id)->with('success', "__('seller_messages.store_document_bank_saved')");
 
     }
 
@@ -529,12 +562,12 @@ class LoginController extends Controller
         $review_data= $this->SellerAuthService->seller_review($request);
         if($review_data['status']=='success'){
             $review=$review_data['data'];
-            return view('dealer.summary_page',compact('review'))->with('success', 'Store Review Confirm Successfully');
+            return view('dealer.summary_page',compact('review'))->with('success', __('seller_messages.store_review_confirmed'));
             }
 
         }
 
-        return redirect()->route('seller.review_submit_page',$seller_id)->with('success', 'Store Review Confirm Successfully');
+        return redirect()->route('seller.review_submit_page',$seller_id)->with('success',__('seller_messages.store_review_confirmed'));
 
 
     }
@@ -546,7 +579,7 @@ class LoginController extends Controller
         $request = (object) $request;
 
         $data= $this->SellerAuthService->seller_store_submit_request($request);
-        return view('dealer.signup-review')->with('success', 'Wait for Admin To Verify Your Details');
+        return view('dealer.signup-review')->with('success', __('seller_messages.wait_admin_verify'));
     }
 
     public function logout(Request $request)
@@ -579,7 +612,7 @@ class LoginController extends Controller
 
        if($validate->fails()){
         return redirect()->back()
-        ->withErrors(['mobile'=>'Mobile Number Is required'])
+        ->withErrors(['mobile'=>__('seller_messages.mobile_required')])
         ->withInput();
      }
        }
@@ -593,7 +626,7 @@ class LoginController extends Controller
         if($validate->fails()){
 
          return redirect()->back()
-            ->withErrors(['email'=>'Email Address Is required'])
+            ->withErrors(['email'=>__('seller_messages.email_required')])
         ->withInput();
         }
         }
@@ -623,7 +656,7 @@ class LoginController extends Controller
 
     if(!$seller){                   
     return redirect()->back()
-    ->withErrors(['error'=>'Account not exists'])
+    ->withErrors(['error'=>__('seller_messages.account_not_exists')])
     ->withInput();
     }
     
@@ -640,7 +673,7 @@ class LoginController extends Controller
     
     $seller_id= $data['data']->id."?forgot=yes";
     
-    return redirect()->route('seller.register_otp_verify',$seller_id)->with('success', 'forgot Password otp send successfully');
+    return redirect()->route('seller.register_otp_verify',$seller_id)->with('success',__('seller_messages.forgot_password_otp_sent'));
     
     }
 
@@ -661,11 +694,18 @@ class LoginController extends Controller
         'confirm_password'=>"required|same:password"
            ],[
 
-            'password.required'     => 'Please enter password',
-            'password.min' => 'Password must be at least 8 characters long',
-            'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
-            'confirm_password.required' => 'Please confirm your password',
-            'confirm_password.same' => 'Password do not match',
+            // 'password.required'     => 'Please enter password',
+            // 'password.min' => 'Password must be at least 8 characters long',
+            // 'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
+            // 'confirm_password.required' => 'Please confirm your password',
+            // 'confirm_password.same' => 'Password do not match',
+
+            'password.required' => __('seller_messages.reset_password_required'),
+            'password.min' => __('seller_messages.reset_password_min'),
+            'password.regex' => __('seller_messages.reset_password_regex'),
+
+            'confirm_password.required' => __('seller_messages.reset_confirm_password_required'),
+            'confirm_password.same' => __('seller_messages.reset_confirm_password_same'),
 
            ]);
     
@@ -694,7 +734,7 @@ class LoginController extends Controller
         ->withInput();
     }
     
-    return redirect()->route('seller.login')->with('success', 'Your Password reset Successfully');
+    return redirect()->route('seller.login')->with('success', __('seller_messages.password_reset_success'));
 
     }
 
@@ -704,7 +744,7 @@ class LoginController extends Controller
     public function removeImage(Request $request){
             
         sellerDocument::where('id',$request->id)->delete();
-        return ApiResponse::generateResponse('success', 'Image Remove Successfully',(object)[],200);
+        return ApiResponse::generateResponse('success', __('seller_messages.image_removed_success'),(object)[],200);
     
     }
 
