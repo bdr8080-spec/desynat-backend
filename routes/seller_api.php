@@ -19,6 +19,9 @@ use App\Http\Controllers\Api\Seller\SellerStaffManagementController;
 use App\Http\Controllers\CommonController;
 
 
+Route::middleware(['ApiLang'])->group(function(){
+
+
 // M1 Milestone 
 Route::group(['prefix' => 'seller'], function () {
     Route::post('create_account', [AuthController::class, 'create_account']);
@@ -217,3 +220,6 @@ Route::get('all-size',[CommonController::class, 'get_size']);
 Route::get('/upload_color', [SellerDashboardController::class,'upload_color']);
 
 Route::get('/all_color', [SellerDashboardController::class,'upload_color']);
+
+
+});

@@ -388,6 +388,17 @@ return [
 
 
 
+    // seller web  Code 
+    // LoginController Controller   
+
+  'email_mobile_required' => 'البريد الإلكتروني أو رقم الجوال مطلوب.',
+  'password_required' => 'كلمة المرور مطلوبة.',
+   'no_seller_account' => 'لم يتم العثور على حساب البائع.',
+    'account_blocked' => 'هذا الحساب محظور.',
+    'seller_not_verified' => 'لم يتم التحقق من البائع من قبل الإدارة.',
+    'document_rejected' => 'تم رفض مستندك من قبل الإدارة. يرجى إعادة رفعه مرة أخرى.',
+    'login_success' => 'تم تسجيل الدخول بنجاح.',
+    'incorrect_password' => 'يرجى إدخال كلمة المرور الصحيحة.',
 
 
 ];
