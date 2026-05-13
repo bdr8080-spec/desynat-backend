@@ -401,4 +401,103 @@ return [
     'incorrect_password' => 'يرجى إدخال كلمة المرور الصحيحة.',
 
 
+     'profile_pic_required' => 'يرجى رفع صورة الملف الشخصي',
+    'first_name_required' => 'يرجى إدخال الاسم الأول',
+    'last_name_required' => 'يرجى إدخال اسم العائلة',
+    'country_code_required' => 'يرجى اختيار رمز الدولة',
+    'mobile_required' => 'يرجى إدخال رقم الجوال',
+    'mobile_unique' => 'رقم الجوال هذا مسجل بالفعل',
+
+    'email_required' => 'يرجى إدخال البريد الإلكتروني',
+    'email_email' => 'يرجى إدخال بريد إلكتروني صحيح',
+    'email_unique' => 'هذا البريد الإلكتروني مسجل بالفعل',
+
+    'password_required' => 'يرجى إدخال كلمة المرور',
+    'password_min' => 'يجب أن تكون كلمة المرور 8 أحرف على الأقل',
+    'password_regex' => 'يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم ورمز خاص واحد على الأقل',
+
+    'confirm_password_required' => 'يرجى تأكيد كلمة المرور',
+    'confirm_password_same' => 'كلمات المرور غير متطابقة',
+
+    'accept_terms_required' => 'يرجى قبول الشروط والأحكام',
+    'accept_terms_in' => 'يجب الموافقة على الشروط والأحكام للمتابعة',
+
+
+    'otp_sent_successfully' => 'تم إرسال رمز التحقق بنجاح.',
+    'otp_verify_successfully' => 'تم التحقق من رمز التحقق بنجاح.',
+    'invalid_otp' => 'رمز التحقق غير صالح.',
+
+    'store_info_saved' => 'تم حفظ معلومات المتجر بنجاح.',
+    'store_document_bank_saved' => 'تم حفظ مستندات المتجر والتفاصيل البنكية بنجاح.',
+
+    'store_review_confirmed' => 'تم تأكيد مراجعة المتجر بنجاح.',
+    'wait_admin_verify' => 'يرجى الانتظار حتى يقوم المسؤول بالتحقق من بياناتك.',
+
+    'mobile_required' => 'رقم الجوال مطلوب.',
+    'email_required' => 'البريد الإلكتروني مطلوب.',
+    'account_not_exists' => 'الحساب غير موجود.',
+
+    'forgot_password_otp_sent' => 'تم إرسال رمز إعادة تعيين كلمة المرور بنجاح.',
+    'password_reset_success' => 'تم إعادة تعيين كلمة المرور بنجاح.',
+    'image_removed_success' => 'تم حذف الصورة بنجاح.',
+
+        'otp_required' => 'يرجى إدخال رمز التحقق.',
+    'otp_array' => 'يجب أن يكون رمز التحقق بصيغة صحيحة.',
+    'otp_min' => 'يجب إدخال جميع أرقام رمز التحقق الستة.',
+    'otp_digit_required' => 'يرجى إدخال رمز التحقق.',
+    'otp_digit_only' => 'يجب أن يحتوي كل مربع على رقم واحد فقط.',
+
+    'store_image_required' => 'يرجى رفع صورة المتجر.',
+    'store_name_required' => 'يرجى إدخال اسم المتجر.',
+    'country_required' => 'يرجى اختيار الدولة.',
+    'store_address_required' => 'يرجى إدخال عنوان المتجر.',
+    'address_line1_required' => 'يرجى إدخال عنوان المتجر 1.',
+    'address_line2_required' => 'يرجى إدخال عنوان المتجر 2.',
+
+    'store_phone_required' => 'يرجى إدخال رقم هاتف المتجر.',
+    'store_phone_digits' => 'يجب أن يكون رقم هاتف المتجر بين 7 و 15 رقمًا.',
+
+    'store_email_required' => 'يرجى إدخال البريد الإلكتروني للمتجر.',
+    'store_email_valid' => 'يرجى إدخال بريد إلكتروني صحيح للمتجر.',
+
+    'bio_required' => 'يرجى إدخال نبذة تعريفية.',
+
+
+    'iban_required' => 'يرجى إدخال رقم IBAN.',
+    'swift_required' => 'يرجى إدخال رقم SWIFT/BIC.',
+
+    'account_type_required' => 'يرجى اختيار نوع الحساب.',
+    'account_type_invalid' => 'نوع الحساب المحدد غير صالح.',
+
+    'bank_name_required' => 'يرجى إدخال اسم البنك.',
+    'account_holder_required' => 'يرجى إدخال اسم صاحب الحساب.',
+
+    'store_document_required' => 'يرجى رفع مستندات المتجر.',
+    'store_document_min' => 'يرجى رفع مستندين على الأقل للمتجر.',
+    'store_document_image' => 'يجب أن تكون مستندات المتجر ملفات صور.',
+    'store_document_mimes' => 'يسمح فقط بصيغ JPG و JPEG و PNG و WEBP لمستندات المتجر.',
+    'store_document_max' => 'يجب ألا يتجاوز حجم مستند المتجر 2 ميجابايت.',
+
+    'owner_document_required' => 'يرجى رفع مستندات المالك.',
+    'owner_document_min' => 'يرجى رفع مستندين على الأقل للمالك.',
+    'owner_document_image' => 'يجب أن تكون مستندات المالك ملفات صور.',
+    'owner_document_mimes' => 'يسمح فقط بصيغ JPG و JPEG و PNG و WEBP لمستندات المالك.',
+    'owner_document_max' => 'يجب ألا يتجاوز حجم مستند المالك 2 ميجابايت.',
+
+    'upload_proof_required' => 'يرجى رفع إثبات الحساب.',
+    'upload_proof_image' => 'يجب أن يكون إثبات الحساب ملف صورة.',
+    'upload_proof_mimes' => 'يسمح فقط بصيغ JPG و JPEG و PNG و WEBP.',
+    'upload_proof_max' => 'يجب ألا يتجاوز حجم الصورة 2 ميجابايت.',
+    
+
+
+    'reset_password_required' => 'يرجى إدخال كلمة المرور.',
+    'reset_password_min' => 'يجب أن تكون كلمة المرور 8 أحرف على الأقل.',
+    'reset_password_regex' => 'يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم ورمز خاص واحد على الأقل.',
+
+    'reset_confirm_password_required' => 'يرجى تأكيد كلمة المرور.',
+    'reset_confirm_password_same' => 'كلمات المرور غير متطابقة.',
+
+    
+
 ];

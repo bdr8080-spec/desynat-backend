@@ -412,8 +412,106 @@ return [
 
     'email_mobile_required' => 'Email or mobile number is required.',
     'password_required' => 'Password is required.',
+     'no_seller_account' => 'No seller account found.',
+    'account_blocked' => 'This account is blocked.',
+    'seller_not_verified' => 'Seller is not verified by admin.',
+    'document_rejected' => 'Your document was rejected by admin. Please upload it again.',
+    'login_success' => 'Login successful.',
+    'incorrect_password' => 'Please enter the correct password.',
+
+
+    'profile_pic_required' => 'Please upload profile picture',
+    'first_name_required' => 'Please enter first name',
+    'last_name_required' => 'Please enter last name',
+    'country_code_required' => 'Please select country code',
+    'mobile_required' => 'Please enter mobile number',
+    'mobile_unique' => 'This mobile number is already registered',
+
+    'email_required' => 'Please enter email address',
+    'email_email' => 'Please enter a valid email address',
+    'email_unique' => 'This email address is already registered',
+
+    'password_required' => 'Please enter password',
+    'password_min' => 'Password must be at least 8 characters long',
+    'password_regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
+
+    'confirm_password_required' => 'Please confirm your password',
+    'confirm_password_same' => 'Passwords do not match',
+
+    'accept_terms_required' => 'Please accept the terms and conditions',
+    'accept_terms_in' => 'You must agree to the terms and conditions to continue',
+
+
+
+
+    'otp_sent_successfully' => 'OTP sent successfully.',
+    'otp_verify_successfully' => 'OTP verified successfully.',
+    'invalid_otp' => 'Invalid OTP.',
+
+    'store_info_saved' => 'Store information saved successfully.',
+    'store_document_bank_saved' => 'Store document and bank details saved successfully.',
+
+    'store_review_confirmed' => 'Store review confirmed successfully.',
+    'wait_admin_verify' => 'Wait for admin to verify your details.',
+
+    'mobile_required' => 'Mobile number is required.',
+    'email_required' => 'Email address is required.',
+    'account_not_exists' => 'Account does not exist.',
+
+    'forgot_password_otp_sent' => 'Forgot password OTP sent successfully.',
+    'password_reset_success' => 'Your password has been reset successfully.',
+
+    'image_removed_success' => 'Image removed successfully.',
     
 
+      'otp_required' => 'Please enter your OTP.',
+    'otp_array' => 'OTP must be in a valid format.',
+    'otp_min' => 'All 6 OTP digits are required.',
+    'otp_digit_required' => 'Please enter OTP.',
+    'otp_digit_only' => 'Each OTP box must contain only one number.',
+
+      'store_image_required' => 'Please upload store image.',
+    'store_name_required' => 'Please enter store name.',
+    'country_required' => 'Please select country.',
+    'store_address_required' => 'Please enter store address.',
+    'address_line1_required' => 'Please enter store address 1.',
+    'address_line2_required' => 'Please enter store address 2.',
+
+    'store_phone_required' => 'Please enter store phone number.',
+    'store_phone_digits' => 'Store phone number must be between 7 to 15 digits.',
+
+    'store_email_required' => 'Please enter store email ID.',
+    'store_email_valid' => 'Please enter a valid store email ID.',
+
+    'bio_required' => 'Please enter bio.',
+
+
+
+    'iban_required' => 'Please enter IBAN number.',
+    'swift_required' => 'Please enter SWIFT/BIC number.',
+
+    'account_type_required' => 'Please select account type.',
+    'account_type_invalid' => 'Invalid account type selected.',
+
+    'bank_name_required' => 'Please enter bank name.',
+    'account_holder_required' => 'Please enter account holder name.',
+
+    'store_document_required' => 'Please upload store document.',
+    'store_document_min' => 'Please upload at least 2 store documents.',
+    'store_document_image' => 'Store document must be an image file.',
+    'store_document_mimes' => 'Only JPG, JPEG, PNG, and WEBP formats are allowed for store documents.',
+    'store_document_max' => 'Store document size must not exceed 2MB.',
+
+    'owner_document_required' => 'Please upload owner document.',
+    'owner_document_min' => 'Please upload at least 2 owner documents.',
+    'owner_document_image' => 'Owner document must be an image file.',
+    'owner_document_mimes' => 'Only JPG, JPEG, PNG, and WEBP formats are allowed for owner documents.',
+    'owner_document_max' => 'Owner document size must not exceed 2MB.',
+
+    'upload_proof_required' => 'Please upload proof of account.',
+    'upload_proof_image' => 'The upload proof must be an image file.',
+    'upload_proof_mimes' => 'Only JPG, JPEG, PNG, and WEBP formats are allowed.',
+    'upload_proof_max' => 'The image size must not exceed 2MB.',
 
 
 
