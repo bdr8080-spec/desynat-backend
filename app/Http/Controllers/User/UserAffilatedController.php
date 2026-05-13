@@ -24,6 +24,9 @@ use App\Services\TicketService;
 use App\Services\CMSManagementService;
 use App\Services\AffiliateDashboardService;
 use App\Http\Controllers\CommonController;
+use App\Services\TwilioService;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserOtpMail;
 
 class UserAffilatedController extends Controller
 {
@@ -69,9 +72,9 @@ class UserAffilatedController extends Controller
                 'mobileOrEmail' => 'required',
                 'password' => 'required|min:6',
             ], [
-                'mobileOrEmail.required' => 'Please enter your mobile number or email address',
-                'password.required' => 'Please enter your password',
-                'password.min' => 'Password must be at least 6 characters long',
+                'mobileOrEmail.required' => __('affiliate_messages.please_enter_mobile_or_email'),
+                'password.required' => __('affiliate_messages.please_enter_password'),
+                'password.min' => __('affiliate_messages.password_min_6_characters'),
             ]);
 
             if ($validator->fails()) {
@@ -105,7 +108,7 @@ class UserAffilatedController extends Controller
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Affiliate User is not Regsiter',
+                    'message' => __('affiliate_messages.affiliate_user_not_registered'),
                 ], 401);
             }
 
@@ -113,7 +116,7 @@ class UserAffilatedController extends Controller
             if ($user->admin_verify == '3') {
                 return response()->json([
                     'status' => false,
-                    'message' => "Your Registration request is rejected ($user->reject_reason) ",
+                    'message' => __('affiliate_messages.registration_request_rejected', ['reason' => $user->reject_reason]),
                 ], 401);
             }
 
@@ -121,7 +124,7 @@ class UserAffilatedController extends Controller
               if ($user->status == '0') {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Account is blocked by admin',
+                    'message' => __('affiliate_messages.account_blocked_by_admin'),
                 ], 401);
             }
             
@@ -129,7 +132,7 @@ class UserAffilatedController extends Controller
             if ($user->otp_verify == '0') {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Please verify your ' . $loginField . ' with OTP to login',
+                    'message' => __('affiliate_messages.verify_login_field_with_otp', ['field' => $loginField]),
                 ], 401);
             }
 
@@ -138,7 +141,7 @@ class UserAffilatedController extends Controller
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'Affiliate User Login successfully',
+                    'message' => __('affiliate_messages.login_successfully'),
                     'data'=>$user
                 ]);
             }
@@ -163,7 +166,7 @@ class UserAffilatedController extends Controller
             $validator = Validator::make($request->all(), [
                 'mobileOrEmail' => 'required',
             ], [
-                'mobileOrEmail.required' => 'Please enter your mobile number or email address',
+                'mobileOrEmail.required' => __('affiliate_messages.please_enter_mobile_or_email'),
             ]);
 
             if ($validator->fails()) {
@@ -197,7 +200,7 @@ class UserAffilatedController extends Controller
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Affiliate User is not Regsiter',
+                    'message' => __('affiliate_messages.affiliate_user_not_registered'),
                 ], 401);
             }
             
@@ -255,9 +258,21 @@ class UserAffilatedController extends Controller
 
                     $id = Crypt::encryptString($user->id);
                     Session::put('verify-password', '1');
+                    $phone = $user->country_code . $user->mobile;
+                    $message = "Your verification Code Is $otp";
+                    if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                        try {
+                            $this->TwilioService->sendOtp($phone, $message);
+                        } catch (\Exception $e) {
+                            // ❌ silently skip (no return, no error)
+                            // Optional: log for debugging
+                            //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                        }
+                    }
+                     Mail::to($user->email)->send(new UserOtpMail($user, $otp));
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP sent successfully',
+                        'message' => __('affiliate_messages.otp_sent_successfully'),
                         'id' => $id,
                         'type'=> $request->forgetPassword
                     ]);
@@ -266,8 +281,8 @@ class UserAffilatedController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => $request->forgetPassword == '1'
-                        ? 'This mobile number is not registered'
-                        : 'This email address is not registered',
+                        ? __('affiliate_messages.mobile_not_registered')
+                        : __('affiliate_messages.email_not_registered'),
                 ], 403);
             }
         }
@@ -354,8 +369,8 @@ class UserAffilatedController extends Controller
                 'id'=>'required',
                 'otp' => 'required|array',
             ], [
-                'otp.required' => 'Please enter OTP',
-                'otp.*.required' => 'Please enter OTP',
+                'otp.required' => __('affiliate_messages.please_enter_otp'),
+                 'otp.*.required' => __('affiliate_messages.please_enter_otp'),
             ]);
 
 
@@ -381,7 +396,7 @@ if ($validator->fails()) {
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid user reference',
+                    'message' => __('user_messages.invalid_user_reference'),
                 ], 400);
             }
 
@@ -392,7 +407,7 @@ if ($validator->fails()) {
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'User not found.',
+                    'message' => __('user_messages.user_not_found'),
                 ], 404);
             }
 
@@ -412,7 +427,7 @@ if ($validator->fails()) {
                  Session::forget('verify-password');
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP verified successfully',
+                        'message' => __('affiliate_messages.otp_verified_successfully'),
                         'redirect_url' => route('affiliate.userCreatePassword', ['temp_user_id' => $request->id]),
                     ]);
                     
@@ -420,7 +435,7 @@ if ($validator->fails()) {
                     
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP verified successfully',
+                        'message' => __('affiliate_messages.otp_verified_successfully'),
                         'redirect_url' => route('affiliate.affiliate_addaddress', ['temp_user_id' => $request->id]),
                     ]);
 
@@ -430,8 +445,8 @@ if ($validator->fails()) {
                     return response()->json([
                     'status' => true,
                     'message' => $request->type == 1 
-                        ? 'Login successfully' 
-                        : 'Affilated User registered successfully',
+                        ? __('affiliate_messages.login_successfully')
+                        : __('affiliate_messages.affiliate_user_registered_successfully'),
                     'redirect_url' => route('affiliate.affiliateDashboard'),
                 ]);
 
@@ -440,7 +455,7 @@ if ($validator->fails()) {
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid OTP, please try again',
+                    'message' => __('affiliate_messages.invalid_otp'),
                 ], 422);
             }
 

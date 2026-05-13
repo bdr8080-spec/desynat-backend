@@ -39,21 +39,21 @@
 
                         <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                        <span id="currentLang">EN</span>
+                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end langu">
 
                         <li>
-                            <a class="dropdown-item" data-lang="ar">
-                                <span>AR</span> Arabic
+                            <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
+                                <span>AR</span> {{ __('affiliate_messages.arabic') }}
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" data-lang="en">
-                                <span>EN</span> English
+                            <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
+                                <span>EN</span> {{ __('affiliate_messages.english') }}
                             </a>
                         </li>
 
@@ -72,12 +72,12 @@
             <form id="userLogin">
                 @csrf
                 <div class="d-flex align-items-center justify-content-between">
-                    <h4>Sign In</h4>
-                    <p class="guest"><a href="{{route('dashboard')}}">Switch to User</a></p>
+                    <h4>{{ __('affiliate_messages.sign_in') }}</h4>
+                    <p class="guest"><a href="{{route('dashboard')}}">{{ __('affiliate_messages.switch_to_user') }}</a></p>
                 </div>
-                <h3>Welcome back !</h3>
+                <h3>{{ __('affiliate_messages.welcome_back') }} !</h3>
                 <div class="form-group mt-lg-4 mt-md-3 mt-2">
-                    <label for="">Mobile Number or Email Address</label>
+                    <label for="">{{ __('affiliate_messages.mobile_number_or_email_address') }}</label>
 
                     <div class="d-flex align-items-center">
                         <div class=" d-none LoginCountryCode">
@@ -138,7 +138,7 @@
                         </div>
                         <div class="w-100 LoginMobileDesign">
                             <input type="text" class="form-control notapplyspace" value=""
-                                placeholder="Please enter mobile number or email address" name="mobileOrEmail"
+                                placeholder="{{ __('affiliate_messages.enter_mobile_number_or_email_address') }}" name="mobileOrEmail"
                                 id="LoginMobile" />
                         </div>
                     </div>
@@ -146,17 +146,17 @@
                 <span class="text-danger" id="error-mobileOrEmail"></span>
                 <br />
                 <div class="mt-3">
-                    <button type="submit" class="customBtn mb-3" id="loginButtom">Login</button>
+                    <button type="submit" class="customBtn mb-3" id="loginButtom">{{ __('affiliate_messages.login') }}</button>
                 </div>
             </form>
             <div class="mt-2">
-                <a class="customBtn2" style="text-decoration: none;" href="{{route('affiliate.affiliate_login')}}">Login Via
-                Password</a>
+                <a class="customBtn2" style="text-decoration: none;" href="{{route('affiliate.affiliate_login')}}">{{ __('affiliate_messages.login_via_password') }}
+                </a>
             </div>
 
             <div class="sign-new mt-4 text-center">
-                <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('affiliate.affiliate_signup')}}">Sign
-                up</a></p>
+                <p class="mt-3 dontAccount">{{ __('affiliate_messages.do_not_have_an_account') }}? <a href="{{route('affiliate.affiliate_signup')}}">{{ __('affiliate_messages.sign_up') }}
+                </a></p>
             </div>
 
         </div>

@@ -308,7 +308,43 @@ return [
     'thank_you_for_your_patience' => 'Thank you for your patience',
     'team_desynat_app' => 'Team Desynat App',
 
-    
+    //login
+    'sign_in' => 'Sign In',
+    'welcome_back' => 'Welcome Back',
+    'switch_to_user' => 'Switch to User',
+    'mobile_number_or_email_address' => 'Mobile Number or Email Address',
+    'enter_mobile_number_or_email_address' => 'Enter Mobile Number or Email Address',
+    'password' => 'Password',
+    'enter_password' => 'Enter Password',
+    'forgot_password' => 'Forgot Password',
+    'login' => 'Login',
+    'login_via_otp' => 'Login via OTP',
+    'do_not_have_an_account' => "Don't have an account?",
+    'sign_up' => 'Sign Up',
+    'document_rejected_upload_again' => 'Your document is rejected by admin. Please upload again',
+    'please_enter_mobile_or_email' => 'Please enter your mobile number or email address',
+    'please_enter_password' => 'Please enter your password',
+    'password_min_6_characters' => 'Password must be at least 6 characters long',
+    'affiliate_user_not_registered' => 'Affiliate user is not registered',
+    'registration_request_rejected' => 'Your registration request is rejected (:reason)',
+    'account_blocked_by_admin' => 'Account is blocked by admin',
+    'verify_login_field_with_otp' => 'Please verify your :field with OTP to login',
+    'login_successfully' => 'Affiliate user logged in successfully',
+    'login_via_password' => 'Login via Password',
+    'mobile_not_registered' => 'This mobile number is not registered',
+    'email_not_registered' => 'This email address is not registered',
+    'otp_sent_successfully' => 'OTP sent successfully',
+
+    //otp verify
+    'otp_verification' => 'OTP Verification',
+    'email_address' => 'Email Address',
+    'mobile_number' => 'Mobile Number',
+    '6_digit_otp_has_been_sent_to_your_registered' => '6 digit OTP has been sent to your registered',
+    'please_enter_otp' => 'Please enter OTP',
+    'otp_verified_successfully' => 'OTP verified successfully',
+    'login_successfully' => 'Login successfully',
+    'affiliate_user_registered_successfully' => 'Affiliate user registered successfully',
+    'invalid_otp' => 'Invalid OTP, please try again',
 
     
 

@@ -308,6 +308,44 @@ return [
     'thank_you_for_your_patience' => 'شكرًا لصبرك',
     'team_desynat_app' => 'فريق تطبيق ديسينات',
 
+    //login
+    'sign_in' => 'تسجيل الدخول',
+    'welcome_back' => 'مرحباً بعودتك',
+    'switch_to_user' => 'التبديل إلى المستخدم',
+    'mobile_number_or_email_address' => 'رقم الجوال أو البريد الإلكتروني',
+    'enter_mobile_number_or_email_address' => 'أدخل رقم الجوال أو البريد الإلكتروني',
+    'password' => 'كلمة المرور',
+    'enter_password' => 'أدخل كلمة المرور',
+    'forgot_password' => 'هل نسيت كلمة المرور؟',
+    'login' => 'تسجيل الدخول',
+    'login_via_otp' => 'تسجيل الدخول عبر رمز التحقق',
+    'do_not_have_an_account' => 'ليس لديك حساب؟',
+    'sign_up' => 'إنشاء حساب',
+    'document_rejected_upload_again' => 'تم رفض المستند من قبل الإدارة. يرجى إعادة رفعه مرة أخرى',
+    'please_enter_mobile_or_email' => 'يرجى إدخال رقم الجوال أو البريد الإلكتروني',
+    'please_enter_password' => 'يرجى إدخال كلمة المرور',
+    'password_min_6_characters' => 'يجب أن تكون كلمة المرور 6 أحرف على الأقل',
+    'affiliate_user_not_registered' => 'المستخدم غير مسجل',
+    'registration_request_rejected' => 'تم رفض طلب التسجيل (:reason)',
+    'account_blocked_by_admin' => 'تم حظر الحساب من قبل الإدارة',
+    'verify_login_field_with_otp' => 'يرجى التحقق من :field باستخدام رمز التحقق لتسجيل الدخول',
+    'login_successfully' => 'تم تسجيل دخول المستخدم بنجاح',
+    'login_via_password' => 'تسجيل الدخول بكلمة المرور',
+    'mobile_not_registered' => 'رقم الجوال غير مسجل',
+    'email_not_registered' => 'عنوان البريد الإلكتروني غير مسجل',
+    'otp_sent_successfully' => 'تم إرسال رمز التحقق بنجاح',
+
+    //otp verify
+    'otp_verification' => 'التحقق من رمز التحقق',
+    'email_address' => 'عنوان البريد الإلكتروني',
+    'mobile_number' => 'رقم الجوال',
+    '6_digit_otp_has_been_sent_to_your_registered' => 'تم إرسال رمز تحقق مكون من 6 أرقام إلى حسابك المسجل',
+    'please_enter_otp' => 'يرجى إدخال رمز التحقق',
+    'otp_verified_successfully' => 'تم التحقق من رمز التحقق بنجاح',
+    'login_successfully' => 'تم تسجيل الدخول بنجاح',
+    'affiliate_user_registered_successfully' => 'تم تسجيل المستخدم التابع بنجاح',
+    'invalid_otp' => 'رمز التحقق غير صحيح، يرجى المحاولة مرة أخرى',
+
 
 
 
