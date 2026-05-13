@@ -144,10 +144,29 @@ public function seller_banner_price(Request $request){
             'price'=>'required'
             
             ],[
-              'start_date.required'=>"Please select start date ",
-              'end_date.required'=>"Please select End date",
-              'category.required_if'=>"Please Select categrory",
-              'subcatgory.required_if'=>"Please select Subcategory",
+                    
+            'banner_position.required' => __('seller_messages.banner_position_required'),
+            'banner_position.in' => __('seller_messages.banner_position_invalid'),
+
+            'category.required_if' => __('seller_messages.category_required'),
+            'category.exists' => __('seller_messages.category_exists'),
+
+            'subcatgory.required_if' => __('seller_messages.subcategory_required'),
+            'subcatgory.exists' => __('seller_messages.subcategory_exists'),
+
+            'start_date.required' => __('seller_messages.start_date_required'),
+            'start_date.date' => __('seller_messages.start_date_date'),
+
+            'end_date.required' => __('seller_messages.end_date_required'),
+            'end_date.date' => __('seller_messages.end_date_date'),
+            'end_date.after_or_equal' => __('seller_messages.end_date_after'),
+
+            'total_days.required' => __('seller_messages.total_days_required'),
+            'total_days.integer' => __('seller_messages.total_days_integer'),
+
+            'upload_banner.required' => __('seller_messages.upload_banner_required'),
+
+            'price.required' => __('seller_messages.price_required'),
               
             ]);
             

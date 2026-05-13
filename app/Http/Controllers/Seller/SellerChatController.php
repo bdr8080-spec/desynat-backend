@@ -120,6 +120,12 @@ class SellerChatController extends Controller
             // "shipping"=>'required',
             // "tax"=>'required',
             "total_amount"=>"required",
+        ],[
+        'unique_id.required' => __('seller_messages.unique_id_required'),
+        'unique_id.exists' => __('seller_messages.unique_id_exists'),
+        'price.required' => __('seller_messages.price_required'),
+        'quantity.required' => __('seller_messages.quantity_required'),
+        'total_amount.required' => __('seller_messages.total_amount_required'),
         ]);
         
        if($validate->fails()){

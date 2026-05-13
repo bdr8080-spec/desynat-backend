@@ -1257,141 +1257,136 @@ public function Add_product_code1(Request $request){
       ],[
    
     // Base Fields
-    'category_id.required' => 'Category is required.',
-    'category_id.exists' => 'Selected category is invalid.',
+   
+     // Category / Brand
+    'category_id.required' => __('seller_messages.category_required'),
+    'category_id.exists' => __('seller_messages.category_invalid'),
 
-    'subcategory_id.required' => 'Sub-category is required.',
-    'subcategory_id.exists' => 'Selected sub-category is invalid.',
+    'subcategory_id.required' => __('seller_messages.subcategory_required'),
+    'subcategory_id.exists' => __('seller_messages.subcategory_invalid'),
 
-    'brand_id.required' => 'Brand is required.',
-    'brand_id.exists' => 'Selected brand is invalid.',
+    'brand_id.required' => __('seller_messages.brand_required'),
+    'brand_id.exists' => __('seller_messages.brand_invalid'),
 
-    'product_name_en.required' => 'Product name (English) is required.',
-    'product_name_en.unique' => 'English product name already exists.',
-    'product_name_ar.required' => 'Product name (Arabic) is required.',
-    'product_name_ar.unique' => 'Arabic product name already exists.',
+    // Product Names
+    'product_name_en.required' => __('seller_messages.product_name_en_required'),
+    'product_name_en.unique' => __('seller_messages.product_name_en_unique'),
 
-    'description_en.required' => 'English description is required.',
-    'description_ar.required' => 'Arabic description is required.',
+    'product_name_ar.required' => __('seller_messages.product_name_ar_required'),
+    'product_name_ar.unique' => __('seller_messages.product_name_ar_unique'),
 
+      'description_en.required' => __('seller_messages.description_en_required'),
+    'description_ar.required' => __('seller_messages.description_ar_required'),
 
     // Specification
-    'product_spe_en.required' => 'Product specification (English) is required.',
-    'product_spe_en.array' => 'Product specification (English) must be in format.',
-    'product_spe_en.*.required' => 'Product specification value (English) is required.',
+    'product_spe_en.required' => __('seller_messages.product_spe_en_required'),
+    'product_spe_en.array' => __('seller_messages.product_spe_en_array'),
+    'product_spe_en.*.required' => __('seller_messages.product_spe_en_value_required'),
 
-    'product_spe_feature_en.required' => 'Product feature (English) is required.',
-    'product_spe_feature_en.array' => 'Product feature (English) must be in format.',
-    'product_spe_feature_en.*.required' => 'Product feature value (English) is required.',
+    'product_spe_feature_en.required' => __('seller_messages.product_spe_feature_en_required'),
+    'product_spe_feature_en.array' => __('seller_messages.product_spe_feature_en_array'),
+    'product_spe_feature_en.*.required' => __('seller_messages.product_spe_feature_en_value_required'),
 
-    'product_spe_ar.required' => 'Product specification (Arabic) is required.',
-    'product_spe_ar.array' => 'Product specification (Arabic) must be in format.',
-    'product_spe_ar.*.required' => 'Product specification value (Arabic) is required.',
+    'product_spe_ar.required' => __('seller_messages.product_spe_ar_required'),
+    'product_spe_ar.array' => __('seller_messages.product_spe_ar_array'),
+    'product_spe_ar.*.required' => __('seller_messages.product_spe_ar_value_required'),
 
-    'product_spe_feature_ar.required' => 'Product feature (Arabic) is required.',
-    'product_spe_feature_ar.array' => 'Product feature (Arabic) must be in format.',
-    'product_spe_feature_ar.*.required' => 'Product feature value (Arabic) is required.',
-
+    'product_spe_feature_ar.required' => __('seller_messages.product_spe_feature_ar_required'),
+    'product_spe_feature_ar.array' => __('seller_messages.product_spe_feature_ar_array'),
+    'product_spe_feature_ar.*.required' => __('seller_messages.product_spe_feature_ar_value_required'),
 
     // Colors
-    'color_id.required' => 'At least one color must be selected.',
-    'color_id.array' => 'Color input format invalid.',
-    'color_id.*.required' => 'Color Field is Required.',
-    'color_id.*.exists' => 'Selected color is invalid.',
-
+    'color_id.required' => __('seller_messages.color_required'),
+    'color_id.array' => __('seller_messages.color_array'),
+    'color_id.*.required' => __('seller_messages.color_field_required'),
+    'color_id.*.exists' => __('seller_messages.color_invalid'),
 
     // Variant Image
-    'variant_image.required' => 'Product variant image is required.',
-    'variant_image.array' => 'Variant images must be valid.',
-    'variant_image.*.required' => 'Please upload image for each color.',
-    'variant_image.*.array' => 'Image format invalid.',
-
+    'variant_image.required' => __('seller_messages.variant_image_required'),
+    'variant_image.array' => __('seller_messages.variant_image_array'),
+    'variant_image.*.required' => __('seller_messages.variant_image_each_required'),
+    'variant_image.*.array' => __('seller_messages.variant_image_invalid'),
 
     // Size Validation
-    'size_id.required' => 'At least one size must be selected.',
-    'size_id.array' => 'Size format invalid.',
-    'size_id.*.required' => 'Size entry missing.',
-    'size_id.*.array' => 'Size format invalid.',
-    'size_id.*.*.required' => 'Size is required.',
-    'size_id.*.*.exists' => 'Selected size is invalid.',
-
+    'size_id.required' => __('seller_messages.size_required'),
+    'size_id.array' => __('seller_messages.size_array'),
+    'size_id.*.required' => __('seller_messages.size_entry_required'),
+    'size_id.*.array' => __('seller_messages.size_array'),
+    'size_id.*.*.required' => __('seller_messages.size_value_required'),
+    'size_id.*.*.exists' => __('seller_messages.size_invalid'),
 
     // Inventory
-    'total_stock.*.*.required' => 'Total stock is required.',
-    'total_stock.*.*.integer' => 'Total stock must be a valid number.',
+    'total_stock.*.*.required' => __('seller_messages.stock_required'),
+    'total_stock.*.*.integer' => __('seller_messages.stock_integer'),
 
-    'sku.*.*.required' => 'SKU value is required.',
-    'sku.*.*.max' => 'SKU must not exceed 50 characters.',
+    'sku.*.*.required' => __('seller_messages.sku_required'),
+    'sku.*.*.max' => __('seller_messages.sku_max'),
 
-    'actual_price.*.*.required' => 'Actual price is required.',
-    'actual_price.*.*.numeric' => 'Actual price must be a valid number.',
-
+    'actual_price.*.*.required' => __('seller_messages.actual_price_required'),
+    'actual_price.*.*.numeric' => __('seller_messages.actual_price_numeric'),
 
     // Discount
-    'discount_type.*.*.required' => 'Discount type is required.',
-    'discount_type.*.*.in' => 'Discount type must be 1=percentage or 2=fixed.',
+    'discount_type.*.*.required' => __('seller_messages.discount_type_required'),
+    'discount_type.*.*.in' => __('seller_messages.discount_type_invalid'),
 
-    'discount_value.*.*.required' => 'Discount value is required.',
-    'discount_value.*.*.numeric' => 'Discount value must be numeric.',
+    'discount_value.*.*.required' => __('seller_messages.discount_value_required'),
+    'discount_value.*.*.numeric' => __('seller_messages.discount_value_numeric'),
 
-    'final_price.*.*.required' => 'Final price is required.',
-    'final_price.*.*.numeric' => 'Final price must be numeric.',
-
+    'final_price.*.*.required' => __('seller_messages.final_price_required'),
+    'final_price.*.*.numeric' => __('seller_messages.final_price_numeric'),
 
     // Product Policy
-    'min_card_quantity.required' => 'Minimum cart quantity is required.',
-    'max_card_quantity.required' => 'Maximum cart quantity is required.',
+    'min_card_quantity.required' => __('seller_messages.min_cart_required'),
+    'max_card_quantity.required' => __('seller_messages.max_cart_required'),
 
-    'product_return.required' => 'Please select return availability.',
-    'product_return.in' => 'Invalid return option.',
+    'product_return.required' => __('seller_messages.product_return_required'),
+    'product_return.in' => __('seller_messages.product_return_invalid'),
 
-    'return_days.required_if' => 'Return days are required if return is available.',
-    'return_days.integer' => 'Return days must be numeric.',
+    'return_days.required_if' => __('seller_messages.return_days_required'),
+    'return_days.integer' => __('seller_messages.return_days_numeric'),
 
-    'product_exchangable.required' => 'Please select exchange availability.',
-    'product_exchangable.in' => 'Invalid exchange option.',
+    'product_exchangable.required' => __('seller_messages.exchange_required'),
+    'product_exchangable.in' => __('seller_messages.exchange_invalid'),
 
-    'exchangable_days.required_if' => 'Exchange days required if exchange available.',
-    'exchangable_days.integer' => 'Exchange days must be numeric.',
+    'exchangable_days.required_if' => __('seller_messages.exchange_days_required'),
+    'exchangable_days.integer' => __('seller_messages.exchange_days_numeric'),
 
-    'review_rating.required' => 'Review & Rating option is required.',
-    'review_rating.in' => 'Invalid rating option.',
+    'review_rating.required' => __('seller_messages.review_required'),
+    'review_rating.in' => __('seller_messages.review_invalid'),
 
-    'affiliated_product.required' => 'Affiliated product option is required.',
-    'affiliated_product.in' => 'Invalid option.',
-    'affiliated_commission.required_if' => 'Affiliated Commission required if Affiliated option Yes.',
-   
+    'affiliated_product.required' => __('seller_messages.affiliate_required'),
+    'affiliated_product.in' => __('seller_messages.affiliate_invalid'),
+    'affiliated_commission.required_if' => __('seller_messages.affiliate_commission_required'),
 
-    'customized_product.required' => 'Customization option is required.',
-    'customized_product.in' => 'Invalid option.',
+    'customized_product.required' => __('seller_messages.customized_required'),
+    'customized_product.in' => __('seller_messages.customized_invalid'),
 
-    'ready_to_ship.required' => 'Ready to ship status required.',
-    'ready_to_ship.in' => 'Invalid ready to ship option.',
+    'ready_to_ship.required' => __('seller_messages.ready_to_ship_required'),
+    'ready_to_ship.in' => __('seller_messages.ready_to_ship_invalid'),
 
-    'cash_on_delivery.required' => 'Cash on delivery availability required.',
-    'cash_on_delivery.in' => 'Invalid COD option.',
+    'cash_on_delivery.required' => __('seller_messages.cod_required'),
+    'cash_on_delivery.in' => __('seller_messages.cod_invalid'),
 
-    'upload_size_chart.required' => 'Upload size chart is required.',
-
+    'upload_size_chart.required' => __('seller_messages.size_chart_required'),
 
     // Body measurement
-    'bust.*.*.required' => 'Bust measurement required.',
-    'bust.*.*.numeric' => 'Bust measurement must be numeric.',
+    'bust.*.*.required' => __('seller_messages.bust_required'),
+    'bust.*.*.numeric' => __('seller_messages.bust_numeric'),
 
-    'waist.*.*.required' => 'Waist measurement required.',
-    'waist.*.*.numeric' => 'Waist must be numeric.',
+    'waist.*.*.required' => __('seller_messages.waist_required'),
+    'waist.*.*.numeric' => __('seller_messages.waist_numeric'),
 
-    'hip.*.*.required' => 'Hip measurement required.',
-    'hip.*.*.numeric' => 'Hip must be numeric.',
+    'hip.*.*.required' => __('seller_messages.hip_required'),
+    'hip.*.*.numeric' => __('seller_messages.hip_numeric'),
 
-    'shoulder.*.*.required' => 'Shoulder measurement required.',
-    'shoulder.*.*.numeric' => 'Shoulder must be numeric.',
+    'shoulder.*.*.required' => __('seller_messages.shoulder_required'),
+    'shoulder.*.*.numeric' => __('seller_messages.shoulder_numeric'),
 
-    'sleeve_length.*.*.required' => 'Sleeve length is required.',
-    'sleeve_length.*.*.numeric' => 'Sleeve length must be numeric.',
+    'sleeve_length.*.*.required' => __('seller_messages.sleeve_required'),
+    'sleeve_length.*.*.numeric' => __('seller_messages.sleeve_numeric'),
 
-    'length.*.*.required' => 'Length is required.',
-    'length.*.*.numeric' => 'Length must be numeric.',
+    'length.*.*.required' => __('seller_messages.length_required'),
+    'length.*.*.numeric' => __('seller_messages.length_numeric'),
         
       ]);
 
@@ -1407,7 +1402,7 @@ public function Add_product_code1(Request $request){
                     $stockValue = $totalStock[$index][$index1] ?? null;
 
                     if ($stockValue !== null && $skuValue1 >= $stockValue) {
-                        $validate->errors()->add("sku.$index.$index1", "SKU Limit Not should be greater than Total Stock");
+                        $validate->errors()->add("sku.$index.$index1", "__('seller_messages.sku_limit_exceeded')");
                     }
                 }
 
@@ -1433,7 +1428,7 @@ public function Add_product_code1(Request $request){
 
         $validate->errors()->add(
             "variant_image.$key",
-            "At least one image is required for variation #".($key + 1)
+            __('seller_messages.variation_image_required')."#".($key + 1)
         );
     }
 }
@@ -1463,7 +1458,7 @@ public function Add_product_code1(Request $request){
         if (count($sizesForColor) !== count(array_unique($sizesForColor))) {
             $validate->errors()->add(
                 'size_id_'.$color,
-                "For color sizes must be different."
+                "__('seller_messages.color_sizes_must_be_different')"
             );
         }
     }
@@ -1718,151 +1713,140 @@ public function edit_product_code1(Request $request, $id){
       ],[
     
         // Base Fields
-    'category_id.required' => 'Category is required.',
-    'category_id.exists' => 'Selected category is invalid.',
+     'category_id.required' => __('seller_messages.category_required'),
+    'category_id.exists' => __('seller_messages.category_invalid'),
 
-    'subcategory_id.required' => 'Sub-category is required.',
-    'subcategory_id.exists' => 'Selected sub-category is invalid.',
+    'subcategory_id.required' => __('seller_messages.subcategory_required'),
+    'subcategory_id.exists' => __('seller_messages.subcategory_invalid'),
 
-    'brand_id.required' => 'Brand is required.',
-    'brand_id.exists' => 'Selected brand is invalid.',
+    'brand_id.required' => __('seller_messages.brand_required'),
+    'brand_id.exists' => __('seller_messages.brand_invalid'),
 
-    'product_name_en.required' => 'Product name (English) is required.',
-    'product_name_en.unique' => 'English product name already exists.',
-    'product_name_ar.required' => 'Product name (Arabic) is required.',
-    'product_name_ar.unique' => 'Arabic product name already exists.',
+    'product_name_en.required' => __('seller_messages.product_name_en_required'),
+    'product_name_en.unique' => __('seller_messages.product_name_en_unique'),
 
-    'description_en.required' => 'English description is required.',
-    'description_ar.required' => 'Arabic description is required.',
+    'product_name_ar.required' => __('seller_messages.product_name_ar_required'),
+    'product_name_ar.unique' => __('seller_messages.product_name_ar_unique'),
+
+    'description_en.required' => __('seller_messages.description_en_required'),
+    'description_ar.required' => __('seller_messages.description_ar_required'),
 
 
     // Specifications
-    'product_spe_en.required' => 'English specifications are required.',
-    'product_spe_en.array' => 'Invalid format for English specifications.',
-    'product_spe_en.*.required' => 'Each English specification is required.',
+     'product_spe_en.required' => __('seller_messages.product_spe_en_required'),
+    'product_spe_en.array' => __('seller_messages.product_spe_en_array'),
+    'product_spe_en.*.required' => __('seller_messages.product_spe_en_value_required'),
 
-    'product_spe_feature_en.required' => 'English specification features are required.',
-    'product_spe_feature_en.array' => 'Invalid format for English specification features.',
-    'product_spe_feature_en.*.required' => 'Each English feature is required.',
+    'product_spe_feature_en.required' => __('seller_messages.product_spe_feature_en_required'),
+    'product_spe_feature_en.array' => __('seller_messages.product_spe_feature_en_array'),
+    'product_spe_feature_en.*.required' => __('seller_messages.product_spe_feature_en_value_required'),
 
-    'product_spe_ar.required' => 'Arabic specifications are required.',
-    'product_spe_ar.array' => 'Invalid format for Arabic specifications.',
-    'product_spe_ar.*.required' => 'Each Arabic specification is required.',
+    'product_spe_ar.required' => __('seller_messages.product_spe_ar_required'),
+    'product_spe_ar.array' => __('seller_messages.product_spe_ar_array'),
+    'product_spe_ar.*.required' => __('seller_messages.product_spe_ar_value_required'),
 
-    'product_spe_feature_ar.required' => 'Arabic specification features are required.',
-    'product_spe_feature_ar.array' => 'Invalid format for Arabic specification features.',
-    'product_spe_feature_ar.*.required' => 'Each Arabic feature is required.',
+    'product_spe_feature_ar.required' => __('seller_messages.product_spe_feature_ar_required'),
+    'product_spe_feature_ar.array' => __('seller_messages.product_spe_feature_ar_array'),
+    'product_spe_feature_ar.*.required' => __('seller_messages.product_spe_feature_ar_value_required'),
 
-
-    // Variation Images
-    'variant_image.array' => 'Variant images format is invalid.',
-    'variant_image.*.array' => 'Variant image group format is invalid.',
-    'variant_image.*.*.image' => 'Each uploaded file must be an image.',
-    'variant_image.*.*.mimes' => 'Images must be jpeg, png, jpg, or gif.',
-    'variant_image.*.*.max' => 'Image size must not exceed 2MB.',
-
-    'old_variant_image.array' => 'Old variant images format is invalid.',
-    'old_variant_image.*.nullable' => 'Old variant image field is invalid.',
-
-
-    // Colors
-    'color_id.required' => 'At least one color must be selected.',
-    'color_id.array' => 'Color format invalid.',
-    'color_id.*.required' => 'Color selection is required.',
-    'color_id.*.exists' => 'Selected color does not exist.',
+    'color_id.required' => __('seller_messages.color_required'),
+    'color_id.array' => __('seller_messages.color_array'),
+    'color_id.*.required' => __('seller_messages.color_value_required'),
+    'color_id.*.exists' => __('seller_messages.color_invalid'),
 
 
     // Sizes
-    'size_id.required' => 'At least one size is required.',
-    'size_id.array' => 'Size format invalid.',
-    'size_id.*.required' => 'Size group is required.',
-    'size_id.*.array' => 'Invalid size input format.',
-    'size_id.*.*.required' => 'Each size must be selected.',
-    'size_id.*.*.exists' => 'Invalid size selected.',
+    'size_id.required' => __('seller_messages.size_required'),
+    'size_id.array' => __('seller_messages.size_array'),
+    'size_id.*.required' => __('seller_messages.size_group_required'),
+    'size_id.*.*.required' => __('seller_messages.size_value_required'),
+    'size_id.*.*.exists' => __('seller_messages.size_invalid'),
 
+'variant_image.array' => __('seller_messages.variant_image_array'),
+'variant_image.*.array' => __('seller_messages.variant_image_group_array'),
+'variant_image.*.*.image' => __('seller_messages.variant_image_image'),
+'variant_image.*.*.mimes' => __('seller_messages.variant_image_mimes'),
+'variant_image.*.*.max' => __('seller_messages.variant_image_max'),
 
-    // Inventory
-    'total_stock.*.*.required' => 'Total stock is required.',
-    'total_stock.*.*.integer' => 'Total stock must be a number.',
-    'total_stock.*.*.min' => 'Stock cannot be negative.',
+'old_variant_image.array' => __('seller_messages.old_variant_image_array'),
+'old_variant_image.*.nullable' => __('seller_messages.old_variant_image_nullable'),
 
-    'sku.*.*.required' => 'SKU is required.',
-    'sku.*.*.string' => 'SKU format invalid.',
-    'sku.*.*.max' => 'SKU must not exceed 50 characters.',
+'total_stock.*.*.required' => __('seller_messages.total_stock_required'),
+'total_stock.*.*.integer' => __('seller_messages.total_stock_integer'),
+'total_stock.*.*.min' => __('seller_messages.total_stock_min'),
 
-    'actual_price.*.*.required' => 'Actual price is required.',
-    'actual_price.*.*.numeric' => 'Actual price must be a number.',
-    'actual_price.*.*.min' => 'Actual price cannot be negative.',
+'sku.*.*.required' => __('seller_messages.sku_required'),
+'sku.*.*.string' => __('seller_messages.sku_string'),
+'sku.*.*.max' => __('seller_messages.sku_max'),
 
+'actual_price.*.*.required' => __('seller_messages.actual_price_required'),
+'actual_price.*.*.numeric' => __('seller_messages.actual_price_numeric'),
+'actual_price.*.*.min' => __('seller_messages.actual_price_min'),
 
-    // Discount
-    'discount_type.*.*.required' => 'Discount type is required.',
-    'discount_type.*.*.in' => 'Invalid discount type.',
+'discount_type.*.*.required' => __('seller_messages.discount_type_required'),
+'discount_type.*.*.in' => __('seller_messages.discount_type_invalid'),
 
-    'discount_value.*.*.required' => 'Discount value is required.',
-    'discount_value.*.*.numeric' => 'Discount value must be numeric.',
-    'discount_value.*.*.min' => 'Discount value cannot be negative.',
+'discount_value.*.*.required' => __('seller_messages.discount_value_required'),
+'discount_value.*.*.numeric' => __('seller_messages.discount_value_numeric'),
+'discount_value.*.*.min' => __('seller_messages.discount_value_min'),
 
-    'final_price.*.*.required' => 'Final price is required.',
-    'final_price.*.*.numeric' => 'Final price must be numeric.',
-    'final_price.*.*.min' => 'Final price cannot be negative.',
+'final_price.*.*.required' => __('seller_messages.final_price_required'),
+'final_price.*.*.numeric' => __('seller_messages.final_price_numeric'),
+'final_price.*.*.min' => __('seller_messages.final_price_min'),
 
+'min_card_quantity.required' => __('seller_messages.min_cart_quantity_required'),
+'max_card_quantity.required' => __('seller_messages.max_cart_quantity_required'),
 
-    // Product Policies
-    'min_card_quantity.required' => 'Minimum cart quantity is required.',
-    'max_card_quantity.required' => 'Maximum cart quantity is required.',
+'product_return.required' => __('seller_messages.product_return_required'),
+'product_return.in' => __('seller_messages.product_return_invalid'),
 
-    'product_return.required' => 'Return availability is required.',
-    'product_return.in' => 'Invalid return selection.',
-    'return_days.required_if' => 'Return days required if product is returnable.',
-    'return_days.integer' => 'Return days must be numeric.',
+'return_days.required_if' => __('seller_messages.return_days_required'),
+'return_days.integer' => __('seller_messages.return_days_integer'),
 
-    'product_exchangable.required' => 'Exchange availability is required.',
-    'product_exchangable.in' => 'Invalid exchange selection.',
-    'exchangable_days.required_if' => 'Exchange days required if exchange is available.',
-    'exchangable_days.integer' => 'Exchange days must be numeric.',
+'product_exchangable.required' => __('seller_messages.product_exchange_required'),
+'product_exchangable.in' => __('seller_messages.product_exchange_invalid'),
 
-    'review_rating.required' => 'Review & rating option required.',
-    'review_rating.in' => 'Invalid review & rating value.',
+'exchangable_days.required_if' => __('seller_messages.exchange_days_required'),
+'exchangable_days.integer' => __('seller_messages.exchange_days_integer'),
 
-    'affiliated_product.required' => 'Affiliated product selection required.',
-    'affiliated_product.in' => 'Invalid affiliated product option.',
-    'affiliated_commission.required_if' => 'Affiliated Commission required if Affiliated option Yes.',
-   
+'review_rating.required' => __('seller_messages.review_rating_required'),
+'review_rating.in' => __('seller_messages.review_rating_invalid'),
 
-    'customized_product.required' => 'Customization selection required.',
-    'customized_product.in' => 'Invalid customization option.',
+'affiliated_product.required' => __('seller_messages.affiliated_product_required'),
+'affiliated_product.in' => __('seller_messages.affiliated_product_invalid'),
 
-    'ready_to_ship.required' => 'Ready to ship status required.',
-    'ready_to_ship.in' => 'Invalid ready to ship option.',
+'affiliated_commission.required_if' => __('seller_messages.affiliated_commission_required'),
 
-    'cash_on_delivery.required' => 'Cash on delivery option required.',
-    'cash_on_delivery.in' => 'Invalid COD selection.',
+'customized_product.required' => __('seller_messages.customized_product_required'),
+'customized_product.in' => __('seller_messages.customized_product_invalid'),
 
+'ready_to_ship.required' => __('seller_messages.ready_to_ship_required'),
+'ready_to_ship.in' => __('seller_messages.ready_to_ship_invalid'),
 
-    // Upload Size Chart
-    'upload_size_chart.required_without' => 'Size chart upload is required if old size chart not uploaded.',
-    'old_upload_size_chart.required_without' => 'Old size chart required if new size chart not uploaded.',
+'cash_on_delivery.required' => __('seller_messages.cash_on_delivery_required'),
+'cash_on_delivery.in' => __('seller_messages.cash_on_delivery_invalid'),
 
+'upload_size_chart.required_without' => __('seller_messages.upload_size_chart_required'),
+'old_upload_size_chart.required_without' => __('seller_messages.old_upload_size_chart_required'),
 
-    // Body Measurements (only category 2)
-    'bust.*.*.required' => 'Bust measurement required.',
-    'bust.*.*.numeric' => 'Bust must be numeric.',
+'bust.*.*.required' => __('seller_messages.bust_required'),
+'bust.*.*.numeric' => __('seller_messages.bust_numeric'),
 
-    'waist.*.*.required' => 'Waist measurement required.',
-    'waist.*.*.numeric' => 'Waist must be numeric.',
+'waist.*.*.required' => __('seller_messages.waist_required'),
+'waist.*.*.numeric' => __('seller_messages.waist_numeric'),
 
-    'hip.*.*.required' => 'Hip measurement required.',
-    'hip.*.*.numeric' => 'Hip must be numeric.',
+'hip.*.*.required' => __('seller_messages.hip_required'),
+'hip.*.*.numeric' => __('seller_messages.hip_numeric'),
 
-    'shoulder.*.*.required' => 'Shoulder measurement required.',
-    'shoulder.*.*.numeric' => 'Shoulder must be numeric.',
+'shoulder.*.*.required' => __('seller_messages.shoulder_required'),
+'shoulder.*.*.numeric' => __('seller_messages.shoulder_numeric'),
 
-    'sleeve_length.*.*.required' => 'Sleeve length required.',
-    'sleeve_length.*.*.numeric' => 'Sleeve length must be numeric.',
+'sleeve_length.*.*.required' => __('seller_messages.sleeve_length_required'),
+'sleeve_length.*.*.numeric' => __('seller_messages.sleeve_length_numeric'),
 
-    'length.*.*.required' => 'Length is required.',
-    'length.*.*.numeric' => 'Length must be numeric.',
+'length.*.*.required' => __('seller_messages.length_required'),
+'length.*.*.numeric' => __('seller_messages.length_numeric'),
+
 
       ]);
 
@@ -2141,7 +2125,21 @@ public function getcolorsizeaccordingdetails(Request $request)
         'stock_quantity' => 'required|integer',
         'sku' => 'nullable|integer|lte:stock_quantity',        
      ],[
-         'sku.lte' => 'SKU cannot be greater than stock quantity.',
+        //  'sku.lte' => 'SKU cannot be greater than stock quantity.',
+
+    'inventory_product_id.required' => __('seller_messages.inventory_product_required'),
+    'inventory_product_id.exists' => __('seller_messages.inventory_product_invalid'),
+
+    'variation_id.required' => __('seller_messages.variation_required'),
+    'variation_id.exists' => __('seller_messages.variation_invalid'),
+
+    'stock_quantity.required' => __('seller_messages.stock_quantity_required'),
+    'stock_quantity.integer' => __('seller_messages.stock_quantity_integer'),
+
+    'sku.integer' => __('seller_messages.sku_integer'),
+    'sku.lte' => __('seller_messages.sku_lte'),
+
+
      ]);
     
     if($validate->fails()){

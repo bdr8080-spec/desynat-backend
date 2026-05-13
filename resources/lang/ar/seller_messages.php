@@ -498,6 +498,469 @@ return [
     'reset_confirm_password_required' => 'يرجى تأكيد كلمة المرور.',
     'reset_confirm_password_same' => 'كلمات المرور غير متطابقة.',
 
+    // web-SellerBannerManagement
     
 
+     'banner_position_required' => 'يرجى اختيار موضع البانر.',
+    'banner_position_invalid' => 'موضع البانر المحدد غير صالح.',
+
+    'category_required' => 'يرجى اختيار الفئة.',
+    'category_exists' => 'الفئة المحددة غير موجودة.',
+
+    'subcategory_required' => 'يرجى اختيار الفئة الفرعية.',
+    'subcategory_exists' => 'الفئة الفرعية المحددة غير موجودة.',
+
+    'start_date_required' => 'يرجى اختيار تاريخ البداية.',
+    'start_date_date' => 'يجب أن يكون تاريخ البداية صالحًا.',
+
+    'end_date_required' => 'يرجى اختيار تاريخ النهاية.',
+    'end_date_date' => 'يجب أن يكون تاريخ النهاية صالحًا.',
+    'end_date_after' => 'يجب أن يكون تاريخ النهاية أكبر من أو يساوي تاريخ البداية.',
+
+    'total_days_required' => 'يرجى إدخال إجمالي الأيام.',
+    'total_days_integer' => 'يجب أن يكون إجمالي الأيام رقمًا صحيحًا.',
+
+    'upload_banner_required' => 'يرجى رفع صورة البانر.',
+
+    'price_required' => 'يرجى إدخال السعر.',
+
+    
+    // SellerChatController web 
+
+    'unique_id_required' => 'يرجى إدخال معرف المحادثة.',
+    'unique_id_exists' => 'معرف المحادثة غير صالح.',
+    'price_required' => 'يرجى إدخال السعر.',
+    'quantity_required' => 'يرجى إدخال الكمية.',
+    'total_amount_required' => 'يرجى إدخال المبلغ الإجمالي.',
+
+
+    // seller product controller web
+
+     'category_required' => 'الفئة مطلوبة.',
+    'category_invalid' => 'الفئة المحددة غير صالحة.',
+
+    'subcategory_required' => 'الفئة الفرعية مطلوبة.',
+    'subcategory_invalid' => 'الفئة الفرعية المحددة غير صالحة.',
+
+    'brand_required' => 'العلامة التجارية مطلوبة.',
+    'brand_invalid' => 'العلامة التجارية المحددة غير صالحة.',
+
+    'product_name_en_required' => 'اسم المنتج باللغة الإنجليزية مطلوب.',
+    'product_name_en_unique' => 'اسم المنتج الإنجليزي موجود بالفعل.',
+
+    'product_name_ar_required' => 'اسم المنتج باللغة العربية مطلوب.',
+    'product_name_ar_unique' => 'اسم المنتج العربي موجود بالفعل.',
+
+    'description_en_required' => 'الوصف باللغة الإنجليزية مطلوب.',
+    'description_ar_required' => 'الوصف باللغة العربية مطلوب.',
+
+    'color_required' => 'يجب اختيار لون واحد على الأقل.',
+    'size_required' => 'يجب اختيار مقاس واحد على الأقل.',
+
+    'variant_image_required' => 'صورة متغير المنتج مطلوبة.',
+
+    'stock_required' => 'إجمالي المخزون مطلوب.',
+    'sku_required' => 'قيمة SKU مطلوبة.',
+    'price_required' => 'السعر الفعلي مطلوب.',
+    'final_price_required' => 'السعر النهائي مطلوب.',
+
+    'min_cart_required' => 'الحد الأدنى للكمية مطلوب.',
+    'max_cart_required' => 'الحد الأقصى للكمية مطلوب.',
+
+    'product_return_required' => 'يرجى تحديد إمكانية الإرجاع.',
+    'return_days_required' => 'عدد أيام الإرجاع مطلوب.',
+
+    'exchange_required' => 'يرجى تحديد إمكانية الاستبدال.',
+    'exchange_days_required' => 'عدد أيام الاستبدال مطلوب.',
+
+    'review_required' => 'خيار التقييم والمراجعة مطلوب.',
+
+    'affiliate_required' => 'خيار المنتج التابع مطلوب.',
+    'affiliate_commission_required' => 'عمولة المنتج التابع مطلوبة.',
+
+    'customized_required' => 'خيار التخصيص مطلوب.',
+    'ready_to_ship_required' => 'حالة الجاهزية للشحن مطلوبة.',
+    'cod_required' => 'خيار الدفع عند الاستلام مطلوب.',
+
+    'size_chart_required' => 'يرجى رفع جدول المقاسات.',
+
+    'bust_required' => 'قياس الصدر مطلوب.',
+    'waist_required' => 'قياس الخصر مطلوب.',
+    'hip_required' => 'قياس الورك مطلوب.',
+    'shoulder_required' => 'قياس الكتف مطلوب.',
+    'sleeve_required' => 'قياس طول الكم مطلوب.',
+    'length_required' => 'قياس الطول مطلوب.',
+
+
+
+    'description_en_required' => 'الوصف باللغة الإنجليزية مطلوب.',
+    'description_ar_required' => 'الوصف باللغة العربية مطلوب.',
+
+    // Specification
+    'product_spe_en_required' => 'مواصفات المنتج (بالإنجليزية) مطلوبة.',
+    'product_spe_en_array' => 'تنسيق مواصفات المنتج (بالإنجليزية) غير صالح.',
+    'product_spe_en_value_required' => 'قيمة مواصفات المنتج (بالإنجليزية) مطلوبة.',
+
+    'product_spe_feature_en_required' => 'ميزة المنتج (بالإنجليزية) مطلوبة.',
+    'product_spe_feature_en_array' => 'تنسيق ميزة المنتج (بالإنجليزية) غير صالح.',
+    'product_spe_feature_en_value_required' => 'قيمة ميزة المنتج (بالإنجليزية) مطلوبة.',
+
+    'product_spe_ar_required' => 'مواصفات المنتج (بالعربية) مطلوبة.',
+    'product_spe_ar_array' => 'تنسيق مواصفات المنتج (بالعربية) غير صالح.',
+    'product_spe_ar_value_required' => 'قيمة مواصفات المنتج (بالعربية) مطلوبة.',
+
+    'product_spe_feature_ar_required' => 'ميزة المنتج (بالعربية) مطلوبة.',
+    'product_spe_feature_ar_array' => 'تنسيق ميزة المنتج (بالعربية) غير صالح.',
+    'product_spe_feature_ar_value_required' => 'قيمة ميزة المنتج (بالعربية) مطلوبة.',
+
+    // Colors
+    'color_required' => 'يجب اختيار لون واحد على الأقل.',
+    'color_array' => 'تنسيق اللون غير صالح.',
+    'color_field_required' => 'حقل اللون مطلوب.',
+    'color_invalid' => 'اللون المحدد غير صالح.',
+
+    // Variant Images
+    'variant_image_required' => 'صورة متغير المنتج مطلوبة.',
+    'variant_image_array' => 'تنسيق صور المنتج غير صالح.',
+    'variant_image_each_required' => 'يرجى رفع صورة لكل لون.',
+    'variant_image_invalid' => 'تنسيق الصورة غير صالح.',
+
+    // Size
+    'size_required' => 'يجب اختيار مقاس واحد على الأقل.',
+    'size_array' => 'تنسيق المقاس غير صالح.',
+    'size_entry_required' => 'إدخال المقاس مفقود.',
+    'size_value_required' => 'المقاس مطلوب.',
+    'size_invalid' => 'المقاس المحدد غير صالح.',
+
+    // Inventory
+    'stock_required' => 'إجمالي المخزون مطلوب.',
+    'stock_integer' => 'يجب أن يكون المخزون رقمًا صحيحًا.',
+
+    'sku_required' => 'قيمة SKU مطلوبة.',
+    'sku_max' => 'يجب ألا يتجاوز SKU 50 حرفًا.',
+
+    'actual_price_required' => 'السعر الفعلي مطلوب.',
+    'actual_price_numeric' => 'يجب أن يكون السعر الفعلي رقمًا.',
+
+    // Discount
+    'discount_type_required' => 'نوع الخصم مطلوب.',
+    'discount_type_invalid' => 'يجب أن يكون نوع الخصم نسبة أو مبلغ ثابت.',
+
+    'discount_value_required' => 'قيمة الخصم مطلوبة.',
+    'discount_value_numeric' => 'يجب أن تكون قيمة الخصم رقمًا.',
+
+    'final_price_required' => 'السعر النهائي مطلوب.',
+    'final_price_numeric' => 'يجب أن يكون السعر النهائي رقمًا.',
+
+    // Product Policy
+    'product_return_invalid' => 'خيار الإرجاع غير صالح.',
+    'return_days_numeric' => 'يجب أن تكون أيام الإرجاع رقمًا.',
+
+    'exchange_invalid' => 'خيار الاستبدال غير صالح.',
+    'exchange_days_numeric' => 'يجب أن تكون أيام الاستبدال رقمًا.',
+
+    'review_invalid' => 'خيار التقييم غير صالح.',
+
+    'affiliate_invalid' => 'خيار المنتج التابع غير صالح.',
+
+    'customized_invalid' => 'خيار التخصيص غير صالح.',
+
+    'ready_to_ship_invalid' => 'خيار الجاهزية للشحن غير صالح.',
+
+    'cod_invalid' => 'خيار الدفع عند الاستلام غير صالح.',
+
+    // Measurements
+    'bust_numeric' => 'يجب أن يكون قياس الصدر رقمًا.',
+    'waist_numeric' => 'يجب أن يكون قياس الخصر رقمًا.',
+    'hip_numeric' => 'يجب أن يكون قياس الورك رقمًا.',
+    'shoulder_numeric' => 'يجب أن يكون قياس الكتف رقمًا.',
+    'sleeve_numeric' => 'يجب أن يكون طول الكم رقمًا.',
+    'length_numeric' => 'يجب أن يكون الطول رقمًا.',
+
+
+    'variation_image_required' => 'مطلوب صورة واحدة على الأقل لكل متغير.',
+    'color_sizes_must_be_different' => 'يجب أن تكون المقاسات مختلفة لكل لون.',
+     'sku_limit_exceeded' => 'يجب ألا يكون حد SKU أكبر من إجمالي المخزون.',
+
+
+
+  //  inventory  edit Code 
+  
+   // Base Fields
+    'category_id.required' => 'الفئة مطلوبة.',
+    'category_id.exists' => 'الفئة المحددة غير صالحة.',
+
+    'subcategory_id.required' => 'الفئة الفرعية مطلوبة.',
+    'subcategory_id.exists' => 'الفئة الفرعية المحددة غير صالحة.',
+
+    'brand_id.required' => 'العلامة التجارية مطلوبة.',
+    'brand_id.exists' => 'العلامة التجارية المحددة غير صالحة.',
+
+    'product_name_en.required' => 'اسم المنتج باللغة الإنجليزية مطلوب.',
+    'product_name_en.unique' => 'اسم المنتج باللغة الإنجليزية موجود بالفعل.',
+
+    'product_name_ar.required' => 'اسم المنتج باللغة العربية مطلوب.',
+    'product_name_ar.unique' => 'اسم المنتج باللغة العربية موجود بالفعل.',
+
+    'description_en.required' => 'الوصف باللغة الإنجليزية مطلوب.',
+    'description_ar.required' => 'الوصف باللغة العربية مطلوب.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Product Specifications
+    |--------------------------------------------------------------------------
+    */
+    'product_spe_en.required' => 'مواصفات المنتج باللغة الإنجليزية مطلوبة.',
+    'product_spe_en.array' => 'تنسيق مواصفات المنتج باللغة الإنجليزية غير صالح.',
+    'product_spe_en.*.required' => 'كل مواصفة باللغة الإنجليزية مطلوبة.',
+
+    'product_spe_feature_en.required' => 'ميزات المنتج باللغة الإنجليزية مطلوبة.',
+    'product_spe_feature_en.array' => 'تنسيق ميزات المنتج باللغة الإنجليزية غير صالح.',
+    'product_spe_feature_en.*.required' => 'كل ميزة باللغة الإنجليزية مطلوبة.',
+
+    'product_spe_ar.required' => 'مواصفات المنتج باللغة العربية مطلوبة.',
+    'product_spe_ar.array' => 'تنسيق مواصفات المنتج باللغة العربية غير صالح.',
+    'product_spe_ar.*.required' => 'كل مواصفة باللغة العربية مطلوبة.',
+
+    'product_spe_feature_ar.required' => 'ميزات المنتج باللغة العربية مطلوبة.',
+    'product_spe_feature_ar.array' => 'تنسيق ميزات المنتج باللغة العربية غير صالح.',
+    'product_spe_feature_ar.*.required' => 'كل ميزة باللغة العربية مطلوبة.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Variant Images
+    |--------------------------------------------------------------------------
+    */
+    'variant_image.array' => 'تنسيق صور المتغيرات غير صالح.',
+    'variant_image.*.array' => 'تنسيق مجموعة صور المتغيرات غير صالح.',
+    'variant_image.*.*.image' => 'يجب أن يكون كل ملف مرفوع صورة.',
+    'variant_image.*.*.mimes' => 'يجب أن تكون الصور بصيغة jpeg أو png أو jpg أو gif.',
+    'variant_image.*.*.max' => 'يجب ألا يتجاوز حجم الصورة 2 ميجابايت.',
+
+    'old_variant_image.array' => 'تنسيق الصور القديمة غير صالح.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Colors
+    |--------------------------------------------------------------------------
+    */
+    'color_id.required' => 'يجب اختيار لون واحد على الأقل.',
+    'color_id.array' => 'تنسيق اللون غير صالح.',
+    'color_id.*.required' => 'اختيار اللون مطلوب.',
+    'color_id.*.exists' => 'اللون المحدد غير صالح.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sizes
+    |--------------------------------------------------------------------------
+    */
+    'size_id.required' => 'يجب اختيار مقاس واحد على الأقل.',
+    'size_id.array' => 'تنسيق المقاس غير صالح.',
+    'size_id.*.required' => 'مجموعة المقاسات مطلوبة.',
+    'size_id.*.array' => 'تنسيق المقاسات غير صالح.',
+    'size_id.*.*.required' => 'يجب اختيار كل المقاسات.',
+    'size_id.*.*.exists' => 'المقاس المحدد غير صالح.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Inventory
+    |--------------------------------------------------------------------------
+    */
+    'total_stock.*.*.required' => 'إجمالي المخزون مطلوب.',
+    'total_stock.*.*.integer' => 'يجب أن يكون إجمالي المخزون رقمًا.',
+    'total_stock.*.*.min' => 'لا يمكن أن يكون المخزون سالبًا.',
+
+    'sku.*.*.required' => 'رمز SKU مطلوب.',
+    'sku.*.*.string' => 'تنسيق SKU غير صالح.',
+    'sku.*.*.max' => 'يجب ألا يتجاوز SKU 50 حرفًا.',
+
+    'actual_price.*.*.required' => 'السعر الفعلي مطلوب.',
+    'actual_price.*.*.numeric' => 'يجب أن يكون السعر الفعلي رقمًا.',
+    'actual_price.*.*.min' => 'لا يمكن أن يكون السعر الفعلي سالبًا.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Discount
+    |--------------------------------------------------------------------------
+    */
+    'discount_type.*.*.required' => 'نوع الخصم مطلوب.',
+    'discount_type.*.*.in' => 'نوع الخصم غير صالح.',
+
+    'discount_value.*.*.required' => 'قيمة الخصم مطلوبة.',
+    'discount_value.*.*.numeric' => 'يجب أن تكون قيمة الخصم رقمًا.',
+    'discount_value.*.*.min' => 'لا يمكن أن تكون قيمة الخصم سالبة.',
+
+    'final_price.*.*.required' => 'السعر النهائي مطلوب.',
+    'final_price.*.*.numeric' => 'يجب أن يكون السعر النهائي رقمًا.',
+    'final_price.*.*.min' => 'لا يمكن أن يكون السعر النهائي سالبًا.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Product Policies
+    |--------------------------------------------------------------------------
+    */
+    'min_card_quantity.required' => 'الحد الأدنى لكمية السلة مطلوب.',
+    'max_card_quantity.required' => 'الحد الأقصى لكمية السلة مطلوب.',
+
+    'product_return.required' => 'خيار الإرجاع مطلوب.',
+    'product_return.in' => 'خيار الإرجاع غير صالح.',
+
+    'return_days.required_if' => 'عدد أيام الإرجاع مطلوب إذا كان المنتج قابلًا للإرجاع.',
+    'return_days.integer' => 'يجب أن يكون عدد أيام الإرجاع رقمًا.',
+
+    'product_exchangable.required' => 'خيار الاستبدال مطلوب.',
+    'product_exchangable.in' => 'خيار الاستبدال غير صالح.',
+
+    'exchangable_days.required_if' => 'عدد أيام الاستبدال مطلوب إذا كان المنتج قابلًا للاستبدال.',
+    'exchangable_days.integer' => 'يجب أن يكون عدد أيام الاستبدال رقمًا.',
+
+    'review_rating.required' => 'خيار التقييم والمراجعة مطلوب.',
+    'review_rating.in' => 'خيار التقييم غير صالح.',
+
+    'affiliated_product.required' => 'خيار المنتج التابع مطلوب.',
+    'affiliated_product.in' => 'خيار المنتج التابع غير صالح.',
+    'affiliated_commission.required_if' => 'عمولة المنتج التابع مطلوبة.',
+
+    'customized_product.required' => 'خيار التخصيص مطلوب.',
+    'customized_product.in' => 'خيار التخصيص غير صالح.',
+
+    'ready_to_ship.required' => 'حالة الجاهزية للشحن مطلوبة.',
+    'ready_to_ship.in' => 'خيار الجاهزية للشحن غير صالح.',
+
+    'cash_on_delivery.required' => 'خيار الدفع عند الاستلام مطلوب.',
+    'cash_on_delivery.in' => 'خيار الدفع عند الاستلام غير صالح.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Size Chart
+    |--------------------------------------------------------------------------
+    */
+    'upload_size_chart.required_without' => 'رفع جدول المقاسات مطلوب.',
+    'old_upload_size_chart.required_without' => 'جدول المقاسات القديم مطلوب.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Body Measurements
+    |--------------------------------------------------------------------------
+    */
+    'bust.*.*.required' => 'قياس الصدر مطلوب.',
+    'bust.*.*.numeric' => 'يجب أن يكون قياس الصدر رقمًا.',
+
+    'waist.*.*.required' => 'قياس الخصر مطلوب.',
+    'waist.*.*.numeric' => 'يجب أن يكون قياس الخصر رقمًا.',
+
+    'hip.*.*.required' => 'قياس الورك مطلوب.',
+    'hip.*.*.numeric' => 'يجب أن يكون قياس الورك رقمًا.',
+
+    'shoulder.*.*.required' => 'قياس الكتف مطلوب.',
+    'shoulder.*.*.numeric' => 'يجب أن يكون قياس الكتف رقمًا.',
+
+    'sleeve_length.*.*.required' => 'طول الكم مطلوب.',
+    'sleeve_length.*.*.numeric' => 'يجب أن يكون طول الكم رقمًا.',
+
+    'length.*.*.required' => 'الطول مطلوب.',
+    'length.*.*.numeric' => 'يجب أن يكون الطول رقمًا.',
+
+
+
+    'variant_image_array' => 'تنسيق صور المتغيرات غير صالح.',
+    'variant_image_group_array' => 'تنسيق مجموعة صور المتغيرات غير صالح.',
+    'variant_image_image' => 'يجب أن يكون كل ملف مرفوع صورة.',
+    'variant_image_mimes' => 'يجب أن تكون الصور من نوع jpeg أو png أو jpg أو gif.',
+    'variant_image_max' => 'يجب ألا يتجاوز حجم الصورة 2 ميجابايت.',
+
+    'old_variant_image_array' => 'تنسيق الصور القديمة غير صالح.',
+    'old_variant_image_nullable' => 'حقل الصور القديمة غير صالح.',
+
+    'total_stock_required' => 'إجمالي المخزون مطلوب.',
+    'total_stock_integer' => 'يجب أن يكون إجمالي المخزون رقمًا.',
+    'total_stock_min' => 'لا يمكن أن يكون المخزون سالبًا.',
+
+    'sku_required' => 'رمز SKU مطلوب.',
+    'sku_string' => 'تنسيق SKU غير صالح.',
+    'sku_max' => 'يجب ألا يزيد SKU عن 50 حرفًا.',
+
+    'actual_price_required' => 'السعر الفعلي مطلوب.',
+    'actual_price_numeric' => 'يجب أن يكون السعر الفعلي رقمًا.',
+    'actual_price_min' => 'لا يمكن أن يكون السعر الفعلي سالبًا.',
+
+    'discount_type_required' => 'نوع الخصم مطلوب.',
+    'discount_type_invalid' => 'نوع الخصم غير صالح.',
+
+    'discount_value_required' => 'قيمة الخصم مطلوبة.',
+    'discount_value_numeric' => 'يجب أن تكون قيمة الخصم رقمية.',
+    'discount_value_min' => 'لا يمكن أن تكون قيمة الخصم سالبة.',
+
+    'final_price_required' => 'السعر النهائي مطلوب.',
+    'final_price_numeric' => 'يجب أن يكون السعر النهائي رقمًا.',
+    'final_price_min' => 'لا يمكن أن يكون السعر النهائي سالبًا.',
+
+    'min_cart_quantity_required' => 'الحد الأدنى لكمية السلة مطلوب.',
+    'max_cart_quantity_required' => 'الحد الأقصى لكمية السلة مطلوب.',
+
+    'product_return_required' => 'خيار الإرجاع مطلوب.',
+    'product_return_invalid' => 'خيار الإرجاع غير صالح.',
+
+    'return_days_required' => 'عدد أيام الإرجاع مطلوب.',
+    'return_days_integer' => 'يجب أن تكون أيام الإرجاع رقمًا.',
+
+    'product_exchange_required' => 'خيار الاستبدال مطلوب.',
+    'product_exchange_invalid' => 'خيار الاستبدال غير صالح.',
+
+    'exchange_days_required' => 'عدد أيام الاستبدال مطلوب.',
+    'exchange_days_integer' => 'يجب أن تكون أيام الاستبدال رقمًا.',
+
+    'review_rating_required' => 'خيار التقييم مطلوب.',
+    'review_rating_invalid' => 'قيمة التقييم غير صالحة.',
+
+    'affiliated_product_required' => 'اختيار المنتج التابع مطلوب.',
+    'affiliated_product_invalid' => 'خيار المنتج التابع غير صالح.',
+
+    'affiliated_commission_required' => 'عمولة المنتج التابع مطلوبة.',
+
+    'customized_product_required' => 'خيار التخصيص مطلوب.',
+    'customized_product_invalid' => 'خيار التخصيص غير صالح.',
+
+    'ready_to_ship_required' => 'حالة جاهز للشحن مطلوبة.',
+    'ready_to_ship_invalid' => 'خيار جاهز للشحن غير صالح.',
+
+    'cash_on_delivery_required' => 'خيار الدفع عند الاستلام مطلوب.',
+    'cash_on_delivery_invalid' => 'خيار الدفع عند الاستلام غير صالح.',
+
+    'upload_size_chart_required' => 'رفع جدول المقاسات مطلوب.',
+    'old_upload_size_chart_required' => 'جدول المقاسات القديم مطلوب.',
+
+    'bust_required' => 'قياس الصدر مطلوب.',
+    'bust_numeric' => 'يجب أن يكون قياس الصدر رقمًا.',
+
+    'waist_required' => 'قياس الخصر مطلوب.',
+    'waist_numeric' => 'يجب أن يكون قياس الخصر رقمًا.',
+
+    'hip_required' => 'قياس الورك مطلوب.',
+    'hip_numeric' => 'يجب أن يكون قياس الورك رقمًا.',
+
+    'shoulder_required' => 'قياس الكتف مطلوب.',
+    'shoulder_numeric' => 'يجب أن يكون قياس الكتف رقمًا.',
+
+    'sleeve_length_required' => 'طول الكم مطلوب.',
+    'sleeve_length_numeric' => 'يجب أن يكون طول الكم رقمًا.',
+
+    'length_required' => 'الطول مطلوب.',
+    'length_numeric' => 'يجب أن يكون الطول رقمًا.',
+
+
+    'inventory_product_required' => 'المنتج مطلوب.',
+    'inventory_product_invalid' => 'المنتج المحدد غير صالح.',
+    
+    'variation_required' => 'متغير المنتج مطلوب.',
+    'variation_invalid' => 'متغير المنتج المحدد غير صالح.',
+
+    'stock_quantity_required' => 'كمية المخزون مطلوبة.',
+    'stock_quantity_integer' => 'يجب أن تكون كمية المخزون رقمًا صحيحًا.',
+
+    'sku_integer' => 'يجب أن يكون SKU رقمًا صحيحًا.',
+    'sku_lte' => 'لا يمكن أن يكون SKU أكبر من كمية المخزون.',
+
+
+  
 ];
