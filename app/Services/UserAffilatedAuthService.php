@@ -227,7 +227,7 @@ try{
     $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['bank_update_status'=>'1','admin_verify'=>'1']);
 
 
-     return ['status'=>'success','message'=>"Bank details Submit succesfully",'data'=>$check];            
+     return ['status'=>'success','message' => __('affiliate_messages.bank_details_added_successfully'),'data'=>$check];            
     }
     
     } catch (\Exception $e) {

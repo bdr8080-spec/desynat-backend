@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl">
-        <div class="title24">Payments </div>
+        <div class="title24">{{ __('affiliate_messages.payments') }} </div>
     </div>
 
     <!-- <div class="search-field d-flex align-items-center py-4">
@@ -21,12 +21,12 @@
                 <input type="search"
                     name="search"
                     class="form-control py-3"
-                    placeholder="Search"
+                    placeholder="{{ __('affiliate_messages.search') }}"
                     value="{{ request('search') }}">
             </div>
 
             <button type="submit" class="btn btn-success searchlin">
-                Search
+                {{ __('affiliate_messages.search') }}
             </button>
         </div>
     </form>
@@ -34,7 +34,7 @@
     <div class="border-12 mb-3 mt-3 choose-date">
         <div class="d-flex justify-content-between date-header">
             <div class="total-balance">
-                <div class="balance-title">Total Revenue</div>
+                <div class="balance-title">{{ __('affiliate_messages.total_revenue') }}</div>
                 <div class="walletic d-flex gap-2 align-items-center mt-3">
                     <div class="wallet-ic-2">
                         <img src="{{ asset('/dealer') }}/assets/img/wallet-ic.svg" class="img-fluid">
@@ -44,13 +44,13 @@
                             intval($allOrders['total_earning']) == $allOrders['total_earning'] 
                                 ? intval($allOrders['total_earning']) 
                                 : number_format($allOrders['total_earning'], 2) 
-                        }} KD
+                        }} {{ __('affiliate_messages.kwd') }}
                     </h5>
                 </div>
             </div>
             <div class="total-balance-2 d-flex gap-3 align-items-center">
                 <!-- <a href="#" class="btn btn-export">Export</a> -->
-                <a href="#" class="btn btn-export withdraw-bg"  data-bs-toggle="modal" data-bs-target="#Withdrawpop"> Withdraw</a>
+                <a href="#" class="btn btn-export withdraw-bg"  data-bs-toggle="modal" data-bs-target="#Withdrawpop"> {{ __('affiliate_messages.withdraw') }}</a>
             </div>
         </div>
     </div>
@@ -65,57 +65,57 @@
 
                             // 1 → Cancelled Order
                             $orderdetail->payment_status == '2' || $orderdetail->payment_status == '3'
-                            => 'Cancelled',
+                            => __('affiliate_messages.cancelled'),
 
                             // 2 → confirmed
                             $orderdetail->delivery_status == '1' &&
                             $orderdetail->return_type == '0'
-                            => 'Pending',
+                            => __('affiliate_messages.pending'),
 
                             // 2 → Ongoing
                             $orderdetail->delivery_status == '2' || $orderdetail->delivery_status == '1' &&
                             $orderdetail->return_type == '0'
-                            => 'Ongoing',
+                            => __('affiliate_messages.ongoing'),
 
                             // 2.1 → shipped
                             $orderdetail->delivery_status == '2.1' &&
                             $orderdetail->return_type == '0'
-                            => 'Shipped',
+                            => __('affiliate_messages.shipped'),
 
                             // 2.2 → shipped
                             $orderdetail->delivery_status == '2.2' &&
                             $orderdetail->return_type == '0'
-                            => 'On The Way',
+                            => __('affiliate_messages.on_the_way'),
 
                             // 3 → Delivered
                             $orderdetail->delivery_status == '3' &&
                             $orderdetail->return_type == '0'
-                            => 'Complete',
+                            =>  __('affiliate_messages.completed'),
 
                             // 4 → Cancelled
                             $orderdetail->payment_status == '2'
-                            => 'Cancelled',
+                            =>  __('affiliate_messages.cancelled'),
 
                             // 5 → Returned / Failed
                             $orderdetail->delivery_status == '3' && $orderdetail->return_type == '2'
-                            => 'Exchange Request',
+                            => __('affiliate_messages.exchange_request'),
 
                             // 5 → Exchange / Failed
                             $orderdetail->delivery_status == '3' && $orderdetail->return_type == '1'
-                            => 'Return Request',
+                            => __('affiliate_messages.return_request'),
 
                             // Default
-                            default => 'On Going',
+                            default => __('affiliate_messages.ongoing'),
                             };
 
                             [$statusColor, $bgColor] = match ($statusText) {
 
-                            'Complete' => ['#28a745', '#28a7451A'],
+                            __('affiliate_messages.completed') => ['#28a745', '#28a7451A'],
 
-                            'Cancelled' => ['#E70000', '#E700001A'],
+                            __('affiliate_messages.cancelled') => ['#E70000', '#E700001A'],
 
-                            "Exchange Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-                            "Return Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
+                            __('affiliate_messages.exchange_request')=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
+                            __('affiliate_messages.return_request')=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
 
                             default => ['#FF5F1B', '#79d69d1a'],
                             };
@@ -123,47 +123,59 @@
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between">
                 <div class="">
-                    <p class="text-muted mb-1">My Earnings </p>
+                    <p class="text-muted mb-1">{{ __('affiliate_messages.my_earnings') }} </p>
                     <h6 class="fst-500">{{ 
                             intval($order['affiliate_commission']) == $order['affiliate_commission'] 
                                 ? intval($order['affiliate_commission']) 
                                 : number_format($order['affiliate_commission'], 2) 
-                        }} KD
+                        }} {{ __('affiliate_messages.kwd') }}
                     </h6>
                 </div>
                 <div class="">
-                    <p class="text-muted mb-1">Transaction Id </p>
+                    <p class="text-muted mb-1">{{ __('affiliate_messages.transaction_id') }} </p>
                     <h6 class="fst-500">#{{ $order['id'] }} </h6>
                 </div>
             </div>
 
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <p class="text-muted mb-1">Purchased by </p>
-                    <p class="fst-500">{{ $order['user_details']['full_name'] ?? 'N/A' }} </p>
+                    <p class="text-muted mb-1">{{ __('affiliate_messages.purchased_by') }} </p>
+                    <p class="fst-500">{{ $order['user_details']['full_name'] ?? __('affiliate_messages.na')  }} </p>
                 </div> 
                 <div class="d-flex justify-content-between">
-                    <p class="text-muted mb-1">Product name</p>
-                    <p class="fst-500">{{ $order['product_details']['product_name_en'] }}</p>
+                    <p class="text-muted mb-1">{{ __('affiliate_messages.product_name') }}</p>
+                    <p class="fst-500">
+                        @if(app()->getLocale() == 'en')
+                        {{ $order['product_details']['product_name_en'] }}
+                        @else
+                        {{ $order['product_details']['product_name_ar'] }}
+                        @endif
+                    </p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p class="text-muted mb-1">Category</p>
-                    <p class="fst-500">{{ $order['product_details']['category']['name'] }}</p>
+                    <p class="text-muted mb-1">{{ __('affiliate_messages.category') }}</p>
+                    <p class="fst-500">
+                        @if(app()->getLocale() == 'en')
+                        {{ $order['product_details']['category']['name'] }}
+                        @else
+                        {{ $order['product_details']['category']['name_ar'] }}
+                        @endif
+                    </p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p class="text-muted mb-1">Quantity</p>
+                    <p class="text-muted mb-1">{{ __('affiliate_messages.quantity') }}</p>
                     <p class="fst-500">{{ $order['quantity'] }}</p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p class="text-muted mb-1">Total Amount</p>
-                    <p class="fst-500">{{ $order['amount'] }} KD</p>
+                    <p class="text-muted mb-1">{{ __('affiliate_messages.total_amount') }}</p>
+                    <p class="fst-500">{{ $order['amount'] }} {{ __('affiliate_messages.kwd') }}</p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p class="text-muted mb-1">Purchased on</p>
+                    <p class="text-muted mb-1">{{ __('affiliate_messages.purchased_on') }}</p>
                     <p class="fst-500">{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y \a\t h:i A') }}</p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p class="text-muted mb-1">Order status</p>
+                    <p class="text-muted mb-1">{{ __('affiliate_messages.order_status') }}</p>
                     <p style="color: {{ $statusColor }}; background-color: {{ $bgColor }};
                             padding:4px 10px; border-radius:6px; font-size:13px;">
                         {{ $statusText }}
@@ -184,23 +196,23 @@
     <div class="modal-dialog modal-dialog-centered w-75">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Withdraw Money</h1>
+                <h1 class="modal-title fs-5">{{ __('affiliate_messages.withdraw_money') }}</h1>
                 <button type="button" id="withdraw_close_btn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="search-field">
                     <div class="label-flex">
-                        <label>Amount </label>
+                        <label>{{ __('affiliate_messages.amount') }} </label>
                     </div>
                     <div class="from-group position-relative w-100">
-                        <span class="kd-icon">KD | </span>
-                        <input type="text" class="form-control" name="amount" placeholder="Enter amount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '').replace(/^0+([1-9])/, '$1').replace(/^0+$/, '0').replace(/(\.\d{0,2}).*/g, '$1')">
+                        <span class="kd-icon">{{ __('affiliate_messages.kwd') }} | </span>
+                        <input type="text" class="form-control" name="amount" placeholder="{{ __('affiliate_messages.enter_amount') }}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '').replace(/^0+([1-9])/, '$1').replace(/^0+$/, '0').replace(/(\.\d{0,2}).*/g, '$1')">
                         <span id="error_amount" class="text-danger"></span>
                     </div>  
                 </div>
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Select Account</label>
+                        <label>{{ __('affiliate_messages.select_account') }}</label>
                     </div>
                     @foreach($affilatedUser->bank_details as $key=>$val)
                     <div class="rounded-4 desc-box bg-white mb-3">
@@ -220,13 +232,13 @@
                    @endforeach
    
                    <div class="addanother d-flex gap-2" data-bs-toggle="modal" data-bs-target="#bankDetails">
-                       <i class="bi bi-plus-lg"></i> <h5 class="mb-0">Add another account</h5>
+                       <i class="bi bi-plus-lg"></i> <h5 class="mb-0">{{ __('affiliate_messages.add_another_account') }}</h5>
                    </div>
    
                 </div>
                 
                 <div class="text-center mt-5">
-                    <button type="submit" id="submit_withdraw_btn" class="btn btn-success w-100 lh-2">Submit Request</button>
+                    <button type="submit" id="submit_withdraw_btn" class="btn btn-success w-100 lh-2">{{ __('affiliate_messages.submit_request') }}</button>
                 </div>
 
             </div>
@@ -240,7 +252,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h1 class="modal-title fs-5">Add Account</h1>
+        <h1 class="modal-title fs-5">{{ __('affiliate_messages.add_account') }}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
@@ -249,38 +261,38 @@
         <div class="account-form">
 
           <div class="sub-form mb-2">
-            <label>Bank Name</label>
-            <input type="text" id="bank_name" class="form-control">
+            <label>{{ __('affiliate_messages.bank_name') }}</label>
+            <input type="text" id="bank_name" class="form-control" placeholder="{{ __('affiliate_messages.enter_bank_name') }}">
             <small class="text-danger" id="error_bank_name"></small>
           </div>
 
           <div class="sub-form mb-2">
-            <label>Account Holder Name</label>
-            <input type="text" id="account_holder_name" class="form-control">
+            <label>{{ __('affiliate_messages.account_holder_name') }}</label>
+            <input type="text" id="account_holder_name" class="form-control" placeholder="{{ __('affiliate_messages.enter_account_holder_name') }}">
             <small class="text-danger" id="error_account_holder_name"></small>
           </div>
 
           <div class="sub-form mb-2">
-            <label>Account Number</label>
-            <input type="text" id="account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <label>{{ __('affiliate_messages.account_number') }}</label>
+            <input type="text" id="account_no" placeholder="{{ __('affiliate_messages.enter_account_number') }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <small class="text-danger" id="error_account_no"></small>
           </div>
 
           <div class="sub-form mb-2">
-            <label>Confirm Account Number</label>
-            <input type="text" id="confirm_account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <label>{{ __('affiliate_messages.confirm_account_number') }}</label>
+            <input type="text" id="confirm_account_no" placeholder="{{ __('affiliate_messages.re_enter_account_number') }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <small class="text-danger" id="error_confirm_account_no"></small>
           </div>
 
           <div class="sub-form mb-2">
-            <label>IBAN</label>
-            <input type="text" id="iban" class="form-control">
+            <label>{{ __('affiliate_messages.iban') }}</label>
+            <input type="text" id="iban" class="form-control" placeholder="{{ __('affiliate_messages.enter_iban') }}">
             <small class="text-danger" id="error_iban"></small>
           </div>
 
           <div class="sub-form mb-2">
-            <label>SWIFT / BIC</label>
-            <input type="text" id="swift" class="form-control">
+            <label>{{ __('affiliate_messages.swift_bic') }}</label>
+            <input type="text" id="swift" class="form-control" placeholder="{{ __('affiliate_messages.enter_swift_bic') }}">
             <small class="text-danger" id="error_swift"></small>
           </div>
 
@@ -288,7 +300,7 @@
 
         <div class="text-center mt-4">
           <button type="button" id="submit_bank_btn" class="btn btn-success w-100">
-            Submit 
+            {{ __('affiliate_messages.submit') }} 
           </button>
         </div>
 
@@ -332,37 +344,37 @@ $(document).ready(function() {
         let isValid = true;
 
         if(bankName === '') {
-            showError('bank_name', 'Please enter bank name');
+            showError('bank_name', "{{ __('affiliate_messages.please_enter_bank_name') }}");
             isValid = false;
         }
 
         if(accountHolder === '') {
-            showError('account_holder_name', 'Please enter account holder name');
+            showError('account_holder_name', "{{ __('affiliate_messages.please_enter_account_holder_name') }}");
             isValid = false;
         }
 
         if(accountNo === '') {
-            showError('account_no', 'Please enter account number');
+            showError('account_no', "{{ __('affiliate_messages.please_enter_account_number') }}");
             isValid = false;
         }
 
         if(confirmAccountNo === '') {
-            showError('confirm_account_no', 'Please confirm account number');
+            showError('confirm_account_no', "{{ __('affiliate_messages.please_confirm_account_number') }}");
             isValid = false;
         }
 
         if(accountNo !== '' && confirmAccountNo !== '' && accountNo !== confirmAccountNo) {
-            showError('confirm_account_no', 'Account numbers do not match');
+            showError('confirm_account_no', "{{ __('affiliate_messages.account_numbers_do_not_match') }}");
             isValid = false;
         }
 
         if(iban === '') {
-            showError('iban', 'Please enter IBAN');
+            showError('iban', "{{ __('affiliate_messages.please_enter_iban') }}");
             isValid = false;
         }
 
         if(swift === '') {
-            showError('swift', 'Please enter SWIFT/BIC');
+            showError('swift', "{{ __('affiliate_messages.please_enter_swift_bic') }}");
             isValid = false;
         }
 
@@ -446,12 +458,12 @@ $(document).ready(function() {
         let isValid = true;
 
         if(amount === '') {
-            showError('amount', 'Please enter amount');
+            showError('amount', "{{ __('affiliate_messages.please_enter_amount') }}");
             isValid = false;
         }
 
         if(!bankdetails_id) {
-            toastr.error('Please select a bank account');
+            toastr.error("{{ __('affiliate_messages.please_select_account') }}");
             isValid = false;
         }
 
