@@ -53,7 +53,7 @@ class SellerNotificationService
             if ($notifications->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No notifications found',
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -99,7 +99,7 @@ class SellerNotificationService
 
             return [
                 'status' => 'success',
-                'message' => 'Notifications marked as read successfully',
+                'message' => __('Service_messages.notifications_marked_as_read_successfully'),
                 'data' => [
                     'marked_notification_ids' => $notification_ids
                 ]
@@ -139,7 +139,7 @@ class SellerNotificationService
 
             return [
                 'status' => 'success',
-                'message' => 'Notifications marked as read successfully',
+                'message' => __('Service_messages.notifications_marked_as_read_successfully'),
                 'data' => $updatedNotifications
             ];
 
@@ -180,7 +180,7 @@ class SellerNotificationService
 
             return [
                 'status' => 'success',
-                'message' => 'Notifications marked as read successfully',
+                'message' => __('Service_messages.notifications_marked_as_read_successfully'),
                 'data' => $updatedNotifications
             ];
 
@@ -287,7 +287,7 @@ class SellerNotificationService
 
             return [
                 'status' => 'success',
-                'message' => 'Order Notification Marked As Read',
+                'message' => __('Service_messages.notifications_marked_as_read_successfully'),
                 'data' => (object)[]
             ];
 
@@ -348,7 +348,7 @@ class SellerNotificationService
 
             return [
                 'status' => 'success',
-                'message' => 'Notifications marked as read successfully',
+                'message' => __('Service_messages.notifications_marked_as_read_successfully'),
                 'data' => $updated
             ];
 
@@ -371,9 +371,9 @@ class SellerNotificationService
 
             $user->update(['notification' => $newStatus]);
 
-            $message = $newStatus == 1 
-                ? 'Notification is set to On' 
-                : 'Notification is set to Off';
+            $message = $newStatus == 1
+                ? __('Service_messages.notification_on')
+                : __('Service_messages.notification_off');
 
             return [
                 'status' => 'success',
@@ -400,9 +400,9 @@ class SellerNotificationService
 
             $user->update(['app_notification' => $newStatus]);
 
-            $message = $newStatus == 1 
-                ? 'In app Notification is set to On' 
-                : 'In app Notification is set to Off';
+            $message = $newStatus == 1
+                ? __('Service_messages.in_app_notification_set_to_on')
+                : __('Service_messages.in_app_notification_set_to_off');
 
             return [
                 'status' => 'success',

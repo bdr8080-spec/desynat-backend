@@ -295,7 +295,7 @@ try{
     
      return [
             'status'  => 'success',
-            'message' => 'Status Update Successfully',
+            'message' => __('Service_messages.status_updated_successfully'),
             'data'    => $singleOrder
         ];
         
@@ -374,7 +374,7 @@ try{
     
      return [
             'status'  => 'success',
-            'message' => 'Status Update Successfully',
+            'message' => __('Service_messages.status_updated_successfully'),
             'data'    => $singleOrder
         ];
         
@@ -576,7 +576,7 @@ try{
 
      return [
             'status'  => 'success',
-            'message' => 'Modify Order chat Successfully',
+            'message' => __('Service_messages.order_chat_modified_successfully'),
             'data'    => $check_chatRecord
         ];
         

@@ -159,6 +159,8 @@ return [
  'notifications_marked_as_read_successfully' => 'تم وضع علامة على الإشعارات كمقروءة بنجاح',
  'notification_on' => 'تم تفعيل الإشعارات بنجاح',
  'notification_off' => 'تم إيقاف الإشعارات بنجاح',
+ 'in_app_notification_set_to_on' => 'تم تفعيل إشعارات داخل التطبيق',
+ 'in_app_notification_set_to_off' => 'تم إيقاف إشعارات داخل التطبيق',
 
  //order management service
  'order_not_found' => 'لم يتم العثور على الطلب',
@@ -234,6 +236,28 @@ return [
  'products_removed_from_deal' => 'تمت إزالة المنتجات من العرض',
 
  //seller live req service
+ 'live_request_cancelled_successfully' => 'تم إلغاء طلب البث المباشر بنجاح',
+ 'live_request_sent_successfully' => 'تم إرسال طلب البث المباشر بنجاح',
+ 'live_request_deleted_successfully' => 'تم حذف طلب البث المباشر بنجاح',
+
+ //seller order service
+ 'status_updated_successfully' => 'تم تحديث الحالة بنجاح',
+ 'order_chat_modified_successfully' => 'تم تعديل محادثة الطلب بنجاح',
+
+ //seller product service
+ 'store_not_accepted_or_rejected_by_admin' => 'لم يتم قبول أو رفض متجرك من قبل المدير',
+ 'no_active_plan' => 'لا يوجد لديك خطة نشطة',
+ 'product_monthly_limit_reached' => 'لقد وصلت إلى الحد الشهري لإضافة المنتجات، لا يمكنك إضافة المزيد هذا الشهر',
+ 'product_added_successfully' => 'تم إضافة المنتج بنجاح',
+ 'product_updated_successfully' => 'تم تحديث المنتج بنجاح',
+ 'product_activated_successfully' => 'تم تفعيل المنتج بنجاح',
+ 'product_deactivated_successfully' => 'تم إلغاء تفعيل المنتج بنجاح',
+ 'product_deleted_successfully' => 'تم حذف المنتج بنجاح',
+ 'product_inventory_updated_successfully' => 'تم تحديث مخزون المنتج بنجاح',
+ 'affiliate_commission_updated_successfully' => 'تم تحديث عمولة الأفلييت بنجاح',
+ 'profile_updated_successfully' => 'تم تحديث الملف الشخصي بنجاح',
+ 'staff_profile_updated_successfully' => 'تم تحديث ملف الموظف بنجاح',
+ 'document_and_bank_details_saved_successfully' => 'تم حفظ المستندات وبيانات البنك بنجاح',
 
 
 ];

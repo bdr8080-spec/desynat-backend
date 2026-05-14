@@ -69,7 +69,7 @@ class SellerManagementService
             if ($seller_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No New Seller found',
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
@@ -183,7 +183,7 @@ class SellerManagementService
             if ($seller_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Approved Seller found',
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -262,7 +262,7 @@ class SellerManagementService
             if ($seller_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Rejected Seller found',
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }

@@ -159,6 +159,8 @@ return [
   'notifications_marked_as_read_successfully' => 'Notifications marked as read successfully',
   'notification_on' => 'Notifications turned on successfully',
   'notification_off' => 'Notifications turned off successfully',
+  'in_app_notification_set_to_on' => 'In-app notification is set to On',
+  'in_app_notification_set_to_off' => 'In-app notification is set to Off',
 
   //order management service
   'order_not_found' => 'Order not found',
@@ -234,7 +236,29 @@ return [
   'products_removed_from_deal' => 'Products removed from deal',
 
   //seller live req service
-  
+  'live_request_cancelled_successfully' => 'Live request cancelled successfully',
+  'live_request_sent_successfully' => 'Live request sent successfully',
+  'live_request_deleted_successfully' => 'Live request deleted successfully',
+
+  //seller order service
+  'status_updated_successfully' => 'Status updated successfully',
+  'order_chat_modified_successfully' => 'Order chat modified successfully',
+
+  //seller product service
+  'store_not_accepted_or_rejected_by_admin' => 'Your store has not been accepted or rejected by admin',
+  'no_active_plan' => 'You have no active plan',
+  'product_monthly_limit_reached' => "Your monthly product limit has been reached, you can't add more products this month",
+  'product_added_successfully' => 'Product added successfully',
+  'product_updated_successfully' => 'Product updated successfully',
+  'product_activated_successfully' => 'Product activated successfully',
+  'product_deactivated_successfully' => 'Product deactivated successfully',
+  'product_deleted_successfully' => 'Product deleted successfully',
+  'product_inventory_updated_successfully' => 'Product inventory updated successfully',
+  'affiliate_commission_updated_successfully' => 'Affiliate commission updated successfully',
+  'profile_updated_successfully' => 'Profile updated successfully',
+  'staff_profile_updated_successfully' => 'Staff profile updated successfully',
+  'document_and_bank_details_saved_successfully' => 'Document and bank details saved successfully',
+
 
   
   
