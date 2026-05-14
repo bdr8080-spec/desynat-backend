@@ -23,16 +23,18 @@ class AdminAuthService
         if($get_user_details->otp==$request->otp){
             $get_user_details->update(['otp_verify'=>'1']);
                 
-            return ['status'=>'success','message' => __('service_messages.otp_verified_successfully'),'data'=>$get_user_details];            
+            return ['status'=>'success','message' => __('Service_messages.otp_verified_successfully'),'data'=>$get_user_details];            
         
         }else{
-            return ['status'=>'error','message' => __('service_messages.otp_invalid'),'data'=>(object)[]];                
+            return ['status'=>'error','message' => __('Service_messages.otp_invalid'),'data'=>(object)[]];                
         }
 
     }
 
 
     public function loginCheck($request){
+        
+        try{
 
         $get_user_details=  Admin::where('email',$request->email)->where('status','1')->first();
 
@@ -52,14 +54,20 @@ class AdminAuthService
                     if (!empty($updateData)) {
                         $get_user_details->update($updateData);
                     }
-                $get_user_details->accessToken = $get_user_details->createToken('admin')->plainTextToken;            
-                return ['status'=>'success','message' => __('service_messages.admin_login_successfully'),'data'=>$get_user_details];                            
+                $get_user_details->accessToken = $get_user_details->createToken('admin')->plainTextToken;  
+                
+                return ['status'=>'success','message' =>__('Service_messages.admin_login_successfully'),'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message' => __('service_messages.wrong_password'),'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('Service_messages.wrong_password'),'data'=>(object)[]];                
             }
     
         }else{
-        return ['status'=>'error','message' => __('service_messages.account_not_exist_or_blocked'),'data'=>(object)[]];                
+        return ['status'=>'error','message' => __('Service_messages.account_not_exist_or_blocked'),'data'=>(object)[]];                
+        }
+
+        } catch (\Exception $e) {
+            \Log::error('Notification Error: ' . $e->getMessage());
+            return false;
         }
 
     }
@@ -77,10 +85,10 @@ class AdminAuthService
             Mail::to($get_user_details->email)->send(new AdminOtpMail($get_user_details, $otp));
 
             $get_user_details->accessToken ='';            
-            return ['status'=>'success','message' => __('service_messages.forgot_password_otp_sent_successfully'),'data'=>$get_user_details];            
+            return ['status'=>'success','message' => __('Service_messages.forgot_password_otp_sent_successfully'),'data'=>$get_user_details];            
         
         }else{
-        return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
+        return ['status'=>'error','message' => __('Service_messages.account_not_exist'),'data'=>(object)[]];                
         }
 
     }
@@ -96,10 +104,10 @@ class AdminAuthService
             $get_user_details->accessToken =''; 
             $get_user_details->otp =''; 
             $get_user_details->otp_verify ='0';              
-            return ['status'=>'success','message' => __('service_messages.password_updated_successfully'),'data'=>$get_user_details];            
+            return ['status'=>'success','message' => __('Service_messages.password_updated_successfully'),'data'=>$get_user_details];            
         
         }else{
-        return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
+        return ['status'=>'error','message' => __('Service_messages.account_not_exist'),'data'=>(object)[]];                
         }
 
     }
@@ -109,7 +117,7 @@ class AdminAuthService
         try {
             $admin->currentAccessToken()->delete();
 
-            return ['status' => 'success', 'message' => __('service_messages.admin_logged_out_successfully')];
+            return ['status' => 'success', 'message' => __('Service_messages.admin_logged_out_successfully')];
 
         } catch (\Exception $e) {
             return ['status' => 'error', 'message' => 'Logout failed: ' . $e->getMessage()];
@@ -127,10 +135,10 @@ class AdminAuthService
             $get_user_details->update(['otp'=>$otp]);
 
             $get_user_details->accessToken ='';            
-            return ['status'=>'success','message' => __('service_messages.otp_send_successfully'),'data'=>$get_user_details];            
+            return ['status'=>'success','message' => __('Service_messages.otp_send_successfully'),'data'=>$get_user_details];            
         
         }else{
-        return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
+        return ['status'=>'error','message' => __('Service_messages.account_not_exist'),'data'=>(object)[]];                
         }
 
     }
@@ -143,7 +151,7 @@ class AdminAuthService
             if (!$admin) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.user_not_found'),
+                    'message' => __('Service_messages.user_not_found'),
                     'data' => (object)[]
                 ];
             }
@@ -156,7 +164,7 @@ class AdminAuthService
                 if ($emailExists) {
                     return [
                         'status' => 'error',
-                        'message' => __('service_messages.email_already_assigned_coadmin'),
+                        'message' => __('Service_messages.email_already_assigned_coadmin'),
                         'data' => (object)[]
                     ];
                 }
@@ -170,7 +178,7 @@ class AdminAuthService
             if ($mobileExists) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.mobile_already_assigned_coadmin'),
+                    'message' => __('Service_messages.mobile_already_assigned_coadmin'),
                     'data' => (object)[]
                 ];
             }
@@ -185,7 +193,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.account_settings_updated_successfully'),
+                'message' => __('Service_messages.account_settings_updated_successfully'),
                 'data' => $admin
             ];
 
@@ -207,7 +215,7 @@ class AdminAuthService
             if (!$admin) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.user_not_found'),
+                    'message' => __('Service_messages.user_not_found'),
                     'data' => (object)[]
                 ];
             }
@@ -215,7 +223,7 @@ class AdminAuthService
             if (!Hash::check($request_data->old_password, $admin->password)) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.old_password_incorrect'),
+                    'message' => __('Service_messages.old_password_incorrect'),
                     'data' => (object)[]
                 ];
             }
@@ -223,7 +231,7 @@ class AdminAuthService
             if (Hash::check($request_data->new_password, $admin->password)) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.new_password_same_old'),
+                    'message' => __('Service_messages.new_password_same_old'),
                     'data' => (object)[]
                 ];
             }
@@ -234,7 +242,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.password_updated_successfully'),
+                'message' => __('Service_messages.password_updated_successfully'),
                 'data' => $admin
             ];
 
@@ -258,7 +266,7 @@ class AdminAuthService
                 if ($emailExists) {
                     return [
                         'status' => 'error',
-                        'message' => __('service_messages.email_already_registered'),
+                        'message' => __('Service_messages.email_already_registered'),
                         'data' => (object)[]
                     ];
                 }
@@ -269,7 +277,7 @@ class AdminAuthService
                 if ($mobileExists) {
                     return [
                         'status' => 'error',
-                        'message' => __('service_messages.mobile_already_registered'),
+                        'message' => __('Service_messages.mobile_already_registered'),
                         'data' => (object)[]
                     ];
                 }
@@ -310,7 +318,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.sub_admin_created_successfully'),
+                'message' => __('Service_messages.sub_admin_created_successfully'),
                 'data' => $admin
             ];
 
@@ -338,7 +346,7 @@ class AdminAuthService
             if (!$admin) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.user_not_found'),
+                    'message' => __('Service_messages.user_not_found'),
                     'data' => []
                 ];
             }
@@ -350,7 +358,7 @@ class AdminAuthService
             if ($emailExists) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.email_already_registered'),
+                    'message' => __('Service_messages.email_already_registered'),
                     'data' => (object)[]
                 ];
             }
@@ -363,7 +371,7 @@ class AdminAuthService
             if ($mobileExists) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.mobile_already_registered'),
+                    'message' => __('Service_messages.mobile_already_registered'),
                     'data' => (object)[]
                 ];
             }
@@ -404,7 +412,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.sub_admin_updated_successfully'),
+                'message' => __('Service_messages.sub_admin_updated_successfully'),
                 'data' => $admin->fresh()
             ];
 
@@ -434,7 +442,7 @@ class AdminAuthService
             if (!$admin) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.user_not_found'),
+                    'message' => __('Service_messages.user_not_found'),
                     'data' => (object)[]
                 ];
             }
@@ -445,7 +453,7 @@ class AdminAuthService
             if ($id == $admin->id) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.cannot_delete_self'),
+                    'message' => __('Service_messages.cannot_delete_self'),
                     'data' => (object)[]
                 ];
             }
@@ -458,7 +466,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.sub_admin_deleted_successfully'),
+                'message' => __('Service_messages.sub_admin_deleted_successfully'),
                 'data' => (object)[]
             ];
 
@@ -487,7 +495,7 @@ class AdminAuthService
             if (!$admin) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.user_not_found'),
+                    'message' => __('Service_messages.user_not_found'),
                     'data' => (object)[]
                 ];
             }
@@ -498,7 +506,7 @@ class AdminAuthService
             if ($id == $admin->id) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.cannot_delete_self'),
+                    'message' => __('Service_messages.cannot_delete_self'),
                     'data' => (object)[]
                 ];
             }
@@ -511,7 +519,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.sub_admin_deleted_successfully'),
+                'message' => __('Service_messages.sub_admin_deleted_successfully'),
                 'data' => (object)[]
             ];
 
@@ -536,7 +544,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.modules_fetched_successfully'),
+                'message' => __('Service_messages.modules_fetched_successfully'),
                 'data' => $modules
             ];
 
@@ -612,7 +620,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.sub_admins_fetched_successfully'),
+                'message' => __('Service_messages.sub_admins_fetched_successfully'),
                 'data' => $result
             ];
 
@@ -685,7 +693,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.active_sub_admins_fetched_successfully'),
+                'message' => __('Service_messages.active_sub_admins_fetched_successfully'),
                 'data' => $result
             ];
 
@@ -762,7 +770,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.inactive_sub_admins_fetched_successfully'),
+                'message' => __('Service_messages.inactive_sub_admins_fetched_successfully'),
                 'data' => $result
             ];
 
@@ -789,7 +797,7 @@ class AdminAuthService
             if (!$admin) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.profile_not_found'),
+                    'message' => __('Service_messages.profile_not_found'),
                     'data' => []
                 ];
             }
@@ -876,8 +884,8 @@ class AdminAuthService
             return [
                 'status' => 'success',
                 'message' => $newStatus == 1
-                    ? __('service_messages.status_updated_to_active')
-                    : __('service_messages.status_updated_to_inactive'),
+                    ? __('Service_messages.status_updated_to_active')
+                    : __('Service_messages.status_updated_to_inactive'),
                 'data' => $admin
             ];
 
@@ -915,7 +923,7 @@ class AdminAuthService
             if (empty($plainPassword)) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.password_not_available'),
+                    'message' => __('Service_messages.password_not_available'),
                     'data' => (object)[]
                 ];
             }
@@ -924,7 +932,7 @@ class AdminAuthService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.credentials_sent_successfully'),
+                'message' => __('Service_messages.credentials_sent_successfully'),
                 'data' => $admin
             ];
 
