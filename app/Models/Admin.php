@@ -34,6 +34,7 @@ class Admin extends Authenticatable
         'unhashed_password',
         'notification',
         'app_notification',
+        'lang',
     ];
 
     /**

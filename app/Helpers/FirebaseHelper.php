@@ -108,7 +108,7 @@ use App\Models\DeliveryBoy;
 // }
 
 if (!function_exists('sendPushNotificationNew')) {
-    function sendPushNotificationNew($deviceTokens, $title_en, $title_ar = null, $body_en, $body_ar = null, $deviceType = 0, $badge = 0)
+    function sendPushNotificationNew($deviceTokens, $title_en, $title_ar = null, $body_en, $body_ar = null, $deviceType = 0, $badge = 0, $lang = 'en')
     {
         $projectId = 'desynat';
         $keyFilePath = storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json');
@@ -127,100 +127,87 @@ if (!function_exists('sendPushNotificationNew')) {
         $oauth->fetchAuthToken();
         $accessToken = $oauth->getLastReceivedToken()['access_token'];
 
+        $title = ($lang == 'ar' && !empty($title_ar)) ? $title_ar : $title_en;
+
+        $body = ($lang == 'ar' && !empty($body_ar)) ? $body_ar : $body_en;
+
         $responses = [];
 
         foreach ($deviceTokens as $token) {
 
             if (empty($token)) continue;
 
-            // BASE MESSAGE (FIXED FOR FCM)
-            $message = [
-                'token' => $token,
-
-                'notification' => [
-                    'title' => $title_en,
-                    'body'  => $body_en,
-                ],
-
-                'data' => [
-                    'title_en' => (string) $title_en,
-                    'title_ar' => (string) $title_ar,
-                    'body_en'  => (string) $body_en,
-                    'body_ar'  => (string) $body_ar,
-                    'badge'    => (string) $badge,
-                ],
-            ];
-
-            // WEB
-            if ($deviceType == '0') {
-
-                $locale = app()->getLocale(); 
-                //$locale = 'ar';
-
-                $message['notification'] = [
-                    'title' => $locale == 'ar' ? $title_ar : $title_en,
-                    'body'  => $locale == 'ar' ? $body_ar : $body_en,
+            // Base payload
+            if($deviceType !== '2'){
+                $message = [
+                    'token' => $token,
+                    'notification' => [
+                        'title' => $title,
+                        'body'  => $body,
+                    ],
                 ];
+            }else{
+                $message = [
+                    'token' => $token,
+                ];
+            }
 
+
+            //  WEB
+            if ($deviceType == '0') {
                 $message['webpush'] = [
                     'headers' => [
                         'Urgency' => 'high',
                     ],
                     'notification' => [
-                        'icon' => url('/logo.png'),
+                        'icon' => url('/logo.png'), // optional
                     ],
                 ];
             }
 
-            // iOS (FIX: added data without changing structure)
+            //  iOS
             if ($deviceType == '1') {
                 $message['apns'] = [
                     'headers' => [
                         'apns-priority' => '10',
                     ],
-                    'payload' => [
+                    'payload' => [ 
                         'aps' => [
-                            'badge' => (int) $badge,
+                            'badge' => (int)$badge,
                             'sound' => 'default',
                         ],
                     ],
                 ];
-
-                $message['data'] = [
-                    'title_en' => (string) $title_en,
-                    'title_ar' => (string) $title_ar,
-                    'body_en'  => (string) $body_en,
-                    'body_ar'  => (string) $body_ar,
-                    'badge'    => (string) $badge,
-                ];
             }
 
-            // ANDROID (UNCHANGED STRUCTURE)
+            //  ANDROID
             if ($deviceType == '2') {
                 $message['android'] = [
                     'priority' => 'high',
                 ];
 
-                $message['data'] = [
-                    'badge'    => (string) $badge,
-                    'title_en' => $title_en,
-                    'body_en'  => $body_en,
-                    'title_ar' => $title_ar,
-                    'body_ar'  => $body_ar,
+                // Android badge (handled in app)
+                $message['data'] = (object)[
+                    'badge' => (string)$badge,
+                    'title' => $title,
+                    'body'  => $body,
                 ];
             }
 
+            //dd($message);
             $response = Http::withToken($accessToken)
                 ->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
                     'message' => $message
                 ]);
 
             $responses[] = $response->json();
+            //dd($responses);
         }
 
         return $responses;
     }
 }
+
 
 
 
@@ -301,6 +288,8 @@ if (!function_exists('CreateNotification')) {
                     ->where('is_read', '0')
                     ->count();
 
+                $lang = $receiver->lang ?? 'en';
+
                 if (!empty($tokens)) {
                     sendPushNotificationNew(
                         $tokens,
@@ -309,7 +298,8 @@ if (!function_exists('CreateNotification')) {
                         $data['description_english'],
                         $data['description_arabic'],
                         $deviceType,
-                        $badgeCount
+                        $badgeCount,
+                        $lang
                     );
                 }
             }

@@ -280,6 +280,9 @@ try{
                     if (isset($request->fcm_token)) {
                         $updateData['fcm_token'] = $request->fcm_token;
                     }
+                    if (isset($request->lang)) {
+                        $updateData['lang'] = $request->lang;
+                    }
                     if (!empty($updateData)) {
                         $get_user_details->update($updateData);
                     }

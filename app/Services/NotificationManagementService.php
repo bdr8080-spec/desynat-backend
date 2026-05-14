@@ -36,129 +36,6 @@ class NotificationManagementService
             $this->database = $factory->createDatabase();
         }
    
-    //  public function sendNotification($request_data)
-    // {
-    //     try {
-
-    //         $sender_id = $request_data->sender_id;
-    //         $description_english = $request_data->description_english;
-    //         $description_arabic = $request_data->description_arabic;
-    //         $sender_type = $request_data->sender_type;
-    //         $title_english = $request_data->title_english ?? null;
-    //         $title_arabic = $request_data->title_arabic ?? null;
-    //         $notification_type = $request_data->notification_type ?? null;
-
-    //         $receivers = [];
-
-    //         if (!empty($request_data->user_id)) {
-    //             foreach ($request_data->user_id as $id) {
-    //                 $receivers[] = [
-    //                     'id' => $id,
-    //                     'type' => '2'
-    //                 ];
-    //             }
-    //         }
-
-    //         if (!empty($request_data->seller_id)) {
-    //             foreach ($request_data->seller_id as $id) {
-    //                 $receivers[] = [
-    //                     'id' => $id,
-    //                     'type' => '3' 
-    //                 ];
-    //             }
-    //         }
-
-    //         if (!empty($request_data->affiliate_id)) {
-    //             foreach ($request_data->affiliate_id as $id) {
-    //                 $receivers[] = [
-    //                     'id' => $id,
-    //                     'type' => '4' 
-    //                 ];
-    //             }
-    //         }
-    //         if (!empty($request_data->driver_id)) {
-    //             foreach ($request_data->driver_id as $id) {
-    //                 $receivers[] = [
-    //                     'id' => $id,
-    //                     'type' => '5' 
-    //                 ];
-    //             }
-    //         }
-
-    //         if (empty($receivers)) {
-    //             return [
-    //                 'status' => 'error',
-    //                 'message' => 'No receivers provided',
-    //                 'data' => (object)[]
-    //             ];
-    //         }
-
-    //         $allNotifications = []; 
-
-    //         foreach ($receivers as $receiver) {
-
-    //             $notification = Notification::create([
-    //                 'sender_id' => $sender_id,
-    //                 'sender_type' => $sender_type,
-    //                 'receiver_id' => $receiver['id'],
-    //                 'receiver_type' => $receiver['type'],
-    //                 'title_english' => $title_english,
-    //                 'title_arabic' => $title_arabic,
-    //                 'description_english' => $description_english,
-    //                 'description_arabic' => $description_arabic,
-    //                 'notification_type' => $notification_type
-    //             ]);
-
-    //             $allNotifications[] = $notification;
-
-    //             $token = $this->getDeviceToken($receiver['id'], $receiver['type']);
-
-    //             // if($token) {
-    //             //     sendPushNotificationNew(
-    //             //         [$token->fcm_token],
-    //             //         $title_english,
-    //             //         $description_english,
-    //             //         [$token->device_type],
-    //             //         '1'
-                        
-    //             //     );
-    //             // }
-
-    //             if ($token && !empty($token->fcm_token)) {
-
-    //                 //  Calculate badge (unread count)
-    //                 $badgeCount = Notification::where('receiver_id', $receiver['id'])
-    //                     ->where('receiver_type', $receiver['type'])
-    //                     ->where('is_read', '0')
-    //                     ->count();
-
-    //                 sendPushNotificationNew(
-    //                     [$token->fcm_token],
-    //                     $title_english,
-    //                     $description_english,
-    //                     $token->device_type, 
-    //                     $badgeCount          
-    //                 );
-    //             }
-    //         }
-
-    //        // dd($allNotifications);
-
-    //         return [
-    //             'status' => 'success',
-    //             'message' => 'Notification sent successfully',
-    //             'data' => $allNotifications
-    //         ];
-
-    //     } catch (\Exception $e) {
-    //         return [
-    //             'status' => 'error',
-    //             'message' => 'Failed to send notification: ' . $e->getMessage(),
-    //             'data' => (object)[]
-    //         ];
-    //     }
-    // }
-
     public function sendNotification($request_data)
     {
         try {
@@ -276,7 +153,8 @@ class NotificationManagementService
                             $description_english,
                             $description_arabic,
                            $deviceType,
-                            $badgeCount
+                            $badgeCount,
+                            $token->lang ?? 'en'
                         );
                     }
                 }
@@ -298,183 +176,22 @@ class NotificationManagementService
         }
     }
  
-    // debug code
-//     public function sendNotification($request_data)
-// {
-//     try {
 
-//         \Log::info('==== SEND NOTIFICATION START ====');
-//         \Log::info('Request Data:', (array)$request_data);
-
-//         $sender_id = $request_data->sender_id;
-//         $description_english = $request_data->description_english;
-//         $description_arabic = $request_data->description_arabic;
-//         $sender_type = $request_data->sender_type;
-//         $title_english = $request_data->title_english ?? null;
-//         $title_arabic = $request_data->title_arabic ?? null;
-//         $notification_type = $request_data->notification_type ?? null;
-
-//         $receivers = [];
-
-//         if (!empty($request_data->user_id)) {
-//             foreach ($request_data->user_id as $id) {
-//                 $receivers[] = ['id' => $id, 'type' => '2'];
-//             }
-//         }
-
-//         if (!empty($request_data->seller_id)) {
-//             foreach ($request_data->seller_id as $id) {
-//                 $receivers[] = ['id' => $id, 'type' => '3'];
-//             }
-//         }
-
-//         if (!empty($request_data->affiliate_id)) {
-//             foreach ($request_data->affiliate_id as $id) {
-//                 $receivers[] = ['id' => $id, 'type' => '4'];
-//             }
-//         }
-
-//         if (!empty($request_data->driver_id)) {
-//             foreach ($request_data->driver_id as $id) {
-//                 $receivers[] = ['id' => $id, 'type' => '5'];
-//             }
-//         }
-
-//         \Log::info('Receivers:', $receivers);
-
-//         if (empty($receivers)) {
-//             \Log::warning('No receivers found');
-//             return [
-//                 'status' => 'error',
-//                 'message' => 'No receivers provided',
-//                 'data' => (object)[]
-//             ];
-//         }
-
-//         $allNotifications = [];
-
-//         foreach ($receivers as $receiver) {
-
-//             \Log::info("Processing receiver", $receiver);
-
-//             // STEP 1: FLAGS
-//             $flags = $this->getNotificationFlags($receiver['id'], $receiver['type']);
-
-//             \Log::info('Flags:', (array)$flags);
-
-//             if (!$flags) {
-//                 \Log::warning("Flags not found for receiver");
-//                 continue;
-//             }
-
-//             $sendPush = $flags->notification == 1;
-//             $saveDb   = $flags->app_notification == 1;
-
-//             \Log::info("sendPush: $sendPush | saveDb: $saveDb");
-
-//             if (!$sendPush && !$saveDb) {
-//                 \Log::info("Skipping (both flags OFF)");
-//                 continue;
-//             }
-
-//             $notification = null;
-
-//             // STEP 2: DB INSERT
-//             if ($saveDb) {
-
-//                 $notification = Notification::create([
-//                     'sender_id' => $sender_id,
-//                     'sender_type' => $sender_type,
-//                     'receiver_id' => $receiver['id'],
-//                     'receiver_type' => $receiver['type'],
-//                     'title_english' => $title_english,
-//                     'title_arabic' => $title_arabic,
-//                     'description_english' => $description_english,
-//                     'description_arabic' => $description_arabic,
-//                     'notification_type' => $notification_type
-//                 ]);
-
-//                 \Log::info('Notification saved', ['id' => $notification->id]);
-
-//                 $allNotifications[] = $notification;
-//             }
-
-//             // STEP 3: PUSH
-//             if ($sendPush) {
-
-//                 $token = $this->getDeviceToken($receiver['id'], $receiver['type']);
-
-//                 \Log::info('Device Token Data:', (array)$token);
-
-//                 if (!$token) {
-//                     \Log::warning("No token record found");
-//                     continue;
-//                 }
-
-//                 if (empty($token->fcm_token)) {
-//                     \Log::warning("FCM token is empty");
-//                     continue;
-//                 }
-
-//                 $badgeCount = Notification::where('receiver_id', $receiver['id'])
-//                     ->where('receiver_type', $receiver['type'])
-//                     ->where('is_read', '0')
-//                     ->count();
-
-//                 \Log::info("Badge Count: $badgeCount");
-
-//                 try {
-
-//                     $response = sendPushNotificationNew(
-//                         [$token->fcm_token],
-//                         $title_english,
-//                         $description_english,
-//                         $token->device_type,
-//                         $badgeCount
-//                     );
-
-//                     \Log::info('Push Sent Response:', ['response' => $response]);
-
-//                 } catch (\Exception $e) {
-//                     \Log::error('Push Error: ' . $e->getMessage());
-//                 }
-//             }
-//         }
-
-//         \Log::info('==== SEND NOTIFICATION END ====');
-
-//         return [
-//             'status' => 'success',
-//             'message' => 'Notification sent successfully',
-//             'data' => $allNotifications
-//         ];
-
-//     } catch (\Exception $e) {
-
-//         \Log::error('MAIN ERROR: ' . $e->getMessage());
-
-//         return [
-//             'status' => 'error',
-//             'message' => 'Failed to send notification: ' . $e->getMessage(),
-//             'data' => (object)[]
-//         ];
-//     }
-// }
 
     private function getDeviceToken($receiver_id, $receiver_type)
     { 
         $receiver_type = (int)$receiver_type;
         switch ($receiver_type) {
             case 2: // User
-                return User::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
+                return User::select('fcm_token', 'device_type', 'lang')->where('id', $receiver_id)->first();
             case 3: // seller
-                return seller::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
+                return seller::select('fcm_token', 'device_type', 'lang')->where('id', $receiver_id)->first();
             case 4: // AffilatedUser
-                return AffilatedUser::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
+                return AffilatedUser::select('fcm_token', 'device_type', 'lang')->where('id', $receiver_id)->first();
             case 1: // Admin
-                return Admin::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
+                return Admin::select('fcm_token', 'device_type', 'lang')->where('id', $receiver_id)->first();
             case 5: // Driver
-                return DeliveryBoy::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
+                return DeliveryBoy::select('fcm_token', 'device_type', 'lang')->where('id', $receiver_id)->first();
             default:
                 return null;
         }
