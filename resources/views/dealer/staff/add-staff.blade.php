@@ -1,7 +1,7 @@
 @include('dealer.layout.header')
 
 <section class="section dashboard">
-  
+
     <div class="d-flex justify-content-between mt-4">
         <a href="#" class="title24 alink"> <i class="bi bi-chevron-left"></i> {{ __('seller_messages.Add_Staff') }} </a>
     </div>
@@ -17,52 +17,55 @@
                                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                                     style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
                                 <div class="py-2" style="color:#875C3A">
-                                     {{ __('seller_messages.Upload_Profile') }}
+                                    {{ __('seller_messages.Upload_Profile') }}
                                 </div>
                             </div>
                             <!-- Uploaded Image -->
-                             <div class="profileImg" style="display:none;" id="showProfile">
-                                 <img id="bannerUploadedImg" src="" alt="image" class="img-fluid"
-                                >
+                            <div class="profileImg" style="display:none;" id="showProfile">
+                                <img id="bannerUploadedImg" src="" alt="image" class="img-fluid">
                             </div>
                             <!-- SINGLE IMAGE -->
                             <input type="file" accept="image/*" id="banner_image_upload"
                                 style="opacity:0;position: absolute;" name="profile_pic">
                         </label>
 
-                         <p class="text-danger" id="error-file"></p>
+                        <p class="text-danger" id="error-file"></p>
 
                     </div>
                 </div>
             </div>
         </div>
 
-<meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <div class="row">
             <div class="col-lg-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                          <label>{{ __('seller_messages.Full_Name') }}</label>
+                        <label>{{ __('seller_messages.Full_Name') }}</label>
                         <span>{{ __('seller_messages.In_English') }}</span>
                     </div>
-                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" name="full_name" class="form-control" placeholder="{{ __('seller_messages.Enter_Full_Name') }}">
-                   <p class="text-danger" id="error-full_name"></p>
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                        name="full_name" class="form-control" placeholder="{{ __('seller_messages.Enter_Full_Name') }}">
+                    <p class="text-danger" id="error-full_name"></p>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                       <label>{{ __('seller_messages.Full_Name') }}</label>
+                        <label>{{ __('seller_messages.Full_Name') }}</label>
                         <span>{{ __('seller_messages.In_Arabic') }}</span>
                     </div>
-                    <input type="text" dir="rtl" style="text-align: right;" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control"  placeholder="{{ __('seller_messages.Enter_Full_Name_arabic') }}" name="name_ar">
-                 <p class="text-danger" id="error-name_ar"></p>
+                    <input type="text" dir="rtl" style="text-align: right;"
+                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                        class="form-control" placeholder="{{ __('seller_messages.Enter_Full_Name_arabic') }}"
+                        name="name_ar">
+                    <p class="text-danger" id="error-name_ar"></p>
                 </div>
             </div>
         </div>
         <div class="row">
-        <!-- <div class="col-lg-1">
+            <!-- <div class="col-lg-1">
                 <div class="sub-form">
                     <div class="label-flex">
                         <label>Country Code</label>
@@ -71,7 +74,7 @@
                 </div>
         </div> -->
 
-        <!-- <div class="col-lg-5">
+            <!-- <div class="col-lg-5">
                 <div class="sub-form">
                     <div class="label-flex">
                         <label>Phone Number</label>
@@ -79,95 +82,93 @@
                     <input type="text"  class="form-control" placeholder="Enter Phone Number" name="mobile">
                 </div>
         </div> -->
-        <input type="hidden" name="country_code_hidden" id="country_code_hidden"
-            value="{{ $all_country[0]->dial_code ?? '' }}">
+            <input type="hidden" name="country_code_hidden" id="country_code_hidden"
+                value="{{ $all_country[0]->dial_code ?? '' }}">
 
-         <div class="col-lg-6 col-md-6">
-                                    <div class="label-flex">
-                                        <label>{{ __('seller_messages.Store_Phone_Number') }}</label>
+            <div class="col-lg-6 col-md-6">
+                <div class="label-flex">
+                    <label>{{ __('seller_messages.Store_Phone_Number') }}</label>
+                </div>
+
+                <div class="form-group d-flex gap-2 w-100">
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                            type="button" id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+
+                            <span id="selected-flag">
+                                <img src="{{$all_country[0]->flag1}}" alt="flag" width="25" height="16">
+                                {{$all_country[0]->dial_code}}
+                            </span>
+
+                            <span id="selected-code" class="ms-2">
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
+                            @foreach ($all_country as $index => $item)
+                            <li>
+                                <label class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                    style="cursor: pointer;">
+                                    <input type="radio" name="country_code" value="{{ $item->dial_code }}"
+                                        data-flag="{{ $item->flag }}" data-name="{{ $item->name }}"
+                                        class="country-radio" hidden>
+
+                                    <div width="25" height="16">
+                                        <span>{{ $item->flag }}
+                                            {{ $item->dial_code }} {{ $item->name }}
+                                        </span>
                                     </div>
+                                </label>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
 
-                                    <div class="form-group d-flex gap-2 w-100">
-                                        <div class="dropdown">
-                                            <button
-                                                class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
-                                                type="button" id="countryDropdown" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
+                    <div class="w-100">
+                        <input class="form-control notapplyspace" type="number" id="phone"
+                            placeholder="{{ __('seller_messages.Enter_Mobile_Number') }}" name="mobile"
+                            value="{{ old('mobile') }}"
+                            oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+                        <p class="text-danger" id="error-mobile"></p>
+                    </div>
 
-                                                <span id="selected-flag">
-                                                    <img src="{{$all_country[0]->flag1}}"
-                                                        alt="flag" width="25" height="16">
-                                                    {{$all_country[0]->dial_code}}
-                                                </span>
+                </div>
 
-                                                <span id="selected-code" class="ms-2">
-                                                </span>
-                                            </button>
-                                            <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
-                                                @foreach ($all_country as $index => $item)
-                                                <li>
-                                                    <label
-                                                        class="dropdown-item d-flex align-items-center gap-2 country-option"
-                                                        style="cursor: pointer;">
-                                                        <input type="radio" name="country_code"
-                                                            value="{{ $item->dial_code }}" data-flag="{{ $item->flag }}"
-                                                            data-name="{{ $item->name }}" class="country-radio"
-                                                            hidden>
-
-                                                        <div width="25" height="16">
-                                                            <span>{{ $item->flag }}
-                                                                {{ $item->dial_code }} {{ $item->name }}
-                                                            </span>
-                                                        </div>
-                                                    </label>
-                                                </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-
-                                        <div class="w-100">
-                                            <input class="form-control notapplyspace" type="number" id="phone"
-                                                placeholder="{{ __('seller_messages.Enter_Mobile_Number') }}" name="mobile"
-                                                value="{{ old('mobile') }}"
-                                                oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
-                                            <p class="text-danger" id="error-mobile"></p>
-                                        </div>
-
-                                    </div>
-
-                                </div>
+            </div>
 
             <div class="col-lg-6">
                 <div class="sub-form">
                     <div class="label-flex">
                         <label>{{ __('seller_messages.Email') }}</label>
                     </div>
-                    <input type="text"  class="form-control" placeholder="{{ __('seller_messages.Enter_Email') }}" name="email">
-                     <p class="text-danger" id="error-email"></p>
+                    <input type="text" class="form-control" placeholder="{{ __('seller_messages.Enter_Email') }}"
+                        name="email">
+                    <p class="text-danger" id="error-email"></p>
                 </div>
             </div>
         </div>
 
         <div class="row mt-3">
             <div class="col-md-6">
-                <label class="banner-text">   {{ __('seller_messages.Select_Category') }}</label>
+                <label class="banner-text"> {{ __('seller_messages.Select_Category') }}</label>
                 <div class="group-radio-btn d-flex gap-5 align-items-center flex-wrap py-3 pe-3">
 
-                @foreach($staff_category as $key=>$val)
+                    @foreach($staff_category as $key=>$val)
                     <div class="check_radio">
                         <label class="radio-group">
                             <input type="radio" name="select_category" value="{{$val->id}}" checked>
                             <span class="custom-radio"></span>
-                            <span class="radio-label">  {{ app()->getLocale() == 'ar' ? $val->name_ar : $val->name_en }}</span>
+                            <span class="radio-label">
+                                {{ app()->getLocale() == 'ar' ? $val->name_ar : $val->name_en }}</span>
                         </label>
                     </div>
-                @endforeach
+                    @endforeach
 
 
-                   
+
                 </div>
             </div>
-          
+
         </div>
 
         <div class="row">
@@ -177,72 +178,69 @@
                         <label>{{ __('seller_messages.Password') }}</label>
 
                     </div>
-                    <input type="text"  class="form-control" placeholder="{{ __('seller_messages.Enter_Password') }}" name="password">
-                    <i class="toggle-password  bi bi-eye-slash "></i> 
+                    <input type="text" class="form-control" placeholder="{{ __('seller_messages.Enter_Password') }}"
+                        name="password">
+                    <i class="toggle-password  bi bi-eye-slash "></i>
                     <p class="text-danger" id="error-password"></p>
-                
+
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="sub-form position-relative">
                     <div class="label-flex">
-                       <label>{{ __('seller_messages.Confirm_Password') }}</label>
-                       
+                        <label>{{ __('seller_messages.Confirm_Password') }}</label>
+
                     </div>
-                    <input type="text"  class="form-control" placeholder="{{ __('seller_messages.Enter_Confirm_Password') }}" name="confirm_password">
-                    <i class="toggle-password  bi bi-eye-slash "></i> 
+                    <input type="text" class="form-control"
+                        placeholder="{{ __('seller_messages.Enter_Confirm_Password') }}" name="confirm_password">
+                    <i class="toggle-password  bi bi-eye-slash "></i>
                     <p class="text-danger" id="error-confirm_password"></p>
                 </div>
             </div>
         </div>
         <div class="module-lists mt-3 mb-4">
-            <label class="banner-text py-3">  {{ __('seller_messages.Access_Module') }}</label>
+            <label class="banner-text py-3"> {{ __('seller_messages.Access_Module') }}</label>
 
             <div class="row">
                 <div class="col-lg-5">
 
-                 <p class="text-danger" id="error-menuSelect"></p>
+                    <p class="text-danger" id="error-menuSelect"></p>
 
-                @foreach($sellerMenu as $key=>$menu)
-                <div class="d-flex gap-2 justify-content-between w-100 mb-4">
+                    @foreach($sellerMenu as $key=>$menu)
+                    <div class="d-flex gap-2 justify-content-between w-100 mb-4">
 
-                <!-- MAIN MENU -->
-                <div class="view-width">
-                <div class="form-check-3">
-                <input class="form-check-input menu-checkbox"
-                type="checkbox"
-                value="{{$menu->id}}" hidden>
-                <label class="form-check-label">
-                 @if(app()->getLocale() == 'ar')
-                                        {{ $menu->title_ar }}
+                        <!-- MAIN MENU -->
+                        <div class="view-width">
+                            <div class="form-check-3">
+                                <input class="form-check-input menu-checkbox" type="checkbox" value="{{$menu->id}}"
+                                    hidden>
+                                <label class="form-check-label">
+                                    @if(app()->getLocale() == 'ar')
+                                    {{ $menu->title_ar }}
                                     @else
-                                        {{ $menu->title }}
+                                    {{ $menu->title }}
                                     @endif
-                </label>
-                </div>
-                </div>
+                                </label>
+                            </div>
+                        </div>
 
-                <!-- VIEW -->
-                
-                    <div class="form-check">
-                    <input class="form-check-input view-checkbox"
-                    type="checkbox"
-                    data-id="{{$menu->id}}">
-                    <label class="form-check-label">{{ __('seller_messages.View') }}</label>
+                        <!-- VIEW -->
+
+                        <div class="form-check">
+                            <input class="form-check-input view-checkbox" type="checkbox" data-id="{{$menu->id}}">
+                            <label class="form-check-label">{{ __('seller_messages.View') }}</label>
+                        </div>
+
+                        <!-- ACTION -->
+                        <div class="form-check">
+                            <input class="form-check-input action-checkbox" type="checkbox" data-id="{{$menu->id}}">
+                            <label class="form-check-label">{{ __('seller_messages.Action') }}</label>
+                        </div>
                     </div>
-            
-                <!-- ACTION -->
-                <div class="form-check">
-                <input class="form-check-input action-checkbox"
-                type="checkbox"
-                data-id="{{$menu->id}}">
-                <label class="form-check-label">{{ __('seller_messages.Action') }}</label>
-                </div>
-                </div>
-                @endforeach                    
+                    @endforeach
                 </div>
             </div>
-            
+
         </div>
 
         <div class="mb-5">
@@ -262,7 +260,7 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 
     if (!file) return;
 
-     $('#error-file').text('');
+    $('#error-file').text('');
 
     const reader = new FileReader();
     reader.onload = function(e) {
@@ -315,7 +313,7 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 
 // });
 
-$(document).ready(function () {
+$(document).ready(function() {
 
     // 🔥 SET DEFAULT ON PAGE LOAD (IMPORTANT)
     let defaultCountry = $('input[name="country_code"]:checked').val();
@@ -329,7 +327,7 @@ $(document).ready(function () {
 
 
     // ================= COUNTRY SELECT =================
-    $(document).on('click', '.country-option', function () {
+    $(document).on('click', '.country-option', function() {
 
         let radio = $(this).find('.country-radio');
         let flag = radio.data('flag');
@@ -356,7 +354,7 @@ $('#addBanner').on('submit', function(e) {
 
     let full_name = $('input[name="full_name"]').val().trim();
     let full_name_ar = $('input[name="name_ar"]').val().trim();
-    
+
     let mobile = $('input[name="mobile"]').val().trim();
     let email = $('input[name="email"]').val().trim();
     let password = $('input[name="password"]').val();
@@ -372,25 +370,25 @@ $('#addBanner').on('submit', function(e) {
 
     if (!full_name) {
         error = true;
-        // alert('Full name is required');
-        $('#error-full_name').text('Please Enter full Name');
+
+        $('#error-full_name').text("{{__('seller_messages.full_name_required')}}");
     }
 
-     if (!full_name_ar) {
+    if (!full_name_ar) {
         error = true;
         // alert('Full name is required');
-        $('#error-name_ar').text('Please Enter full Name');
+        $('#error-name_ar').text("{{__('seller_messages.name_ar_string')}}");
     }
 
     if (!mobile || mobile.length < 8) {
         error = true;
-        $('#error-mobile').text('Enter valid mobile number');
+        $('#error-mobile').text("{{__('seller_messages.mobile_required')}}");
     }
 
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
         error = true;
         // alert('Enter valid email');
-        $('#error-email').text('Please Enter email Address');
+        $('#error-email').text("{{__('seller_messages.email_required')}}");
 
     }
 
@@ -398,37 +396,36 @@ $('#addBanner').on('submit', function(e) {
         error = true;
         // alert('Password must be at least 6 characters');
 
-        $('#error-password').text('Please Enter Password');
+        $('#error-password').text("{{__('seller_messages.password_required')}}");
     }
 
-     if (!confirm_password || confirm_password.length < 6) {
+    if (!confirm_password || confirm_password.length < 6) {
         error = true;
         // alert('Password must be at least 6 characters');
 
-        $('#error-confirm_password').text('Please Enter Password');
+        $('#error-confirm_password').text("{{__('seller_messages.confirm_password_required')}}");
     }
 
     if (password !== confirm_password) {
         error = true;
         // alert('Passwords do not match');
-        $('#error-confirm_password').text('Please match password and confirm Password');
+        $('#error-confirm_password').text("{{__('seller_messages.password_same')}}");
     }
 
     if (!file) {
         error = true;
         // alert('Profile image is required');
-        $('#error-file').text('Please Upload profile');
+        $('#error-file').text("{{__('seller_messages.profile_pic_required')}}");
     }
 
-      // File upload
-   
+    // File upload
 
 
     // At least one menu selected
     if ($('.menu-checkbox:checked').length === 0) {
         error = true;
         // alert('Select at least one module');
-        $('#error-menuSelect').text('Please Select at least one module');
+        $('#error-menuSelect').text("{{__('seller_messages.menu_required')}}");
     }
 
     if (error) return;
@@ -438,8 +435,8 @@ $('#addBanner').on('submit', function(e) {
     $('.menu-checkbox').each(function() {
         let id = $(this).val();
 
-        let can_view = $('.view-checkbox[data-id="'+id+'"]').is(':checked') ? 1 : 0;
-        let can_action = $('.action-checkbox[data-id="'+id+'"]').is(':checked') ? 1 : 0;
+        let can_view = $('.view-checkbox[data-id="' + id + '"]').is(':checked') ? 1 : 0;
+        let can_action = $('.action-checkbox[data-id="' + id + '"]').is(':checked') ? 1 : 0;
 
         if ($(this).is(':checked')) {
             menuData.push({
@@ -486,43 +483,43 @@ $('#addBanner').on('submit', function(e) {
         url: '/seller/add-staff',
         type: 'POST',
         data: formData,
-        processData: false,   // REQUIRED
-        contentType: false,   // REQUIRED
+        processData: false, // REQUIRED
+        contentType: false, // REQUIRED
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
 
-             if (res.status === 'success') {
-                    toastr.success(res.message);
-                    setTimeout(() => window.location.href='/seller/staff-management', 2000);
-                } else {
-                    toastr.error(res.message || 'Something went wrong');
-                }
+            if (res.status === 'success') {
+                toastr.success(res.message);
+                setTimeout(() => window.location.href = '/seller/staff-management', 2000);
+            } else {
+                toastr.error(res.message || 'Something went wrong');
+            }
 
             //console.log(res);
-           // alert('Success');
+            // alert('Success');
         },
         error: function(err) {
 
-        if (err.status === 422) {
+            if (err.status === 422) {
 
-        let errors = err.responseJSON.errors;
+                let errors = err.responseJSON.errors;
 
-        // Loop all validation errors
-        for (let key in errors) {
-            $(`#error-${key}`).html(errors[key][0]); // show first error
-        }
+                // Loop all validation errors
+                for (let key in errors) {
+                    $(`#error-${key}`).html(errors[key][0]); // show first error
+                }
 
-        toastr.error('Please fix validation errors');
+                toastr.error('Please fix validation errors');
 
-    } else if (err.responseJSON && err.responseJSON.message) {
-        toastr.error(err.responseJSON.message);
-    } else {
-        toastr.error('Something went wrong');
-    }
+            } else if (err.responseJSON && err.responseJSON.message) {
+                toastr.error(err.responseJSON.message);
+            } else {
+                toastr.error('Something went wrong');
+            }
 
-           
+
         }
     });
 
@@ -532,7 +529,7 @@ $('#addBanner').on('submit', function(e) {
 
 
 
-document.addEventListener("change", function (e) {
+document.addEventListener("change", function(e) {
 
     let parent = e.target.closest(".d-flex");
     if (!parent) return;
@@ -590,15 +587,14 @@ document.addEventListener("change", function (e) {
 // add stuff code End here 
 
 $(".toggle-password").click(function() {
-        $(this).toggleClass("bi-eye bi-eye-slash");
-        input = $(this).parent().find("input");
-        if (input.attr("type") == "password") {
-            input.attr("type", "text");
-        } else {
-            input.attr("type", "password");
-        }
-    });
-
+    $(this).toggleClass("bi-eye bi-eye-slash");
+    input = $(this).parent().find("input");
+    if (input.attr("type") == "password") {
+        input.attr("type", "text");
+    } else {
+        input.attr("type", "password");
+    }
+});
 </script>
 
 

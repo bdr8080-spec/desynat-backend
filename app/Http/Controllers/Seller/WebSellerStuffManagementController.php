@@ -84,7 +84,49 @@ class WebSellerStuffManagementController extends Controller
         'menu_id.*.can_view' => 'required|boolean',
         'menu_id.*.can_action' => 'required|boolean',
 
-    ]);
+     ],[
+        'full_name.required' => __('seller_messages.full_name_required'),
+        'full_name.string' => __('seller_messages.full_name_string'),
+        'full_name.max' => __('seller_messages.full_name_max'),
+
+        'name_ar.string' => __('seller_messages.name_ar_string'),
+        'name_ar.max' => __('seller_messages.name_ar_max'),
+
+        'profile_pic.required' => __('seller_messages.profile_pic_required'),
+
+        'country_code.required' => __('seller_messages.country_code_required'),
+        'country_code.string' => __('seller_messages.country_code_string'),
+        'country_code.max' => __('seller_messages.country_code_max'),
+
+        'mobile.required' => __('seller_messages.mobile_required'),
+        'mobile.digits_between' => __('seller_messages.mobile_digits_between'),
+
+        'email.required' => __('seller_messages.email_required'),
+        'email.email' => __('seller_messages.email_email'),
+
+        'select_category.required' => __('seller_messages.select_category_required'),
+        'select_category.exists' => __('seller_messages.select_category_exists'),
+
+        'password.required' => __('seller_messages.password_required'),
+        'password.min' => __('seller_messages.password_min'),
+        'password.same' => __('seller_messages.password_same'),
+
+        'confirm_password.required' => __('seller_messages.confirm_password_required'),
+
+        'menu_id.required' => __('seller_messages.menu_required'),
+        'menu_id.array' => __('seller_messages.menu_array'),
+        'menu_id.min' => __('seller_messages.menu_min'),
+
+        'menu_id.*.id.required' => __('seller_messages.menu_id_required'),
+        'menu_id.*.id.exists' => __('seller_messages.menu_id_exists'),
+
+        'menu_id.*.can_view.required' => __('seller_messages.can_view_required'),
+        'menu_id.*.can_view.boolean' => __('seller_messages.can_view_boolean'),
+
+        'menu_id.*.can_action.required' => __('seller_messages.can_action_required'),
+        'menu_id.*.can_action.boolean' => __('seller_messages.can_action_boolean'),
+     ]
+);
 
     if ($validator->fails()) {
         return response()->json([
@@ -198,7 +240,51 @@ $validate = Validator::make($request->all(), [
             'menu_id.*.id' => 'required|integer',
             'menu_id.*.can_view' => 'required|integer',                       
             'menu_id.*.can_action' => 'required|integer',                       
-        ]);
+],
+[
+        'full_name.required' => __('seller_messages.full_name_required'),
+        'full_name.string' => __('seller_messages.full_name_string'),
+        'full_name.max' => __('seller_messages.full_name_max'),
+
+        'name_ar.string' => __('seller_messages.name_ar_string'),
+        'name_ar.max' => __('seller_messages.name_ar_max'),
+
+        // 'profile_pic.required' => __('seller_messages.profile_pic_required'),
+
+        'country_code.required' => __('seller_messages.country_code_required'),
+        'country_code.string' => __('seller_messages.country_code_string'),
+        'country_code.max' => __('seller_messages.country_code_max'),
+
+        'mobile.required' => __('seller_messages.mobile_required'),
+        'mobile.digits_between' => __('seller_messages.mobile_digits_between'),
+
+        'email.required' => __('seller_messages.email_required'),
+        'email.email' => __('seller_messages.email_email'),
+
+        'select_category.required' => __('seller_messages.select_category_required'),
+        'select_category.exists' => __('seller_messages.select_category_exists'),
+
+        'password.required' => __('seller_messages.password_required'),
+        'password.min' => __('seller_messages.password_min'),
+        'password.same' => __('seller_messages.password_same'),
+
+        'confirm_password.required' => __('seller_messages.confirm_password_required'),
+
+        'menu_id.required' => __('seller_messages.menu_required'),
+        'menu_id.array' => __('seller_messages.menu_array'),
+        'menu_id.min' => __('seller_messages.menu_min'),
+
+        'menu_id.*.id.required' => __('seller_messages.menu_id_required'),
+        'menu_id.*.id.exists' => __('seller_messages.menu_id_exists'),
+
+        'menu_id.*.can_view.required' => __('seller_messages.can_view_required'),
+        'menu_id.*.can_view.boolean' => __('seller_messages.can_view_boolean'),
+
+        'menu_id.*.can_action.required' => __('seller_messages.can_action_required'),
+        'menu_id.*.can_action.boolean' => __('seller_messages.can_action_boolean'),
+     ]
+
+    );
 
         if($validate->fails()){
             return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);

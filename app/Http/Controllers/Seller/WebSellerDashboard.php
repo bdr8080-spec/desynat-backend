@@ -1198,8 +1198,12 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
         $validator = Validator::make($request->all(), [
             'file' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ], [
-            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG format',
-            'file.max' => 'Image size should not exceed 5MB',
+            // 'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG format',
+            // 'file.max' => 'Image size should not exceed 5MB',
+
+            'file.mimes' => __('seller_messages.file_invalid_format') ,
+            'file.max' => __('seller_messages.file_size_exceed') ,
+
         ]);
 
         // $seller_id=Auth::guard('seller')->user()->id;
@@ -1554,8 +1558,9 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
             ],
             'confirm_password' => 'required|same:new_password',
         ], [
-            'new_password.regex' => 'Password must be at least 8 characters long and include 1 uppercase letter, 1 number, and 1 special character.',
-            'confirm_password.same' => 'Confirm password must match new password.',
+            'new_password.regex' => __('seller_messages.password_validation'),
+            'confirm_password.same' => __('seller_messages.confirm_password_match'),
+            
         ]);
 
         if ($validate->fails()) {
