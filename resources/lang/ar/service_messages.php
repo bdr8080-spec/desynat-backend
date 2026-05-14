@@ -142,5 +142,63 @@ return [
  'gift_card_category_updated_successfully' => 'تم تحديث فئة بطاقة الهدايا بنجاح',
  'gift_card_category_deleted_successfully' => 'تم حذف فئة بطاقة الهدايا بنجاح',
 
+ //live request service
+ 'timeslot_unblocked_successfully' => 'تم إلغاء حظر الفترة الزمنية بنجاح',
+ 'timeslot_blocked_successfully' => 'تم حظر الفترة الزمنية بنجاح',
+ 'please_select_minimum_30_min_timeslot' => 'يرجى اختيار فترة زمنية لا تقل عن 30 دقيقة',
+ 'timeslot_already_exists' => 'هذه الفترة الزمنية موجودة بالفعل',
+ 'timeslot_added_successfully' => 'تمت إضافة الفترة الزمنية بنجاح',
+ 'timeslot_updated_successfully' => 'تم تحديث الفترة الزمنية بنجاح',
+ 'timeslot_deleted_successfully' => 'تم حذف الفترة الزمنية بنجاح',
+ 'live_request_accepted_successfully' => 'تم قبول طلب البث المباشر بنجاح',
+ 'live_request_rejected_successfully' => 'تم رفض طلب البث المباشر بنجاح',
+
+ //notification management service
+ 'no_receivers_provided' => 'لم يتم توفير أي مستلمين',
+ 'notification_sent_successfully' => 'تم إرسال الإشعار بنجاح',
+ 'notifications_marked_as_read_successfully' => 'تم وضع علامة على الإشعارات كمقروءة بنجاح',
+ 'notification_on' => 'تم تفعيل الإشعارات بنجاح',
+ 'notification_off' => 'تم إيقاف الإشعارات بنجاح',
+
+ //order management service
+ 'order_not_found' => 'لم يتم العثور على الطلب',
+ 'order_address_outside_kuwait' => 'عنوان الطلب خارج الكويت',
+ 'no_delivery_boy_found_for_zone' => 'لم يتم العثور على مندوب توصيل في منطقة عنوان المستخدم',
+ 'driver_already_assigned_to_order' => 'تم تعيين السائق بالفعل لهذا الطلب',
+ 'driver_assigned_successfully' => 'تم تعيين مندوب التوصيل بنجاح',
+
+ //product management service
+ 'product_unblocked_successfully' => 'تم إلغاء حظر المنتج بنجاح',
+ 'product_blocked_successfully' => 'تم حظر المنتج بنجاح',
+
+ //promocode service
+ 'promocode_unblocked_successfully' => 'تم إلغاء حظر الكوبون بنجاح',
+ 'promocode_blocked_successfully' => 'تم حظر الكوبون بنجاح',
+ 'promocode_added_successfully' => 'تم إضافة الكوبون بنجاح',
+ 'promocode_updated_successfully' => 'تم تحديث الكوبون بنجاح',
+ 'promocode_deleted_successfully' => 'تم حذف الكوبون بنجاح',
+
+ //reason service
+ 'exchange_reason_unblocked_successfully' => 'تم إلغاء حظر سبب الاستبدال بنجاح',
+ 'exchange_reason_blocked_successfully' => 'تم حظر سبب الاستبدال بنجاح',
+ 'return_reason_unblocked_successfully' => 'تم إلغاء حظر سبب الإرجاع بنجاح',
+ 'return_reason_blocked_successfully' => 'تم حظر سبب الإرجاع بنجاح',
+ 'cancel_reason_unblocked_successfully' => 'تم إلغاء حظر سبب الإلغاء بنجاح',
+ 'cancel_reason_blocked_successfully' => 'تم حظر سبب الإلغاء بنجاح',
+ 'reason_unblocked_successfully' => 'تم إلغاء حظر السبب بنجاح',
+ 'reason_blocked_successfully' => 'تم حظر السبب بنجاح',
+ 'exchange_reason_created_successfully' => 'تم إنشاء سبب الاستبدال بنجاح',
+ 'return_reason_created_successfully' => 'تم إنشاء سبب الإرجاع بنجاح',
+ 'cancel_reason_created_successfully' => 'تم إنشاء سبب الإلغاء بنجاح',
+ 'reason_created_successfully' => 'تم إنشاء السبب بنجاح',
+ 'exchange_reason_updated_successfully' => 'تم تحديث سبب الاستبدال بنجاح',
+ 'return_reason_updated_successfully' => 'تم تحديث سبب الإرجاع بنجاح',
+ 'cancel_reason_updated_successfully' => 'تم تحديث سبب الإلغاء بنجاح',
+ 'reason_updated_successfully' => 'تم تحديث السبب بنجاح',
+ 'exchange_reason_deleted_successfully' => 'تم حذف سبب الاستبدال بنجاح',
+ 'return_reason_deleted_successfully' => 'تم حذف سبب الإرجاع بنجاح',
+ 'cancel_reason_deleted_successfully' => 'تم حذف سبب الإلغاء بنجاح',
+ 'reason_deleted_successfully' => 'تم حذف السبب بنجاح',
+
 
 ];

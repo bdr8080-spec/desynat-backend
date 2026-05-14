@@ -29,7 +29,7 @@ class ReasonService
             if ($reason_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Reason found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
@@ -69,16 +69,27 @@ class ReasonService
 
             switch ($reason->type) {
                 case 1:
-                    $message = $reason->status == 1 ? 'Exchange Reason Unblocked Successfully' : 'Exchange Reason Blocked Successfully';
+                    $message = $reason->status == 1
+                        ? __('service_messages.exchange_reason_unblocked_successfully')
+                        : __('service_messages.exchange_reason_blocked_successfully');
                     break;
+
                 case 2:
-                    $message = $reason->status == 1 ? 'Return Reason Unblocked Successfully' : 'Return Reason Blocked Successfully';
+                    $message = $reason->status == 1
+                        ? __('service_messages.return_reason_unblocked_successfully')
+                        : __('service_messages.return_reason_blocked_successfully');
                     break;
+
                 case 3:
-                    $message = $reason->status == 1 ? 'Cancel Reason Unblocked Successfully' : 'Cancel Reason Blocked Successfully';
+                    $message = $reason->status == 1
+                        ? __('service_messages.cancel_reason_unblocked_successfully')
+                        : __('service_messages.cancel_reason_blocked_successfully');
                     break;
+
                 default:
-                    $message = $reason->status == 1 ? 'Reason Unblocked Successfully' : 'Reason Blocked Successfully';
+                    $message = $reason->status == 1
+                        ? __('service_messages.reason_unblocked_successfully')
+                        : __('service_messages.reason_blocked_successfully');
             }
 
             return [
@@ -109,16 +120,19 @@ class ReasonService
 
             switch ($reason->type) {
                 case 1:
-                    $message = 'Exchange Reason Created Successfully';
+                    $message = __('service_messages.exchange_reason_created_successfully');
                     break;
+
                 case 2:
-                    $message = 'Return Reason Created Successfully';
+                    $message = __('service_messages.return_reason_created_successfully');
                     break;
+
                 case 3:
-                    $message = 'Cancel Reason Created Successfully';
+                    $message = __('service_messages.cancel_reason_created_successfully');
                     break;
+
                 default:
-                    $message = 'Reason Created Successfully';
+                    $message = __('service_messages.reason_created_successfully');
             }
 
             return [
@@ -156,16 +170,19 @@ class ReasonService
 
             switch ($reason->type) {
                 case 1:
-                    $message = 'Exchange Reason Updated Successfully';
+                    $message = __('service_messages.exchange_reason_updated_successfully');
                     break;
+
                 case 2:
-                    $message = 'Return Reason Updated Successfully';
+                    $message = __('service_messages.return_reason_updated_successfully');
                     break;
+
                 case 3:
-                    $message = 'Cancel Reason Updated Successfully';
+                    $message = __('service_messages.cancel_reason_updated_successfully');
                     break;
+
                 default:
-                    $message = 'Reason Updated Successfully';
+                    $message = __('service_messages.reason_updated_successfully');
             }
 
             return [
@@ -199,16 +216,19 @@ class ReasonService
 
             switch ($reason->type) {
                 case 1:
-                    $message = 'Exchange Reason Deleted Successfully';
+                    $message = __('service_messages.exchange_reason_deleted_successfully');
                     break;
+
                 case 2:
-                    $message = 'Return Reason Deleted Successfully';
+                    $message = __('service_messages.return_reason_deleted_successfully');
                     break;
+
                 case 3:
-                    $message = 'Cancel Reason Deleted Successfully';
+                    $message = __('service_messages.cancel_reason_deleted_successfully');
                     break;
+
                 default:
-                    $message = 'Reason Deleted Successfully';
+                    $message = __('service_messages.reason_deleted_successfully');
             }
 
             // Delete the reason

@@ -25,7 +25,7 @@ class LiveRequestService
             if ($timeslot_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Timeslot found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' =>  []
                 ];
             }
@@ -64,8 +64,8 @@ class LiveRequestService
             $data->save();
 
             $message = $data->status == 1
-                        ? 'Timeslot Unblocked successfully'
-                        : 'Timeslot Blocked successfully';
+                ? __('service_messages.timeslot_unblocked_successfully')
+                : __('service_messages.timeslot_blocked_successfully');
 
             return [
                 'status' => 'success',
@@ -117,7 +117,7 @@ class LiveRequestService
             if ($from->diffInMinutes($to) < 30) {
                 return [
                     'status' => 'error',
-                    'message' => 'Please select a minimum 30-minute timeslot',
+                    'message' => __('service_messages.please_select_minimum_30_min_timeslot'),
                     'data' => (object)[]
                 ];
             }
@@ -138,7 +138,7 @@ class LiveRequestService
             if ($exists) {
                 return [
                     'status' => 'error',
-                    'message' => 'This timeslot is already exist',
+                    'message' => __('service_messages.timeslot_already_exists'),
                     'data' => (object)[]
                 ];
             }
@@ -152,7 +152,7 @@ class LiveRequestService
 
             return [
                 'status' => 'success',
-                'message' => 'Timeslot added successfully',
+                'message' => __('service_messages.timeslot_added_successfully'),
                 'data' => $data
             ];
 
@@ -224,7 +224,7 @@ class LiveRequestService
             if ($from->diffInMinutes($to) < 30) {
                 return[
                     'status' => 'error',
-                    'message' => 'Please select a minimum 30-minute timeslot',
+                    'message' => __('service_messages.please_select_minimum_30_min_timeslot'),
                     'data' =>(object) []
                 ];
             }
@@ -245,7 +245,7 @@ class LiveRequestService
             if ($exists) {
                 return[
                     'status' => 'error',
-                    'message' => 'This timeslot is already exists',
+                    'message' => __('service_messages.timeslot_already_exists'),
                     'data' => (object)[]
                 ];
             }
@@ -259,7 +259,7 @@ class LiveRequestService
 
             return[
                 'status' => 'success',
-                'message' => 'Timeslot updated successfully',
+                'message' => __('service_messages.timeslot_updated_successfully'),
                 'data' => $data
             ];
 
@@ -291,7 +291,7 @@ class LiveRequestService
 
             return [
                 'status' => 'success',
-                'message' => 'Timeslot deleted successfully',
+                'message' => __('service_messages.timeslot_deleted_successfully'),
                 'data' => []
             ];
 
@@ -351,7 +351,7 @@ class LiveRequestService
             if ($req_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Request found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' =>  (object)[]
                 ];
             }
@@ -405,7 +405,7 @@ class LiveRequestService
 
             return [
                 'status' => 'success',
-                'message' => 'Live Request Accepted successfully',
+                'message' => __('service_messages.live_request_accepted_successfully'),
                 'data' => $data
             ];
 
@@ -454,7 +454,7 @@ class LiveRequestService
 
             return [
                 'status' => 'success',
-                'message' => 'Live Request Rejected successfully',
+                'message' => __('service_messages.live_request_rejected_successfully'),
                 'data' => $data
             ];
 
@@ -542,7 +542,7 @@ $current_requests = $currentQuery->get();
 if ($current_requests->isEmpty()) {
     return [
         'status' => 'success',
-        'message' => 'No Request found',
+        'message' => __('service_messages.no_data_found'),
         'data' => []
     ];
 }

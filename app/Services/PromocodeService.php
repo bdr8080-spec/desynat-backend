@@ -44,7 +44,7 @@ class PromocodeService
             if ($data->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Promocode found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' =>  []
                 ];
             }
@@ -84,8 +84,8 @@ class PromocodeService
             $data->save();
 
             $message = $data->status == 1
-                ? 'Promocode Unblocked Successfully'
-                : 'Promocode blocked Successfully';
+                ? __('service_messages.promocode_unblocked_successfully')
+                : __('service_messages.promocode_blocked_successfully');
 
             return [
                 'status' => 'success',
@@ -122,7 +122,7 @@ class PromocodeService
 
             return [
                 'status' => 'success',
-                'message' => 'Promocode added successfully',
+                'message' => __('service_messages.promocode_added_successfully'),
                 'data' => $data
             ];
 
@@ -165,7 +165,7 @@ class PromocodeService
 
             return [
                 'status' => 'success',
-                'message' => 'Promocode updated successfully',
+                'message' => __('service_messages.promocode_updated_successfully'),
                 'data' => $data
             ];
 
@@ -194,7 +194,7 @@ class PromocodeService
 
             return [
                 'status' => 'success',
-                'message' => 'Promocode deleted successfully',
+                'message' => __('service_messages.promocode_deleted_successfully'),
                 'data' => []
             ];
 

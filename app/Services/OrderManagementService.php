@@ -300,7 +300,7 @@ class OrderManagementService
             if (!$checkOrder) {
                 return [
                     'status' => 'error',
-                    'message' => 'Order not found',
+                    'message' => __('service_messages.order_not_found'),
                     'data' => []
                 ];
             }
@@ -311,7 +311,7 @@ class OrderManagementService
             if ($checkDeliveryAddressCountryCode!== '+965') {
                 return [
                     'status' => 'error',
-                    'message' => 'Order Address Is Outside From Kuwait',
+                    'message' => __('service_messages.order_address_outside_kuwait'),
                     'data' => []
                 ];
             }
@@ -326,7 +326,7 @@ class OrderManagementService
             if (!$deliveryBoyIds) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Delivery Boy Found For User Address Zone',
+                    'message' => __('service_messages.no_delivery_boy_found_for_zone'),
                     'data' => []
                 ];
             }
@@ -369,7 +369,7 @@ class OrderManagementService
             if (!$order) {
                 return [
                     'status' => 'error',
-                    'message' => 'Order not found',
+                    'message' => __('service_messages.order_not_found'),
                     'data' => []
                 ];
             }
@@ -377,7 +377,7 @@ class OrderManagementService
             if ($order->assign_status == 1 && $order->delivery_boy_id == $driver->id) {
                 return [
                     'status' => 'error',
-                    'message' => 'Driver already assigned to this order',
+                    'message' => __('service_messages.driver_already_assigned_to_order'),
                     'data' => []
                 ];
             }
@@ -436,7 +436,7 @@ class OrderManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Delivery Boy Assigned Successfully',
+                'message' => __('service_messages.driver_assigned_successfully'),
                 'data' => [
                     'order'        => $order,
                     'orderdetails' => $order->order_details, 
@@ -955,7 +955,7 @@ class OrderManagementService
             if (!$checkOrder) {
                 return [
                     'status' => 'error',
-                    'message' => 'Order not found',
+                    'message' => __('service_messages.order_not_found'),
                     'data' => []
                 ];
             }
@@ -966,7 +966,7 @@ class OrderManagementService
             if ($checkDeliveryAddressCountryCode!== '+965') {
                 return [
                     'status' => 'error',
-                    'message' => 'Order Address Is Outside From Kuwait',
+                    'message' => __('service_messages.order_address_outside_kuwait'),
                     'data' => []
                 ];
             }
@@ -981,7 +981,7 @@ class OrderManagementService
             if (!$deliveryBoyIds) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Delivery Boy Found For User Address Zone',
+                    'message' => __('service_messages.no_delivery_boy_found_for_zone'),
                     'data' => []
                 ];
             }
@@ -1024,7 +1024,7 @@ class OrderManagementService
             if (!$order) {
                 return [
                     'status' => 'error',
-                    'message' => 'Order not found',
+                    'message' => __('service_messages.order_not_found'),
                     'data' => []
                 ];
             }
@@ -1032,7 +1032,7 @@ class OrderManagementService
             if ($order->assign_status == 1 && $order->delivery_boy_id == $driver->id) {
                 return [
                     'status' => 'error',
-                    'message' => 'Driver already assigned to this order',
+                    'message' => __('service_messages.driver_already_assigned_to_order'),
                     'data' => []
                 ];
             }
@@ -1057,7 +1057,7 @@ class OrderManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Delivery Boy Assigned Successfully',
+                'message' => __('service_messages.driver_assigned_successfully'),
                 'data' => [
                     'order'        => $order,
                     'driver'       => $driver

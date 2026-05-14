@@ -142,6 +142,64 @@ return [
   'gift_card_category_updated_successfully' => 'Gift Card Category Updated Successfully',
   'gift_card_category_deleted_successfully' => 'Gift Card Category deleted successfully',
 
+  //live request service
+  'timeslot_unblocked_successfully' => 'Timeslot Unblocked successfully',
+  'timeslot_blocked_successfully' => 'Timeslot Blocked successfully',
+  'please_select_minimum_30_min_timeslot' => 'Please select a minimum 30-minute timeslot',
+  'timeslot_already_exists' => 'This timeslot already exists',
+  'timeslot_added_successfully' => 'Timeslot added successfully',
+  'timeslot_updated_successfully' => 'Timeslot updated successfully',
+  'timeslot_deleted_successfully' => 'Timeslot deleted successfully',
+  'live_request_accepted_successfully' => 'Live Request Accepted successfully',
+  'live_request_rejected_successfully' => 'Live Request Rejected successfully',
+
+  //notification management service
+  'no_receivers_provided' => 'No receivers provided',
+  'notification_sent_successfully' => 'Notification sent successfully',
+  'notifications_marked_as_read_successfully' => 'Notifications marked as read successfully',
+  'notification_on' => 'Notifications turned on successfully',
+  'notification_off' => 'Notifications turned off successfully',
+
+  //order management service
+  'order_not_found' => 'Order not found',
+  'order_address_outside_kuwait' => 'Order address is outside Kuwait',
+  'no_delivery_boy_found_for_zone' => 'No delivery boy found for user address zone',
+  'driver_already_assigned_to_order' => 'Driver already assigned to this order',
+  'driver_assigned_successfully' => 'Delivery boy assigned successfully',
+
+  //product management service
+  'product_unblocked_successfully' => 'Product unblocked successfully',
+  'product_blocked_successfully' => 'Product blocked successfully',
+
+  //promocode service
+  'promocode_unblocked_successfully' => 'Promocode unblocked successfully',
+  'promocode_blocked_successfully' => 'Promocode blocked successfully',
+  'promocode_added_successfully' => 'Promocode added successfully',
+  'promocode_updated_successfully' => 'Promocode updated successfully',
+  'promocode_deleted_successfully' => 'Promocode deleted successfully',
+
+  //reason service
+  'exchange_reason_unblocked_successfully' => 'Exchange reason unblocked successfully',
+  'exchange_reason_blocked_successfully' => 'Exchange reason blocked successfully',
+  'return_reason_unblocked_successfully' => 'Return reason unblocked successfully',
+  'return_reason_blocked_successfully' => 'Return reason blocked successfully',
+  'cancel_reason_unblocked_successfully' => 'Cancel reason unblocked successfully',
+  'cancel_reason_blocked_successfully' => 'Cancel reason blocked successfully',
+  'reason_unblocked_successfully' => 'Reason unblocked successfully',
+  'reason_blocked_successfully' => 'Reason blocked successfully',
+  'exchange_reason_created_successfully' => 'Exchange reason created successfully',
+  'return_reason_created_successfully' => 'Return reason created successfully',
+  'cancel_reason_created_successfully' => 'Cancel reason created successfully',
+  'reason_created_successfully' => 'Reason created successfully',
+  'exchange_reason_updated_successfully' => 'Exchange reason updated successfully',
+  'return_reason_updated_successfully' => 'Return reason updated successfully',
+  'cancel_reason_updated_successfully' => 'Cancel reason updated successfully',
+  'reason_updated_successfully' => 'Reason updated successfully',
+  'exchange_reason_deleted_successfully' => 'Exchange reason deleted successfully',
+  'return_reason_deleted_successfully' => 'Return reason deleted successfully',
+  'cancel_reason_deleted_successfully' => 'Cancel reason deleted successfully',
+  'reason_deleted_successfully' => 'Reason deleted successfully',
+
   
   
     
