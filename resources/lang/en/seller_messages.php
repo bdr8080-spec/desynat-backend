@@ -1006,7 +1006,7 @@ return [
 
     // WebSellerStaffmanagementController Web 
 
-   'full_name_required' => 'Full name is required.',
+    'full_name_required' => 'Full name is required.',
     'full_name_string' => 'Full name must be valid text.',
     'full_name_max' => 'Full name cannot exceed 255 characters.',
 
@@ -1048,5 +1048,8 @@ return [
     'can_action_boolean' => 'Action permission must be true or false.',
 
     'staff_created_successfully' => 'Staff created successfully.',
+
+
+    'old_password_required' => 'Old password is required.',
     
 ];

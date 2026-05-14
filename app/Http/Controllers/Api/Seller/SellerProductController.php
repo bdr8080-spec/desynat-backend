@@ -94,7 +94,143 @@ class SellerProductController extends Controller
             'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
             'upload_size_chart'=>'required'
                          
-        ]);
+        ],
+    [
+   
+    // Base Fields
+   
+     // Category / Brand
+    'category_id.required' => __('seller_messages.category_required'),
+    'category_id.exists' => __('seller_messages.category_invalid'),
+
+    'subcategory_id.required' => __('seller_messages.subcategory_required'),
+    'subcategory_id.exists' => __('seller_messages.subcategory_invalid'),
+
+    'brand_id.required' => __('seller_messages.brand_required'),
+    'brand_id.exists' => __('seller_messages.brand_invalid'),
+
+    // Product Names
+    'product_name_en.required' => __('seller_messages.product_name_en_required'),
+    'product_name_en.unique' => __('seller_messages.product_name_en_unique'),
+
+    'product_name_ar.required' => __('seller_messages.product_name_ar_required'),
+    'product_name_ar.unique' => __('seller_messages.product_name_ar_unique'),
+
+      'description_en.required' => __('seller_messages.description_en_required'),
+    'description_ar.required' => __('seller_messages.description_ar_required'),
+
+    // Specification
+    'product_spe_en.required' => __('seller_messages.product_spe_en_required'),
+    'product_spe_en.array' => __('seller_messages.product_spe_en_array'),
+    'product_spe_en.*.required' => __('seller_messages.product_spe_en_value_required'),
+
+    'product_spe_feature_en.required' => __('seller_messages.product_spe_feature_en_required'),
+    'product_spe_feature_en.array' => __('seller_messages.product_spe_feature_en_array'),
+    'product_spe_feature_en.*.required' => __('seller_messages.product_spe_feature_en_value_required'),
+
+    'product_spe_ar.required' => __('seller_messages.product_spe_ar_required'),
+    'product_spe_ar.array' => __('seller_messages.product_spe_ar_array'),
+    'product_spe_ar.*.required' => __('seller_messages.product_spe_ar_value_required'),
+
+    'product_spe_feature_ar.required' => __('seller_messages.product_spe_feature_ar_required'),
+    'product_spe_feature_ar.array' => __('seller_messages.product_spe_feature_ar_array'),
+    'product_spe_feature_ar.*.required' => __('seller_messages.product_spe_feature_ar_value_required'),
+
+    // Colors
+    'color_id.required' => __('seller_messages.color_required'),
+    'color_id.array' => __('seller_messages.color_array'),
+    'color_id.*.required' => __('seller_messages.color_field_required'),
+    'color_id.*.exists' => __('seller_messages.color_invalid'),
+
+    // Variant Image
+    'variant_image.required' => __('seller_messages.variant_image_required'),
+    'variant_image.array' => __('seller_messages.variant_image_array'),
+    'variant_image.*.required' => __('seller_messages.variant_image_each_required'),
+    'variant_image.*.array' => __('seller_messages.variant_image_invalid'),
+
+    // Size Validation
+    'size_id.required' => __('seller_messages.size_required'),
+    'size_id.array' => __('seller_messages.size_array'),
+    'size_id.*.required' => __('seller_messages.size_entry_required'),
+    'size_id.*.array' => __('seller_messages.size_array'),
+    'size_id.*.*.required' => __('seller_messages.size_value_required'),
+    'size_id.*.*.exists' => __('seller_messages.size_invalid'),
+
+    // Inventory
+    'total_stock.*.*.required' => __('seller_messages.stock_required'),
+    'total_stock.*.*.integer' => __('seller_messages.stock_integer'),
+
+    'sku.*.*.required' => __('seller_messages.sku_required'),
+    'sku.*.*.max' => __('seller_messages.sku_max'),
+
+    'actual_price.*.*.required' => __('seller_messages.actual_price_required'),
+    'actual_price.*.*.numeric' => __('seller_messages.actual_price_numeric'),
+
+    // Discount
+    'discount_type.*.*.required' => __('seller_messages.discount_type_required'),
+    'discount_type.*.*.in' => __('seller_messages.discount_type_invalid'),
+
+    'discount_value.*.*.required' => __('seller_messages.discount_value_required'),
+    'discount_value.*.*.numeric' => __('seller_messages.discount_value_numeric'),
+
+    'final_price.*.*.required' => __('seller_messages.final_price_required'),
+    'final_price.*.*.numeric' => __('seller_messages.final_price_numeric'),
+
+    // Product Policy
+    'min_card_quantity.required' => __('seller_messages.min_cart_required'),
+    'max_card_quantity.required' => __('seller_messages.max_cart_required'),
+
+    'product_return.required' => __('seller_messages.product_return_required'),
+    'product_return.in' => __('seller_messages.product_return_invalid'),
+
+    'return_days.required_if' => __('seller_messages.return_days_required'),
+    'return_days.integer' => __('seller_messages.return_days_numeric'),
+
+    'product_exchangable.required' => __('seller_messages.exchange_required'),
+    'product_exchangable.in' => __('seller_messages.exchange_invalid'),
+
+    'exchangable_days.required_if' => __('seller_messages.exchange_days_required'),
+    'exchangable_days.integer' => __('seller_messages.exchange_days_numeric'),
+
+    'review_rating.required' => __('seller_messages.review_required'),
+    'review_rating.in' => __('seller_messages.review_invalid'),
+
+    'affiliated_product.required' => __('seller_messages.affiliate_required'),
+    'affiliated_product.in' => __('seller_messages.affiliate_invalid'),
+    'affiliated_commission.required_if' => __('seller_messages.affiliate_commission_required'),
+
+    'customized_product.required' => __('seller_messages.customized_required'),
+    'customized_product.in' => __('seller_messages.customized_invalid'),
+
+    'ready_to_ship.required' => __('seller_messages.ready_to_ship_required'),
+    'ready_to_ship.in' => __('seller_messages.ready_to_ship_invalid'),
+
+    'cash_on_delivery.required' => __('seller_messages.cod_required'),
+    'cash_on_delivery.in' => __('seller_messages.cod_invalid'),
+
+    'upload_size_chart.required' => __('seller_messages.size_chart_required'),
+
+    // Body measurement
+    'bust.*.*.required' => __('seller_messages.bust_required'),
+    'bust.*.*.numeric' => __('seller_messages.bust_numeric'),
+
+    'waist.*.*.required' => __('seller_messages.waist_required'),
+    'waist.*.*.numeric' => __('seller_messages.waist_numeric'),
+
+    'hip.*.*.required' => __('seller_messages.hip_required'),
+    'hip.*.*.numeric' => __('seller_messages.hip_numeric'),
+
+    'shoulder.*.*.required' => __('seller_messages.shoulder_required'),
+    'shoulder.*.*.numeric' => __('seller_messages.shoulder_numeric'),
+
+    'sleeve_length.*.*.required' => __('seller_messages.sleeve_required'),
+    'sleeve_length.*.*.numeric' => __('seller_messages.sleeve_numeric'),
+
+    'length.*.*.required' => __('seller_messages.length_required'),
+    'length.*.*.numeric' => __('seller_messages.length_numeric'),
+        
+      ]
+    );
 
         if($validate->fails()){
             return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
@@ -260,6 +396,143 @@ class SellerProductController extends Controller
             'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
             'upload_size_chart'=>'required'
                          
+        ],
+        [
+    
+        // Base Fields
+     'category_id.required' => __('seller_messages.category_required'),
+    'category_id.exists' => __('seller_messages.category_invalid'),
+
+    'subcategory_id.required' => __('seller_messages.subcategory_required'),
+    'subcategory_id.exists' => __('seller_messages.subcategory_invalid'),
+
+    'brand_id.required' => __('seller_messages.brand_required'),
+    'brand_id.exists' => __('seller_messages.brand_invalid'),
+
+    'product_name_en.required' => __('seller_messages.product_name_en_required'),
+    'product_name_en.unique' => __('seller_messages.product_name_en_unique'),
+
+    'product_name_ar.required' => __('seller_messages.product_name_ar_required'),
+    'product_name_ar.unique' => __('seller_messages.product_name_ar_unique'),
+
+    'description_en.required' => __('seller_messages.description_en_required'),
+    'description_ar.required' => __('seller_messages.description_ar_required'),
+
+
+    // Specifications
+     'product_spe_en.required' => __('seller_messages.product_spe_en_required'),
+    'product_spe_en.array' => __('seller_messages.product_spe_en_array'),
+    'product_spe_en.*.required' => __('seller_messages.product_spe_en_value_required'),
+
+    'product_spe_feature_en.required' => __('seller_messages.product_spe_feature_en_required'),
+    'product_spe_feature_en.array' => __('seller_messages.product_spe_feature_en_array'),
+    'product_spe_feature_en.*.required' => __('seller_messages.product_spe_feature_en_value_required'),
+
+    'product_spe_ar.required' => __('seller_messages.product_spe_ar_required'),
+    'product_spe_ar.array' => __('seller_messages.product_spe_ar_array'),
+    'product_spe_ar.*.required' => __('seller_messages.product_spe_ar_value_required'),
+
+    'product_spe_feature_ar.required' => __('seller_messages.product_spe_feature_ar_required'),
+    'product_spe_feature_ar.array' => __('seller_messages.product_spe_feature_ar_array'),
+    'product_spe_feature_ar.*.required' => __('seller_messages.product_spe_feature_ar_value_required'),
+
+    'color_id.required' => __('seller_messages.color_required'),
+    'color_id.array' => __('seller_messages.color_array'),
+    'color_id.*.required' => __('seller_messages.color_value_required'),
+    'color_id.*.exists' => __('seller_messages.color_invalid'),
+
+
+    // Sizes
+    'size_id.required' => __('seller_messages.size_required'),
+    'size_id.array' => __('seller_messages.size_array'),
+    'size_id.*.required' => __('seller_messages.size_group_required'),
+    'size_id.*.*.required' => __('seller_messages.size_value_required'),
+    'size_id.*.*.exists' => __('seller_messages.size_invalid'),
+
+'variant_image.array' => __('seller_messages.variant_image_array'),
+'variant_image.*.array' => __('seller_messages.variant_image_group_array'),
+'variant_image.*.*.image' => __('seller_messages.variant_image_image'),
+'variant_image.*.*.mimes' => __('seller_messages.variant_image_mimes'),
+'variant_image.*.*.max' => __('seller_messages.variant_image_max'),
+
+'old_variant_image.array' => __('seller_messages.old_variant_image_array'),
+'old_variant_image.*.nullable' => __('seller_messages.old_variant_image_nullable'),
+
+'total_stock.*.*.required' => __('seller_messages.total_stock_required'),
+'total_stock.*.*.integer' => __('seller_messages.total_stock_integer'),
+'total_stock.*.*.min' => __('seller_messages.total_stock_min'),
+
+'sku.*.*.required' => __('seller_messages.sku_required'),
+'sku.*.*.string' => __('seller_messages.sku_string'),
+'sku.*.*.max' => __('seller_messages.sku_max'),
+
+'actual_price.*.*.required' => __('seller_messages.actual_price_required'),
+'actual_price.*.*.numeric' => __('seller_messages.actual_price_numeric'),
+'actual_price.*.*.min' => __('seller_messages.actual_price_min'),
+
+'discount_type.*.*.required' => __('seller_messages.discount_type_required'),
+'discount_type.*.*.in' => __('seller_messages.discount_type_invalid'),
+
+'discount_value.*.*.required' => __('seller_messages.discount_value_required'),
+'discount_value.*.*.numeric' => __('seller_messages.discount_value_numeric'),
+'discount_value.*.*.min' => __('seller_messages.discount_value_min'),
+
+'final_price.*.*.required' => __('seller_messages.final_price_required'),
+'final_price.*.*.numeric' => __('seller_messages.final_price_numeric'),
+'final_price.*.*.min' => __('seller_messages.final_price_min'),
+
+'min_card_quantity.required' => __('seller_messages.min_cart_quantity_required'),
+'max_card_quantity.required' => __('seller_messages.max_cart_quantity_required'),
+
+'product_return.required' => __('seller_messages.product_return_required'),
+'product_return.in' => __('seller_messages.product_return_invalid'),
+
+'return_days.required_if' => __('seller_messages.return_days_required'),
+'return_days.integer' => __('seller_messages.return_days_integer'),
+
+'product_exchangable.required' => __('seller_messages.product_exchange_required'),
+'product_exchangable.in' => __('seller_messages.product_exchange_invalid'),
+
+'exchangable_days.required_if' => __('seller_messages.exchange_days_required'),
+'exchangable_days.integer' => __('seller_messages.exchange_days_integer'),
+
+'review_rating.required' => __('seller_messages.review_rating_required'),
+'review_rating.in' => __('seller_messages.review_rating_invalid'),
+
+'affiliated_product.required' => __('seller_messages.affiliated_product_required'),
+'affiliated_product.in' => __('seller_messages.affiliated_product_invalid'),
+
+'affiliated_commission.required_if' => __('seller_messages.affiliated_commission_required'),
+
+'customized_product.required' => __('seller_messages.customized_product_required'),
+'customized_product.in' => __('seller_messages.customized_product_invalid'),
+
+'ready_to_ship.required' => __('seller_messages.ready_to_ship_required'),
+'ready_to_ship.in' => __('seller_messages.ready_to_ship_invalid'),
+
+'cash_on_delivery.required' => __('seller_messages.cash_on_delivery_required'),
+'cash_on_delivery.in' => __('seller_messages.cash_on_delivery_invalid'),
+
+'upload_size_chart.required_without' => __('seller_messages.upload_size_chart_required'),
+'old_upload_size_chart.required_without' => __('seller_messages.old_upload_size_chart_required'),
+
+'bust.*.*.required' => __('seller_messages.bust_required'),
+'bust.*.*.numeric' => __('seller_messages.bust_numeric'),
+
+'waist.*.*.required' => __('seller_messages.waist_required'),
+'waist.*.*.numeric' => __('seller_messages.waist_numeric'),
+
+'hip.*.*.required' => __('seller_messages.hip_required'),
+'hip.*.*.numeric' => __('seller_messages.hip_numeric'),
+
+'shoulder.*.*.required' => __('seller_messages.shoulder_required'),
+'shoulder.*.*.numeric' => __('seller_messages.shoulder_numeric'),
+
+'sleeve_length.*.*.required' => __('seller_messages.sleeve_length_required'),
+'sleeve_length.*.*.numeric' => __('seller_messages.sleeve_length_numeric'),
+
+'length.*.*.required' => __('seller_messages.length_required'),
+'length.*.*.numeric' => __('seller_messages.length_numeric'),
         ]);
 
         if($validate->fails()){
@@ -563,6 +836,140 @@ public function product_delete(Request $request){
           'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
           'upload_size_chart'=>'required'
                        
+      ],[
+        
+    // Base Fields
+     // Category / Brand
+    'category_id.required' => __('seller_messages.category_required'),
+    'category_id.exists' => __('seller_messages.category_invalid'),
+
+    'subcategory_id.required' => __('seller_messages.subcategory_required'),
+    'subcategory_id.exists' => __('seller_messages.subcategory_invalid'),
+
+    'brand_id.required' => __('seller_messages.brand_required'),
+    'brand_id.exists' => __('seller_messages.brand_invalid'),
+
+    // Product Names
+    'product_name_en.required' => __('seller_messages.product_name_en_required'),
+    'product_name_en.unique' => __('seller_messages.product_name_en_unique'),
+
+    'product_name_ar.required' => __('seller_messages.product_name_ar_required'),
+    'product_name_ar.unique' => __('seller_messages.product_name_ar_unique'),
+
+      'description_en.required' => __('seller_messages.description_en_required'),
+    'description_ar.required' => __('seller_messages.description_ar_required'),
+
+    // Specification
+    'product_spe_en.required' => __('seller_messages.product_spe_en_required'),
+    'product_spe_en.array' => __('seller_messages.product_spe_en_array'),
+    'product_spe_en.*.required' => __('seller_messages.product_spe_en_value_required'),
+
+    'product_spe_feature_en.required' => __('seller_messages.product_spe_feature_en_required'),
+    'product_spe_feature_en.array' => __('seller_messages.product_spe_feature_en_array'),
+    'product_spe_feature_en.*.required' => __('seller_messages.product_spe_feature_en_value_required'),
+
+    'product_spe_ar.required' => __('seller_messages.product_spe_ar_required'),
+    'product_spe_ar.array' => __('seller_messages.product_spe_ar_array'),
+    'product_spe_ar.*.required' => __('seller_messages.product_spe_ar_value_required'),
+
+    'product_spe_feature_ar.required' => __('seller_messages.product_spe_feature_ar_required'),
+    'product_spe_feature_ar.array' => __('seller_messages.product_spe_feature_ar_array'),
+    'product_spe_feature_ar.*.required' => __('seller_messages.product_spe_feature_ar_value_required'),
+
+    // Colors
+    'color_id.required' => __('seller_messages.color_required'),
+    'color_id.array' => __('seller_messages.color_array'),
+    'color_id.*.required' => __('seller_messages.color_field_required'),
+    'color_id.*.exists' => __('seller_messages.color_invalid'),
+
+    // Variant Image
+    'variant_image.required' => __('seller_messages.variant_image_required'),
+    'variant_image.array' => __('seller_messages.variant_image_array'),
+    'variant_image.*.required' => __('seller_messages.variant_image_each_required'),
+    'variant_image.*.array' => __('seller_messages.variant_image_invalid'),
+
+    // Size Validation
+    'size_id.required' => __('seller_messages.size_required'),
+    'size_id.array' => __('seller_messages.size_array'),
+    'size_id.*.required' => __('seller_messages.size_entry_required'),
+    'size_id.*.array' => __('seller_messages.size_array'),
+    'size_id.*.*.required' => __('seller_messages.size_value_required'),
+    'size_id.*.*.exists' => __('seller_messages.size_invalid'),
+
+    // Inventory
+    'total_stock.*.*.required' => __('seller_messages.stock_required'),
+    'total_stock.*.*.integer' => __('seller_messages.stock_integer'),
+
+    'sku.*.*.required' => __('seller_messages.sku_required'),
+    'sku.*.*.max' => __('seller_messages.sku_max'),
+
+    'actual_price.*.*.required' => __('seller_messages.actual_price_required'),
+    'actual_price.*.*.numeric' => __('seller_messages.actual_price_numeric'),
+
+    // Discount
+    'discount_type.*.*.required' => __('seller_messages.discount_type_required'),
+    'discount_type.*.*.in' => __('seller_messages.discount_type_invalid'),
+
+    'discount_value.*.*.required' => __('seller_messages.discount_value_required'),
+    'discount_value.*.*.numeric' => __('seller_messages.discount_value_numeric'),
+
+    'final_price.*.*.required' => __('seller_messages.final_price_required'),
+    'final_price.*.*.numeric' => __('seller_messages.final_price_numeric'),
+
+    // Product Policy
+    'min_card_quantity.required' => __('seller_messages.min_cart_required'),
+    'max_card_quantity.required' => __('seller_messages.max_cart_required'),
+
+    'product_return.required' => __('seller_messages.product_return_required'),
+    'product_return.in' => __('seller_messages.product_return_invalid'),
+
+    'return_days.required_if' => __('seller_messages.return_days_required'),
+    'return_days.integer' => __('seller_messages.return_days_numeric'),
+
+    'product_exchangable.required' => __('seller_messages.exchange_required'),
+    'product_exchangable.in' => __('seller_messages.exchange_invalid'),
+
+    'exchangable_days.required_if' => __('seller_messages.exchange_days_required'),
+    'exchangable_days.integer' => __('seller_messages.exchange_days_numeric'),
+
+    'review_rating.required' => __('seller_messages.review_required'),
+    'review_rating.in' => __('seller_messages.review_invalid'),
+
+    'affiliated_product.required' => __('seller_messages.affiliate_required'),
+    'affiliated_product.in' => __('seller_messages.affiliate_invalid'),
+    'affiliated_commission.required_if' => __('seller_messages.affiliate_commission_required'),
+
+    'customized_product.required' => __('seller_messages.customized_required'),
+    'customized_product.in' => __('seller_messages.customized_invalid'),
+
+    'ready_to_ship.required' => __('seller_messages.ready_to_ship_required'),
+    'ready_to_ship.in' => __('seller_messages.ready_to_ship_invalid'),
+
+    'cash_on_delivery.required' => __('seller_messages.cod_required'),
+    'cash_on_delivery.in' => __('seller_messages.cod_invalid'),
+
+    'upload_size_chart.required' => __('seller_messages.size_chart_required'),
+
+    // Body measurement
+    'bust.*.*.required' => __('seller_messages.bust_required'),
+    'bust.*.*.numeric' => __('seller_messages.bust_numeric'),
+
+    'waist.*.*.required' => __('seller_messages.waist_required'),
+    'waist.*.*.numeric' => __('seller_messages.waist_numeric'),
+
+    'hip.*.*.required' => __('seller_messages.hip_required'),
+    'hip.*.*.numeric' => __('seller_messages.hip_numeric'),
+
+    'shoulder.*.*.required' => __('seller_messages.shoulder_required'),
+    'shoulder.*.*.numeric' => __('seller_messages.shoulder_numeric'),
+
+    'sleeve_length.*.*.required' => __('seller_messages.sleeve_required'),
+    'sleeve_length.*.*.numeric' => __('seller_messages.sleeve_numeric'),
+
+    'length.*.*.required' => __('seller_messages.length_required'),
+    'length.*.*.numeric' => __('seller_messages.length_numeric'),
+        
+      
       ]);
 
     //   check Color and size combination
@@ -747,6 +1154,143 @@ $request_data=(object) [
         'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
         'upload_size_chart'=>'required',
                      
+    ],
+    [
+    
+        // Base Fields
+     'category_id.required' => __('seller_messages.category_required'),
+    'category_id.exists' => __('seller_messages.category_invalid'),
+
+    'subcategory_id.required' => __('seller_messages.subcategory_required'),
+    'subcategory_id.exists' => __('seller_messages.subcategory_invalid'),
+
+    'brand_id.required' => __('seller_messages.brand_required'),
+    'brand_id.exists' => __('seller_messages.brand_invalid'),
+
+    'product_name_en.required' => __('seller_messages.product_name_en_required'),
+    'product_name_en.unique' => __('seller_messages.product_name_en_unique'),
+
+    'product_name_ar.required' => __('seller_messages.product_name_ar_required'),
+    'product_name_ar.unique' => __('seller_messages.product_name_ar_unique'),
+
+    'description_en.required' => __('seller_messages.description_en_required'),
+    'description_ar.required' => __('seller_messages.description_ar_required'),
+
+
+    // Specifications
+     'product_spe_en.required' => __('seller_messages.product_spe_en_required'),
+    'product_spe_en.array' => __('seller_messages.product_spe_en_array'),
+    'product_spe_en.*.required' => __('seller_messages.product_spe_en_value_required'),
+
+    'product_spe_feature_en.required' => __('seller_messages.product_spe_feature_en_required'),
+    'product_spe_feature_en.array' => __('seller_messages.product_spe_feature_en_array'),
+    'product_spe_feature_en.*.required' => __('seller_messages.product_spe_feature_en_value_required'),
+
+    'product_spe_ar.required' => __('seller_messages.product_spe_ar_required'),
+    'product_spe_ar.array' => __('seller_messages.product_spe_ar_array'),
+    'product_spe_ar.*.required' => __('seller_messages.product_spe_ar_value_required'),
+
+    'product_spe_feature_ar.required' => __('seller_messages.product_spe_feature_ar_required'),
+    'product_spe_feature_ar.array' => __('seller_messages.product_spe_feature_ar_array'),
+    'product_spe_feature_ar.*.required' => __('seller_messages.product_spe_feature_ar_value_required'),
+
+    'color_id.required' => __('seller_messages.color_required'),
+    'color_id.array' => __('seller_messages.color_array'),
+    'color_id.*.required' => __('seller_messages.color_value_required'),
+    'color_id.*.exists' => __('seller_messages.color_invalid'),
+
+
+    // Sizes
+    'size_id.required' => __('seller_messages.size_required'),
+    'size_id.array' => __('seller_messages.size_array'),
+    'size_id.*.required' => __('seller_messages.size_group_required'),
+    'size_id.*.*.required' => __('seller_messages.size_value_required'),
+    'size_id.*.*.exists' => __('seller_messages.size_invalid'),
+
+'variant_image.array' => __('seller_messages.variant_image_array'),
+'variant_image.*.array' => __('seller_messages.variant_image_group_array'),
+'variant_image.*.*.image' => __('seller_messages.variant_image_image'),
+'variant_image.*.*.mimes' => __('seller_messages.variant_image_mimes'),
+'variant_image.*.*.max' => __('seller_messages.variant_image_max'),
+
+'old_variant_image.array' => __('seller_messages.old_variant_image_array'),
+'old_variant_image.*.nullable' => __('seller_messages.old_variant_image_nullable'),
+
+'total_stock.*.*.required' => __('seller_messages.total_stock_required'),
+'total_stock.*.*.integer' => __('seller_messages.total_stock_integer'),
+'total_stock.*.*.min' => __('seller_messages.total_stock_min'),
+
+'sku.*.*.required' => __('seller_messages.sku_required'),
+'sku.*.*.string' => __('seller_messages.sku_string'),
+'sku.*.*.max' => __('seller_messages.sku_max'),
+
+'actual_price.*.*.required' => __('seller_messages.actual_price_required'),
+'actual_price.*.*.numeric' => __('seller_messages.actual_price_numeric'),
+'actual_price.*.*.min' => __('seller_messages.actual_price_min'),
+
+'discount_type.*.*.required' => __('seller_messages.discount_type_required'),
+'discount_type.*.*.in' => __('seller_messages.discount_type_invalid'),
+
+'discount_value.*.*.required' => __('seller_messages.discount_value_required'),
+'discount_value.*.*.numeric' => __('seller_messages.discount_value_numeric'),
+'discount_value.*.*.min' => __('seller_messages.discount_value_min'),
+
+'final_price.*.*.required' => __('seller_messages.final_price_required'),
+'final_price.*.*.numeric' => __('seller_messages.final_price_numeric'),
+'final_price.*.*.min' => __('seller_messages.final_price_min'),
+
+'min_card_quantity.required' => __('seller_messages.min_cart_quantity_required'),
+'max_card_quantity.required' => __('seller_messages.max_cart_quantity_required'),
+
+'product_return.required' => __('seller_messages.product_return_required'),
+'product_return.in' => __('seller_messages.product_return_invalid'),
+
+'return_days.required_if' => __('seller_messages.return_days_required'),
+'return_days.integer' => __('seller_messages.return_days_integer'),
+
+'product_exchangable.required' => __('seller_messages.product_exchange_required'),
+'product_exchangable.in' => __('seller_messages.product_exchange_invalid'),
+
+'exchangable_days.required_if' => __('seller_messages.exchange_days_required'),
+'exchangable_days.integer' => __('seller_messages.exchange_days_integer'),
+
+'review_rating.required' => __('seller_messages.review_rating_required'),
+'review_rating.in' => __('seller_messages.review_rating_invalid'),
+
+'affiliated_product.required' => __('seller_messages.affiliated_product_required'),
+'affiliated_product.in' => __('seller_messages.affiliated_product_invalid'),
+
+'affiliated_commission.required_if' => __('seller_messages.affiliated_commission_required'),
+
+'customized_product.required' => __('seller_messages.customized_product_required'),
+'customized_product.in' => __('seller_messages.customized_product_invalid'),
+
+'ready_to_ship.required' => __('seller_messages.ready_to_ship_required'),
+'ready_to_ship.in' => __('seller_messages.ready_to_ship_invalid'),
+
+'cash_on_delivery.required' => __('seller_messages.cash_on_delivery_required'),
+'cash_on_delivery.in' => __('seller_messages.cash_on_delivery_invalid'),
+
+'upload_size_chart.required_without' => __('seller_messages.upload_size_chart_required'),
+'old_upload_size_chart.required_without' => __('seller_messages.old_upload_size_chart_required'),
+
+'bust.*.*.required' => __('seller_messages.bust_required'),
+'bust.*.*.numeric' => __('seller_messages.bust_numeric'),
+
+'waist.*.*.required' => __('seller_messages.waist_required'),
+'waist.*.*.numeric' => __('seller_messages.waist_numeric'),
+
+'hip.*.*.required' => __('seller_messages.hip_required'),
+'hip.*.*.numeric' => __('seller_messages.hip_numeric'),
+
+'shoulder.*.*.required' => __('seller_messages.shoulder_required'),
+'shoulder.*.*.numeric' => __('seller_messages.shoulder_numeric'),
+
+'sleeve_length.*.*.required' => __('seller_messages.sleeve_length_required'),
+'sleeve_length.*.*.numeric' => __('seller_messages.sleeve_length_numeric'),
+
+'length.*.*.required' => __('seller_messages.length_required'),
+'length.*.*.numeric' => __('seller_messages.length_numeric'),
     ]);
     
 
@@ -1025,6 +1569,18 @@ public function view_profile(Request $request){
             'let'=>'required',
             'long'=>'required'
             
+            ],[
+                    
+        // Basic fields
+        'first_name.required'     =>__('seller_messages.first_name_required') ,
+        'last_name.required'      =>__('seller_messages.last_name_required') ,
+        'store_name.required'     =>__('seller_messages.store_name_required') ,
+        'country.required'        =>__('seller_messages.country_required') ,
+        'store_address.required'  =>__('seller_messages.store_address_required') ,
+        'store_phone.required'    =>__('seller_messages.store_phone_required') ,
+        'store_mail_id.required'  =>__('seller_messages.store_email_required') ,
+        'bio.required'     
+
             ]);
         
        if($validate->fails()){

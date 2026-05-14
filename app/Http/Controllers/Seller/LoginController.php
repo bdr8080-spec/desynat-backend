@@ -608,6 +608,10 @@ class LoginController extends Controller
         $validate = Validator::make($request->all(), [
             'country_code'=>"required",
             'mobile'=>"required"
+        ],[
+              'country_code.required'=> __('seller_messages.country_code_required'),
+                'mobile.required'=> __('seller_messages.mobile_required')
+       
         ]);
 
        if($validate->fails()){
