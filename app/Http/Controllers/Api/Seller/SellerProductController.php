@@ -1579,9 +1579,9 @@ public function view_profile(Request $request){
         'store_address.required'  =>__('seller_messages.store_address_required') ,
         'store_phone.required'    =>__('seller_messages.store_phone_required') ,
         'store_mail_id.required'  =>__('seller_messages.store_email_required') ,
-        'bio.required'     
+        'bio.required'            =>__('seller_messages.bio_required'), 
 
-            ]);
+        ]);
         
        if($validate->fails()){
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
