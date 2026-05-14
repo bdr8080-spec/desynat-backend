@@ -962,5 +962,66 @@ return [
     'sku_lte' => 'لا يمكن أن يكون SKU أكبر من كمية المخزون.',
 
 
+
+    // websellerdashboard controller 
+
+      // Subscription
+    'plan_purchase_success' => 'لقد قمت بشراء الخطة بنجاح!',
+    'payment_failed' => 'فشل الدفع الخاص بك، يرجى المحاولة مرة أخرى.',
+    'no_plan_found' => 'لم يتم العثور على أي خطة.',
+    'purchase_plan_message' => 'يرجى شراء خطة للحصول على خيارات أفضل.',
+    'payment_method_required' => 'طريقة الدفع مطلوبة.',
+    'plan_purchase_successfully' => 'لقد قمت بشراء الخطة بنجاح.',
+
+    // Profile Update
+    'profile_pic_required' => 'يرجى تحميل صورة الملف الشخصي.',
+    'old_profile_pic_missing' => 'صورة الملف الشخصي السابقة غير موجودة.',
+    'store_image_required' => 'يرجى تحميل صورة المتجر.',
+    'old_store_image_missing' => 'صورة المتجر السابقة غير موجودة.',
+
+    'first_name_required' => 'يرجى إدخال الاسم الأول.',
+    'last_name_required' => 'يرجى إدخال اسم العائلة.',
+    'store_name_required' => 'يرجى إدخال اسم المتجر.',
+    'country_required' => 'الدولة مطلوبة.',
+    'store_address_required' => 'يرجى إدخال عنوان المتجر.',
+    'store_phone_required' => 'يرجى إدخال رقم هاتف المتجر.',
+    'store_email_required' => 'يرجى إدخال البريد الإلكتروني للمتجر.',
+    'bio_required' => 'يرجى إدخال النبذة التعريفية.',
+
+    // Bank Details
+    'account_type_required' => 'نوع الحساب مطلوب.',
+    'account_type_invalid' => 'نوع الحساب المحدد غير صالح.',
+    'iban_required' => 'رقم الآيبان مطلوب.',
+    'swift_required' => 'رمز السويفت مطلوب.',
+    'bank_name_required' => 'اسم البنك مطلوب.',
+    'account_holder_name_required' => 'اسم صاحب الحساب مطلوب.',
+    'upload_proof_required' => 'يرجى تحميل مستند الإثبات.',
+    'old_upload_proof_missing' => 'مستند الإثبات السابق غير موجود.',
+
+    // Commission
+    'affiliate_commission_required' => 'عمولة التسويق بالعمولة مطلوبة.',
+    'affiliate_commission_numeric' => 'يجب أن تكون العمولة رقمًا.',
+    'affiliate_commission_min' => 'لا يمكن أن تكون العمولة أقل من 0٪.',
+    'affiliate_commission_max' => 'لا يمكن أن تكون العمولة أكثر من 100٪.',
+
+    // Story / Reel / Highlight
+    'file_required' => 'يرجى تحميل صورة أو فيديو.',
+    'file_invalid_format' => 'يجب أن يكون الملف بصيغة JPEG أو PNG أو JPG أو GIF أو SVG أو MP4 أو MOV أو AVI أو MKV.',
+    'file_size_exceed' => 'يجب ألا يتجاوز حجم الملف 5 ميجابايت.',
+    'caption_required' => 'يرجى إدخال وصف.',
+
+    // Ticket
+    'ticket_file_invalid' => 'يجب أن يكون الملف بصيغة JPEG أو PNG أو JPG أو GIF أو SVG.',
+    'ticket_file_size' => 'يجب ألا يتجاوز حجم الصورة 5 ميجابايت.',
+
+    // Delete Account
+    'seller_not_found' => 'البائع غير موجود.',
+    'account_deleted_successfully' => 'تم حذف الحساب بنجاح.',
+
+    // Password
+    'password_validation' => 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وتحتوي على حرف كبير ورقم ورمز خاص.',
+    'confirm_password_match' => 'يجب أن تتطابق كلمة تأكيد كلمة المرور مع كلمة المرور الجديدة.',
+    'validation_error' => 'خطأ في التحقق',
+
   
 ];
