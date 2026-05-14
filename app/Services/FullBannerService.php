@@ -46,7 +46,7 @@ class FullBannerService
             if ($banner_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Banner found',
+                    'message' => __('service_messages.no_data_found'),'message' => __('service_messages.no_data_found'),
                     'data' =>  (object)[]
                 ];
             }
@@ -83,7 +83,7 @@ class FullBannerService
 
             return [
                 'status' => 'success',
-                'message' => 'Banner added successfully',
+                'message' => __('service_messages.banner_added_successfully'),
                 'data' => $data
             ];
 
@@ -120,7 +120,7 @@ class FullBannerService
 
             return [
                 'status' => 'success',
-                'message' => 'Banner updated successfully',
+                'message' => __('service_messages.banner_updated_successfully'),
                 'data' => $data
             ];
 
@@ -149,7 +149,7 @@ class FullBannerService
 
             return [
                 'status' => 'success',
-                'message' => 'Banner deleted successfully',
+                'message' => __('service_messages.banner_deleted_successfully'),
                 'data' => []
             ];
 
@@ -219,7 +219,7 @@ class FullBannerService
                 
                 return [
                         'status'  => 'success',
-                        'message' => 'Promotional Banner Added Successfully',
+                        'message' => __('service_messages.promotional_banner_added_successfully'),
                         'data'    => $createBanner
                     ];
 
@@ -266,7 +266,7 @@ class FullBannerService
 
             return [
                 'status'  => 'success',
-                'message' => 'Promotional Banner Updated Successfully',
+                'message' => __('service_messages.promotional_banner_updated_successfully'),
                 'data'    => $banner
             ];
 
@@ -296,7 +296,7 @@ class FullBannerService
 
             return [
                 'status' => 'success',
-                'message' => 'Promotional Banner deleted successfully',
+                'message' => __('service_messages.promotional_banner_deleted_successfully'),
                 'data' => []
             ];
 
@@ -345,7 +345,7 @@ class FullBannerService
             if ($banner_details->isEmpty()) {
                 return [
                     'status'  => 'success',
-                    'message' => 'No Banner found',
+                    'message' => __('service_messages.no_data_found'),
                     'data'    => (object)[]
                 ];
             }
@@ -410,8 +410,8 @@ class FullBannerService
             $data->save();
 
             $message = $data->status == 1
-                ? 'Promotional Banner Unblocked Successfully'
-                : 'Promotional Banner blocked Successfully';
+                ? __('service_messages.promotional_banner_unblocked_successfully')
+                : __('service_messages.promotional_banner_blocked_successfully');
 
             return [
                 'status' => 'success',

@@ -116,6 +116,32 @@ return [
   'setting_changed_to_on_duty_successfully' => 'Setting changed to on Duty Successfully',
   'setting_changed_to_off_duty_successfully' => 'Setting changed to off Duty Successfully',
 
+  //driver order service
+  'delivery_status_updated_to_delivered' => 'Delivery Status Updated to Delivered',
+ 'delivery_status_updated_to_picked' => 'Delivery Status Updated to Picked',
+ 'delivery_status_updated_to_not_delivered' => 'Delivery Status Updated to Not Delivered',
+ 'delivery_status_updated_successfully' => 'Delivery Status Updated Successfully',
+ 'order_picked_successfully' => 'Order Picked Successfully',
+ 'exchange_not_found' => 'This is Not Exchange found',
+ 'order_returned_to_store_successfully' => 'Order Return to Store Successfully',
+
+  //full banner service
+  'banner_added_successfully' => 'Banner added successfully',
+  'banner_updated_successfully' => 'Banner updated successfully',
+  'banner_deleted_successfully' => 'Banner deleted successfully',
+  'promotional_banner_added_successfully' => 'Promotional Banner Added Successfully',
+  'promotional_banner_updated_successfully' => 'Promotional Banner Updated Successfully',
+  'promotional_banner_deleted_successfully' => 'Promotional Banner deleted successfully',
+  'promotional_banner_unblocked_successfully' => 'Promotional Banner Unblocked Successfully',
+  'promotional_banner_blocked_successfully' => 'Promotional Banner blocked Successfully',
+
+  //gift card service
+  'gift_card_category_unblocked_successfully' => 'Gift Card Category Unblocked Successfully',
+  'gift_card_category_blocked_successfully' => 'Gift Card Category blocked Successfully',
+  'gift_card_category_added_successfully' => 'Gift Card Category Added Successfully',
+  'gift_card_category_updated_successfully' => 'Gift Card Category Updated Successfully',
+  'gift_card_category_deleted_successfully' => 'Gift Card Category deleted successfully',
+
   
   
     

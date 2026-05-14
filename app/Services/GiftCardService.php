@@ -29,7 +29,7 @@ class GiftCardService
             if ($data->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Gift Card found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' =>  []
                 ];
             }
@@ -68,8 +68,8 @@ class GiftCardService
             $data->save();
 
             $message = $data->status == 1
-                ? 'Gift Card Category Unblocked Successfully'
-                : 'Gift Card Category blocked Successfully';
+                ? __('service_messages.gift_card_category_unblocked_successfully')
+                : __('service_messages.gift_card_category_blocked_successfully');
 
             return [
                 'status' => 'success',
@@ -98,7 +98,7 @@ class GiftCardService
 
             return [
                 'status' => 'success',
-                'message' => 'Gift Card Category Addeed Successfully',
+                'message' => __('service_messages.gift_card_category_added_successfully'),
                 'data' => $data
             ];
 
@@ -133,7 +133,7 @@ class GiftCardService
 
             return [
                 'status' => 'success',
-                'message' => 'Gift Card Category Updated Successfully',
+                'message' => __('service_messages.gift_card_category_updated_successfully'),
                 'data' => $data
             ];
 
@@ -162,7 +162,7 @@ class GiftCardService
 
             return [
                 'status' => 'success',
-                'message' => 'Gift Card Category deleted successfully',
+                'message' => __('service_messages.gift_card_category_deleted_successfully'),
                 'data' => []
             ];
 

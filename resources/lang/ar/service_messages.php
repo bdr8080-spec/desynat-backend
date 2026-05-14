@@ -116,6 +116,31 @@ return [
   'setting_changed_to_on_duty_successfully' => 'تم تغيير الحالة إلى متاح للعمل بنجاح',
   'setting_changed_to_off_duty_successfully' => 'تم تغيير الحالة إلى غير متاح للعمل بنجاح',
 
+  //driver order service
+  'delivery_status_updated_to_delivered' => 'تم تحديث حالة التوصيل إلى تم التسليم',
+  'delivery_status_updated_to_picked' => 'تم تحديث حالة التوصيل إلى تم الاستلام',
+  'delivery_status_updated_to_not_delivered' => 'تم تحديث حالة التوصيل إلى لم يتم التسليم',
+  'delivery_status_updated_successfully' => 'تم تحديث حالة التوصيل بنجاح',
+  'order_picked_successfully' => 'تم استلام الطلب بنجاح',
+  'exchange_not_found' => 'لم يتم العثور على طلب استبدال',
+  'order_returned_to_store_successfully' => 'تم إرجاع الطلب إلى المتجر بنجاح',
+
+ //full banner service
+ 'banner_added_successfully' => 'تمت إضافة البانر بنجاح',
+ 'banner_updated_successfully' => 'تم تحديث البانر بنجاح',
+ 'banner_deleted_successfully' => 'تم حذف البانر بنجاح',
+ 'promotional_banner_added_successfully' => 'تمت إضافة البانر الترويجي بنجاح',
+ 'promotional_banner_updated_successfully' => 'تم تحديث البانر الترويجي بنجاح',
+ 'promotional_banner_deleted_successfully' => 'تم حذف البانر الترويجي بنجاح',
+ 'promotional_banner_unblocked_successfully' => 'تم إلغاء حظر البانر الترويجي بنجاح',
+ 'promotional_banner_blocked_successfully' => 'تم حظر البانر الترويجي بنجاح',
+
+ //gift card service
+ 'gift_card_category_unblocked_successfully' => 'تم إلغاء حظر فئة بطاقة الهدايا بنجاح',
+ 'gift_card_category_blocked_successfully' => 'تم حظر فئة بطاقة الهدايا بنجاح',
+ 'gift_card_category_added_successfully' => 'تمت إضافة فئة بطاقة الهدايا بنجاح',
+ 'gift_card_category_updated_successfully' => 'تم تحديث فئة بطاقة الهدايا بنجاح',
+ 'gift_card_category_deleted_successfully' => 'تم حذف فئة بطاقة الهدايا بنجاح',
 
 
 ];
