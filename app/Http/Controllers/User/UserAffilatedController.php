@@ -298,16 +298,16 @@ class UserAffilatedController extends Controller
             
                 if ($request->forgetPassword == '1') {
                     $rules['mobile'] = 'required|digits_between:7,15|exists:affilated_users,mobile';
-                    $messages['mobile.required'] = 'Please enter your mobile number';
-                    $messages['mobile.digits_between'] = 'Mobile number must be between 7 and 15 digits';
-                    $messages['mobile.exists'] = 'This mobile number is not registered';
+                    $messages['mobile.required'] = __('affiliate_messages.mobile_required');
+                    $messages['mobile.digits_between'] = __('affiliate_messages.mobile_digits_between');
+                    $messages['mobile.exists'] = __('affiliate_messages.mobile_exists');
                 }
 
                 if ($request->forgetPassword == '2') {
                     $rules['email'] = 'required|email|exists:affilated_users,email';
-                    $messages['email.required'] = 'Please enter your email address';
-                    $messages['email.email'] = 'Please enter a valid email address';
-                    $messages['email.exists'] = 'This email is not registered';
+                    $messages['email.required'] = __('affiliate_messages.email_required');
+                    $messages['email.email']    = __('affiliate_messages.email_email');
+                    $messages['email.exists']   = __('affiliate_messages.email_exists');
                 }
 
                 $validator = Validator::make($request->all(), $rules, $messages);
@@ -338,9 +338,21 @@ class UserAffilatedController extends Controller
                     $user->save();
                     $id = Crypt::encryptString($user->id);
                     Session::put('verify-password', '1');
+                     $phone = $user->country_code . $user->mobile;
+                    $message = "Your verification Code Is $otp";
+                    if (preg_match('/^\+[1-9]\d{6,14}$/', $phone)) {
+                        try {
+                            $this->TwilioService->sendOtp($phone, $message);
+                        } catch (\Exception $e) {
+                            // ❌ silently skip (no return, no error)
+                            // Optional: log for debugging
+                            //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
+                        }
+                    }
+                     Mail::to($user->email)->send(new UserOtpMail($user, $otp));
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP sent successfully',
+                        'message' => __('affiliate_messages.otp_sent_successfully'),
                         'id' => $id,
                         'type'=>$request->forgetPassword
                     ]);
@@ -483,11 +495,11 @@ if ($validator->fails()) {
                     ];
 
                 $messages = [
-                'password.required' => 'Please Enter New password',
-                'password.min' => 'Password must be at least 8 characters long. ',
-                'password.regex' => 'Password must include at least one uppercase, one lowercase, one number',
-                'confirm_password.required' => 'Please enter confirm password',
-                'confirm_password.same' => 'Passwords do not match',
+                'password.required' => __('affiliate_messages.password_required'),
+                'password.min' => __('affiliate_messages.password_min'),
+                'password.regex' => __('affiliate_messages.password_regex'),
+                'confirm_password.required' => __('affiliate_messages.confirm_password_required'),
+                'confirm_password.same' => __('affiliate_messages.confirm_password_same'),
                 ];
 
 
@@ -506,7 +518,7 @@ if ($validator->fails()) {
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid user reference',
+                    'message' => __('affiliate_messages.invalid_user_reference'),
                 ], 400);
             }
 
@@ -514,8 +526,8 @@ if ($validator->fails()) {
 
             if (Hash::check($request->password, $user->password)) {
                 
-                $validator->after(function ($validator) use ($request) {
-                        $validator->errors()->add('password', "You can't use old password as new password");
+                $validator->after(function ($validator) {
+                    $validator->errors()->add('password', __('affiliate_messages.old_password_not_allowed'));
                 });
                 $validator->validate();
 
@@ -535,13 +547,13 @@ if ($validator->fails()) {
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'Password updated successfully'
+                    'message' => __('affiliate_messages.password_updated_successfully'),
                 ]);
             }
 
             return response()->json([
                 'status' => false,
-                'message' => 'User not found.'
+                'message' => __('affiliate_messages.user_not_found'),
             ]);
             
                
@@ -580,22 +592,22 @@ if ($validator->fails()) {
                 "accept" =>"required|In:1"
                 ],
             [
-        'profile_image.required'    => 'Please Upload Profile Picture.',
-        'full_name.required'        => 'Please Enter First Name.',
-        'country_code.required'     => 'Country code is required.',
-        'mobile.required'           => 'Please Enter Mobile number.',
-        'email.required'            => 'Please Enter Email address.',
-        'email.email'               => 'Please enter a valid email address.',
-        'password.required'         => 'Password is required.',
-        'confirm_password.required' => 'Please confirm your password.',
-        'confirm_password.same'     => 'Password and confirm password must match.',
-        'document1.required'        => 'Please Upload Document 1.',
-        'document2.required'        => 'Please Upload Document 2',
-        'accept.required'           => 'You must accept the terms and conditions.',
-        'accept.in'                 => 'You must accept the terms and conditions.',
-        'password.required'     => 'Please enter your password',
-        'password.min' => 'Password must be at least 8 characters long',
-        'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number No special Symbal Allowed',
+        'profile_image.required'    => __('affiliate_messages.profile_image_required'),
+        'full_name.required'        => __('affiliate_messages.full_name_required'),
+        'country_code.required'     => __('affiliate_messages.country_code_required'),
+        'mobile.required'           => __('affiliate_messages.mobile_required'),
+        'email.required'            => __('affiliate_messages.email_required'),
+        'email.email'               => __('affiliate_messages.email_email'),
+        'password.required'         => __('affiliate_messages.password_required'),
+        'confirm_password.required' => __('affiliate_messages.confirm_password_required'),
+        'confirm_password.same'     => __('affiliate_messages.confirm_password_same'),
+        'document1.required'        => __('affiliate_messages.document1_required'),
+        'document2.required'        => __('affiliate_messages.document2_required'),
+        'accept.required'           => __('affiliate_messages.accept_required'),
+        'accept.in'                 => __('affiliate_messages.accept_in'),
+        'password.required'         => __('affiliate_messages.password_required'),
+        'password.min'              => __('affiliate_messages.password_min'),
+        'password.regex'            => __('affiliate_messages.password_regex'),
     ]
 );
             
@@ -689,16 +701,16 @@ if ($validator->fails()) {
                 "long" =>"required"
                 ],
              [
-        'country.required'   => 'Please select a country.',
-        'locations.required' => 'Please select a location.',
-        'address1.required'  => 'Address line 1 is required.',
-        'address2.required'  => 'Address line 2 is required.',
-        'pincode.required'   => 'Pincode is required.',
-        'town.required'      => 'Town is required.',
-        'state.required'     => 'State is required.',
-        'city.required'      => 'City is required.',
-        'let.required'       => 'Latitude is required.',
-        'long.required'      => 'Longitude is required.',
+        'country.required'   => __('affiliate_messages.country_required'),
+        'locations.required' => __('affiliate_messages.locations_required'),
+        'address1.required'  => __('affiliate_messages.address1_required'),
+        'address2.required'  => __('affiliate_messages.address2_required'),
+        'pincode.required'   => __('affiliate_messages.pincode_required'),
+        'town.required'      => __('affiliate_messages.town_required'),
+        'state.required'     => __('affiliate_messages.state_required'),
+        'city.required'      => __('affiliate_messages.city_required'),
+        'let.required'       => __('affiliate_messages.lat_required'),
+        'long.required'      => __('affiliate_messages.long_required'),
     ]);
             
     if($validate->fails()){
@@ -760,13 +772,13 @@ if ($validator->fails()) {
                 "swift"=>"required",
                 ],
                  [
-        'bank_name.required'           => 'Bank name is required.',
-        'account_holder_name.required' => 'Account holder name is required.',
-        'account_no.required'          => 'Account number is required.',
-        'confirm_account_no.required'  => 'Please confirm your account number.',
-        'confirm_account_no.same'      => 'Account number and confirm account do not match.',
-        'iban.required'                => 'IBAN number is required.',
-        'swift.required'               => 'SWIFT code is required.',
+        'bank_name.required'           => __('affiliate_messages.please_enter_bank_name'),
+        'account_holder_name.required' => __('affiliate_messages.please_enter_account_holder_name'),
+        'account_no.required'          => __('affiliate_messages.please_enter_account_number'),
+        'confirm_account_no.required'  => __('affiliate_messages.please_confirm_account_number'),
+        'confirm_account_no.same'      => __('affiliate_messages.account_numbers_do_not_match'),
+        'iban.required'                => __('affiliate_messages.please_enter_iban'),
+        'swift.required'               => __('affiliate_messages.please_enter_swift_bic'),
     ]);
             
     if($validate->fails()){

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>desynat seller</title>
+    <title>{{ __('affiliate_messages.desynat_affiliate') }}</title>
     <!-- Favicons -->
     <link href="{{ asset('/dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
@@ -36,11 +37,11 @@
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    <img src="{{ asset('/dealer') }}/assets/img/global.svg" class="img-fluid" /> EN
+                    <img src="{{ asset('/dealer') }}/assets/img/global.svg" class="img-fluid" /> @if(app()->getLocale()=='en') En @else AR @endif
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
-                    <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
+                    <li><a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}"><span>AR</span> {{ __('affiliate_messages.arabic') }}</a></li>
+                    <li><a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}"><span>EN</span> {{ __('affiliate_messages.english') }}</a></li>
                 </ul>
             </div>
         </div>
@@ -67,7 +68,7 @@
                                     enctype="multipart/form-data">
                                     @csrf
 
-                                    <h1>Sign Up <br><span class="gold-color">Create your account !</span></h1>
+                                    <h1>{{ __('affiliate_messages.sign_up') }} <br><span class="gold-color">{{ __('affiliate_messages.create_your_account') }} !</span></h1>
                                     <div class="step-progress py-4">
                                         <div class="progress pro-1" role="progressbar" aria-label="Basic example"
                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -91,7 +92,7 @@
                                         <label class="uploadLabel" id="label-3"
                                             style="cursor:pointer;text-align:center;">
                                             <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                                            <div class="text-color-upload">Upload Profile Photo</div>
+                                            <div class="text-color-upload">{{ __('affiliate_messages.upload_profile_photo') }}</div>
                                             <input type="file" name="profile_image" accept="image/*" hidden
                                                 onchange="showPreview(event,3)">
                                             <p class="text-danger ImageError3" id="error-profile_image"></p>
@@ -106,15 +107,15 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">First Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter First Name"
+                                        <label for="name">{{ __('affiliate_messages.full_name') }}</label>
+                                        <input type="text" class="form-control" placeholder="{{ __('affiliate_messages.enter_full_name') }}"
                                             name="full_name">
 
                                         <p class="text-danger" id="error-full_name"></p>
                                     </div>
 
                                     <div class="form-group mt-3">
-                                        <label class="d-block" for="">Mobile Number</label>
+                                        <label class="d-block" for="">{{ __('affiliate_messages.mobile_number') }}</label>
                                         <div class="d-flex align-items-center">
                                             <div class="">
                                                 {{-- <select name="country_code" id="" class="country" class="form-control">
@@ -168,7 +169,7 @@
                                             </div>
                                             <div class="w-100">
                                                 <input type="number" class="form-control" value=""
-                                                    placeholder="Enter Mobile Number" name="mobile"
+                                                    placeholder="{{ __('affiliate_messages.enter_mobile_number') }}" name="mobile"
                                                     oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
 
 
@@ -178,21 +179,21 @@
                                         <p class="text-danger" id="error-mobile"></p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">Email Address</label>
-                                        <input type="text" class="form-control" placeholder="Enter Email Address"
+                                        <label for="name">{{ __('affiliate_messages.email_address') }}</label>
+                                        <input type="text" class="form-control" placeholder="{{ __('affiliate_messages.enter_email_address') }}"
                                             name="email">
                                         <p class="text-danger" id="error-email"></p>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">Upload Document</label>
+                                        <label for="name">{{ __('affiliate_messages.upload_document') }}</label>
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="upload-image w-100">
                                                     <label class="uploadLabel" id="label-1"
                                                         style="cursor:pointer;text-align:center;">
                                                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                                                        <div class="text-color-upload">Document 1</div>
+                                                        <div class="text-color-upload">{{ __('affiliate_messages.document_1') }}</div>
                                                         <input type="file" name="document1" accept="image/*" hidden
                                                             onchange="showPreview(event,1)">
                                                     </label>
@@ -212,7 +213,7 @@
                                                     <label class="uploadLabel" id="label-2"
                                                         style="cursor:pointer;text-align:center;">
                                                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                                                        <div class="text-color-upload">Document 2</div>
+                                                        <div class="text-color-upload">{{ __('affiliate_messages.document_2') }}</div>
                                                         <input type="file" name="document2" accept="image/*" hidden
                                                             onchange="showPreview(event,2)">
                                                     </label>
@@ -230,16 +231,16 @@
                                     </div>
 
                                     <div class="form-group position-relative">
-                                        <label for="password">Create Password</label>
+                                        <label for="password">{{ __('affiliate_messages.create_password') }}</label>
                                         <input type="password" class="form-control notapplyspace" id="password"
-                                            placeholder="Enter Password" name="password" value="">
+                                            placeholder="{{ __('affiliate_messages.enter_password') }}" name="password" value="">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
                                     </div>
                                     <p class="text-danger" id="error-password"></p>
                                     <div class="form-group position-relative">
-                                        <label for="password">Confirm Password</label>
+                                        <label for="password">{{ __('affiliate_messages.confirm_password') }}</label>
                                         <input type="password" class="form-control notapplyspace" id="confirm_password"
-                                            placeholder="Enter Confirm Password" name="confirm_password" value="">
+                                            placeholder="{{ __('affiliate_messages.enter_confirm_password') }}" name="confirm_password" value="">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
                                     </div>
                                     <p class="text-danger" id="error-confirm_password"></p>
@@ -248,8 +249,8 @@
                                         <input class="form-check-input" type="checkbox" value="1" id="checkChecked"
                                             name="accept" {{ old('accept') ? 'checked' : '' }}>
                                         <label class="form-check-label mt-0" for="checkChecked">
-                                            I accept the <span class="title-color">Terms & Conditions </span> and
-                                            <span class="title-color">Policies</span>
+                                            {{ __('affiliate_messages.i_accept_the') }} <span class="title-color">{{ __('affiliate_messages.terms_&_conditions') }} </span> {{ __('affiliate_messages.and') }}
+                                            <span class="title-color">{{ __('affiliate_messages.policies') }}</span>
                                         </label>
                                         <p class="text-danger" id="error-accept"></p>
                                     </div>
@@ -257,13 +258,13 @@
                                     <div class="login-btn">
 
                                         <button type="submit"
-                                            class="btn add-fillbtn w-100 btn btn-success w-100">Continue</button>
+                                            class="btn add-fillbtn w-100 btn btn-success w-100">{{ __('affiliate_messages.continue') }}</button>
                                     </div>
                                 </form>
 
                                 <div class="sign-new mt-2 text-center">
-                                    <div>Already have an account? <a href="{{route('affiliate.affiliate_login')}}"
-                                            class="link-color"> Sign In</a></div>
+                                    <div>{{ __('affiliate_messages.already_have_an_account') }}? <a href="{{route('affiliate.affiliate_login')}}"
+                                            class="link-color"> {{ __('affiliate_messages.sign_in') }}</a></div>
                                 </div>
 
                             </div>
