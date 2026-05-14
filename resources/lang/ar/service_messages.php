@@ -1,6 +1,8 @@
 <?php
 
 return [
+
+  'no_data_found' => 'لا توجد بيانات',
   
   //admin auth service
   'otp_verified_successfully' => 'تم التحقق من رمز التحقق بنجاح',
@@ -46,6 +48,47 @@ return [
 
   //affiliate dashboard service
   'affiliate_dashboard_data_fetched_successfully' => 'تم جلب بيانات لوحة تحكم المسوق بنجاح',
+
+  //affiliate user management service
+  'no_new_affiliate_users_found' => 'لا يوجد مستخدمون جدد في نظام التسويق بالعمولة',
+  'new_affiliate_users_fetched_successfully' => 'تم جلب المستخدمين الجدد في نظام التسويق بالعمولة بنجاح',
+  'no_approved_affiliate_users_found' => 'لا يوجد مستخدمون معتمدون في نظام التسويق بالعمولة',
+  'approved_affiliate_users_fetched_successfully' => 'تم جلب المستخدمين المعتمدين في نظام التسويق بالعمولة بنجاح',
+  'no_rejected_affiliate_users_found' => 'لا يوجد مستخدمون مرفوضون في نظام التسويق بالعمولة',
+  'message' => __('service_messages.rejected_affiliate_users_fetched_successfully'),
+
+  //banner service
+  'no_banner_found' => 'لا يوجد بانر',
+  'banner_updated_successfully' => 'تم تحديث البانر بنجاح',
+  'banner_per_day_charge_updated_successfully' => 'تم تحديث رسوم البانر اليومية بنجاح',
+  'banner_request_approved_successfully' => 'تمت الموافقة على طلب البانر بنجاح',
+  'banner_request_rejected_successfully' => 'تم رفض طلب البانر بنجاح',
+  'banner_request_unblocked_successfully' => 'تم إلغاء حظر طلب البانر بنجاح',
+  'banner_request_blocked_successfully' => 'تم حظر طلب البانر بنجاح',
+
+  //brand serviec
+  'brand_not_found' => 'العلامة التجارية غير موجودة',
+
+  //category service
+  'category_not_found' => 'الفئة غير موجودة',
+
+  //cms service
+  'terms_updated_successfully' => 'تم تحديث الشروط والأحكام بنجاح',
+  'terms_created_successfully' => 'تم إنشاء الشروط والأحكام بنجاح',
+  'return_policy_updated_successfully' => 'تم تحديث سياسة الإرجاع بنجاح',
+  'return_policy_created_successfully' => 'تم إنشاء سياسة الإرجاع بنجاح',
+  'about_us_updated_successfully' => 'تم تحديث صفحة من نحن بنجاح',
+  'about_us_created_successfully' => 'تم إنشاء صفحة من نحن بنجاح',
+  'cancellation_policy_updated_successfully' => 'تم تحديث سياسة الإلغاء بنجاح',
+  'cancellation_policy_created_successfully' => 'تم إنشاء سياسة الإلغاء بنجاح',
+  'exchange_policy_updated_successfully' => 'تم تحديث سياسة الاستبدال بنجاح',
+  'exchange_policy_created_successfully' => 'تم إنشاء سياسة الاستبدال بنجاح',
+  'contact_us_updated_successfully' => 'تم تحديث صفحة اتصل بنا بنجاح',
+  'contact_us_created_successfully' => 'تم إنشاء صفحة اتصل بنا بنجاح',
+  'faq_added_successfully' => 'تمت إضافة الأسئلة الشائعة بنجاح',
+  'faq_updated_successfully' => 'تم تحديث الأسئلة الشائعة بنجاح',
+  'faq_deleted_successfully' => 'تم حذف الأسئلة الشائعة بنجاح',
+
     
 
 

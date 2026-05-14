@@ -29,7 +29,7 @@ class BrandService
             if ($brand_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Brand found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
@@ -59,7 +59,7 @@ class BrandService
             if (!$brand) {
                 return [
                     'status' => 'error',
-                    'message' => 'Brand not found',
+                    'message' => __('service_messages.brand_not_found'),
                     'data' => []
                 ];
             }
@@ -117,7 +117,7 @@ class BrandService
         if (!$brand) {
             return [
                 'status' => 'error',
-                'message' => 'Brand not found',
+                'message' => __('service_messages.brand_not_found'),
                 'data' => []
             ];
         }
@@ -153,7 +153,7 @@ class BrandService
             if (!$brand) {
                 return [
                     'status' => 'error',
-                    'message' => 'Brand not found',
+                    'message' => __('service_messages.brand_not_found'),
                     'data' => []
                 ];
             }

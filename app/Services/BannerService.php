@@ -69,7 +69,7 @@ class BannerService
             if ($data->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Banner found',
+                    'message' => __('service_messages.no_banner_found'),
                     'data' =>  []
                 ];
             }
@@ -104,7 +104,7 @@ class BannerService
 
             return [
                 'status' => 'success',
-                'message' => 'Banner updated successfully',
+                'message' => __('service_messages.banner_updated_successfully'),
                 'data' => $data
             ];
 
@@ -125,7 +125,7 @@ class BannerService
             if (!$banner) {
                 return [
                     'status' => 'error',
-                    'message' => 'Banner not found',
+                    'message' => __('service_messages.no_banner_found'),
                     'data' => []
                 ];
             }
@@ -136,7 +136,7 @@ class BannerService
 
             return [
                 'status' => 'success',
-                'message' => 'Banner per day charge updated successfully',
+                'message' => __('service_messages.banner_per_day_charge_updated_successfully'),
                 'data' => $banner
             ];
 
@@ -193,7 +193,7 @@ class BannerService
             if ($data->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Banner Request found',
+                    'message' => __('service_messages.no_banner_found'),
                     'data' =>  (object)[]
                 ];
             }
@@ -221,7 +221,7 @@ class BannerService
             if (!$banner) {
                 return [
                     'status' => 'error',
-                    'message' => 'Banner request not found',
+                    'message' => __('service_messages.no_banner_found'),
                     'data' => []
                 ];
             }
@@ -248,7 +248,7 @@ class BannerService
 
             return [
                 'status' => 'success',
-                'message' => 'Banner Request Approved successfully',
+                'message' => __('service_messages.banner_request_approved_successfully'),
                 'data' => $banner
             ];
 
@@ -269,7 +269,7 @@ class BannerService
             if (!$banner) {
                 return [
                     'status' => 'error',
-                    'message' => 'Banner request not found',
+                    'message' => __('service_messages.no_banner_found'),
                     'data' => []
                 ];
             }
@@ -305,7 +305,7 @@ class BannerService
 
             return [
                 'status' => 'success',
-                'message' => 'Banner Request Rejected successfully',
+                'message' => __('service_messages.banner_request_rejected_successfully'),
                 'data' => $banner
             ];
 
@@ -326,7 +326,7 @@ class BannerService
             if (!$data) {
                 return [
                     'status' => 'error',
-                    'message' => 'Banner Req not found',
+                    'message' => __('service_messages.no_banner_found'),
                     'data' => []
                 ];
             }
@@ -335,8 +335,8 @@ class BannerService
             $data->save();
 
             $message = $data->status == 1
-                ? 'Banner Request Unblocked Successfully'
-                : 'Banner Request blocked Successfully';
+                ? __('service_messages.banner_request_unblocked_successfully')
+                : __('service_messages.banner_request_blocked_successfully');
 
             return [
                 'status' => 'success',

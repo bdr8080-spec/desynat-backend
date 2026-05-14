@@ -2,6 +2,8 @@
 
 return [
 
+  'no_data_found' => 'No data found',
+
   //admin auth service
   'otp_verified_successfully' => 'OTP Verified Successfully',
   'otp_invalid' => 'OTP is invalid',
@@ -46,6 +48,47 @@ return [
 
   //affiliate dashboard serviec
   'affiliate_dashboard_data_fetched_successfully' => 'Affiliate dashboard data fetched successfully',
+
+  //affiliate user management service
+  'no_new_affiliate_users_found' => 'No new affiliate users found',
+  'new_affiliate_users_fetched_successfully' => 'New affiliate users fetched successfully',
+  'no_approved_affiliate_users_found' => 'No approved affiliate users found',
+  'approved_affiliate_users_fetched_successfully' => 'Approved affiliate users fetched successfully',
+  'no_rejected_affiliate_users_found' => 'No rejected affiliate users found',
+  'rejected_affiliate_users_fetched_successfully' => 'Rejected affiliate users fetched successfully',
+
+  //banner service
+  'no_banner_found' => 'No banner found',
+  'banner_updated_successfully' => 'Banner updated successfully',
+  'banner_per_day_charge_updated_successfully' => 'Banner per day charge updated successfully',
+  'banner_request_approved_successfully' => 'Banner request approved successfully',
+  'banner_request_rejected_successfully' => 'Banner request rejected successfully',
+  'banner_request_unblocked_successfully' => 'Banner request unblocked successfully',
+  'banner_request_blocked_successfully' => 'Banner request blocked successfully',
+
+  //brand service
+  'brand_not_found' => 'Brand not found',
+
+  //category service
+  'category_not_found' => 'Category not found',
+
+  //cms service
+  'terms_updated_successfully' => 'Terms & Conditions updated successfully',
+  'terms_created_successfully' => 'Terms & Conditions created successfully',
+  'return_policy_updated_successfully' => 'Return Policy updated successfully',
+  'return_policy_created_successfully' => 'Return Policy created successfully',
+  'about_us_updated_successfully' => 'About Us updated successfully',
+  'about_us_created_successfully' => 'About Us created successfully',
+  'cancellation_policy_updated_successfully' => 'Cancellation Policy updated successfully',
+  'cancellation_policy_created_successfully' => 'Cancellation Policy created successfully',
+  'exchange_policy_updated_successfully' => 'Exchange Policy updated successfully',
+  'exchange_policy_created_successfully' => 'Exchange Policy created successfully',
+  'contact_us_updated_successfully' => 'Contact Us updated successfully',
+  'contact_us_created_successfully' => 'Contact Us created successfully',
+  'faq_added_successfully' => 'FAQ added successfully',
+  'faq_updated_successfully' => 'FAQ updated successfully',
+  'faq_deleted_successfully' => 'FAQ deleted successfully',
+
   
   
     
