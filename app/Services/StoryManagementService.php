@@ -52,7 +52,7 @@ class StoryManagementService
             if ($story_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Story found',
+                    'message' => __('Service_messages.no_story_found'),
                     'data' =>  (object)[]
                 ];
             }
@@ -93,7 +93,7 @@ class StoryManagementService
             if ($story_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Story found',
+                    'message' => __('Service_messages.no_story_found'),
                     'data' =>  (object)[]
                 ];
             }
@@ -130,7 +130,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Story added successfully',
+                'message' => __('Service_messages.story_added_successfully'),
                 'data' => $story
             ];
 
@@ -160,7 +160,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Story deleted successfully',
+                'message' => __('Service_messages.story_deleted_successfully'),
                 'data' => []
             ];
 
@@ -197,7 +197,7 @@ class StoryManagementService
             if ($story_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Story found',
+                    'message' => __('Service_messages.no_story_found'),
                     'data' => []
                 ];
             }
@@ -236,7 +236,7 @@ class StoryManagementService
             if ($story_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Story found',
+                    'message' => __('Service_messages.no_story_found'),
                     'data' => []
                 ];
             }
@@ -276,7 +276,7 @@ class StoryManagementService
             if ($story_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Story found',
+                    'message' => __('Service_messages.no_story_found'),
                     'data' => []
                 ];
             }
@@ -361,7 +361,7 @@ class StoryManagementService
             if ($collection->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Reel found',
+                    'message' => __('Service_messages.no_reel_found'),
                     'data' => []
                 ];
             }
@@ -415,7 +415,7 @@ class StoryManagementService
             if ($story_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Highlight found',
+                    'message' => __('Service_messages.no_highlights_found'),
                     'data' => []
                 ];
             }
@@ -451,7 +451,7 @@ class StoryManagementService
             if (!$subscription) {
                 return [
                     'status' => 'failed',
-                    'message' => 'You have no active plan',
+                    'message' => __('Service_messages.no_active_plan'),
                     'data' => []
                 ];
             }
@@ -459,7 +459,7 @@ class StoryManagementService
             if ($subscription->stories !== '1') {
                 return [
                     'status' => 'error',
-                    'message' => "You can't add stories as per your active plan.",
+                    'message' => __('Service_messages.story_limit_reached_for_plan'),
                     'data' => []
                 ];
             }
@@ -473,7 +473,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Story added successfully',
+                'message' => __('Service_messages.story_added_successfully'),
                 'data' => $story
             ];
 
@@ -528,7 +528,7 @@ class StoryManagementService
             if (!$subscription) {
                 return [
                     'status' => 'failed',
-                    'message' => 'You have no active plan',
+                    'message' => __('Service_messages.no_active_plan'),
                     'data' => []
                 ];
             }
@@ -538,7 +538,7 @@ class StoryManagementService
                 if ($subscription->no_of_videos <= '0') {
                     return [
                         'status' => 'error',
-                        'message' => "Your reel upload limit of this month has been reached, you can't add more reels",
+                        'message' => __('Service_messages.reel_upload_limit_reached'),
                         'data' => []
                     ];
                 }
@@ -558,7 +558,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Reel added successfully',
+                'message' => __('Service_messages.reel_added_successfully'),
                 'data' => $story
             ];
 
@@ -612,7 +612,7 @@ class StoryManagementService
             if (!$subscription) {
                 return [
                     'status' => 'failed',
-                    'message' => 'You have no active plan',
+                    'message' => __('Service_messages.no_active_plan'),
                     'data' => []
                 ];
             }
@@ -620,7 +620,7 @@ class StoryManagementService
             if ($subscription->no_of_highlights !== null && $subscription->no_of_highlights <= '0') {
                 return [
                     'status' => 'error',
-                    'message' => "Your highlight limit of this month has been reached, you can't add more highlights",
+                    'message' => __('Service_messages.highlight_limit_reached'),
                     'data' => []
                 ];
             }
@@ -639,7 +639,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Highlight added successfully',
+                'message' => __('Service_messages.highlight_added_successfully'),
                 'data' => $story
             ];
 
@@ -669,7 +669,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Story deleted successfully',
+                'message' => __('Service_messages.story_deleted_successfully'),
                 'data' => (object)[]
             ];
 
@@ -699,7 +699,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Highlight deleted successfully',
+                'message' => __('Service_messages.highlight_deleted_successfully'),
                 'data' => (object)[]
             ];
 
@@ -729,7 +729,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Reel deleted successfully',
+                'message' => __('Service_messages.reel_deleted_successfully'),
                 'data' => (object)[]
             ];
 
@@ -765,7 +765,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Reel updated successfully',
+                'message' => __('Service_messages.reel_updated_successfully'),
                 'data' => $reel
             ];
 
@@ -794,7 +794,9 @@ class StoryManagementService
             $reel->status = $reel->status == 1 ? 0 : 1;
             $reel->save();
 
-            $message = $reel->status == 1 ? 'Reel Activated successfully' : 'Reel Inactivated successfully';
+            $message = $reel->status == 1
+                ? __('Service_messages.reel_activated_successfully')
+                : __('Service_messages.reel_inactivated_successfully');
 
             return [
                 'status' => 'success',
@@ -829,7 +831,7 @@ class StoryManagementService
             if ($stories->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No stories found',
+                    'message' => __('Service_messages.no_story_found'),
                     'data' => (object)[]
                 ];
             }
@@ -866,7 +868,7 @@ class StoryManagementService
             if ($stories->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No reel found',
+                    'message' => __('Service_messages.no_reel_found'),
                     'data' => (object)[]
                 ];
             }
@@ -906,13 +908,13 @@ class StoryManagementService
             if (!empty($request_data->limit)) {
                 return [
                     'status' => 'success',
-                    'message' => 'No highlights found',
+                    'message' => __('Service_messages.no_highlights_found'),
                     'data' =>(object)[]
                 ];
             }else{
                 return [
                     'status' => 'success',
-                    'message' => 'No highlights found',
+                    'message' => __('Service_messages.no_highlights_found'),
                     'data' => []
                 ];
 
@@ -1019,7 +1021,7 @@ class StoryManagementService
             if (!$subscription) {
                 return [
                     'status' => 'failed',
-                    'message' => 'You have no active plan',
+                    'message' => __('Service_messages.no_active_plan'),
                     'data' => []
                 ];
             }
@@ -1027,7 +1029,7 @@ class StoryManagementService
             if ($subscription->stories !== '1') {
                 return [
                     'status' => 'error',
-                    'message' => "You can't add stories as per your active plan.",
+                    'message' => __('Service_messages.story_limit_reached_for_plan'),
                     'data' => []
                 ];
             }
@@ -1041,7 +1043,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Story uploaded successfully',
+                'message' => __('Service_messages.story_added_successfully'),
                 'data' => $story
             ];
 
@@ -1067,7 +1069,7 @@ class StoryManagementService
             if (!$subscription) {
                 return [
                     'status' => 'failed',
-                    'message' => 'You have no active plan',
+                    'message' => __('Service_messages.no_active_plan'),
                     'data' => []
                 ];
             }
@@ -1075,7 +1077,7 @@ class StoryManagementService
             if ($subscription->no_of_highlights !== null && $subscription->no_of_highlights <= '0') {
                 return [
                     'status' => 'error',
-                    'message' => "Your highlight limit of this month has been reached, you can't add more highlights",
+                    'message' => __('Service_messages.highlight_limit_reached'),
                     'data' => []
                 ];
             }
@@ -1090,7 +1092,7 @@ class StoryManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Highlight uploaded successfully',
+                'message' => __('Service_messages.highlight_added_successfully'),
                 'data' => $story
             ];
 
@@ -1132,31 +1134,31 @@ class StoryManagementService
         }
     }
 
-    public function addCommentOnSellerStory($request_data)
-    {
-        try {
-            $storyComment = new StoriesComment();
-            $storyComment->story_id = $request_data->story_id;
-            $storyComment->comment = $request_data->comment;
-            $storyComment->user_id = $request_data->user_id;
-            $storyComment->user_type = $request_data->user_type;
+    // public function addCommentOnSellerStory($request_data)
+    // {
+    //     try {
+    //         $storyComment = new StoriesComment();
+    //         $storyComment->story_id = $request_data->story_id;
+    //         $storyComment->comment = $request_data->comment;
+    //         $storyComment->user_id = $request_data->user_id;
+    //         $storyComment->user_type = $request_data->user_type;
 
-            $storyComment->save();
+    //         $storyComment->save();
 
-            return [
-                'status' => 'success',
-                'message' => 'Comment added successfully',
-                'data' => $storyComment
-            ];
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Comment added successfully',
+    //             'data' => $storyComment
+    //         ];
 
-        } catch (\Exception $e) {
-            return [
-                'status' => 'error',
-                'message' => 'Failed to add comment: ' . $e->getMessage(),
-                'data' => []
-            ];
-        }
-    }
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to add comment: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
 
 
 

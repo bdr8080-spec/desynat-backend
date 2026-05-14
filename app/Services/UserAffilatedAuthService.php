@@ -260,11 +260,11 @@ try{
         if($get_user_details){
 
           if($get_user_details->admin_verify=='3'){
-            return ['status'=>'error','message'=>"Your Account is reject By Admin Reason $get_user_details->reject_reason ",'data'=>(object)[]];                
+            return ['status' => 'error', 'message' => __('Service_messages.account_rejected_by_admin_reason', ['reason' => $get_user_details->reject_reason]), 'data' => (object)[]];              
           }
 
           if ($get_user_details->status == '0') {
-            return ['status'=>'error','message'=>"Account is blocked by admin",'data'=>(object)[]];                
+            return ['status' => 'error', 'message' => __('Service_messages.account_blocked_by_admin'), 'data' => (object)[]];                
           }
         
           // if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
@@ -295,13 +295,13 @@ try{
                 
                 // $user->createToken('seller-token', ['seller'])->plainTextToken;
 
-                return ['status'=>'success','message'=>"Affiliate Login Successfully",'data'=>$get_user_details];                            
+                return ['status'=>'success','message' => __('Service_messages.login_successfully'),'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message'=>"Password Is wrong",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('Service_messages.please_enter_correct_password'),'data'=>(object)[]];                
             }
         
           }else{
-            return ['status'=>'error','message'=>"Affiliate User is Not Existed",'data'=>(object)[]];                
+            return ['status'=>'error','message' => __('Service_messages.account_not_exist'),'data'=>(object)[]];                
           }
     
         }    
@@ -321,7 +321,7 @@ try{
             if($get_user_details){
 
               if($get_user_details->admin_verify=='3'){
-                return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('Service_messages.account_rejected_by_admin'),'data'=>(object)[]];                
               }
     
               // if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
@@ -346,10 +346,10 @@ try{
                     }
                 }
 
-                return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
+                return ['status'=>'success','message' => __('Service_messages.otp_send_successfully'),'data'=>$get_user_details];            
             
               }else{
-                return ['status'=>'error','message'=>"Affilated user is Not Existed",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('Service_messages.account_not_exist'),'data'=>(object)[]];                
               }
         
             }
@@ -364,16 +364,16 @@ try{
 
                if (Hash::check($request->password, $get_user_details->password)) {
               
-                return ['status'=>'error','message'=>"Old Password can not use as new password",'data'=>(object)[]];                 
+                return ['status'=>'error','message' => __('Service_messages.new_password_should_not_be_same_as_old_password'),'data'=>(object)[]];                 
                 
                }
                     $get_user_details->update(['password'=>hash::make($request->password), 'password_old'=>$request->password,]);
                     
                     $get_user_details->affiliated_accessToken ='';            
-                    return ['status'=>'success','message'=>"Forgot Password Password Change Successfully",'data'=>$get_user_details];            
+                    return ['status'=>'success','message' => __('Service_messages.password_updated_successfully'),'data'=>$get_user_details];            
                 
                   }else{
-                    return ['status'=>'error','message'=>"Affilated User is Not Existed",'data'=>(object)[]];                
+                    return ['status'=>'error','message' => __('Service_messages.account_not_exist'),'data'=>(object)[]];                
                   }
             
                 }
@@ -410,10 +410,10 @@ try{
                     }
                 }
                 
-                return ['status'=>'success','message'=>"Otp Send Successfully",'data'=>$get_user_details];            
+                return ['status'=>'success','message' => __('Service_messages.otp_send_successfully'),'data'=>$get_user_details];            
             
               }else{
-                return ['status'=>'error','message'=>"Affiliated user is Not Existed",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('Service_messages.account_not_exist'),'data'=>(object)[]];                
               }
         
             }
@@ -441,7 +441,7 @@ try{
     $checkUserAffilatedStatus->update($insert_Data);
 
     if($checkUserAffilatedStatus){
-        return ['status'=>'success','message'=>"document Upload Successfully",'data'=>$checkUserAffilatedStatus];            
+        return ['status'=>'success','message' => __('Service_messages.document_uploaded_successfully'),'data'=>$checkUserAffilatedStatus];            
     }
 
     } catch (\Exception $e) {
@@ -474,7 +474,7 @@ function updateReverifydocument($request){
     $checkUserAffilatedStatus->update($insert_Data);
 
     if($checkUserAffilatedStatus){
-        return ['status'=>'success','message'=>"document Upload Successfully",'data'=>$checkUserAffilatedStatus];            
+        return ['status'=>'success','message' => __('Service_messages.document_uploaded_successfully'),'data'=>$checkUserAffilatedStatus];            
     }
 
     } catch (\Exception $e) {
@@ -605,7 +605,7 @@ function updateAddress($request)
 
         return [
             'status' => 'success',
-            'message' => 'Address updated successfully',
+            'message' => __('Service_messages.address_updated_successfully'),
             'data' => $address
         ];
 
@@ -833,7 +833,7 @@ try{
 
     $check=  AffiliateProduct::where($request_data)->delete(); // remove old default
 
-   return ['status'=>'success','message'=>"affilate product remove succesfully",'data'=>$check];            
+   return ['status'=>'success','message' => __('Service_messages.affiliate_product_removed_successfully'),'data'=>$check];            
 
    
     } catch (\Exception $e) {
@@ -922,7 +922,7 @@ try{
 
           return [
               'status' => 'success',
-              'message' => 'Account deleted successfully',
+              'message' => __('Service_messages.account_deleted_successfully'),
               'data' => $data
           ];
 

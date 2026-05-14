@@ -79,7 +79,7 @@ class ShippingTaxService
 
             return [
                 'status' => 'success',
-                'message' => 'Tax Updated successfully',
+                'message' => __('Service_messages.tax_updated_successfully'),
                 'data' => $tax
             ];
 
@@ -106,7 +106,7 @@ class ShippingTaxService
             if ($exists) {
                 return [
                     'status' => 'error',
-                    'message' => 'Delivery charges already Existed',
+                    'message' => __('Service_messages.delivery_charges_already_exist'),
                     'data' => []
                 ];
             }
@@ -120,7 +120,7 @@ class ShippingTaxService
 
             return [
                 'status' => 'success',
-                'message' => 'Shipping Charge Added successfully',
+                'message' => __('Service_messages.shipping_charge_added_successfully'),
                 'data' => $fee
             ];
 
@@ -161,7 +161,7 @@ class ShippingTaxService
             if ($exists) {
                 return [
                     'status' => 'error',
-                    'message' => 'Delivery charges already Existed',
+                    'message' => __('Service_messages.delivery_charges_already_exist'),
                     'data' => (object)[]
                 ];
             }
@@ -175,7 +175,7 @@ class ShippingTaxService
 
             return [
                 'status' => 'success',
-                'message' => 'Shipping Charge updated successfully',
+                'message' => __('Service_messages.shipping_charge_updated_successfully'),
                 'data' => $fee
             ];
 
@@ -208,8 +208,8 @@ class ShippingTaxService
             $data->save();
 
             $message = $data->status == 1
-                ? 'Delivery Charges Unblocked Successfully'
-                : 'Delivery Charges blocked Successfully';
+                ? __('Service_messages.delivery_charges_unblocked_successfully')
+                : __('Service_messages.delivery_charges_blocked_successfully');
 
             return [
                 'status' => 'success',
@@ -241,7 +241,7 @@ class ShippingTaxService
 
             return [
                 'status' => 'success',
-                'message' => 'Delivery Charges delete succesfully ',
+                'message' => __('Service_messages.delivery_charges_deleted_successfully'),
                 'data' => []
             ];
 
@@ -264,7 +264,7 @@ class ShippingTaxService
 
             return [
                 'status' => 'success',
-                'message' => 'Tax updated successfully',
+                'message' => __('Service_messages.tax_updated_successfully'),
                 'data' => $tax
             ];
 
@@ -328,7 +328,7 @@ class ShippingTaxService
 
             return [
                 'status' => 'success',
-                'message' => 'Shipping Charge updated successfully',
+                'message' => __('Service_messages.shipping_charge_updated_successfully'),
                 'data' => $fee
             ];
 

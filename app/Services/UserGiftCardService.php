@@ -117,7 +117,7 @@ class UserGiftCardService
                 // );
     
         
-            return ['status'=>'success','message'=>"GiftCard Add successfully",'data'=>$AddGiftCard];
+            return ['status'=>'success','message' => __('Service_messages.giftcard_added_successfully'),'data'=>$AddGiftCard];
 
         
         } catch (\Exception $e) {
@@ -144,7 +144,7 @@ class UserGiftCardService
             if($checkGiftCard->payment_status!=='0'){
                 return [
                     'status' => 'error',
-                    'message' => 'Gift Card is cancel or Already Paid',
+                    'message' => __('Service_messages.giftcard_already_paid_or_cancelled'),
                     'data' => (object)[]
                 ];
             }
@@ -169,7 +169,7 @@ class UserGiftCardService
                     // check Wallet AMount 
                     return [
                         'status' => 'error',
-                        'message' => "Wallet Amount Is Low Please recharge Your Wallet",
+                        'message' => __('Service_messages.wallet_balance_low_please_recharge'),
                         'data' => []
                     ];
                 }
@@ -182,7 +182,7 @@ class UserGiftCardService
 
 
 
-                $msg="Gift Card Purchased Successfully";
+                $msg = __('Service_messages.giftcard_purchased_successfully');
                 CreateNotification([
                     'sender_id' => 1,
                     'sender_type' => 1,
@@ -201,7 +201,7 @@ class UserGiftCardService
 
             }else{
 
-                $msg="Pyment Failed";
+                $msg = __('Service_messages.payment_failed');
                 CreateNotification([
                     'sender_id' => 1,
                     'sender_type' => 1,

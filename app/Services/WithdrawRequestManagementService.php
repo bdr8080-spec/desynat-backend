@@ -116,12 +116,12 @@ class WithdrawRequestManagementService
 
             if ($data->admin_verify != '0') {
 
-                if ($data->admin_verify == '1') {
-                    $msg = 'Withdraw request already approved';
+               if ($data->admin_verify == '1') {
+                    $msg = __('Service_messages.withdraw_request_already_approved');
                 } elseif ($data->admin_verify == '2') {
-                    $msg = 'Withdraw request already rejected';
+                    $msg = __('Service_messages.withdraw_request_already_rejected');
                 } else {
-                    $msg = 'Withdraw request already processed';
+                    $msg = __('Service_messages.withdraw_request_already_processed');
                 }
 
                 return [
@@ -161,7 +161,7 @@ class WithdrawRequestManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Withdraw Request Rejected Successfully',
+                'message' => __('Service_messages.withdraw_request_rejected_successfully'),
                 'data' => $data
             ];
 
@@ -190,11 +190,11 @@ class WithdrawRequestManagementService
             if ($data->admin_verify != '0') {
 
                 if ($data->admin_verify == '1') {
-                    $msg = 'Withdraw request already approved';
+                    $msg = __('Service_messages.withdraw_request_already_approved');
                 } elseif ($data->admin_verify == '2') {
-                    $msg = 'Withdraw request already rejected';
+                    $msg = __('Service_messages.withdraw_request_already_rejected');
                 } else {
-                    $msg = 'Withdraw request already processed';
+                    $msg = __('Service_messages.withdraw_request_already_processed');
                 }
 
                 return [
@@ -235,7 +235,7 @@ class WithdrawRequestManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Withdraw Request Approved Successfully',
+                'message' => __('Service_messages.withdraw_request_approved_successfully'),
                 'data' => $data
             ];
 

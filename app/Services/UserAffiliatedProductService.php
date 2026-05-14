@@ -792,7 +792,7 @@ return [
             if ($alreadyAdded) {
                 return [
                     'status' => 'success',
-                    'message' => 'Product Link already added to this affiliate',
+                    'message' => __('Service_messages.product_link_already_added_to_affiliate'),
                     'data' => $alreadyAdded
                 ];
             }
@@ -808,7 +808,7 @@ return [
 
             return [
                 'status' => 'success',
-                'message' => 'Link added to affiliate successfully',
+                'message' => __('Service_messages.link_added_to_affiliate_successfully'),
                 'data' => $data
             ];
 
@@ -953,12 +953,12 @@ return [
             $user->email = $userDetails->email ?? $user->email;
             $user->save();
 
-            return ['status' => 'success', 'message' => 'OTP verified successfully', 'data' => $userDetails];
+            return ['status' => 'success', 'message' => __('Service_messages.otp_verified_successfully'), 'data' => $userDetails];
         }
 
 
 
-         return ['status'=>'error','message'=>"Invalid OTP. Please try again.",'data'=>(object)[]];
+         return ['status'=>'error','message' => __('Service_messages.otp_invalid'),'data'=>(object)[]];
         // return ApiResponse::generateResponse('error', 'Invalid OTP. Please try again.', (object)[], 400);
     }
 

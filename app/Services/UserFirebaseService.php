@@ -80,7 +80,7 @@ $check_record = allproductchats::create($request_data);
 
     return [
         'status'  => 'success',
-        'message' => 'Chat request send Successfully',
+        'message' => __('Service_messages.chat_request_sent_successfully'),
         'data'    => $check_chatRecord
     ];
 
@@ -369,7 +369,7 @@ foreach ($check_chatRecord as $key => $val) {
             
     return [
         'status'  => 'success',
-        'message' => 'Chat message send successfully',
+        'message' => __('Service_messages.chat_message_sent_successfully'),
         'data'    => $request_data,
         "msg_id" => $msgId
     ];
@@ -406,7 +406,7 @@ foreach ($check_chatRecord as $key => $val) {
 
     return [
         'status'  => 'success',
-        'message' => 'Normal Chat request send Successfully',
+        'message' => __('Service_messages.normal_chat_request_sent_successfully'),
         'data'    => $check_chatRecord
     ];
 
@@ -434,7 +434,7 @@ foreach ($check_chatRecord as $key => $val) {
         if($check_chatRecord->product_request!=='1'){
         return [
             'status'  => 'error',
-            'message' => "User didn't Request This Order This Is Normal Chat ",
+            'message' => __('Service_messages.not_order_chat_request'),
             'data'    => (object)[]
         ];
         }
@@ -442,7 +442,7 @@ foreach ($check_chatRecord as $key => $val) {
         if($check_chatRecord->action!=='1' &&  $check_chatRecord->action!=='2' && $check_chatRecord->action!=='5'){
         return [
             'status'  => 'error',
-            'message' => "Seller didn't Accept Order Or Cancel This order",
+            'message' => __('Service_messages.seller_not_accepted_or_cancelled_order'),
             'data'    => (object)[]
         ];
         
@@ -543,7 +543,7 @@ $order_id=$createOrder->id;
 
 DB::commit();
    
-return ['status'=>'success','message'=>"Custom Order Create Successfully",'data'=>$createOrder];
+return ['status'=>'success','message' => __('Service_messages.custom_order_created_successfully'),'data'=>$createOrder];
 
         
     } catch (\Exception $e) {
@@ -574,7 +574,7 @@ return ['status'=>'success','message'=>"Custom Order Create Successfully",'data'
 
          return [
             'status'  => 'error',
-            'message' => "Seller Process Already proceed",
+            'message' => __('Service_messages.seller_already_processed'),
             'data'    => (object)[]
         ];
      }
@@ -586,7 +586,7 @@ return ['status'=>'success','message'=>"Custom Order Create Successfully",'data'
 
     return [
         'status'  => 'success',
-        'message' => 'Custom request Update Successfully',
+        'message' => __('Service_messages.custom_request_updated_successfully'),
         'data'    => $check_chatRecord
     ];
 
@@ -692,7 +692,7 @@ return ['status'=>'success','message'=>"Custom Order Create Successfully",'data'
 
         return [
             'status' => 'success',
-            'message' => 'Messages marked as read successfully',
+            'message' => __('Service_messages.messages_marked_as_read_successfully'),
             'data' => $updatedCount
         ];
 

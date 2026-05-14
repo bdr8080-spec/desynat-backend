@@ -829,7 +829,7 @@ public function product_add_to_cart($request)
         if(!$variation_stock_check){
             return [
                 'status' => 'error',
-                'message' => 'Variant not found',
+                'message' => __('Service_messages.variant_not_found'),
                 'data' => (object)[]
             ];
         }
@@ -837,7 +837,7 @@ public function product_add_to_cart($request)
         if(intval($variation_stock_check->total_stock) < $request->quantity){
             return [
                 'status' => 'error',
-                'message' => 'Product Stock limit is low',
+                'message' => __('Service_messages.product_stock_limit_low'),
                 'data' => (object)[]
             ];
         }
@@ -893,7 +893,7 @@ public function product_add_to_cart($request)
             if(intval($variation_stock_check->total_stock) < $update_quantity){
                 return [
                     'status' => 'error',
-                    'message' => 'Product Stock limit is low',
+                    'message' => __('Service_messages.product_stock_limit_low'),
                     'data' => (object)[]
                 ];
             }
@@ -928,7 +928,7 @@ public function product_add_to_cart($request)
 
             $add_to_cart->update($updateData);
 
-            $msg = "Product Add to Cart Updated Successfully";
+            $msg = __('Service_messages.product_cart_updated_successfully');
 
         } else {
 
@@ -936,7 +936,7 @@ public function product_add_to_cart($request)
 
             $add_to_cart = Addtocart::create($data);
 
-            $msg = "Product Add in Cart Successfully";
+            $msg = __('Service_messages.product_added_to_cart_successfully');
         }
 
         if($reference_link){
@@ -1161,14 +1161,14 @@ public function product_view_cart_details($request)
             if(intVal($variation_stock_check->total_stock) < $update_quantity){
                 return [
                     'status'  => 'error',
-                    'message' => 'product Stock limit Is Low',
+                    'message' => __('Service_messages.product_stock_limit_low'),
                     'data'    => (object)[]
                 ];
             }
             
             $add_to_cart->update(['quantity'=>$update_quantity,'amount'=>$update_amount]);
 
-            $msg="Product Add to Cart Update Successfully";
+            $msg = __('Service_messages.product_cart_updated_successfully');
         
         }else{
 
@@ -1176,7 +1176,7 @@ public function product_view_cart_details($request)
 
 
           $add_to_cart= Addtocart::create($data);
-            $msg="Product Add in Cart Successfully";
+            $msg = __('Service_messages.product_added_to_cart_successfully');
         }
 
       
@@ -1218,7 +1218,7 @@ public function addtoCart_Increment_decrement($request)
                 if($cart_details->order_type=='2'){
                      return [
                         'status'  => 'error',
-                        'message' => "You can't increment and decrease Custom Order Quantity",
+                        'message' => __('Service_messages.custom_order_quantity_change_not_allowed'),
                         'data'    => (object)[]
                     ];
                 }
@@ -1231,13 +1231,13 @@ public function addtoCart_Increment_decrement($request)
                 if(intVal($cart_details->product_variants->total_stock) < $update_quantity){
                     return [
                         'status'  => 'error',
-                        'message' => "product Stock limit Is Low You Can't Increment quantity ",
+                        'message' => __('Service_messages.product_stock_limit_low'),
                         'data'    => (object)[]
                     ];
                 }
 
                 $cart_details->update(['quantity'=>$update_quantity]);
-                $msg="Product Increment successfully";
+                $msg = __('Service_messages.product_incremented_successfully');
 
                 }else{
                 // decrement Code
@@ -1245,11 +1245,11 @@ public function addtoCart_Increment_decrement($request)
                 
                 if($update_quantity<=0){
                   $cart_details->delete();
-                  $msg="Product Remove from The cart successfully";
+                  $msg = __('Service_messages.product_removed_from_cart_successfully');
                 }else{
       
                 $cart_details->update(['quantity'=>$update_quantity]);
-                $msg="Product decrement successfully";
+                $msg = __('Service_messages.product_decremented_successfully');
                 
                    }
                 }
@@ -1284,7 +1284,7 @@ public function addtoCart_Increment_decrement($request)
             if(intVal($variation_stock_check->total_stock) < $request->quantity){
                 return [
                     'status'  => 'error',
-                    'message' => 'product Stock limit Is Low',
+                    'message' => __('Service_messages.product_stock_limit_low'),
                     'data'    => (object)[]
                 ];
             }
@@ -1305,14 +1305,14 @@ public function addtoCart_Increment_decrement($request)
                 if(intVal($variation_stock_check->total_stock) < $update_quantity){
                     return [
                         'status'  => 'error',
-                        'message' => 'product Stock limit Is Low',
+                        'message' => __('Service_messages.product_stock_limit_low'),
                         'data'    => (object)[]
                     ];
                 }
                 
                 $add_to_cart->update(['quantity'=>$update_quantity,'amount'=>$update_amount]);
 
-                $msg="Product Add to Cart Update Successfully";
+               $msg = __('Service_messages.product_cart_updated_successfully');
             
             }else{
 
@@ -1320,7 +1320,7 @@ public function addtoCart_Increment_decrement($request)
 
 
               $add_to_cart= Addtocart::create($data);
-                $msg="Product Add in Cart Successfully";
+                 $msg = __('Service_messages.product_added_to_cart_successfully');
             }
 
           
@@ -1819,7 +1819,7 @@ public function addtoCart_Increment_decrement($request)
 
             return [
                 'status' => "success",
-                'message' => 'Custom Product Remove from The Card successfully',
+                'message' => __('Service_messages.custom_product_removed_from_cart_successfully'),
                 'data'    => $AddToCardCheck
             ];
         } 
@@ -1853,7 +1853,7 @@ public function addtoCart_Increment_decrement($request)
 
         return [
             'status' => 'success',
-            'message' => 'Affiliate click recorded successfully',
+            'message' => __('Service_messages.affiliate_click_recorded_successfully'),
             'data' => $clickRecord
         ];
 

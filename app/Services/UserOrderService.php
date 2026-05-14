@@ -29,7 +29,7 @@ class UserOrderService
 
         return [
             'status' => 'error',
-            'message' => 'User and Address didn\'t Match',
+            'message' => __('Service_messages.user_address_do_not_match'),
             'data' => []
         ];
       }
@@ -435,7 +435,7 @@ $checkOrder=Order::with('user_details')->where('order_id', $request->order_id)->
 if($checkOrder->payment_status!=='0' ){
     return [
             'status' => 'error',
-            'message' => "This Order Payment is done or cancelled",
+            'message' => __('Service_messages.order_payment_already_completed_or_cancelled'),
             'data' => []
     ];
 }
@@ -453,7 +453,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         AddtocartRemoveData($checkOrder->id);
         OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
-         $msg="COD Order Place Successfully";  
+         $msg = __('Service_messages.cod_order_placed_successfully'); 
          $msgAr = "تم إنشاء طلب الدفع عند الاستلام بنجاح";
 
         // return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
@@ -471,7 +471,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         // check Wallet AMount 
         return [
             'status' => 'error',
-            'message' => "Wallet Amount Is Low Please recharge Your Wallet",
+            'message' => __('Service_messages.wallet_balance_low_please_recharge'),
             'data' => []
         ];
        }
@@ -507,7 +507,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
          $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2']);
 
 
-         $msg="Order Place Successfully"; 
+         $msg = __('Service_messages.order_placed_successfully');
          $msgAr = "تم إنشاء الطلب بنجاح"; 
 
     //    return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
@@ -518,7 +518,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2','transaction_id' => $transactionId]);
 
         if($request->payment_status=='1'){
-        $msg="Order Payment Paid Successfully";
+        $msg = __('Service_messages.order_payment_paid_successfully');
         $msgAr = "تم دفع الطلب بنجاح";
 
         AddtocartRemoveData($checkOrder->id);
@@ -531,7 +531,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     }else{
 
-        $msg="Order Payment Cancelled";  
+        $msg = __('Service_messages.order_payment_cancelled');
         $msgAr = "تم إلغاء دفع الطلب";              
     }
 
@@ -964,16 +964,16 @@ $orders = $orders->orderBy('id', 'desc')->get();
     $checkOrder=Order::where('id',$request->order_id)->first();
 
     if(!$checkOrder){
-        return ['status'=>'error','message'=>"No Order id Found",'data'=>(object)[]];
+        return ['status'=>'error','message' => __('Service_messages.no_order_id_found'),'data'=>(object)[]];
     }
 
     if($checkOrder->payment_status!=='1' && $checkOrder->payment_method!=='3'){
-       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('Service_messages.order_payment_not_paid'),'data'=>(object)[]];
     }
 
     // check delivery status
     if($checkOrder->delivery_status!=='1' && $checkOrder->delivery_status!=='2' ){
-       return ['status'=>'error','message'=>"Delivery is Already proceeed  You Can't Cancel order ",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('Service_messages.delivery_already_processed_cannot_cancel_order'),'data'=>(object)[]];
     }
 
     // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
@@ -1032,7 +1032,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
 
 
 
-    return ['status'=>'success','message'=>"Order cancelled Successfully",'data'=>$checkOrder];
+    return ['status'=>'success','message' => __('Service_messages.order_cancelled_successfully'),'data'=>$checkOrder];
     
     } catch (\Exception $e) {
         return [
@@ -1367,7 +1367,7 @@ if($checkOrder->order_type=='2'){
     }
 
     if($checkOrder->payment_status=='2'){
-       return ['status'=>'error','message'=>"Order is Cancelled or rejected",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('Service_messages.order_cancelled_or_rejected'),'data'=>(object)[]];
     }
 
     // if($checkOrder->payment_status!=='1'){
@@ -1376,13 +1376,13 @@ if($checkOrder->order_type=='2'){
     // check order is Alredy in return and exchange state 
 
      if($checkOrder->return_type!=='0'){
-       return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('Service_messages.product_already_in_return_or_exchange'),'data'=>(object)[]];
      }
      
     
     // check delivery status
     if($checkOrder->delivery_status!=='3'){
-       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+       return ['status'=>'error','message' => __('Service_messages.product_not_delivered_yet'),'data'=>(object)[]];
     }
     
 
@@ -1390,7 +1390,7 @@ if($checkOrder->order_type=='2'){
      if($request->type=='1'){
 
          if($checkOrder->product_details->product_return=='0'){
-       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+       return ['status'=>'error','message' => __('Service_messages.product_return_not_available'),'data'=>(object)[]];     
     }
 
     // Check Product Return days Availbility
@@ -1409,7 +1409,7 @@ if($checkOrder->order_type=='2'){
     // Check if today is greater than return date
     if ($today->greaterThan($returnLastDate)) {
                
-        return ['status'=>'error','message'=>"Product return Period Is Over",'data'=>(object)[]];     
+        return ['status'=>'error','message' => __('Service_messages.product_return_period_over'),'data'=>(object)[]];     
 
     }
 
@@ -1417,7 +1417,7 @@ if($checkOrder->order_type=='2'){
 
     $checkOrder->update(['return_type'=>'1','return_reason'=> $request->return_reason,'return_image'=>$request->return_image]);    
 
-    $msg="Product return Request Send Successfully";
+    $msg = __('Service_messages.product_return_request_sent_successfully');
 
 
      }
@@ -1427,7 +1427,7 @@ if($checkOrder->order_type=='2'){
     if($request->type=='2'){
 
     if($checkOrder->product_details->product_exchangable=='0'){
-       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+       return ['status'=>'error','message' => __('Service_messages.product_exchange_not_available'),'data'=>(object)[]];     
     }
 
     // Check Product product_exchangable days Availbility
@@ -1445,7 +1445,7 @@ if($checkOrder->order_type=='2'){
     // Check if today is greater than return date
     if ($today->greaterThan($returnLastDate)) {
                
-        return ['status'=>'error','message'=>"Product Exchange Period Is Over",'data'=>(object)[]];     
+        return ['status'=>'error','message' => __('Service_messages.product_exchange_period_over'),'data'=>(object)[]];     
 
     }
 
@@ -1453,7 +1453,7 @@ if($checkOrder->order_type=='2'){
 
     $checkOrder->update(['return_type'=>'2','exchange_reason'=> $request->exchange_reason,'exchange_new_size'=>$request->new_size]);    
 
-    $msg="Product Exchange Request Send Successfully";
+    $msg = __('Service_messages.product_exchange_request_sent_successfully');
 
 }
 
@@ -1675,7 +1675,7 @@ $unique_id="Wal".Rand('100000','999999');
    
     return [
         'status'  => 'success',
-        'message' => 'add Wallet Money Transaction',
+        'message' => __('Service_messages.wallet_money_transaction_added_successfully'),
         'data'    => $insert_record
     ];
 
@@ -1708,7 +1708,7 @@ public function CompleteAddMoneyPayment($request)
                 ['amount' => DB::raw("amount + {$history->amount}")]
             );
 
-            $message = 'Add Money in Wallet Complete Successfully';
+            $message = __('Service_messages.wallet_add_money_completed_successfully');
             CreateNotification([
                 'sender_id' => 1,
                 'sender_type' => 1,
@@ -1725,7 +1725,7 @@ public function CompleteAddMoneyPayment($request)
                 'notification_type' => 'wallet_money_added'
             ]);
         } else {
-            $message = 'Add Money in Wallet Cancelled / Failed';
+            $message = __('Service_messages.wallet_add_money_failed_or_cancelled');
             CreateNotification([
                 'sender_id' => 1,
                 'sender_type' => 1,

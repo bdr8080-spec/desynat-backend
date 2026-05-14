@@ -259,5 +259,117 @@ return [
  'staff_profile_updated_successfully' => 'تم تحديث ملف الموظف بنجاح',
  'document_and_bank_details_saved_successfully' => 'تم حفظ المستندات وبيانات البنك بنجاح',
 
+ //seller staff management service
+ 'email_address_already_used' => 'عنوان البريد الإلكتروني مستخدم بالفعل',
+ 'phone_number_already_used' => 'رقم الهاتف مستخدم بالفعل',
+ 'staff_created_successfully' => 'تم إنشاء الموظف بنجاح',
+ 'staff_updated_successfully' => 'تم تحديث الموظف بنجاح',
+ 'staff_blocked_successfully' => 'تم حظر الموظف بنجاح',
+ 'staff_unblocked_successfully' => 'تم إلغاء حظر الموظف بنجاح',
+ 'staff_deleted_successfully' => 'تم حذف الموظف بنجاح',
+
+ //shipping tax service
+ 'tax_updated_successfully' => 'تم تحديث الضريبة بنجاح',
+ 'delivery_charges_already_exist' => 'رسوم التوصيل موجودة بالفعل',
+ 'shipping_charge_added_successfully' => 'تمت إضافة رسوم الشحن بنجاح',
+ 'shipping_charge_updated_successfully' => 'تم تحديث رسوم الشحن بنجاح',
+ 'delivery_charges_unblocked_successfully' => 'تم إلغاء حظر رسوم التوصيل بنجاح',
+ 'delivery_charges_blocked_successfully' => 'تم حظر رسوم التوصيل بنجاح',
+ 'delivery_charges_deleted_successfully' => 'تم حذف رسوم التوصيل بنجاح',
+
+ //story management service
+ 'no_story_found' => 'لم يتم العثور على قصة',
+ 'no_reel_found' => 'لم يتم العثور على ريل',
+ 'no_highlights_found' => 'لم يتم العثور على أبرز اللقطات',
+ 'story_added_successfully' => 'تمت إضافة القصة بنجاح',
+ 'story_deleted_successfully' => 'تم حذف القصة بنجاح',
+ 'no_active_plan' => 'لا يوجد لديك خطة نشطة',
+ 'story_limit_reached_for_plan' => 'لا يمكنك إضافة قصص حسب خطتك الحالية',
+ 'reel_upload_limit_reached' => 'لقد وصلت إلى الحد الشهري لرفع الريلز، لا يمكنك إضافة المزيد',
+ 'reel_added_successfully' => 'تمت إضافة الريل بنجاح',
+ 'highlight_limit_reached' => 'لقد وصلت إلى الحد الشهري للأبرز، لا يمكنك إضافة المزيد',
+ 'highlight_added_successfully' => 'تمت إضافة أبرز اللقطات بنجاح',
+ 'highlight_deleted_successfully' => 'تم حذف أبرز اللقطات بنجاح',
+ 'reel_deleted_successfully' => 'تم حذف الريل بنجاح',
+ 'reel_updated_successfully' => 'تم تحديث الريل بنجاح',
+ 'reel_activated_successfully' => 'تم تفعيل الريل بنجاح',
+ 'reel_inactivated_successfully' => 'تم إلغاء تفعيل الريل بنجاح',
+
+ //ticket service
+ 'ticket_status_updated_successfully' => 'تم تحديث حالة التذكرة بنجاح',
+
+ //user affiliate auth service
+ 'account_rejected_by_admin_reason' => 'تم رفض حسابك من قبل المدير. سبب الرفض: :reason',
+ 'document_uploaded_successfully' => 'تم رفع المستند بنجاح',
+ 'address_updated_successfully' => 'تم تحديث العنوان بنجاح',
+ 'affiliate_product_removed_successfully' => 'تم حذف منتج الأفلييت بنجاح',
+ 'account_deleted_successfully' => 'تم حذف الحساب بنجاح',
+
+ //user affiliate product service
+ 'product_link_already_added_to_affiliate' => 'تمت إضافة رابط المنتج لهذا الأفلييت بالفعل',
+ 'link_added_to_affiliate_successfully' => 'تمت إضافة الرابط إلى الأفلييت بنجاح',
+
+ //user firebase service
+ 'chat_request_sent_successfully' => 'تم إرسال طلب الدردشة بنجاح',
+ 'chat_message_sent_successfully' => 'تم إرسال رسالة الدردشة بنجاح',
+ 'normal_chat_request_sent_successfully' => 'تم إرسال طلب الدردشة العادية بنجاح',
+ 'not_order_chat_request' => 'المستخدم لم يطلب هذا الطلب، هذه محادثة عادية',
+ 'seller_not_accepted_or_cancelled_order' => 'لم يقم البائع بقبول أو إلغاء هذا الطلب',
+ 'custom_order_created_successfully' => 'تم إنشاء الطلب المخصص بنجاح',
+ 'seller_already_processed' => 'قام البائع بمعالجة هذا الطلب بالفعل',
+ 'custom_request_updated_successfully' => 'تم تحديث الطلب المخصص بنجاح',
+ 'messages_marked_as_read_successfully' => 'تم وضع علامة مقروء على الرسائل بنجاح',
+
+ //user giftcard service
+ 'giftcard_added_successfully' => 'تمت إضافة بطاقة الهدية بنجاح',
+ 'giftcard_already_paid_or_cancelled' => 'بطاقة الهدية مدفوعة أو ملغاة بالفعل',
+ 'wallet_balance_low_please_recharge' => 'رصيد المحفظة منخفض، يرجى إعادة شحن المحفظة',
+ 'giftcard_purchased_successfully' => 'تم شراء بطاقة الهدية بنجاح',
+ 'payment_failed' => 'فشل الدفع',
+
+ //user management service
+ 'variant_not_found' => 'لم يتم العثور على المتغير',
+ 'product_stock_limit_low' => 'مخزون المنتج منخفض',
+ 'product_cart_updated_successfully' => 'تم تحديث سلة المنتج بنجاح',
+ 'product_added_to_cart_successfully' => 'تمت إضافة المنتج إلى السلة بنجاح',
+ 'custom_order_quantity_change_not_allowed' => 'لا يمكنك زيادة أو تقليل كمية الطلب المخصص',
+ 'product_incremented_successfully' => 'تم زيادة كمية المنتج بنجاح',
+ 'product_removed_from_cart_successfully' => 'تمت إزالة المنتج من السلة بنجاح',
+ 'product_decremented_successfully' => 'تم تقليل كمية المنتج بنجاح',
+ 'custom_product_removed_from_cart_successfully' => 'تمت إزالة المنتج المخصص من السلة بنجاح',
+ 'affiliate_click_recorded_successfully' => 'تم تسجيل نقرة الأفلييت بنجاح',
+
+ //user order service
+ 'user_address_do_not_match' => 'عنوان المستخدم غير متطابق',
+ 'order_payment_already_completed_or_cancelled' => 'تم إتمام أو إلغاء دفع هذا الطلب بالفعل',
+ 'cod_order_placed_successfully' => 'تم إنشاء طلب الدفع عند الاستلام بنجاح',
+ 'wallet_balance_low_please_recharge' => 'رصيد المحفظة منخفض. يرجى إعادة شحن المحفظة',
+ 'order_placed_successfully' => 'تم إنشاء الطلب بنجاح',
+ 'order_payment_paid_successfully' => 'تم دفع طلب الدفع بنجاح',
+ 'order_payment_cancelled' => 'تم إلغاء دفع الطلب',
+ 'no_order_id_found' => 'لم يتم العثور على رقم الطلب',
+ 'order_payment_not_paid' => 'لم يتم دفع هذا الطلب بعد',
+ 'delivery_already_processed_cannot_cancel_order' => 'تم معالجة الطلب بالفعل، لا يمكنك إلغاء الطلب',
+ 'order_cancelled_successfully' => 'تم إلغاء الطلب بنجاح',
+ 'order_cancelled_or_rejected' => 'تم إلغاء أو رفض الطلب',
+ 'product_already_in_return_or_exchange' => 'المنتج بالفعل في عملية الاسترجاع أو الاستبدال',
+ 'product_not_delivered_yet' => 'لم يتم تسليم المنتج بعد، يرجى الانتظار حتى يتم التسليم',
+ 'product_return_not_available' => 'استرجاع المنتج غير متاح',
+ 'product_return_period_over' => 'انتهت فترة استرجاع المنتج',
+ 'product_return_request_sent_successfully' => 'تم إرسال طلب إرجاع المنتج بنجاح',
+ 'product_exchange_not_available' => 'استبدال المنتج غير متاح',
+ 'product_exchange_period_over' => 'انتهت فترة استبدال المنتج',
+ 'product_exchange_request_sent_successfully' => 'تم إرسال طلب استبدال المنتج بنجاح',
+ 'wallet_money_transaction_added_successfully' => 'تم إضافة معاملة رصيد المحفظة بنجاح',
+ 'wallet_add_money_completed_successfully' => 'تمت إضافة المال إلى المحفظة بنجاح',
+ 'wallet_add_money_failed_or_cancelled' => 'فشلت عملية إضافة المال إلى المحفظة أو تم إلغاؤها',
+
+ //withdraw req management service
+ 'withdraw_request_already_approved' => 'تمت الموافقة على طلب السحب بالفعل',
+ 'withdraw_request_already_rejected' => 'تم رفض طلب السحب بالفعل',
+ 'withdraw_request_already_processed' => 'تمت معالجة طلب السحب بالفعل',
+ 'withdraw_request_rejected_successfully' => 'تم رفض طلب السحب بنجاح',
+ 'withdraw_request_approved_successfully' => 'تمت الموافقة على طلب السحب بنجاح',
+
 
 ];

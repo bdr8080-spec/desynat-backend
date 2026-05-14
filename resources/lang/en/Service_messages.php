@@ -259,6 +259,119 @@ return [
   'staff_profile_updated_successfully' => 'Staff profile updated successfully',
   'document_and_bank_details_saved_successfully' => 'Document and bank details saved successfully',
 
+  //seller staff management service
+  'email_address_already_used' => 'Email address is already used',
+  'phone_number_already_used' => 'Phone number is already used',
+  'staff_created_successfully' => 'Staff created successfully',
+  'staff_updated_successfully' => 'Staff updated successfully',
+  'staff_blocked_successfully' => 'Staff member blocked successfully',
+  'staff_unblocked_successfully' => 'Staff member unblocked successfully',
+  'staff_deleted_successfully' => 'Staff deleted successfully',
+
+  //shipping tax service
+  'tax_updated_successfully' => 'Tax updated successfully',
+  'delivery_charges_already_exist' => 'Delivery charges already exist',
+  'shipping_charge_added_successfully' => 'Shipping charge added successfully',
+  'shipping_charge_updated_successfully' => 'Shipping charge updated successfully',
+  'delivery_charges_unblocked_successfully' => 'Delivery charges unblocked successfully',
+  'delivery_charges_blocked_successfully' => 'Delivery charges blocked successfully',
+  'delivery_charges_deleted_successfully' => 'Delivery charges deleted successfully',
+
+  //story management service
+  'no_story_found' => 'No story found',
+  'no_reel_found' => 'No reel found',
+  'no_highlights_found' => 'No highlights found',
+  'story_added_successfully' => 'Story added successfully',
+  'story_deleted_successfully' => 'Story deleted successfully',
+  'no_active_plan' => 'You have no active plan',
+  'story_limit_reached_for_plan' => "You can't add stories as per your active plan",
+  'reel_upload_limit_reached' => "Your monthly reel upload limit has been reached, you can't add more reels",
+  'reel_added_successfully' => 'Reel added successfully',
+  'highlight_limit_reached' => "Your monthly highlight limit has been reached, you can't add more highlights",
+  'highlight_added_successfully' => 'Highlight added successfully',
+  'highlight_deleted_successfully' => 'Highlight deleted successfully',
+  'reel_deleted_successfully' => 'Reel deleted successfully',
+  'reel_updated_successfully' => 'Reel updated successfully',
+  'reel_activated_successfully' => 'Reel activated successfully',
+  'reel_inactivated_successfully' => 'Reel inactivated successfully',
+
+  //ticket service
+  'ticket_status_updated_successfully' => 'Ticket status updated successfully',
+
+  //user affiliate auth service
+  'account_rejected_by_admin_reason' => 'Your account has been rejected by admin. Reason: :reason',
+  'document_uploaded_successfully' => 'Document uploaded successfully',
+  'address_updated_successfully' => 'Address updated successfully',
+  'affiliate_product_removed_successfully' => 'Affiliate product removed successfully',
+  'account_deleted_successfully' => 'Account deleted successfully',
+
+  //user affiliate product service
+  'product_link_already_added_to_affiliate' => 'Product link already added to this affiliate',
+  'link_added_to_affiliate_successfully' => 'Link added to affiliate successfully',
+
+  //user firebase service
+  'chat_request_sent_successfully' => 'Chat request sent successfully',
+  'chat_message_sent_successfully' => 'Chat message sent successfully',
+  'normal_chat_request_sent_successfully' => 'Normal chat request sent successfully',
+  'not_order_chat_request' => 'User did not request this order. This is a normal chat',
+  'seller_not_accepted_or_cancelled_order' => 'Seller did not accept or cancel this order',
+  'custom_order_created_successfully' => 'Custom order created successfully',
+  'seller_already_processed' => 'Seller has already processed this request',
+  'custom_request_updated_successfully' => 'Custom request updated successfully',
+  'messages_marked_as_read_successfully' => 'Messages marked as read successfully',
+
+  //user giftcard service
+  'giftcard_added_successfully' => 'Gift card added successfully',
+  'giftcard_already_paid_or_cancelled' => 'Gift card is already paid or cancelled',
+  'wallet_balance_low_please_recharge' => 'Wallet balance is low. Please recharge your wallet',
+  'giftcard_purchased_successfully' => 'Gift card purchased successfully',
+  'payment_failed' => 'Payment failed',
+
+  //user managemenr service
+  'variant_not_found' => 'Variant not found',
+  'product_stock_limit_low' => 'Product stock is low',
+  'product_cart_updated_successfully' => 'Product cart updated successfully',
+  'product_added_to_cart_successfully' => 'Product added to cart successfully',
+  'custom_order_quantity_change_not_allowed' => "You can't increment or decrease custom order quantity",
+  'product_incremented_successfully' => 'Product quantity increased successfully',
+  'product_removed_from_cart_successfully' => 'Product removed from cart successfully',
+  'product_decremented_successfully' => 'Product quantity decreased successfully',
+  'custom_product_removed_from_cart_successfully' => 'Custom product removed from cart successfully',
+  'affiliate_click_recorded_successfully' => 'Affiliate click recorded successfully',
+
+  //user order service
+  'user_address_do_not_match' => 'User address does not match',
+  'order_payment_already_completed_or_cancelled' => 'This order payment is already completed or cancelled',
+  'cod_order_placed_successfully' => 'Cash on delivery order placed successfully',
+  'wallet_balance_low_please_recharge' => 'Wallet balance is low. Please recharge your wallet',
+  'order_placed_successfully' => 'Order placed successfully',
+  'order_payment_paid_successfully' => 'Order payment paid successfully',
+  'order_payment_cancelled' => 'Order payment cancelled',
+  'no_order_id_found' => 'No order ID found',
+  'order_payment_not_paid' => 'This order payment is not paid',
+  'delivery_already_processed_cannot_cancel_order' => "Delivery is already processed. You can't cancel the order",
+  'order_cancelled_successfully' => 'Order cancelled successfully',
+  'order_cancelled_or_rejected' => 'Order is cancelled or rejected',
+  'product_already_in_return_or_exchange' => 'Product is already in return or exchange process',
+  'product_not_delivered_yet' => 'Product is not delivered yet. Please wait until it is delivered',
+  'product_return_not_available' => 'Product return is not available',
+  'product_return_period_over' => 'Product return period is over',
+  'product_return_request_sent_successfully' => 'Product return request sent successfully',
+  'product_exchange_not_available' => 'Product exchange is not available',
+  'product_exchange_period_over' => 'Product exchange period is over',
+  'product_exchange_request_sent_successfully' => 'Product exchange request sent successfully',
+  'wallet_money_transaction_added_successfully' => 'Wallet money transaction added successfully',
+  'wallet_add_money_completed_successfully' => 'Money added to wallet successfully',
+  'wallet_add_money_failed_or_cancelled' => 'Adding money to wallet failed or was cancelled',
+
+  //withdraw req management service
+  'withdraw_request_already_approved' => 'Withdraw request already approved',
+  'withdraw_request_already_rejected' => 'Withdraw request already rejected',
+  'withdraw_request_already_processed' => 'Withdraw request already processed',
+  'withdraw_request_rejected_successfully' => 'Withdraw request rejected successfully',
+  'withdraw_request_approved_successfully' => 'Withdraw request approved successfully',
+
+
 
   
   

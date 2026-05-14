@@ -66,7 +66,7 @@ class SellerStaffManagementService
         if($check_user_alreadyinseller){
            return [
                 'status' => 'error',
-                'message' => 'Email Address is Already used',
+                'message' => __('Service_messages.email_address_already_used'),
                 'data' => []
             ];
 
@@ -77,7 +77,7 @@ class SellerStaffManagementService
         if($check_user_already){
            return [
                 'status' => 'error',
-                'message' => 'Email Address is Already used',
+                'message' => __('Service_messages.email_address_already_used'),
                 'data' => []
             ];
 
@@ -87,7 +87,7 @@ class SellerStaffManagementService
         if($check_mobile_already){
             return [
                 'status' => 'error',
-                'message' => 'Phone Number is Already used',
+                'message' => __('Service_messages.phone_number_already_used'),
                 'data' => []
             ];
 
@@ -138,7 +138,7 @@ class SellerStaffManagementService
     }
         return [
             'status' => 'success',
-            'message' => 'Staff created Successfully',
+            'message' => __('Service_messages.staff_created_successfully'),
             'data' => $check_seller
         ];
 
@@ -184,7 +184,7 @@ class SellerStaffManagementService
         if ($check_user_already) {
             return [
                 'status' => 'error',
-                'message' => 'Email Address is Already used',
+                'message' => __('Service_messages.email_address_already_used'),
                 'data' => []
             ];
         }
@@ -201,7 +201,7 @@ class SellerStaffManagementService
         if ($check_mobile_already) {
             return [
                 'status' => 'error',
-                'message' => 'Phone Number is Already used',
+                'message' => __('Service_messages.phone_number_already_used'),
                 'data' => []
             ];
         }
@@ -260,7 +260,9 @@ class SellerStaffManagementService
 
         return [
             'status' => 'success',
-            'message' => $isEdit ? 'Staff updated successfully' : 'Staff created successfully',
+            'message' => $isEdit
+                ? __('Service_messages.staff_updated_successfully')
+                : __('Service_messages.staff_created_successfully'),
             'data' => $check_seller
         ];
 
@@ -332,10 +334,10 @@ if($type=='api'){
 
     if($staff->is_block==0){ //0 No Block 
 
-        $msg="staff member Block Successfully";
+        $msg = __('Service_messages.staff_blocked_successfully');
         $staff->update(['is_block'=>1]);
     }else{  // 1 block
-        $msg="staff member UnBlock Successfully";
+        $msg = __('Service_messages.staff_unblocked_successfully');
         $staff->update(['is_block'=>0]);
     }
 
@@ -364,7 +366,7 @@ if($type=='api'){
 
     $staff=seller::with('seller_category','Role_Action.sellermenu')->where('id',$request->id)->first();
 
-    $msg="Staff deleted Successfully";
+    $msg = __('Service_messages.staff_deleted_successfully');
     $staff->delete();
 
     return [

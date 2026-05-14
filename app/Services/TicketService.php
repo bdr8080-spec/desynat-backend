@@ -50,7 +50,7 @@ class TicketService
             if ($data->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Tickets found',
+                    'message' => __('Service_messages.no_data_found'),
                     'data' =>  (object)[]
                 ];
             }
@@ -122,7 +122,7 @@ class TicketService
 
             return [
                 'status' => 'success',
-                'message' => 'Ticket status updated successfully',
+                'message' => __('Service_messages.ticket_status_updated_successfully'),
                 'data' => $data
             ];
 
@@ -248,7 +248,7 @@ class TicketService
             if (($limit && $tickets->isEmpty()) || (!$limit && $tickets->isEmpty())) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Tickets found',
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -385,7 +385,7 @@ class TicketService
             if (($limit && $tickets->isEmpty()) || (!$limit && $tickets->isEmpty())) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Tickets found',
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -521,7 +521,7 @@ class TicketService
             if (($limit && $tickets->isEmpty()) || (!$limit && $tickets->isEmpty())) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Tickets found',
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
