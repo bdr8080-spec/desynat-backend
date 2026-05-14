@@ -1004,6 +1004,49 @@ return [
     'confirm_password_match' => 'Confirm password must match new password.',
     'validation_error' => 'Validation error',
 
+    // WebSellerStaffmanagementController Web 
 
+   'full_name_required' => 'Full name is required.',
+    'full_name_string' => 'Full name must be valid text.',
+    'full_name_max' => 'Full name cannot exceed 255 characters.',
 
+    'name_ar_string' => 'Arabic name must be valid text.',
+    'name_ar_max' => 'Arabic name cannot exceed 255 characters.',
+
+    'profile_pic_required' => 'Profile picture is required.',
+
+    'country_code_required' => 'Country code is required.',
+    'country_code_string' => 'Country code must be valid.',
+    'country_code_max' => 'Country code cannot exceed 10 characters.',
+
+    'mobile_required' => 'Mobile number is required.',
+    'mobile_digits_between' => 'Mobile number must be between 8 and 15 digits.',
+
+    'email_required' => 'Email is required.',
+    'email_email' => 'Please enter a valid email address.',
+
+    'select_category_required' => 'Please select category.',
+    'select_category_exists' => 'Selected category is invalid.',
+
+    'password_required' => 'Password is required.',
+    'password_min' => 'Password must be at least 6 characters.',
+    'password_same' => 'Password confirmation does not match.',
+
+    'confirm_password_required' => 'Confirm password is required.',
+
+    'menu_required' => 'Please select at least one menu.',
+    'menu_array' => 'Menu format is invalid.',
+    'menu_min' => 'Please select at least one menu.',
+
+    'menu_id_required' => 'Menu ID is required.',
+    'menu_id_exists' => 'Selected menu is invalid.',
+
+    'can_view_required' => 'View permission is required.',
+    'can_view_boolean' => 'View permission must be true or false.',
+
+    'can_action_required' => 'Action permission is required.',
+    'can_action_boolean' => 'Action permission must be true or false.',
+
+    'staff_created_successfully' => 'Staff created successfully.',
+    
 ];

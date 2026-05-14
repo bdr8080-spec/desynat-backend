@@ -1,9 +1,10 @@
 @include('dealer.layout.header')
 
 <section class="section dashboard">
-  
+
     <div class="d-flex justify-content-between mt-4">
-        <a href="#" class="title24 alink"> <i class="bi bi-chevron-left"></i> {{ __('seller_messages.edit_Staff') }} </a>
+        <a href="#" class="title24 alink"> <i class="bi bi-chevron-left"></i> {{ __('seller_messages.edit_Staff') }}
+        </a>
     </div>
 
     <form id="addBanner" action="#" method="post">
@@ -11,72 +12,77 @@
             <div class="col-lg-2">
                 <div class="product-pnls2 mt-3">
                     <div class="upload-image" style="position:relative;height:30%">
-                     
-                    <label id="bannerUploadLabel" style="cursor:pointer;text-align:center;display:block;position:relative;">
-                    <!-- Placeholder -->
-                    <div id="bannerPlaceholderImg" style="{{ !empty($view_staff->profile_pic) ? 'display:none;' : '' }}">
-                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
-                             style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
-                        <div class="py-2" style="color:#875C3A">
-                             {{ __('seller_messages.Upload_Profile') }}
-                        </div>
-                    </div>
 
-                    <!-- Uploaded Image -->
-                    <div class="profileImg" style="" id="showProfile">
-                    <img id="bannerUploadedImg"
-                         src="{{ !empty($view_staff->profile_pic) ? asset($view_staff->profile_pic) : '' }}"
-                         class="img-fluid uploadbnr"
-                         style="{{ empty($view_staff->profile_pic) ? 'display:none;' : '' }}">
-                    </div>
+                        <label id="bannerUploadLabel"
+                            style="cursor:pointer;text-align:center;display:block;position:relative;">
+                            <!-- Placeholder -->
+                            <div id="bannerPlaceholderImg"
+                                style="{{ !empty($view_staff->profile_pic) ? 'display:none;' : '' }}">
+                                <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
+                                    style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
+                                <div class="py-2" style="color:#875C3A">
+                                    {{ __('seller_messages.Upload_Profile') }}
+                                </div>
+                            </div>
 
-                    <!-- File Input -->
-                    <input type="file"
-                           accept="image/*"
-                           id="banner_image_upload"
-                           name="profile_pic"
-                           style="opacity:0;position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;">
-                </label>
+                            <!-- Uploaded Image -->
+                            <div class="profileImg" style="" id="showProfile">
+                                <img id="bannerUploadedImg"
+                                    src="{{ !empty($view_staff->profile_pic) ? asset($view_staff->profile_pic) : '' }}"
+                                    class="img-fluid uploadbnr"
+                                    style="{{ empty($view_staff->profile_pic) ? 'display:none;' : '' }}">
+                            </div>
 
-                    <p class="text-danger" id="error-file"></p>
+                            <!-- File Input -->
+                            <input type="file" accept="image/*" id="banner_image_upload" name="profile_pic"
+                                style="opacity:0;position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;">
+                        </label>
+
+                        <p class="text-danger" id="error-file"></p>
 
                     </div>
                 </div>
             </div>
         </div>
 
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <input type="hidden" id="old_profile_pic" name="old_profile_pic" value="{{$view_staff->profile_pic}}">
+        <input type="hidden" id="old_profile_pic" name="old_profile_pic" value="{{$view_staff->profile_pic}}">
 
-    <input type="hidden" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" name="id" value="{{$view_staff->id}}">
+        <input type="hidden" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" name="id"
+            value="{{$view_staff->id}}">
 
-    <div class="row">
+        <div class="row">
             <div class="col-lg-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                         <label>{{ __('seller_messages.Full_Name') }}</label>
+                        <label>{{ __('seller_messages.Full_Name') }}</label>
                         <span>{{ __('seller_messages.In_English') }}</span>
-                    
+
                     </div>
-                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" name="full_name" class="form-control" placeholder="{{ __('seller_messages.Enter_Full_Name') }}" value="{{$view_staff->first_name}}">
-                   <p class="text-danger" id="error-full_name"></p>
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                        name="full_name" class="form-control" placeholder="{{ __('seller_messages.Enter_Full_Name') }}"
+                        value="{{$view_staff->first_name}}">
+                    <p class="text-danger" id="error-full_name"></p>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                       <label>{{ __('seller_messages.Full_Name') }}</label>
+                        <label>{{ __('seller_messages.Full_Name') }}</label>
                         <span>{{ __('seller_messages.In_Arabic') }}</span>
-                 
+
                     </div>
-                    <input type="text" dir="rtl" style="text-align: right;" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="{{ __('seller_messages.Enter_Full_Name_arabic') }}" name="name_ar" value="{{$view_staff->name_ar}}">
-                 <p class="text-danger" id="error-name_ar"></p>
+                    <input type="text" dir="rtl" style="text-align: right;"
+                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                        class="form-control" placeholder="{{ __('seller_messages.Enter_Full_Name_arabic') }}"
+                        name="name_ar" value="{{$view_staff->name_ar}}">
+                    <p class="text-danger" id="error-name_ar"></p>
                 </div>
             </div>
         </div>
         <div class="row">
-        <!-- <div class="col-lg-1">
+            <!-- <div class="col-lg-1">
                 <div class="sub-form">
                     <div class="label-flex">
                         <label>Country Code</label>
@@ -85,7 +91,7 @@
                 </div>
         </div> -->
 
-        <!-- <div class="col-lg-5">
+            <!-- <div class="col-lg-5">
                 <div class="sub-form">
                     <div class="label-flex">
                         <label>Phone Number</label>
@@ -94,68 +100,67 @@
                 </div>
         </div> -->
 
-         <div class="col-lg-6 col-md-6">
-                                    <div class="label-flex">
-                                       <label>{{ __('seller_messages.Store_Phone_Number') }}</label>
-                                      </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="label-flex">
+                    <label>{{ __('seller_messages.Store_Phone_Number') }}</label>
+                </div>
 
-                                    <div class="form-group d-flex gap-2 w-100">
-                                        <div class="dropdown">
-                                            <button
-                                                class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
-                                                type="button" id="countryDropdown" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
+                <div class="form-group d-flex gap-2 w-100">
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                            type="button" id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
 
-                                                <span id="selected-flag">
-                                                    <img src="{{@$view_staff->country_details->flag1}}"
-                                                        alt="flag" width="25" height="16">
-                                                    {{$view_staff->country_code}}
-                                                </span>
+                            <span id="selected-flag">
+                                <img src="{{@$view_staff->country_details->flag1}}" alt="flag" width="25" height="16">
+                                {{$view_staff->country_code}}
+                            </span>
 
-                                                <span id="selected-code" class="ms-2">
-                                                </span>
-                                            </button>
-                                            <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
-                                                @foreach ($all_country as $index => $item)
-                                                <li>
-                                                    <label
-                                                        class="dropdown-item d-flex align-items-center gap-2 country-option"
-                                                        style="cursor: pointer;">
-                                                        <input type="radio" name="country_code"
-                                                            value="{{ $item->dial_code }} " data-flag="{{ $item->flag }}"
-                                                            data-name="{{ $item->name }}" class="country-radio" @if($item->dial_code==$view_staff->country_code) checked @endif
-                                                            hidden>
+                            <span id="selected-code" class="ms-2">
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
+                            @foreach ($all_country as $index => $item)
+                            <li>
+                                <label class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                    style="cursor: pointer;">
+                                    <input type="radio" name="country_code" value="{{ $item->dial_code }} "
+                                        data-flag="{{ $item->flag }}" data-name="{{ $item->name }}"
+                                        class="country-radio" @if($item->dial_code==$view_staff->country_code) checked
+                                    @endif
+                                    hidden>
 
-                                                        <div width="25" height="16">
-                                                            <span>{{ $item->flag }}
-                                                                {{ $item->dial_code }} {{ $item->name }}
-                                                            </span>
-                                                        </div>
-                                                    </label>
-                                                </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-
-                                        <div class="w-100">
-                                            <input class="form-control notapplyspace" type="number" id="phone"
-                                                placeholder="{{ __('seller_messages.Enter_Mobile_Number') }}" name="mobile"
-                                                value="{{$view_staff->mobile}}"
-                                                oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
-                                            <p class="text-danger" id="error-mobile"></p>
-                                        </div>
-
+                                    <div width="25" height="16">
+                                        <span>{{ $item->flag }}
+                                            {{ $item->dial_code }} {{ $item->name }}
+                                        </span>
                                     </div>
+                                </label>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
 
-                                </div>
+                    <div class="w-100">
+                        <input class="form-control notapplyspace" type="number" id="phone"
+                            placeholder="{{ __('seller_messages.Enter_Mobile_Number') }}" name="mobile"
+                            value="{{$view_staff->mobile}}"
+                            oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+                        <p class="text-danger" id="error-mobile"></p>
+                    </div>
+
+                </div>
+
+            </div>
 
             <div class="col-lg-6">
                 <div class="sub-form">
                     <div class="label-flex">
                         <label>{{ __('seller_messages.Email') }}</label>
                     </div>
-                    <input type="text"  class="form-control" placeholder="{{ __('seller_messages.Enter_Email') }}" name="email" value="{{$view_staff->email}}">
-                     <p class="text-danger" id="error-email"></p>
+                    <input type="text" class="form-control" placeholder="{{ __('seller_messages.Enter_Email') }}"
+                        name="email" value="{{$view_staff->email}}">
+                    <p class="text-danger" id="error-email"></p>
                 </div>
             </div>
         </div>
@@ -165,42 +170,47 @@
                 <label class="banner-text">{{ __('seller_messages.Select_Category') }}</label>
                 <div class="group-radio-btn d-flex gap-5 align-items-center flex-wrap py-3 pe-3">
 
-                @foreach($staff_category as $key=>$val)
+                    @foreach($staff_category as $key=>$val)
                     <div class="check_radio">
                         <label class="radio-group">
-                            <input type="radio" name="select_category" value="{{$val->id}}" @if($val->id==$view_staff->select_category) checked  @endif >
+                            <input type="radio" name="select_category" value="{{$val->id}}"
+                                @if($val->id==$view_staff->select_category) checked @endif >
                             <span class="custom-radio"></span>
-                            <span class="radio-label">{{ app()->getLocale() == 'ar' ? $val->name_ar : $val->name_en }}</span>
+                            <span
+                                class="radio-label">{{ app()->getLocale() == 'ar' ? $val->name_ar : $val->name_en }}</span>
                         </label>
                     </div>
-                @endforeach
+                    @endforeach
 
 
-                   
+
                 </div>
             </div>
-          
+
         </div>
 
         <div class="row">
             <div class="col-lg-6">
-             <div class="sub-form position-relative">
+                <div class="sub-form position-relative">
                     <div class="label-flex">
                         <label>{{ __('seller_messages.Password') }}</label>
                     </div>
-                    <input type="text"  class="form-control" placeholder="{{ __('seller_messages.Enter_Password') }}" name="password" value="{{$view_staff->save_password}}">
-                    <i class="toggle-password  bi bi-eye-slash "></i>  
+                    <input type="text" class="form-control" placeholder="{{ __('seller_messages.Enter_Password') }}"
+                        name="password" value="{{$view_staff->save_password}}">
+                    <i class="toggle-password  bi bi-eye-slash "></i>
                     <p class="text-danger" id="error-password"></p>
-                
+
                 </div>
             </div>
             <div class="col-lg-6">
-             <div class="sub-form position-relative">
+                <div class="sub-form position-relative">
                     <div class="label-flex">
                         <label>{{ __('seller_messages.Confirm_Password') }}</label>
                     </div>
-                    <input type="text"  class="form-control" placeholder="{{ __('seller_messages.Enter_Confirm_Password') }}" name="confirm_password"  value="{{$view_staff->save_password}}">
-                    <i class="toggle-password  bi bi-eye-slash "></i>  
+                    <input type="text" class="form-control"
+                        placeholder="{{ __('seller_messages.Enter_Confirm_Password') }}" name="confirm_password"
+                        value="{{$view_staff->save_password}}">
+                    <i class="toggle-password  bi bi-eye-slash "></i>
                     <p class="text-danger" id="error-confirm_password"></p>
                 </div>
             </div>
@@ -211,81 +221,78 @@
             <div class="row">
                 <div class="col-lg-5">
 
-                 <p class="text-danger" id="error-menuSelect"></p>
+                    <p class="text-danger" id="error-menuSelect"></p>
 
-                @foreach($sellerMenu as $key=>$menu)
-
-
-                @php
-
-                $firstMenu='';
-                $secondMenu='';
-                $thirdMenu='';
+                    @foreach($sellerMenu as $key=>$menu)
 
 
-                foreach($view_staff->Role_Action as $key1=>$dbmenu){
+                    @php
 
-                if($menu->id==$dbmenu->menu_id){
+                    $firstMenu='';
+                    $secondMenu='';
+                    $thirdMenu='';
+
+
+                    foreach($view_staff->Role_Action as $key1=>$dbmenu){
+
+                    if($menu->id==$dbmenu->menu_id){
                     $firstMenu="checked";
-                }
+                    }
 
-                if($menu->id==$dbmenu->menu_id &&  $dbmenu->can_view=='1'){
+                    if($menu->id==$dbmenu->menu_id && $dbmenu->can_view=='1'){
                     $secondMenu="checked";
-                }
+                    }
 
-                if($menu->id==$dbmenu->menu_id &&  $dbmenu->can_action=='1'){
+                    if($menu->id==$dbmenu->menu_id && $dbmenu->can_action=='1'){
                     $thirdMenu="checked";
-                }
+                    }
 
-                }
+                    }
 
-                @endphp
+                    @endphp
 
 
-                <div class="d-flex gap-2 justify-content-between w-100 mb-4">
-                <!-- MAIN MENU -->
-                <div class="view-width">
-                <div class="form-check">
-                <input class="form-check-input menu-checkbox"
-                type="checkbox"
-                value="{{$menu->id}}"  {{$firstMenu}} hidden>
-                <label class="form-check-label">
+                    <div class="d-flex gap-2 justify-content-between w-100 mb-4">
+                        <!-- MAIN MENU -->
+                        <div class="view-width">
+                            <div class="form-check">
+                                <input class="form-check-input menu-checkbox" type="checkbox" value="{{$menu->id}}"
+                                    {{$firstMenu}} hidden>
+                                <label class="form-check-label">
 
-                 @if(app()->getLocale() == 'ar')
-                                        {{ $menu->title_ar }}
+                                    @if(app()->getLocale() == 'ar')
+                                    {{ $menu->title_ar }}
                                     @else
-                                        {{ $menu->title }}
+                                    {{ $menu->title }}
                                     @endif
 
-                </label>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- VIEW -->
+                        <div class="form-check">
+                            <input class="form-check-input view-checkbox" type="checkbox" data-id="{{$menu->id}}"
+                                {{$secondMenu}}>
+                            <label class="form-check-label">{{ __('seller_messages.View') }}</label>
+                        </div>
+
+                        <!-- ACTION -->
+                        <div class="form-check">
+                            <input class="form-check-input action-checkbox" type="checkbox" data-id="{{$menu->id}}"
+                                {{$thirdMenu}}>
+                            <label class="form-check-label">{{ __('seller_messages.Action') }}</label>
+                        </div>
+
+                    </div>
+                    @endforeach
+
+
                 </div>
             </div>
 
-                <!-- VIEW -->
-                <div class="form-check">
-                <input class="form-check-input view-checkbox"
-                type="checkbox"
-                data-id="{{$menu->id}}"  {{$secondMenu}}>
-                <label class="form-check-label">{{ __('seller_messages.View') }}</label>
-                </div>
 
-                <!-- ACTION -->
-                <div class="form-check">
-                <input class="form-check-input action-checkbox"
-                type="checkbox"
-                data-id="{{$menu->id}}"  {{$thirdMenu}}>
-                <label class="form-check-label">{{ __('seller_messages.Action') }}</label>
-                </div>
 
-                </div>
-                @endforeach
-
-                    
-                </div>
-            </div>
-            
-                
-            
 
 
         </div>
@@ -311,8 +318,8 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 
     if (!file) return;
 
-     $('#error-file').text('');
-     $('#old_profile_pic').val('');
+    $('#error-file').text('');
+    $('#old_profile_pic').val('');
 
     const reader = new FileReader();
     reader.onload = function(e) {
@@ -375,7 +382,7 @@ $('#addBanner').on('submit', function(e) {
     let id = $('input[name="id"]').val().trim();
     let full_name = $('input[name="full_name"]').val().trim();
     let full_name_ar = $('input[name="name_ar"]').val().trim();
-    
+
     let country_code = $('input[name="country_code"]:checked').val();
 
     // alert(country_code);
@@ -389,8 +396,8 @@ $('#addBanner').on('submit', function(e) {
     let confirm_password = $('input[name="confirm_password"]').val();
     let file = $('#banner_image_upload')[0].files[0];
 
-    let old_profile_pic=$('input[name="old_profile_pic"]').val().trim();
-        
+    let old_profile_pic = $('input[name="old_profile_pic"]').val().trim();
+
     console.log(file);
 
     let error = false;
@@ -400,25 +407,25 @@ $('#addBanner').on('submit', function(e) {
 
     if (!full_name) {
         error = true;
-        // alert('Full name is required');
-        $('#error-full_name').text('Please Enter full Name');
+
+        $('#error-full_name').text("{{__('seller_messages.full_name_required')}}");
     }
 
-     if (!full_name_ar) {
+    if (!full_name_ar) {
         error = true;
         // alert('Full name is required');
-        $('#error-name_ar').text('Please Enter full Name');
+        $('#error-name_ar').text("{{__('seller_messages.name_ar_string')}}");
     }
 
     if (!mobile || mobile.length < 8) {
         error = true;
-        $('#error-mobile').text('Enter valid mobile number');
+        $('#error-mobile').text("{{__('seller_messages.mobile_required')}}");
     }
 
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
         error = true;
         // alert('Enter valid email');
-        $('#error-email').text('Please Enter email Address');
+        $('#error-email').text("{{__('seller_messages.email_required')}}");
 
     }
 
@@ -426,42 +433,40 @@ $('#addBanner').on('submit', function(e) {
         error = true;
         // alert('Password must be at least 6 characters');
 
-        $('#error-password').text('Please Enter Password');
+        $('#error-password').text("{{__('seller_messages.password_required')}}");
     }
 
-     if (!confirm_password || confirm_password.length < 6) {
+    if (!confirm_password || confirm_password.length < 6) {
         error = true;
         // alert('Password must be at least 6 characters');
 
-        $('#error-confirm_password').text('Please Enter Password');
+        $('#error-confirm_password').text("{{__('seller_messages.confirm_password_required')}}");
     }
 
     if (password !== confirm_password) {
         error = true;
         // alert('Passwords do not match');
-        $('#error-confirm_password').text('Please match password and confirm Password');
+        $('#error-confirm_password').text("{{__('seller_messages.password_same')}}");
     }
 
-     if (!old_profile_pic) {
+    if (!old_profile_pic) {
 
         if (!file) {
             error = true;
             // alert('Profile image is required');
-            $('#error-file').text('Please Upload profile');
+            $('#error-file').text("{{__('seller_messages.profile_pic_required')}}");
         }
+    }
 
-     }
+    // File upload
 
-
-      // File upload
-   
 
 
     // At least one menu selected
     if ($('.menu-checkbox:checked').length === 0) {
         error = true;
         // alert('Select at least one module');
-        $('#error-menuSelect').text('Please Select at least one module');
+        $('#error-menuSelect').text("{{__('seller_messages.menu_required')}}");
     }
 
     if (error) return;
@@ -471,8 +476,8 @@ $('#addBanner').on('submit', function(e) {
     $('.menu-checkbox').each(function() {
         let id = $(this).val();
 
-        let can_view = $('.view-checkbox[data-id="'+id+'"]').is(':checked') ? 1 : 0;
-        let can_action = $('.action-checkbox[data-id="'+id+'"]').is(':checked') ? 1 : 0;
+        let can_view = $('.view-checkbox[data-id="' + id + '"]').is(':checked') ? 1 : 0;
+        let can_action = $('.action-checkbox[data-id="' + id + '"]').is(':checked') ? 1 : 0;
 
         if ($(this).is(':checked')) {
             menuData.push({
@@ -498,7 +503,7 @@ $('#addBanner').on('submit', function(e) {
     formData.append('confirm_password', $('input[name="confirm_password"]').val());
 
     formData.append('old_profile_pic', $('input[name="old_profile_pic"]').val());
-    
+
 
     // ✅ Image
     formData.append('profile_pic', file);
@@ -511,45 +516,45 @@ $('#addBanner').on('submit', function(e) {
     });
 
     $.ajax({
-        url: '/seller/edit-staff/'+id,
+        url: '/seller/edit-staff/' + id,
         type: 'POST',
         data: formData,
-        processData: false,   // REQUIRED
-        contentType: false,   // REQUIRED
+        processData: false, // REQUIRED
+        contentType: false, // REQUIRED
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(res) {
 
-             if (res.status === 'success') {
-                    toastr.success(res.message);
-                    setTimeout(() => window.location.href='/seller/staff-management', 2000);
-                } else {
-                    toastr.error(res.message || 'Something went wrong');
-                }
+            if (res.status === 'success') {
+                toastr.success(res.message);
+                setTimeout(() => window.location.href = '/seller/staff-management', 2000);
+            } else {
+                toastr.error(res.message || 'Something went wrong');
+            }
 
             console.log(res);
         },
         error: function(err) {
 
-        if (err.status === 422) {
+            if (err.status === 422) {
 
-        let errors = err.responseJSON.errors;
+                let errors = err.responseJSON.errors;
 
-        // Loop all validation errors
-        for (let key in errors) {
-            $(`#error-${key}`).html(errors[key][0]); // show first error
-        }
+                // Loop all validation errors
+                for (let key in errors) {
+                    $(`#error-${key}`).html(errors[key][0]); // show first error
+                }
 
-        toastr.error('Please fix validation errors');
+                toastr.error('Please fix validation errors');
 
-    } else if (err.responseJSON && err.responseJSON.message) {
-        toastr.error(err.responseJSON.message);
-    } else {
-        toastr.error('Something went wrong');
-    }
+            } else if (err.responseJSON && err.responseJSON.message) {
+                toastr.error(err.responseJSON.message);
+            } else {
+                toastr.error('Something went wrong');
+            }
 
-           
+
         }
     });
 
@@ -614,7 +619,7 @@ $('#addBanner').on('submit', function(e) {
 
 // });
 
-document.addEventListener("change", function (e) {
+document.addEventListener("change", function(e) {
 
     let parent = e.target.closest(".d-flex");
     if (!parent) return;
@@ -673,15 +678,14 @@ document.addEventListener("change", function (e) {
 // add stuff code End here 
 
 $(".toggle-password").click(function() {
-        $(this).toggleClass("bi-eye bi-eye-slash");
-        input = $(this).parent().find("input");
-        if (input.attr("type") == "password") {
-            input.attr("type", "text");
-        } else {
-            input.attr("type", "password");
-        }
-    });
-
+    $(this).toggleClass("bi-eye bi-eye-slash");
+    input = $(this).parent().find("input");
+    if (input.attr("type") == "password") {
+        input.attr("type", "text");
+    } else {
+        input.attr("type", "password");
+    }
+});
 </script>
 
 

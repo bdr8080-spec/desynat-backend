@@ -1023,5 +1023,49 @@ return [
     'confirm_password_match' => 'يجب أن تتطابق كلمة تأكيد كلمة المرور مع كلمة المرور الجديدة.',
     'validation_error' => 'خطأ في التحقق',
 
-  
+    // WebSellerStaffmanagementController Web 
+      'full_name_required' => 'الاسم الكامل مطلوب.',
+    'full_name_string' => 'يجب أن يكون الاسم الكامل نصًا صحيحًا.',
+    'full_name_max' => 'يجب ألا يزيد الاسم الكامل عن 255 حرفًا.',
+
+    'name_ar_string' => 'يجب أن يكون الاسم العربي نصًا صحيحًا.',
+    'name_ar_max' => 'يجب ألا يزيد الاسم العربي عن 255 حرفًا.',
+
+    'profile_pic_required' => 'الصورة الشخصية مطلوبة.',
+
+    'country_code_required' => 'رمز الدولة مطلوب.',
+    'country_code_string' => 'رمز الدولة غير صالح.',
+    'country_code_max' => 'يجب ألا يزيد رمز الدولة عن 10 أحرف.',
+
+    'mobile_required' => 'رقم الجوال مطلوب.',
+    'mobile_digits_between' => 'يجب أن يكون رقم الجوال بين 8 و15 رقمًا.',
+
+    'email_required' => 'البريد الإلكتروني مطلوب.',
+    'email_email' => 'يرجى إدخال بريد إلكتروني صحيح.',
+
+    'select_category_required' => 'يرجى اختيار الفئة.',
+    'select_category_exists' => 'الفئة المختارة غير صالحة.',
+
+    'password_required' => 'كلمة المرور مطلوبة.',
+    'password_min' => 'يجب أن تكون كلمة المرور 6 أحرف على الأقل.',
+    'password_same' => 'تأكيد كلمة المرور غير متطابق.',
+
+    'confirm_password_required' => 'تأكيد كلمة المرور مطلوب.',
+
+    'menu_required' => 'يرجى اختيار قائمة واحدة على الأقل.',
+    'menu_array' => 'تنسيق القائمة غير صالح.',
+    'menu_min' => 'يرجى اختيار قائمة واحدة على الأقل.',
+
+    'menu_id_required' => 'معرف القائمة مطلوب.',
+    'menu_id_exists' => 'القائمة المختارة غير صالحة.',
+
+    'can_view_required' => 'صلاحية العرض مطلوبة.',
+    'can_view_boolean' => 'يجب أن تكون صلاحية العرض صحيحة أو خاطئة.',
+
+    'can_action_required' => 'صلاحية الإجراء مطلوبة.',
+    'can_action_boolean' => 'يجب أن تكون صلاحية الإجراء صحيحة أو خاطئة.',
+
+    'staff_created_successfully' => 'تم إنشاء الموظف بنجاح.',
+      
+    
 ];
