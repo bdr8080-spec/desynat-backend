@@ -17,14 +17,14 @@ class AffiliateCommissionService
             if ($countries->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_countries_found'),
+                    'message' => __('Service_messages.no_countries_found'),
                     'data' => []
                 ];
             }
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.countries_fetched_successfully'),
+                'message' => __('Service_messages.countries_fetched_successfully'),
                 'data' => $countries
             ];
 
@@ -50,7 +50,7 @@ class AffiliateCommissionService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.commission_updated_successfully'),
+                'message' => __('Service_messages.commission_updated_successfully'),
                 'data' => $tax
             ];
 
@@ -71,7 +71,7 @@ class AffiliateCommissionService
             if (!$banner) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.affiliate_commission_not_found'),
+                    'message' => __('Service_messages.affiliate_commission_not_found'),
                     'data' => []
                 ];
             }
@@ -82,7 +82,7 @@ class AffiliateCommissionService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.commission_updated_successfully'),
+                'message' => __('Service_messages.commission_updated_successfully'),
                 'data' => $banner
             ];
 

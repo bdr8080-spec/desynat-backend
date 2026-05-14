@@ -169,7 +169,7 @@ class ProductManagementService
             if ($collection->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
@@ -236,7 +236,7 @@ class ProductManagementService
             if (!$data) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
@@ -291,8 +291,8 @@ class ProductManagementService
             $data->save();
 
             $message = $data->product_active_status == 1
-                ? __('service_messages.product_unblocked_successfully')
-                : __('service_messages.product_blocked_successfully');
+                ? __('Service_messages.product_unblocked_successfully')
+                : __('Service_messages.product_blocked_successfully');
 
             return [
                 'status' => 'success',

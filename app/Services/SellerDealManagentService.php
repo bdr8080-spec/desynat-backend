@@ -225,7 +225,7 @@ public function SingleDealView($request)
         if (!$deal) {
             return [
                 'status'  => 'error',
-                'message' => __('service_messages.deal_not_found'),
+                'message' => __('Service_messages.deal_not_found'),
                 'data'    => (object)[]
             ];
         }
@@ -398,7 +398,7 @@ try{
             SellerDealProduct::UpdateorCreate($insert_data);
         }
 
-        return ['status'=>'success','message' => __('service_messages.deal_product_added_successfully'),'data'=>$deal];
+        return ['status'=>'success','message' => __('Service_messages.deal_product_added_successfully'),'data'=>$deal];
 
 
     }else{
@@ -433,7 +433,7 @@ try{
         ];
         SellerDealProduct::where($check_data)->delete();
 
-        return ['status'=>'success','message' => __('service_messages.products_removed_from_deal'),'data'=>(object)[]];
+        return ['status'=>'success','message' => __('Service_messages.products_removed_from_deal'),'data'=>(object)[]];
 
      
     }else{

@@ -98,7 +98,7 @@ class AffiliateDashboardService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.affiliate_dashboard_data_fetched_successfully'),
+                'message' => __('Service_messages.affiliate_dashboard_data_fetched_successfully'),
                 'data' => [
                     'total_revenue' => $total_revenue,
 

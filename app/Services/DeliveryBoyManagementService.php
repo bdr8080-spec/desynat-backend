@@ -92,7 +92,7 @@ class DeliveryBoyManagementService
             if ($details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -131,7 +131,7 @@ class DeliveryBoyManagementService
             if (!$deliveryBoy) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
@@ -182,8 +182,8 @@ class DeliveryBoyManagementService
             $deliveryboy->save();
 
             $message = $deliveryboy->status == 1
-                ? __('service_messages.delivery_boy_unblocked_successfully')
-                : __('service_messages.delivery_boy_blocked_successfully');
+                ? __('Service_messages.delivery_boy_unblocked_successfully')
+                : __('Service_messages.delivery_boy_blocked_successfully');
 
             return [
                 'status' => 'success',
@@ -216,7 +216,7 @@ class DeliveryBoyManagementService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.delivery_boy_deleted_successfully'),
+                'message' => __('Service_messages.delivery_boy_deleted_successfully'),
                 'data' => []
             ];
 
@@ -294,7 +294,7 @@ class DeliveryBoyManagementService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.delivery_boy_added_successfully'),
+                'message' => __('Service_messages.delivery_boy_added_successfully'),
                 'data' => $deliveryBoy
             ];
 
@@ -384,7 +384,7 @@ class DeliveryBoyManagementService
 
             return [
                 'status'  => 'success',
-                'message' => __('service_messages.delivery_boy_updated_successfully'),
+                'message' => __('Service_messages.delivery_boy_updated_successfully'),
                 'data'    => [
                     'delivery_boy' => $deliveryBoy,
                     'documents' => $updatedDocuments
@@ -411,7 +411,7 @@ class DeliveryBoyManagementService
             if ($query->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' =>  []
                 ];
             }
@@ -466,7 +466,7 @@ class DeliveryBoyManagementService
 
             return [
                 'status'  => 'success',
-                'message' => __('service_messages.profile_updated_successfully'),
+                'message' => __('Service_messages.profile_updated_successfully'),
                 'data'    => $deliveryBoy
             ];
 
@@ -499,8 +499,8 @@ class DeliveryBoyManagementService
             $deliveryboy->save();
 
             $message = $deliveryboy->on_duty == 1
-                ? __('service_messages.setting_changed_to_on_duty_successfully')
-                : __('service_messages.setting_changed_to_off_duty_successfully');
+                ? __('Service_messages.setting_changed_to_on_duty_successfully')
+                : __('Service_messages.setting_changed_to_off_duty_successfully');
 
             return [
                 'status' => 'success',

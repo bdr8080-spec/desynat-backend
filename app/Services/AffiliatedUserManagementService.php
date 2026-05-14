@@ -58,7 +58,7 @@ class AffiliatedUserManagementService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.new_affiliate_users_fetched_successfully'),
+                'message' => __('Service_messages.new_affiliate_users_fetched_successfully'),
                 'data' => $user_details
             ];
 
@@ -152,14 +152,14 @@ class AffiliatedUserManagementService
             if ($user_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_approved_affiliate_users_found'),
+                    'message' => __('Service_messages.no_approved_affiliate_users_found'),
                     'data' => (object)[]
                 ];
             }
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.approved_affiliate_users_fetched_successfully'),
+                'message' => __('Service_messages.approved_affiliate_users_fetched_successfully'),
                 'data' => $user_details
             ];
 
@@ -214,14 +214,14 @@ class AffiliatedUserManagementService
             if ($user_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_rejected_affiliate_users_found'),
+                    'message' => __('Service_messages.no_rejected_affiliate_users_found'),
                     'data' => (object) []
                 ];
             }
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.rejected_affiliate_users_fetched_successfully'),
+                'message' => __('Service_messages.rejected_affiliate_users_fetched_successfully'),
                 'data' => $user_details
             ];
 
@@ -276,7 +276,7 @@ class AffiliatedUserManagementService
             if (!$user) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.user_not_found'),
+                    'message' => __('Service_messages.user_not_found'),
                     'data' => (object) []
                 ];
             }
@@ -323,7 +323,7 @@ class AffiliatedUserManagementService
             if (!$user) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.user_not_found'),
+                    'message' => __('Service_messages.user_not_found'),
                     'data' => (object) []
                 ];
             }
@@ -377,7 +377,7 @@ class AffiliatedUserManagementService
             if (!$user) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.user_not_found'),
+                    'message' => __('Service_messages.user_not_found'),
                     'data' => (object)[]
                 ];
             }

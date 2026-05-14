@@ -90,7 +90,7 @@ class NotificationManagementService
             if (empty($receivers)) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.no_receivers_provided'),
+                    'message' => __('Service_messages.no_receivers_provided'),
                     'data' => (object)[]
                 ];
             }
@@ -162,7 +162,7 @@ class NotificationManagementService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.notification_sent_successfully'),
+                'message' => __('Service_messages.notification_sent_successfully'),
                 'data' => $allNotifications
             ];
 
@@ -269,7 +269,7 @@ class NotificationManagementService
             if ($notifications->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -414,7 +414,7 @@ class NotificationManagementService
             if ($notifications->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => []
                 ];
             }
@@ -551,7 +551,7 @@ class NotificationManagementService
             if ($notifications->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -590,14 +590,14 @@ class NotificationManagementService
             if ($updated === 0) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.notifications_marked_as_read_successfully'),
+                'message' => __('Service_messages.notifications_marked_as_read_successfully'),
                 'data' => [
                     'marked_notification_ids' => $notification_ids
                 ]
@@ -624,7 +624,7 @@ class NotificationManagementService
             if (!$query->exists()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -637,7 +637,7 @@ class NotificationManagementService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.notifications_marked_as_read_successfully'),
+                'message' => __('Service_messages.notifications_marked_as_read_successfully'),
                 'data' => $updatedNotifications
             ];
 
@@ -664,7 +664,7 @@ class NotificationManagementService
             if (!$query->exists()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -678,7 +678,7 @@ class NotificationManagementService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.notifications_marked_as_read_successfully'),
+                'message' => __('Service_messages.notifications_marked_as_read_successfully'),
                 'data' => $updatedNotifications
             ];
 
@@ -901,7 +901,7 @@ class NotificationManagementService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.notifications_marked_as_read_successfully'),
+                'message' => __('Service_messages.notifications_marked_as_read_successfully'),
                 'data' => $updated
             ];
 

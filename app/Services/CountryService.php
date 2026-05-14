@@ -19,7 +19,7 @@ class CountryService
             if ($countries->isEmpty()) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -95,7 +95,7 @@ class CountryService
             if ($cities->isEmpty()) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'all_added' => false,
                     'data' => []
                 ];
@@ -111,7 +111,7 @@ class CountryService
             if ($excludedCities->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.all_cities_already_added'),
+                    'message' => __('Service_messages.all_cities_already_added'),
                     'all_added' => true,
                     'data' => []
                 ];
@@ -153,7 +153,7 @@ class CountryService
             if ($cities->isEmpty()) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
@@ -316,7 +316,7 @@ class CountryService
             if ($zones->isEmpty()) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
@@ -472,7 +472,7 @@ class CountryService
             if ($countries->isEmpty()) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
