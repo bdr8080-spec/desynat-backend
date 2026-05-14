@@ -167,7 +167,7 @@ class AdminDashboardService
 
             return [
                 'status' => 'success',
-                'message' => 'Dashboard data fetched successfully',
+                'message' => __('service_messages.dashboard_data_fetched_successfully'),
                 'data' => [
                     'total_users' => $total_users,
                     'total_active_users' => $total_active_users,

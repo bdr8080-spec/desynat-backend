@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\DeliveryBoy\DeliveryBoyProfileController;
 use App\Http\Controllers\Api\DeliveryBoy\DeliveryBoyOrderController;
 use App\Http\Controllers\Api\DeliveryBoy\NotificationController;
 
-
+Route::middleware(['ApiLang'])->group(function(){
 // M1 Milestone 
 Route::group(['prefix' => 'deliveryboy'], function () {
     Route::post('/verify_otp',[AuthController::class,'verify_otp']);
@@ -66,6 +66,6 @@ Route::group(['prefix' => 'deliveryboy'], function () {
 
 
 
-
+});
 
 });
