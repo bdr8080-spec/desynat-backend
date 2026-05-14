@@ -18,7 +18,7 @@ class CategoryService
             if ($category_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
@@ -56,7 +56,7 @@ class CategoryService
             if ($subCategories->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
@@ -85,7 +85,7 @@ class CategoryService
             if (!$category) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.category_not_found'),
+                    'message' => __('Service_messages.category_not_found'),
                     'data' => []
                 ];
             }
@@ -117,7 +117,7 @@ class CategoryService
             if (!$subCategory) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.category_not_found'),
+                    'message' => __('Service_messages.category_not_found'),
                     'data' => []
                 ];
             }
@@ -175,7 +175,7 @@ class CategoryService
         if (!$subCategory) {
             return [
                 'status' => 'error',
-                'message' => __('service_messages.category_not_found'),
+                'message' => __('Service_messages.category_not_found'),
                 'data' => []
             ];
         }
@@ -211,7 +211,7 @@ class CategoryService
             if (!$subCategory) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.category_not_found'),
+                    'message' => __('Service_messages.category_not_found'),
                     'data' => []
                 ];
             }

@@ -116,7 +116,7 @@ class PaymentService
             if ($collection->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.order_not_found'),
+                    'message' => __('Service_messages.order_not_found'),
                     'data' => (object)[],
                     'total_revenue' => 0,
                     'total_custom_order_revenue' => 0,
@@ -203,7 +203,7 @@ class PaymentService
             if ($collection->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[],
                     'total_revenue' => 0,
                 ];
@@ -285,7 +285,7 @@ class PaymentService
             if ($collection->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[],
                     'total_revenue' => 0,
                 ];
@@ -365,7 +365,7 @@ class PaymentService
             if ($collection->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[],
                     'total_revenue' => 0,
                 ];

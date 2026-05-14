@@ -29,7 +29,7 @@ class CMSManagementService
                     'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.terms_updated_successfully');
+                $message = __('Service_messages.terms_updated_successfully');
 
             } else {
                 $content = Content::create([
@@ -40,7 +40,7 @@ class CMSManagementService
                     'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.terms_created_successfully');
+                $message = __('Service_messages.terms_created_successfully');
             }
 
             return [
@@ -72,7 +72,7 @@ class CMSManagementService
             if (!$content) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -110,7 +110,7 @@ class CMSManagementService
                     'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.return_policy_updated_successfully');
+                $message = __('Service_messages.return_policy_updated_successfully');
 
             } else {
                 $content = Content::create([
@@ -121,7 +121,7 @@ class CMSManagementService
                     'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.return_policy_created_successfully');
+                $message = __('Service_messages.return_policy_created_successfully');
             }
 
             return [
@@ -153,7 +153,7 @@ class CMSManagementService
             if (!$content) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -191,7 +191,7 @@ class CMSManagementService
                     'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.about_us_updated_successfully');
+                $message = __('Service_messages.about_us_updated_successfully');
 
             } else {
                 $content = Content::create([
@@ -202,7 +202,7 @@ class CMSManagementService
                     'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.about_us_created_successfully');
+                $message = __('Service_messages.about_us_created_successfully');
             }
 
             return [
@@ -234,7 +234,7 @@ class CMSManagementService
             if (!$content) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -272,7 +272,7 @@ class CMSManagementService
                     'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.cancellation_policy_updated_successfully');
+                $message = __('Service_messages.cancellation_policy_updated_successfully');
 
             } else {
                 $content = Content::create([
@@ -283,7 +283,7 @@ class CMSManagementService
                     'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.cancellation_policy_created_successfully');
+                $message = __('Service_messages.cancellation_policy_created_successfully');
             }
 
             return [
@@ -315,7 +315,7 @@ class CMSManagementService
             if (!$content) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -353,7 +353,7 @@ class CMSManagementService
                     'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.exchange_policy_updated_successfully');
+                $message = __('Service_messages.exchange_policy_updated_successfully');
 
             } else {
                 $content = Content::create([
@@ -364,7 +364,7 @@ class CMSManagementService
                     'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.exchange_policy_created_successfully');
+                $message = __('Service_messages.exchange_policy_created_successfully');
             }
 
             return [
@@ -396,7 +396,7 @@ class CMSManagementService
             if (!$content) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -435,7 +435,7 @@ class CMSManagementService
                     //'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.contact_us_updated_successfully');
+                $message = __('Service_messages.contact_us_updated_successfully');
 
             } else {
 
@@ -447,7 +447,7 @@ class CMSManagementService
                     //'content_arabic' => $request_data->content_arabic,
                 ]);
 
-                $message = __('service_messages.contact_us_created_successfully');
+                $message = __('Service_messages.contact_us_created_successfully');
             }
 
             return [
@@ -479,7 +479,7 @@ class CMSManagementService
             if (!$content) {
                 return [
                     'status' => 'success',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -516,7 +516,7 @@ class CMSManagementService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.faq_added_successfully'),
+                'message' => __('Service_messages.faq_added_successfully'),
                 'data' => $faq
             ];
 
@@ -553,7 +553,7 @@ class CMSManagementService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.faq_updated_successfully'),
+                'message' => __('Service_messages.faq_updated_successfully'),
                 'data' => $faq
             ];
 
@@ -575,7 +575,7 @@ class CMSManagementService
             if ($faqs->isEmpty()) {
                 return [
                     'status' => 'error',
-                    $message = __('service_messages.no_data_found'),
+                    $message = __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -612,7 +612,7 @@ class CMSManagementService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.faq_deleted_successfully'),
+                'message' => __('Service_messages.faq_deleted_successfully'),
                 'data' => (object)[]
             ];
 

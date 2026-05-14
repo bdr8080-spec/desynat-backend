@@ -370,7 +370,7 @@ class DeliveryBoyOrderService
             if (!$orderDetail) {
                 return [
                     'status' => 'error',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => []
                 ];
             }
@@ -463,16 +463,16 @@ class DeliveryBoyOrderService
 
             switch ($status) {
                 case '3':
-                    $message = __('service_messages.delivery_status_updated_to_delivered');
+                    $message = __('Service_messages.delivery_status_updated_to_delivered');
                     break;
                 case '7':
-                    $message = __('service_messages.delivery_status_updated_to_picked');
+                    $message = __('Service_messages.delivery_status_updated_to_picked');
                     break;
                 case '8':
-                    $message = __('service_messages.delivery_status_updated_to_not_delivered');
+                    $message = __('Service_messages.delivery_status_updated_to_not_delivered');
                     break;
                 default:
-                    $message = __('service_messages.delivery_status_updated_successfully');
+                    $message = __('Service_messages.delivery_status_updated_successfully');
             }
 
             return [
@@ -527,7 +527,7 @@ class DeliveryBoyOrderService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.order_picked_successfully'),
+                'message' => __('Service_messages.order_picked_successfully'),
                 'data' => $data
             ];
         } catch (\Exception $e) {
@@ -552,7 +552,7 @@ class DeliveryBoyOrderService
             if ($reason_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => __('service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' =>  []
                 ];
             }
@@ -1028,7 +1028,7 @@ class DeliveryBoyOrderService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.order_picked_successfully'),
+                'message' => __('Service_messages.order_picked_successfully'),
                 'data' => $data
             ];
         } catch (\Exception $e) {
@@ -1062,7 +1062,7 @@ class DeliveryBoyOrderService
             if($data->p_orderdetails_id=='null'){
                return [
                     'status' => 'error',
-                    'message' => __('service_messages.exchange_not_found'),
+                    'message' => __('Service_messages.exchange_not_found'),
                     'data' => []
                 ];
 
@@ -1090,7 +1090,7 @@ class DeliveryBoyOrderService
 
             return [
                 'status' => 'success',
-                'message' => __('service_messages.order_returned_to_store_successfully'),
+                'message' => __('Service_messages.order_returned_to_store_successfully'),
                 'data' => $data
             ];
         } catch (\Exception $e) {
