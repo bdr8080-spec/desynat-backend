@@ -1051,5 +1051,85 @@ return [
 
 
     'old_password_required' => 'Old password is required.',
+
+
+    // Add product web 
+
+     'add_new_product' => 'Add New Product',
+    'select_category' => 'Select Category',
+    'select_sub_category' => 'Select Sub-Category',
+    'other' => 'Other',
+
+    'in_english' => 'In English',
+    'in_arabic' => 'In Arabic',
+
+    'enter_brand_name' => 'Enter Brand name',
+    'enter_product_name' => 'Enter Product name',
+
+    'product_name' => 'Product Name',
+    'description' => 'Description',
+    'write_here' => 'Write Here',
+
+    'select_brand' => 'Select Brand',
+    'select_brand_option' => 'Select Brand',
+
+    'specifications' => 'Specifications',
+    'name' => 'Name',
+    'feature' => 'Feature',
+    'enter_product_feature' => 'Enter product feature',
+
+    'colour' => 'Colour',
+    'select_colour' => 'Select Colour',
+
+    'upload_product_images' => 'Upload Product Images',
+
+    'add_variation' => 'Add Variation',
+    'add_another_variant' => 'Add Another Variant',
+
+    'size' => 'Size',
+    'select_size' => 'Select Size',
+
+    'bust' => 'Bust',
+    'waist' => 'Waist',
+    'hip' => 'HIP',
+    'shoulder' => 'Shoulder',
+    'sleeve_length' => 'Sleeve Length',
+    'length' => 'Length',
+
+    'total_stocks' => 'Total Stocks',
+    'sku_limit' => 'SKU Limit',
+
+    'actual_price' => 'Actual Price',
+    'discounted_price' => 'Discounted Price',
+
+    'percentage' => 'Percentage',
+    'fixed_price' => 'Fixed Price',
+    'final_price' => 'Final Price',
+
+    'min_cart_quantity' => 'Set Min.cart quantity',
+    'max_cart_quantity' => 'Set Max.cart quantity',
+
+    'product_returnable' => 'Is this product returnable?',
+    'yes' => 'Yes',
+    'no' => 'No',
+
+    'return_days' => 'If Yes, Total days for returning',
+
+    'product_exchangeable' => 'Is this product Exchangable?',
+    'exchange_days' => 'Is this product exchangeable?',
+
+    'review_rating_allowed' => 'Review & ratings allowed?',
+    'affiliated_product' => 'Affiliated Product?',
+    'affiliated_commission' => 'Affiliated product commission',
+
+    'customized_product' => 'Customized products?',
+    'ready_to_ship' => 'Ready to ship?',
+    'cash_on_delivery' => 'Cash on delivery allowed?',
+
+    'upload_size_chart' => 'Upload Size Chart',
+
+    'cancel' => 'Cancel',
+    'add_product' => 'Add Product',
+
     
 ];

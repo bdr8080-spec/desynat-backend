@@ -17,14 +17,14 @@
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a href="{{ route('seller.products') }}" class="title24 alink">
-            <i class="bi bi-chevron-left"></i> Add New Product
+            <i class="bi bi-chevron-left"></i> {{ __('seller_messages.add_new_product') }}
         </a>
     </div>
 
     <form id="addproduct" action="{{ route('seller.Add_product_code') }}" method="post">
         @csrf
         <div class="pt-3">
-            <div class="title24">Select Category</div>
+            <div class="title24">{{ __('seller_messages.select_category') }}</div>
             <div class="row">
                 <div class="col-lg-6">
                     <div
@@ -36,7 +36,14 @@
                                 <input type="radio" name="category_id" value="{{ $item->id }}"
                                     onclick="catgoryFunction({{ $item->id }})" @if ($key==0) checked @endif>
                                 <span class="custom-radio"></span>
-                                <span class="radio-label">{{ $item->name }}</span>
+                                <span class="radio-label">
+                                    @if(app::getLocale()=='en')
+                                    {{ $item->name }}</span>
+                                @else
+                                {{ $item->name_ar }}</span>
+                                @endif
+
+
                             </label>
                         </div>
                         @endforeach
@@ -52,7 +59,7 @@
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Select Sub-Category</label>
+                        <label>{{ __('seller_messages.select_sub_category') }}</label>
                     </div>
                     <select class="form-select form-control" name="subcategory_id" aria-label="Default select example"
                         id="getSubcategry">
@@ -62,31 +69,33 @@
                 </div>
                 <div class="sub-form" id="other-field0" style="display:none;">
                     <div class="label-flex">
-                        <label>Other</label>
-                        <span>In English</span>
+                        <label>{{ __('seller_messages.other') }}</label>
+                        <span>{{ __('seller_messages.in_english') }}</span>
                     </div>
                     <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                        class="form-control" placeholder="Enter Brand name" name="other_en">
+                        class="form-control" placeholder="{{ __('seller_messages.enter_brand_name') }}" name="other_en">
                     <p class="text-danger" id="error-other_en"></p>
                 </div>
 
 
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Product Name</label>
-                        <span>In English</span>
+                        <label>{{ __('seller_messages.product_name') }}</label>
+                        <span>{{ __('seller_messages.in_english') }}</span>
                     </div>
                     <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                        class="form-control" placeholder="Enter Product name" name="product_name_en">
+                        class="form-control" placeholder="{{ __('seller_messages.enter_product_name') }}"
+                        name="product_name_en">
                     <p class="text-danger" id="error-product_name_en"></p>
                 </div>
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Description</label>
-                        <span>In English</span>
+                        <label>{{ __('seller_messages.description') }}</label>
+                        <span>{{ __('seller_messages.in_english') }}</span>
                     </div>
                     <textarea rows="4" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                        placeholder="Write Here" class="form-control" name="description_en"></textarea>
+                        placeholder="{{ __('seller_messages.write_here') }}" class="form-control"
+                        name="description_en"></textarea>
 
                     <p class="text-danger" id="error-description_en"></p>
                 </div>
@@ -95,15 +104,21 @@
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Select Brand</label>
+                        <label>{{ __('seller_messages.select_brand') }}</label>
                     </div>
                     <select class="form-select form-control" aria-label="Default select example" id="brand_id"
                         name="brand_id">
 
-                        <option value="">Select Brand</option>
+                        <option value="">{{ __('seller_messages.select_brand') }}</option>
 
                         @foreach ($brand as $item)
-                        <option value="{{ $item->id }}">{{ $item->name_english }}</option>
+                        <option value="{{ $item->id }}">
+                            @if(app::getLocale()=='en')
+                            {{ $item->name_english }}</span>
+                            @else
+                            {{ $item->name_arabic }}</span>
+                            @endif
+                        </option>
                         @endforeach
 
                     </select>
@@ -111,34 +126,36 @@
                 </div>
                 <div class="sub-form " id="other-field1" style="display:none;">
                     <div class="label-flex">
-                        <label>Other</label>
-                        <span>In Arabic</span>
+                        <label>{{ __('seller_messages.other') }}</label>
+                        <span>{{ __('seller_messages.in_arabic') }}</span>
                     </div>
                     <input type="text"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                        class="form-control" placeholder="Enter Brand name" name="other_ar">
+                        class="form-control" placeholder="{{ __('seller_messages.enter_brand_name') }}" name="other_ar">
 
                     <p class="text-danger" id="error-other_ar"></p>
                 </div>
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Product Name</label>
-                        <span>In Arabic</span>
+                        <label>{{ __('seller_messages.product_name') }}</label>
+                        <span>{{ __('seller_messages.in_arabic') }}</span>
                     </div>
                     <input type="text"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                        class="form-control" placeholder="Enter Product name" name="product_name_ar">
+                        class="form-control" placeholder="{{ __('seller_messages.enter_product_name') }}"
+                        name="product_name_ar">
 
                     <p class="text-danger" id="error-product_name_ar"></p>
                 </div>
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Description</label>
-                        <span>In Arabic</span>
+                        <label>{{ __('seller_messages.description') }}</label>
+                        <span>{{ __('seller_messages.in_arabic') }}</span>
                     </div>
                     <textarea rows="4"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                        placeholder="Write Here" class="form-control" name="description_ar"></textarea>
+                        placeholder="{{ __('seller_messages.write_here') }}" class="form-control"
+                        name="description_ar"></textarea>
                     <p class="text-danger" id="error-description_ar"></p>
 
                 </div>
@@ -146,7 +163,7 @@
         </div>
 
         <div class="mt-3 d-flex justify-content-between py-3">
-            <div class="title24">Specifications</div>
+            <div class="title24">{{ __('seller_messages.specifications') }}</div>
             <div class="sep-icon" id="addmore">
                 <img src="{{ asset('/dealer') }}/assets/img/add.svg" alt="add">
             </div>
@@ -158,13 +175,13 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Name</label>
-                                    <span>In English</span>
+                                    <label>{{ __('seller_messages.name') }}</label>
+                                    <span>{{ __('seller_messages.in_english') }}</span>
                                 </div>
                                 <input type="text"
                                     oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                                    class="form-control" placeholder="Enter product name" value=""
-                                    name="product_spe_en[]">
+                                    class="form-control" placeholder="{{ __('seller_messages.enter_product_name') }}"
+                                    value="" name="product_spe_en[]">
 
                                 <p id="error-product_spe_en_0" class="text-danger"></p>
 
@@ -177,13 +194,15 @@
                             <div class="append-flex">
                                 <div class="sub-form">
                                     <div class="label-flex">
-                                        <label>Name</label>
-                                        <span>In Arabic</span>
+                                        <label>{{ __('seller_messages.name') }}</label>
+                                        <span>{{ __('seller_messages.in_arabic') }}</span>
+
                                     </div>
                                     <input type="text"
                                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                                        class="form-control" placeholder="Enter product name" name="product_spe_ar[]"
-                                        value="">
+                                        class="form-control"
+                                        placeholder="{{ __('seller_messages.enter_product_name') }}"
+                                        name="product_spe_ar[]" value="">
                                     <p class="text-danger" id="error-product_spe_ar_0"></p>
 
                                 </div>
@@ -196,12 +215,13 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Feature</label>
-                                    <span>In English</span>
+                                    <label>{{ __('seller_messages.feature') }}</label>
+                                    <span>{{ __('seller_messages.in_english') }}</span>
+
                                 </div>
                                 <input type="text"
                                     oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                                    class="form-control" placeholder="Enter product feature"
+                                    class="form-control" placeholder="{{ __('seller_messages.enter_product_feature') }}"
                                     name="product_spe_feature_en[]" value="">
                                 <p class="text-danger" id="error-product_spe_feature_en_0"></p>
 
@@ -213,12 +233,14 @@
                             <div class="append-flex">
                                 <div class="sub-form">
                                     <div class="label-flex">
-                                        <label>Feature</label>
-                                        <span>In Arabic</span>
+                                        <label>{{ __('seller_messages.feature') }}</label>
+                                        <span>{{ __('seller_messages.in_arabic') }}</span>
+
                                     </div>
                                     <input type="text"
                                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                                        class="form-control" placeholder="Enter product feature"
+                                        class="form-control"
+                                        placeholder="{{ __('seller_messages.enter_product_feature') }}"
                                         name="product_spe_feature_ar[]" value="">
                                     <p class="text-danger" id="error-product_spe_feature_ar_0"></p>
 
@@ -238,12 +260,12 @@
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form product-row">
                     <div class="label-flex">
-                        <label>Colour</label>
+                        <label>{{ __('seller_messages.colour') }}</label>
                     </div>
 
                     <select class="form-select form-control color-select" aria-label="Default select example"
                         name="color_id[]" rel="0">
-                        <option value="">Select Colour</option>
+                        <option value="">{{ __('seller_messages.select_colour') }}</option>
                         @foreach ($color as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
@@ -259,7 +281,7 @@
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
-                        <div class="mt-3" style="color:#875C3A">Upload Product Images</div>
+                        <div class="mt-3" style="color:#875C3A">{{ __('seller_messages.upload_product_images') }}</div>
                         <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
                             name="variant_image[0][]" rel="0">
                     </label>
@@ -274,7 +296,7 @@
 
             {{-- Add New Variationc code --}}
             <div class="mt-3 d-flex justify-content-between py-3">
-                <div class="title24">Add Variation FDF </div>
+                <div class="title24">{{ __('seller_messages.add_variation') }} </div>
                 <div class="sep-icon " rel="0">
                     <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation" alt="add" rel="0">
                 </div>
@@ -290,12 +312,12 @@
                         <div class="col-lg-3">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Size</label>
+                                    <label>{{ __('seller_messages.size') }}</label>
                                 </div>
 
                                 <select class="form-select form-control" aria-label="Default select example"
                                     name="size_id[0][]">
-                                    <option value="">Select Size</option>
+                                    <option value="">{{ __('seller_messages.select_size') }}</option>
                                     @foreach ($size as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
@@ -310,7 +332,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Bust</label>
+                                    <label>{{ __('seller_messages.bust') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.10"
                                     name="bust[0][]">
@@ -322,7 +344,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Waist</label>
+                                    <label>{{ __('seller_messages.waist') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.12"
                                     name="waist[0][]">
@@ -334,7 +356,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>HIP</label>
+                                    <label>{{ __('seller_messages.hip') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14"
                                     name="hip[0][]">
@@ -346,7 +368,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Shoulder</label>
+                                    <label>{{ __('seller_messages.shoulder') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.16"
                                     name="shoulder[0][]">
@@ -358,7 +380,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Sleev Length</label>
+                                    <label>{{ __('seller_messages.sleeve_length') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.18"
                                     name="sleeve_length[0][]">
@@ -370,7 +392,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Length</label>
+                                    <label>{{ __('seller_messages.length') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.20"
                                     name="length[0][]">
@@ -382,7 +404,7 @@
                         <div class="col-lg-3">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Total Stocks</label>
+                                    <label>{{ __('seller_messages.total_stocks') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace" placeholder="Eg.13208"
                                     name="total_stock[0][]">
@@ -394,7 +416,7 @@
                         <div class="col-lg-3">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>SKU Limit</label>
+                                    <label>{{ __('seller_messages.sku_limit') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace" placeholder="20019"
                                     name="sku[0][]">
@@ -420,7 +442,7 @@
                         <div class="col-lg-3">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Actual Price</label>
+                                    <label>{{ __('seller_messages.actual_price') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
                                     name="actual_price[0][]" id="actualprice_0_0">
@@ -433,7 +455,7 @@
                 </div>
 
                 <div class="pt-3">
-                    <div class="title24">Discounted Price</div>
+                    <div class="title24">{{ __('seller_messages.discounted_price') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -443,7 +465,7 @@
                                         <input type="radio" name="discount_type[0][0]" id="discount_type_percentage_0_0"
                                             checked value="1">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Percentage</span>
+                                        <span class="radio-label">{{ __('seller_messages.percentage') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
@@ -451,7 +473,7 @@
                                         <input type="radio" name="discount_type[0][0]" id="discount_type_fixed_0_0"
                                             value="2">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Fixed Price</span>
+                                        <span class="radio-label">{{ __('seller_messages.fixed_price') }}</span>
                                     </label>
                                 </div>
 
@@ -465,7 +487,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Percentage</label>
+                                    <label>{{ __('seller_messages.percentage') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
                                     name="discount_value[0][]" id="discount_value_0_0">
@@ -477,7 +499,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Final Price</label>
+                                    <label>{{ __('seller_messages.final_price') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
                                     name="final_price[0][]" id="final_price_0_0">
@@ -494,7 +516,8 @@
 
         <div class="row py-3 mt-4">
             <div class="col-lg-12 col-md-12">
-                <button type="button" class="btn cancel-outline w-100 addVariantBtn">Add Another Variant</button>
+                <button type="button"
+                    class="btn cancel-outline w-100 addVariantBtn">{{ __('seller_messages.add_another_variant') }}</button>
             </div>
         </div>
 
@@ -503,7 +526,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Set Min.cart quantity</label>
+                            <label>{{ __('seller_messages.min_cart_quantity') }}</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
                             name="min_card_quantity" id="min_card_quantity_0">
@@ -515,7 +538,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Set Max.cart quantity</label>
+                            <label>{{ __('seller_messages.max_cart_quantity') }}</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
                             name="max_card_quantity" id="max_card_quantity_0">
@@ -531,7 +554,7 @@
         <div class="pt-3">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Is this product returnable?</div>
+                    <div class="title24"> {{ __('seller_messages.product_returnable') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -540,14 +563,14 @@
                                     <label class="radio-group">
                                         <input type="radio" name="product_return" checked value='1'>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="product_return" value='0'>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -557,7 +580,7 @@
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>If Yes,Total days for returning</label>
+                                    <label>{{ __('seller_messages.return_days') }} </label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="return_days">
                                 <p class="text-danger" id="error-return_days"></p>
@@ -567,7 +590,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Is this product Exchangable ?</div>
+                    <div class="title24"> {{ __('seller_messages.product_exchangeable') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -576,14 +599,14 @@
                                     <label class="radio-group">
                                         <input type="radio" name="product_exchangable" checked value="1">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="product_exchangable" value="0">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -594,7 +617,7 @@
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Is this product exchangeable?</label>
+                                    <label> {{ __('seller_messages.product_exchangeable') }}</label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.15 days"
                                     name="exchangable_days">
@@ -610,7 +633,7 @@
         <div class="pt-3">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Review & ratings allowed?</div>
+                    <div class="title24">{{ __('seller_messages.review_rating_allowed') }} </div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -619,63 +642,23 @@
                                     <label class="radio-group">
                                         <input type="radio" name="review_rating" value="1" checked>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="review_rating" value="0">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-lg-6 col-md-6">
-                    <div class="title24">Affiliated Product?</div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div
-                                class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
-                                <div class="check_radio">
-                                    <label class="radio-group">
-                                        <input type="radio" name="affiliated_product" checked value="1">
-                                        <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
-                                    </label>
-                                </div>
-                                <div class="check_radio">
-                                    <label class="radio-group">
-                                        <input type="radio" name="affiliated_product" value="0">
-                                        <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                     <div class="row">
-                        <div class="col-lg-12 col-md-12">
-                            <div class="sub-form">
-                                <div class="label-flex">
-                                    <label>Is this product exchangeable?</label>
-                                </div>
-                                <input type="number" class="form-control" placeholder="Eg.15 days"
-                                    name="exchangable_days">
-                                <p class="text-danger" id="error-exchangable_days"></p>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    </div>
-                </div> -->
 
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Affiliated Product?</div>
+                    <div class="title24">{{ __('seller_messages.affiliated_product') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -684,14 +667,14 @@
                                     <label class="radio-group">
                                         <input type="radio" name="affiliated_product" checked value="1">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="affiliated_product" value="0">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -702,7 +685,7 @@
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Affiliated product commision</label>
+                                    <label>{{ __('seller_messages.affiliated_commission') }}</label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.0 to 100"
                                     name="affiliated_commission" max="100" min="0" value="10">
@@ -714,7 +697,7 @@
                 </div>
 
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Customized products?</div>
+                    <div class="title24">{{ __('seller_messages.customized_product') }} </div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -723,14 +706,14 @@
                                     <label class="radio-group">
                                         <input type="radio" name="customized_product" checked value="1">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="customized_product" value="0">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -738,7 +721,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Ready to ship?</div>
+                    <div class="title24">{{ __('seller_messages.ready_to_ship') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -747,14 +730,14 @@
                                     <label class="radio-group">
                                         <input type="radio" name="ready_to_ship" checked value="1">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="ready_to_ship" value="0">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -762,7 +745,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Cash on delivery allowed?</div>
+                    <div class="title24"> {{ __('seller_messages.cash_on_delivery') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -771,14 +754,14 @@
                                     <label class="radio-group">
                                         <input type="radio" name="cash_on_delivery" checked value="1">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="cash_on_delivery" value="0">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -788,7 +771,7 @@
             </div>
         </div>
 
-        <div class="title24">Upload Size Chart</div>
+        <div class="title24">{{ __('seller_messages.upload_size_chart') }}</div>
         <div class="product-pnls mt-4">
             <div class="upload-image" style="height:170px;width: 270px;">
                 <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
@@ -798,7 +781,7 @@
                     <img id="uploadedImg" src=""
                         style="width:100px; display:none; object-fit:cover; border-radius:6px;object-fit:cover; height: 110px;">
 
-                    <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
+                    <div class="py-2" style="color:#875C3A">{{ __('seller_messages.upload_size_chart') }}</div>
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
                         name="upload_size_chart">
                     <p class="text-danger" id="error-upload_size_chart"></p>
@@ -809,37 +792,10 @@
 
         </div>
 
-        <!--
-  <div class="product-pnls mt-4">
-                <div class="upload-image" style="height:170px; width: 270px;">
-                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
-                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px;padding-top:2rem;">
-
-
-
-              style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
-                    <img id="uploadedImg" src=""
-                        style="display:none; object-fit:cover; border-radius:6px;width:225px;object-fit: fill; height: 125px;padding-top: 12px;">
-                    <div class="py-2"  style="color:#875C3A" >Upload Size Chart</div>
-                    <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;display: none; width:50px;"
-        
-        <div class="product-pnls mt-4">
-            <div class="upload-image" style="height:170px;">
-                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
-                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                    <div class="py-2">Upload Size Chart</div>
-                    <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
-                        name="upload_size_chart">
-                    <p class="text-danger" id="error-upload_size_chart"></p>
-                </label>
-            </div>
-            <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div>
-        </div> -->
-
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
-                onclick="location.href='{{ route('seller.products') }}'">Cancel</button>
-            <button type="submit" class="btn add-fillbtn w-100">Add Product</button>
+                onclick="location.href='{{ route('seller.products') }}'">{{ __('seller_messages.cancel') }}</button>
+            <button type="submit" class="btn add-fillbtn w-100">{{ __('seller_messages.add_product') }}</button>
         </div>
     </form>
 
