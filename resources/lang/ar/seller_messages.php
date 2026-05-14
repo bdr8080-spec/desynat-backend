@@ -1068,6 +1068,86 @@ return [
     'staff_created_successfully' => 'تم إنشاء الموظف بنجاح.',
 
     'old_password_required' => 'كلمة المرور القديمة مطلوبة.',
+
+
+
+    // Add product web 
+
+    'add_new_product' => 'إضافة منتج جديد',
+    'select_category' => 'اختر الفئة',
+    'select_sub_category' => 'اختر الفئة الفرعية',
+    'other' => 'أخرى',
+
+    'in_english' => 'بالإنجليزية',
+    'in_arabic' => 'بالعربية',
+
+    'enter_brand_name' => 'أدخل اسم العلامة التجارية',
+    'enter_product_name' => 'أدخل اسم المنتج',
+
+    'product_name' => 'اسم المنتج',
+    'description' => 'الوصف',
+    'write_here' => 'اكتب هنا',
+
+    'select_brand' => 'اختر العلامة التجارية',
+    'select_brand_option' => 'اختر العلامة التجارية',
+
+    'specifications' => 'المواصفات',
+    'name' => 'الاسم',
+    'feature' => 'الميزة',
+    'enter_product_feature' => 'أدخل ميزة المنتج',
+
+    'colour' => 'اللون',
+    'select_colour' => 'اختر اللون',
+
+    'upload_product_images' => 'تحميل صور المنتج',
+
+    'add_variation' => 'إضافة متغير',
+    'add_another_variant' => 'إضافة متغير آخر',
+
+    'size' => 'المقاس',
+    'select_size' => 'اختر المقاس',
+
+    'bust' => 'الصدر',
+    'waist' => 'الخصر',
+    'hip' => 'الورك',
+    'shoulder' => 'الكتف',
+    'sleeve_length' => 'طول الكم',
+    'length' => 'الطول',
+
+    'total_stocks' => 'إجمالي المخزون',
+    'sku_limit' => 'حد SKU',
+
+    'actual_price' => 'السعر الفعلي',
+    'discounted_price' => 'السعر بعد الخصم',
+
+    'percentage' => 'النسبة المئوية',
+    'fixed_price' => 'سعر ثابت',
+    'final_price' => 'السعر النهائي',
+
+    'min_cart_quantity' => 'تحديد الحد الأدنى لكمية السلة',
+    'max_cart_quantity' => 'تحديد الحد الأقصى لكمية السلة',
+
+    'product_returnable' => 'هل المنتج قابل للإرجاع؟',
+    'yes' => 'نعم',
+    'no' => 'لا',
+
+    'return_days' => 'إذا كانت الإجابة نعم، عدد أيام الإرجاع',
+
+    'product_exchangeable' => 'هل المنتج قابل للاستبدال؟',
+    'exchange_days' => 'عدد أيام الاستبدال',
+
+    'review_rating_allowed' => 'هل التقييمات والمراجعات مسموحة؟',
+    'affiliated_product' => 'منتج تابع؟',
+    'affiliated_commission' => 'عمولة المنتج التابع',
+
+    'customized_product' => 'منتجات مخصصة؟',
+    'ready_to_ship' => 'جاهز للشحن؟',
+    'cash_on_delivery' => 'هل الدفع عند الاستلام مسموح؟',
+
+    'upload_size_chart' => 'تحميل جدول المقاسات',
+
+    'cancel' => 'إلغاء',
+    'add_product' => 'إضافة المنتج',
       
     
 ];
