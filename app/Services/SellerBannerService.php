@@ -35,7 +35,7 @@ public function SellerAddBanner($request){
     
       return [
             'status'  => 'success',
-            'message' => 'Banner create Successfully',
+            'message' => __('service_messages.banner_created_successfully'),
             'data'    => $createBanner
         ];
 
@@ -61,7 +61,7 @@ public function SellerbannerPayment($request){
     if($checkBanner->Admin_verify=='0'){
          return [
             'status'  => 'error',
-            'message' => 'Wait for The Admin verify Your Banner',
+            'message' => __('service_messages.wait_for_admin_to_verify_banner'),
             'data'    => $checkBanner
         ];
     }
@@ -69,7 +69,7 @@ public function SellerbannerPayment($request){
     if($checkBanner->Admin_verify=='2'){
          return [
             'status'  => 'error',
-            'message' => 'Banner Rejected By Admin',
+            'message' => __('service_messages.banner_rejected_by_admin'),
             'data'    => $checkBanner
         ];
     }
@@ -77,7 +77,7 @@ public function SellerbannerPayment($request){
      if($checkBanner->payment_status!=='0'){
          return [
             'status'  => 'error',
-            'message' => 'Banner Payment is Already Paid or cancelled',
+            'message' => __('service_messages.banner_payment_already_paid_or_cancelled'),
             'data'    => $checkBanner
         ];
     }
@@ -85,7 +85,7 @@ public function SellerbannerPayment($request){
   $checkBanner->update(['payment_status'=>$request->payment_status,'transaction_id'=>$request->transaction_id]);
 
   if($request->payment_status=='1'){
-        $msg="Banner Payment Paid Successfully";
+        $msg = __('service_messages.banner_payment_paid_successfully');
         CreateNotification([
             'sender_id' => 1,
             'sender_type' => 1,
@@ -102,7 +102,7 @@ public function SellerbannerPayment($request){
             'notification_type' => 'seller_banner_payment'
         ]);
     }elseif($request->payment_status=='2'){
-        $msg="Banner Payment Cancelled";
+        $msg = __('service_messages.banner_payment_cancelled');
         CreateNotification([
             'sender_id' => 1,
             'sender_type' => 1,
@@ -119,7 +119,7 @@ public function SellerbannerPayment($request){
             'notification_type' => 'seller_banner_payment'
         ]);
     }else{
-        $msg="Banner Payment Cancelled";  
+        $msg = __('service_messages.banner_payment_cancelled'); 
         CreateNotification([
             'sender_id' => 1,
             'sender_type' => 1,
@@ -277,7 +277,7 @@ try{
 
     $checkBanner=Banner::where('type',$request->type)->where('country_id',$country_id)->get();
     if($checkBanner->isEmpty()){
-        return ['status'=>'error','message'=>"No Price Found",'data'=>[]];
+        return ['status'=>'error','message' => __('service_messages.no_banner_found'),'data'=>[]];
 
     }
 

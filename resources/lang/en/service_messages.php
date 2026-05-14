@@ -200,6 +200,42 @@ return [
   'cancel_reason_deleted_successfully' => 'Cancel reason deleted successfully',
   'reason_deleted_successfully' => 'Reason deleted successfully',
 
+  //seller auth service
+  'store_information_saved_successfully' => 'Store information saved successfully',
+  'document_and_bank_details_saved_successfully' => 'Document and bank details saved successfully',
+  'please_submit_store_information' => 'Please submit store information',
+  'please_submit_bank_and_store_document_information' => 'Please submit bank and store document information',
+  'seller_store_request_submitted_successfully' => 'Seller store request submitted successfully',
+  'account_rejected_by_admin' => 'Your account has been rejected by admin',
+  'seller_already_has_active_plan' => 'Seller already has an active plan',
+  'subscription_order_created_successfully' => 'Subscription order created successfully',
+  'subscription_plan_bought_successfully' => 'Subscription plan bought successfully',
+  'subscription_plan_payment_rejected' => 'Subscription plan payment rejected',
+  'payment_already_paid_or_cancelled' => 'Payment is already paid or cancelled',
+  'seller_store_availability_on' => 'Seller store availability turned on',
+  'seller_store_availability_off' => 'Seller store availability turned off',
+  'plan_not_found' => 'Plan not found',
+  'active_plan_not_expired_yet' => 'Your active plan is not expired yet',
+  'renew_subscription_order_created_successfully' => 'Renew subscription order created successfully',
+  'old_password_incorrect' => 'Old password is incorrect',
+  'new_password_should_not_be_same_as_old_password' => 'New password should not be the same as old password',
+
+  //seller banner service
+  'banner_created_successfully' => 'Banner created successfully',
+  'wait_for_admin_to_verify_banner' => 'Please wait for the admin to verify your banner',
+  'banner_rejected_by_admin' => 'Banner rejected by admin',
+  'banner_payment_already_paid_or_cancelled' => 'Banner payment is already paid or cancelled',
+  'banner_payment_paid_successfully' => 'Banner payment paid successfully',
+  'banner_payment_cancelled' => 'Banner payment cancelled',
+
+  //seller deal management service
+  'deal_not_found' => 'Deal not found',
+  'deal_product_added_successfully' => 'Product added to deal successfully',
+  'products_removed_from_deal' => 'Products removed from deal',
+
+  //seller live req service
+  
+
   
   
     

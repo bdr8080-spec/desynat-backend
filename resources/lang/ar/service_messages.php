@@ -55,7 +55,7 @@ return [
   'no_approved_affiliate_users_found' => 'لا يوجد مستخدمون معتمدون في نظام التسويق بالعمولة',
   'approved_affiliate_users_fetched_successfully' => 'تم جلب المستخدمين المعتمدين في نظام التسويق بالعمولة بنجاح',
   'no_rejected_affiliate_users_found' => 'لا يوجد مستخدمون مرفوضون في نظام التسويق بالعمولة',
-  'message' => __('service_messages.rejected_affiliate_users_fetched_successfully'),
+  'rejected_affiliate_users_fetched_successfully' => 'تم جلب المستخدمين التابعين المرفوضين بنجاح',
 
   //banner service
   'no_banner_found' => 'لا يوجد بانر',
@@ -199,6 +199,41 @@ return [
  'return_reason_deleted_successfully' => 'تم حذف سبب الإرجاع بنجاح',
  'cancel_reason_deleted_successfully' => 'تم حذف سبب الإلغاء بنجاح',
  'reason_deleted_successfully' => 'تم حذف السبب بنجاح',
+
+ //seller auth service
+ 'store_information_saved_successfully' => 'تم حفظ معلومات المتجر بنجاح',
+ 'document_and_bank_details_saved_successfully' => 'تم حفظ المستندات وبيانات البنك بنجاح',
+ 'please_submit_store_information' => 'يرجى تقديم معلومات المتجر',
+ 'please_submit_bank_and_store_document_information' => 'يرجى تقديم معلومات البنك ومستندات المتجر',
+ 'seller_store_request_submitted_successfully' => 'تم تقديم طلب متجر البائع بنجاح',
+ 'account_rejected_by_admin' => 'تم رفض حسابك من قبل المدير',
+ 'seller_already_has_active_plan' => 'لدى البائع خطة نشطة بالفعل',
+ 'subscription_order_created_successfully' => 'تم إنشاء طلب الاشتراك بنجاح',
+ 'subscription_plan_bought_successfully' => 'تم شراء خطة الاشتراك بنجاح',
+ 'subscription_plan_payment_rejected' => 'تم رفض دفع خطة الاشتراك',
+ 'payment_already_paid_or_cancelled' => 'تم الدفع أو إلغاء الدفع بالفعل',
+ 'seller_store_availability_on' => 'تم تفعيل توفر متجر البائع',
+ 'seller_store_availability_off' => 'تم إيقاف توفر متجر البائع',
+ 'plan_not_found' => 'لم يتم العثور على الخطة',
+ 'active_plan_not_expired_yet' => 'خطة الاشتراك النشطة لديك لم تنتهِ بعد',
+ 'renew_subscription_order_created_successfully' => 'تم إنشاء طلب تجديد الاشتراك بنجاح',
+ 'old_password_incorrect' => 'كلمة المرور القديمة غير صحيحة',
+ 'new_password_should_not_be_same_as_old_password' => 'يجب ألا تكون كلمة المرور الجديدة مطابقة لكلمة المرور القديمة',
+
+ //seller banner service
+ 'banner_created_successfully' => 'تم إنشاء البانر بنجاح',
+ 'wait_for_admin_to_verify_banner' => 'يرجى انتظار قيام المدير بالتحقق من البانر الخاص بك',
+ 'banner_rejected_by_admin' => 'تم رفض البانر من قبل المدير',
+ 'banner_payment_already_paid_or_cancelled' => 'تم دفع أو إلغاء دفع البانر بالفعل',
+ 'banner_payment_paid_successfully' => 'تم دفع مبلغ البانر بنجاح',
+ 'banner_payment_cancelled' => 'تم إلغاء دفع البانر',
+
+ //seller deal management service
+ 'deal_not_found' => 'لم يتم العثور على العرض',
+ 'deal_product_added_successfully' => 'تم إضافة المنتج إلى العرض بنجاح',
+ 'products_removed_from_deal' => 'تمت إزالة المنتجات من العرض',
+
+ //seller live req service
 
 
 ];

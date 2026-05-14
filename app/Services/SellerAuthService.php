@@ -79,7 +79,7 @@ class SellerAuthService
                 }
 
         if($check){
-            return ['status'=>'success','message'=>"OTP sent succesfully",'data'=>$check];            
+            return ['status'=>'success','message' => __('service_messages.otp_sent_successfully'),'data'=>$check];            
         }
 
 
@@ -95,10 +95,10 @@ class SellerAuthService
 
         $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;
             
-        return ['status'=>'success','message'=>"seller Otp verify Successfully",'data'=>$get_user_details];            
+        return ['status'=>'success','message' => __('service_messages.otp_verified_successfully'),'data'=>$get_user_details];            
     
       }else{
-        return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+        return ['status'=>'error','message' => __('service_messages.otp_invalid'),'data'=>(object)[]];                
       }
 
     }
@@ -133,10 +133,10 @@ class SellerAuthService
       seller::where('id',$request->user_id)->update(['store_information'=>'1']); // update store information
 
 
-          return ['status'=>'success','message'=>"Store information Save succesfully",'data'=>$store_information];            
+          return ['status'=>'success','message' => __('service_messages.store_information_saved_successfully'),'data'=>$store_information];            
 
         }else{
-          return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+          return ['status'=>'error','message' => __('service_messages.otp_invalid'),'data'=>(object)[]];                
         }
   
       }
@@ -189,10 +189,10 @@ class SellerAuthService
 
           seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
   
-            return ['status'=>'success','message'=>"Document and Bank details Save succesfully",'data'=>$store_information];            
+            return ['status'=>'success','message' => __('service_messages.document_and_bank_details_saved_successfully'),'data'=>$store_information];            
   
           }else{
-            return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+            return ['status'=>'error','message' => __('service_messages.otp_invalid'),'data'=>(object)[]];                
           }
     
         }
@@ -218,11 +218,11 @@ class SellerAuthService
                 if($seller_details){
 
                   if($seller_details->store_information!=='1'){
-                    return ['status'=>'error','message'=>"Please submit Store information",'data'=>(object)[]];                
+                    return ['status'=>'error','message' => __('service_messages.please_submit_store_information'),'data'=>(object)[]];                
                   }
 
                   if($seller_details->bank_information!=='1'){
-                    return ['status'=>'error','message'=>"Please submit Bank and store document information",'data'=>(object)[]];                                    
+                    return ['status'=>'error','message' => __('service_messages.please_submit_bank_and_store_document_information'),'data'=>(object)[]];                                    
                   }
                   $updateData = [];
                   if (!empty($request->fcm_token)) {
@@ -237,7 +237,7 @@ class SellerAuthService
 
                   $seller_details->update(['admin_verify'=>'1']); // update store information
 
-                  return ['status'=>'success','message'=>"seller Store Request Submit",'data'=>$seller_details];            
+                  return ['status'=>'success','message' => __('service_messages.seller_store_request_submitted_successfully'),'data'=>$seller_details];            
               
                     }else{
                       return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
@@ -272,7 +272,7 @@ class SellerAuthService
         if($get_user_details){
           
           if($get_user_details->admin_verify=='3'){
-            return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
+            return ['status'=>'error','message' => __('service_messages.account_rejected_by_admin'),'data'=>(object)[]];                
           }
           
           // if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
@@ -297,7 +297,7 @@ class SellerAuthService
                 // $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;   
 
                 if($get_user_details->is_block==1){
-                  return ['status'=>'error','message'=>"This Account is blocked",'data'=>(object)[]];                
+                  return ['status'=>'error','message' => __('service_messages.account_blocked_by_admin'),'data'=>(object)[]];                
                 }
 
                 
@@ -332,13 +332,13 @@ class SellerAuthService
 
                 // $user->createToken('seller-token', ['seller'])->plainTextToken;
 
-                return ['status'=>'success','message'=>"Seller Login Successfully",'data'=>$get_user_details];                            
+                return ['status'=>'success','message' => __('service_messages.login_successfully'),'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message'=>"Seller Password Is wrong",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('service_messages.please_enter_correct_password'),'data'=>(object)[]];                
             }
         
           }else{
-            return ['status'=>'error','message'=>"Seller is Not Existed",'data'=>(object)[]];                
+            return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
           }
     
         }
@@ -356,7 +356,7 @@ class SellerAuthService
             if($get_user_details){
 
               if($get_user_details->admin_verify=='3'){
-                return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('service_messages.account_rejected_by_admin'),'data'=>(object)[]];                
               }
     
               // if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
@@ -381,10 +381,10 @@ class SellerAuthService
                     }
                 }
 
-                return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
+                return ['status'=>'success','message' => __('service_messages.otp_send_successfully'),'data'=>$get_user_details];            
             
               }else{
-                return ['status'=>'error','message'=>"Seller is Not Existed",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
               }
         
             }
@@ -398,10 +398,10 @@ class SellerAuthService
                     $get_user_details->update(['password'=>hash::make($request->password)]);
                     
                     $get_user_details->accessToken ='';            
-                    return ['status'=>'success','message'=>"Forgot Password Password Change Successfully",'data'=>$get_user_details];            
+                    return ['status'=>'success','message' => __('service_messages.password_updated_successfully'),'data'=>$get_user_details];            
                 
                   }else{
-                    return ['status'=>'error','message'=>"seller is Not Existed",'data'=>(object)[]];                
+                    return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
                   }
             
                 }
@@ -436,10 +436,10 @@ class SellerAuthService
                     }
                 }
                 
-                return ['status'=>'success','message'=>"Otp Send Successfully",'data'=>$get_user_details];            
+                return ['status'=>'success','message' => __('service_messages.otp_send_successfully'),'data'=>$get_user_details];            
             
               }else{
-                return ['status'=>'error','message'=>"Seller is Not Existed",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
               }
         
             }
@@ -505,7 +505,7 @@ class SellerAuthService
                 $check_plan= SellerSubcriptionPlanBuy::where('seller_id',$request->seller_id)->where('status','1')->where('payment_status','1')->where('is_expired','0')->first(); // check seller Plan
 
                 if($check_plan){
-                 return ['status'=>'error','message'=>"seller Already Have Active Plan",'data'=>(object)[]]; 
+                 return ['status'=>'error','message' => __('service_messages.seller_already_has_active_plan'),'data'=>(object)[]]; 
                 }
 
                 if ($plan_data->duration_type == '1') {
@@ -548,7 +548,7 @@ class SellerAuthService
   
                 if($data){
               
-                    return ['status'=>'success','message'=>"Subcription Order Create Successfully",'data'=>$data];            
+                    return ['status'=>'success','message' => __('service_messages.subscription_order_created_successfully'),'data'=>$data];            
                 
                   }else{
                     return ['status'=>'error','message'=>"error found",'data'=>(object)[]];                
@@ -560,10 +560,10 @@ class SellerAuthService
               public function complete_Subcription_Order($request){
 
                 if($request->payment_status=='1'){
-                  $msg="Subcription Plan Buy Successfully";
+                  $msg = __('service_messages.subscription_plan_bought_successfully');
                   $status='1';
                  }else{
-                  $msg="Subcription Plan Payment Rejected";
+                  $msg = __('service_messages.subscription_plan_payment_rejected');
                   $status='2';
                  }
 
@@ -584,11 +584,11 @@ class SellerAuthService
                  $check_plan= SellerSubcriptionPlanBuy::where('seller_id',$seller_id)->where('status','1')->where('is_expired','0')->where('payment_status','1')->first(); // check seller Plan
 
                  if($check_plan){
-                  return ['status'=>'error','message'=>"seller Already Have Active Plan",'data'=>(object)[]]; 
+                  return ['status'=>'error','message' => __('service_messages.seller_already_has_active_plan'),'data'=>(object)[]]; 
                  }
 
                   if($data->payment_status!=='0'){
-                    return ['status'=>'error','message'=>"Payment is Already Paid or cancelled",'data'=>(object)[]];                
+                    return ['status'=>'error','message' => __('service_messages.payment_already_paid_or_cancelled'),'data'=>(object)[]];                
                   }
                   
                  $data->update($array_data);
@@ -637,12 +637,12 @@ class SellerAuthService
 
                     if ($store_information->Store_Availability == '0') {
                         $status = 1;
-                        $message = "Seller Store Store Availability On";
+                        $message = __('service_messages.seller_store_availability_on');
                         $desc_en = "Your store status has been updated to on duty";
                         $desc_ar = "تم تحديث حالة متجرك إلى متاح للعمل";
                     } else {
                         $status = 0;
-                        $message = "Seller Store Store Availability Off";
+                        $message = __('service_messages.seller_store_availability_off');
                         $desc_en = "Your store status has been updated to off duty";
                         $desc_ar = "تم تحديث حالة متجرك إلى غير متاح للعمل";
                     }
@@ -680,7 +680,7 @@ class SellerAuthService
           if (!$plan_data) {
               return [
                   'status' => 'error',
-                  'message' => 'Plan not found',
+                  'message' => __('service_messages.plan_not_found'),
                   'data' => (object)[]
               ];
           }
@@ -704,7 +704,7 @@ class SellerAuthService
           if ($activePlan && $activePlan->plan_end_date >= $currentDateTime) {
               return [
                   'status' => 'error',
-                  'message' => 'Your active plan is not expired yet',
+                  'message' => __('service_messages.active_plan_not_expired_yet'),
                   'data' => (object)[]
               ];
           }
@@ -753,7 +753,7 @@ class SellerAuthService
           if ($newSubscription) {
               return [
                   'status' => 'success',
-                  'message' => 'Renew Subscription Order Create Successfully',
+                  'message' => __('service_messages.renew_subscription_order_created_successfully'),
                   'data' => $newSubscription
               ];
           } else {
@@ -783,7 +783,7 @@ class SellerAuthService
               if($data->isNotEmpty()){
                 return ['status'=>'success','message'=>"My Plans fetch Successfully",'data'=>$data];            
                 }else{
-                  return ['status'=>'error','message'=>"No Plan Found",'data'=>(object)[]];                
+                  return ['status'=>'error','message' => __('service_messages.plan_not_found'),'data'=>(object)[]];                
                 }
 
               }
@@ -805,7 +805,7 @@ class SellerAuthService
             if (!Hash::check($request_data->old_password, $data->password)) {
                 return [
                     'status' => 'error',
-                    'message' => 'Old password is incorrect',
+                    'message' => __('service_messages.old_password_incorrect'),
                     'data' => (object)[]
                 ];
             }
@@ -813,7 +813,7 @@ class SellerAuthService
             if (Hash::check($request_data->new_password, $data->password)) {
                 return [
                     'status' => 'error',
-                    'message' => 'New password should not be same as old password ',
+                    'message' => __('service_messages.new_password_should_not_be_same_as_old_password'),
                     'data' => (object)[]
                 ];
             }
@@ -824,7 +824,7 @@ class SellerAuthService
 
             return [
                 'status' => 'success',
-                'message' => 'Password updated successfully',
+                'message' => __('service_messages.password_updated_successfully'),
                 'data' => $data
             ];
 
@@ -869,7 +869,7 @@ class SellerAuthService
 
           return [
               'status' => 'success',
-              'message' => 'Account deleted successfully',
+              'message' => __('service_messages.account_deleted_successfully'),
               'data' => $seller
           ];
 

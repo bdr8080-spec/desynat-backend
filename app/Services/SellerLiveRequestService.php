@@ -30,7 +30,7 @@ class SellerLiveRequestService
             if ($timeslot_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Timeslot found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' =>  []
                 ];
             }
