@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Desynat Address</title>
+    <title>{{ __('affiliate_messages.desynat_affiliate') }}</title>
     <!-- Favicons -->
     <link href="{{ asset('/dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
@@ -88,21 +89,21 @@
 
                         <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                        <span id="currentLang">EN</span>
+                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end langu">
 
                         <li>
-                            <a class="dropdown-item" data-lang="ar">
-                                <span>AR</span> Arabic
+                            <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
+                                <span>AR</span> {{ __('affiliate_messages.arabic') }}
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" data-lang="en">
-                                <span>EN</span> English
+                            <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
+                                <span>EN</span> {{ __('affiliate_messages.english') }}
                             </a>
                         </li>
 
@@ -127,7 +128,7 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="#"><i class="bi bi-chevron-left"></i></a> Address</h1>
+                                    <h1><a href="#"><i class="bi bi-chevron-left"></i></a> {{ __('affiliate_messages.address') }}</h1>
                                 </div>
 
                                 <form id="Affiliate_AddAddress" action="{{route('affiliate.affiliate_addaddress')}}"
@@ -180,7 +181,7 @@
                                     </div> -->
 
                                     <div class="form-group">
-                                        <label for="">Choose Country</label>
+                                        <label for="">{{ __('affiliate_messages.choose_country') }}</label>
 
                                         <div class="align-items-center">
                                             <div class="">
@@ -196,7 +197,11 @@
                                                         </span>
 
                                                         <span id="selected-code" class="ms-2">
+                                                            @if(app()->getLocale() == 'en')
                                                             {{ old('country_code', $country[0]->name) }}
+                                                            @else
+                                                            {{ old('country_code', $country[0]->name_ar) }}
+                                                            @endif
                                                         </span>
                                                     </div>
 
@@ -217,7 +222,11 @@
 
                                                                 <div width="25" height="16">
                                                                     <span>{{ $item->flag }}
+                                                                        @if(app()->getLocale() == 'en')
                                                                         {{ $item->name }}
+                                                                        @else
+                                                                        {{ $item->name_ar }}
+                                                                        @endif
                                                                     </span>
                                                                 </div>
 
@@ -232,7 +241,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">Choose Location</label>
+                                        <label for="name">{{ __('affiliate_messages.choose_location') }}</label>
                                         <div class="store-map  position-relative">
                                             <input type="text" class="form-control blockFirstTime"
                                                 placeholder="Locations" name="locations"
@@ -255,9 +264,9 @@
 
 
                                     <div class="form-group">
-                                        <label for="name">Address line 1</label>
+                                        <label for="name">{{ __('affiliate_messages.address_line1') }}</label>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter Address line 1" name="address1"
+                                            placeholder="{{ __('affiliate_messages.address_line1') }}" name="address1"
                                             value="{{ old('address1', @$affiliate_address->address1) }}"
                                             id="address_line1">
 
@@ -265,9 +274,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">Address line 2</label>
+                                        <label for="name">{{ __('affiliate_messages.address_line2') }}</label>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter Address line 2" name="address2"
+                                            placeholder="{{ __('affiliate_messages.address_line2') }}" name="address2"
                                             value="{{ old('address2', @$affiliate_address->address2) }}"
                                             id="address_line2">
                                         <p class="text-danger" id="error-address2"></p>
@@ -315,7 +324,7 @@
                                     </div>
 
                                     <div class="login-btn mt-5">
-                                        <input type="submit" class="btn btn-success w-100" value="Continue">
+                                        <input type="submit" class="btn btn-success w-100" value="{{ __('affiliate_messages.continue') }}">
 
                                         <!-- <a href="bank-details.php" class="btn btn-success w-100">Continue</a> -->
                                     </div>
@@ -363,7 +372,7 @@
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="gpspanel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Set Location</h5>
+            <h5 class="offcanvas-title">{{ __('affiliate_messages.set_location') }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
@@ -372,14 +381,14 @@
                 <div class="setup-maps mb-0 position-relative">
 
 
-                    <input id="searchBox" type="text" placeholder="Search your address"
+                    <input id="searchBox" type="text" placeholder="{{ __('affiliate_messages.search_your_address') }}"
                         class="form-control position-absolute"
                         style="top:10px;left:10px;width:300px;z-index:9999;padding:6px 10px;border-radius:4px;">
 
                     <div id="googleMap" style="width: 100%; height: 500px;"></div>
 
                     <div id="useCurrentLocation" class="mt-3 cursor-pointer">
-                        <i class="bi bi-crosshair"></i> Use Current Location
+                        <i class="bi bi-crosshair"></i> {{ __('affiliate_messages.use_current_location') }}
                     </div>
                 </div>
 
@@ -394,7 +403,7 @@
 
                 <!-- Done button -->
                 <div class="setup-done">
-                    <button type="button" class="btn btn-success w-100" data-bs-dismiss="offcanvas">Done</button>
+                    <button type="button" class="btn btn-success w-100" data-bs-dismiss="offcanvas">{{ __('affiliate_messages.done') }}</button>
                 </div>
             </div>
         </div>
@@ -434,7 +443,7 @@
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
 
 <script
-    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places"
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places&language={{ app()->getLocale() == 'ar' ? 'ar' : 'en' }}"
     async defer>
 </script>
 

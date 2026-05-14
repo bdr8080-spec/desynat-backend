@@ -40,7 +40,7 @@ try{
     if($checkUserAffilatedStatus->otp_verify=='1'){
         return [
             'status' => 'error',
-            'message' => 'This User Already Apply Affilated Account',
+            'message' => __('affiliate_messages.affiliate_already_applied'),
             'data' => (object)[]
         ];
     }
@@ -52,7 +52,7 @@ $checkmail=AffilatedUser::where('email',$request->email)->where('user_id','!=',$
 if($checkmail){
    return [
             'status' => 'error',
-            'message' => 'This Email is Already Register By Another User',
+            'message' => __('affiliate_messages.email_already_registered'),
             'data' => (object)[]
         ];
 }
@@ -61,7 +61,7 @@ $checkphone=AffilatedUser::where(['country_code'=>$request->country_code,'mobile
 if($checkphone){
    return [
             'status' => 'error',
-            'message' => 'This Mobile No is Already Register By Another User',
+            'message' => __('affiliate_messages.mobile_already_registered'),
             'data' => (object)[]
         ];
 }
@@ -122,7 +122,7 @@ if($checkphone){
                     }
                 }
 
-            return ['status'=>'success','message'=>"OTP sent succesfully",'data'=>$check];            
+            return ['status'=>'success','message' => __('affiliate_messages.otp_sent_successfully'),'data'=>$check];            
         }
 
          } catch (\Exception $e) {
@@ -155,10 +155,10 @@ if($checkphone){
         $get_user_details->affiliated_accessToken ='';  
       }  
         
-        return ['status'=>'success','message'=>"Otp Verified Successfully",'data'=>$get_user_details];            
+        return ['status'=>'success','message' => __('affiliate_messages.otp_verified_successfully'),'data'=>$get_user_details];            
     
       }else{
-        return ['status'=>'error','message'=>"Invalid OTP",'data'=>(object)[]];                
+        return ['status'=>'error','message' => __('affiliate_messages.invalid_otp'),'data'=>(object)[]];                
       }
 
     }

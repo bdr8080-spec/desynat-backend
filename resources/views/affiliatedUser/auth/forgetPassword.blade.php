@@ -38,21 +38,21 @@
 
                         <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                        <span id="currentLang">EN</span>
+                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end langu">
 
                         <li>
-                            <a class="dropdown-item" data-lang="ar">
-                                <span>AR</span> Arabic
+                            <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
+                                <span>AR</span> {{ __('affiliate_messages.arabic') }}
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" data-lang="en">
-                                <span>EN</span> English
+                            <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
+                                <span>EN</span> {{ __('affiliate_messages.english') }}
                             </a>
                         </li>
 
@@ -70,7 +70,7 @@
         <div class="login_content_content align-self-center">
             <div>
                 <h3 class="h3-heading"><span><a href="{{ route('affiliate.affiliate_login') }}"><i
-                                class="fa-solid fa-chevron-left"></i></a></span>Forgot Password</h3>
+                                class="fa-solid fa-chevron-left"></i></a></span>{{ __('affiliate_messages.forgot_password') }}</h3>
                 <form id="forgetPassword">
                     @csrf
                     <div class="radio-group my-4">
@@ -78,18 +78,18 @@
                             <input type="radio" name="forgetPassword" class="emailandmobile notapplyspace" value="1"
                                 checked />
                             <span class="radio-mark"></span>
-                            <span class="label-text">Mobile Number</span>
+                            <span class="label-text">{{ __('affiliate_messages.mobile_number') }}</span>
                         </label>
 
                         <label class="custom-radio">
                             <input type="radio" name="forgetPassword" class="emailandmobile" value="2" />
                             <span class="radio-mark"></span>
-                            <span class="label-text">Email Address</span>
+                            <span class="label-text">{{ __('affiliate_messages.email_address') }}</span>
                         </label>
                     </div>
 
                     <div class="form-group position-relative mt-3 mobileInput">
-                        <label for="">Enter Mobile Number</label>
+                        <label for="">{{ __('affiliate_messages.mobile_number') }}</label>
                         <div class="d-flex align-items-center">
                             <div class="">
                                 {{-- <select name="country_code" id="" class="country" class="form-control">
@@ -175,7 +175,7 @@
 
                             </div>
                             <div class="w-100">
-                                <input type="number" class="form-control" value="" placeholder="Enter Mobile Number"
+                                <input type="number" class="form-control" value="" placeholder="{{ __('affiliate_messages.enter_mobile_number') }}"
                                     name="mobile" maxlength="15"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
                             </div>
@@ -185,11 +185,11 @@
             </div>
 
             <div class="form-group position-relative password_icon mt-3 d-none emailInput">
-                <label for="">Enter Email Id</label>
-                <input class="form-control notapplyspace" type="email" placeholder="Enter email Address" name="email">
+                <label for="">{{ __('affiliate_messages.email_address') }}</label>
+                <input class="form-control notapplyspace" type="email" placeholder="{{ __('affiliate_messages.enter_email_address') }}" name="email">
                 <p class="text-danger" id="error-email"></p>
             </div>
-            <button type="submit" class="customBtn customBtn5 mt-4">Continue</button>
+            <button type="submit" class="customBtn customBtn5 mt-4">{{ __('affiliate_messages.continue') }}</button>
             </form>
 
         </div>

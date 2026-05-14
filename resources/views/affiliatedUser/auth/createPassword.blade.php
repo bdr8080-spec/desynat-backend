@@ -39,28 +39,28 @@
 
                         <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                        <span id="currentLang">EN</span>
+                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end langu">
 
                         <li>
-                            <a class="dropdown-item" data-lang="ar">
-                                <span>AR</span> Arabic
+                            <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
+                                <span>AR</span> {{ __('affiliate_messages.arabic') }}
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" data-lang="en">
-                                <span>EN</span> English
+                            <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
+                                <span>EN</span> {{ __('affiliate_messages.english') }}
                             </a>
                         </li>
 
                     </ul>
-            </div>
+            <!-- </div>
             <a href="{{url('/seller/login')}}" class="customBtn1">Become a seller</a>
-        </div>
+        </div> -->
     </header>
     <div class="login_content login_content_left">
         <img src="assets/images/left-img.svg" class="left-imgone" />
@@ -73,26 +73,26 @@
                 @csrf
                 <input type="hidden" name="id" value="{{request()->temp_user_id}}">
                 <div>
-                    <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> Reset Password</h3>
+                    <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> {{ __('affiliate_messages.reset_password') }}</h3>
                     <div class="form-group position-relative password_icon mt-3">
-                        <label for="createPassword">Create New Password</label>
+                        <label for="createPassword">{{ __('affiliate_messages.create_new_password') }}</label>
                         <input type="password" id="createPassword" class="form-control custom-password notapplyspace"
-                            placeholder="Enter New Password" style="padding-right: 40px;" name="password" />
+                            placeholder="{{ __('affiliate_messages.create_new_password') }}" style="padding-right: 40px;" name="password" />
                         <i class="fa-solid fa-eye toggle-passwordtwo" id="toggleCreate"></i>
                     </div>
                     <span class="text-danger" id="error-password"></span>
 
 
                     <div class="form-group position-relative password_icon mt-3">
-                        <label for="confirmPassword">Confirm Password</label>
+                        <label for="confirmPassword">{{ __('affiliate_messages.confirm_password') }}</label>
                         <input type="password" id="confirmPassword" class="form-control custom-password notapplyspace"
-                            placeholder="Enter confirm password" style="padding-right: 40px;" name="confirm_password" />
+                            placeholder="{{ __('affiliate_messages.enter_confirm_password') }}" style="padding-right: 40px;" name="confirm_password" />
                         <i class="fa-solid fa-eye toggle-passwordtwo" id="toggleConfirm"></i>
                         {{-- <span class="text-danger" id="error-confirm_password"></span> --}}
                     </div>
                     <span class="text-danger" id="error-confirm_password"></span>
 
-                    <button type="submit" class="customBtn customBtn5 mt-4">Done</a>
+                    <button type="submit" class="customBtn customBtn5 mt-4">{{ __('affiliate_messages.done') }}</a>
                 </div>
             </form>
         </div>
@@ -105,7 +105,7 @@
         <div class="modal-content">
             <div class="modal-body text-center">
                 <img src="assets/images/success.svg" class="img-fluid" />
-                <p>Password Reset Successfully !</p>
+                <p>{{ __('affiliate_messages.password_updated_successfully') }} !</p>
             </div>
         </div>
     </div>

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Desynat Bank Details </title>
+    <title>{{ __('affiliate_messages.desynat_affiliate') }}</title>
     <!-- Favicons -->
     <link href="{{ asset('/dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
@@ -61,21 +62,21 @@
 
                         <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                        <span id="currentLang">EN</span>
+                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end langu">
 
                         <li>
-                            <a class="dropdown-item" data-lang="ar">
-                                <span>AR</span> Arabic
+                            <a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}">
+                                <span>AR</span> {{ __('affiliate_messages.arabic') }}
                             </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" data-lang="en">
-                                <span>EN</span> English
+                            <a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}">
+                                <span>EN</span> {{ __('affiliate_messages.english') }}
                             </a>
                         </li>
 
@@ -129,50 +130,50 @@
                                     @csrf
 
                                     <div class="form-group">
-                                        <label for="name">Bank Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Bank Name"
+                                        <label for="name">{{ __('affiliate_messages.bank_name') }}</label>
+                                        <input type="text" class="form-control" placeholder="{{ __('affiliate_messages.enter_bank_name') }}"
                                             name="bank_name"
                                             value="{{ old('bank_name', @$affiliate_bank->bank_name) }}">
                                         <p class="text-danger" id="error-bank_name"></p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">Account Holder Name </label>
+                                        <label for="name">{{ __('affiliate_messages.account_holder_name') }} </label>
                                         <input type="text" class="form-control applyAlphabetSpaceOnly"
-                                            placeholder="Enter Account Holder Name" name="account_holder_name"
+                                            placeholder="{{ __('affiliate_messages.enter_account_holder_name') }}" name="account_holder_name"
                                             value="{{ old('account_holder_name', @$affiliate_bank->account_holder_name) }}">
                                         <p class="text-danger" id="error-account_holder_name"></p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name"> Account Number </label>
+                                        <label for="name"> {{ __('affiliate_messages.account_number') }} </label>
                                         <input type="text" class="form-control applynumberOnly"
-                                            placeholder="Enter Account Number" name="account_no"
+                                            placeholder="{{ __('affiliate_messages.enter_account_number') }}" name="account_no"
                                             value="{{ old('account_no', @$affiliate_bank->account_no) }}"
                                             maxlength="20">
                                         <p class="text-danger" id="error-account_no"></p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">Confirm Account Number </label>
+                                        <label for="name">{{ __('affiliate_messages.confirm_account_number') }} </label>
                                         <input type="text" class="form-control applynumberOnly"
-                                            placeholder="Re-Enter Account Number" name="confirm_account_no"
+                                            placeholder="{{ __('affiliate_messages.re_enter_account_number') }}" name="confirm_account_no"
                                             value="{{ old('confirm_account_no', @$affiliate_bank->account_no) }}"
                                             maxlength="20">
                                         <p class="text-danger" id="error-confirm_account_no"></p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">IBAN</label>
+                                        <label for="name">{{ __('affiliate_messages.iban') }}</label>
                                         <input type="text" class="form-control applyAlphaNumeric"
-                                            placeholder="Enter IBAN" name="iban"
+                                            placeholder="{{ __('affiliate_messages.enter_iban') }}" name="iban"
                                             value="{{ old('iban', @$affiliate_bank->iban) }}">
                                         <p class="text-danger" id="error-iban"></p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="name"> SWIFT/BIC</label>
-                                        <input type="text" class="form-control" placeholder="Enter Swift" name="swift"
+                                        <label for="name"> {{ __('affiliate_messages.swift_bic') }}</label>
+                                        <input type="text" class="form-control" placeholder="{{ __('affiliate_messages.enter_swift_bic') }}" name="swift"
                                             value="{{ old('swift', @$affiliate_bank->swift) }}" maxlength="15">
                                         <p class="text-danger" id="error-swift"></p>
                                     </div>
                                     <div class="login-btn mt-5">
-                                        <input type="submit" class="btn btn-success w-100" value="Submit">
+                                        <input type="submit" class="btn btn-success w-100" value="{{ __('affiliate_messages.submit') }}">
                                     </div>
                                 </form>
                             </div>
