@@ -18,6 +18,7 @@ class ApiLang
     {
 
         $language = request()->header('Accept-Language', 'en');
+
         session(['lang' => $language]);
         App::setLocale($language);
 
