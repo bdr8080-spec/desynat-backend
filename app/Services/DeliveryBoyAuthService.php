@@ -36,7 +36,7 @@ class DeliveryBoyAuthService
         if($get_user_details){
 
             if($get_user_details->status=='0'){
-                return ['status'=>'error','message'=>"Your Account is blocked By Admin",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('service_messages.account_blocked_by_admin'),'data'=>(object)[]];                
             }
 
             if(Hash::check($request->password,$get_user_details->password,)){  
@@ -56,13 +56,13 @@ class DeliveryBoyAuthService
                 
                 $get_user_details->accessToken = $get_user_details->createToken('delivery-boy-token', ['delivery-boy'])->plainTextToken;
 
-                return ['status'=>'success','message'=>"Login Successfully",'data'=>$get_user_details];                            
+                return ['status'=>'success','message' => __('service_messages.login_successfully'),'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message'=>"Please Enter Correct Password",'data'=>(object)[]];                
+                return ['status'=>'error','message' => __('service_messages.please_enter_correct_password'),'data'=>(object)[]];                
             }
         
         }else{
-        return ['status'=>'error','message'=>"Account Does Not Existed",'data'=>(object)[]];                
+        return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
         }
     
     }
@@ -95,10 +95,10 @@ class DeliveryBoyAuthService
                         //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
                     }
                 }       
-            return ['status'=>'success','message'=>"OTP Sent Successfully",'data'=>$get_user_details];            
+            return ['status'=>'success','message' => __('service_messages.otp_send_successfully'),'data'=>$get_user_details];            
         
             }else{
-            return ['status'=>'error','message'=>"Account Does Not Existed",'data'=>(object)[]];                
+            return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
         }
     
     }
@@ -112,10 +112,10 @@ class DeliveryBoyAuthService
 
             $get_user_details->accessToken = $get_user_details->createToken('delivery-boy')->plainTextToken;
                 
-            return ['status'=>'success','message'=>"OTP Verify Successfully",'data'=>$get_user_details];            
+            return ['status'=>'success','message' => __('service_messages.otp_verified_successfully'),'data'=>$get_user_details];            
         
         }else{
-            return ['status'=>'error','message'=>"Invalid OTP",'data'=>(object)[]];                
+            return ['status'=>'error','message' => __('service_messages.otp_invalid'),'data'=>(object)[]];                
         }
 
     }
@@ -148,10 +148,10 @@ class DeliveryBoyAuthService
                         //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
                     }
                 }       
-        return ['status'=>'success','message'=>"OTP Resent Successfully",'data'=>$get_user_details];            
+        return ['status'=>'success','message' => __('service_messages.otp_send_successfully'),'data'=>$get_user_details];            
     
         }else{
-        return ['status'=>'error','message'=>"Account Does Not Existed",'data'=>(object)[]];                
+        return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
         }
 
     }
@@ -169,10 +169,10 @@ class DeliveryBoyAuthService
         ]);
         
         $get_user_details->accessToken ='';            
-        return ['status'=>'success','message'=>"Password Changed Successfully",'data'=>$get_user_details];            
+        return ['status'=>'success','message' => __('service_messages.password_updated_successfully'),'data'=>$get_user_details];            
     
         }else{
-        return ['status'=>'error','message'=>"Account Does Not Existed",'data'=>(object)[]];                
+        return ['status'=>'error','message' => __('service_messages.account_not_exist'),'data'=>(object)[]];                
         }
 
     }
@@ -199,7 +199,7 @@ class DeliveryBoyAuthService
 
           return [
               'status' => 'success',
-              'message' => 'Account deleted successfully',
+              'message' => __('service_messages.account_deleted_successfully'),
               'data' => $data
           ];
 

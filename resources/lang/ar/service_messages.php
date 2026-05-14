@@ -89,7 +89,32 @@ return [
   'faq_updated_successfully' => 'تم تحديث الأسئلة الشائعة بنجاح',
   'faq_deleted_successfully' => 'تم حذف الأسئلة الشائعة بنجاح',
 
-    
+  //country service
+  'all_cities_already_added' => 'تمت إضافة جميع المدن بالفعل',
+
+  //deal management service
+  'deal_unblocked_successfully' => 'تم إلغاء حظر العرض بنجاح',
+  'deal_blocked_successfully' => 'تم حظر العرض بنجاح',
+  'deal_added_successfully' => 'تمت إضافة العرض بنجاح',
+  'deal_updated_successfully' => 'تم تحديث العرض بنجاح',
+  'deal_deleted_successfully' => 'تم حذف العرض بنجاح',
+  'deal_id_and_seller_id_required' => 'معرف العرض ومعرف البائع مطلوبان',
+
+  //driver auth service
+  'account_blocked_by_admin' => 'تم حظر حسابك من قبل الإدارة',
+  'login_successfully' => 'تم تسجيل الدخول بنجاح',
+  'please_enter_correct_password' => 'الرجاء إدخال كلمة المرور الصحيحة',
+  'account_deleted_successfully' => 'تم حذف الحساب بنجاح',
+
+  //driver management service
+  'delivery_boy_unblocked_successfully' => 'تم إلغاء حظر عامل التوصيل بنجاح',
+  'delivery_boy_blocked_successfully' => 'تم حظر عامل التوصيل بنجاح',
+  'delivery_boy_deleted_successfully' => 'تم حذف عامل التوصيل بنجاح',
+  'delivery_boy_added_successfully' => 'تمت إضافة عامل التوصيل بنجاح',
+  'delivery_boy_updated_successfully' => 'تم تحديث عامل التوصيل بنجاح',
+  'profile_updated_successfully' => 'تم تحديث الملف الشخصي بنجاح',
+  'setting_changed_to_on_duty_successfully' => 'تم تغيير الحالة إلى متاح للعمل بنجاح',
+  'setting_changed_to_off_duty_successfully' => 'تم تغيير الحالة إلى غير متاح للعمل بنجاح',
 
 
 

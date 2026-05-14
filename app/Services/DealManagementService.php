@@ -83,7 +83,7 @@ class DealManagementService
             if ($deal_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Deal found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -132,7 +132,7 @@ class DealManagementService
             if ($deal_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Deal found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' =>  (object)[]
                 ];
             }
@@ -171,8 +171,8 @@ class DealManagementService
             $deal->save();
 
             $message = $deal->status == 1
-                        ? 'Deal Unblocked successfully'
-                        : 'Deal Blocked successfully';
+                ? __('service_messages.deal_unblocked_successfully')
+                : __('service_messages.deal_blocked_successfully');
 
             return [
                 'status' => 'success',
@@ -206,7 +206,7 @@ class DealManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Deal added successfully',
+                'message' => __('service_messages.deal_added_successfully'),
                 'data' => $deal
             ];
 
@@ -245,7 +245,7 @@ class DealManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Deal updated successfully',
+                'message' => __('service_messages.deal_updated_successfully'),
                 'data' => $deal
             ];
 
@@ -274,7 +274,7 @@ class DealManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Deal deleted successfully',
+                'message' => __('service_messages.deal_deleted_successfully'),
                 'data' => []
             ];
 
@@ -344,7 +344,7 @@ class DealManagementService
             if (!$data) {
                 return [
                     'status' => 'error',
-                    'message' => 'Deal not found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' => (object)[] // return empty object
                 ];
             }
@@ -479,7 +479,7 @@ class DealManagementService
             if (!$dealId || !$sellerId) {
                 return [
                     'status' => 'error',
-                    'message' => 'Deal ID and Seller ID are required',
+                    'message' => __('service_messages.deal_id_and_seller_id_required'),
                     'data' => (object)[]
                 ];
             }
@@ -520,7 +520,7 @@ class DealManagementService
             if (!$deal) {
                 return [
                     'status' => 'error',
-                    'message' => 'Deal not found',
+                    'message' => __('service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }

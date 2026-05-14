@@ -89,6 +89,33 @@ return [
   'faq_updated_successfully' => 'FAQ updated successfully',
   'faq_deleted_successfully' => 'FAQ deleted successfully',
 
+  //country service
+  'all_cities_already_added' => 'All cities are already added',
+
+  //deal management service
+  'deal_unblocked_successfully' => 'Deal Unblocked successfully',
+  'deal_blocked_successfully' => 'Deal Blocked successfully',
+  'deal_added_successfully' => 'Deal added successfully',
+  'deal_updated_successfully' => 'Deal updated successfully',
+  'deal_deleted_successfully' => 'Deal deleted successfully',
+  'deal_id_and_seller_id_required' => 'Deal ID and Seller ID are required',
+
+  //driver auth service
+  'account_blocked_by_admin' => 'Your account is blocked by admin',
+  'login_successfully' => 'Login Successfully',
+  'please_enter_correct_password' => 'Please enter correct password',
+  'account_deleted_successfully' => 'Account deleted successfully',
+
+  //driver management service
+  'delivery_boy_unblocked_successfully' => 'Delivery Boy Unblocked Successfully',
+  'delivery_boy_blocked_successfully' => 'Delivery Boy blocked Successfully',
+  'delivery_boy_deleted_successfully' => 'Delivery Boy deleted successfully',
+  'delivery_boy_added_successfully' => 'Delivery boy added successfully',
+  'delivery_boy_updated_successfully' => 'Delivery boy updated successfully',
+  'profile_updated_successfully' => 'Profile updated successfully',
+  'setting_changed_to_on_duty_successfully' => 'Setting changed to on Duty Successfully',
+  'setting_changed_to_off_duty_successfully' => 'Setting changed to off Duty Successfully',
+
   
   
     
