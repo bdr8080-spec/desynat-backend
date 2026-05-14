@@ -309,6 +309,11 @@ class SellerDashboardController extends Controller
 
       $validate = Validator::make($request->all(), [
         'file' => 'required',
+        ],[
+            'file.required' => __('seller_messages.file_required') ,
+            // 'file.mimes' => __('seller_messages.file_invalid_format') ,
+            // 'file.max' => __('seller_messages.file_size_exceed') ,
+            
         ]);
     
         if($validate->fails()){
@@ -368,6 +373,12 @@ class SellerDashboardController extends Controller
       $validate = Validator::make($request->all(), [
         'file' => 'required',
         'caption' => 'required',
+        ],[
+            'file.required' => __('seller_messages.file_required') ,
+            // 'file.mimes' => __('seller_messages.file_invalid_format') ,
+            // 'file.max' => __('seller_messages.file_size_exceed') ,
+            'caption.required' => __('seller_messages.caption_required'),
+
         ]);
     
         if($validate->fails()){
@@ -428,6 +439,11 @@ class SellerDashboardController extends Controller
       $validate = Validator::make($request->all(), [
         'file' => 'required',
         'title' => 'required',
+        ],[
+            'file.required' => __('seller_messages.file_required') ,
+            // 'file.mimes' => __('seller_messages.file_invalid_format') ,
+            // 'file.max' => __('seller_messages.file_size_exceed') ,
+            'title.required' => __('seller_messages.caption_required'),
         ]);
     
         if($validate->fails()){
@@ -489,6 +505,12 @@ class SellerDashboardController extends Controller
             'reel_id' => 'required|exists:reels,id',
             'file' => 'required',
             'caption' => 'required',
+        ],[
+            'file.required' => __('seller_messages.file_required') ,
+            // 'file.mimes' => __('seller_messages.file_invalid_format') ,
+            // 'file.max' => __('seller_messages.file_size_exceed') ,
+            'caption.required' => __('seller_messages.caption_required'),
+
         ]);
 
         if ($validate->fails()) {
@@ -619,6 +641,9 @@ class SellerDashboardController extends Controller
 
       $validate = Validator::make($request->all(), [
         'file' => 'required',
+        ],[
+            'file.required' => __('seller_messages.file_required') ,
+
         ]);
     
         if($validate->fails()){
@@ -648,6 +673,12 @@ class SellerDashboardController extends Controller
       $validate = Validator::make($request->all(), [
         'file' => 'required',
         'title' => 'required',
+        ],[
+             'file.required' => __('seller_messages.file_required') ,
+            // 'file.mimes' => __('seller_messages.file_invalid_format') ,
+            // 'file.max' => __('seller_messages.file_size_exceed') ,
+            'title.required' => __('seller_messages.caption_required'),
+
         ]);
     
         if($validate->fails()){
@@ -693,6 +724,12 @@ public function raise_ticket(Request $request){
         'ticket_type_id' => 'required|integer|exists:ticket_types,id',
         'title' => 'required',
         'description' => 'required',
+        ],[
+
+            'ticket_type_id.required' => __('seller_messages.Please_Select_Ticket_Type') ,
+            'title.required' => __('seller_messages.Please_Enter_Title'),
+            'description.required' => __('seller_messages.Please_Enter_Description'),
+
         ]);
     
     if($validate->fails()){

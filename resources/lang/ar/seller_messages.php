@@ -1066,6 +1066,8 @@ return [
     'can_action_boolean' => 'يجب أن تكون صلاحية الإجراء صحيحة أو خاطئة.',
 
     'staff_created_successfully' => 'تم إنشاء الموظف بنجاح.',
+
+    'old_password_required' => 'كلمة المرور القديمة مطلوبة.',
       
     
 ];

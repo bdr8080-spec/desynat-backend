@@ -55,7 +55,32 @@ class AuthController extends Controller
             'password' => 'required',
             'confirm_password' => 'required|same:password',
             'accept_terms'=>"required|in:1"
-        ]);
+        ],
+    [
+    
+    'profile_pic.required' => __('seller_messages.profile_pic_required'),
+    'first_name.required' => __('seller_messages.first_name_required'),
+    'last_name.required' => __('seller_messages.last_name_required'),
+    'country_code.required' => __('seller_messages.country_code_required'),
+    'mobile.required' => __('seller_messages.mobile_required'),
+    'mobile.unique' => __('seller_messages.mobile_unique'),
+
+    'email.required' => __('seller_messages.email_required'),
+    'email.email' => __('seller_messages.email_email'),
+    'email.unique' => __('seller_messages.email_unique'),
+
+    'password.required' => __('seller_messages.password_required'),
+    'password.min' => __('seller_messages.password_min'),
+    'password.regex' => __('seller_messages.password_regex'),
+
+    'confirm_password.required' => __('seller_messages.confirm_password_required'),
+    'confirm_password.same' => __('seller_messages.confirm_password_same'),
+
+    'accept_terms.required' => __('seller_messages.accept_terms_required'),
+    'accept_terms.in' => __('seller_messages.accept_terms_in'),
+        
+        ]
+    );
 
 
         if($validate->fails()){
@@ -154,7 +179,25 @@ class AuthController extends Controller
             'let'=>'required',
             'long'=>'required'
             
-            ]);
+            ],
+        [
+            'store_image.required' => __('seller_messages.store_image_required'),
+            'store_name.required' => __('seller_messages.store_name_required'),
+            'country.required' => __('seller_messages.country_required'),
+            'store_address.required' => __('seller_messages.store_address_required'),
+            'address_line1.required' => __('seller_messages.address_line1_required'),
+            'address_line2.required' => __('seller_messages.address_line2_required'),
+
+            'store_phone.required' => __('seller_messages.store_phone_required'),
+            'store_phone.digits_between' => __('seller_messages.store_phone_digits'),
+
+            'store_mail_id.required' => __('seller_messages.store_email_required'),
+            'store_mail_id.email' => __('seller_messages.store_email_valid'),
+
+            'bio.required' => __('seller_messages.bio_required'),
+                
+            ]
+        );
         
        if($validate->fails()){
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
@@ -185,6 +228,32 @@ class AuthController extends Controller
             'bank_name'=>'required',
             "account_holder_name"=>"required",
             'upload_proof'=>'required'
+            ],[
+                 'iban.required' => __('seller_messages.iban_required'),
+    'swift.required' => __('seller_messages.swift_required'),
+
+    'account_type.required' => __('seller_messages.account_type_required'),
+    'account_type.in' => __('seller_messages.account_type_invalid'),
+
+    'bank_name.required' => __('seller_messages.bank_name_required'),
+    'account_holder_name.required' => __('seller_messages.account_holder_required'),
+
+    'store_document.required' => __('seller_messages.store_document_required'),
+    'store_document.min' => __('seller_messages.store_document_min'),
+    'store_document.*.image' => __('seller_messages.store_document_image'),
+    'store_document.*.mimes' => __('seller_messages.store_document_mimes'),
+    'store_document.*.max' => __('seller_messages.store_document_max'),
+
+    'owner_document.required' => __('seller_messages.owner_document_required'),
+    'owner_document.min' => __('seller_messages.owner_document_min'),
+    'owner_document.*.image' => __('seller_messages.owner_document_image'),
+    'owner_document.*.mimes' => __('seller_messages.owner_document_mimes'),
+    'owner_document.*.max' => __('seller_messages.owner_document_max'),
+
+    'upload_proof.required_without' => __('seller_messages.upload_proof_required'),
+    'upload_proof.image' => __('seller_messages.upload_proof_image'),
+    'upload_proof.mimes' => __('seller_messages.upload_proof_mimes'),
+    'upload_proof.max' => __('seller_messages.upload_proof_max'),
             ]);
         
        if($validate->fails()){
@@ -297,6 +366,11 @@ class AuthController extends Controller
         $validate = Validator::make($req->all(), [
             'country_code'=>"required",
             'mobile'=>"required"
+        ],[
+               'country_code.required'=> __('seller_messages.country_code_required'),
+                'mobile.required'=> __('seller_messages.mobile_required')
+       
+
         ]);
 
        if($validate->fails()){
@@ -309,6 +383,8 @@ class AuthController extends Controller
         if($req->type=='1'){
         $validate = Validator::make($req->all(), [
             'email'=>"required",
+        ],[
+          'email.required'=> __('seller_messages.email_required')
         ]);
 
         if($validate->fails()){
@@ -334,6 +410,12 @@ class AuthController extends Controller
             'id'=>'required|exists:sellers,id',
             'password' => 'required',
             'confirm_password'=>"required|same:password"
+            ],[
+
+                "password.required"=>__('seller_messages.password_required'),
+                "confirm_password.required"=>__('seller_messages.confirm_password_required'),
+                'confirm_password.same' => __('seller_messages.reset_confirm_password_same'),
+
                ]);
         
        if($validate->fails()){
@@ -356,6 +438,12 @@ class AuthController extends Controller
               'old_password' => 'required',
               'new_password' => 'required',
               'confirm_password' => 'required|same:new_password',
+              ],[
+                "old_password.required"=>__('seller_messages.old_password_required'),
+                "new_password.required"=>__('seller_messages.password_required'),
+                "confirm_password.required"=>__('seller_messages.confirm_password_required'),
+                'confirm_password.same' => __('seller_messages.reset_confirm_password_same'),
+
               ]);
           
          if($validate->fails()){
