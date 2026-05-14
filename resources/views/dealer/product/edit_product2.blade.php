@@ -218,81 +218,82 @@ $product_Variation_inside_count = 0;
 
                 @foreach ($product_details['product_specifications'] as $item)
                 <div class="specifications-row">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Name</label>
-                                <span>In English</span>
-                            </div>
-                            <input type="text"
-                                oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                                class="form-control" placeholder="Enter product name" name="product_spe_en[]"
-                                value="{{ $item->name_en }}">
-
-                            <p id="error-product_spe_en_{{ $specification_count }}" class="text-danger"></p>
-
-                        </div>
-
-
-                    </div>
-
-                    <div class="col-lg-6 col-md-6">
-                        <div class="append-flex">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>Name</label>
-                                    <span>In Arabic</span>
+                                    <span>In English</span>
                                 </div>
                                 <input type="text"
-                                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                                    class="form-control" placeholder="Enter product name" name="product_spe_ar[]"
-                                    value="{{ $item->name_ar }}">
-                                <p class="text-danger" id="error-product_spe_ar_{{ $specification_count }}"></p>
+                                    oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                                    class="form-control" placeholder="Enter product name" name="product_spe_en[]"
+                                    value="{{ $item->name_en }}">
+
+                                <p id="error-product_spe_en_{{ $specification_count }}" class="text-danger"></p>
 
                             </div>
 
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Feature</label>
-                                <span>In English</span>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="append-flex">
+                                <div class="sub-form">
+                                    <div class="label-flex">
+                                        <label>Name</label>
+                                        <span>In Arabic</span>
+                                    </div>
+                                    <input type="text"
+                                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                        class="form-control" placeholder="Enter product name" name="product_spe_ar[]"
+                                        value="{{ $item->name_ar }}">
+                                    <p class="text-danger" id="error-product_spe_ar_{{ $specification_count }}"></p>
+
+                                </div>
+
                             </div>
-                            <input type="text"
-                                oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                                class="form-control" placeholder="Enter product feature" name="product_spe_feature_en[]"
-                                value="{{ $item->feature_en }}">
-                            <p class="text-danger" id="error-product_spe_feature_en_{{ $specification_count }}">
-                            </p>
-
                         </div>
-
                     </div>
 
-                    <div class="col-lg-6 col-md-6">
-                        <div class="append-flex">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>Feature</label>
-                                    <span>In Arabic</span>
+                                    <span>In English</span>
                                 </div>
                                 <input type="text"
-                                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                    oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
                                     class="form-control" placeholder="Enter product feature"
-                                    name="product_spe_feature_ar[]" value="{{ $item->feature_ar }}">
-                                <p class="text-danger" id="error-product_spe_feature_ar_{{ $specification_count }}"></p>
+                                    name="product_spe_feature_en[]" value="{{ $item->feature_en }}">
+                                <p class="text-danger" id="error-product_spe_feature_en_{{ $specification_count }}">
+                                </p>
 
                             </div>
 
                         </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="append-flex">
+                                <div class="sub-form">
+                                    <div class="label-flex">
+                                        <label>Feature</label>
+                                        <span>In Arabic</span>
+                                    </div>
+                                    <input type="text"
+                                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                        class="form-control" placeholder="Enter product feature"
+                                        name="product_spe_feature_ar[]" value="{{ $item->feature_ar }}">
+                                    <p class="text-danger" id="error-product_spe_feature_ar_{{ $specification_count }}">
+                                    </p>
+
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
                 @php
                 $specification_count++;
@@ -307,10 +308,10 @@ $product_Variation_inside_count = 0;
 
         <div class="variant-panel">
 
-            @php 
-                $count_Variation_Button=0;
-                $count_Variation_ButtonMain=0;
-                @endphp
+            @php
+            $count_Variation_Button=0;
+            $count_Variation_ButtonMain=0;
+            @endphp
 
             @foreach ($product_details->variation_Group as $key => $item)
 
@@ -391,7 +392,8 @@ $product_Variation_inside_count = 0;
 
                         {{-- Other Variation show start --}}
                         @foreach ($item->otherVariation as $var => $value)
-                        <div class="Varient_show inside_variation{{ $product_Variation_count }} subpanel" @if ($var !==0)
+                        <div class="Varient_show inside_variation{{ $product_Variation_count }} subpanel" @if ($var
+                            !==0)
                             style="background: #fff;border: 1px dashed #0d0606;border-radius: 10px; box-shadow: 0px 2px 4px #ddd;"
                             @endif>
                             <div class="wapper-header mt-2">
@@ -636,17 +638,17 @@ $product_Variation_inside_count = 0;
                                     </div>
                                 </div>
                             </div>
-                              @if($count_Variation_Button > 0 )
-                           <div class="d-flex justify-content-end">
-                              <div class="remove-btn22"><i class="bi bi-x"></i> Remove </div>
-                           </div>
-                             @endif
+                            @if($count_Variation_Button > 0 )
+                            <div class="d-flex justify-content-end">
+                                <div class="remove-btn22"><i class="bi bi-x"></i> Remove </div>
+                            </div>
+                            @endif
 
                         </div>
 
                         @php
 
-                     
+
 
                         $count_Variation_Button++;
 
@@ -656,8 +658,8 @@ $product_Variation_inside_count = 0;
                         {{-- Other Variation show End Here --}}
 
                         @if($count_Variation_ButtonMain > 0 )
-                    <div class="removerow"><i class="bi bi-x"></i> Remove</div>
-                    @endif
+                        <div class="removerow"><i class="bi bi-x"></i> Remove</div>
+                        @endif
 
                     </div>
 
@@ -665,9 +667,9 @@ $product_Variation_inside_count = 0;
 
                 @php
 
-                   $product_Variation_count++;
-              
-              $count_Variation_ButtonMain++;
+                $product_Variation_count++;
+
+                $count_Variation_ButtonMain++;
 
                 $product_Variation_inside_count = 0;
 
@@ -1241,7 +1243,7 @@ $(document).on("click", ".remove-btn", function() {
 
 // remove After refresh error code 
 function refreshSpecificationIndexes() {
-    $(".specifications-row").each(function (index) {
+    $(".specifications-row").each(function(index) {
 
         $(this).find("p[id^='error-product_spe_en_']")
             .attr("id", "error-product_spe_en_" + index);
@@ -1259,9 +1261,6 @@ function refreshSpecificationIndexes() {
     // update global counter
     specification_count = $(".specifications-row").length;
 }
-
-
-
 </script>
 
 <script>
@@ -1531,7 +1530,7 @@ $(document).on("click", ".removerow", function() {
 // refresh variation code 
 function refreshVariantIndexes() {
 
-    $(".variant-panel-remove").each(function (variantIndex) {
+    $(".variant-panel-remove").each(function(variantIndex) {
 
         // IMAGE SECTION
         $(this).find(".product-pnls")
@@ -1547,12 +1546,12 @@ function refreshVariantIndexes() {
         $(this).find("[id^='previewContainer']")
             .attr("id", "previewContainer" + variantIndex);
 
-            
+
         // UPDATE addmoreVariation REL
         $(this).find(".addmoreVariation")
             .attr("rel", variantIndex);
 
-               // 🔹 UPDATE PRICE FIELD IDS
+        // 🔹 UPDATE PRICE FIELD IDS
         $(this).find("[id^='actualprice_']")
             .attr("id", `actualprice_${variantIndex}_0`);
 
@@ -1572,7 +1571,7 @@ function refreshVariantIndexes() {
             .attr("id", "error-color_id_" + variantIndex);
 
         // ALL INPUTS WITH ARRAY INDEX
-        $(this).find("input, select").each(function () {
+        $(this).find("input, select").each(function() {
 
             let name = $(this).attr("name");
             if (!name) return;
@@ -1582,14 +1581,14 @@ function refreshVariantIndexes() {
         });
 
         // ERROR MESSAGE IDS
-        $(this).find("p[id^='error-']").each(function () {
+        $(this).find("p[id^='error-']").each(function() {
             let newId = $(this).attr("id")
                 .replace(/\_\d+(\_\d+)?$/, `_${variantIndex}_0`);
             $(this).attr("id", newId);
         });
 
         // DISCOUNT RADIO BUTTONS
-        $(this).find("input[type='radio']").each(function () {
+        $(this).find("input[type='radio']").each(function() {
             let id = $(this).attr("id");
             if (id) {
                 id = id.replace(/\_\d+\_\d+$/, `_${variantIndex}_0`);
@@ -1608,7 +1607,7 @@ function refreshVariantIndexes() {
     // RESET GLOBAL COUNT
     product_Variation_count = $(".variant-panel-bg").length;
 
-    
+
     console.log(product_Variation_count);
 }
 
@@ -1638,6 +1637,10 @@ function catgoryFunction(val) {
             id: val
         },
         dataType: "json",
+        headers: {
+            'Accept-Language': "{{ app()->getLocale() }}"
+            // returns 'en' or 'ar'
+        },
         beforeSend: function() {
             $('#loader').show()
         },

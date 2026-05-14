@@ -1430,6 +1430,10 @@ function catgoryFunction(val) {
             id: val
         },
         dataType: "json",
+        headers: {
+            'Accept-Language': "{{ app()->getLocale() }}"
+            // returns 'en' or 'ar'
+        },
         beforeSend: function() {
             $('#loader').show()
         },
