@@ -35,7 +35,7 @@ DB::beginTransaction();
 $seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
 
     if($seller_details->admin_verify!=='2'){
-        return ['status'=>'error','message'=>"You store Didn't Accept or reject By Admin",'data'=>[]];    
+        return ['status'=>'error','message' => __('Service_messages.store_not_accepted_or_rejected_by_admin'),'data'=>[]];    
     }
 
     $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request->seller_id)
@@ -47,7 +47,7 @@ $seller_details=seller::with('store_info','subcription_plan')->where('id',$reque
         if (!$subscription) {
             return [
                 'status' => 'failed',
-                'message' => "You have no active plan",
+                'message' => __('Service_messages.no_active_plan'),
                 'data' => []
             ];
         }
@@ -58,7 +58,7 @@ $seller_details=seller::with('store_info','subcription_plan')->where('id',$reque
             if ($subscription->no_of_products <= '0') {
                 return [
                     'status' => 'error',
-                    'message' => "Your monthly limit for product addition has reached, you can't add more products this month",
+                    'message' => __('Service_messages.product_monthly_limit_reached'),
                     'data' => []
                 ];
             }
@@ -175,7 +175,7 @@ $add_product_data=$this->single_product_details_fetch($request_data);
 
 DB::commit();
 
-return ['status'=>'success','message'=>"Product Add successfully",'data'=>$add_product_data['data']];
+return ['status'=>'success','message' => __('Service_messages.product_added_successfully'),'data'=>$add_product_data['data']];
 
 } 
 catch (\Exception $e) {
@@ -308,7 +308,7 @@ $add_product_data=$this->single_product_details_fetch($request_data);
 
 DB::commit();
 
-return ['status'=>'success','message'=>"Product Add successfully",'data'=>$add_product_data['data']];
+return ['status'=>'success','message' => __('Service_messages.product_updated_successfully'),'data'=>$add_product_data['data']];
 
 } 
 catch (\Exception $e) {
@@ -323,7 +323,7 @@ public function Seller_Plan_check($seller_id){
       $seller_details=seller::with('store_info','subcription_plan')->where('id',$seller_id)->first();
 
         if($seller_details->admin_verify!=='2'){
-            return ['status'=>'error','message'=>"You store Didn't Accept or reject By Admin",'data'=>[]];    
+            return ['status'=>'error','message' => __('Service_messages.store_not_accepted_or_rejected_by_admin'),'data'=>[]];    
         }
 
         return  $seller_details;
@@ -474,7 +474,7 @@ public function edit_Product($request){
 
         DB::commit();
 
-        return ['status'=>'success','message'=>"Product Update successfully",'data'=>$add_product_data['data']];
+        return ['status'=>'success','message' => __('Service_messages.product_updated_successfully'),'data'=>$add_product_data['data']];
 
 } 
 catch (\Exception $e) {
@@ -849,10 +849,10 @@ public function single_product_details_fetch($request){
         }
 
         if($product_data->product_active_status==0){
-            $msg="Product Active Successfully";
+            $msg = __('Service_messages.product_activated_successfully');
             $value=1;
         }else{
-            $msg="Product Deactive Successfully";
+            $msg = __('Service_messages.product_deactivated_successfully');
             $value=0;
         }
 
@@ -877,7 +877,7 @@ public function single_product_details_fetch($request){
 
         $product_data->delete();
                 
-        return ['status'=>'success','message'=>'Product delete Successfully','data'=>$product_data];
+        return ['status'=>'success','message' => __('Service_messages.product_deleted_successfully'),'data'=>$product_data];
             }
 
 
@@ -897,7 +897,7 @@ public function AddProduct1($request){
     $seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
     
         if($seller_details->admin_verify!=='2'){
-            return ['status'=>'error','message'=>"You store Didn't Accept or reject By Admin",'data'=>[]];    
+            return ['status'=>'error','message' => __('Service_messages.store_not_accepted_or_rejected_by_admin'),'data'=>[]];    
         }
     
 
@@ -1019,7 +1019,7 @@ public function AddProduct1($request){
     
     DB::commit();
     
-    return ['status'=>'success','message'=>"Product Add successfully",'data'=>$add_product_data['data']];
+    return ['status'=>'success','message' => __('Service_messages.product_added_successfully'),'data'=>$add_product_data['data']];
     
     } 
     catch (\Exception $e) {
@@ -1182,7 +1182,7 @@ public function edit_Product1($request){  /// for api
 
         DB::commit();
 
-        return ['status'=>'success','message'=>"Product Update successfully",'data'=>$add_product_data['data']];
+        return ['status'=>'success','message' => __('Service_messages.product_updated_successfully'),'data'=>$add_product_data['data']];
 
 } 
 catch (\Exception $e) {
@@ -1208,7 +1208,7 @@ public function AddProduct_web($request){
     $seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
     
         if($seller_details->admin_verify!=='2'){
-            return ['status'=>'error','message'=>"You store Didn't Accept or reject By Admin",'data'=>[]];    
+            return ['status'=>'error','message' => __('Service_messages.store_not_accepted_or_rejected_by_admin'),'data'=>[]];    
         }
 
         $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request->seller_id)
@@ -1220,7 +1220,7 @@ public function AddProduct_web($request){
         if (!$subscription) {
             return [
                 'status' => 'failed',
-                'message' => "You have no active plan",
+                'message' => __('Service_messages.no_active_plan'),
                 'data' => []
             ];
         }
@@ -1231,7 +1231,7 @@ public function AddProduct_web($request){
             if ($subscription->no_of_products <= '0') {
                 return [
                     'status' => 'error',
-                    'message' => "Your monthly limit for product addition has reached, you can't add more products this month",
+                    'message' => __('Service_messages.product_monthly_limit_reached'),
                     'data' => []
                 ];
             }
@@ -1353,7 +1353,7 @@ foreach($request->color_id as $key=>$val){
     
     DB::commit();
     
-    return ['status'=>'success','message'=>"Product Add successfully",'data'=>$add_product_data['data']];
+    return ['status'=>'success','message' => __('Service_messages.product_added_successfully'),'data'=>$add_product_data['data']];
     
     } 
     catch (\Exception $e) {
@@ -1476,7 +1476,7 @@ public function edit_Product_web($request){
         $seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
         
             if($seller_details->admin_verify!=='2'){
-                return ['status'=>'error','message'=>"You store Didn't Accept or reject By Admin",'data'=>[]];    
+                return ['status'=>'error','message' => __('Service_messages.store_not_accepted_or_rejected_by_admin'),'data'=>[]];    
             }
 
             $product_id= $request->product_id;
@@ -1625,7 +1625,7 @@ foreach($request->color_id as $key=>$val){
         
         DB::commit();
         
-        return ['status'=>'success','message'=>"Product Update successfully",'data'=>$add_product_data['data']];
+        return ['status'=>'success','message' => __('Service_messages.product_updated_successfully'),'data'=>$add_product_data['data']];
         
         } 
         catch (\Exception $e) {
@@ -1687,7 +1687,7 @@ public function Update_Product_Inventory($request){
         if($update_inventory){
             DB::commit();
 
-        return ['status'=>'success','message'=>"Product Inventory Update successfully",'data'=>(object)[]];
+        return ['status'=>'success','message' => __('Service_messages.product_inventory_updated_successfully'),'data'=>(object)[]];
       
         }
         
@@ -1727,7 +1727,7 @@ public function Update_affilate_commission_Inventory($request){
         
         DB::commit();
         
-        return ['status'=>'success','message'=>"Affilate Commission Update successfully",'data'=>(object)[]];
+        return ['status'=>'success','message' => __('Service_messages.affiliate_commission_updated_successfully'),'data'=>(object)[]];
       
         }
         
@@ -1841,7 +1841,7 @@ public function View_seller_profile($request){
             'notification_type' => 'store_info_update'
         ]);
         
-        return ['status'=>'success','message'=>"Profile details updated succesfully",'data'=>$store_information];            
+        return ['status'=>'success','message' => __('Service_messages.profile_updated_successfully'),'data'=>$store_information];            
   
           }else{
             return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
@@ -1890,7 +1890,7 @@ public function View_seller_profile($request){
             'notification_type' => 'store_info_update'
         ]);
         
-        return ['status'=>'success','message'=>"Staff Profile details updated succesfully",'data'=>''];            
+        return ['status'=>'success','message' => __('Service_messages.staff_profile_updated_successfully'),'data'=>''];            
   
     
         }
@@ -1939,7 +1939,7 @@ public function View_seller_profile($request){
                 'notification_type' => 'store_bank_details_update'
             ]);
       
-                return ['status'=>'success','message'=>"Document and Bank details Save succesfully",'data'=>$store_information];            
+                return ['status'=>'success','message' => __('Service_messages.document_and_bank_details_saved_successfully'),'data'=>$store_information];            
       
               }else{
                 return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                

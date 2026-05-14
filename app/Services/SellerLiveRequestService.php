@@ -194,7 +194,7 @@ class SellerLiveRequestService
             if ($req_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Request found',
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object)[]
                 ];
             }
@@ -235,7 +235,7 @@ class SellerLiveRequestService
 
             return [
                 'status' => 'success',
-                'message' => 'Live Request cancelled successfully',
+                'message' => __('Service_messages.live_request_cancelled_successfully'),
                 'data' => $data
             ];
 
@@ -267,7 +267,7 @@ class SellerLiveRequestService
 
             return [
                 'status' => 'success',
-                'message' => 'Live Request sent successfully',
+                'message' => __('Service_messages.live_request_sent_successfully'),
                 'data' => $data
             ];
 
@@ -297,7 +297,7 @@ class SellerLiveRequestService
 
             return [
                 'status' => 'success',
-                'message' => 'Live Request deleted successfully',
+                'message' => __('Service_messages.live_request_deleted_successfully'),
                 'data' => []
             ];
 
@@ -361,7 +361,7 @@ $future_requests = $futureQuery->get();
 if ($current_requests->isEmpty() && $future_requests->isEmpty()) {
     return [
         'status' => 'success',
-        'message' => 'No Request found',
+        'message' => __('Service_messages.no_data_found'),
         'data' => (object)[]
     ];
 }
@@ -426,7 +426,7 @@ $current_requests = $currentQuery->get();
 if ($current_requests->isEmpty()) {
     return [
         'status' => 'success',
-        'message' => 'No Request found',
+        'message' => __('Service_messages.no_data_found'),
         'data' => []
     ];
 }
