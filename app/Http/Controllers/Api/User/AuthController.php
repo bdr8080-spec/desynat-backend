@@ -318,12 +318,11 @@ class AuthController extends Controller
                 // Check if the user was successfully created
                 if ($newUser) {
                     // After creating the new user, generate a token
-                    $newUser->access_token = $newUser->createToken('user-token', ['user'])->plainTextToken;
+                    $newUser->accessToken = $newUser->createToken('user-token', ['user'])->plainTextToken;
 
 
                     return ApiResponse::generateResponse('success',  __('user_messages.login_success'), $newUser, 200);
 
-  
 
                 } else {
                     return ApiResponse::generateResponse('success', __('messages_Sorry_Unable_to_create_Profile'), '', 403);
@@ -347,7 +346,7 @@ class AuthController extends Controller
 
             // Update the user and return the response
             $isLogin->update($updateDetails);
-            $isLogin->access_token = $isLogin->createToken('user-token', ['user'])->plainTextToken;
+            $isLogin->accessToken = $isLogin->createToken('user-token', ['user'])->plainTextToken;
 
             return ApiResponse::generateResponse('success',  __('user_messages.login_success'), $isLogin, 200);
         } catch (\Exception $e) {
