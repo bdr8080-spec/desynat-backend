@@ -172,13 +172,13 @@
 
                                 @if($seller_details->type=="1")
                                 <a class="drop-profile" href="{{ route('seller.staff_edit_profile') }}">
-                                    <span>View Profile</span>
+                                    <span><h3>{{ __('seller_messages.View_Profile') }}</h3> </span>
                                 </a>
 
                                 @else
                                 
                                 <a class="drop-profile" href="{{ route('seller.view_profile') }}">
-                                    <span>View Profile</span>
+                                    <span>{{ __('seller_messages.View_Profile') }}</span>
                                 </a>
 
                                 @endif
@@ -196,7 +196,7 @@
                                     </div>
                                 </div>
                                 <a class="drop-profile" href="{{ route('seller.view_profile') }}">
-                                    <span>View Profile</span>
+                                    <span>{{ __('seller_messages.View_Profile') }}</span>
                                 </a>
                             </div>
 
@@ -208,14 +208,14 @@
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-3"  href="{{route('seller.change_password')}}">
                                 <i class="bi bi-person-fill-lock"></i>
-                                <span class="text-black">Change Password</span>
+                                <span class="text-black">{{ __('seller_messages.Change_Password') }}</span>
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-3"
                                 href="{{ route('seller.logout') }}">
                                 <img src="{{ asset('dealer') }}/assets/img/logout.svg">
-                                <span class="text-red">Sign Out</span>
+                                <span class="text-red">{{ __('seller_messages.Sign_Out') }} </span>
                             </a>
                         </li>
                     </ul>
@@ -236,13 +236,12 @@
 
                                     <li>
                                         <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
-                                            <span>AR</span> Arabic
+                                            <span>AR</span> {{ __('seller_messages.Arabic') }} 
                                         </a>
                                     </li>
-
                                     <li>
                                         <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
-                                            <span>EN</span> English
+                                            <span>EN</span> {{ __('seller_messages.English') }} 
                                         </a>
                                     </li>
                                 </ul>

@@ -35,7 +35,7 @@ button.deleteHighlightBtn {
         <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
             <div class="title24">
                 <a href="{{route('seller.view_profile')}}" style="color:rgb(57, 55, 55)">
-                    <i class="bi bi-chevron-left"></i> Add Highlight
+                    <i class="bi bi-chevron-left"></i>  {{ __('seller_messages.Add_Highlight') }}
                 </a>
             </div>
         </div>
@@ -48,7 +48,7 @@ button.deleteHighlightBtn {
             <div id="bannerPlaceholderImg">
                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                      style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
-                <div class="py-2" style="color:#875C3A">Upload image/video</div>
+                <div class="py-2" style="color:#875C3A"> {{ __('seller_messages.Upload_Image_Video') }}</div>
             </div>
 
             <!-- Image Preview -->
@@ -63,26 +63,26 @@ button.deleteHighlightBtn {
     </div>
 </div>
 
-<label class="banner-text">Highlight Name</label>
+<label class="banner-text"> {{ __('seller_messages.Highlight_Name') }}</label>
 <div class="group-radio-btn d-flex gap-5 align-items-center flex-wrap py-3 pe-3">
     <div class="check_radio">
         <label class="radio-group">
             <input type="radio" name="banner_position" value="1" checked>
             <span class="custom-radio"></span>
-            <span class="radio-label">Select from previous</span>
+            <span class="radio-label"> {{ __('seller_messages.Select_From_Previous') }} </span>
         </label>
     </div>
     <div class="check_radio">
         <label class="radio-group">
             <input type="radio" name="banner_position" value="2">
             <span class="custom-radio"></span>
-            <span class="radio-label">Add New</span>
+            <span class="radio-label">{{ __('seller_messages.Add_New') }}</span>
         </label>
     </div>
 </div>
 
 <select id="previousHighlights" class="form-select mb-3">
-    <option value="">Select Highlight</option>
+    <option value="">  {{ __('seller_messages.Select_Highlight') }}</option>
     @foreach($highlights as $highlight)
         <option value="{{ $highlight->title }}">{{ $highlight->title }}</option>
     @endforeach
@@ -91,10 +91,10 @@ button.deleteHighlightBtn {
 <input type="text" id="highlightTitleInput" class="form-control mb-3" placeholder="Enter Highlight Name" style="display:none;">
 <div id="titleError" style="color:red; font-size:0.9rem;"></div>
 
-<button id="submitHighlight" type="button" class="btn add-fillbtn w-100">Submit</button>
+<button id="submitHighlight" type="button" class="btn add-fillbtn w-100">   {{ __('seller_messages.Submit') }}</button>
 
 <div class="product_reels customContainer mt-4">
-    <div class="title24">Select From gallary</div>
+    <div class="title24">  {{ __('seller_messages.Select_From_Gallery') }}</div>
     <div class="reels-wrapper mt-4">
         <div class="row">
             @foreach($highlights as $index => $highlight)
@@ -108,7 +108,7 @@ button.deleteHighlightBtn {
                             @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
                                 <video class="img-fluid" muted loop playsinline preload="metadata">
                                     <source src="{{ $highlight->file }}" type="video/{{ $extension }}">
-                                    Your browser does not support the video tag.
+                                    {{ __('seller_messages.Browser_Not_Support_Video') }}
                                 </video>
                             @else
                                 <img src="{{ $highlight->file }}" alt="image" class="img-fluid">
@@ -117,7 +117,7 @@ button.deleteHighlightBtn {
 
                     </div>
                     <button class="deleteHighlightBtn" data-id="{{ $highlight->id }}">
-                        Delete
+                         {{ __('seller_messages.Delete') }}
                     </button>
                 </div>
             @endforeach

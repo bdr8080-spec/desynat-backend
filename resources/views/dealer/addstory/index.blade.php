@@ -28,7 +28,7 @@ button.deleteStoryBtn {
         <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
             <div class="title24">
                 <a href="{{route('seller.view_profile')}}" style="color:rgb(57, 55, 55)">
-                    <i class="bi bi-chevron-left"></i> Add Story
+                    <i class="bi bi-chevron-left"></i>  {{ __('seller_messages.Add_Story') }}
                 </a>
             </div>
         </div>
@@ -42,7 +42,7 @@ button.deleteStoryBtn {
                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                     style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
                 <div class="py-2" style="color:#875C3A">
-                    Upload image/video
+                    {{ __('seller_messages.Upload_Image_Video') }}
                 </div>
             </div>
             <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr" style="display:none;">
@@ -59,7 +59,7 @@ button.deleteStoryBtn {
 
 
 <div class="product_reels customContainer mt-4">
-    <div class="title24">Select From gallary</div>
+    <div class="title24">{{ __('seller_messages.Select_From_Gallery') }}</div>
     <div class="reels-wrapper mt-4">
         <div class="row">
             @foreach($sellerStories as $index => $story)
@@ -73,7 +73,7 @@ button.deleteStoryBtn {
                             @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
                                 <video class="img-fluid" muted loop playsinline preload="metadata">
                                     <source src="{{ $story->file }}" type="video/{{ $extension }}">
-                                    Your browser does not support the video tag.
+                                   {{ __('seller_messages.Browser_Not_Support_Video') }}
                                 </video>
                             @else
                                 <img src="{{ $story->file }}" alt="image" class="img-fluid">
@@ -81,7 +81,7 @@ button.deleteStoryBtn {
                         </div>
                     </div>
                     <button class="deleteStoryBtn" data-id="{{ $story->id }}">
-                        Delete
+                         {{ __('seller_messages.Delete') }}
                     </button>
                 </div>
             @endforeach
@@ -94,7 +94,7 @@ button.deleteStoryBtn {
 <div class="status-viewer bgwhite" id="Addstory12">
     <div class="container">
         <div class="story-header d-flex justify-content-between py-4">
-            <h3>Add Story </h3>
+           <h3>{{ __('seller_messages.Add_Story') }}</h3>
             <button type="button" class="btn btn-light" onclick="closeStatus1()"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="logostatus">
@@ -105,7 +105,7 @@ button.deleteStoryBtn {
         </div>   
 
         <div class="dashboard-button mt-4 logostatus bgwhite">
-            <button type="button" class="btn add-fillbtn w-100">Upload</button>
+            <button type="button" class="btn add-fillbtn w-100">  {{ __('seller_messages.Upload') }}</button>
         </div>
     </div>
 </div>
