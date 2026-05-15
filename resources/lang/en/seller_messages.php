@@ -1131,5 +1131,9 @@ return [
     'cancel' => 'Cancel',
     'add_product' => 'Add Product',
 
+    "remove"=>"Remove",
+    "Save_Changes"=>"Save Changes",
+
+
     
 ];

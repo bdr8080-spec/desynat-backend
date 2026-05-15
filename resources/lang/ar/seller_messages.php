@@ -1148,6 +1148,7 @@ return [
 
     'cancel' => 'إلغاء',
     'add_product' => 'إضافة المنتج',
+    "remove"=>"يزيل",
       
     
 ];

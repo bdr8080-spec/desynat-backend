@@ -76,7 +76,7 @@ $product_Variation_inside_count = 0;
 
         @csrf
         <div class="pt-3">
-            <div class="title24">Select Category</div>
+            <div class="title24">{{ __('seller_messages.select_category') }}</div>
             <div class="row">
                 <div class="col-lg-6">
                     <div
@@ -90,7 +90,14 @@ $product_Variation_inside_count = 0;
                                 $item->id) checked @endif
                                 @if ($key == 0) checked @endif>
                                 <span class="custom-radio"></span>
-                                <span class="radio-label">{{ $item->name }}</span>
+                                <span class="radio-label">
+                                    @if(app::getLocale()=='en')
+                                    {{ $item->name }}</span>
+                                @else
+                                {{ $item->name_ar }}</span>
+                                @endif
+
+                                </span>
                             </label>
                         </div>
                         @endforeach
@@ -106,7 +113,7 @@ $product_Variation_inside_count = 0;
 
             <div class="sub-form col-lg-6 col-md-6">
                 <div class="label-flex">
-                    <label>Select Sub-Category</label>
+                    <label>{{ __('seller_messages.select_sub_category') }}</label>
                 </div>
                 <select class="form-select form-control" name="subcategory_id" aria-label="Default select example"
                     id="getSubcategry">
@@ -116,16 +123,23 @@ $product_Variation_inside_count = 0;
             </div>
             <div class="sub-form col-lg-6 col-md-6">
                 <div class="label-flex">
-                    <label>Select Brand</label>
+                    <label>{{ __('seller_messages.select_brand') }}</label>
                 </div>
                 <select class="form-select form-control" aria-label="Default select example" id="brand_id"
                     name="brand_id">
 
-                    <option value="">Select Brand</option>
+                    <option value="">{{ __('seller_messages.select_brand') }}</option>
+
 
                     @foreach ($brand as $item)
                     <option value="{{ $item->id }}" @if ($product_details->brand_id == $item->id) selected @endif>
-                        {{ $item->name_english }}</option>
+                        @if(app::getLocale()=='en')
+                        {{ $item->name_english }}</span>
+                        @else
+                        {{ $item->name_arabic }}</span>
+                        @endif
+
+                    </option>
                     @endforeach
 
                 </select>
@@ -133,21 +147,22 @@ $product_Variation_inside_count = 0;
             </div>
             <div class="sub-form col-lg-6 col-md-6" id="other-field0" style="display:none;">
                 <div class="label-flex">
-                    <label>Other</label>
-                    <span>In English</span>
+                    <label>{{ __('seller_messages.other') }}</label>
+                    <span>{{ __('seller_messages.in_english') }}</span>
+
                 </div>
                 <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                    class="form-control" placeholder="Enter Brand name" name="other_en"
+                    class="form-control" placeholder="{{ __('seller_messages.enter_brand_name') }}" name="other_en"
                     value="{{ $product_details->other_en }}">
                 <p class="text-danger" id="error-other_en"></p>
             </div>
             <div class="sub-form col-lg-6 col-md-6 " id="other-field1" style="display:none;">
                 <div class="label-flex">
-                    <label>Other</label>
-                    <span>In Arabic</span>
+                    <label>{{ __('seller_messages.other') }}</label>
+                    <span>{{ __('seller_messages.in_arabic') }}</span>
                 </div>
                 <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                    class="form-control" placeholder="Enter Brand name" name="other_ar"
+                    class="form-control" placeholder="{{ __('seller_messages.enter_brand_name') }}" name="other_ar"
                     value="{{ $product_details->other_en }}">
 
                 <p class="text-danger" id="error-other_ar"></p>
@@ -155,30 +170,30 @@ $product_Variation_inside_count = 0;
 
             <div class="sub-form col-lg-6 col-md-6">
                 <div class="label-flex">
-                    <label>Product Name</label>
-                    <span>In English</span>
+                    <label>{{ __('seller_messages.product_name') }}</label>
+                    <span>{{ __('seller_messages.in_english') }}</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_en"
-                    value="{{ $product_details->product_name_en }}">
+                <input type="text" class="form-control" placeholder="{{ __('seller_messages.enter_product_name') }}"
+                    name="product_name_en" value="{{ $product_details->product_name_en }}">
                 <p class="text-danger" id="error-product_name_en"></p>
             </div>
 
             <div class="sub-form col-lg-6 col-md-6">
                 <div class="label-flex">
-                    <label>Product Name</label>
-                    <span>In Arabic</span>
+                    <label>{{ __('seller_messages.product_name') }}</label>
+                    <span>{{ __('seller_messages.in_arabic') }}</span>
                 </div>
                 <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                    class="form-control" placeholder="Enter Product name" name="product_name_ar"
-                    value="{{ $product_details->product_name_ar }}">
+                    class="form-control" placeholder="{{ __('seller_messages.enter_product_name') }}"
+                    name="product_name_ar" value="{{ $product_details->product_name_ar }}">
 
                 <p class="text-danger" id="error-product_name_ar"></p>
             </div>
 
             <div class="sub-form col-lg-6 col-md-6">
                 <div class="label-flex">
-                    <label>Description</label>
-                    <span>In English</span>
+                    <label>{{ __('seller_messages.description') }}</label>
+                    <span>{{ __('seller_messages.in_english') }}</span>
                 </div>
                 <textarea rows="4" placeholder="Write Here" class="form-control"
                     name="description_en"> {{ $product_details->description_en }}</textarea>
@@ -194,8 +209,8 @@ $product_Variation_inside_count = 0;
 
             <div class="sub-form col-lg-6 col-md-6">
                 <div class="label-flex">
-                    <label>Description</label>
-                    <span>In Arabic</span>
+                    <label>{{ __('seller_messages.description') }}</label>
+                    <span>{{ __('seller_messages.in_arabic') }}</span>
                 </div>
                 <textarea rows="4" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
                     placeholder="Write Here" class="form-control"
@@ -207,7 +222,7 @@ $product_Variation_inside_count = 0;
         </div>
 
         <div class="mt-3 d-flex justify-content-between py-3">
-            <div class="title24">Specifications</div>
+            <div class="title24">{{ __('seller_messages.specifications') }}</div>
             <div class="sep-icon" id="addmore">
                 <img src="{{ asset('/dealer') }}/assets/img/add.svg" alt="add">
             </div>
@@ -222,13 +237,14 @@ $product_Variation_inside_count = 0;
                         <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Name</label>
-                                    <span>In English</span>
+                                    <label>{{ __('seller_messages.name') }}</label>
+                                    <span>{{ __('seller_messages.in_english') }}</span>
+
                                 </div>
                                 <input type="text"
                                     oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                                    class="form-control" placeholder="Enter product name" name="product_spe_en[]"
-                                    value="{{ $item->name_en }}">
+                                    class="form-control" placeholder="{{ __('seller_messages.enter_product_name') }}"
+                                    name="product_spe_en[]" value="{{ $item->name_en }}">
 
                                 <p id="error-product_spe_en_{{ $specification_count }}" class="text-danger"></p>
 
@@ -241,8 +257,9 @@ $product_Variation_inside_count = 0;
                             <div class="append-flex">
                                 <div class="sub-form">
                                     <div class="label-flex">
-                                        <label>Name</label>
-                                        <span>In Arabic</span>
+                                        <label>{{ __('seller_messages.name') }}</label>
+                                        <span>{{ __('seller_messages.in_arabic') }}</span>
+
                                     </div>
                                     <input type="text"
                                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
@@ -260,12 +277,13 @@ $product_Variation_inside_count = 0;
                         <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Feature</label>
-                                    <span>In English</span>
+                                    <label>{{ __('seller_messages.feature') }}</label>
+                                    <span>{{ __('seller_messages.in_english') }}</span>
+
                                 </div>
                                 <input type="text"
                                     oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                                    class="form-control" placeholder="Enter product feature"
+                                    class="form-control" placeholder="{{ __('seller_messages.enter_product_feature') }}"
                                     name="product_spe_feature_en[]" value="{{ $item->feature_en }}">
                                 <p class="text-danger" id="error-product_spe_feature_en_{{ $specification_count }}">
                                 </p>
@@ -278,12 +296,14 @@ $product_Variation_inside_count = 0;
                             <div class="append-flex">
                                 <div class="sub-form">
                                     <div class="label-flex">
-                                        <label>Feature</label>
-                                        <span>In Arabic</span>
+                                        <label>{{ __('seller_messages.feature') }}</label>
+                                        <span>{{ __('seller_messages.in_arabic') }}</span>
+
                                     </div>
                                     <input type="text"
                                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                                        class="form-control" placeholder="Enter product feature"
+                                        class="form-control"
+                                        placeholder="{{ __('seller_messages.enter_product_feature') }}"
                                         name="product_spe_feature_ar[]" value="{{ $item->feature_ar }}">
                                     <p class="text-danger" id="error-product_spe_feature_ar_{{ $specification_count }}">
                                     </p>
@@ -320,12 +340,12 @@ $product_Variation_inside_count = 0;
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form product-row">
                             <div class="label-flex">
-                                <label>Colour</label>
+                                <label>{{ __('seller_messages.colour') }}</label>
                             </div>
 
                             <select class="form-select form-control color-select" aria-label="Default select example"
                                 name="color_id[]" rel="0">
-                                <option value="">Select Colour</option>
+                                <option value="">{{ __('seller_messages.select_colour') }}</option>
                                 @foreach ($color as $item1)
                                 <option value="{{ $item1->id }}" @if ($item->color_id == $item1->id) selected
                                     @endif>{{ $item1->name }}
@@ -344,7 +364,8 @@ $product_Variation_inside_count = 0;
                             <label id="uploadLabel"
                                 style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
-                                <div class="mt-3" style="color:#875C3A">Upload Product Images</div>
+                                <div class="mt-3" style="color:#875C3A">
+                                    {{ __('seller_messages.upload_product_images') }}</div>
                                 <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
                                     name="variant_image[{{ $product_Variation_count }}][]"
                                     rel="{{ $product_Variation_count }}">
@@ -379,7 +400,7 @@ $product_Variation_inside_count = 0;
 
                     {{-- Add New Variationc code --}}
                     <div class="mt-3 d-flex justify-content-between py-3">
-                        <div class="title24">Add Variation FDF </div>
+                        <div class="title24">{{ __('seller_messages.add_variation') }} </div>
                         <div class="sep-icon " rel="{{ $product_Variation_count }}">
                             <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation" alt="add"
                                 rel="{{ $product_Variation_count }}">
@@ -402,12 +423,12 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-3">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>Size</label>
+                                                <label>{{ __('seller_messages.size') }}</label>
                                             </div>
 
                                             <select class="form-select form-control" aria-label="Default select example"
                                                 name="size_id[{{ $product_Variation_count }}][]">
-                                                <option value="">Select Size</option>
+                                                <option value="">{{ __('seller_messages.select_size') }}</option>
                                                 @foreach ($size as $item)
                                                 <option value="{{ $item->id }}" @if ($value->size_id == $item->id)
                                                     selected @endif>
@@ -428,7 +449,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-3 remove_Not_in_women_Category">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>Bust</label>
+                                                <label>{{ __('seller_messages.bust') }}</label>
                                             </div>
                                             <input type="number" class="form-control notapplyspace no-zero"
                                                 placeholder="Eg.10" name="bust[{{ $product_Variation_count }}][]"
@@ -443,7 +464,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-3 remove_Not_in_women_Category">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>Waist</label>
+                                                <label>{{ __('seller_messages.waist') }}</label>
                                             </div>
                                             <input type="number" class="form-control notapplyspace no-zero"
                                                 placeholder="Eg.12" name="waist[{{ $product_Variation_count }}][]"
@@ -458,7 +479,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-3 remove_Not_in_women_Category">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>HIP</label>
+                                                <label>{{ __('seller_messages.hip') }}</label>
                                             </div>
                                             <input type="number" class="form-control notapplyspace no-zero"
                                                 placeholder="Eg.14" name="hip[{{ $product_Variation_count }}][]"
@@ -473,7 +494,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-3 remove_Not_in_women_Category">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>Shoulder</label>
+                                                <label>{{ __('seller_messages.shoulder') }}</label>
                                             </div>
                                             <input type="number" class="form-control notapplyspace no-zero"
                                                 placeholder="Eg.16" name="shoulder[{{ $product_Variation_count }}][]"
@@ -488,7 +509,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-3 remove_Not_in_women_Category">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>Sleev Length</label>
+                                                <label>{{ __('seller_messages.sleeve_length') }}</label>
                                             </div>
                                             <input type="number" class="form-control notapplyspace no-zero"
                                                 placeholder="Eg.18"
@@ -504,7 +525,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-3 remove_Not_in_women_Category">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>Length</label>
+                                                <label>{{ __('seller_messages.length') }}</label>
                                             </div>
                                             <input type="number" class="form-control notapplyspace no-zero"
                                                 placeholder="Eg.20" name="length[{{ $product_Variation_count }}][]"
@@ -519,7 +540,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-3">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>Total Stocks</label>
+                                                <label>{{ __('seller_messages.total_stocks') }}</label>
                                             </div>
                                             <input type="number" class="form-control notapplyspace"
                                                 placeholder="Eg.13208"
@@ -535,7 +556,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-3">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>SKU Limit</label>
+                                                <label>{{ __('seller_messages.sku_limit') }}</label>
                                             </div>
                                             <input type="number" class="form-control notapplyspace" placeholder="20019"
                                                 name="sku[{{ $product_Variation_count }}][]" value="{{ $value->sku }}">
@@ -553,7 +574,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-3">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>Actual Price</label>
+                                                <label>{{ __('seller_messages.actual_price') }}</label>
                                             </div>
                                             <input type="number" class="form-control notapplyspace"
                                                 placeholder="Eg. 299.00 KD"
@@ -572,7 +593,7 @@ $product_Variation_inside_count = 0;
 
 
                             <div class="pt-3">
-                                <div class="title24">Discounted Price</div>
+                                <div class="title24">{{ __('seller_messages.discounted_price') }}</div>
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div
@@ -584,7 +605,8 @@ $product_Variation_inside_count = 0;
                                                         id="discount_type_percentage_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
                                                         value="1" @if ($value->discount_type == 1) checked @endif>
                                                     <span class="custom-radio"></span>
-                                                    <span class="radio-label">Percentage</span>
+                                                    <span
+                                                        class="radio-label">{{ __('seller_messages.percentage') }}</span>
                                                 </label>
                                             </div>
                                             <div class="check_radio">
@@ -594,7 +616,8 @@ $product_Variation_inside_count = 0;
                                                         id="discount_type_fixed_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
                                                         value="2" @if ($value->discount_type == 2) checked @endif>
                                                     <span class="custom-radio"></span>
-                                                    <span class="radio-label">Fixed Price</span>
+                                                    <span
+                                                        class="radio-label">{{ __('seller_messages.fixed_price') }}</span>
                                                 </label>
                                             </div>
 
@@ -608,7 +631,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-6 col-md-6">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>Percentage</label>
+                                                <label>{{ __('seller_messages.percentage') }}</label>
                                             </div>
                                             <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
                                                 name="discount_value[{{ $product_Variation_count }}][]"
@@ -624,7 +647,7 @@ $product_Variation_inside_count = 0;
                                     <div class="col-lg-6 col-md-6">
                                         <div class="sub-form">
                                             <div class="label-flex">
-                                                <label>Final Price</label>
+                                                <label>{{ __('seller_messages.final_price') }}</label>
                                             </div>
                                             <input type="text" class="form-control notapplyspace"
                                                 placeholder="Eg. 299.00 KD"
@@ -640,7 +663,8 @@ $product_Variation_inside_count = 0;
                             </div>
                             @if($count_Variation_Button > 0 )
                             <div class="d-flex justify-content-end">
-                                <div class="remove-btn22"><i class="bi bi-x"></i> Remove </div>
+                                <div class="remove-btn22"><i class="bi bi-x"></i> {{ __('seller_messages.remove') }}
+                                </div>
                             </div>
                             @endif
 
@@ -658,7 +682,7 @@ $product_Variation_inside_count = 0;
                         {{-- Other Variation show End Here --}}
 
                         @if($count_Variation_ButtonMain > 0 )
-                        <div class="removerow"><i class="bi bi-x"></i> Remove</div>
+                        <div class="removerow"><i class="bi bi-x"></i> {{ __('seller_messages.remove') }}</div>
                         @endif
 
                     </div>
@@ -684,7 +708,8 @@ $product_Variation_inside_count = 0;
 
         <div class="row py-3 mt-4">
             <div class="col-lg-12 col-md-12">
-                <button type="button" class="btn cancel-outline w-100 addVariantBtn">Add Another Variant</button>
+                <button type="button"
+                    class="btn cancel-outline w-100 addVariantBtn">{{ __('seller_messages.add_another_variant') }}</button>
             </div>
         </div>
 
@@ -693,7 +718,7 @@ $product_Variation_inside_count = 0;
                 <div class="col-lg-6 col-md-6">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Set Min.cart quantity</label>
+                            <label>{{ __('seller_messages.min_cart_quantity') }}</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
                             name="min_card_quantity" value="{{ $product_details->min_card_quantity }}"
@@ -707,7 +732,7 @@ $product_Variation_inside_count = 0;
                 <div class="col-lg-6 col-md-6">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Set Max.cart quantity</label>
+                            <label>{{ __('seller_messages.max_cart_quantity') }}</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
                             name="max_card_quantity" value="{{ $product_details->max_card_quantity }}"
@@ -725,7 +750,7 @@ $product_Variation_inside_count = 0;
         <div class="pt-3">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Is this product returnable?</div>
+                    <div class="title24">{{ __('seller_messages.product_returnable') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -735,7 +760,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="product_return" value='1'
                                             @if($product_details->product_return == 1) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
@@ -743,7 +768,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="product_return" value='0'
                                             @if($product_details->product_return == 0) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -753,7 +778,7 @@ $product_Variation_inside_count = 0;
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>If Yes,Total days for returning</label>
+                                    <label>{{ __('seller_messages.return_days') }} </label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="return_days"
                                     value="{{ $product_details->return_days }}">
@@ -768,7 +793,7 @@ $product_Variation_inside_count = 0;
             <div class="row">
 
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Is this product Exchangable ?</div>
+                    <div class="title24">{{ __('seller_messages.product_exchangeable') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -778,7 +803,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="product_exchangable" checked value="1"
                                             @if($product_details->product_exchangable == 1) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
@@ -786,7 +811,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="product_exchangable" value="0"
                                             @if($product_details->product_exchangable == 0) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -797,7 +822,7 @@ $product_Variation_inside_count = 0;
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Is this product exchangeable?</label>
+                                    <label>{{ __('seller_messages.product_exchangeable') }}</label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.15 days"
                                     name="exchangable_days" value="{{ $product_details->exchangable_days }}">
@@ -815,7 +840,7 @@ $product_Variation_inside_count = 0;
         <div class="pt-3">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Review & ratings allowed?</div>
+                    <div class="title24">{{ __('seller_messages.review_rating_allowed') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -825,7 +850,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="review_rating" value="1"
                                             @if($product_details->review_rating == 1) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
@@ -833,7 +858,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="review_rating" value="0"
                                             @if($product_details->review_rating == 0) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -841,7 +866,7 @@ $product_Variation_inside_count = 0;
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Affiliated Product?</div>
+                    <div class="title24">{{ __('seller_messages.affiliated_product') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -851,7 +876,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="affiliated_product" checked value="1"
                                             @if($product_details->affiliated_product == 1) checked @endif value="10">
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
@@ -859,7 +884,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="affiliated_product" value="0"
                                             @if($product_details->affiliated_product == 0) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -874,7 +899,7 @@ $product_Variation_inside_count = 0;
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Affiliated product commision</label>
+                                    <label>{{ __('seller_messages.affiliated_commission') }}</label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.0 to 100"
                                     name="affiliated_commission" max="100" min="0" value="10">
@@ -886,7 +911,7 @@ $product_Variation_inside_count = 0;
 
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Customized products?</div>
+                    <div class="title24">{{ __('seller_messages.customized_product') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -896,7 +921,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="customized_product" value="1"
                                             @if($product_details->customized_product == 1) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
@@ -904,7 +929,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="customized_product" value="0"
                                             @if($product_details->customized_product == 0) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -912,7 +937,7 @@ $product_Variation_inside_count = 0;
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Ready to ship?</div>
+                    <div class="title24">{{ __('seller_messages.ready_to_ship') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -922,7 +947,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="ready_to_ship" value="1"
                                             @if($product_details->ready_to_ship == 1) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
@@ -930,7 +955,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="ready_to_ship" value="0"
                                             @if($product_details->ready_to_ship == 0) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -938,7 +963,7 @@ $product_Variation_inside_count = 0;
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <div class="title24">Cash on delivery allowed?</div>
+                    <div class="title24">{{ __('seller_messages.cash_on_delivery') }}</div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div
@@ -948,7 +973,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="cash_on_delivery" value="1"
                                             @if($product_details->cash_on_delivery == 1) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">Yes</span>
+                                        <span class="radio-label">{{ __('seller_messages.yes') }}</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
@@ -956,7 +981,7 @@ $product_Variation_inside_count = 0;
                                         <input type="radio" name="cash_on_delivery" value="0"
                                             @if($product_details->cash_on_delivery == 0) checked @endif>
                                         <span class="custom-radio"></span>
-                                        <span class="radio-label">No</span>
+                                        <span class="radio-label">{{ __('seller_messages.no') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -966,12 +991,12 @@ $product_Variation_inside_count = 0;
             </div>
         </div>
 
-        <div class="title24">Upload Size Chart</div>
+        <div class="title24">{{ __('seller_messages.upload_size_chart') }}</div>
         <div class="product-pnls mt-4">
             <div class="upload-image" style="height:170px; width: 300px;">
                 <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.7rem; ">
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:60px;">
-                    <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
+                    <div class="py-2" style="color:#875C3A">{{ __('seller_messages.upload_size_chart') }}</div>
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
                         name="upload_size_chart">
                 </label>
@@ -1029,8 +1054,8 @@ $product_Variation_inside_count = 0;
 
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
-                onclick="location.href='{{ route('seller.view_product', Request()->id) }}'">Cancel</button>
-            <button type="submit" class="btn add-fillbtn w-100">Save Changes</button>
+                onclick="location.href='{{ route('seller.view_product', Request()->id) }}'">{{ __('seller_messages.cancel') }}</button>
+            <button type="submit" class="btn add-fillbtn w-100">{{ __('seller_messages.Save_Changes') }} </button>
 
 
         </div>
@@ -1171,10 +1196,11 @@ $("#addmore").click(function() {
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Name</label>
-                        <span>In English</span>
+                        <label>{{ __('seller_messages.name') }}</label>
+                        <span>{{ __('seller_messages.in_english') }}</span>
+                   
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter product name" name="product_spe_en[]" value="">
+                    <input type="text" class="form-control" placeholder="{{ __('seller_messages.enter_product_name') }}" name="product_spe_en[]" value="">
                 <p class="text-danger" id="error-product_spe_en_${specification_count}"></p>
 
              </div>
@@ -1185,10 +1211,11 @@ $("#addmore").click(function() {
                 <div class="append-flex">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Name</label>
-                            <span>In Arabic</span>
+                             <label>{{ __('seller_messages.name') }}</label>
+                            <span>{{ __('seller_messages.in_arabic') }}</span>
+                     
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter product name" name="product_spe_ar[]" value="">
+                        <input type="text" class="form-control" placeholder="{{ __('seller_messages.enter_product_name') }}" name="product_spe_ar[]" value="">
                     <p class="text-danger" id="error-product_spe_ar_${specification_count}"></p>
 
                         </div>
@@ -1200,10 +1227,10 @@ $("#addmore").click(function() {
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Feature Name</label>
-                        <span>In English</span>
+                       <label>{{ __('seller_messages.feature') }}</label>
+                        <span>{{ __('seller_messages.in_english') }}</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter product feature" name="product_spe_feature_en[]" value="">
+                    <input type="text" class="form-control" placeholder="{{ __('seller_messages.enter_product_feature') }}" name="product_spe_feature_en[]" value="">
                 <p class="text-danger" id="error-product_spe_feature_en_${specification_count}"></p>
            
                     </div>
@@ -1212,10 +1239,10 @@ $("#addmore").click(function() {
                 <div class="append-flex">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Feature</label>
-                            <span>In Arabic</span>
+                              <label>{{ __('seller_messages.feature') }}</label>
+                            <span>{{ __('seller_messages.in_arabic') }}</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter product feature" name="product_spe_feature_ar[]" value="">
+                        <input type="text" class="form-control" placeholder="{{ __('seller_messages.enter_product_feature') }}" name="product_spe_feature_ar[]" value="">
                     <p class="text-danger" id="error-product_spe_feature_ar_${specification_count}"></p>
 
                         </div>
@@ -1224,7 +1251,7 @@ $("#addmore").click(function() {
             </div>
         </div>
         <div class="d-flex justify-content-end">
-            <div class="remove-btn"><i class="bi bi-x"></i> Remove </div>
+            <div class="remove-btn"><i class="bi bi-x"></i> {{ __('seller_messages.remove') }} </div>
         </div>
         </div>
        `)
@@ -1276,7 +1303,7 @@ $(".addVariantBtn").click(function() {
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                        <div class="mt-3">Upload Product Images</div>
+                        <div class="mt-3">{{ __('seller_messages.upload_product_images') }}</div>
                         <input type="file" accept="image/*" multiple name="variant_image[${product_Variation_count}][]" style="opacity:0;" rel="${product_Variation_count}">
                     </label>
 
@@ -1291,10 +1318,10 @@ $(".addVariantBtn").click(function() {
                 <div class="col-lg-3 col-md-3">
                     <div class="sub-form product-row">
                         <div class="label-flex">
-                            <label>Colour</label>
+                            <label>{{ __('seller_messages.colour') }}</label>
                         </div>
                         <select class="form-select form-control color-select" aria-label="Default select example" name="color_id[]" rel="${product_Variation_count}">
-                            <option value="">Select Colour</option>
+                            <option value="">{{ __('seller_messages.select_colour') }}</option>
                             @foreach ($color as $item)
                                 <option value="{{ $item->id }}"">{{ $item->name }}</option>
                             @endforeach
@@ -1307,7 +1334,7 @@ $(".addVariantBtn").click(function() {
             
                   {{-- Add New Variationc code --}}
              <div class="mt-3 d-flex justify-content-between py-2 align-items-center">
-            <div class="title24">Add Variation </div>
+            <div class="title24">{{ __('seller_messages.add_variation') }} </div>
             <div class="sep-icon" rel="${product_Variation_count}">
                 <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation" alt="add" rel="${product_Variation_count}">
             </div>
@@ -1322,11 +1349,11 @@ $(".addVariantBtn").click(function() {
                 <div class="col-lg-3">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Size</label>
+                            <label>{{ __('seller_messages.size') }}</label>
                         </div>
 
                         <select class="form-select form-control" aria-label="Default select example" name="size_id[${product_Variation_count}][]">
-                               <option value="">Select Size</option>
+                               <option value="">{{ __('seller_messages.select_size') }}</option>
                            
                             @foreach ($size as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -1344,7 +1371,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Bust</label>
+                                <label>{{ __('seller_messages.bust') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.10" name="bust[${product_Variation_count}][]">
                           <p class="text-danger" id="error-bust_${product_Variation_count}_0"></p>
@@ -1355,7 +1382,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Waist</label>
+                                <label>{{ __('seller_messages.waist') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.12" name="waist[${product_Variation_count}][]">
                           <p class="text-danger" id="error-waist_${product_Variation_count}_0"></p>
@@ -1366,7 +1393,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>HIP</label>
+                                <label>{{ __('seller_messages.hip') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.14" name="hip[${product_Variation_count}][]">
                           <p class="text-danger" id="error-hip_${product_Variation_count}_0"></p>
@@ -1377,7 +1404,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Shoulder</label>
+                                <label>{{ __('seller_messages.shoulder') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.16" name="shoulder[${product_Variation_count}][]">
                           <p class="text-danger" id="error-shoulder_${product_Variation_count}_0"></p>
@@ -1389,7 +1416,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Sleev Length</label>
+                                <label>{{ __('seller_messages.sleeve_length') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.18" name="sleeve_length[${product_Variation_count}][]">
                           <p class="text-danger" id="error-sleeve_length_${product_Variation_count}_0"></p>
@@ -1400,7 +1427,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Length</label>
+                                <label>{{ __('seller_messages.length') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.20" name="length[${product_Variation_count}][]" >
                           <p class="text-danger" id="error-length_${product_Variation_count}_0"></p>
@@ -1411,7 +1438,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Total Stocks</label>
+                                <label>{{ __('seller_messages.total_stocks') }}</label>
                             </div>
                             <input type="number" class="form-control" placeholder="Eg.13208" name="total_stock[${product_Variation_count}][]" >
                           <p class="text-danger" id="error-total_stock_${product_Variation_count}_0"></p>
@@ -1422,7 +1449,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>SKU Limit </label>
+                                 <label>{{ __('seller_messages.sku_limit') }} </label>
                             </div>
                             <input type="number" class="form-control" placeholder="20019" name="sku[${product_Variation_count}][]">
                           <p class="text-danger" id="error-sku_${product_Variation_count}"></p>
@@ -1436,7 +1463,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Actual Price</label>
+                                 <label>{{ __('seller_messages.actual_price') }}</label>
                             </div>
                             <input type="number"  id="actualprice_${product_Variation_count}_0" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[${product_Variation_count}][]">
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}_0"></p>
@@ -1448,7 +1475,7 @@ $(".addVariantBtn").click(function() {
 
 
             <div class="pt-3">
-                <div class="title24">Discounted Price</div>
+               <div class="title24">{{ __('seller_messages.discounted_price') }}</div>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
@@ -1456,14 +1483,14 @@ $(".addVariantBtn").click(function() {
                                 <label class="radio-group">
                                     <input type="radio" id="discount_type_percentage_${product_Variation_count}_0" name="discount_type[${product_Variation_count}][0]" value="1" checked>
                                     <span class="custom-radio"></span>
-                                    <span class="radio-label">Percentage</span>
+                                    <span class="radio-label">{{ __('seller_messages.percentage') }}</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" id="discount_type_fixed_${product_Variation_count}_0" name="discount_type[${product_Variation_count}][0]" value="2">
                                     <span class="custom-radio"></span>
-                                    <span class="radio-label">Fixed Price</span>
+                                    <span class="radio-label">{{ __('seller_messages.fixed_price') }}</span>
                                 </label>
                             </div>
                             
@@ -1475,7 +1502,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Percentage</label>
+                                 <label>{{ __('seller_messages.percentage') }}</label>
                             </div>
                            <input type="number" id="discount_value_${product_Variation_count}_0" class="form-control" placeholder="Eg.10%" name="discount_value[${product_Variation_count}][]">
                           <p class="text-danger" id="error-discount_value_${product_Variation_count}_0"></p>
@@ -1486,7 +1513,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Final Price</label>
+                               <label>{{ __('seller_messages.final_price') }}</label>
                             </div>
                             <input type="number" id="final_price_${product_Variation_count}_0" class="form-control" placeholder="Eg.KD 299.00" name="final_price[${product_Variation_count}][]">
                           <p class="text-danger" id="error-final_price_${product_Variation_count}_0"></p>
@@ -1497,7 +1524,7 @@ $(".addVariantBtn").click(function() {
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <div class="removerow"><i class="bi bi-x"></i> Remove </div>
+                <div class="removerow"><i class="bi bi-x"></i> {{ __('seller_messages.remove') }} </div>
             </div>
 
             </div>
@@ -1650,7 +1677,8 @@ function catgoryFunction(val) {
 
                 var subcatgory_record = data.data;
 
-                var htmlcontent = ' <option value="">Select Sub Category</option>';
+                var htmlcontent = " <option value="
+                ">{{ __('seller_messages.Select_Sub_Category') }} </option>";
 
                 let selectedCategoryId = "{{ $product_details->subcategory_id }}";
 
@@ -1659,7 +1687,16 @@ function catgoryFunction(val) {
                     let selected = (item.id == selectedCategoryId) ? "selected" : "";
 
                     htmlcontent +=
-                        `<option value="${item.id}" ${selected}>${item.name_english} </option>`;
+                        `<option value="${item.id}" ${selected}>
+                        
+                         @if(App::getLocale()=='en')
+                        ${item.name_english} 
+                        @else 
+                            ${item.name_arabic} 
+
+                        @endif
+
+                        </option>`;
                 })
 
                 $('#getSubcategry').empty();

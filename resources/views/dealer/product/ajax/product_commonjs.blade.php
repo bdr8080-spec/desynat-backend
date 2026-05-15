@@ -1,61 +1,61 @@
 <script>
-    // Remove 0 in women catgeory and other inout field
+// Remove 0 in women catgeory and other inout field
 
-    document.querySelectorAll('.no-zero').forEach(function(input) {
+document.querySelectorAll('.no-zero').forEach(function(input) {
 
-        // Remove leading zero(s)
-        input.addEventListener('input', function() {
-            if (this.value.startsWith('0')) {
-                this.value = this.value.replace(/^0+/, '');
-            }
-        });
-
-        // Prevent typing "0" as first character
-        input.addEventListener('keydown', function(e) {
-            if (e.key === '0' && this.selectionStart === 0) {
-                e.preventDefault();
-            }
-        });
-
+    // Remove leading zero(s)
+    input.addEventListener('input', function() {
+        if (this.value.startsWith('0')) {
+            this.value = this.value.replace(/^0+/, '');
+        }
     });
 
-
-    // add More Variation inside Product Size
-
-
-
-    // Add another sub Variation
-
-    $(document).on("click", ".addmoreVariation", function() {
-
-
-        let variation_id = $(this).attr("rel");
-
-        if (variation_id == 0) {
-            var count_variation = document.querySelectorAll('.inside_variation' + variation_id).length - 1;
-            count_variation = count_variation + 1;
-        } else {
-
-            var count_variation = document.querySelectorAll('.inside_variation' + variation_id).length;
-            count_variation = count_variation + 1;
-
+    // Prevent typing "0" as first character
+    input.addEventListener('keydown', function(e) {
+        if (e.key === '0' && this.selectionStart === 0) {
+            e.preventDefault();
         }
+    });
+
+});
 
 
-        if (variation_id == 0) {
+// add More Variation inside Product Size
 
-            var data1 = $(".subvariant");
 
-        } else {
 
-            var data1 = $(`#variant_image_id${variation_id}`).closest(".variant-panel-bg").find(
-                ".inside_variation")
+// Add another sub Variation
 
-        }
+$(document).on("click", ".addmoreVariation", function() {
 
-        console.log(data1);
 
-        data1.append(`
+    let variation_id = $(this).attr("rel");
+
+    if (variation_id == 0) {
+        var count_variation = document.querySelectorAll('.inside_variation' + variation_id).length - 1;
+        count_variation = count_variation + 1;
+    } else {
+
+        var count_variation = document.querySelectorAll('.inside_variation' + variation_id).length;
+        count_variation = count_variation + 1;
+
+    }
+
+
+    if (variation_id == 0) {
+
+        var data1 = $(".subvariant");
+
+    } else {
+
+        var data1 = $(`#variant_image_id${variation_id}`).closest(".variant-panel-bg").find(
+            ".inside_variation")
+
+    }
+
+    console.log(data1);
+
+    data1.append(`
 
        <div class="inside_variation${variation_id} p-2 mt-4 newvariant subpanel" style="background:#fff7ea; background: #fff; border: 1px dashed #0d0606;
         border-radius: 10px; box-shadow: 0px 2px 4px #ddd;">
@@ -64,10 +64,10 @@
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Size</label>
+                                <label>{{ __('seller_messages.select_size') }}</label>
                             </div>
                             <select class="form-select form-control" aria-label="Default select example" name="size_id[${variation_id}][]">
-                                <option value="">Select Size</option>
+                                <option value="">{{ __('seller_messages.size') }}</option>
                                 @foreach ($size as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -79,7 +79,7 @@
                       <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Bust</label>
+                                    <label>{{ __('seller_messages.bust') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.10"
                                     name="bust[${variation_id}][]">
@@ -90,7 +90,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Waist</label>
+                                    <label>{{ __('seller_messages.waist') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.12"
                                     name="waist[${variation_id}][]">
@@ -102,7 +102,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>HIP</label>
+                                    <label>{{ __('seller_messages.hip') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14"
                                     name="hip[${variation_id}][]">
@@ -114,7 +114,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Shoulder</label>
+                                    <label>{{ __('seller_messages.shoulder') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.16"
                                     name="shoulder[${variation_id}][]">
@@ -126,7 +126,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Sleev Length</label>
+                                    <label>{{ __('seller_messages.sleeve_length') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.18"
                                     name="sleeve_length[${variation_id}][]">
@@ -138,7 +138,7 @@
                         <div class="col-lg-3 remove_Not_in_women_Category">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>Length</label>
+                                    <label>{{ __('seller_messages.length') }}</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.20"
                                     name="length[${variation_id}][]">
@@ -153,7 +153,7 @@
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Total Stocks</label>
+                                <label>{{ __('seller_messages.total_stocks') }}</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.13208" name="total_stock[${variation_id}][]">
 
@@ -163,7 +163,7 @@
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>SKU Limit</label>
+                                <label>{{ __('seller_messages.sku_limit') }}</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="20019" name="sku[${variation_id}][]">
                             <p class="text-danger" id="error-sku_${variation_id}_${count_variation}"></p>
@@ -172,7 +172,7 @@
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Actual Price</label>
+                                <label>{{ __('seller_messages.actual_price') }}</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="actual_price[${variation_id}][]" id="actualprice_${variation_id}_${count_variation}">
                             <p class="text-danger" id="error-actual_price_${variation_id}_${count_variation}"></p>
@@ -182,7 +182,7 @@
             </div
 
             <div class="pt-3">
-                <div class="title24">Discounted Price</div>
+                <div class="title24">{{ __('seller_messages.discounted_price') }}</div>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
@@ -190,14 +190,14 @@
                                 <label class="radio-group">
                                     <input type="radio" name="discount_type[${variation_id}][${count_variation}]" id="discount_type_percentage_${variation_id}_${count_variation}" checked value="1">
                                     <span class="custom-radio"></span>
-                                    <span class="radio-label">Percentage</span>
+                                    <span class="radio-label">{{ __('seller_messages.percentage') }}</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" name="discount_type[${variation_id}][${count_variation}]" id="discount_type_fixed_${variation_id}_${count_variation}" value="2">
                                     <span class="custom-radio"></span>
-                                    <span class="radio-label">Fixed Price</span>
+                                    <span class="radio-label">{{ __('seller_messages.fixed_price') }}</span>
                                 </label>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Percentage</label>
+                                <label>{{ __('seller_messages.percentage') }}</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.10%" name="discount_value[${variation_id}][]" id="discount_value_${variation_id}_${count_variation}">
                             <p class="text-danger" id="error-discount_value_${variation_id}_${count_variation}"></p>
@@ -216,31 +216,31 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Final Price</label>
+                                <label>{{ __('seller_messages.final_price') }}</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="final_price[${variation_id}][]" id="final_price_${variation_id}_${count_variation}">
                             <p class="text-danger" id="error-final_price_${variation_id}_${count_variation}"></p>
                         </div>
                     </div>
                 </div>
-                    <div class="remove-btn22 " style="margin-left:90%;color: red;"><i class="bi bi-x"></i> Remove</div>
+                    <div class="remove-btn22 " style="margin-left:90%;color: red;"><i class="bi bi-x"></i> {{ __('seller_messages.remove') }}</div>
             </div>
         </div>
 
     `);
 
 
-        var checked_category = $("input[name='category_id']:checked").val();
-        if (checked_category) {
-            remove_Not_in_women_Category(checked_category);
-        }
+    var checked_category = $("input[name='category_id']:checked").val();
+    if (checked_category) {
+        remove_Not_in_women_Category(checked_category);
+    }
 
 
-    });
+});
 
-    // REMOVE ROW
-    $(document).on("click", ".remove-btn22", function() {
+// REMOVE ROW
+$(document).on("click", ".remove-btn22", function() {
 
-        $(this).closest(".subpanel").remove();
-    });
+    $(this).closest(".subpanel").remove();
+});
 </script>
