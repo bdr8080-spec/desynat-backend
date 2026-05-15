@@ -53,6 +53,9 @@ require __DIR__.'/deliveryboy_api.php';
 
 
 
+ Route::post('/socialSignup', [AuthController::class, 'socialSignup']);
+
+
 
 // User APi M1
 Route::post('/register',[AuthController::class,'register']);

@@ -278,9 +278,83 @@ class AuthController extends Controller
 
     
 
-    
+    public function socialSignup(Request $req)
+    {
+        try {
+            $validator = Validator::make($req->all(), [
+                // 'name' => 'required',
+                // 'device_type' => 'required|integer|digits_between:1,2',
+                // 'device_token' => 'required',
+                'unique_id' => 'required',
+                'socialType' => 'required|integer',
+                // 'profile_image' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['message' => $validator->errors()->first()], 403);
+            }
+
+            // Check if the user already exists based on unique_id (socialId)
+            $isLogin = User::where('unique_id', $req->unique_id)->first();
+            // If the user does not exist, create the user
+            if (! $isLogin) {
+                $userDetails = [
+                    'full_name' => $req->full_name,
+                    'email' => $req->email,
+                    'device_token' => $req->device_token,
+                    'device_type' => $req->device_type,
+                    'unique_id' => $req->unique_id,
+                    'socialType' => $req->socialType,
+                    'otp_verify' => 1,
+                    'profile_image' => $req->profile_image ?: null,
+                    'latitude' => $request->latitude ?? null,
+                    'longitude' => $request->longitude ?? null,
+
+                ];
+
+                $newUser = User::create($userDetails);
+
+                // Check if the user was successfully created
+                if ($newUser) {
+                    // After creating the new user, generate a token
+                    $newUser->access_token = $newUser->createToken('user-token', ['user'])->plainTextToken;
 
 
+                    return ApiResponse::generateResponse('success',  __('user_messages.login_success'), $newUser, 200);
+
+  
+
+                } else {
+                    return ApiResponse::generateResponse('success', __('messages_Sorry_Unable_to_create_Profile'), '', 403);
+                }
+            }
+
+            // If the user exists, generate a token for the existing user
+
+            // Update the user's device details
+            $updateDetails = [
+                'email' => $req->email ?: 'null',
+                'device_token' => $req->device_token,
+                'device_type' => $req->device_type,
+                'social_type' => $req->socialType,
+                'otp_verify' => 1,
+                'latitude' => $request->latitude ?? null,
+                'longitude' => $request->longitude ?? null,
+                'profile_image' => $req->profile_image ?: null,
+            ];
+
+            // Update the user and return the response
+            $isLogin->update($updateDetails);
+            $isLogin->access_token = $isLogin->createToken('user-token', ['user'])->plainTextToken;
+
+            return ApiResponse::generateResponse('success',  __('user_messages.login_success'), $isLogin, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Error: ' . $e->getMessage(),
+            ]);
+        }
+    }
       
 
 
