@@ -316,7 +316,7 @@ class CountryService
             if ($zones->isEmpty()) {
                 return [
                     'status' => 'success',
-                    $message = __('Service_messages.no_data_found'),
+                    'message' => __('Service_messages.no_data_found'),
                     'data' => (object) []
                 ];
             }
