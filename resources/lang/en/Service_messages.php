@@ -222,6 +222,9 @@ return [
   'old_password_incorrect' => 'Old password is incorrect',
   'new_password_should_not_be_same_as_old_password' => 'New password should not be the same as old password',
 
+
+  'otp_sent_successfully' => 'OTP sent successfully.',
+
   //seller banner service
   'banner_created_successfully' => 'Banner created successfully',
   'wait_for_admin_to_verify_banner' => 'Please wait for the admin to verify your banner',
