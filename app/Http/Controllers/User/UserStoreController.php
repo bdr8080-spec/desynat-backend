@@ -39,17 +39,17 @@ class UserStoreController extends Controller
 
        $request_data=(object)[
         'category_id'=>$id,
+        'subcategory'=>$request->subcategory,
         'search'=>$request->search,
         'rating'=>$request->rating,
         'availbility'=>$request->availability,
         'shortest_delivery'=>$request->shortest_delivery,
         'highest_sale'=>$request->highest_sale
        ];
-       
-       
+              
 
        $store_data=$this->UserManagementService->getStoreWithCatgory($request_data);
-
+       
        $store_data=$store_data['data'];
 
        //dd($store_data);

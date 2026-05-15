@@ -3,7 +3,7 @@
 @section('content')
 
 @php
-    $currency = session('currency', 'KWD');
+$currency = session('currency', 'KWD');
 
 @endphp
 
@@ -37,15 +37,16 @@
     <div class="row">
         @forelse ($subCategory as $item)
         <div class="col-lg-4 col-md-4 col-6 my-lg-3 my-2 text-center">
-            <a class="category_detail" href="{{ route('user.category_wise_store', $item->category_id) }}">
+            <a class="category_detail"
+                href="{{ route('user.category_wise_store', $item->category_id) }}?subcategory={{$item->id}} ">
                 <div class="categorie_cotent">
                     <div class="categorie_cotent-img">
                         <img src="{{ $item->image }}" class="img-fluid" />
                     </div>
                     @if(app()->getLocale() == 'en')
-                        <h3 class="mt-3">{{ $item->name_english }}</h3>
+                    <h3 class="mt-3">{{ $item->name_english }}</h3>
                     @else
-                        <h3 class="mt-3">{{ $item->name_arabic }}</h3>
+                    <h3 class="mt-3">{{ $item->name_arabic }}</h3>
                     @endif
                 </div>
             </a>
@@ -66,22 +67,23 @@
             @foreach($stores as $store)
             <div class="item">
                 <div class="suggestStore_content">
-                    <a href="{{ route('user.store_details', $store->id) }}" style="text-decoration:none; color:inherit;">
-                    <div class="suggestedStore_img">
-                        <img src="{{ $store->store_image }}" class="img-fluid circle-image"
-                            alt="{{ $store->store_name }}" />
-                    </div>
+                    <a href="{{ route('user.store_details', $store->id) }}"
+                        style="text-decoration:none; color:inherit;">
+                        <div class="suggestedStore_img">
+                            <img src="{{ $store->store_image }}" class="img-fluid circle-image"
+                                alt="{{ $store->store_name }}" />
+                        </div>
                     </a>
                     <h5>{{ $store->store_name }}</h5>
                 </div>
             </div>
             @endforeach
 
-         
+
         </div>
 
     </div>
-  
+
 </div>
 
 
@@ -93,70 +95,70 @@
 
         <div class="item">
             <div class="product-card blacktitle">
-              
-                    <div class="product-img">
-                        <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+
+                <div class="product-img">
+                    <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
                         @if ($key != 0)
                         @php break @endphp
                         @endif
-                        <img  style="z-index:-99" src="{{ $val1 }}" alt="Product">
+                        <img style="z-index:-99" src="{{ $val1 }}" alt="Product">
                         @endforeach
-                        </a>
+                    </a>
 
-                        @if (Auth::guard('web')->user())
-                        <span class="wishlist-btn" style="cursor: pointer;"><i style="cursor: pointer;"
-                                class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
-                                onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
-                        @else
-                        <a class="wishlist-btn text-decoration-underline" style="cursor: pointer;" href="{{route('userLogin')}}">
-                            <i class="fa-regular fa-heart" style="cursor: pointer;"></i>
-                        </a>
-                        @endif
+                    @if (Auth::guard('web')->user())
+                    <span class="wishlist-btn" style="cursor: pointer;"><i style="cursor: pointer;"
+                            class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                            onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
+                    @else
+                    <a class="wishlist-btn text-decoration-underline" style="cursor: pointer;"
+                        href="{{route('userLogin')}}">
+                        <i class="fa-regular fa-heart" style="cursor: pointer;"></i>
+                    </a>
+                    @endif
 
-                        <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
-                                src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                    
-                    </div>
+                    <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
+                            src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
 
-                      <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+                </div>
+
+                <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                     <div class="product-content">
                         @if(app()->getLocale() == 'en')
-                        <h5>{{ $item->product_name_en }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
+                        <h5>{{ $item->product_name_en }}@if(!empty($item->store))({{$item->store->store_name}})@endif
+                        </h5>
                         @else
-                        <h5>{{ $item->product_name_ar }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
+                        <h5>{{ $item->product_name_ar }}@if(!empty($item->store))({{$item->store->store_name}})@endif
+                        </h5>
                         @endif
                         <div class="rating">
                             @php
-                                $rating = $item->product_avg_rating ?? 0;
-                                $fullStars = floor($rating);
-                                $hasHalfStar = ($rating - $fullStars) >= 0.5;
-                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                            $rating = $item->product_avg_rating ?? 0;
+                            $fullStars = floor($rating);
+                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                            $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
                             @endphp
 
                             @if($rating > 0)
 
-                                @for($i = 0; $i < $fullStars; $i++)
-                                    <i class="fa-solid fa-star"></i>
+                            @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
                                 @endfor
 
                                 @if($hasHalfStar)
-                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
                                 @endif
 
-                                @for($i = 0; $i < $emptyStars; $i++)
-                                    <i class="fa-regular fa-star"></i>
-                                @endfor
+                                @for($i = 0; $i < $emptyStars; $i++) <i class="fa-regular fa-star"></i>
+                                    @endfor
 
-                            @else
+                                    @else
 
-                                @for($i = 0; $i < 5; $i++)
-                                    <i class="fa-regular fa-star"></i>
-                                @endfor
+                                    @for($i = 0; $i < 5; $i++) <i class="fa-regular fa-star"></i>
+                                        @endfor
 
-                            @endif
+                                        @endif
 
-                            <span>({{ $item->review_count ?? 0 }})</span>
+                                        <span>({{ $item->review_count ?? 0 }})</span>
                         </div>
                         <!-- <div class="price">
                             <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
@@ -167,29 +169,31 @@
                         </div> -->
 
 
-            <div class="price">
-                <strong>
-                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
-                </strong>
+                        <div class="price">
+                            <strong>
+                                {{ $currency }}
+                                {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                            </strong>
 
-                <span class="old-price">
-                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
-                </span>
+                            <span class="old-price">
+                                {{ $currency }}
+                                {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                            </span>
 
-                <span class="discount">
-                {{ $item->product_variants[0]->discount_value }}
-                {{ $item->product_variants[0]->discount_type == '1' ? '% ' . __('user_messages.off') : __('user_messages.off') }}
-                </span>
-            </div>
+                            <span class="discount">
+                                {{ $item->product_variants[0]->discount_value }}
+                                {{ $item->product_variants[0]->discount_type == '1' ? '% ' . __('user_messages.off') : __('user_messages.off') }}
+                            </span>
+                        </div>
 
-            </div>
+                    </div>
                 </a>
             </div>
         </div>
 
         @endforeach
 
-       
+
     </div>
 </section>
 
@@ -226,71 +230,71 @@
 
         <div class="item">
             <div class="product-card blacktitle">
-                   <div class="product-img">
-            
+                <div class="product-img">
+
                     <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
-            
+
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
                         @if ($key != 0)
                         @php break @endphp
                         @endif
-                        <img  style="z-index:-1;" src="{{ $val1 }}" alt="Product">
+                        <img style="z-index:-1;" src="{{ $val1 }}" alt="Product">
                         @endforeach
 
                     </a>
 
-                        @if (Auth::guard('web')->user())
-                        <span class="wishlist-btn" style="cursor: pointer;"><i style=""
-                                class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
-                                onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
-                        @else
-                        <a class="wishlist-btn text-decoration-underline"  style="cursor: pointer;" href="{{route('userLogin')}}">
-                            <i class="fa-regular fa-heart"></i>
-                        </a>
-                        @endif
+                    @if (Auth::guard('web')->user())
+                    <span class="wishlist-btn" style="cursor: pointer;"><i style=""
+                            class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                            onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
+                    @else
+                    <a class="wishlist-btn text-decoration-underline" style="cursor: pointer;"
+                        href="{{route('userLogin')}}">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                    @endif
 
-                        <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
-                                src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                     </div>
-                     <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
-            
+                    <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
+                            src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
+                </div>
+                <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+
                     <div class="product-content">
                         @if(app()->getLocale() == 'en')
-                        <h5>{{ $item->product_name_en }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
+                        <h5>{{ $item->product_name_en }}@if(!empty($item->store))({{$item->store->store_name}})@endif
+                        </h5>
                         @else
-                        <h5>{{ $item->product_name_ar }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
+                        <h5>{{ $item->product_name_ar }}@if(!empty($item->store))({{$item->store->store_name}})@endif
+                        </h5>
                         @endif
                         <div class="rating">
                             @php
-                                $rating = $item->product_avg_rating ?? 0;
-                                $fullStars = floor($rating);
-                                $hasHalfStar = ($rating - $fullStars) >= 0.5;
-                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                            $rating = $item->product_avg_rating ?? 0;
+                            $fullStars = floor($rating);
+                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                            $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
                             @endphp
 
                             @if($rating > 0)
 
-                                @for($i = 0; $i < $fullStars; $i++)
-                                    <i class="fa-solid fa-star"></i>
+                            @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
                                 @endfor
 
                                 @if($hasHalfStar)
-                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
                                 @endif
 
-                                @for($i = 0; $i < $emptyStars; $i++)
-                                    <i class="fa-regular fa-star"></i>
-                                @endfor
+                                @for($i = 0; $i < $emptyStars; $i++) <i class="fa-regular fa-star"></i>
+                                    @endfor
 
-                            @else
+                                    @else
 
-                                @for($i = 0; $i < 5; $i++)
-                                    <i class="fa-regular fa-star"></i>
-                                @endfor
+                                    @for($i = 0; $i < 5; $i++) <i class="fa-regular fa-star"></i>
+                                        @endfor
 
-                            @endif
+                                        @endif
 
-                            <span>({{ $item->review_count ?? 0 }})</span>
+                                        <span>({{ $item->review_count ?? 0 }})</span>
                         </div>
                         <!-- <div class="price">
                             <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
@@ -300,24 +304,26 @@
                             </span>
                         </div> -->
 
-                          <div class="price">
-                <strong>
-                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
-                </strong>
+                        <div class="price">
+                            <strong>
+                                {{ $currency }}
+                                {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                            </strong>
 
-                <span class="old-price">
-                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
-                </span>
+                            <span class="old-price">
+                                {{ $currency }}
+                                {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                            </span>
 
-                <span class="discount">
-                {{ $item->product_variants[0]->discount_value }}
-                {{ $item->product_variants[0]->discount_type == '1' ? '% ' . __('user_messages.off') : __('user_messages.off') }}
-                </span>
-            </div>
+                            <span class="discount">
+                                {{ $item->product_variants[0]->discount_value }}
+                                {{ $item->product_variants[0]->discount_type == '1' ? '% ' . __('user_messages.off') : __('user_messages.off') }}
+                            </span>
+                        </div>
 
                     </div>
                 </a>
-                </div>
+            </div>
         </div>
 
         @endforeach
@@ -359,69 +365,69 @@
 
         <div class="col-lg-3 col-md-4 col-6 my-3">
             <div class="product-card blacktitle">
-                    <div class="product-img">
-                         <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
-           
+                <div class="product-img">
+                    <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+
                         @foreach ($item->product_variants[0]->variant_image as $key => $val1)
                         @if ($key != 0)
                         @php break @endphp
                         @endif
                         <img style="z-index:-99" src="{{ $val1 }}" alt="Product">
                         @endforeach
-                         </a>
+                    </a>
 
-                        @if (Auth::guard('web')->user())
-                        <span class="wishlist-btn" style="cursor: pointer;"><i
-                                class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
-                                onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
-                        @else
-                        <a class="wishlist-btn text-decoration-underline"  style="cursor: pointer;" href="{{route('userLogin')}}">
-                            <i class="fa-regular fa-heart"></i>
-                        </a>
-                        @endif
+                    @if (Auth::guard('web')->user())
+                    <span class="wishlist-btn" style="cursor: pointer;"><i
+                            class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                            onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
+                    @else
+                    <a class="wishlist-btn text-decoration-underline" style="cursor: pointer;"
+                        href="{{route('userLogin')}}">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                    @endif
 
-                        <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
-                                src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
-                      </div>
-                     <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
-           
+                    <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
+                            src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
+                </div>
+                <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+
                     <div class="product-content">
                         @if(app()->getLocale() == 'en')
-                        <h5>{{ $item->product_name_en }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
+                        <h5>{{ $item->product_name_en }}@if(!empty($item->store))({{$item->store->store_name}})@endif
+                        </h5>
                         @else
-                        <h5>{{ $item->product_name_ar }}@if(!empty($item->store))({{$item->store->store_name}})@endif</h5>
+                        <h5>{{ $item->product_name_ar }}@if(!empty($item->store))({{$item->store->store_name}})@endif
+                        </h5>
                         @endif
                         <div class="rating">
                             @php
-                                $rating = $item->product_avg_rating ?? 0;
-                                $fullStars = floor($rating);
-                                $hasHalfStar = ($rating - $fullStars) >= 0.5;
-                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                            $rating = $item->product_avg_rating ?? 0;
+                            $fullStars = floor($rating);
+                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                            $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
                             @endphp
 
                             @if($rating > 0)
 
-                                @for($i = 0; $i < $fullStars; $i++)
-                                    <i class="fa-solid fa-star"></i>
+                            @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
                                 @endfor
 
                                 @if($hasHalfStar)
-                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
                                 @endif
 
-                                @for($i = 0; $i < $emptyStars; $i++)
-                                    <i class="fa-regular fa-star"></i>
-                                @endfor
+                                @for($i = 0; $i < $emptyStars; $i++) <i class="fa-regular fa-star"></i>
+                                    @endfor
 
-                            @else
+                                    @else
 
-                                @for($i = 0; $i < 5; $i++)
-                                    <i class="fa-regular fa-star"></i>
-                                @endfor
+                                    @for($i = 0; $i < 5; $i++) <i class="fa-regular fa-star"></i>
+                                        @endfor
 
-                            @endif
+                                        @endif
 
-                            <span>({{ $item->review_count ?? 0 }})</span>
+                                        <span>({{ $item->review_count ?? 0 }})</span>
                         </div>
                         <!-- <div class="price">
                             <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
@@ -431,24 +437,26 @@
                             </span>
                         </div> -->
 
-                          <div class="price">
-                <strong>
-                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
-                </strong>
+                        <div class="price">
+                            <strong>
+                                {{ $currency }}
+                                {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                            </strong>
 
-                <span class="old-price">
-                {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
-                </span>
+                            <span class="old-price">
+                                {{ $currency }}
+                                {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                            </span>
 
-                <span class="discount">
-                {{ $item->product_variants[0]->discount_value }}
-                {{ $item->product_variants[0]->discount_type == '1' ? '% ' . __('user_messages.off') : __('user_messages.off') }}
-                </span>
-            </div>
+                            <span class="discount">
+                                {{ $item->product_variants[0]->discount_value }}
+                                {{ $item->product_variants[0]->discount_type == '1' ? '% ' . __('user_messages.off') : __('user_messages.off') }}
+                            </span>
+                        </div>
 
                     </div>
                 </a>
-                </div>
+            </div>
         </div>
 
         @endforeach
@@ -553,7 +561,7 @@ function handleSubCategory(id) {
 </script>
 
 <script>
-document.addEventListener('click', function (e) {
+document.addEventListener('click', function(e) {
 
     var shareBtn = e.target.closest('.share-btn');
 
@@ -570,9 +578,9 @@ document.addEventListener('click', function (e) {
         }
 
         if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(link).then(function () {
+            navigator.clipboard.writeText(link).then(function() {
                 toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
-            }).catch(function () {
+            }).catch(function() {
                 fallbackCopy(link);
             });
         } else {
@@ -600,21 +608,21 @@ function fallbackCopy(text) {
 <script src="//code.tidio.co/{{ config('app.TIDIO_KEY') }}.js" async></script>
 
 <script>
-document.addEventListener("tidioChat-ready", function () {
+document.addEventListener("tidioChat-ready", function() {
 
     if (!window.tidioChatApi) return;
 
     @php
-        $user = Auth::guard('web')->user();
-        $fullName = $user ? $user->full_name : 'Guest';
-        $email = $user ? $user->email : 'guest_'.uniqid();
-        $role = $user ? 'user' : 'guest';
+    $user = Auth::guard('web') -> user();
+    $fullName = $user ? $user -> full_name : 'Guest';
+    $email = $user ? $user -> email : 'guest_'.uniqid();
+    $role = $user ? 'user' : 'guest';
     @endphp
 
     const email = "{{ $email }}";
     const role = "{{ $role }}";
     const fullName = "{{ $fullName }}";
-   // console.log(fullName);
+    // console.log(fullName);
 
     const uniqueId = role + "_" + email;
 
@@ -626,11 +634,9 @@ document.addEventListener("tidioChat-ready", function () {
         role: role
     });
 
-    window.tidioChatApi.on("messageFromVisitor", function (event) {
-    });
+    window.tidioChatApi.on("messageFromVisitor", function(event) {});
 
-    window.tidioChatApi.on("messageFromOperator", function (event) {
-    });
+    window.tidioChatApi.on("messageFromOperator", function(event) {});
 
 });
 </script>
