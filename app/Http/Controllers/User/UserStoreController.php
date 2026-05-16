@@ -42,8 +42,7 @@ class UserStoreController extends Controller
         'search'=>$request->search,
         'rating'=>$request->rating,
         'availbility'=>$request->availability,
-        'shortest_delivery'=>$request->shortest_delivery,
-        'highest_sale'=>$request->highest_sale
+        'sort'=>$request->sort,
        ];
        
        

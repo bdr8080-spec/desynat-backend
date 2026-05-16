@@ -285,10 +285,10 @@ class UserManagementService
         try {
 
             if(isset($request->category_id)){
-                      $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
+                      $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
                  ->where('category_id', $request->category_id)->pluck('store_id');
             }else{
-                      $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
+                      $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
                         ->pluck('store_id');
             }
       
@@ -309,12 +309,12 @@ class UserManagementService
             $all_store_information->where('store_name', 'Like', '%'.$request->search.'%');
         }
 
-        if(isset($request->rating)){
-            // $all_store_information->where('store_name', 'Like', '%'.$request->search.'%');
-        }
+        
         if(isset($request->availbility)){
             $all_store_information->where('Store_Availability',$request->availbility);
         }
+
+
 
         $all_store_information=$all_store_information->get();
 
@@ -339,6 +339,53 @@ class UserManagementService
 
             return $store;
         });
+
+        if (!empty($request->rating) && is_array($request->rating)) {
+
+            $maxRating = max(array_map('intval', $request->rating));
+
+            $all_store_information = $all_store_information->filter(function ($store) use ($maxRating) {
+
+                return $store->average_store_rating <= $maxRating;
+
+            })->values();
+        }
+
+        if (!empty($request->sort) && is_array($request->sort)) {
+           //shortest delivery time
+
+            if (in_array('0', $request->sort)) {
+
+                // random order
+                $all_store_information = $all_store_information->shuffle()->values();
+            }
+
+           //highest sale
+            if (in_array('1', $request->sort)) {
+
+                $all_store_information = $all_store_information->map(function ($store) {
+
+                    // get store product ids
+                    $productIds = product::where('store_id', $store->id)
+                        ->pluck('id');
+
+                    // count total sold products
+                    $totalSales = orderdetail::whereIn('product_id', $productIds)
+                        ->where('payment_status', '1')
+                        ->where('delivery_status', '3')
+                        ->count();
+
+                    $store->total_sales_count = $totalSales;
+
+                    return $store;
+                });
+
+                // sort by highest sales count
+                $all_store_information = $all_store_information
+                    ->sortByDesc('total_sales_count')
+                    ->values();
+            }
+        }
 
             return [
                 'status' => 'success',
@@ -395,48 +442,129 @@ class UserManagementService
                 $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
             }
 
+            if (!empty($data->category_id) && is_array($data->category_id)) {
+
+                $products->whereIn('category_id', $data->category_id);
+            }
+
+            if (!empty($data->brand_id) && is_array($data->brand_id)) {
+
+                $products->whereIn('brand_id', $data->brand_id);
+            }
+
+            //price filter
+
+            if (!empty($data->price_min) || !empty($data->price_max)) {
+
+                $products->whereHas('product_variants', function ($query) use ($data) {
+
+                    // minimum price
+                    if (!empty($data->price_min)) {
+                        $query->where('final_price', '>=', $data->price_min);
+                    }
+
+                    // maximum price
+                    if (!empty($data->price_max)) {
+                        $query->where('final_price', '<=', $data->price_max);
+                    }
+                });
+            }
+
+            //dicount
+            if (!empty($data->discount)) {
+
+                $products->whereHas('product_variants', function ($query) use ($data) {
+
+                    $query->where('discount_value', '<=', $data->discount);
+                });
+            }
+
+            //size filter
+            if (!empty($data->size_id) && is_array($data->size_id)) {
+
+                $products->whereHas('product_variants', function ($query) use ($data) {
+
+                    $query->whereIn('size_id', $data->size_id);
+                });
+            }
+
+            if (!empty($data->rating)) {
+
+                $products->withAvg('review', 'product_rating')
+                    ->havingRaw('COALESCE(review_avg_product_rating, 0) <= ?', [$data->rating]);
+            }
+
+            //delivery time
+            if (!empty($data->delivery_time)) {
+
+                $products->reorder()->inRandomOrder();
+            }
+
+            //delivery option
+
+            $deliveryOptions = (array) $data->delivery_option;
+
+            if (in_array('2', $deliveryOptions)) {
+
+                $products = $products->select('products.*')
+                    ->addSelect([
+                        'total_sales' => orderdetail::selectRaw('COUNT(*)')
+                            ->whereColumn('orderdetails.product_id', 'products.id')
+                            ->where('payment_status', '1')
+                            ->where('delivery_status', '3')
+                    ])
+                    ->orderByDesc('total_sales');
+            }
+
+            elseif (in_array('1', $deliveryOptions)) {
+
+                $products->reorder()->inRandomOrder();
+            }
+
+            
+
             // Apply Filter
 
-            switch ($data->sort_filter) {
+            // switch ($data->sort_filter) {
 
-                case 1: // Recommended
-                    // $products = $products->orderBy('recommended_score', 'desc');
-                    break;
+            //     case 1: // Recommended
+            //         // $products = $products->orderBy('recommended_score', 'desc');
+            //         break;
             
-                case 2: // Price: Low to High
-                    $products = $products->whereHas('product_variants',function($query){
-                        $query->orderBy('actual_price', 'asc');
+            //     case 2: // Price: Low to High
+            //         $products = $products->whereHas('product_variants',function($query){
+            //             $query->orderBy('actual_price', 'asc');
                         
-                    });
-                    break;
+            //         });
+            //         break;
             
-                case 3: // Price: High to Low
-                    $products = $products->whereHas('product_variants',function($query){
-                        $query->orderBy('actual_price', 'desc');
+            //     case 3: // Price: High to Low
+            //         $products = $products->whereHas('product_variants',function($query){
+            //             $query->orderBy('actual_price', 'desc');
                         
-                    });
-                    break;
+            //         });
+            //         break;
             
-                case 4: // Newest First
-                    $products = $products->orderBy('created_at', 'desc');
-                    break;
+            //     case 4: // Newest First
+            //         $products = $products->orderBy('created_at', 'desc');
+            //         break;
             
-                case 5: // Customer Rating
-                    // $products = $products->orderBy('rating', 'desc');
-                    break;
+            //     case 5: // Customer Rating
+            //         // $products = $products->orderBy('rating', 'desc');
+            //         break;
             
-                case 6: // Best selling
-                    // $products = $products->orderBy('total_sales', 'desc');
-                    break;
+            //     case 6: // Best selling
+            //         // $products = $products->orderBy('total_sales', 'desc');
+            //         break;
             
-                case 7: // Fastest delivery
-                    // $products = $products->orderBy('delivery_time', 'asc');
-                    break;
+            //     case 7: // Fastest delivery
+            //         // $products = $products->orderBy('delivery_time', 'asc');
+            //         break;
             
-                default:
-                    // No filter
-                    break;
-            }
+            //     default:
+            //         // No filter
+            //         break;
+            // }
             
 
             // Step 4: Pagination (convert stdClass to array)

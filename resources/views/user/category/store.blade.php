@@ -170,7 +170,7 @@
                         @empty
 
                             <h2>
-                                <center> No Store Found </center>
+                                <center>{{__('user_messages.no_data_found')}} </center>
                             </h2>
                         @endforelse
 
