@@ -41,6 +41,8 @@ class User extends Authenticatable
         'is_login',
         'is_visit_website',
         'is_visit_app',
+        'unique_id',
+        'socialType',
     ];
 
     protected $dates = ['deleted_at'];

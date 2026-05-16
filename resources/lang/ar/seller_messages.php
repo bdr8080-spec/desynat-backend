@@ -1148,6 +1148,118 @@ return [
 
     'cancel' => 'إلغاء',
     'add_product' => 'إضافة المنتج',
+    "remove"=>"يزيل",
+
+    // profile Page 
+
+    'Profile' => 'الملف الشخصي',
+    'Upload_New' => 'رفع جديد',
+    'My_Reels' => 'مقاطع الفيديو الخاصة بي',
+    'Documents_Bank_Details' => 'المستندات والتفاصيل البنكية',
+
+    'Share' => 'مشاركة',
+
+    'Owners_Documents' => 'مستندات المالك',
+    'Store_Documents' => 'مستندات المتجر',
+    'Bank_Details' => 'التفاصيل البنكية',
+
+    'Front' => 'الأمام',
+    'Back' => 'الخلف',
+
+    'Account_Type' => 'نوع الحساب',
+    'Personal' => 'شخصي',
+    'Business' => 'تجاري',
+
+    'IBAN' => 'رقم الآيبان',
+    'SWIFT_BIC' => 'سويفت / BIC',
+    'Bank_Name' => 'اسم البنك',
+    'Account_Holder_Name' => 'اسم صاحب الحساب',
+    'Proof_Of_Documents' => 'إثبات المستندات',
+
+    'Upload_New_Reel' => 'رفع فيديو جديد',
+    'Upload_Video' => 'رفع فيديو',
+    'Caption' => 'الوصف',
+    'Write_Here' => 'اكتب هنا...',
+    'Upload' => 'رفع',
+
+    'Reel' => 'الفيديو',
+    'Added_On' => 'تمت الإضافة في',
+
+    'Update_Reel' => 'تحديث الفيديو',
+    'Update' => 'تحديث',
+
+    'N_A' => 'غير متوفر',
       
+  'Add_Story' => 'إضافة قصة',
+  'Upload_Image_Video' => 'رفع صورة/فيديو',
+  'Select_From_Gallery' => 'اختر من المعرض',
+  'Delete' => 'حذف',
+  'Browser_Not_Support_Video' => 'متصفحك لا يدعم تشغيل الفيديو',
+
+
+'Add_Highlight' => 'إضافة تمييز',
+'Highlight_Name' => 'اسم التمييز',
+'Select_From_Previous' => 'اختر من السابق',
+'Add_New' => 'إضافة جديد',
+'Select_Highlight' => 'اختر التمييز',
+'Enter_Highlight_Name' => 'أدخل اسم التمييز',
+'Submit' => 'إرسال',
+'Highlight' => 'التمييز',
+'Add_To_Highlight' => 'إضافة إلى التمييز',
+
+
+'View_Profile' => 'عرض الملف الشخصي',
+'Change_Password' => 'تغيير كلمة المرور',
+'Sign_Out' => 'تسجيل الخروج',
+'Arabic' => 'العربية',
+'English' => 'الإنجليزية',
+
+
+// edit profile 
+'Edit' => 'تعديل',
+'Personal_Info' => 'المعلومات الشخصية',
+'Documents_Bank_Details' => 'المستندات وتفاصيل البنك',
+'Change_Image' => 'تغيير الصورة',
+'First_Name' => 'الاسم الأول',
+'Enter_First_Name' => 'أدخل الاسم الأول',
+'Last_Name' => 'اسم العائلة',
+'Enter_Last_Name' => 'أدخل اسم العائلة',
+'Mobile_No' => 'رقم الجوال',
+'Mobile_Number' => 'رقم الجوال',
+'Email_Id' => 'البريد الإلكتروني',
+'Store_Name' => 'اسم المتجر',
+'Enter_Store_Name' => 'أدخل اسم المتجر',
+'Choose_Country' => 'اختر الدولة',
+'Store_Address' => 'عنوان المتجر',
+'Enter_Store_Address' => 'أدخل عنوان المتجر',
+'Address_Line_1' => 'العنوان 1',
+'Enter_Address_Line_1' => 'أدخل العنوان 1',
+'Address_Line_2' => 'العنوان 2',
+'Enter_Address_Line_2' => 'أدخل العنوان 2',
+'Store_Phone_Number' => 'رقم هاتف المتجر',
+'Enter_Mobile_Number' => 'أدخل رقم الجوال',
+'Store_Mail_Id' => 'بريد المتجر الإلكتروني',
+'Enter_Store_Email_Id' => 'أدخل بريد المتجر الإلكتروني',
+'Bio' => 'نبذة',
+'Write_Text' => 'اكتب نصًا...',
+'Save_Changes' => 'حفظ التغييرات',
+'Bank_Details' => 'تفاصيل البنك',
+'Personal' => 'شخصي',
+'Business' => 'تجاري',
+'IBAN' => 'رقم الآيبان',
+'Enter_IBAN' => 'أدخل رقم الآيبان',
+'SWIFT_BIC' => 'سويفت / BIC',
+'Enter_SWIFT_BIC' => 'أدخل سويفت / BIC',
+'Bank_Name' => 'اسم البنك',
+'Enter_Bank_Name' => 'أدخل اسم البنك',
+'Account_Holder_Name' => 'اسم صاحب الحساب',
+'Enter_Account_Holder_Name' => 'أدخل اسم صاحب الحساب',
+'Upload_Proof_Of_Account' => 'تحميل إثبات الحساب',
+'Set_Location' => 'تحديد الموقع',
+'Search_Your_Address' => 'ابحث عن عنوانك',
+'Use_Current_Location' => 'استخدام الموقع الحالي',
+'Done' => 'تم',
+
+
     
 ];

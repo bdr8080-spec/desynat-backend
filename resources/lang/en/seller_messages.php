@@ -1131,5 +1131,124 @@ return [
     'cancel' => 'Cancel',
     'add_product' => 'Add Product',
 
+    "remove"=>"Remove",
+    "Save_Changes"=>"Save Changes",
+
+
+    // profile Page 
+
+     'Profile' => 'Profile',
+    'Upload_New' => 'Upload New',
+    'My_Reels' => 'My Reels',
+    'Documents_Bank_Details' => 'Documents & Bank Details',
+
+    'Share' => 'Share',
+
+    'Owners_Documents' => "Owner's Documents",
+    'Store_Documents' => 'Store Documents',
+    'Bank_Details' => 'Bank Details',
+
+    'Front' => 'Front',
+    'Back' => 'Back',
+
+    'Account_Type' => 'Account Type',
+    'Personal' => 'Personal',
+    'Business' => 'Business',
+
+    'IBAN' => 'IBAN',
+    'SWIFT_BIC' => 'SWIFT/BIC',
+    'Bank_Name' => 'Bank Name',
+    'Account_Holder_Name' => 'Account Holder Name',
+    'Proof_Of_Documents' => 'Proof Of Documents',
+
+    'Upload_New_Reel' => 'Upload New Reel',
+    'Upload_Video' => 'Upload Video',
+    'Caption' => 'Caption',
+    'Write_Here' => 'Write here...',
+    'Upload' => 'Upload',
+
+    'Reel' => 'Reel',
+    'Added_On' => 'Added On',
+
+    'Update_Reel' => 'Update Reel',
+    'Update' => 'Update',
+
+    'N_A' => 'N/A',
+
+
+'Add_Story' => 'Add Story',
+'Upload_Image_Video' => 'Upload Image/Video',
+'Select_From_Gallery' => 'Select From Gallery',
+'Delete' => 'Delete',
+'Browser_Not_Support_Video' => 'Your browser does not support the video tag.',
+
+
+'Add_Highlight' => 'Add Highlight',
+'Highlight_Name' => 'Highlight Name',
+'Select_From_Previous' => 'Select from previous',
+'Add_New' => 'Add New',
+'Select_Highlight' => 'Select Highlight',
+'Enter_Highlight_Name' => 'Enter Highlight Name',
+'Submit' => 'Submit',
+'Highlight' => 'Highlight',
+'Add_To_Highlight' => 'Add to Highlight',
+
+
+'View_Profile' => 'View Profile',
+'Change_Password' => 'Change Password',
+'Sign_Out' => 'Sign Out',
+
+'Arabic' => 'Arabic',
+'English' => 'English',
+
+
+// edit Profile seller 
+
+'Edit' => 'Edit',
+'Personal_Info' => 'Personal Info',
+'Documents_Bank_Details' => 'Documents & Bank Details',
+'Change_Image' => 'Change Image',
+'First_Name' => 'First Name',
+'Enter_First_Name' => 'Enter First Name',
+'Last_Name' => 'Last Name',
+'Enter_Last_Name' => 'Enter Last Name',
+'Mobile_No' => 'Mobile No.',
+'Mobile_Number' => 'Mobile Number',
+'Email_Id' => 'Email Id',
+'Store_Name' => 'Store Name',
+'Enter_Store_Name' => 'Enter Store Name',
+'Choose_Country' => 'Choose Country',
+'Store_Address' => 'Store Address',
+'Enter_Store_Address' => 'Enter Store Address',
+'Address_Line_1' => 'Address Line 1',
+'Enter_Address_Line_1' => 'Enter Address Line 1',
+'Address_Line_2' => 'Address Line 2',
+'Enter_Address_Line_2' => 'Enter Address Line 2',
+'Store_Phone_Number' => 'Store Phone Number',
+'Enter_Mobile_Number' => 'Enter Mobile Number',
+'Store_Mail_Id' => 'Store Mail Id',
+'Enter_Store_Email_Id' => 'Enter Store Email Id',
+'Bio' => 'Bio',
+'Write_Text' => 'Write a text...',
+'Save_Changes' => 'Save Changes',
+'Bank_Details' => 'Bank Details',
+'Personal' => 'Personal',
+'Business' => 'Business',
+'IBAN' => 'IBAN',
+'Enter_IBAN' => 'Enter IBAN',
+'SWIFT_BIC' => 'SWIFT/BIC',
+'Enter_SWIFT_BIC' => 'Enter SWIFT/BIC',
+'Bank_Name' => 'Bank Name',
+'Enter_Bank_Name' => 'Enter Bank Name',
+'Account_Holder_Name' => 'Account Holder Name',
+'Enter_Account_Holder_Name' => 'Enter Account Holder Name',
+'Upload_Proof_Of_Account' => 'Upload Proof of Account',
+'Set_Location' => 'Set Location',
+'Search_Your_Address' => 'Search your address',
+'Use_Current_Location' => 'Use Current Location',
+'Done' => 'Done',
+
+
+
     
 ];

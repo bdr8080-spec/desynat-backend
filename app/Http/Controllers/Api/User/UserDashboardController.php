@@ -154,6 +154,7 @@ public function get_Invoice(Request $request){
 public function popUpHomescreenBanner(Request $request){
 
 
+
      $user_id=$request->user()->id;
 
      $request_data=(object)[

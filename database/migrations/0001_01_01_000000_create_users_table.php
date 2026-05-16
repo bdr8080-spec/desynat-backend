@@ -35,6 +35,11 @@ return new class extends Migration
             
             $table->integer('selected_country')->nullable()->comment('user Seleted Country');
             $table->integer('selected_currency')->nullable()->comment('user Seleted Currency');
+
+            $table->varchar('unique_id')->nullable();
+            $table->integer('socialType')->nullable()->comment('1 google 2 facebook 3 applepay');
+
+
             
             $table->timestamps();
         });

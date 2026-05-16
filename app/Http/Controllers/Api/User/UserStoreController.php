@@ -33,9 +33,10 @@ class UserStoreController extends Controller
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
-
+       
        $request_data=(object)[
         'category_id'=>$request->category_id,
+        'subcategory'=>$request->subcategory,
         "search"=>$request->search,
         "rating"=>$request->rating,
         "availbility"=>$request->availbility,

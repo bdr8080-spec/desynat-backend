@@ -99,7 +99,7 @@
         <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
             <div class="title24">
                 <a href="{{route('seller.dashboard')}}" style="color:rgb(57, 55, 55)">
-                    <i class="bi bi-chevron-left"></i> Profile
+                    <i class="bi bi-chevron-left"></i> {{ __('seller_messages.Profile') }}
                 </a>
             </div>
 
@@ -149,21 +149,29 @@
 
                     <div class="col-md-4 col-4 text-end qr-box">
                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://example.com">
-                        <div class="mt-1 small">Share <i class="bi bi-share-fill"></i></div>
+                        <div class="mt-1 small"> {{ __('seller_messages.Share') }} <i class="bi bi-share-fill"></i></div>
                     </div>
                 </div>
 
                 <div class="mt-4">
-                    <h6 class="fw-bold">{{ $seller_details->store_info->store_name??'N/A' }}</h6>
-                    <small class="text-muted">{{ $seller_details->store_info->country_code??'N/A' }}
-                        {{ $seller_details->store_info->store_phone ??'N/A'}}</small><br>
-                    <small class="text-muted">{{ $seller_details->store_info->store_mail_id??'N/A' }}</small>
+                   <h6 class="fw-bold">
+                        {{ $seller_details->store_info->store_name ?? __('seller_messages.N_A') }}
+                    </h6>
+                    
+                      <small class="text-muted">
+                        {{ $seller_details->store_info->country_code ?? __('seller_messages.N_A') }}
+                        {{ $seller_details->store_info->store_phone ?? __('seller_messages.N_A') }}
+                    </small><br>
 
+                    <small class="text-muted">
+                        {{ $seller_details->store_info->store_mail_id ?? __('seller_messages.N_A') }}
+                    </small>
+                    
                     <p class="mt-2 mb-0">
-                        {{ $seller_details->store_info->store_address??'N/A' }}
+                        {{ $seller_details->store_info->store_address ?? __('seller_messages.N_A') }}
                     </p>
                     <p class="mt-2 mb-0">
-                        {{ $seller_details->store_info->bio??'N/A' }}
+                        {{ $seller_details->store_info->bio ?? __('seller_messages.N_A') }}
                     </p>
                 </div>
 
@@ -230,14 +238,14 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="product-tab" data-bs-toggle="tab" data-bs-target="#product-tab-pane"
                 type="button" role="tab" aria-controls="product-tab-pane" aria-selected="true">
-                My Reels
+                 {{ __('seller_messages.My_Reels') }}
             </button>
         </li>
 
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="reels-tab" data-bs-toggle="tab" data-bs-target="#reels-tab-pane" type="button"
                 role="tab" aria-controls="reels-tab-pane" aria-selected="false">
-                Documents & Bank Details
+                {{ __('seller_messages.Documents_Bank_Details') }}
             </button>
         </li>
     </ul>
@@ -251,7 +259,7 @@
                         <div class="reel-upload-box">
                             <div class="upload-inner" onclick="uploadReels(0)">
                                 <img src="/dealer/assets/img/hightlights-add.svg" alt="">
-                                <p>Upload New</p>
+                               <p>{{ __('seller_messages.Upload_New') }}</p>
                             </div>
                         </div>
                     </div>
@@ -283,7 +291,7 @@
 
         <div class="tab-pane fade" id="reels-tab-pane" role="tabpanel" aria-labelledby="reels-tab" tabindex="0">
             <div class="bank-show-panel">
-                <div class="title24">Owner's Documents</div>
+                <div class="title24"> {{ __('seller_messages.Owners_Documents') }}</div>
                 <div class="row">
 
                     @foreach($seller_details->owner_document as $key=>$val)
@@ -325,7 +333,7 @@
             </div>
 
             <div class="bank-show-panel">
-                <div class="title24">Store Documents</div>
+                <div class="title24"> {{ __('seller_messages.Store_Documents') }}</div>
                 <div class="row">
 
                     @foreach($seller_details->store_document as $key=>$val)
@@ -365,32 +373,32 @@
             </div>
 
             <div class="bank-show-panel">
-                <div class="title24">Bank details</div>
+                <div class="title24"> {{ __('seller_messages.Bank_Details') }}</div>
                 <div class="bank-lists">
                     <div class="personal-list-2">
-                        <div class="lightName">Account Type</div>
+                        <div class="lightName">  {{ __('seller_messages.Account_Type') }}</div>
                         <div class="title_black">@if(@$seller_details->seller_bank_details->account_type=='0')
                             Personal @else business @endif </div>
                     </div>
                     <div class="personal-list-2">
-                        <div class="lightName">IBAN</div>
+                        <div class="lightName">{{ __('seller_messages.IBAN') }}</div>
                         <div class="title_black">{{ @$seller_details->seller_bank_details->iban }}</div>
                     </div>
                     <div class="personal-list-2">
-                        <div class="lightName">SWIFT/BIC</div>
+                        <div class="lightName">{{ __('seller_messages.SWIFT_BIC') }}</div>
                         <div class="title_black">{{ @$seller_details->seller_bank_details->swift }}</div>
                     </div>
                     <div class="personal-list-2">
-                        <div class="lightName">Bank Name</div>
+                        <div class="lightName">{{ __('seller_messages.Bank_Name') }}</div>
                         <div class="title_black">{{ @$seller_details->seller_bank_details->bank_name }}</div>
                     </div>
                     <div class="personal-list-2">
-                        <div class="lightName">Account holder name</div>
+                        <div class="lightName"> {{ __('seller_messages.Account_Holder_Name') }}</div>
                         <div class="title_black">{{ @$seller_details->seller_bank_details->account_holder_name }}
                         </div>
                     </div>
                     <div class="personal-list-2">
-                        <div class="lightName">Proof Of Documents</div>
+                        <div class="lightName">  {{ __('seller_messages.Proof_Of_Documents') }}</div>
                     </div>
                     <div class="doc-views2">
                         <img src="{{ @$seller_details->seller_bank_details->upload_proof }}" alt="image"
@@ -416,7 +424,7 @@
         <div class="story-header d-flex justify-content-between py-4">
             <div class="d-flex gap-2">
                 <a href="javascript:void(0)" onclick="closeStatus1()"><i class="bi bi-chevron-left"></i> </a>
-                <h3>Upload new reel </h3>
+                <h3>{{ __('seller_messages.Upload_New_Reel') }}</h3>
             </div>
             <button type="button" class="btn btn-light" onclick="closeStatus1()"><i class="bi bi-x-lg"></i></button>
         </div>
@@ -428,7 +436,7 @@
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                         style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
                     <div class="py-2" style="color:#875C3A">
-                        Upload Video
+                        {{ __('seller_messages.Upload') }}
                     </div>
                 </div>
 
@@ -446,7 +454,7 @@
             </label>
 
             <div class="add-caption mt-3">
-                <h6>Caption</h6>
+                 <h6>{{ __('seller_messages.Caption') }}</h6>
                 <textarea id="storyCaption" class="form-control" placeholder="Write here..."></textarea>
 
                 <!-- Caption Error -->
@@ -455,7 +463,7 @@
         </div>
 
         <div class="dashboard-button mt-4 logostatus bgwhite">
-            <button type="button" class="btn add-fillbtn w-100">Upload</button>
+            <button type="button" class="btn add-fillbtn w-100">{{ __('seller_messages.Upload') }}</button>
         </div>
     </div>
 </div>
@@ -469,7 +477,7 @@
         <div class="story-header d-flex justify-content-between py-4">
             <div class="d-flex gap-2">
                 <a href="javascript:void(0)" onclick="closeStatus2()"><i class="bi bi-chevron-left"></i> </a>
-                <h3>Reel </h3>
+                <h3>{{ __('seller_messages.Reel') }} </h3>
             </div>
             <button type="button" class="btn btn-light" onclick="closeStatus2()"><i class="bi bi-x-lg"></i></button>
         </div>
@@ -533,7 +541,7 @@
         <div class="story-header d-flex justify-content-between py-4">
             <div class="d-flex gap-2">
                 <a href="javascript:void(0)" onclick="closeStatus3()"><i class="bi bi-chevron-left"></i></a>
-                <h3>Update Reel</h3>
+                <h3>{{ __('seller_messages.Update_Reel') }}</h3>
             </div>
             <button type="button" class="btn btn-light" onclick="closeStatus3()"><i class="bi bi-x-lg"></i></button>
         </div>
@@ -544,7 +552,7 @@
                 <div id="bannerhide2" class="text-center">
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                         style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
-                    <div class="py-2" style="color:#875C3A">Upload Video</div>
+                    <div class="py-2" style="color:#875C3A">{{ __('seller_messages.Upload_Video') }}</div>
                 </div>
 
                 <!-- Preview -->
@@ -562,14 +570,14 @@
             
 
             <div class="add-caption">
-                <h6>Caption</h6>
+                <h6>{{ __('seller_messages.Caption') }} </h6>
                 <textarea id="caption2" class="form-control" placeholder="Write here..."></textarea>
                 <div id="captionError2" style="color:red; font-size:0.9rem;"></div>
             </div>
         </div>
 
         <div class="dashboard-button mt-4 logostatus bgwhite">
-            <button type="button" class="btn add-fillbtn w-100" onclick="updateReelSubmit()">Update</button>
+            <button type="button" class="btn add-fillbtn w-100" onclick="updateReelSubmit()"> {{ __('seller_messages.Upload') }}</button>
         </div>
     </div>
 </div>

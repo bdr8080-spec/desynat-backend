@@ -222,6 +222,9 @@ return [
  'old_password_incorrect' => 'كلمة المرور القديمة غير صحيحة',
  'new_password_should_not_be_same_as_old_password' => 'يجب ألا تكون كلمة المرور الجديدة مطابقة لكلمة المرور القديمة',
 
+
+    'otp_sent_successfully' => 'تم إرسال رمز التحقق بنجاح.',
+
  //seller banner service
  'banner_created_successfully' => 'تم إنشاء البانر بنجاح',
  'wait_for_admin_to_verify_banner' => 'يرجى انتظار قيام المدير بالتحقق من البانر الخاص بك',

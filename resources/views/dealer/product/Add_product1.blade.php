@@ -921,10 +921,10 @@ $("#addmore").click(function() {
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Name</label>
-                        <span>In English</span>
+                        <label>{{ __('seller_messages.name') }}</label>
+                        <span>{{ __('seller_messages.in_english') }}</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter product name" name="product_spe_en[]" value="">
+                    <input type="text" class="form-control" placeholder="{{ __('seller_messages.enter_product_name') }}" name="product_spe_en[]" value="">
                 <p class="text-danger" id="error-product_spe_en_${specification_count}"></p>
 
              </div>
@@ -935,10 +935,10 @@ $("#addmore").click(function() {
                 <div class="append-flex">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Name</label>
-                            <span>In Arabic</span>
+                            <label>{{ __('seller_messages.name') }}</label>
+                            <span>{{ __('seller_messages.in_arabic') }}</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter product name" name="product_spe_ar[]" value="">
+                        <input type="text" class="form-control" placeholder="{{ __('seller_messages.enter_product_name') }}" name="product_spe_ar[]" value="">
                     <p class="text-danger" id="error-product_spe_ar_${specification_count}"></p>
 
                         </div>
@@ -950,10 +950,10 @@ $("#addmore").click(function() {
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Feature Name</label>
-                        <span>In English</span>
+                        <label>{{ __('seller_messages.feature') }}</label>
+                        <span>{{ __('seller_messages.in_english') }}</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter product feature" name="product_spe_feature_en[]" value="">
+                    <input type="text" class="form-control" placeholder="{{ __('seller_messages.enter_product_feature') }}" name="product_spe_feature_en[]" value="">
                 <p class="text-danger" id="error-product_spe_feature_en_${specification_count}"></p>
            
                     </div>
@@ -962,10 +962,10 @@ $("#addmore").click(function() {
                 <div class="append-flex">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Feature</label>
-                            <span>In Arabic</span>
+                            <label>{{ __('seller_messages.feature') }}</label>
+                            <span>{{ __('seller_messages.in_arabic') }}</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter product feature" name="product_spe_feature_ar[]" value="">
+                        <input type="text" class="form-control" placeholder="{{ __('seller_messages.enter_product_feature') }}" name="product_spe_feature_ar[]" value="">
                     <p class="text-danger" id="error-product_spe_feature_ar_${specification_count}"></p>
 
                         </div>
@@ -974,7 +974,7 @@ $("#addmore").click(function() {
             </div>
         </div>
         <div class="d-flex justify-content-end">
-            <div class="remove-btn"><i class="bi bi-x"></i> Remove </div>
+            <div class="remove-btn"><i class="bi bi-x"></i> {{ __('seller_messages.remove') }} </div>
         </div>
         </div>
        `)
@@ -1030,7 +1030,7 @@ $(".addVariantBtn").click(function() {
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                        <div class="mt-3">Upload Product Images</div>
+                        <div class="mt-3">{{ __('seller_messages.upload_product_images') }}</div>
                         <input type="file" accept="image/*" multiple name="variant_image[${product_Variation_count}][]" style="opacity:0;" rel="${product_Variation_count}">
                     </label>
 
@@ -1044,10 +1044,10 @@ $(".addVariantBtn").click(function() {
                 <div class="col-lg-3 col-md-3">
                     <div class="sub-form product-row">
                         <div class="label-flex">
-                            <label>Colour</label>
+                            <label>{{ __('seller_messages.colour') }}</label>
                         </div>
                         <select class="form-select form-control color-select" aria-label="Default select example" name="color_id[]" rel="${product_Variation_count}">
-                            <option value="">Select Colour</option>
+                            <option value="">{{ __('seller_messages.select_colour') }}</option>
                             @foreach ($color as $item)
                                 <option value="{{ $item->id }}"">{{ $item->name }}</option>
                             @endforeach
@@ -1060,7 +1060,7 @@ $(".addVariantBtn").click(function() {
             
                   {{-- Add New Variationc code --}}
              <div class="mt-3 d-flex justify-content-between py-2 align-items-center">
-            <div class="title24">Add Variation </div>
+            <div class="title24">{{ __('seller_messages.add_variation') }}  </div>
             <div class="sep-icon" rel="${product_Variation_count}">
                 <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation" alt="add" rel="${product_Variation_count}">
             </div>
@@ -1075,11 +1075,11 @@ $(".addVariantBtn").click(function() {
                 <div class="col-lg-3">
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Size</label>
+                            <label>{{ __('seller_messages.size') }}</label>
                         </div>
 
                         <select class="form-select form-control" aria-label="Default select example" name="size_id[${product_Variation_count}][]">
-                               <option value="">Select Size</option>
+                               <option value="">{{ __('seller_messages.select_size') }}</option>
                            
                             @foreach ($size as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -1097,7 +1097,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Bust</label>
+                                <label>{{ __('seller_messages.bust') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.10" name="bust[${product_Variation_count}][]">
                           <p class="text-danger" id="error-bust_${product_Variation_count}_0"></p>
@@ -1108,7 +1108,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Waist</label>
+                                <label>{{ __('seller_messages.waist') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.12" name="waist[${product_Variation_count}][]">
                           <p class="text-danger" id="error-waist_${product_Variation_count}_0"></p>
@@ -1119,7 +1119,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>HIP</label>
+                                <label>{{ __('seller_messages.hip') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.14" name="hip[${product_Variation_count}][]">
                           <p class="text-danger" id="error-hip_${product_Variation_count}_0"></p>
@@ -1130,7 +1130,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Shoulder</label>
+                                <label>{{ __('seller_messages.shoulder') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.16" name="shoulder[${product_Variation_count}][]">
                           <p class="text-danger" id="error-shoulder_${product_Variation_count}_0"></p>
@@ -1142,7 +1142,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Sleev Length</label>
+                                <label>{{ __('seller_messages.sleeve_length') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.18" name="sleeve_length[${product_Variation_count}][]">
                           <p class="text-danger" id="error-sleeve_length_${product_Variation_count}_0"></p>
@@ -1153,7 +1153,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Length</label>
+                                <label>{{ __('seller_messages.length') }}</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.20" name="length[${product_Variation_count}][]" >
                           <p class="text-danger" id="error-length_${product_Variation_count}_0"></p>
@@ -1164,7 +1164,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Total Stocks</label>
+                                <label>{{ __('seller_messages.total_stocks') }}</label>
                             </div>
                             <input type="number" class="form-control" placeholder="Eg.13208" name="total_stock[${product_Variation_count}][]" >
                           <p class="text-danger" id="error-total_stock_${product_Variation_count}_0"></p>
@@ -1175,7 +1175,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>SKU Limit </label>
+                                <label>{{ __('seller_messages.sku_limit') }} </label>
                             </div>
                             <input type="number" class="form-control" placeholder="20019" name="sku[${product_Variation_count}][]">
                           <p class="text-danger" id="error-sku_${product_Variation_count}"></p>
@@ -1189,7 +1189,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Actual Price</label>
+                                <label>{{ __('seller_messages.actual_price') }}</label>
                             </div>
                         <input type="number"  id="actualprice_${product_Variation_count}_0" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[${product_Variation_count}][]">
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}_0"></p>
@@ -1201,7 +1201,7 @@ $(".addVariantBtn").click(function() {
 
 
             <div class="pt-3">
-                <div class="title24">Discounted Price</div>
+                <div class="title24">{{ __('seller_messages.discounted_price') }}</div>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
@@ -1209,14 +1209,14 @@ $(".addVariantBtn").click(function() {
                                 <label class="radio-group">
                                     <input type="radio" id="discount_type_percentage_${product_Variation_count}_0" name="discount_type[${product_Variation_count}][0]" value="1" checked>
                                     <span class="custom-radio"></span>
-                                    <span class="radio-label">Percentage</span>
+                                    <span class="radio-label">{{ __('seller_messages.percentage') }}</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" id="discount_type_fixed_${product_Variation_count}_0" name="discount_type[${product_Variation_count}][0]" value="2">
                                     <span class="custom-radio"></span>
-                                    <span class="radio-label">Fixed Price</span>
+                                    <span class="radio-label">{{ __('seller_messages.fixed_price') }}</span>
                                 </label>
                             </div>
                             
@@ -1228,7 +1228,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Percentage</label>
+                                <label>{{ __('seller_messages.percentage') }}</label>
                             </div>
                            <input type="number" id="discount_value_${product_Variation_count}_0" class="form-control" placeholder="Eg.10%" name="discount_value[${product_Variation_count}][]">
                           <p class="text-danger" id="error-discount_value_${product_Variation_count}_0"></p>
@@ -1239,23 +1239,20 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Final Price</label>
+                                <label>{{ __('seller_messages.final_price') }}</label>
                             </div>
                             <input type="text" id="final_price_${product_Variation_count}_0" class="form-control" placeholder="Eg.KD 299.00" name="final_price[${product_Variation_count}][]">
                           <p class="text-danger" id="error-final_price_${product_Variation_count}_0"></p>
-
                          </div>
-
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <div class="remove-btn removerow"><i class="bi bi-x"></i> Remove </div>
+                <div class="remove-btn removerow"><i class="bi bi-x"></i> {{ __('seller_messages.remove') }} </div>
             </div>
 
             </div>
             </div> 
-
         </div>
 
        `)
@@ -1399,11 +1396,21 @@ function catgoryFunction(val) {
 
                 var subcatgory_record = data.data;
 
-                var htmlcontent = ' <option value="">Select Sub Category</option>';
+                var htmlcontent = " <option value="
+                ">{{ __('seller_messages.Select_Sub_Category') }}</option>";
 
                 subcatgory_record.forEach(function(item, val) {
                     htmlcontent +=
-                        `<option value="${item.id}">${item.name_english} </option>`;
+                        `<option value="${item.id}">
+                        
+                        @if(App::getLocale()=='en')
+                        ${item.name_english} 
+                        @else 
+                            ${item.name_arabic} 
+
+                        @endif
+                        
+                        </option>`;
                 })
 
                 $('#getSubcategry').empty();

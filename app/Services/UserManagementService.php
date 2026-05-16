@@ -285,7 +285,7 @@ class UserManagementService
         try {
 
             if(isset($request->category_id)){
-                      $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
+                      $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
                  ->where('category_id', $request->category_id)->pluck('store_id');
             }else{
                       $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
