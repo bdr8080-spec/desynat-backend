@@ -121,7 +121,7 @@
                                             <div class="user-infoCat_detail d-flex align-items-center">
                                                 <div class="user">
                                                     <img src="{{ $item->seller_information->profile_pic }}"
-                                                        class="img-fluid" />
+                                                        class="img-fluid" style="cursor:pointer" onclick="openSellerGallery(event, {{ $item->seller_information->id }})" />
                                                 </div>
                                                 {{-- <p>{{ $item->seller_information->first_name }}
                                                     {{ $item->seller_information->last_name }}</p> --}}
@@ -180,8 +180,289 @@
         </div>
     </div>
 
+      <!-- Seller logo story section -->
+<div class="status-viewer bgwhite" id="statusSeller">
+    <div class="container adminstatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeSellerStatus()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="logostatus">
+            <div id="progressContainerSeller" class="progress-container"></div>
+            
+            <div class="status-img">
+                <img id="statusImageSeller" class="img-fluid" style="display:none;" />
+                
+                <video id="statusVideoSeller"
+                       style="width:100%; height:100%; object-fit:contain; display:none;"
+                       controls autoplay muted>
+                </video>
+            </div>
+        </div>    
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+
+var sellerStories = null;  
+var sellerIndex = 0;
+var sellerTimer = null;
+var sellerDuration = 3000;
+var sellerLoading = false;    // prevent multiple API calls
+
+// ================= CLICK HANDLER =================
+function openSellerGallery(event, sellerId, index = 0) {
+    console.log("[SELLER] Clicked");
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Prevent multiple clicks while loading
+    if (sellerLoading) {
+        console.log("[SELLER] Already loading...");
+        return;
+    }
+
+    // If not loaded → fetch from API
+    // if (sellerStories === null) {
+    //     loadSellerStories(sellerId, index);
+    // } else if (sellerStories.length > 0) {
+    //     showSellerGallery(index);
+    // }
+    sellerStories = null;
+
+    // Always fetch clicked seller stories
+    loadSellerStories(sellerId, index);
+    if (sellerStories.length > 0) {
+        showSellerGallery(openIndex);
+    } else {
+       // console.log("[SELLER] No stories found");
+    }
+}
+
+// ================= LOAD STORIES FROM API =================
+function loadSellerStories(seller_id, openIndex = 0) {
+
+    sellerLoading = true;
 
 
+    console.log("[SELLER] seller_id:", seller_id);
+
+    $.ajax({
+        url: "{{ route('user.get_seller_story') }}",
+        type: "GET",
+        dataType: "json",
+
+        data: {
+            seller_id: seller_id
+        },
+
+        success: function(res) {
+            sellerLoading = false;
+
+            console.log("[SELLER] API RESPONSE:", res);
+
+            if (res.status === "success" && Array.isArray(res.data.data)) {
+                sellerStories = res.data.data;
+            } else {
+                sellerStories = [];
+            }
+            var profileDiv = document.querySelector('.user');
+
+            if (sellerStories.length > 0) {
+                if(profileDiv){
+                    profileDiv.classList.add('story-active');
+                }
+            } else {
+                if(profileDiv){
+                    profileDiv.classList.remove('story-active');
+                }
+            }
+
+            // If stories exist → open gallery
+            if (sellerStories.length > 0) {
+                showSellerGallery(openIndex);
+            } else {
+                console.log("[SELLER] No stories found → do nothing");
+            }
+        },
+
+        error: function(err) {
+            sellerLoading = false;
+            console.error("[SELLER] AJAX ERROR:", err);
+            sellerStories = [];
+        }
+    });
+}
+
+function showSellerGallery(index) {
+    console.log('123');
+
+    sellerIndex = index;
+
+    var container = document.getElementById("statusSeller");
+    if (!container) {
+        console.error("[SELLER] statusSeller not found");
+        return;
+    }
+
+    container.style.display = "block";
+
+    generateSellerProgressBars();
+    showSellerStory();
+}
+
+
+function generateSellerProgressBars() {
+
+    var container = document.getElementById("progressContainerSeller");
+
+    if (!container) {
+        console.error("[SELLER] progressContainerSeller not found");
+        return;
+    }
+
+    container.innerHTML = "";
+
+    sellerStories.forEach((s, i) => {
+        container.innerHTML += `
+            <div class="progress-bar">
+                <div class="progress-fill" id="sellerBar${i}"></div>
+            </div>
+        `;
+    });
+}
+
+function showSellerStory() {
+
+    var story = sellerStories[sellerIndex];
+
+    console.log("[SELLER] showStory index:", sellerIndex, story);
+
+    if (!story) {
+        closeSellerStatus();
+        return;
+    }
+
+    var img = document.getElementById("statusImageSeller");
+    var video = document.getElementById("statusVideoSeller");
+
+    if (!img || !video) {
+        console.error("[SELLER] Image or Video element missing");
+        return;
+    }
+
+    // Reset
+    img.style.display = "none";
+    video.style.display = "none";
+    video.pause();
+    video.currentTime = 0;
+
+    var file = story.file;
+
+    if (!file) {
+        console.warn("[SELLER] Empty file → skipping");
+        showNextSeller();
+        return;
+    }
+
+    console.log("[SELLER] FILE:", file);
+
+    if (file.match(/\.(mp4|webm|ogg)$/i)) {
+
+        video.src = file;
+        video.style.display = "block";
+        video.controls = true;
+
+        video.onloadedmetadata = function () {
+            sellerDuration = (video.duration * 1000) || 3000;
+            startSellerProgress();
+            video.play().catch(e => console.warn("[SELLER] Play blocked:", e));
+        };
+
+        video.onerror = function () {
+            console.error("[SELLER] Video failed → skipping");
+            showNextSeller();
+        };
+
+    } 
+    else {
+
+        img.src = file;
+        img.style.display = "block";
+
+        sellerDuration = 3000;
+        startSellerProgress();
+    }
+}
+
+
+function startSellerProgress() {
+
+    clearTimeout(sellerTimer);
+
+    document.querySelectorAll("#progressContainerSeller .progress-fill")
+        .forEach(bar => {
+            bar.style.width = "0%";
+            bar.style.transition = "none";
+        });
+
+    setTimeout(() => {
+        var bar = document.getElementById("sellerBar" + sellerIndex);
+
+        if (bar) {
+            bar.style.transition = sellerDuration + "ms linear";
+            bar.style.width = "100%";
+        }
+    }, 10);
+
+    sellerTimer = setTimeout(() => {
+        showNextSeller();
+    }, sellerDuration);
+}
+
+
+function showNextSeller() {
+
+    if (sellerIndex < sellerStories.length - 1) {
+        sellerIndex++;
+        showSellerStory();
+    } else {
+        closeSellerStatus();
+    }
+}
+
+
+function showPrevSeller() {
+
+    if (sellerIndex > 0) {
+        sellerIndex--;
+        showSellerStory();
+    }
+}
+
+function closeSellerStatus() {
+
+    clearTimeout(sellerTimer);
+
+    var video = document.getElementById("statusVideoSeller");
+
+    if (video) {
+        video.pause();
+        video.currentTime = 0;
+    }
+
+    var container = document.getElementById("statusSeller");
+
+    if (container) {
+        container.style.display = "none";
+    }
+}
+
+</script>
 
 
 @endsection
