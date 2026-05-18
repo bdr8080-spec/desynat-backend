@@ -22,9 +22,15 @@ use App\Http\Controllers\Api\User\ApiNotificationController;
 use App\Http\Controllers\AgoraController;
 
 use App\Http\Controllers\CommonController;
+use App\Http\Controllers\CurrencyController;
+
+
 use Illuminate\Support\Facades\Artisan;
 
 Route::middleware(['ApiLang'])->group(function(){
+
+Route::match(['get','post'],'/updatecurrency_price', [CurrencyController::class, 'updatecurrency_price']);
+
 
 Route::match(['get','post'],'/agora/token', [AgoraController::class, 'generateToken']);
 
