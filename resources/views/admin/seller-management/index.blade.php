@@ -419,11 +419,11 @@
                                             }
                                         @endphp
                                         <td>{{ $planName ?? __('admin_messages.n/a') }}</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0 KD</td>
-                                        <td>0 KD</td>
-                                        <td>0
+                                        <td>{{ $seller['total_completed_orders']}}</td>
+                                        <td>{{ $seller['total_cancelled_orders']}}</td>
+                                        <td>{{ $seller['total_earning']}} {{ __('admin_messages.kd') }}</td>
+                                        <td>0 {{ __('admin_messages.kd') }}</td>
+                                        <td>{{ $seller['average_product_rating']}}
                                             <i class="bi bi-star-fill"></i>
 
                                         </td>

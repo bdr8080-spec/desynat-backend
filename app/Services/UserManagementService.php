@@ -15,6 +15,8 @@ use App\Models\ProductLink;
 use App\Models\AffiliateProduct;
 use App\Models\AffiliateProductClickRecord;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
+use App\Models\Story;
 
 use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist,Addtocart,allproductchats,orderdetail};
 
@@ -285,7 +287,7 @@ class UserManagementService
         try {
 
             if(isset($request->category_id)){
-                      $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
+                      $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
                  ->where('category_id', $request->category_id)->pluck('store_id');
             }else{
                       $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
@@ -336,6 +338,11 @@ class UserManagementService
 
             $store->average_store_rating = $count > 0 ? round($totalRating / $count, 1) : 0;
             $store->total_review_count = $reviewCount;
+
+            $store->seller_stories = Story::where('seller_id', $store->seller_id)
+                ->where('type', '2')
+                ->where('created_at', '>=', Carbon::now()->subHours(24))
+                ->get();
 
             return $store;
         });
