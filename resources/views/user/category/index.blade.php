@@ -369,8 +369,8 @@
                                     <h5>{{ __('user_messages.delivery_time') }}</h5>
 
                                     <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="delivery_time" value="1-2"
-                                            id="del1" {{ request()->delivery_time == '1-2' ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="radio" name="delivery_time" value="1"
+                                            id="del1" {{ request()->delivery_time == '1' ? 'checked' : '' }}>
 
                                         <label class="form-check-label" for="del1">
                                             {{ __('user_messages.today_2_days') }}
@@ -378,8 +378,8 @@
                                     </div>
 
                                     <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="delivery_time" value="3-5"
-                                            id="del2" {{ request()->delivery_time == '3-5' ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="radio" name="delivery_time" value="2"
+                                            id="del2" {{ request()->delivery_time == '2' ? 'checked' : '' }}>
 
                                         <label class="form-check-label" for="del2">
                                             {{ __('user_messages.3_5_days') }}
@@ -389,10 +389,11 @@
 
                                 {{-- Delivery Options --}}
                                 <div class="form-group delivery">
+                                    <h5>{{ __('user_messages.sort_preference') }}</h5>
                                     <div class="form-check my-4">
-                                        <input class="form-check-input" type="checkbox" value="shortest"
+                                        <input class="form-check-input" type="checkbox" value="1"
                                             name="delivery_option[]" id="shortest"
-                                            {{ is_array(request()->delivery_option) && in_array('shortest', request()->delivery_option) ? 'checked' : '' }}>
+                                            {{ is_array(request()->delivery_option) && in_array('1', request()->delivery_option) ? 'checked' : '' }}>
 
                                         <label class="form-check-label" for="shortest">
                                             {{ __('user_messages.shortest_delivery_time') }}
@@ -400,9 +401,9 @@
                                     </div>
 
                                     <div class="form-check my-4">
-                                        <input class="form-check-input" type="checkbox" value="highest_sale"
+                                        <input class="form-check-input" type="checkbox" value="2"
                                             name="delivery_option[]" id="highest_sale"
-                                            {{ is_array(request()->delivery_option) && in_array('highest_sale', request()->delivery_option) ? 'checked' : '' }}>
+                                            {{ is_array(request()->delivery_option) && in_array('2', request()->delivery_option) ? 'checked' : '' }}>
 
                                         <label class="form-check-label" for="highest_sale">
                                             {{ __('user_messages.highest_sale') }}
@@ -421,7 +422,7 @@
                         <div class="categoryDetail_content">
                             <div class="row">
 
-                                @foreach ($store_details['All_Product'] as $item)
+                                @forelse ($store_details['All_Product'] as $item)
                                 <div class="col-lg-4 col-md-4 col-6 my-3 cardblock">
                                     <a href="{{ route('user.product_details',[$item->id]) }}"
                                         style="text-decoration:none;">
@@ -534,7 +535,12 @@
                                         </div>
                                     </a>
                                 </div>
-                                @endforeach
+                                @empty
+
+                                    <h2>
+                                        <center>{{__('user_messages.no_data_found')}} </center>
+                                    </h2>
+                                @endforelse
 
 
 

@@ -189,7 +189,8 @@ class CountryService
             $serviceCity = ServiceCity::create([
                 'country_id' => $city->country_id,
                 'city_id' => $city->id,  
-                'name' => $city->name,             
+                'name' => $city->name,   
+                'name_ar' => $city->name_ar,          
             ]);
 
             return [

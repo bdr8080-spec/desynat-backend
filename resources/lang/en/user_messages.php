@@ -12,6 +12,7 @@ return [
     'english' => 'English',
 
     //common
+    'no_data_found' => 'No data found',
     'sign_in' => 'SIGN IN',
     'sign_up' => 'SIGN UP',
     'my_wallet' => 'My Wallet',
@@ -182,6 +183,7 @@ return [
     'highest_sale' => 'Highest Sale',
     'apply' => 'Apply',
     'clear' => 'Clear',
+    'no_store_found' => 'No store found',
 
     //single store
     'copy_link' => 'Copy Link',

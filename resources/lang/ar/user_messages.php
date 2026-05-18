@@ -12,6 +12,7 @@ return [
     'english' => 'إنجليزي',
 
     //common
+    'no_data_found' => 'لم يتم العثور على بيانات',
     'sign_in' => 'تسجيل الدخول',
     'sign_up' => 'إنشاء حساب',
     'my_wallet' => 'محفظتي',
@@ -181,6 +182,7 @@ return [
     'highest_sale' => 'الأعلى مبيعًا',
     'apply' => 'تطبيق',
     'clear' => 'مسح',
+    'no_store_found' => 'لم يتم العثور على متجر',
 
     //single store
     'copy_link' => 'نسخ الرابط',

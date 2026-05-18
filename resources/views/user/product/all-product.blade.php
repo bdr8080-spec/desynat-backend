@@ -234,7 +234,7 @@
                         <div class="categoryDetail_content">
                             <div class="row">
 
-                                @foreach ($AllProduct as $item)
+                                @forelse ($AllProduct as $item)
                                 <div class="col-lg-4 col-md-4 col-6 my-3 cardblock">
                                     <a href="{{ route('user.product_details',[$item->id]) }}"
                                         style="text-decoration:none;">
@@ -318,7 +318,12 @@
                                         </div>
                                     </a>
                                 </div>
-                                @endforeach
+                                @empty
+
+                            <h2>
+                                <center>{{__('user_messages.no_data_found')}} </center>
+                            </h2>
+                        @endforelse
 
 
 
