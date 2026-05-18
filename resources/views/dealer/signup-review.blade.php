@@ -96,12 +96,12 @@
                                             class="img-fluid">
                                     </div>
                                     <div class="group-radio-btn text-center">
-                                        <h2 class="mb-3">Your account registration is under review !!</h2>
-                                        <p>Please wait for 3-4 hrs. Thank you for your patience. Team Desynat App</p>
+                                        <h2 class="mb-3">{{ __('seller_messages.account_under_review') }}</h2>
+                                        <p>{{ __('seller_messages.review_wait_message') }}</p>
                                     </div>
 
                                     <div class="login-btn padding-top-60">
-                                        <a href="{{ route('seller.logout') }}" class="btn btn-success w-100">Logout</a>
+                                        <a href="{{ route('seller.logout') }}" class="btn btn-success w-100">{{ __('seller_messages.logout') }}</a>
                                     </div>
 
                                 </form>

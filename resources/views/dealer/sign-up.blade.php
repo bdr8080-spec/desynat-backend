@@ -101,7 +101,7 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
                                 <form action="{{ route('seller.register') }}" method="post">
-                                    <h1>Sign Up <br><span class="gold-color">Create your account !</span></h1>
+                                    <h1>{{ __('seller_messages.sign_up') }} <br><span class="gold-color">{{ __('seller_messages.create_your_account') }}</span></h1>
                                     <div class="step-progress py-4">
                                         <div class="progress pro-1" role="progressbar" aria-label="Basic example"
                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -124,7 +124,7 @@
                                     <div class="upload-image w-100">
                                         <label id="uploadLabel" style="cursor:pointer;text-align:center;">
                                             <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                                            <div>Upload Profile Photo</div>
+                                            <div>{{ __('seller_messages.upload_profile_photo') }}</div>
                                             <input type="file" accept="image/*" hidden onchange="showPreview(event)"
                                                 id="edit_imageUpload">
                                         </label>
@@ -146,9 +146,9 @@
                                     @csrf
 
                                     <div class="form-group">
-                                        <label for="name">First Name</label>
+                                        <label for="name">{{ __('seller_messages.first_name') }}</label>
                                         <input type="text" class="form-control notapplyspace"
-                                            placeholder="Enter First Name" name="first_name"
+                                            placeholder="{{ __('seller_messages.enter_first_name') }}" name="first_name"
                                             value="{{ old('first_name') }}">
                                         @error('first_name')
                                             <span class="text-danger">{{ $message }}</span>
@@ -156,18 +156,18 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">Last Name</label>
+                                        <label for="name">{{ __('seller_messages.last_name') }}</label>
                                         <input type="text" class="form-control notapplyspace"
-                                            placeholder="Enter Last Name" name="last_name"
+                                            placeholder="{{ __('seller_messages.enter_last_name') }}" name="last_name"
                                             value="{{ old('last_name') }}">
                                         @error('last_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">Email Address</label>
+                                        <label for="name">{{ __('seller_messages.email_address') }} </label>
                                         <input type="text" class="form-control notapplyspace"
-                                            placeholder="Enter Email Address" name="email"
+                                            placeholder="{{ __('seller_messages.enter_email_address') }} " name="email"
                                             value="{{ old('email') }}">
                                         @error('email')
                                             <span class="text-danger">{{ $message }}</span>
@@ -175,7 +175,7 @@
                                     </div>
 
                                     <div class="form-group phone-pnl">
-                                        <label for="name">Mobile Number</label>
+                                        <label for="name">{{ __('seller_messages.mobile_number') }} </label>
 
                                         <div class="form-group d-flex gap-2 w-100">
                                             <div class="dropdown">
@@ -225,7 +225,7 @@
 
                                             <div class="w-100">
                                                 <input class="form-control notapplyspace" type="number"
-                                                    id="phone" placeholder="Enter mobile Number" name="mobile"
+                                                    id="phone" placeholder="{{ __('seller_messages.enter_mobile_number') }}" name="mobile"
                                                     value="{{ old('mobile') }}"
                                                     oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
 
@@ -243,9 +243,9 @@
                                     </div>
 
                                     <div class="form-group position-relative">
-                                        <label for="password">Create Password</label>
+                                        <label for="password">{{ __('seller_messages.create_password') }}</label>
                                         <input type="password" class="form-control notapplyspace" id="password"
-                                            placeholder="Enter Password" name="password"
+                                            placeholder="{{ __('seller_messages.enter_password') }}" name="password"
                                             value="{{ old('password') }}">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
                                         @error('password')
@@ -253,9 +253,9 @@
                                         @enderror
                                     </div>
                                     <div class="form-group position-relative">
-                                        <label for="password">Confirm Password</label>
+                                        <label for="password">{{ __('seller_messages.confirm_password') }}</label>
                                         <input type="password" class="form-control notapplyspace" id="password"
-                                            placeholder="Enter Confirm Password" name="confirm_password"
+                                            placeholder="{{ __('seller_messages.enter_confirm_password') }}" name="confirm_password"
                                             value="{{ old('confirm_password') }}">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
                                         @error('confirm_password')
@@ -268,8 +268,8 @@
                                             id="checkChecked" name="accept_terms"
                                             {{ old('accept_terms') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="checkChecked">
-                                            I accept the <span class="title-color">Terms & Conditions </span> and <span
-                                                class="title-color">Policies</span>
+                                              {{ __('seller_messages.accept_terms_text') }} <span class="title-color">  {{ __('seller_messages.terms_conditions') }} </span>  {{ __('seller_messages.and') }} <span
+                                                class="title-color">  {{ __('seller_messages.policies') }}</span>
                                         </label>
 
                                     </div>
@@ -279,18 +279,15 @@
 
                                     <div class="login-btn">
                                         <input type="submit" name="submit" class="btn btn-success w-100"
-                                            value="continue">
+                                            value="{{ __('seller_messages.continue') }}">
                                     </div>
                                 </form>
 
                                 <div class="sign-new mt-2 text-center">
-                                    <div>Already have an account? <a href="{{ route('seller.login') }}"
-                                            class="link-color"> Sign In</a></div>
+                                    <div>{{ __('seller_messages.already_have_account') }} <a href="{{ route('seller.login') }}"
+                                            class="link-color"> {{ __('seller_messages.sign_in') }}</a></div>
                                 </div>
-
                             </div>
-
-
                         </div>
                     </div>
                 </div>

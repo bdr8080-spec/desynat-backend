@@ -101,7 +101,7 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="{{ url()->previous() }} "><i class="bi bi-chevron-left"></i></a> OTP
+                                    <h1><a href="{{ url()->previous() }} "><i class="bi bi-chevron-left"></i></a> {{ __('seller_messages.otp') }}
                                     </h1>
                                 </div>
 
@@ -127,7 +127,7 @@
                                 <form action="{{ route('seller.register_otp_verify', request()->id) }}" method="Post">
 
                                     <div class="group-radio-btn">
-                                        <h3>6 digit OTP has been sent to your registered Mobile Number <span
+                                        <h3>{{ __('seller_messages.otp_sent_message') }} <span
                                                 class="gold-color"> {{ $seller_details->country_code }}
                                                 {{ $seller_details->mobile }}</span></h3>
 
@@ -177,7 +177,7 @@
                                     @endif
 
                                     <div class="login-btn padding-top-60">
-                                        <input type="submit" class="btn btn-success w-100" value="Verify">
+                                        <input type="submit" class="btn btn-success w-100" value="{{ __('seller_messages.verify') }}">
                                         <!-- <a href="store_page.php" class="btn btn-success w-100">Verify</a> -->
                                     </div>
 

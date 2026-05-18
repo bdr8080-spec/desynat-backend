@@ -1386,5 +1386,140 @@ return [
 'enter_mobile_number' => 'أدخل رقم الجوال',
 'enter_email_address' => 'أدخل البريد الإلكتروني',
 'continue' => 'متابعة',
+
+
+// otp verify Screen 
+'otp' => 'رمز التحقق',
+'otp_sent_message' => 'تم إرسال رمز تحقق مكون من 6 أرقام إلى رقم هاتفك المسجل',
+'verify' => 'تحقق',
+
+
+// seller create Account 
+'sign_up' => 'إنشاء حساب',
+'create_your_account' => 'أنشئ حسابك!',
+'upload_profile_photo' => 'تحميل صورة الملف الشخصي',
+
+'first_name' => 'الاسم الأول',
+'enter_first_name' => 'أدخل الاسم الأول',
+
+'last_name' => 'اسم العائلة',
+'enter_last_name' => 'أدخل اسم العائلة',
+
+'email_address' => 'البريد الإلكتروني',
+'enter_email_address' => 'أدخل البريد الإلكتروني',
+
+'mobile_number' => 'رقم الجوال',
+'enter_mobile_number' => 'أدخل رقم الجوال',
+
+'create_password' => 'إنشاء كلمة المرور',
+'enter_password' => 'أدخل كلمة المرور',
+
+'confirm_password' => 'تأكيد كلمة المرور',
+'enter_confirm_password' => 'أدخل تأكيد كلمة المرور',
+
+'accept_terms_text' => 'أوافق على',
+'terms_conditions' => 'الشروط والأحكام',
+'and' => 'و',
+'policies' => 'السياسات',
+
+'continue' => 'استمرار',
+
+'already_have_account' => 'هل لديك حساب بالفعل؟',
+'sign_in' => 'تسجيل الدخول',
+
+// Update Store information 
+
+'store_information' => 'معلومات المتجر',
+'upload_store_image' => 'تحميل صورة المتجر',
+
+'store_name' => 'اسم المتجر',
+'enter_store_name' => 'أدخل اسم المتجر',
+
+'choose_country' => 'اختر الدولة',
+'please_select_country' => 'يرجى اختيار الدولة',
+
+'store_address' => 'عنوان المتجر',
+'enter_store_address' => 'أدخل عنوان المتجر',
+
+'address_line_1' => 'العنوان 1',
+'enter_address_line_1' => 'أدخل العنوان 1',
+
+'address_line_2' => 'العنوان 2',
+'enter_address_line_2' => 'أدخل العنوان 2',
+
+'store_phone_number' => 'رقم هاتف المتجر',
+'enter_store_phone_number' => 'أدخل رقم هاتف المتجر',
+
+'store_email_id' => 'البريد الإلكتروني للمتجر',
+'enter_store_email_id' => 'أدخل البريد الإلكتروني للمتجر',
+
+'bio' => 'نبذة',
+'write_message' => 'اكتب رسالة....',
+
+'continue' => 'استمرار',
+
+'set_location' => 'تحديد الموقع',
+'search_your_address' => 'ابحث عن عنوانك',
+'use_current_location' => 'استخدام الموقع الحالي',
+'done' => 'تم',
+
+// seller bank details upload 
+  'upload_documents_bank_details' => 'رفع المستندات والتفاصيل البنكية',
+    'owners_documents' => 'مستندات المالك',
+    'document_1' => 'المستند 1',
+    'document_2' => 'Document 2',
+    'store_documents' => 'مستندات المتجر',
+    'bank_details' => 'التفاصيل البنكية',
+    'account_type' => 'نوع الحساب',
+    'personal' => 'شخصي',
+    'business' => 'تجاري',
+    'iban' => 'رقم الآيبان',
+    'enter_iban_number' => 'أدخل رقم الآيبان',
+    'swift_bic' => 'سويفت / BIC',
+    'enter_swift_bic_number' => 'أدخل رقم سويفت / BIC',
+    'bank_name' => 'اسم البنك',
+    'enter_bank_name' => 'أدخل اسم البنك',
+    'account_holder_name' => 'اسم صاحب الحساب',
+    'enter_account_holder_name' => 'أدخل اسم صاحب الحساب',
+    'upload_proof_of_account' => 'رفع إثبات الحساب',
+    'continue' => 'متابعة',
+
+    // store document summary
+
+
+      'summary_information' => 'ملخص المعلومات',
+
+    'personal_information' => 'المعلومات الشخصية',
+    'full_name' => 'الاسم الكامل',
+    'phone_number' => 'رقم الهاتف',
+    'mail_id' => 'البريد الإلكتروني',
+
+    'store_information' => 'معلومات المتجر',
+    'store_name' => 'اسم المتجر',
+    'address' => 'العنوان',
+    'bio' => 'نبذة',
+
+    'documents' => 'المستندات',
+    'owners_documents' => 'مستندات المالك',
+    'store_documents' => 'مستندات المتجر',
+
+    'bank_details' => 'التفاصيل البنكية',
+    'account_type' => 'نوع الحساب',
+    'personal' => 'شخصي',
+    'business' => 'تجاري',
+
+    'iban' => 'رقم الآيبان',
+    'swift_bic' => 'سويفت / BIC',
+    'bank_name' => 'اسم البنك',
+    'account_holder_name' => 'اسم صاحب الحساب',
+    'proof_of_account' => 'إثبات الحساب',
+    'submit' => 'إرسال',
+    
+
+    'account_under_review' => 'تسجيل حسابك قيد المراجعة !!',
+    'review_wait_message' => 'يرجى الانتظار من 3 إلى 4 ساعات. شكراً لصبرك. فريق تطبيق ديسينات',
+    'logout' => 'تسجيل الخروج',
+
+
     
 ];
