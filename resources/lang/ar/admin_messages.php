@@ -436,6 +436,9 @@ return [
     'delivery_charges_already_existed' => 'رسوم التوصيل موجودة بالفعل',
     'delivery_charges_blocked_successfully' => 'تم حظر رسوم التوصيل بنجاح',
     'delivery_charges_unblocked_successfully' => 'تم إلغاء حظر رسوم التوصيل بنجاح',
+    'edit_delivery_charges' => 'تعديل رسوم التوصيل',
+    'to' => 'إلى',
+    'range_to_greater_than_from' => 'يجب أن تكون نهاية النطاق أكبر من بداية النطاق',
 
     //gift card category management
     'gift_card_category_name_in_english' => 'اسم فئة بطاقة الهدايا بالإنجليزية',
@@ -448,6 +451,9 @@ return [
     'edit_gift_card_category' => 'تعديل فئة بطاقة هدايا',
     'gift_card_category_unblocked_successfully' => 'تم إلغاء حظر فئة بطاقة الهدايا بنجاح',
     'gift_card_category_blocked_successfully' => 'تم حظر فئة بطاقة الهدايا بنجاح',
+    'gift_card_category_deleted_successfully' => 'تم حذف فئة بطاقة الهدايا بنجاح!',
+    'gift_card_category_added_successfully' => 'تمت إضافة فئة بطاقة الهدايا بنجاح!',
+    'gift_card_category_updated_successfully' => 'تم تحديث فئة بطاقة الهدايا بنجاح!',
 
     //banner per day price management
     'banner_per_day_charges_for_sellers' => 'رسوم البانر اليومية للبائعين',
