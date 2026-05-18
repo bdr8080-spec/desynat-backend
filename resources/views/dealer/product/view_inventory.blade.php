@@ -142,7 +142,7 @@ span {
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
         <div class="title24"> <a href="{{route('seller.Inventory_Management')}}" style="color:rgb(57, 55, 55)"><i
-                    class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
+                    class="bi bi-chevron-left"></i> {{ __('seller_messages.product_code') }}- {{ $product->id }}
             </a> </div>
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault"
@@ -172,7 +172,14 @@ span {
                 @endif
 
             </h6>
-            <p class="text-muted mb-1">{{ $product->product_name_en }} ({{ $product->category->name }}) </p>
+            <p class="text-muted mb-1">
+            
+             @if(App::getlocale()=='en')
+            {{ $product->product_name_en }} ({{ $product->category->name }})
+             @else
+            {{ $product->product_name_ar }} ({{ $product->category->name_ar }})
+              @endif  
+
 
             <div class="d-flex align-items-center mb-2">
                 <span class="text-warning fs-5">★★★★☆</span>
@@ -181,11 +188,11 @@ span {
 
             <div id="price-box" class="mb-0"></div>
 
-            <p class="text-success small">inclusive of all taxes</p>
+             <p class="text-success small"> {{ __('seller_messages.inclusive_of_all_taxes') }}</p>
 
             <hr class="mt-0">
 
-            <h6 class="fw-semibold mb-2">More Color</h6>
+            <h6 class="fw-semibold mb-2">{{ __('seller_messages.more_color') }}</h6>
 
             <div class="d-flex gap-2 mb-2">
                 @php $count=1;
@@ -205,9 +212,9 @@ span {
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="fw-semibold">Available Size</h6>
+                <h6 class="fw-semibold"> {{ __('seller_messages.available_size') }}</h6>
                 <a href="#" class="text-brown fw-semibold text-decoration-none" data-bs-toggle="modal"
-                    data-bs-target="#sizeGuideModal">Size Guide</a>
+                    data-bs-target="#sizeGuideModal">{{ __('seller_messages.size_guide') }}</a>
 
             </div>
 
@@ -227,12 +234,12 @@ span {
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="sizeGuideModalLabel">Size Guide</h5>
+                    <h5 class="modal-title" id="sizeGuideModalLabel">{{ __('seller_messages.size_guide') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="position: relative">
                     <!-- Add your size guide content here -->
-                    <p>Here you can show image of size guide:</p>
+                    <p>{{ __('seller_messages.show_size_guide_image') }}</p>
 
                     <img src="{{$product->upload_size_chart}}" style="width:100%">
 
@@ -251,7 +258,7 @@ span {
 
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Inventory</h5>
+                        <h5 class="modal-title">{{ __('seller_messages.edit_inventory') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -263,7 +270,7 @@ span {
                             <div class="col-lg-6 col-md-6">
                                 <div class="sub-form">
                                     <div class="label-flex">
-                                        <label>Total Stocks</label>
+                                        <label>{{ __('seller_messages.total_stocks') }}</label>
                                     </div>
                                     <input type="text" class="form-control" placeholder="" id="Inventory_stock"
                                         name="stock_quantity" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
@@ -273,7 +280,7 @@ span {
                             <div class="col-lg-6 col-md-6">
                                 <div class="sub-form">
                                     <div class="label-flex">
-                                        <label>SKU</label>
+                                        <label>{{ __('seller_messages.sku') }}</label>
                                     </div>
                                     <input type="text" class="form-control" placeholder="" id="Inventory_sku" name="sku"
                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');">
@@ -285,7 +292,7 @@ span {
                         </div>
 
                         <div class="dashboard-button mt-4">
-                            <button type="submit" class="btn add-fillbtn w-100">Save Changes</button>
+                            <button type="submit" class="btn add-fillbtn w-100">{{ __('seller_messages.save_changes') }}</button>
                         </div>
 
                     </div>

@@ -17,6 +17,8 @@ return [
  "View"=>"View",
 "Action"=>"Action",
 "Submit" => "Submit",
+'percent_off' => '% off',
+'kd_off' => 'KD off',
 
 
 
@@ -1297,6 +1299,61 @@ return [
 'password_validation_message' => 'Password must be 8+ chars with uppercase, number & special character',
 'confirm_password_validation' => 'Please confirm password',
 'password_not_match' => 'Confirm password does not match',
+
+
+// chatlist web 
+
+'chat' => 'Chat',
+'filter' => 'Filter',
+'apply' => 'Apply',
+'all' => 'All',
+'new' => 'New',
+'quotation_sent' => 'Quotation Sent',
+'quotation_accepted' => 'Quotation Accepted',
+'search' => 'Search',
+'request_rejected' => 'Request Rejected',
+'place_order' => 'Place Order',
+
+// View Single chat 
+
+'request_id' => 'Request ID',
+'size' => 'Size',
+'color' => 'Color',
+'view_request' => 'View Request',
+'total_quantity' => 'Total Quantity',
+'custom_details' => 'Custom Details',
+'quotation' => 'Quotation',
+'per_item_price' => 'Per Item Price',
+'total_amount' => 'Total Amount',
+'eg_20_kd' => 'Eg 20 KD',
+'send_quotation' => 'Send Quotation',
+'modify_quotation' => 'Modify Quotation',
+'type_message_here' => 'Type Message Here...',
+'confirm_modify' => 'Confirm & Modify',
+'quotation_sent_successfully' => 'Quotation Sent Successfully!',
+'quotation_modified_successfully' => 'Quotation Modified Successfully!',
+'color' => 'Color',
+'size' => 'Size',
+
+'shipping_fees' => 'Shipping Fees',
+'tax' => 'Tax',
+'total_amount' => 'Total Amount',
+'quotation' => 'Quotation',
+'per_item_price' => 'Per Item Price',
+'per_item_price_1' => 'Per Item Price 1',
+'send_quotation' => 'Send Quotation',
+'modify_quotation' => 'Modify Quotation',
+'type_message_here' => 'Type Message here...',
+'confirm_modify' => 'Confirm & Modify',
+'quotation_sent_successfully' => 'Quotation Sent Successfully!',
+'quotation_modify_successfully' => 'Quotation Modify Successfully!',
+
+
+// View inventory
+'edit_inventory' => 'Edit Inventory',
+'total_stocks' => 'Total Stocks',
+'sku' => 'SKU',
+'save_changes' => 'Save Changes',
 
 
     

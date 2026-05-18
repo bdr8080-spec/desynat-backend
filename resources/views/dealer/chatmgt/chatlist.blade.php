@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <a class="title24 alink"> Chat </a>
+        <a class="title24 alink">  {{ __('seller_messages.chat') }} </a>
     </div>
 
 
@@ -13,8 +13,8 @@
                 <div class="category_filter">
                     <form method="GET" action="">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h3 class="mb-0">Filter</h3>
-                            <input type="submit" class="link-apply " value="Apply">
+                            <h3 class="mb-0"> {{ __('seller_messages.filter') }}</h3>
+                            <input type="submit" class="link-apply " value="{{ __('seller_messages.apply') }}">
 
                         </div>
 
@@ -28,7 +28,7 @@
                                     @if(!request()->has('filters')) checked @endif
                                     >
                                     <span class="custom-radio"></span>
-                                    <span class="radio-label">All</span>
+                                    <span class="radio-label">   {{ __('seller_messages.all') }}</span>
                                 </label>
                             </div>
                             <div class="check_radio mb-3">
@@ -36,7 +36,7 @@
                                     <input type="radio" value="2" name="filters" @if(request()->filters=='2') checked
                                     @endif>
                                     <span class="custom-radio"></span>
-                                    <span class="radio-label">New </span>
+                                    <span class="radio-label"> {{ __('seller_messages.new') }} </span>
                                 </label>
                             </div>
                             <div class="check_radio mb-3">
@@ -44,7 +44,7 @@
                                     <input type="radio" value="3" name="filters" @if(request()->filters=='3') checked
                                     @endif>
                                     <span class="custom-radio"></span>
-                                    <span class="radio-label">Quotation Sent</span>
+                                    <span class="radio-label"> {{ __('seller_messages.quotation_sent') }}</span>
                                 </label>
                             </div>
                             <div class="check_radio">
@@ -52,7 +52,7 @@
                                     <input type="radio" value="4" name="filters" @if(request()->filters=='4') checked
                                     @endif>
                                     <span class="custom-radio"></span>
-                                    <span class="radio-label">Quotation Accepted</span>
+                                    <span class="radio-label">{{ __('seller_messages.quotation_accepted') }}</span>
                                 </label>
                             </div>
                         </div>
@@ -67,10 +67,10 @@
                     <form>
                         <div class="chatsearch d-flex mb-3">
                             <div class="form-group position-relative w-100">
-                                <input type="text" class="form-control search-line" placeholder="Search" />
+                                <input type="text" class="form-control search-line" placeholder="{{ __('seller_messages.search') }}" />
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </div>
-                            <button type="submit" class="btn btn-success">Search </button>
+                            <button type="submit" class="btn btn-success">{{ __('seller_messages.search') }} </button>
                         </div>
                     </form>
 

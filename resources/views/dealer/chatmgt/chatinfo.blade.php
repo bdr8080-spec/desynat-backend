@@ -3,7 +3,7 @@
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
 
-        <a class="title24 alink" href="{{route('seller.All_chats')}}"> <i class="bi bi-chevron-left"></i> Chat</a>
+        <a class="title24 alink" href="{{route('seller.All_chats')}}"> <i class="bi bi-chevron-left"></i>  {{ __('seller_messages.chat') }}</a>
     </div>
 
 
@@ -17,7 +17,7 @@
                     <div class="link-content">
                         <div class="cart-card">
                             <div class="pb-2 d-flex justify-content-between">
-                                <div class="request-title">Request id # {{ $single_chats['record']->unique_id }}</div>
+                                <div class="request-title">{{ __('seller_messages.request_id') }} # {{ $single_chats['record']->unique_id }}</div>
 
                                 @php
                                 $status = SellerChatproductRequestStatus($single_chats['record']);
@@ -47,10 +47,10 @@
                                                 {{ $single_chats['record']->product_variation->product_details->product_name_en  }}
                                             </h5>
                                             <div class="psize d-flex gap-4 mt-2">
-                                                <span>Size:
+                                                <span>{{ __('seller_messages.size') }}::
                                                     {{ $single_chats['record']->product_variation->size->name  }}</span>
                                                 <span class="d-flex align-items-center gap-2">
-                                                    Color:
+                                                     {{ __('seller_messages.color') }}::
                                                     <div class="colorbox"
                                                         style="width:15px;height:15px;border-radius:3px;background:{{ $single_chats['record']->product_variation->color->hex_code }};">
                                                     </div>
@@ -58,7 +58,7 @@
 
                                             </div>
                                             <h6 class="product-title mt-2">
-                                                {{ $single_chats['record']->product_variation->final_price }} KD</h6>
+                                                {{ $single_chats['record']->product_variation->final_price }}  {{ __('seller_messages.KD') }}</h6>
                                         </div>
 
                                     </div>
@@ -79,7 +79,7 @@
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#viewRequest" aria-expanded="true"
                                             aria-controls="viewRequest">
-                                            View Request
+                                            {{ __('seller_messages.view_request') }}
                                         </button>
                                     </h2>
                                     <div id="viewRequest" class="accordion-collapse collapse p-3">
@@ -87,7 +87,7 @@
                                         <table class="table table-borderless table-font">
                                             <tr>
                                                 <td>
-                                                    <div class="width-120">Total Quantity</div>
+                                                    <div class="width-120">   {{ __('seller_messages.total_quantity') }}</div>
                                                 </td>
                                                 <td>
                                                     <div> {{ $single_chats['record']->quantity }}</div>
@@ -104,7 +104,7 @@
                                             </tr> -->
                                             <tr>
                                                 <td>
-                                                    <div class="width-120">Custom details</div>
+                                                    <div class="width-120"> {{ __('seller_messages.custom_details') }}</div>
                                                 </td>
                                                 <td>
                                                     <div class="mb-0">{{ $single_chats['record']->custom_details}}
@@ -130,34 +130,34 @@
                             <table class="table table-borderless table-font mb-0">
                                 <tr>
                                     <td>
-                                        <div class="width-120">Per Item Price</div>
+                                        <div class="width-120"> {{ __('seller_messages.per_item_price') }}</div>
                                     </td>
                                     <td>
-                                        <div>{{ $single_chats['record']->price}} KD</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="width-120">Shipping Fees</div>
-                                    </td>
-                                    <td>
-                                        <div>{{ $single_chats['record']->shipping}} KD</div>
+                                        <div>{{ $single_chats['record']->price}} {{ __('seller_messages.KD') }}</div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="width-120">Tax</div>
+                                        <div class="width-120"> {{ __('seller_messages.shipping_fees') }}</div>
                                     </td>
                                     <td>
-                                        <div>{{ $single_chats['record']->tax}} KD</div>
+                                        <div>{{ $single_chats['record']->shipping}} {{ __('seller_messages.KD') }}</div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="width-120">Total Amount </div>
+                                        <div class="width-120">{{ __('seller_messages.tax') }}</div>
                                     </td>
                                     <td>
-                                        <div>{{ $single_chats['record']->total_amount}} KD</div>
+                                        <div>{{ $single_chats['record']->tax}} {{ __('seller_messages.KD') }}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="width-120">{{ __('seller_messages.total_amount') }}  </div>
+                                    </td>
+                                    <td>
+                                        <div>{{ $single_chats['record']->total_amount}} {{ __('seller_messages.KD') }}</div>
                                     </td>
                                 </tr>
                             </table>
@@ -183,9 +183,9 @@
 
 
                     <div class="quation-pnl mt-3">
-                        <h5>Quotation</h5>
+                        <h5>{{ __('seller_messages.quotation') }}</h5>
                         <div class="form-group sub-form">
-                            <label for="item" class="size14">Per Item Price</label>
+                            <label for="item" class="size14">{{ __('seller_messages.per_item_price') }}</label>
                             <input type="text" class="form-control notapplyspace applynumberOnly" placeholder="Eg 20 KD"
                                 name="price" id="price1">
                             <p class="text-danger mb-0" id="error1-price"></p>
@@ -210,7 +210,7 @@
                             </div> -->
                             <div class="col-lg-12">
                                 <div class="form-group sub-form">
-                                    <label for="item" class="size14">Total Amount</label>
+                                    <label for="item" class="size14">{{ __('seller_messages.total_amount') }}</label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         name="total_amount" id="total_amount1" placeholder="Eg 20 KD" readonly>
                                     <p class="text-danger mb-0" id="error1-total_amount"></p>
@@ -218,7 +218,7 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <button type="submit" class="btn add-fillbtn w-100">Send Quotation</button>
+                            <button type="submit" class="btn add-fillbtn w-100">{{ __('seller_messages.send_quotation') }}</button>
                         </div>
                     </div>
 
@@ -243,16 +243,16 @@
 
                 <div class="time-pnl">
                     <div class="gift-pnl mt-4">
-                        <h5>Quotation</h5>
+                        <h5>{{ __('seller_messages.quotation') }}</h5>
 
                         <div class="border-1">
                             <table class="table table-borderless table-font mb-0">
                                 <tr>
                                     <td>
-                                        <div class="width-120">Per Item Price 1</div>
+                                        <div class="width-120">{{ __('seller_messages.per_item_price') }}</div>
                                     </td>
                                     <td>
-                                        <div>{{ $single_chats['record']->price}} KD</div>
+                                        <div>{{ $single_chats['record']->price}} {{ __('seller_messages.KD') }}</div>
                                     </td>
                                 </tr>
                                 <!-- <tr>
@@ -273,10 +273,10 @@
                                 </tr> -->
                                 <tr>
                                     <td>
-                                        <div class="width-120">Total Amount </div>
+                                        <div class="width-120">{{ __('seller_messages.total_amount') }} </div>
                                     </td>
                                     <td>
-                                        <div>{{ $single_chats['record']->total_amount}} KD</div>
+                                        <div>{{ $single_chats['record']->total_amount}} {{ __('seller_messages.KD') }} </div>
                                     </td>
                                 </tr>
                             </table>
@@ -284,7 +284,7 @@
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="btn add-fillbtn w-100" data-bs-toggle="modal"
-                            data-bs-target="#modifyModal">Modify Quotation</button>
+                            data-bs-target="#modifyModal">{{ __('seller_messages.modify_quotation') }} </button>
                     </div>
                 </div>
                 @endif
@@ -352,7 +352,7 @@
                             </div>
 
                             <input type="text" class="form-control msger-input" name="message" id="chatMessage"
-                                placeholder="Type Message here...">
+                                placeholder="{{ __('seller_messages.type_message_here') }}">
 
                             <!-- IMPORTANT: type="button" -->
                             <button type="button" id="sendMessageBtn" class="msger-send-btn">
@@ -378,7 +378,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Modify Quotation </h1>
+                <h1 class="modal-title fs-5">{{ __('seller_messages.modify_quotation') }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="ModifyPrice" action="{{ route('seller.Modify_custom_order_price')}}" method="post">
@@ -393,7 +393,7 @@
                 <div class="modal-body p-4">
                     <div class="quation-pnl mt-1">
                         <div class="form-group sub-form">
-                            <label for="item" class="size14">Per Item Price</label>
+                            <label for="item" class="size14">{{ __('seller_messages.per_item_price') }}</label>
                             <input type="text" class="form-control notapplyspace applynumberOnly" placeholder="Eg 20 KD"
                                 name="price" id="price0" value="{{ $single_chats['record']->price}}">
                             <p class="text-danger mb-0" id="error0-price"></p>
@@ -421,7 +421,7 @@
 
                             <div class="col-lg-12">
                                 <div class="form-group sub-form">
-                                    <label for="item" class="size14">Total Amount</label>
+                                    <label for="item" class="size14">{{ __('seller_messages.total_amount') }}</label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" value="{{ $single_chats['record']->total_amount}}"
                                         name="total_amount" id="total_amount0" readonly>
@@ -430,8 +430,7 @@
                             </div>
                         </div>
                         <div class="mt-4">
-                            <button type="submit" class="btn add-fillbtn w-100">Confirm &
-                                Modify</button>
+                            <button type="submit" class="btn add-fillbtn w-100">{{ __('seller_messages.confirm_modify') }}</button>
                         </div>
                     </div>
                 </div>
@@ -449,7 +448,7 @@
             <div class="modal-body">
                 <div class="text-center">
                     <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
-                    <div class="title24 py-3">Quotation Sent Successfully!</div>
+                    <div class="title24 py-3">{{ __('seller_messages.quotation_sent_successfully') }}</div>
                 </div>
             </div>
         </div>
@@ -464,7 +463,7 @@
             <div class="modal-body">
                 <div class="text-center">
                     <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
-                    <div class="title24 py-3">Quotation Modify Successfully!</div>
+                    <div class="title24 py-3">{{ __('seller_messages.quotation_modify_successfully') }}</div>
                 </div>
             </div>
         </div>
