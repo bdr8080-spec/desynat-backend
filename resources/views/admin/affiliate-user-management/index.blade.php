@@ -72,7 +72,11 @@
                                     @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('country') == $country['name'] ? 'selected' : '' }}>
-                                        {{ $country['name'] }}
+                                        @if(app()->getLocale() == 'en')
+                                                {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
                                     </option>
                                     @endforeach
                                 </select>
@@ -124,7 +128,13 @@
                                 <td>{{ $user['full_name'] }}</td>
                                 <td>{{ $user['country_code'] }}{{ $user['mobile'] }}</td>
                                 <td>{{ $user['email'] }}</td>
-                                <td>{{ $user['country_details']['name'] }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $user['country_details']['name'] }}
+                                    @else
+                                    {{ $user['country_details']['name_ar'] }}
+                                    @endif
+                                </td>
                                 <td>
                                     @if(!empty($user['address_details']))
                                      {{$user['address_details']['address1']}}
@@ -234,7 +244,11 @@
                                             @foreach($countries as $country)
                                             <option value="{{ $country['name'] }}"
                                                 {{ request('country1') == $country['name'] ? 'selected' : '' }}>
+                                                @if(app()->getLocale() == 'en')
                                                 {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
                                             </option>
                                             @endforeach
                                         </select>
@@ -288,7 +302,13 @@
                                 <td>{{ $user['full_name'] }}</td>
                                 <td>{{ $user['country_code'] }}{{ $user['mobile'] }}</td>
                                 <td>{{ $user['email'] }}</td>
-                                <td>{{ $user['country_details']['name'] }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $user['country_details']['name'] }}
+                                    @else
+                                    {{ $user['country_details']['name_ar'] }}
+                                    @endif
+                                </td>
                                 <td>
                                     @if(!empty($user['address_details']))
                                      {{$user['address_details']['address1']}}
@@ -399,7 +419,11 @@
                                             @foreach($countries as $country)
                                             <option value="{{ $country['name'] }}"
                                                 {{ request('country2') == $country['name'] ? 'selected' : '' }}>
+                                                @if(app()->getLocale() == 'en')
                                                 {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
                                             </option>
                                             @endforeach
                                         </select>
@@ -449,7 +473,13 @@
                                 <td>{{ $user['full_name'] }}</td>
                                 <td>{{ $user['country_code'] }}{{ $user['mobile'] }}</td>
                                 <td>{{ $user['email'] }}</td>
-                                <td>{{ $user['country_details']['name'] }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $user['country_details']['name'] }}
+                                    @else
+                                    {{ $user['country_details']['name_ar'] }}
+                                    @endif
+                                </td>
                                 <td>
                                     @if(!empty($user['address_details']))
                                      {{$user['address_details']['address1']}}

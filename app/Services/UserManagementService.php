@@ -501,24 +501,26 @@ class UserManagementService
             }
 
             //delivery option
+            if (!empty($data->delivery_option)) {
+                $deliveryOptions = (array) $data->delivery_option;
 
-            $deliveryOptions = (array) $data->delivery_option;
+                if (in_array('2', $deliveryOptions)) {
 
-            if (in_array('2', $deliveryOptions)) {
+                    $products = $products->select('products.*')
+                        ->addSelect([
+                            'total_sales' => orderdetail::selectRaw('COUNT(*)')
+                                ->whereColumn('orderdetails.product_id', 'products.id')
+                                ->where('payment_status', '1')
+                                ->where('delivery_status', '3')
+                        ])
+                        ->orderByDesc('total_sales');
+                }
 
-                $products = $products->select('products.*')
-                    ->addSelect([
-                        'total_sales' => orderdetail::selectRaw('COUNT(*)')
-                            ->whereColumn('orderdetails.product_id', 'products.id')
-                            ->where('payment_status', '1')
-                            ->where('delivery_status', '3')
-                    ])
-                    ->orderByDesc('total_sales');
-            }
+                elseif (in_array('1', $deliveryOptions)) {
 
-            elseif (in_array('1', $deliveryOptions)) {
+                    $products->reorder()->inRandomOrder();
+                }
 
-                $products->reorder()->inRandomOrder();
             }
 
             

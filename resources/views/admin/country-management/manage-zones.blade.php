@@ -20,7 +20,7 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">{{ __('admin_messages.manage_zones') }}({{$country->name}}->{{$city->name}})</h6> 
+                        <h6 class="m-0">{{ __('admin_messages.manage_zones') }}(@if(app()->getLocale() == 'en'){{$country->name}}@else{{$country->name_ar}}@endif->@if(app()->getLocale() == 'en'){{$city->name}}@else{{$city->name_ar}}@endif)</h6> 
                     </div>
                 </div>
 
