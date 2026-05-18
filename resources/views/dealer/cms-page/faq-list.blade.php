@@ -81,5 +81,5 @@
 
 </div>
 
-@include('dealer.layout.custom_code');
-@include('dealer.layout.footer');
+@include('dealer.layout.custom_code')
+@include('dealer.layout.footer')
