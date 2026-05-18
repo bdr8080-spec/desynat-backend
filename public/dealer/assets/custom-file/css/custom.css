@@ -1442,3 +1442,27 @@ table.dataTable td.dt-type-date {
     margin-left: -10px;
     position: relative;
 }
+
+
+[dir="rtl"] .search-field .form-control {
+    padding: 10px 40px 10px 20px;
+
+}
+[dir="rtl"] .form-select {
+    background: none;
+}
+
+[dir="rtl"] .asideicon {
+    margin-left: 10px;
+}
+[dir="rtl"] .common-title img {
+    transform: rotate(180deg);
+}
+
+/* [dir="rtl"] .sidebar {
+    right: 0;
+}
+[dir="rtl"] #main, #footer {
+    margin-left: 0px;
+    margin-right: 300px;
+} */

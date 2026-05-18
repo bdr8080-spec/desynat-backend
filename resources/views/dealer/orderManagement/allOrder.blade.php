@@ -57,12 +57,12 @@
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from_date"
+                                                    <input type="date" class="form-control datepicker" name="from_date"
                                                         @if(request()->type==1 && request()->tabs==1)
                                                     value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to_date"
+                                                    <input type="date" class="form-control datepicker" name="to_date"
                                                         onchange="this.form.submit()" @if(request()->type==1 &&
                                                     request()->tabs==1)
                                                     value="{{request()->to_date}}" @endif>
@@ -197,12 +197,12 @@
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from_date"
+                                                    <input type="date" class="form-control datepicker" name="from_date"
                                                         @if(request()->type==1 && request()->tabs==2)
                                                     value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to_date"
+                                                    <input type="date" class="form-control datepicker" name="to_date"
                                                         onchange="this.form.submit()" @if(request()->type==1 &&
                                                     request()->tabs==2)
                                                     value="{{request()->to_date}}" @endif>
@@ -340,12 +340,12 @@
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from_date"
+                                                    <input type="date" class="form-control datepicker" name="from_date"
                                                         @if(request()->type==1 && request()->tabs==3)
                                                     value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to_date"
+                                                    <input type="date" class="form-control datepicker" name="to_date"
                                                         onchange="this.form.submit()" @if(request()->type==1 &&
                                                     request()->tabs==3)
                                                     value="{{request()->to_date}}" @endif>
@@ -513,12 +513,12 @@
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from_date"
+                                                    <input type="date" class="form-control datepicker" name="from_date"
                                                         @if(request()->type==2 && request()->tabs==1)
                                                     value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to_date"
+                                                    <input type="date" class="form-control datepicker" name="to_date"
                                                         onchange="this.form.submit()" @if(request()->type==2 &&
                                                     request()->tabs==1)
                                                     value="{{request()->to_date}}" @endif>
@@ -642,12 +642,12 @@
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from_date"
+                                                    <input type="date" class="form-control datepicker" name="from_date"
                                                         @if(request()->type==2 && request()->tabs==2)
                                                     value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to_date"
+                                                    <input type="date" class="form-control datepicker" name="to_date"
                                                         onchange="this.form.submit()" @if(request()->type==2 &&
                                                     request()->tabs==2)
                                                     value="{{request()->to_date}}" @endif>
@@ -772,12 +772,12 @@
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from_date"
+                                                    <input type="date" class="form-control datepicker" name="from_date"
                                                         @if(request()->type==2 && request()->tabs==3)
                                                     value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to_date"
+                                                    <input type="date" class="form-control datepicker" name="to_date"
                                                         onchange="this.form.submit()" @if(request()->type==2 &&
                                                     request()->tabs==3)
                                                     value="{{request()->to_date}}" @endif>
