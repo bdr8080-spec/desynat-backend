@@ -4,6 +4,9 @@ namespace App\Services;
 use App\Models\seller;
 use App\Models\country;
 use Illuminate\Http\Request;
+use App\Models\orderdetail;
+use App\Models\product;
+use App\Models\ProductRating;
 use App\Http\Controllers\CommonController;
 
 
@@ -61,6 +64,7 @@ class SellerManagementService
                 $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
                     ? $seller->subcription_plan->toArray()
                     : null;
+                    
 
                 return $data;
             });
@@ -102,7 +106,10 @@ class SellerManagementService
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
-                    'subcription_plan'
+                    'subcription_plan',
+                    'highlights',
+                    'stories',
+                    'reels'
                 ]);
 
             // ✅ Country filter
@@ -156,6 +163,62 @@ class SellerManagementService
                     $data['subcription_plan'] = ($seller->subcription_plan && !$seller->subcription_plan->isEmpty())
                         ? $seller->subcription_plan->toArray()
                         : null;
+                    $data['reels'] = $seller->reels && !$seller->reels->isEmpty()
+                        ? $seller->reels->toArray()
+                        : null;
+
+                    $data['highlights'] = $seller->highlights && !$seller->highlights->isEmpty()
+                        ? $seller->highlights->toArray()
+                        : null;
+
+                    $data['stories'] = $seller->stories && !$seller->stories->isEmpty()
+                        ? $seller->stories->toArray()
+                        : null;
+
+                  $data['total_completed_orders'] = orderdetail::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )
+                        ->where('payment_status', '1')
+                        ->where('delivery_status', '3')
+                        ->count();
+
+                    $data['total_cancelled_orders'] = orderdetail::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )
+                        ->where('payment_status', '2')
+                        ->count();
+
+                    $data['total_earning'] = orderdetail::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )
+                        ->where('payment_status', '1')
+                        ->where('delivery_status', '3')
+                        ->selectRaw('
+                            COALESCE(SUM(amount),0) +
+                            COALESCE(SUM(tax),0) +
+                            COALESCE(SUM(shipping_fees),0)
+                            as total_earning
+                        ')
+                        ->value('total_earning');
+
+                    $data['average_product_rating'] = round(
+                        ProductRating::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )->avg('product_rating'),
+                        1
+                    );
+
+                    $data['average_store_rating'] = round(
+                        ProductRating::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )->avg('store_rating'),
+                        1
+                    );
 
                     return $data;
                 });
@@ -174,6 +237,62 @@ class SellerManagementService
                     $data['subcription_plan'] = ($seller->subcription_plan && !$seller->subcription_plan->isEmpty())
                         ? $seller->subcription_plan->toArray()
                         : null;
+                    $data['reels'] = $seller->reels && !$seller->reels->isEmpty()
+                        ? $seller->reels->toArray()
+                        : null;
+
+                    $data['highlights'] = $seller->highlights && !$seller->highlights->isEmpty()
+                        ? $seller->highlights->toArray()
+                        : null;
+
+                    $data['stories'] = $seller->stories && !$seller->stories->isEmpty()
+                        ? $seller->stories->toArray()
+                        : null;
+
+                    $data['total_completed_orders'] = orderdetail::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )
+                        ->where('payment_status', '1')
+                        ->where('delivery_status', '3')
+                        ->count();
+
+                    $data['total_cancelled_orders'] = orderdetail::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )
+                        ->where('payment_status', '2')
+                        ->count();
+
+                    $data['total_earning'] = orderdetail::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )
+                        ->where('payment_status', '1')
+                        ->where('delivery_status', '3')
+                        ->selectRaw('
+                            COALESCE(SUM(amount),0) +
+                            COALESCE(SUM(tax),0) +
+                            COALESCE(SUM(shipping_fees),0)
+                            as total_earning
+                        ')
+                        ->value('total_earning');
+
+                    $data['average_product_rating'] = round(
+                        ProductRating::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )->avg('product_rating'),
+                        1
+                    );
+
+                    $data['average_store_rating'] = round(
+                        ProductRating::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )->avg('store_rating'),
+                        1
+                    );
 
                     return $data;
                 });
@@ -255,6 +374,7 @@ class SellerManagementService
                 $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
                     ? $seller->subcription_plan->toArray()
                     : null;
+                    
 
                 return $data;
             });
@@ -292,6 +412,9 @@ class SellerManagementService
                         'store_document',
                         'seller_bank_details',
                         'subcription_plan.plan_info',
+                        'highlights',
+                        'stories',
+                        'reels'
                     ])
                     ->find($sellerId);
 
@@ -311,6 +434,62 @@ class SellerManagementService
             $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
                 ? $seller->subcription_plan->toArray()
                 : null;
+            $data['reels'] = $seller->reels && !$seller->reels->isEmpty()
+                ? $seller->reels->toArray()
+                : null;
+
+            $data['highlights'] = $seller->highlights && !$seller->highlights->isEmpty()
+                ? $seller->highlights->toArray()
+                : null;
+
+            $data['stories'] = $seller->stories && !$seller->stories->isEmpty()
+                ? $seller->stories->toArray()
+                : null;
+
+            $data['total_completed_orders'] = orderdetail::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )
+                        ->where('payment_status', '1')
+                        ->where('delivery_status', '3')
+                        ->count();
+
+                    $data['total_cancelled_orders'] = orderdetail::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )
+                        ->where('payment_status', '2')
+                        ->count();
+
+                    $data['total_earning'] = orderdetail::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )
+                        ->where('payment_status', '1')
+                        ->where('delivery_status', '3')
+                        ->selectRaw('
+                            COALESCE(SUM(amount),0) +
+                            COALESCE(SUM(tax),0) +
+                            COALESCE(SUM(shipping_fees),0)
+                            as total_earning
+                        ')
+                        ->value('total_earning');
+
+            $data['average_product_rating'] = round(
+                        ProductRating::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )->avg('product_rating'),
+                        1
+                    );
+
+            $data['average_store_rating'] = round(
+                ProductRating::whereIn(
+                    'product_id',
+                    product::where('seller_id', $seller->id)->pluck('id')
+                )->avg('store_rating'),
+                1
+            );
 
 
             return [

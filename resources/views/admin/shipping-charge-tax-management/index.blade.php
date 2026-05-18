@@ -14,7 +14,7 @@
         <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
                 <div class="col-lg-6 col-md-6 col-12">
-                    <h2 class="h2">Delivery Charges & Tax Management</h2>
+                    <h2 class="h2">{{ __('admin_messages.delivery_charges_tax_management') }}</h2>
                 </div>
 
 
@@ -27,14 +27,14 @@
                         <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
-                                    <th scope="col">SR No.</th>
-                                    <th scope="col">Country Name</th>
+                                    <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                    <th scope="col">{{ __('admin_messages.country') }}</th>
                                     @if(in_array(11, $permissions) || $admin->type == 1)
-                                    <th scope="col">Manage Delivery Charges</th>
+                                    <th scope="col">{{ __('admin_messages.manage_delivery_charges') }}</th>
                                     @endif
                                     <th scope="col">Tax Percentage</th>
                                     @if(in_array(11, $permissions) || $admin->type == 1)
-                                    <th scope="col">Action</th>
+                                    <th scope="col">{{ __('admin_messages.action') }}</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -42,10 +42,16 @@
                                 @forelse ($getCountries as $key => $country)
                                 <tr>
                                     <th scope="row">{{ $key + 1 }}</th>
-                                    <td>{{ $country->name }}</td>
+                                    <td>
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $country->name }}
+                                        @else
+                                        {{ $country->name_ar }}
+                                        @endif
+                                    </td>
                                     @if(in_array(11, $permissions) || $admin->type == 1)
                                     <td> <a class="btn btn-dark customBtn" href="{{ route('admin.manageShippingCharges', ['id' => $country->id]) }}">
-                                            <span>Manage </span>
+                                            <span>{{ __('admin_messages.manage') }} </span>
                                         </a></td>
                                     @endif
                                     <td>{{ $country['tax_info'] ? $country['tax_info']->tax : 'N/A' }}</td>
@@ -67,7 +73,7 @@
                                 </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center text-muted">No Data found</td>
+                                        <td colspan="4" class="text-center text-muted">{{ __('admin_messages.no_data_found') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -83,7 +89,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Update Tax</h2>
+                <h2 class="h2">{{ __('admin_messages.update_tax') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="editTaxForm">
@@ -92,8 +98,8 @@
                         <div class="col-lg-12">
                             <input type="hidden" id="editTaxId" name="tax_id">
                             <div class="form-group w-100">
-                                <label for="from" class="form-label"> Tax</label>
-                                <input type="text" id="tax" name="tax" placeholder="Enter Tax" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1'); if(parseFloat(this.value)>100)this.value='100';" class="form-control"
+                                <label for="from" class="form-label"> {{ __('admin_messages.tax') }}</label>
+                                <input type="text" id="tax" name="tax" placeholder="{{ __('admin_messages.enter_tax') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1'); if(parseFloat(this.value)>100)this.value='100';" class="form-control"
                                     aria-describedby="passwordHelpInline" />
                                 <div id="editTaxError" class="text-danger small" style="display:none;"></div>
                             </div>
@@ -101,7 +107,7 @@
                                 <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
                                     style="margin-top: 30px">
                                     <button type="submit" class="btn btn-dark customBtn">
-                                        Save
+                                        {{ __('admin_messages.save') }}
                                     </button>
                                 </div>
                             </div>
@@ -146,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let hasError = false;
 
         if (!tax) {
-            editTaxError.innerText = "Please Enter Tax";
+            editTaxError.innerText = "{{ __('admin_messages.enter_tax') }}";
             editTaxError.style.display = "block";
             hasError = true;
         }
