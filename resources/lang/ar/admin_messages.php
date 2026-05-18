@@ -390,6 +390,7 @@ return [
     'email_available' => 'البريد الإلكتروني متاح.',
     'vehicle_information' => 'معلومات المركبة',
     'invalid_file_type_allowed' => 'نوع الملف غير صالح. المسموح: جيه بي جي و جيه بي إي جي و بي إن جي و جي آي إف و بي دي إف',
+    'please_enter_a_location_first' => 'يرجى إدخال الموقع أولاً.',
 
     //reason management
     'exchange' => 'استبدال',
@@ -411,6 +412,8 @@ return [
     'reson_arabic' => 'السبب (بالعربية)',
     'enter_reason_in_english' => 'أدخل السبب بالإنجليزية',
     'enter_reason_in_arabic' => 'أدخل السبب بالعربية',
+    'add_reason' => 'إضافة سبب',
+    'edit_reason' => 'تعديل السبب',
 
     //delivery charges & tax management
     'manage_delivery_charges' => 'إدارة رسوم التوصيل',

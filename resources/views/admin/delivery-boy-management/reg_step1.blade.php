@@ -515,7 +515,7 @@ document.querySelectorAll(".toggle-password").forEach((toggle) => {
     // Save button: modal close only
     document.querySelector(".setup-done.button").addEventListener("click", function() {
         if (!selectedLatLng) {
-            showLocationError("Please select a location first.");
+            showLocationError("{{ __('admin_messages.please_enter_a_location_first') }}");
             return;
         }
         clearLocationError();

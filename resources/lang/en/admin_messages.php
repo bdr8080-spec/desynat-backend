@@ -393,6 +393,7 @@ return [
     'email_available' => 'Email available.',
     'vehicle_information' => 'Vehicle Information',
     'invalid_file_type_allowed' => 'Invalid file type. Allowed: JPG, JPEG, PNG, GIF, PDF.',
+    'please_enter_a_location_first' => 'Please enter a location first.',
 
     //reason management
     'exchange' => 'Exchange',
@@ -414,6 +415,8 @@ return [
     'reson_arabic' => 'Reason (Arabic)',
     'enter_reason_in_english' => 'Enter reason in English',
     'enter_reason_in_arabic' => 'Enter reason in Arabic',
+    'add_reason' => 'Add Reason',
+    'edit_reason' => 'Edit Reason',
 
     //delivery charges & tax management
     'manage_delivery_charges' => 'Manage Delivery Charges',

@@ -65,7 +65,7 @@ label {
                     <i class="fas fa-angle-left"></i>
                 </a>
             </div>
-            <h2 class="h2 text-start">Vehicle Information</h2>
+            <h2 class="h2 text-start">{{ __('admin_messages.vehicle_information') }}</h2>
 
         </div>
 
@@ -75,8 +75,8 @@ label {
 
                     <div class="row">
                         <div class="col-lg-6 mt-3">
-                            <label class="mb-0">Vehicle Name</label>
-                            <input type="text" placeholder="Enter Vehicle Name"
+                            <label class="mb-0">{{ __('admin_messages.vehicle_name') }}</label>
+                            <input type="text" placeholder="{{ __('admin_messages.enter_vehicle_name') }}"
                                 oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')"
                                 class="form-control mt-1" id="vehicle_name"
                                 value="{{ $deliveryBoy->vehicle_name ?? '' }}">
@@ -84,8 +84,8 @@ label {
                         </div>
 
                         <div class="col-lg-6 mt-3">
-                            <label class="mb-0">Vehicle Registration Number</label>
-                            <input type="text" placeholder="Enter Vehicle Registration Number"
+                            <label class="mb-0">{{ __('admin_messages.registration_number') }}</label>
+                            <input type="text" placeholder="{{ __('admin_messages.enter_vehicle_registration_number') }}"
                                 oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')"
                                 class="form-control mt-1" id="vehicle_reg"
                                 value="{{ $deliveryBoy->vehicle_reg_no ?? '' }}">
@@ -95,7 +95,7 @@ label {
 
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Vehicle Image</h5>
+                            <h5>{{ __('admin_messages.upload_vehicle_image') }}</h5>
                             <div class="row mt-3">
 
                                 <!-- VEHICLE FRONT -->
@@ -126,7 +126,7 @@ label {
                                             data-existing-image="{{ $front }}">
                                     </label>
 
-                                    <div class="upload-subtitle">Front</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.front') }}</div>
                                     <div id="vehicleImgFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -158,7 +158,7 @@ label {
                                             data-existing-image="{{ $back }}">
                                     </label>
 
-                                    <div class="upload-subtitle">Back</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.back') }}</div>
                                     <div id="vehicleImgBack_error" class="text-danger small"></div>
                                 </div>
 
@@ -167,7 +167,7 @@ label {
 
                         <!-- IDENTITY PROOF -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Identity Proof</h5>
+                            <h5>{{ __('admin_messages.upload_identity_proof') }}</h5>
                             <div class="row mt-3">
 
                                 <!-- ID PROOF FRONT -->
@@ -198,7 +198,7 @@ label {
                                             data-existing-image="{{ $idF }}">
                                     </label>
 
-                                    <div class="upload-subtitle">Front</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.front') }}</div>
                                     <div id="idProofFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -230,7 +230,7 @@ label {
                                             data-existing-image="{{ $idB }}">
                                     </label>
 
-                                    <div class="upload-subtitle">Back</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.back') }}</div>
                                     <div id="idProofBack_error" class="text-danger small"></div>
                                 </div>
 
@@ -241,7 +241,7 @@ label {
                     <!-- DRIVING LICENSE -->
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Driving License</h5>
+                            <h5>{{ __('admin_messages.upload_driving_license') }}</h5>
                             <div class="row mt-3">
 
                                 <!-- DL FRONT -->
@@ -271,7 +271,7 @@ label {
                                             data-existing-image="{{ $dlF }}">
                                     </label>
 
-                                    <div class="upload-subtitle">Front</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.front') }}</div>
                                     <div id="dlFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -302,7 +302,7 @@ label {
                                             data-existing-image="{{ $dlB }}">
                                     </label>
 
-                                    <div class="upload-subtitle">Back</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.back') }}</div>
                                     <div id="dlBack_error" class="text-danger small"></div>
                                 </div>
 
@@ -311,7 +311,7 @@ label {
 
                         <!-- VEHICLE INSURANCE -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Vehicle Insurance</h5>
+                            <h5>{{ __('admin_messages.upload_vehicle_insurance') }}</h5>
                             <div class="row mt-3 justify-content-start">
                                 @php
                                     $ins = $deliveryBoy->vehicle_insurance[0]->document_path ?? '';
@@ -350,7 +350,7 @@ label {
                     <!-- POLLUTION SECTION -->
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Pollution Paper (Optional)</h5>
+                            <h5>{{ __('admin_messages.upload_pollution_paper_optional') }}</h5>
                             <div class="row mt-3">
 
                                 <!-- POLLUTION FRONT -->
@@ -381,7 +381,7 @@ label {
                                             data-existing-image="{{ $pf }}">
                                     </label>
 
-                                    <div class="upload-subtitle">Front</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.front') }}</div>
                                     <div id="pollutionFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -413,7 +413,7 @@ label {
                                             data-existing-image="{{ $pb }}">
                                     </label>
 
-                                    <div class="upload-subtitle">Back</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.back') }}</div>
                                     <div id="pollutionBack_error" class="text-danger small"></div>
                                 </div>
 
@@ -422,7 +422,7 @@ label {
 
                         <!-- RC SECTION -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Registration Certificate (Optional)</h5>
+                            <h5>{{ __('admin_messages.upload_registration_certificate_optional') }}</h5>
                             <div class="row mt-3">
 
                                 <!-- RC FRONT -->
@@ -453,7 +453,7 @@ label {
                                             data-existing-image="{{ $rcF }}">
                                     </label>
 
-                                    <div class="upload-subtitle">Front</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.front') }}</div>
                                     <div id="rcFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -485,7 +485,7 @@ label {
                                             data-existing-image="{{ $rcB }}">
                                     </label>
 
-                                    <div class="upload-subtitle">Back</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.back') }}</div>
                                     <div id="rcBack_error" class="text-danger small"></div>
                                 </div>
 
@@ -494,8 +494,8 @@ label {
                     </div>
 
                     <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 gap-4 mt-4">
-                        <a href="{{ route('admin.deliveryBoyManagement') }}" class="btn btn-dark customBtn">Cancel</a>
-                        <a class="btn btn-dark customBtn" id="submitBtn">Update</a>
+                        <a href="{{ route('admin.deliveryBoyManagement') }}" class="btn btn-dark customBtn">{{ __('admin_messages.cancel') }}</a>
+                        <a class="btn btn-dark customBtn" id="submitBtn">{{ __('admin_messages.update') }}</a>
                     </div>
 
                 </div>
@@ -544,18 +544,18 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const textErrors = {
-        vehicle_name: "Please enter vehicle name.",
-        vehicle_reg: "Please enter vehicle registration number."
+        vehicle_name: "{{ __('admin_messages.please_enter_vehicle_name') }}",
+        vehicle_reg: "{{ __('admin_messages.enter_vehicle_registration_number') }}",
     };
 
     const imageErrors = {
-        vehicleImgFront: "Please upload vehicle front image.",
-        vehicleImgBack: "Please upload vehicle back image.",
-        idProofFront: "Please upload ID proof front image.",
-        idProofBack: "Please upload ID proof back image.",
-        dlFront: "Please upload driving license front image.",
-        dlBack: "Please upload driving license back image.",
-        insuranceFront: "Please upload insurance image."
+        vehicleImgFront: "{{ __('admin_messages.please_upload_vehicle_front_image') }}",
+        vehicleImgBack: "{{ __('admin_messages.please_upload_vehicle_back_image') }}",
+        idProofFront: "{{ __('admin_messages.please_upload_id_proof_front_image') }}",
+        idProofBack: "{{ __('admin_messages.please_upload_id_proof_back_image') }}",
+        dlFront: "{{ __('admin_messages.please_upload_driving_license_front_image') }}",
+        dlBack: "{{ __('admin_messages.please_upload_driving_license_back_image') }}",
+        insuranceFront: "{{ __('admin_messages.please_upload_vehicle_insurance_image') }}",
     };
 
     // ------------------- File input preview -------------------
@@ -575,12 +575,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const ext = file.name.split('.').pop().toLowerCase();
             if (!ALLOWED_EXT.includes(ext)) {
-                if(errBox) errBox.innerHTML="Invalid file type. Allowed: JPG, JPEG, PNG, GIF, PDF.";
+                if(errBox) errBox.innerHTML="{{ __('admin_messages.invalid_file_type_allowed') }}";
                 input.value="";
                 return;
             }
             if (file.size > MAX_FILE_SIZE) {
-                if(errBox) errBox.innerHTML="File size should not exceed 4 MB.";
+                if(errBox) errBox.innerHTML="{{ __('admin_messages.image_size_less_than_4mb') }}";
                 input.value="";
                 return;
             }

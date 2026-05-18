@@ -72,7 +72,7 @@ width: fit-content;
                     <i class="fas fa-angle-left"></i>
                 </a>
             </div>
-            <h2 class="h2 text-start">Edit Delivery Boy</h2>
+            <h2 class="h2 text-start">{{ __('admin_messages.edit_delivery_boy') }}</h2>
 
         </div>
         <div class="content">
@@ -107,7 +107,7 @@ width: fit-content;
                                 </div>
                             </div> -->
                             <div class="col-lg-12">
-                                <div class="upload-title text-center">Upload Profile Image</div>
+                                <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
                                 <div class="upload-new text-center">
                                     <label for="profileUpload" class="upload-box">
                                         <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
@@ -115,7 +115,7 @@ width: fit-content;
                                             class="upload-icon"
                                             style="{{ ($step1Data['profile_pic'] ?? $deliveryBoy->profile_pic) ? 'display:none;' : '' }}" />
                                         
-                                        <div class="upload-text">Upload Profile Image</div>
+                                        <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
                                         <input type="file" id="profileUpload" name="profile_pic" hidden accept="image/*" />
                                         
                                         <img id="profilePreview" class="preview-image"
@@ -131,10 +131,10 @@ width: fit-content;
                                 <!-- Full Name English -->
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Full Name</label>
-                                        <span class="text-muted" style="font-size: 12px;">In English</span>
+                                        <label class="mb-0">{{ __('admin_messages.full_name') }}</label>
+                                        <span class="text-muted" style="font-size: 12px;">{{ __('admin_messages.english') }}</span>
                                     </div>
-                                    <input type="text" placeholder="Enter Full Name" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  class="form-control mt-1"
+                                    <input type="text" placeholder="{{ __('admin_messages.enter_full_name_in_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  class="form-control mt-1"
                                         name="full_name_english"
                                         value="{{ $step1Data['full_name_english'] ?? $deliveryBoy->full_name_english ?? '' }}" />
                                     <span class="text-danger" id="full_name_en_error"></span>
@@ -142,8 +142,8 @@ width: fit-content;
 
                                 <!-- Email -->
                                 <div class="mt-3">
-                                    <label>Email-id</label>
-                                    <input type="email" placeholder="Enter Email-Id" class="form-control"
+                                    <label>{{ __('admin_messages.email') }}</label>
+                                    <input type="email" placeholder="{{ __('admin_messages.enter_email_id') }}" class="form-control"
                                         name="email" value="{{ $step1Data['email'] ?? $deliveryBoy->email ?? '' }}" />
                                     <span class="text-danger" id="email_error"></span>
                                 </div>
@@ -151,11 +151,11 @@ width: fit-content;
                                 <!-- Address Line 1 -->
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Address line 1</label>
+                                        <label class="mb-0">{{ __('admin_messages.enter_address_line1') }}</label>
                                     </div>
                                     <div class="position-relative mt-1">
                                         <input type="text" class="form-control" name="address_line1"
-                                            placeholder="Enter Address Line 1"
+                                            placeholder="{{ __('admin_messages.enter_address_line1') }}"
                                             value="{{ $step1Data['address_line1'] ?? $deliveryBoy->address_line1 ?? '' }}" />
                                         <i class="bi bi-crosshair" data-bs-toggle="modal" data-bs-target="#sentModal5"
                                         style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor:pointer;"></i>
@@ -166,18 +166,18 @@ width: fit-content;
                                 <!-- City -->
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">City</label>
+                                        <label class="mb-0">{{ __('admin_messages.city') }}</label>
                                     </div>
-                                    <input type="text" name="city" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  placeholder="Enter City" class="form-control mt-1"
+                                    <input type="text" name="city" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  placeholder="{{ __('admin_messages.enter_city') }}" class="form-control mt-1"
                                         value="{{ $step1Data['city'] ?? $deliveryBoy->city ?? '' }}" />
                                     <span class="text-danger" id="city_error"></span>
                                 </div>
 
                                 <!-- Password -->
                                 <div class="mt-3 position-relative">
-                                    <label>Password</label>
+                                    <label>{{ __('admin_messages.password') }}</label>
                                     <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="Enter password" value="{{ $step1Data['password'] ?? $deliveryBoy->unhashed_password ?? '' }}"style="font-size: 17px;" />
+                                        placeholder="{{ __('admin_messages.enter_password') }}" value="{{ $step1Data['password'] ?? $deliveryBoy->unhashed_password ?? '' }}"style="font-size: 17px;" />
                                     <i class="fas fa-eye toggle-password position-absolute" toggle="#password"
                                     style="right: 15px; cursor: pointer;"></i>
                                 </div>
@@ -185,14 +185,18 @@ width: fit-content;
 
                                 <!-- Zone -->
                                 <div class="mt-3">
-                                    <label>Select Zone</label>
+                                    <label>{{ __('admin_messages.select_zone') }}</label>
                                     <select class="form-select" name="zone_id">
-                                        <option value="">Select Zone</option>
+                                        <option value="">{{ __('admin_messages.select_zone') }}</option>
                                         @foreach($zones as $zone)
                                             <option value="{{ $zone->id }}"
                                                 {{ (isset($step1Data['zone_id']) && $step1Data['zone_id'] == $zone->id) || 
                                                 (!isset($step1Data['zone_id']) && isset($deliveryBoy->zone_id) && $deliveryBoy->zone_id == $zone->id) ? 'selected' : '' }}>
+                                                @if(app()->getLocale() == 'en')
                                                 {{ $zone->name_english }}
+                                                @else
+                                                {{ $zone->name_arabic }}
+                                                @endif
                                             </option>
                                         @endforeach
                                     </select>
@@ -205,10 +209,10 @@ width: fit-content;
                                 <!-- Full Name Arabic -->
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Full Name</label>
-                                        <span class="text-muted" style="font-size: 12px;">In Arabic</span>
+                                        <label class="mb-0">{{ __('admin_messages.full_name') }}</label>
+                                        <span class="text-muted" style="font-size: 12px;">{{ __('admin_messages.arabic') }}</span>
                                     </div>
-                                    <input type="text" placeholder="Enter Full Name" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control mt-1"
+                                    <input type="text" placeholder="{{ __('admin_messages.enter_full_name_in_arabic') }}" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control mt-1"
                                         name="full_name_arabic"
                                         value="{{ $step1Data['full_name_arabic'] ?? $deliveryBoy->full_name_arabic ?? '' }}" />
                                     <span class="text-danger" id="full_name_ar_error"></span>
@@ -222,8 +226,8 @@ width: fit-content;
                                         value="{{ $step1Data['let'] ?? $deliveryBoy->let ?? '' }}">
                                     <input type="hidden" id="long" name="long"
                                         value="{{ $step1Data['long'] ?? $deliveryBoy->long ?? '' }}">
-                                    <label>Mobile Number</label>
-                                    <input id="phone" type="tel"  class="form-control" name="mobile" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/^\s+/,'')"
+                                    <label>{{ __('admin_messages.mobile_number') }}</label>
+                                    <input id="phone" type="tel"  class="form-control" name="mobile" placeholder="{{ __('admin_messages.enter_mobile_number') }}" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/^\s+/,'')"
                                         value="{{ $step1Data['mobile'] ?? $deliveryBoy->mobile ?? '' }}" />
                                     <span class="text-danger" id="mobile_error"></span>
                                 </div>
@@ -231,10 +235,10 @@ width: fit-content;
                                 <!-- Address Line 2 -->
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Address line 2</label>
+                                        <label class="mb-0">{{ __('admin_messages.enter_address_line2') }}</label>
                                     </div>
                                     <input type="text" class="form-control" name="address_line2"
-                                        placeholder="Enter Address Line 2"
+                                        placeholder="{{ __('admin_messages.enter_address_line2') }}"
                                         value="{{ $step1Data['address_line2'] ?? $deliveryBoy->address_line2 ?? '' }}" />
                                     <span class="text-danger" id="address_line2_error"></span>
                                 </div>
@@ -242,18 +246,18 @@ width: fit-content;
                                 <!-- State -->
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">State</label>
+                                        <label class="mb-0">{{ __('admin_messages.state') }}</label>
                                     </div>
-                                    <input type="text" name="state" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  placeholder="Enter State" class="form-control mt-1"
+                                    <input type="text" name="state" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  placeholder="{{ __('admin_messages.enter_state') }}" class="form-control mt-1"
                                         value="{{ $step1Data['state'] ?? $deliveryBoy->state ?? '' }}" />
                                     <span class="text-danger" id="state_error"></span>
                                 </div>
 
                                 <!-- Confirm Password -->
                                 <div class="mt-3 position-relative">
-                                    <label>Confirm Password</label>
+                                    <label>{{ __('admin_messages.confirm_password') }}</label>
                                     <input type="password" id="confirmPassword" class="form-control" name="confirm_password"
-                                        placeholder="Enter Confirm password"
+                                        placeholder="{{ __('admin_messages.enter_confirm_password') }}"
                                         value="{{ $step1Data['password'] ?? $deliveryBoy->unhashed_password ?? '' }}"  style="font-size: 17px;"/>
                                     <i class="fas fa-eye toggle-password position-absolute" toggle="#confirmPassword"
                                     style="right: 15px; cursor: pointer; "></i>
@@ -263,7 +267,7 @@ width: fit-content;
                         </div>
 
                         <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-4">
-                            <button type="submit" class="btn btn-dark customBtn">Next</button>
+                            <button type="submit" class="btn btn-dark customBtn">{{ __('admin_messages.next') }}</button>
                         </div>
                     </form>
 
@@ -280,7 +284,7 @@ width: fit-content;
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Address</h2>
+                <h2 class="h2">{{ __('admin_messages.address') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -297,7 +301,7 @@ width: fit-content;
 
                         <div class="find-location d-flex gap-3 py-4">
                             <div id="useCurrentLocation" class="use-lc">
-                                <i class="bi bi-crosshair"></i> Use Current Location
+                                <i class="bi bi-crosshair"></i> {{ __('admin_messages.use_current_location') }}
                             </div>
                             <div class="d-flex justify-content-start" style="gap: 23px;">
                                 <i class="bi bi-geo-alt-fill"></i>
@@ -307,7 +311,7 @@ width: fit-content;
 
                         <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-3">
                             <span id="locationError" style="color: red; display: none; margin-bottom: 10px;"></span>
-                            <button class="btn btn-dark customBtn w-100 setup-done button">Save</button>
+                            <button class="btn btn-dark customBtn w-100 setup-done button">{{ __('admin_messages.save') }}</button>
                         </div>
                     </div>
                 </div>
@@ -367,7 +371,7 @@ document.querySelectorAll(".toggle-password").forEach((toggle) => {
 </script>
 
 <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places&loading=async">
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places&loading=async&language={{ app()->getLocale() }}">
 </script>
 
 
@@ -554,7 +558,7 @@ function clearLocationError() {
 // Save button: modal close only
 document.querySelector(".setup-done.button").addEventListener("click", function() {
     if (!selectedLatLng) {
-        showLocationError("Please select a location first.");
+        showLocationError("{{ __('admin_messages.please_enter_a_location_first') }}");
         return;
     }
     clearLocationError();
@@ -590,7 +594,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
         if (!allowedTypes.includes(file.type)) {
-            profileImageError.innerText = "Only JPG, JPEG, or PNG images are allowed.";
+            profileImageError.innerText = "{{ __('admin_messages.only_jpg_jpeg_png_allowed') }}";
             profileImageError.style.display = 'block';
             this.value = '';
             return;
@@ -598,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const maxSize = 4 * 1024 * 1024;
         if (file.size > maxSize) {
-            profileImageError.innerText = "Image size must be less than 4MB.";
+            profileImageError.innerText = "{{ __('admin_messages.image_size_less_than_4mb') }}";
             profileImageError.style.display = 'block';
             this.value = '';
             return;
@@ -628,17 +632,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Check required fields
         const fields = [
-            {name: 'full_name_english', errorId: 'full_name_en_error', message: 'Please enter full name (English)'},
-            {name: 'full_name_arabic', errorId: 'full_name_ar_error', message: 'Please enter full name (Arabic)'},
-            {name: 'email', errorId: 'email_error', message: 'Please enter email'},
-            {name: 'mobile', errorId: 'mobile_error', message: 'Please enter mobile number'},
-            {name: 'address_line1', errorId: 'address_line1_error', message: 'Please enter address line 1'},
-            {name: 'address_line2', errorId: 'address_line2_error', message: 'Please enter address line 2'},
-            {name: 'city', errorId: 'city_error', message: 'Please enter city'},
-            {name: 'state', errorId: 'state_error', message: 'Please enter state'},
-            {name: 'password', errorId: 'password_error', message: 'Please enter password'},
-            {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please enter confirm password'},
-            {name: 'zone_id', errorId: 'zone_error', message: 'Please select zone'}
+            {name: 'full_name_english', errorId: 'full_name_en_error', message: "{{ __('admin_messages.please_enter_full_name_in_english') }}"},
+            {name: 'full_name_arabic', errorId: 'full_name_ar_error', message: "{{ __('admin_messages.please_enter_full_name_in_arabic') }}"},
+            {name: 'email', errorId: 'email_error', message: "{{ __('admin_messages.please_enter_email_id') }}"},
+            {name: 'mobile', errorId: 'mobile_error', message: "{{ __('admin_messages.please_enter_mobile_number') }}"},
+            {name: 'address_line1', errorId: 'address_line1_error', message: "{{ __('admin_messages.please_enter_address_line1') }}"},
+            {name: 'address_line2', errorId: 'address_line2_error', message: "{{ __('admin_messages.please_enter_address_line2') }}"},
+            {name: 'city', errorId: 'city_error', message: "{{ __('admin_messages.please_enter_city') }}"},
+            {name: 'state', errorId: 'state_error', message: "{{ __('admin_messages.please_enter_state') }}"},
+            {name: 'password', errorId: 'password_error', message: "{{ __('admin_messages.please_enter_password') }}"},
+            {name: 'confirm_password', errorId: 'confirm_password_error', message: "{{ __('admin_messages.please_enter_confirm_password') }}"},
+            {name: 'zone_id', errorId: 'zone_error', message: "{{ __('admin_messages.please_select_zone') }}"}
         ];
 
         fields.forEach(field => {
@@ -664,14 +668,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (password.length > 0 && password.length < 6) {
             const ps = document.getElementById('password_error');
-            ps.innerText = "Password should be minimum of 6 characters.";
+            ps.innerText = "{{ __('admin_messages.password_min_6_chars') }}";
             ps.style.display = 'block';
             hasError = true;
         }
 
         if (confirmPassword && confirmPassword !== password) {
             const cps = document.getElementById('confirm_password_error');
-            cps.innerText = "Confirm password does not match.";
+            cps.innerText = "{{ __('admin_messages.confirm_password_not_match') }}";
             cps.style.display = 'block';
             hasError = true;
         }
@@ -713,7 +717,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .catch(err => {
             console.error('Error:', err);
-            alert('Something went wrong. Check console for details.');
+            //alert('Something went wrong. Check console for details.');
         });
     });
 
@@ -731,6 +735,97 @@ document.addEventListener("DOMContentLoaded", function() {
             err.classList.remove('text-danger', 'text-success');
         }
     }
+
+     const allInputs = form.querySelectorAll('input, select');
+    allInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            const err = document.getElementById(this.name + '_error');
+            if (err) {
+                err.innerText = '';
+                err.style.display = 'none';
+                err.classList.remove('text-success');
+            }
+        });
+        input.addEventListener('change', function() {
+            const err = document.getElementById(this.name + '_error');
+            if (err) {
+                err.innerText = '';
+                err.style.display = 'none';
+                err.classList.remove('text-success');
+            }
+        });
+    });
+
+    function checkAvailability(url, value, callback) {
+        fetch(url + '?value=' + encodeURIComponent(value))
+        .then(res => res.json())
+        .then(callback)
+        .catch(err => console.error(err));
+    }
+
+    // MOBILE
+    const mobileInput = document.querySelector('[name="mobile"]');
+    mobileInput.addEventListener('input', function() {
+        const mobileError = document.getElementById('mobile_error');
+        const value = this.value.trim();
+
+        if (value.length < 8) {
+            mobileError.innerText = "{{ __('admin_messages.min_8_digits_required') }}";
+            mobileError.classList.add('text-danger');
+            mobileError.style.display = 'block';
+            return;
+        }
+
+        if (value.length > 15) {
+            mobileError.innerText = "{{ __('admin_messages.max_15_digits') }}";
+            mobileError.classList.add('text-danger');
+            mobileError.style.display = 'block';
+            return;
+        }
+
+        checkAvailability('/admin/check-mobile', value, function(data) {
+            if (data.exists) {
+                mobileError.innerText = "{{ __('admin_messages.number_already_registered') }}";
+                mobileError.classList.remove('text-success');
+                mobileError.classList.add('text-danger');
+            } else {
+                mobileError.innerText = "{{ __('admin_messages.mobile_number_available') }}";
+                mobileError.classList.remove('text-danger');
+                mobileError.classList.add('text-success');
+            }
+            mobileError.style.display = 'block';
+        });
+    });
+
+    // EMAIL
+    const emailInput = document.querySelector('[name="email"]');
+    emailInput.addEventListener('input', function() {
+        const emailError = document.getElementById('email_error');
+        const value = this.value.trim();
+
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!pattern.test(value)) {
+            emailError.innerText = "{{ __('admin_messages.invalid_email_format') }}";
+            emailError.classList.remove('text-success');
+            emailError.classList.add('text-danger');
+            emailError.style.display = 'block';
+            return;
+        }
+
+        checkAvailability('/admin/check-email', value, function(data) {
+            if (data.exists) {
+                emailError.innerText = "{{ __('admin_messages.email_already_registered') }}";
+                emailError.classList.remove('text-success');
+                emailError.classList.add('text-danger');
+            } else {
+                emailError.innerText = "{{ __('admin_messages.email_available') }}";
+                emailError.classList.remove('text-danger');
+                emailError.classList.add('text-success');
+            }
+            emailError.style.display = 'block';
+        });
+    });
 });
 
 
