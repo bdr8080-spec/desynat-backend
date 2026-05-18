@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -59,21 +59,21 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                     <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif </span>
+
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
+                                     <li>
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
+                                            <span>AR</span> {{ __('seller_messages.Arabic') }} 
                                         </a>
                                     </li>
-
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
+                                        <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
+                                            <span>EN</span> {{ __('seller_messages.English') }} 
                                         </a>
                                     </li>
 
@@ -99,12 +99,18 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2">
                                 <form action="{{ route('seller.login') }}" method="post">
-                                    <h1>Sign In <br><span class="gold-color">Welcome back !</span></h1>
+                                        <h1>
+                                        {{ __('seller_messages.sign_in') }}
+                                        <br>
+                                        <span class="gold-color">
+                                        {{ __('seller_messages.welcome_back') }}
+                                        </span>
+                                        </h1>
 
                                     @csrf
                                     <div class="form-group">
                                         <div class="form-group mt-4">
-                                            <label for="">Mobile Number or Email Address</label>
+                                            <label for=""> {{ __('seller_messages.mobile_or_email') }}</label>
 
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class=" d-none LoginCountryCode">
@@ -125,7 +131,6 @@
                                                             <span id="selected-flag">
                                                                 <img src="{{ old('country_flag', $country[0]->flag1) }}"
                                                                     alt="flag" width="25" height="16">
-
                                                             </span>
 
                                                             <span id="selected-code" class="ms-2">
@@ -171,7 +176,7 @@
                                                 </div>
                                                 <div class="w-100 LoginMobileDesign">
                                                     <input type="text" class="form-control notapplyspace"
-                                                        value="" placeholder="Mobile Number or Email Address"
+                                                        value="" placeholder="{{ __('seller_messages.mobile_or_email') }}"
                                                         name="email_mobile" id="LoginMobile">
                                                 </div>
                                             </div>
@@ -181,9 +186,9 @@
                                         @enderror
 
                                         <div class="form-group position-relative">
-                                            <label for="password">Password</label>
+                                            <label for="password"> {{ __('seller_messages.password') }}</label>
                                             <input type="password" class="form-control notapplyspace" id="password"
-                                                placeholder="Enter Your Password" name="password">
+                                                placeholder="{{ __('seller_messages.enter_password') }}" name="password">
                                             <i class="toggle-password  bi bi-eye-slash "></i>
                                         </div>
                                         @error('password')
@@ -191,19 +196,19 @@
                                         @enderror
 
                                         <div class="form-group py-2 mb-4 text-center">
-                                            <a href="{{ route('seller.forgot') }}" class="link-color">Forgot Password
+                                            <a href="{{ route('seller.forgot') }}" class="link-color"> {{ __('seller_messages.forgot_password') }}
                                                 ?
                                             </a>
                                         </div>
                                         <div class="login-btn">
                                             <input type="submit" class="btn btn-success w-100" name="submit"
-                                                value="Login">
+                                                value="{{ __('seller_messages.login') }}">
                                         </div>
                                 </form>
 
                                 <div class="sign-new mt-4 text-center">
-                                    <div>Don’t have an account? <a href="{{ route('seller.register') }}"
-                                            class="link-color"> Sign up</a></div>
+                                    <div>{{ __('seller_messages.dont_have_account') }} <a href="{{ route('seller.register') }}"
+                                            class="link-color">  {{ __('seller_messages.sign_up') }}</a></div>
                                 </div>
 
                             </div>

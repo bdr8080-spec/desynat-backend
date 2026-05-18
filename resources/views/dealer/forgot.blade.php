@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+
 
 <head>
     <meta charset="utf-8">
@@ -59,21 +61,21 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                     <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif </span>
+
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
+                                     <li>
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
+                                            <span>AR</span> {{ __('seller_messages.Arabic') }} 
                                         </a>
                                     </li>
-
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
+                                        <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
+                                            <span>EN</span> {{ __('seller_messages.English') }} 
                                         </a>
                                     </li>
 
@@ -101,7 +103,7 @@
                                 <form action="{{ route('seller.forgot') }}" method="Post">
                                     <div class="cmn-header">
                                         <h1><a href="{{ route('seller.login') }}"><i class="bi bi-chevron-left"></i></a>
-                                            Forgot Password
+                                            {{ __('seller_messages.forgot_password') }}
 
                                         </h1>
                                     </div>
@@ -110,12 +112,12 @@
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="type" id="r1"
                                                 value="0" {{ old('type') == 0 ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="r1">Mobile Number</label>
+                                            <label class="form-check-label" for="r1"> {{ __('seller_messages.mobile_number') }}</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="type" id="r2"
                                                 value="1" {{ old('type') == 1 ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="r2">Email Address</label>
+                                            <label class="form-check-label" for="r2">  {{ __('seller_messages.email_address') }}</label>
                                         </div>
                                     </div>
 
@@ -123,7 +125,7 @@
 
 
                                     <div class="form-group mt-4" id="mobileDiv">
-                                        <label for="">Mobile Number</label>
+                                        <label for=""> {{ __('seller_messages.mobile_number') }}</label>
 
                                         <div class="d-flex align-items-center gap-3">
                                             <div class="LoginCountryCode">
@@ -188,7 +190,7 @@
 
 
                                                 <input type="text" class="form-control notapplyspace"
-                                                    value="" placeholder="Enter mobile number" name="mobile"
+                                                    value="" placeholder="{{ __('seller_messages.enter_mobile_number') }}" name="mobile"
                                                     id="LoginMobile">
 
                                                 @error('mobile')
@@ -201,32 +203,24 @@
 
                                     <div class="form-group mt-3 " id="emailDiv">
 
-                                        <label for="">Enter Email Address</label>
+                                        <label for="">{{ __('seller_messages.enter_email_address') }}</label>
 
                                         <div class="w-100 LoginMobileDesign">
                                             <input type="text" class="form-control notapplyspace" value=""
-                                                placeholder="Enter email address" name="email" id="LoginMobile">
+                                                placeholder="{{ __('seller_messages.enter_email_address') }}" name="email" id="LoginMobile">
                                         </div>
                                         @error('email')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
 
-
-
                                     @error('error')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
 
-
-
-
-
-
-
                                     <div class="login-btn padding-top-60">
-                                        <input type="submit" class="btn btn-success w-100" value="Continue">
-                                        {{-- <a href="otp_verify.php" class="btn btn-success w-100">Continue</a> --}}
+                                        <input type="submit" class="btn btn-success w-100" value="{{ __('seller_messages.continue') }}">
+                                        {{-- <a href="otp_verify.php" class="btn btn-success w-100">{{ __('seller_messages.continue') }}</a> --}}
                                     </div>
 
                                 </form>

@@ -222,30 +222,34 @@
                 </li>
                 <li>
                     <div class="des-language">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                                    data-bs-toggle="dropdown">
+                        <div class="des-language">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+                                                        data-bs-toggle="dropdown">
 
-                                    <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
+                                                        <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif </span>
+                                                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif </span>
 
-                                </button>
 
-                                <ul class="dropdown-menu dropdown-menu-end langu">
+                                                    </button>
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
-                                            <span>AR</span> {{ __('seller_messages.Arabic') }} 
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
-                                            <span>EN</span> {{ __('seller_messages.English') }} 
-                                        </a>
-                                    </li>
-                                </ul>
-                        </div>
+                                                    <ul class="dropdown-menu dropdown-menu-end langu">
+
+                                                        <li>
+                                                            <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
+                                                                <span>AR</span> {{ __('seller_messages.Arabic') }} 
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
+                                                                <span>EN</span> {{ __('seller_messages.English') }} 
+                                                            </a>
+                                                        </li>
+
+                                                    </ul>
+                                </div>
+                            </div>
                     </div>
                 </li>
 

@@ -1367,5 +1367,24 @@ return [
 'total_stocks' => 'إجمالي المخزون',
 'sku' => 'رمز المنتج',
 'save_changes' => 'حفظ التغييرات',
+
+// Seller  Login web code 
+'sign_in' => 'تسجيل الدخول',
+'welcome_back' => 'مرحبًا بعودتك!',
+'mobile_or_email' => 'رقم الجوال أو البريد الإلكتروني',
+'password' => 'كلمة المرور',
+'enter_password' => 'أدخل كلمة المرور',
+'forgot_password' => 'هل نسيت كلمة المرور؟',
+'login' => 'تسجيل الدخول',
+'dont_have_account' => 'ليس لديك حساب؟',
+'sign_up' => 'إنشاء حساب',
+
+// forgot_password
+'forgot_password' => 'نسيت كلمة المرور',
+'mobile_number' => 'رقم الجوال',
+'email_address' => 'البريد الإلكتروني',
+'enter_mobile_number' => 'أدخل رقم الجوال',
+'enter_email_address' => 'أدخل البريد الإلكتروني',
+'continue' => 'متابعة',
     
 ];

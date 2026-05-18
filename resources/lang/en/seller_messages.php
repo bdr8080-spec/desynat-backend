@@ -1355,6 +1355,24 @@ return [
 'sku' => 'SKU',
 'save_changes' => 'Save Changes',
 
+// Seller Web Login 
+'sign_in' => 'Sign In',
+'welcome_back' => 'Welcome back !',
+'mobile_or_email' => 'Mobile Number or Email Address',
+'password' => 'Password',
+'enter_password' => 'Enter Your Password',
+'forgot_password' => 'Forgot Password ?',
+'login' => 'Login',
+'dont_have_account' => "Don’t have an account?",
+'sign_up' => 'Sign up',
+
+// forgot_password
+'forgot_password' => 'Forgot Password',
+'mobile_number' => 'Mobile Number',
+'email_address' => 'Email Address',
+'enter_mobile_number' => 'Enter mobile number',
+'enter_email_address' => 'Enter email address',
+'continue' => 'Continue',
 
     
 ];
