@@ -798,6 +798,67 @@ $(document).ready(function () {
 });
 </script>
 
+
+ <!-- date and language english and Arbic Code chnage  Start here  -->
+    <!-- Flatpickr CSS & JS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+
+    @if (App::getlocale() == 'ar')
+        <script>
+            const options = {
+                locale: "ar",
+                dateFormat: "Y-m-d",
+                altInput: true,
+                altFormat: "d F Y",
+                allowInput: false
+            };
+             flatpickr(".datepicker", options);
+            // flatpickr("#toDate", options);
+            // flatpickr("#fromDate", options);
+        </script>
+    @endif -->
+
+
+
+<!-- Flatpickr CSS & JS -->
+@if (App::getlocale() == 'ar')
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const appLocale = "{{ App::getLocale() }}";
+
+        const options = {
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d F Y",
+            allowInput: true,
+            altInputClass: "form-control",
+
+            onReady: function(selectedDates, dateStr, instance) {
+                instance.altInput.setAttribute(
+                    "placeholder",
+                    appLocale === 'ar' ? "اختر التاريخ" : "Select Date"
+                );
+            }
+        };
+
+        if (appLocale === 'ar') {
+            options.locale = "ar";
+        }
+
+        flatpickr(".datepicker", options);
+    });
+</script>
+@endif
+
+ <!-- date and language english and Arbic Code chnage End here -->
+
 </body>
 
 </html>

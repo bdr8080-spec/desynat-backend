@@ -57,12 +57,12 @@ table#table1 {
                     <div class="from-group">
                         <div class="show-date d-flex gap-2  flex-wrap">
                             <div class="date-form-pnl">
-                                <input type="date" class="form-control" name="from" id="fromDate"
+                                <input type="date" class="form-control datepicker" name="from" id="fromDate"
                                     value="{{request()->from }}">
                                 <p class="text-danger" id="error-start_date"></p>
                             </div>
                             <div class="date-form-pnl">
-                                <input type="date" class="form-control" name="to" id="toDate"
+                                <input type="date" class="form-control datepicker" name="to" id="toDate"
                                     value="{{request()->to }}">
 
                                 <p class="text-danger" id="error-end_date"></p>
@@ -110,7 +110,7 @@ table#table1 {
 
 
         <div class="table-responsive">
-            <table class="table table-bordered datatable tablesearch" id="table1">
+            <table class="table table-bordered datatable tablesearch" id="table1" >
                 <thead>
                     <tr>
                          <th>{{ __('seller_messages.S_No') }}</th>
@@ -291,3 +291,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
+

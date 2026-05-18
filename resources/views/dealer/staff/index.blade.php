@@ -38,7 +38,7 @@
                         <div class="show-date d-flex gap-2 flex-wrap">
                             <div class="date-form-pnl">
                                 <input type="date"
-                                    class="form-control"
+                                    class="form-control datepicker"
                                     name="from"
                                     id="fromDate"
                                     value="{{ request()->from }}">
@@ -47,7 +47,7 @@
 
                             <div class="date-form-pnl">
                                 <input type="date"
-                                    class="form-control"
+                                    class="form-control datepicker"
                                     name="to"
                                     id="toDate"
                                     value="{{ request()->to }}">
