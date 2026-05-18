@@ -1249,6 +1249,55 @@ return [
 'Done' => 'Done',
 
 
+// view product Page 
+ 'product_code' => 'Product code',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'confirm_delete' => 'Confirm Delete',
+    'delete_confirmation_message' => 'Are you sure you want to delete this item?',
+    'yes_delete' => 'Yes, Delete',
+    'no' => 'No',
+
+    'inclusive_of_all_taxes' => 'inclusive of all taxes',
+    'more_color' => 'More Color',
+    'available_size' => 'Available Size',
+    'size_guide' => 'Size Guide',
+    'description' => 'Description',
+    'specification' => 'Specification',
+
+    'return_allowed' => 'Return allowed?',
+    'exchange_allowed' => 'Exchange allowed?',
+    'review_ratings_allowed' => 'Review & ratings allowed?',
+    'affiliated_product' => 'Is it an Affiliated Product?',
+    'customized_product' => 'Is this a Customized product?',
+    'ready_to_ship' => 'Ready to ship?',
+    'cash_on_delivery' => 'Cash on delivery allowed?',
+
+    'yes' => 'Yes',
+    'no_text' => 'No',
+    'days' => 'days',
+
+    'show_size_guide_image' => 'Here you can show image of size guide',
+
+    'reviews' => 'Reviews',
+
+
+// change Password 
+
+'change_password' => 'Change Password',
+'old_password' => 'Old Password',
+'enter_password' => 'Enter Password',
+'enter_new_password' => 'Enter New Password',
+'confirm_password' => 'Confirm Password',
+'re_enter_password' => 'Re-Enter Password',
+'save' => 'Save',
+
+'enter_old_password_validation' => 'Please enter old password',
+'enter_new_password_validation' => 'Please enter new password',
+'password_validation_message' => 'Password must be 8+ chars with uppercase, number & special character',
+'confirm_password_validation' => 'Please confirm password',
+'password_not_match' => 'Confirm password does not match',
+
 
     
 ];

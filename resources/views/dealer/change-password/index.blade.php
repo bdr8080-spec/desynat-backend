@@ -3,7 +3,7 @@
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
-        <h3>Change Password</h3>
+        <h3>{{ __('seller_messages.change_password') }}</h3>
     </div>
     
     <form id="passwordForm">
@@ -11,27 +11,27 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group position-relative">
-                    <label for="password">Old Password</label>
+                    <label for="password">  {{ __('seller_messages.old_password') }}</label>
                     <input type="password" class="form-control notapplyspace" id="old_password" name="old_password"
-                        placeholder="Enter Password" >
+                        placeholder="{{ __('seller_messages.enter_password') }}" >
                     <i class="toggle-password  bi bi-eye-slash "></i>
                     <small id="error_old_password" class="text-danger"></small>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group position-relative">
-                    <label for="password">Enter New Password</label>
+                    <label for="password">{{ __('seller_messages.enter_new_password') }}</label>
                     <input type="password" class="form-control notapplyspace" id="new_password" name="new_password"
-                        placeholder="Enter New Password" >
+                        placeholder="{{ __('seller_messages.enter_new_password') }}" >
                     <i class="toggle-password  bi bi-eye-slash "></i>
                     <small id="error_new_password" class="text-danger"></small>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group position-relative">
-                    <label for="password">Confirm Password</label>
+                    <label for="password"> {{ __('seller_messages.confirm_password') }}</label>
                     <input type="password" class="form-control notapplyspace"  id="confirm_password" name="confirm_password"
-                        placeholder="Re-Enter Password" >
+                        placeholder="{{ __('seller_messages.re_enter_password') }}" >
                     <i class="toggle-password  bi bi-eye-slash "></i>
                     <small id="error_confirm_password" class="text-danger"></small>
                 </div>
@@ -40,7 +40,7 @@
         
         <div class="login-btn mt-5 mb-3">
             <button type="button" class="btn btn-success w-100 savePasswordBtn">
-                Save
+                 {{ __('seller_messages.save') }}
             </button>
         </div>
 
@@ -113,24 +113,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             if (!old_password) {
-                oldError.innerText = 'Please enter old password';
+                oldError.innerText =  "{{ __('seller_messages.enter_old_password_validation') }}";
                 hasError = true;
             }
 
             if (!new_password) {
-                newError.innerText = 'Please enter new password';
+                newError.innerText = "{{ __('seller_messages.enter_new_password_validation') }}";
                 hasError = true;
             } else if (!validatePassword(new_password)) {
                 newError.innerText =
-                    'Password must be 8+ chars with uppercase, number & special character';
+                    "{{ __('seller_messages.password_validation_message') }}";
                 hasError = true;
             }
 
             if (!confirm_password) {
-                confirmError.innerText = 'Please confirm password';
+                confirmError.innerText = "{{ __('seller_messages.confirm_password_validation') }}";
                 hasError = true;
             } else if (new_password !== confirm_password) {
-                confirmError.innerText = 'Confirm password does not match';
+                confirmError.innerText = "{{ __('seller_messages.password_not_match') }}";
                 hasError = true;
             }
 

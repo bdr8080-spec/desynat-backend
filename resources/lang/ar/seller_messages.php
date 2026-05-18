@@ -1261,5 +1261,55 @@ return [
 'Done' => 'تم',
 
 
+// view product Page 
+
+  'product_code' => 'رمز المنتج',
+    'edit' => 'تعديل',
+    'delete' => 'حذف',
+    'confirm_delete' => 'تأكيد الحذف',
+    'delete_confirmation_message' => 'هل أنت متأكد أنك تريد حذف هذا العنصر؟',
+    'yes_delete' => 'نعم، احذف',
+    'no' => 'لا',
+
+    'inclusive_of_all_taxes' => 'شامل جميع الضرائب',
+    'more_color' => 'ألوان إضافية',
+    'available_size' => 'المقاسات المتوفرة',
+    'size_guide' => 'دليل المقاسات',
+    'description' => 'الوصف',
+    'specification' => 'المواصفات',
+
+    'return_allowed' => 'هل الإرجاع مسموح؟',
+    'exchange_allowed' => 'هل الاستبدال مسموح؟',
+    'review_ratings_allowed' => 'هل التقييمات والمراجعات مسموحة؟',
+    'affiliated_product' => 'هل هذا منتج تابع؟',
+    'customized_product' => 'هل هذا منتج مخصص؟',
+    'ready_to_ship' => 'جاهز للشحن؟',
+    'cash_on_delivery' => 'هل الدفع عند الاستلام متاح؟',
+
+    'yes' => 'نعم',
+    'no_text' => 'لا',
+    'days' => 'أيام',
+
+    'show_size_guide_image' => 'يمكنك عرض صورة دليل المقاسات هنا',
+    'reviews' => 'التقييمات',
+
+
+
+//  chnage Password code
+
+'change_password' => 'تغيير كلمة المرور',
+'old_password' => 'كلمة المرور القديمة',
+'enter_password' => 'أدخل كلمة المرور',
+'enter_new_password' => 'أدخل كلمة المرور الجديدة',
+'confirm_password' => 'تأكيد كلمة المرور',
+'re_enter_password' => 'أعد إدخال كلمة المرور',
+'save' => 'حفظ',
+
+'enter_old_password_validation' => 'يرجى إدخال كلمة المرور القديمة',
+'enter_new_password_validation' => 'يرجى إدخال كلمة المرور الجديدة',
+'password_validation_message' => 'يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل مع حرف كبير ورقم ورمز خاص',
+'confirm_password_validation' => 'يرجى تأكيد كلمة المرور',
+'password_not_match' => 'تأكيد كلمة المرور غير متطابق',
+
     
 ];
