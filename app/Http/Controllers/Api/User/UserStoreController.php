@@ -84,6 +84,10 @@ class UserStoreController extends Controller
         'color_id'     => is_array($request->color_id) ? $request->color_id : [],      
         'price_min'    => $request->price_min ?? null,
         'price_max'    => $request->price_max ?? null,
+        'discount'    => $request->discount ?? null,
+        'rating'    => $request->rating ?? null,
+        'delivery_time'    => $request->delivery_time ?? null,
+        'delivery_option'    => $request->delivery_option ?? null,
        ];
 
        $data=$this->UserManagementService->singleStoreWiseAllproduct($request_data);
