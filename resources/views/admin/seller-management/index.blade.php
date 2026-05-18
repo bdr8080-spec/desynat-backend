@@ -78,7 +78,11 @@
                                             @foreach($countries as $country)
                                             <option value="{{ $country['id'] }}"
                                                 {{ request('country_id') == $country['id'] ? 'selected' : '' }}>
+                                                @if(app()->getLocale() == 'en')
                                                 {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
                                             </option>
                                             @endforeach
                                         </select>
@@ -138,7 +142,11 @@
                                         @php
                                         if (!empty($seller['store_info']['country'])) {
                                         $country = \App\Models\Country::find($seller['store_info']['country']);
-                                        $countryName = $country->name ?? __('admin_messages.n/a');
+                                            if(app()->getLocale() == 'en'){
+                                            $countryName = $country->name ?? __('admin_messages.n/a');
+                                            }else{
+                                            $countryName = $country->name_ar ?? __('admin_messages.n/a');  
+                                            }
                                         }
                                         @endphp
                                         <td>{{ $countryName ??  __('admin_messages.n/a') }}</td>
@@ -258,7 +266,11 @@
                                             @foreach($countries as $country)
                                             <option value="{{ $country['id'] }}"
                                                 {{ request('country_id1') == $country['id'] ? 'selected' : '' }}>
+                                                @if(app()->getLocale() == 'en')
                                                 {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
                                             </option>
                                             @endforeach
                                         </select>
@@ -328,7 +340,11 @@
                                         @php
                                         if (!empty($seller['store_info']['country'])) {
                                         $country = \App\Models\Country::find($seller['store_info']['country']);
-                                        $countryName = $country->name ??  __('admin_messages.n/a');
+                                        if(app()->getLocale() == 'en'){
+                                            $countryName = $country->name ?? __('admin_messages.n/a');
+                                            }else{
+                                            $countryName = $country->name_ar ?? __('admin_messages.n/a');  
+                                            }
                                         }
                                         @endphp
                                         <td>{{ $countryName ?? 'N/A'}}</td>
@@ -472,7 +488,11 @@
                                             @foreach($countries as $country)
                                             <option value="{{ $country['id'] }}"
                                                 {{ request('country_id2') == $country['id'] ? 'selected' : '' }}>
+                                                @if(app()->getLocale() == 'en')
                                                 {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
                                             </option>
                                             @endforeach
                                         </select>
@@ -532,7 +552,11 @@
                                         @php
                                         if (!empty($seller['store_info']['country'])) {
                                         $country = \App\Models\Country::find($seller['store_info']['country']);
-                                        $countryName = $country->name ??  __('admin_messages.n/a');
+                                        if(app()->getLocale() == 'en'){
+                                            $countryName = $country->name ?? __('admin_messages.n/a');
+                                            }else{
+                                            $countryName = $country->name_ar ?? __('admin_messages.n/a');  
+                                            }
                                         }
                                         @endphp
                                         <td>{{ $countryName ?? 'N/A' }}</td>

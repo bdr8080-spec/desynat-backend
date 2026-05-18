@@ -14,7 +14,7 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">{{ __('admin_messages.manage_city') }}({{$country->name}})</h6> 
+                        <h6 class="m-0">{{ __('admin_messages.manage_city') }}(@if(app()->getLocale() == 'en'){{$country->name}}@else{{$country->name_ar}}@endif)</h6> 
                     </div>
                 </div>
 
@@ -139,7 +139,7 @@
                                 @else
                                     <option value="" selected disabled>{{ __('admin_messages.select_city') }}</option>
                                     @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                        <option value="{{ $city->id }}">@if(app()->getLocale() == 'en'){{ $city->name }}@else{{ $city->name_ar }}@endif</option>
                                     @endforeach
                                 @endif
 

@@ -44,7 +44,11 @@
                                 @foreach($countries as $country)
                                 <option value="{{ $country['id'] }}"
                                     {{ request('country_id') == $country['id'] ? 'selected' : '' }}>
-                                    {{ $country['name'] }}
+                                    @if(app()->getLocale() == 'en')
+                                                {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
                                 </option>
                                 @endforeach
                             </select>
@@ -99,7 +103,13 @@
                                 <img src="{{ $user['profile_image'] }}" alt="" width="60px" height="60px" class="square" />
                             </td>
                             <td>{{ $user['country_code'] }}{{ $user['mobile'] }}</td>
-                            <td>{{ $user->country_info ? $user->country_info->name : __('admin_messages.n/a') }}</td>
+                            <td>
+                                @if(app()->getLocale() == 'en')
+                                {{ $user->country_info ? $user->country_info->name : __('admin_messages.n/a') }}
+                                @else
+                                {{ $user->country_info ? $user->country_info->name_ar : __('admin_messages.n/a') }}
+                                @endif
+                            </td>
                             <td>{{ $user['email'] }}</td>
                             <td>N/A</td>
                             <td>N/A</td>

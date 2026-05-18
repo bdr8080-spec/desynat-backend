@@ -41,7 +41,13 @@
                         @forelse($countries as $index => $country)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $country->name }}</td>
+                                <td>
+                                  @if(app()->getLocale() == 'en')
+                                  {{ $country->name }}
+                                  @else
+                                  {{ $country->name_ar }}
+                                  @endif
+                                </td>
                                 @if(in_array(6, $permissions) || $admin->type == 1)
                                 <td>
                                     <a 

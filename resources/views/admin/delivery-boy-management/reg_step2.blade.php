@@ -61,7 +61,7 @@
                     <i class="fas fa-angle-left"></i>
                 </a>
             </div>
-            <h2 class="h2 text-start">Vehicle Information</h2>
+            <h2 class="h2 text-start">{{ __('admin_messages.vehicle_information') }}</h2>
 
         </div>
         <div class="content">
@@ -71,8 +71,8 @@
 
                         <div class="col-lg-6">
                             <div class="mt-3">
-                                <label class="mb-0">Vehicle Name</label>
-                                <input type="text" placeholder="Enter Vehicle Name"
+                                <label class="mb-0">{{ __('admin_messages.vehicle_name') }}</label>
+                                <input type="text" placeholder="{{ __('admin_messages.enter_vehicle_name') }}"
                                     oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')"
                                     class="form-control mt-1" id="vehicle_name">
                                 <div id="vehicle_name_error" class="text-danger small"></div>
@@ -81,8 +81,8 @@
 
                         <div class="col-lg-6">
                             <div class="mt-3">
-                                <label class="mb-0">Vehicle Registration Number</label>
-                                <input type="text" placeholder="Enter Vehicle Registration Number"
+                                <label class="mb-0">{{ __('admin_messages.registration_number') }}</label>
+                                <input type="text" placeholder="{{ __('admin_messages.enter_vehicle_registration_number') }}"
                                     oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')"
                                     class="form-control mt-1" id="vehicle_reg">
                                 <div id="vehicle_reg_error" class="text-danger small"></div>
@@ -92,7 +92,7 @@
 
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Vehicle Image</h5>
+                            <h5>{{ __('admin_messages.upload_vehicle_image') }}</h5>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">
                                     <label for="vehicleImgFront" class="upload-box">
@@ -101,7 +101,7 @@
                                         <embed id="vehicleImgFrontPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="vehicleImgFront" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div class="upload-subtitle">Front</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.front') }}</div>
                                     <div id="vehicleImgFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -112,14 +112,14 @@
                                         <embed id="vehicleImgBackPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="vehicleImgBack" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div class="upload-subtitle">Back</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.back') }}</div>
                                     <div id="vehicleImgBack_error" class="text-danger small"></div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Identity Proof</h5>
+                            <h5>{{ __('admin_messages.upload_identity_proof') }}</h5>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">
                                     <label for="idProofFront" class="upload-box">
@@ -128,7 +128,7 @@
                                         <embed id="idProofFrontPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="idProofFront" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div class="upload-subtitle">Front</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.front') }}</div>
                                     <div id="idProofFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -139,7 +139,7 @@
                                         <embed id="idProofBackPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="idProofBack" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div class="upload-subtitle">Back</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.back') }}</div>
                                     <div id="idProofBack_error" class="text-danger small"></div>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@
 
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Driving License</h5>
+                            <h5>{{ __('admin_messages.upload_driving_license') }}</h5>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">
                                     <label for="dlFront" class="upload-box">
@@ -157,7 +157,7 @@
                                         <embed id="dlFrontPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="dlFront" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div class="upload-subtitle">Front</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.front') }}</div>
                                     <div id="dlFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -168,14 +168,14 @@
                                         <embed id="dlBackPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="dlBack" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div class="upload-subtitle">Back</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.back') }}</div>
                                     <div id="dlBack_error" class="text-danger small"></div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Vehicle Insurance</h5>
+                            <h5>{{ __('admin_messages.upload_vehicle_insurance') }}</h5>
                             <div class="row mt-3 justify-content-start">
                                 <div class="col-6 text-center">
                                     <label for="insuranceFront" class="upload-box">
@@ -192,7 +192,7 @@
 
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Pollution Paper (Optional)</h5>
+                            <h5>{{ __('admin_messages.upload_pollution_paper_optional') }}</h5>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">
                                     <label for="pollutionFront" class="upload-box">
@@ -201,7 +201,7 @@
                                         <embed id="pollutionFrontPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="pollutionFront" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div class="upload-subtitle">Front</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.front') }}</div>
                                     <div id="pollutionFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -212,14 +212,14 @@
                                         <embed id="pollutionBackPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="pollutionBack" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div class="upload-subtitle">Back</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.back') }}</div>
                                     <div id="pollutionBack_error" class="text-danger small"></div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h5>Upload Registration Certificate (Optional)</h5>
+                            <h5>{{ __('admin_messages.upload_registration_certificate_optional') }}</h5>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">
                                     <label for="rcFront" class="upload-box">
@@ -228,7 +228,7 @@
                                         <embed id="rcFrontPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="rcFront" hidden accept="image/*,.pdf">
                                     </label>
-                                       <div class="upload-subtitle">Front</div>
+                                       <div class="upload-subtitle">{{ __('admin_messages.front') }}</div>
                                    <div id="rcFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -239,7 +239,7 @@
                                         <embed id="rcBackPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="rcBack" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div class="upload-subtitle">Back</div>
+                                    <div class="upload-subtitle">{{ __('admin_messages.back') }}</div>
                                     <div id="rcBack_error" class="text-danger small"></div>
                                 </div>
                             </div>
@@ -247,8 +247,8 @@
                     </div>
 
                     <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 gap-4 mt-4">
-                        <a href="{{route('admin.deliveryBoyManagement')}}" class="btn btn-dark customBtn">Cancel</a>
-                        <a class="btn btn-dark customBtn" id="submitBtn">Add</a>
+                        <a href="{{route('admin.deliveryBoyManagement')}}" class="btn btn-dark customBtn">{{ __('admin_messages.cancel') }}</a>
+                        <a class="btn btn-dark customBtn" id="submitBtn">{{ __('admin_messages.add') }}</a>
                     </div>
                 </div>
             </div>
@@ -284,22 +284,22 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const textErrors = {
-        vehicle_name: "Please enter vehicle name.",
-        vehicle_reg: "Please enter vehicle registration number."
+        vehicle_name: "{{ __('admin_messages.please_enter_vehicle_name') }}",
+        vehicle_reg: "{{ __('admin_messages.enter_vehicle_registration_number') }}",
     };
 
     const imageErrors = {
-        vehicleImgFront: "Please upload vehicle front image.",
-        vehicleImgBack: "Please upload vehicle back image.",
-        idProofFront: "Please upload ID proof front image.",
-        idProofBack: "Please upload ID proof back image.",
-        dlFront: "Please upload driving license front image.",
-        dlBack: "Please upload driving license back image.",
-        insuranceFront: "Please upload insurance image."
+        vehicleImgFront: "{{ __('admin_messages.please_upload_vehicle_front_image') }}",
+        vehicleImgBack: "{{ __('admin_messages.please_upload_vehicle_back_image') }}",
+        idProofFront: "{{ __('admin_messages.please_upload_id_proof_front_image') }}",
+        idProofBack: "{{ __('admin_messages.please_upload_id_proof_back_image') }}",
+        dlFront: "{{ __('admin_messages.please_upload_driving_license_front_image') }}",
+        dlBack: "{{ __('admin_messages.please_upload_driving_license_back_image') }}",
+        insuranceFront: "{{ __('admin_messages.please_upload_vehicle_insurance_image') }}",
     };
 
-    const typeErrorMsg = "Invalid file type. Allowed: JPG, JPEG, PNG, GIF, PDF.";
-    const sizeErrorMsg = "File size should not exceed 4 MB.";
+    const typeErrorMsg = "{{ __('admin_messages.invalid_file_type_allowed') }}";
+    const sizeErrorMsg = "{{ __('admin_messages.image_size_less_than_4mb') }}";
 
     fields.forEach(id => {
         let input = document.getElementById(id);

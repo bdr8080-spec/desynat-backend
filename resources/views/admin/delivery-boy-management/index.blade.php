@@ -12,7 +12,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">DELIVERY BOY MANAGEMENT</h2>
+            <h2 class="h2">{{ __('admin_messages.delivery_boy_management') }}</h2>
         </div>
 
 <!-- 
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="from" class="form-label">From:</label>
+                        <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                         <input type="date" id="from" name="from_date" class="form-control"
                             value="{{ request()->from_date }}"
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -43,7 +43,7 @@
                 <!-- To Date Filter -->
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="to" class="form-label">To:</label>
+                        <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                         <input type="date" id="to" name="to_date" class="form-control"
                             value="{{ request()->to_date }}"
                             onchange="document.getElementById('filterForm').submit();" />
@@ -53,11 +53,11 @@
                     <div class="gap-3 " >
                         <a href="{{route('admin.deliveryBoyManagement')}}" class="btn btn-dark customBtn"
                             style="margin-top: 60px">
-                            <span>Reset</span>
+                            <span>{{ __('admin_messages.reset') }}</span>
                         </a>
                         @if(in_array(9, $permissions) || $admin->type == 1)
                          <a href="{{ route('admin.export_driver_data', request()->all()) }}" class="btn btn-dark customBtn" style="margin-top: 60px">
-                    <span>Export</span>
+                    <span>{{ __('admin_messages.export') }}</span>
                 </a>
                 @endif
                     </div>
@@ -68,7 +68,7 @@
                         <a class="btn btn-dark customBtn"  href="{{route('admin.deliveryboy_reg_step1')}}" style="
     margin-top: -4px;
 ">
-                            <span >Add Delivery Boy</span>
+                            <span >{{ __('admin_messages.add_delivery_boy') }}</span>
                         </a>
                     </div>
                 </div>
@@ -80,25 +80,25 @@
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
-                            <th scope="col">Sr.No</th>
-                            <th scope="col">Joining Date</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Full Name</th>
-                            <th scope="col">Mobile Number</th>
-                            <th scope="col">Email ID</th>
-                            <th scope="col">Zone</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Vehicle Name</th>
-                            <th scope="col">Registration <br> Number</th>
-                            <th scope="col">Vehicle Image</th>
-                            <th scope="col">Uploaded ID</th>
-                            <th scope="col">Uploaded DL</th>
-                            <th scope="col">Uploaded <br> Vehicle <br> Insurance</th>
-                            <th scope="col">Uploaded <br> Pollution Paper</th>
-                            <th scope="col">Uploaded RC</th>
-                            <th scope="col">Total Order <br> Delivered</th>
+                            <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                            <th scope="col">{{ __('admin_messages.joining_date') }}</th>
+                            <th scope="col">{{ __('admin_messages.image') }}</th>
+                            <th scope="col">{{ __('admin_messages.full_name') }}</th>
+                            <th scope="col">{{ __('admin_messages.mobile_number') }}</th>
+                            <th scope="col">{{ __('admin_messages.email') }}</th>
+                            <th scope="col">{{ __('admin_messages.zone') }}</th>
+                            <th scope="col">{{ __('admin_messages.address') }}</th>
+                            <th scope="col">{{ __('admin_messages.vehicle_name') }}</th>
+                            <th scope="col">{{ __('admin_messages.registration_number') }}</th>
+                            <th scope="col">{{ __('admin_messages.vehicle_image') }}</th>
+                            <th scope="col">{{ __('admin_messages.uploaded_id') }}</th>
+                            <th scope="col">{{ __('admin_messages.uploaded_dl') }}</th>
+                            <th scope="col">{{ __('admin_messages.uploaded_vehicle_insurance') }}</th>
+                            <th scope="col">{{ __('admin_messages.uploaded_pollution_paper') }}</th>
+                            <th scope="col">{{ __('admin_messages.uploaded_rc') }}</th>
+                            <th scope="col">{{ __('admin_messages.total_order_delivered') }}</th>
                             @if(in_array(9, $permissions) || $admin->type == 1)
-                            <th scope="col">Action</th>
+                            <th scope="col">{{ __('admin_messages.action') }}</th>
                             @endif
                         </tr>
                     </thead>
@@ -214,7 +214,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2" id="modalTitle">Upload Documnets</h2>
+                <h2 class="h2" id="modalTitle">{{ __('admin_messages.vehicle_image') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -235,7 +235,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2" id="modalTitle1">Upload Documnets</h2>
+                <h2 class="h2" id="modalTitle1">{{ __('admin_messages.uploaded_id') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -256,7 +256,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2" id="modalTitle2">Upload Documnets</h2>
+                <h2 class="h2" id="modalTitle2">{{ __('admin_messages.uploaded_dl') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -277,7 +277,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2" id="modalTitle3">Upload Documnets</h2>
+                <h2 class="h2" id="modalTitle3">{{ __('admin_messages.uploaded_vehicle_insurance') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -298,7 +298,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2" id="modalTitle4">Upload Documnets</h2>
+                <h2 class="h2" id="modalTitle4">{{ __('admin_messages.uploaded_pollution_paper') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -319,7 +319,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2" id="modalTitle5">Upload Documnets</h2>
+                <h2 class="h2" id="modalTitle5">{{ __('admin_messages.uploaded_rc') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!documentContainer || !modalTitle) return;
 
-    modalTitle.innerText = 'Vehicle Document';
+    //modalTitle.innerText = 'Vehicle Document';
 
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -363,13 +363,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (documents.length === 0) {
                 documentContainer.innerHTML =
-                    '<p class="text-muted">No documents available.</p>';
+                    `<p class="text-muted">{{ __('admin_messages.no_documents_available') }}</p>`;
                 return;
             }
 
             documents.forEach(doc => {
                 const filePath = doc.document_path;
-                const isFront = doc.is_front ? 'Front' : 'Back';
+                const isFront = doc.is_front == 1 ? "{{ __('admin_messages.front') }}" : "{{ __('admin_messages.back') }}";
                 const ext = filePath.split('.').pop().toLowerCase();
 
                 const wrapper = document.createElement('div');
@@ -458,7 +458,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
-            modalTitle.innerText = 'Identity Proof';
+           // modalTitle.innerText = 'Identity Proof';
             documentContainer.innerHTML = '';
 
             let documents = [];
@@ -470,13 +470,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (documents.length === 0) {
                 documentContainer.innerHTML =
-                    '<p class="text-muted">No documents available.</p>';
+                    `<p class="text-muted">{{ __('admin_messages.no_documents_available') }}</p>`;
                 return;
             }
 
             documents.forEach(doc => {
                 const filePath = doc.document_path;
-                const isFront = doc.is_front ? 'Front' : 'Back';
+                const isFront = doc.is_front ? "{{ __('admin_messages.front') }}" : "{{ __('admin_messages.back') }}";
                 const ext = filePath.split('.').pop().toLowerCase();
 
                 const wrapper = document.createElement('div');
@@ -566,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
-            modalTitle.innerText = 'Driving License';
+            //modalTitle.innerText = 'Driving License';
             documentContainer.innerHTML = '';
 
             let documents = [];
@@ -578,13 +578,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (documents.length === 0) {
                 documentContainer.innerHTML =
-                    '<p class="text-muted">No documents available.</p>';
+                    `<p class="text-muted">{{ __('admin_messages.no_documents_available') }}</p>`;
                 return;
             }
 
             documents.forEach(doc => {
                 const filePath = doc.document_path;
-                const isFront = doc.is_front ? 'Front' : 'Back';
+                const isFront = doc.is_front ? "{{ __('admin_messages.front') }}" : "{{ __('admin_messages.back') }}";
                 const ext = filePath.split('.').pop().toLowerCase();
 
                 const wrapper = document.createElement('div');
@@ -665,7 +665,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
-            modalTitle.innerText = 'Vehicle Insurance';
+            //modalTitle.innerText = 'Vehicle Insurance';
             documentContainer.innerHTML = '';
 
             let documents = [];
@@ -677,7 +677,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (documents.length === 0) {
                 documentContainer.innerHTML =
-                    '<p class="text-muted">No documents available.</p>';
+                    `<p class="text-muted">{{ __('admin_messages.no_documents_available') }}</p>`;
                 return;
             }
 
@@ -751,7 +751,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
-            modalTitle.innerText = 'Pollution Paper';
+           // modalTitle.innerText = 'Pollution Paper';
             documentContainer.innerHTML = '';
 
             let documents = [];
@@ -763,7 +763,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (documents.length === 0) {
                 documentContainer.innerHTML =
-                    '<p class="text-muted">No documents available.</p>';
+                    `<p class="text-muted">{{ __('admin_messages.no_documents_available') }}</p>`;
                 return;
             }
 
@@ -836,7 +836,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
-            modalTitle.innerText = 'Registration Certificate';
+           // modalTitle.innerText = 'Registration Certificate';
             documentContainer.innerHTML = '';
 
             let documents = [];
@@ -848,7 +848,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (documents.length === 0) {
                 documentContainer.innerHTML =
-                    '<p class="text-muted">No documents available.</p>';
+                    `<p class="text-muted">{{ __('admin_messages.no_documents_available') }}</p>`;
                 return;
             }
 
@@ -916,13 +916,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let deliveryBoyId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteDeliveryBoy/${deliveryBoyId}`, {
