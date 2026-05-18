@@ -67,6 +67,18 @@ class seller extends Authenticatable
         return $this->hasMany(self::class, 'parent_id', 'id')
             ->where('type', '1');
     }
+
+    public function highlights(){ 
+        return $this->hasMany(Highlight::class,'seller_id','id')->where('type','2'); 
+    }
+
+    public function stories(){ 
+        return $this->hasMany(Story::class,'seller_id','id')->where('type','2'); 
+    }
+
+    public function reels(){ 
+        return $this->hasMany(Reel::class,'seller_id','id')->where('type','2'); 
+    }
     
     
     
