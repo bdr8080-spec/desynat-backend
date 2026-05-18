@@ -1292,5 +1292,24 @@ return [
 
     'show_size_guide_image' => 'يمكنك عرض صورة دليل المقاسات هنا',
     'reviews' => 'التقييمات',
+
+
+
+//  chnage Password code
+
+'change_password' => 'تغيير كلمة المرور',
+'old_password' => 'كلمة المرور القديمة',
+'enter_password' => 'أدخل كلمة المرور',
+'enter_new_password' => 'أدخل كلمة المرور الجديدة',
+'confirm_password' => 'تأكيد كلمة المرور',
+'re_enter_password' => 'أعد إدخال كلمة المرور',
+'save' => 'حفظ',
+
+'enter_old_password_validation' => 'يرجى إدخال كلمة المرور القديمة',
+'enter_new_password_validation' => 'يرجى إدخال كلمة المرور الجديدة',
+'password_validation_message' => 'يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل مع حرف كبير ورقم ورمز خاص',
+'confirm_password_validation' => 'يرجى تأكيد كلمة المرور',
+'password_not_match' => 'تأكيد كلمة المرور غير متطابق',
+
     
 ];

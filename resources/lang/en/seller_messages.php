@@ -1281,5 +1281,23 @@ return [
 
     'reviews' => 'Reviews',
 
+
+// change Password 
+
+'change_password' => 'Change Password',
+'old_password' => 'Old Password',
+'enter_password' => 'Enter Password',
+'enter_new_password' => 'Enter New Password',
+'confirm_password' => 'Confirm Password',
+'re_enter_password' => 'Re-Enter Password',
+'save' => 'Save',
+
+'enter_old_password_validation' => 'Please enter old password',
+'enter_new_password_validation' => 'Please enter new password',
+'password_validation_message' => 'Password must be 8+ chars with uppercase, number & special character',
+'confirm_password_validation' => 'Please confirm password',
+'password_not_match' => 'Confirm password does not match',
+
+
     
 ];
