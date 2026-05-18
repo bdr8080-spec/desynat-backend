@@ -40,9 +40,9 @@
                     <div class="d-flex justify-content-end gap-2">
                          <div class="">
                             <div class="form-group">
-                                <label class="form-label">Default Delivery Charge</label>
+                                <label class="form-label">{{ __('admin_messages.default_delivery_charge') }}</label>
                                 <div style="position: relative;">
-                                    <input type="text" id="default_shipping_fee_display" class="form-control" placeholder="Enter charge"data-bs-toggle="modal" data-bs-target="#sentModal1" value="{{$defaultShippingCharge->shipping_fee}}" readOnly/>
+                                    <input type="text" id="default_shipping_fee_display" class="form-control" placeholder="{{ __('admin_messages.enter_tax') }}" data-bs-toggle="modal" data-bs-target="#sentModal1" value="{{$defaultShippingCharge->shipping_fee}}" readOnly/>
                                     <span style=" position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #6c757d; pointer-events: none; font-weight: 500; " >
                                      <i class="bi bi-pencil-square" ></i>
                                     </span>
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <a class="btn btn-dark customBtn mt-3" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                            <span>Add Delivery Charges</span>
+                            <span>{{ __('admin_messages.add_delivery_charges') }}</span>
                         </a>
                     </div>
                 </div>
@@ -64,10 +64,10 @@
                         <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
-                                    <th scope="col">SR No.</th>
-                                    <th scope="col">Range From to To (KM)</th>
-                                    <th scope="col">Shipping Price</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                    <th scope="col">{{ __('admin_messages.range_from_to_to_km') }}</th>
+                                    <th scope="col">{{ __('admin_messages.shipping_price') }}</th>
+                                    <th scope="col">{{ __('admin_messages.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,12 +75,12 @@
                                 <tr>
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td>{{ rtrim(rtrim(number_format($charge['range_from'], 2, '.', ''), '0'), '.') }}Km
-                                        to
+                                        {{ __('admin_messages.to') }}
                                         {{ rtrim(rtrim(number_format($charge['range_to'], 2, '.', ''), '0'), '.') }}Km
                                     </td>
 
                                     <td>{{ rtrim(rtrim(number_format($charge['shipping_fee'], 2, '.', ''), '0'), '.') }}
-                                        KD</td>
+                                        {{ __('admin_messages.kd') }}</td>
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
                                             <a class="table-button editShippingBtn" data-id="{{ $charge['id'] }}"
@@ -112,7 +112,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="4" class="text-center text-muted">No Data found</td>
+                                    <td colspan="4" class="text-center text-muted">{{ __('admin_messages.no_data_found') }}</td>
                                 </tr>
                                 @endforelse
 
@@ -168,7 +168,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Edit</h2>
+                <h2 class="h2">{{ __('admin_messages.edit') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
      
@@ -181,7 +181,7 @@
                                 <input type="text"
                                        id="default_shipping_fee_input"
                                        class="form-control"
-                                       placeholder="Enter delivery charge" />
+                                       placeholder="{{ __('admin_messages.enter_delivery_price') }}" />
                             </div>
                             <small id="defaultShippingFeeError"
                                    style="color:red; display:none;"></small>
@@ -192,7 +192,7 @@
                         <button type="button"
                                 id="updateDefaultShippingBtn"
                                 class="btn btn-dark customBtn mt-3">
-                            Update
+                            {{ __('admin_messages.update') }}
                         </button>
                     </div>
                 </div>
@@ -206,7 +206,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add Delivery Charges</h2>
+                <h2 class="h2">{{ __('admin_messages.add_delivery_charges') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -280,17 +280,17 @@
 
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <h5 class="form-label">Range-</h5>
+                                <h5 class="form-label">{{ __('admin_messages.range') }}-</h5>
 
                                 <div class="d-flex align-items-center gap-4 ">
 
                                     <!-- From -->
                                     <div class="d-flex align-items-center" style="gap: 10px;">
-                                        <label class="form-label mb-0">From</label>
+                                        <label class="form-label mb-0">{{ __('admin_messages.from') }}</label>
                                         <div style="position: relative; ">
                                             <input type="text" name="range_from"
                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
-                                                class="form-control" placeholder="Enter From " />
+                                                class="form-control" placeholder="{{ __('admin_messages.enter_from') }}" />
                                             <span style="
                                                             position: absolute;
                                                             right: 12px;
@@ -308,11 +308,11 @@
 
                                     </div>
                                     <div class="d-flex align-items-center" style="gap: 10px;">
-                                        <label class="form-label mb-0">To</label>
+                                        <label class="form-label mb-0">{{ __('admin_messages.to') }}</label>
                                         <div style="position: relative;">
                                             <input type="text" name="range_to"
                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
-                                                class="form-control" placeholder="Enter To " />
+                                                class="form-control" placeholder="{{ __('admin_messages.enter_to') }}" />
                                             <span style="
                                                             position: absolute;
                                                             right: 12px;
@@ -347,10 +347,10 @@
                         <!-- Shipping Fee -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group mt-2">
-                                <label class="form-label">Delivery Price </label>
+                                <label class="form-label">{{ __('admin_messages.enter_delivery_price') }}</label>
                                 <input type="text" name="shipping_fee"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')"
-                                    class="form-control" placeholder="Enter Delivery price" />
+                                    class="form-control" placeholder="{{ __('admin_messages.enter_delivery_price') }}" />
                                 <span id="shippingFeeError" class="text-danger" style="display:none"></span>
                             </div>
                         </div>
@@ -358,7 +358,7 @@
                         <!-- Submit -->
                         <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
                             <a type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">
-                                Submit
+                                {{ __('admin_messages.submit') }}
                             </a>
                         </div>
 
@@ -376,7 +376,7 @@
         <div class="modal-content">
 
             <div class="modal-header management border-0">
-                <h2 class="h2">Edit Delivery Charges</h2>
+                <h2 class="h2">{{ __('admin_messages.edit_delivery_charges') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -448,17 +448,17 @@
 
 
                         <div class="col-lg-12 col-md-12 col-12">
-                            <label class="form-label mb-3">Range</label>
+                            <label class="form-label mb-3">{{ __('admin_messages.range') }}</label>
 
                             <div class="d-flex align-items-center gap-4 flex-wrap">
 
                                 <!-- From -->
                                 <div class="d-flex align-items-center" style="gap: 10px;">
-                                    <label class="form-label mb-0">From</label>
+                                    <label class="form-label mb-0">{{ __('admin_messages.from') }}</label>
                                     <div style="position: relative; width: 145px;">
                                         <input type="text" id="edit_range_from"
                                             oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
-                                            class="form-control" placeholder="Enter From">
+                                            class="form-control" placeholder="{{ __('admin_messages.enter_from') }}">
                                         <span style="
                                                         position: absolute;
                                                         right: 12px;
@@ -476,11 +476,11 @@
 
                                 </div>
                                 <div class="d-flex align-items-center" style="gap: 10px;">
-                                    <label class="form-label mb-0">To</label>
+                                    <label class="form-label mb-0">{{ __('admin_messages.to') }}</label>
                                     <div style="position: relative; width: 145px;">
                                         <input type="text" id="edit_range_to"
                                             oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
-                                            class="form-control" placeholder="Enter  to">
+                                            class="form-control" placeholder="{{ __('admin_messages.enter_to') }}">
                                         <span style="
                                                         position: absolute;
                                                         right: 12px;
@@ -512,10 +512,10 @@
                         <!-- Shipping Fee -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group mt-2">
-                                <label class="form-label">Delivery Price</label>
+                                <label class="form-label">{{ __('admin_messages.enter_delivery_price') }}</label>
                                 <input type="text" id="edit_shipping_fee"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')"
-                                    class="form-control" placeholder="Enter Shipping price">
+                                    class="form-control" placeholder="{{ __('admin_messages.enter_delivery_price') }}">
 
                                 <span id="editShippingFeeError" class="text-danger" style="display:none"></span>
                             </div>
@@ -523,7 +523,7 @@
 
                         <!-- Submit -->
                         <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                            <a id="updateShippingBtn" class="btn btn-dark customBtn mt-3">Update</a>
+                            <a id="updateShippingBtn" class="btn btn-dark customBtn mt-3">{{ __('admin_messages.update') }}</a>
                         </div>
 
                     </div>
@@ -543,13 +543,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let shippingId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteShippingCharge/${shippingId}`, {
@@ -647,28 +648,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Validate Range From
         if (rangeFrom.value.trim() === "") {
-            rangeFromError.innerText = "Please enter range from";
+            rangeFromError.innerText = "{{ __('admin_messages.please_enter_from') }}";
             rangeFromError.style.display = "block";
             hasError = true;
         }
 
         // Validate Range To
         if (rangeTo.value.trim() === "") {
-            rangeToError.innerText = "Please enter range to";
+            rangeToError.innerText = "{{ __('admin_messages.please_enter_to') }}";
             rangeToError.style.display = "block";
             hasError = true;
         }
 
         // Compare Ranges
         if (rangeFrom.value && rangeTo.value && Number(rangeTo.value) <= Number(rangeFrom.value)) {
-            rangeToError.innerText = "Range To must be greater than Range From";
+            rangeToError.innerText = "{{ __('admin_messages.range_to_greater_than_from') }}";
             rangeToError.style.display = "block";
             hasError = true;
         }
 
         // Validate Shipping Fee
         if (shippingFee.value.trim() === "") {
-            shippingFeeError.innerText = "Please enter delivery price";
+            shippingFeeError.innerText = "{{ __('admin_messages.please_enter_delivery_price') }}";
             shippingFeeError.style.display = "block";
             hasError = true;
         } else if (isNaN(shippingFee.value.trim())) {
@@ -798,28 +799,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Validate range from
         if (rangeFrom.value.trim() === "") {
-            errFrom.innerText = "Please enter range from";
+            errFrom.innerText = "{{ __('admin_messages.please_enter_from') }}";
             errFrom.style.display = "block";
             hasError = true;
         }
 
         // Validate range to
         if (rangeTo.value.trim() === "") {
-            errTo.innerText = "Please enter range to";
+            errTo.innerText = "{{ __('admin_messages.please_enter_to') }}";
             errTo.style.display = "block";
             hasError = true;
         }
 
         // Validate correct order
         if (rangeFrom.value && rangeTo.value && Number(rangeTo.value) <= Number(rangeFrom.value)) {
-            errTo.innerText = "Range To must be greater than Range From";
+            errTo.innerText = "{{ __('admin_messages.range_to_greater_than_from') }}";
             errTo.style.display = "block";
             hasError = true;
         }
 
         // Validate shipping fee
         if (shippingFee.value.trim() === "") {
-            errFee.innerText = "Please enter delivery price";
+            errFee.innerText = "{{ __('admin_messages.please_enter_delivery_price') }}";
             errFee.style.display = "block";
             hasError = true;
         }
@@ -909,7 +910,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateBtn.addEventListener("click", function () {
 
         if (modalInput.value.trim() === "") {
-            errorField.innerText = "Please enter delivery charge";
+            errorField.innerText = "{{ __('admin_messages.please_enter_delivery_price') }}";
             errorField.style.display = "block";
             return;
         }

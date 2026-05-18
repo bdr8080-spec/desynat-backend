@@ -439,6 +439,9 @@ return [
     'delivery_charges_already_existed' => 'Delivery charges already exist',
     'delivery_charges_blocked_successfully' => 'Delivery charges blocked successfully',
     'delivery_charges_unblocked_successfully' => 'Delivery charges unblocked successfully',
+    'edit_delivery_charges' => 'Edit Delivery Charges',
+    'to' => 'To',
+    'range_to_greater_than_from' => 'Range To must be greater than Range From',
 
     //gift card category management
     'gift_card_category_name_in_english' => 'Gift Card Category Name (English)',
@@ -451,6 +454,9 @@ return [
     'edit_gift_card_category' => 'Edit Gift Card Category',
     'gift_card_category_unblocked_successfully' => 'Gift card category unblocked successfully',
     'gift_card_category_blocked_successfully' => 'Gift card category blocked successfully',
+    'gift_card_category_deleted_successfully' => 'Gift Card Category Deleted Successfully!',
+    'gift_card_category_added_successfully' => 'Gift Card Category Added Successfully!',
+    'gift_card_category_updated_successfully' => 'Gift Card Category Updated Successfully!',
 
     //banner per day price management
     'banner_per_day_charges_for_sellers' => 'Banner Per Day Charges for Sellers',
