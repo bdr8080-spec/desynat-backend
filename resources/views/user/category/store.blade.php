@@ -1,6 +1,13 @@
 @extends('user.layout.app')
 
 @section('content')
+
+<style>
+.story-active{
+    border: 4px solid transparent!important;
+    background: linear-gradient(#fff, #fff) padding-box, linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+}
+</style>
     <div class="customContainer">
         <div class="owl-carousel owl-theme customcatOwlcarousel storeBanner">
             @if(empty($catBanners['data']) || count($catBanners['data']) == 0)
@@ -119,7 +126,7 @@
                                         </div>
                                         <div class="category-store-content">
                                             <div class="user-infoCat_detail d-flex align-items-center">
-                                                <div class="user">
+                                                <div class="user sellerStory" id="sellerStory{{ $item->seller_information->id }}">
                                                     <img src="{{ $item->seller_information->profile_pic }}"
                                                         class="img-fluid" style="cursor:pointer" onclick="openSellerGallery(event, {{ $item->seller_information->id }})" />
                                                 </div>
@@ -206,108 +213,83 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
 <script>
 
-var sellerStories = null;  
+var sellerStories = [];
 var sellerIndex = 0;
 var sellerTimer = null;
 var sellerDuration = 3000;
-var sellerLoading = false;    // prevent multiple API calls
+var sellerLoading = false;
+var currentSellerId = null;
 
 // ================= CLICK HANDLER =================
 function openSellerGallery(event, sellerId, index = 0) {
-    console.log("[SELLER] Clicked");
+
     event.preventDefault();
     event.stopPropagation();
 
-    // Prevent multiple clicks while loading
-    if (sellerLoading) {
-        console.log("[SELLER] Already loading...");
-        return;
-    }
+    if (sellerLoading) return;
 
-    // If not loaded → fetch from API
-    // if (sellerStories === null) {
-    //     loadSellerStories(sellerId, index);
-    // } else if (sellerStories.length > 0) {
-    //     showSellerGallery(index);
-    // }
-    sellerStories = null;
+    currentSellerId = sellerId;
+    sellerIndex = index;
 
-    // Always fetch clicked seller stories
     loadSellerStories(sellerId, index);
-    if (sellerStories.length > 0) {
-        showSellerGallery(openIndex);
-    } else {
-       // console.log("[SELLER] No stories found");
-    }
 }
 
-// ================= LOAD STORIES FROM API =================
+// ================= LOAD STORIES =================
 function loadSellerStories(seller_id, openIndex = 0) {
 
     sellerLoading = true;
-
-
-    console.log("[SELLER] seller_id:", seller_id);
 
     $.ajax({
         url: "{{ route('user.get_seller_story') }}",
         type: "GET",
         dataType: "json",
-
         data: {
             seller_id: seller_id
         },
 
         success: function(res) {
-            sellerLoading = false;
 
-            console.log("[SELLER] API RESPONSE:", res);
+            sellerLoading = false;
 
             if (res.status === "success" && Array.isArray(res.data.data)) {
                 sellerStories = res.data.data;
             } else {
                 sellerStories = [];
             }
-            var profileDiv = document.querySelector('.user');
 
-            if (sellerStories.length > 0) {
-                if(profileDiv){
-                    profileDiv.classList.add('story-active');
-                }
-            } else {
-                if(profileDiv){
-                    profileDiv.classList.remove('story-active');
-                }
+            const profileDiv = document.getElementById("sellerStory" + seller_id);
+
+            const hasStories = sellerStories.length > 0;
+
+            if (profileDiv) {
+                profileDiv.classList.toggle("story-active", hasStories);
             }
 
-            // If stories exist → open gallery
-            if (sellerStories.length > 0) {
+            if (hasStories) {
                 showSellerGallery(openIndex);
-            } else {
-                console.log("[SELLER] No stories found → do nothing");
             }
         },
 
         error: function(err) {
+
             sellerLoading = false;
-            console.error("[SELLER] AJAX ERROR:", err);
             sellerStories = [];
+            console.error(err);
         }
     });
 }
 
+// ================= SHOW GALLERY =================
 function showSellerGallery(index) {
-    console.log('123');
 
     sellerIndex = index;
 
     var container = document.getElementById("statusSeller");
-    if (!container) {
-        console.error("[SELLER] statusSeller not found");
-        return;
-    }
+
+    if (!container) return;
 
     container.style.display = "block";
 
@@ -315,15 +297,12 @@ function showSellerGallery(index) {
     showSellerStory();
 }
 
-
+// ================= PROGRESS BARS =================
 function generateSellerProgressBars() {
 
     var container = document.getElementById("progressContainerSeller");
 
-    if (!container) {
-        console.error("[SELLER] progressContainerSeller not found");
-        return;
-    }
+    if (!container) return;
 
     container.innerHTML = "";
 
@@ -336,11 +315,10 @@ function generateSellerProgressBars() {
     });
 }
 
+// ================= SHOW STORY =================
 function showSellerStory() {
 
     var story = sellerStories[sellerIndex];
-
-    console.log("[SELLER] showStory index:", sellerIndex, story);
 
     if (!story) {
         closeSellerStatus();
@@ -350,26 +328,20 @@ function showSellerStory() {
     var img = document.getElementById("statusImageSeller");
     var video = document.getElementById("statusVideoSeller");
 
-    if (!img || !video) {
-        console.error("[SELLER] Image or Video element missing");
-        return;
-    }
+    if (!img || !video) return;
 
-    // Reset
     img.style.display = "none";
     video.style.display = "none";
+
     video.pause();
     video.currentTime = 0;
 
     var file = story.file;
 
     if (!file) {
-        console.warn("[SELLER] Empty file → skipping");
         showNextSeller();
         return;
     }
-
-    console.log("[SELLER] FILE:", file);
 
     if (file.match(/\.(mp4|webm|ogg)$/i)) {
 
@@ -380,16 +352,14 @@ function showSellerStory() {
         video.onloadedmetadata = function () {
             sellerDuration = (video.duration * 1000) || 3000;
             startSellerProgress();
-            video.play().catch(e => console.warn("[SELLER] Play blocked:", e));
+            video.play().catch(() => {});
         };
 
         video.onerror = function () {
-            console.error("[SELLER] Video failed → skipping");
             showNextSeller();
         };
 
-    } 
-    else {
+    } else {
 
         img.src = file;
         img.style.display = "block";
@@ -399,7 +369,7 @@ function showSellerStory() {
     }
 }
 
-
+// ================= PROGRESS =================
 function startSellerProgress() {
 
     clearTimeout(sellerTimer);
@@ -411,12 +381,14 @@ function startSellerProgress() {
         });
 
     setTimeout(() => {
+
         var bar = document.getElementById("sellerBar" + sellerIndex);
 
         if (bar) {
             bar.style.transition = sellerDuration + "ms linear";
             bar.style.width = "100%";
         }
+
     }, 10);
 
     sellerTimer = setTimeout(() => {
@@ -424,7 +396,7 @@ function startSellerProgress() {
     }, sellerDuration);
 }
 
-
+// ================= NEXT STORY =================
 function showNextSeller() {
 
     if (sellerIndex < sellerStories.length - 1) {
@@ -435,7 +407,7 @@ function showNextSeller() {
     }
 }
 
-
+// ================= PREV STORY =================
 function showPrevSeller() {
 
     if (sellerIndex > 0) {
@@ -444,6 +416,7 @@ function showPrevSeller() {
     }
 }
 
+// ================= CLOSE =================
 function closeSellerStatus() {
 
     clearTimeout(sellerTimer);
