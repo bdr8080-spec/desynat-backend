@@ -140,7 +140,7 @@ a:hover {
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between">
         <div class="title24"> <a href="{{route('seller.products')}}" style="color:rgb(57, 55, 55)"><i
-                    class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
+                    class="bi bi-chevron-left"></i> {{ __('seller_messages.product_code') }}- {{ $product->id }}
             </a> </div>
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault"
@@ -174,7 +174,13 @@ a:hover {
                 @endif
 
             </h6>
-            <p class="text-muted mb-1">{{ $product->product_name_en }} ({{ $product->category->name }}) </p>
+            <p class="text-muted mb-1">
+            @if(App::getlocale()=='en')
+            {{ $product->product_name_en }} ({{ $product->category->name }})
+             @else
+            {{ $product->product_name_ar }} ({{ $product->category->name_ar }})
+              @endif  
+        </p>
 
             <div class="d-flex align-items-center mb-2">
                 <span class="text-warning fs-5">★★★★☆</span>
@@ -183,11 +189,11 @@ a:hover {
 
             <div id="price-box" class="mb-0"></div>
 
-            <p class="text-success small">inclusive of all taxes</p>
+            <p class="text-success small"> {{ __('seller_messages.inclusive_of_all_taxes') }}</p>
 
             <hr class="mt-0">
 
-            <h6 class="fw-semibold mb-2">More Color</h6>
+            <h6 class="fw-semibold mb-2"> {{ __('seller_messages.more_color') }}</h6>
 
             <div class="d-flex gap-2 mb-2">
                 @php $count=1;
@@ -207,9 +213,9 @@ a:hover {
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="fw-semibold">Available Size</h6>
+                <h6 class="fw-semibold">  {{ __('seller_messages.available_size') }}</h6>
                 <a href="#" class="text-brown fw-semibold text-decoration-none" data-bs-toggle="modal"
-                    data-bs-target="#sizeGuideModal">Size Guide</a>
+                    data-bs-target="#sizeGuideModal"> {{ __('seller_messages.size_guide') }}</a>
 
             </div>
 
@@ -225,16 +231,26 @@ a:hover {
 
             <div class="my-3">
                 <div class="desc-box p-4 rounded-4">
-                    <h6 class="fw-semibold">Description</h6>
+                    <h6 class="fw-semibold"> {{ __('seller_messages.description') }}</h6>
                     <p class="mt-3 text-muted">
-                        {{ $product->description_en }}
+                          @if(App::getlocale()=='en')
+                           {{ $product->description_en }}
+                         @else
+                        {{ $product->description_ar }}
+                        @endif  
+
+                      
                     </p>
-                    <h6 class="fw-semibold mt-4">Specification</h6>
+                    <h6 class="fw-semibold mt-4">  {{ __('seller_messages.specification') }}</h6>
                     <ul class="mt-3 spec-list">
 
                         @foreach ($product->product_specifications as $item)
 
+                          @if(App::getlocale()=='en')
                         <li>{{$item->name_en}} - {{$item->feature_en}}</li>
+                        @else
+                        <li>{{$item->name_ar}} - {{$item->feature_ar}}</li>
+                        @endif
 
                         @endforeach
 
@@ -243,46 +259,45 @@ a:hover {
             </div>
             <div class="p-4 rounded-4 shadow-sm desc-box">
                 <div class="row mb-2">
-                    <div class="col-6">Return allowed ?
+                    <div class="col-6"> {{ __('seller_messages.return_allowed') }}
                     </div>
-                    <div class="col-6 text-end">@if($product->product_return==1) {{$product->return_days}} days @else No
+                    <div class="col-6 text-end">@if($product->product_return==1) {{$product->return_days}} {{ __('seller_messages.days') }} @else {{ __('seller_messages.no') }}
                         @endif </div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-6">Exchange allowed ?
+                    <div class="col-6"> {{ __('seller_messages.exchange_allowed') }}
                     </div>
                     <div class="col-6 text-end">@if($product->product_exchangable==1) {{$product->exchangable_days}}
-                        days @else No @endif </div>
+                        {{ __('seller_messages.days') }} @else {{ __('seller_messages.no') }} @endif </div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-6">Review & ratings allowed ?
+                    <div class="col-6">  {{ __('seller_messages.review_ratings_allowed') }}
                     </div>
-                    <div class="col-6 text-end">@if($product->review_rating==1) Yes @else No @endif </div>
+                    <div class="col-6 text-end">@if($product->review_rating==1) {{ __('seller_messages.yes') }} @else {{ __('seller_messages.no') }} @endif </div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-6">Is it an Affiliated Product?
+                    <div class="col-6"> {{ __('seller_messages.affiliated_product') }}
                     </div>
-                    <div class="col-6 text-end">@if($product->affiliated_product==1) Yes
-                        @else No @endif </div>
+                    <div class="col-6 text-end">@if($product->affiliated_product==1) {{ __('seller_messages.yes') }}
+                        @else {{ __('seller_messages.no') }} @endif </div>
 
                 </div>
                 <div class="row mb-2">
-                    <div class="col-6">Is this a Customized product?
+                    <div class="col-6">{{ __('seller_messages.customized_product') }}
                     </div>
-                    <div class="col-6 text-end">@if($product->customized_product==1) Yes @else No @endif </div>
+                    <div class="col-6 text-end">@if($product->customized_product==1) {{ __('seller_messages.yes') }} @else {{ __('seller_messages.no') }} @endif </div>
 
                 </div>
                 <div class="row">
-                    <div class="col-6">Ready to ship?
+                    <div class="col-6"> {{ __('seller_messages.ready_to_ship') }}
                     </div>
-                    <div class="col-6 text-end">@if($product->ready_to_ship==1) Yes @else No @endif </div>
+                    <div class="col-6 text-end">@if($product->ready_to_ship==1) {{ __('seller_messages.yes') }} @else {{ __('seller_messages.no') }} @endif </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">Cash on delivery allowed?
+                    <div class="col-6">{{ __('seller_messages.cash_on_delivery') }}
 
                     </div>
-                    <div class="col-6 text-end">@if($product->cash_on_delivery==1) Yes @else No @endif </div>
-
+                    <div class="col-6 text-end">@if($product->cash_on_delivery==1) {{ __('seller_messages.yes') }} @else {{ __('seller_messages.no') }} @endif </div>
                 </div>
             </div>
         </div>
@@ -352,7 +367,7 @@ a:hover {
                 </div>
                 <div class="modal-body" style="position: relative">
                     <!-- Add your size guide content here -->
-                    <p>Here you can show image of size guide:</p>
+                    <p>{{ __('seller_messages.show_size_guide_image') }}</p>
 
                     <img src="{{$product->upload_size_chart}}" style="width:100%">
 
@@ -367,16 +382,15 @@ a:hover {
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteConfirmLabel">Confirm Delete</h5>
+                    <h5 class="modal-title" id="deleteConfirmLabel">{{ __('seller_messages.confirm_delete') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete this item?
+                {{ __('seller_messages.delete_confirmation_message') }}
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary px-5" data-bs-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-id="{{$product->id}}">Yes,
-                        Delete</button>
+                    <button type="button" class="btn btn-secondary px-5" data-bs-dismiss="modal">{{ __('seller_messages.no') }}</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-id="{{$product->id}}">{{ __('seller_messages.yes_delete') }}</button>
                 </div>
             </div>
         </div>
