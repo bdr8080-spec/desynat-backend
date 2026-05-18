@@ -6,6 +6,7 @@ use App\Models\country;
 use Illuminate\Http\Request;
 use App\Models\orderdetail;
 use App\Models\product;
+use App\Models\ProductRating;
 use App\Http\Controllers\CommonController;
 
 
@@ -203,6 +204,22 @@ class SellerManagementService
                         ')
                         ->value('total_earning');
 
+                    $data['average_product_rating'] = round(
+                        ProductRating::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )->avg('product_rating'),
+                        1
+                    );
+
+                    $data['average_store_rating'] = round(
+                        ProductRating::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )->avg('store_rating'),
+                        1
+                    );
+
                     return $data;
                 });
 
@@ -260,6 +277,22 @@ class SellerManagementService
                             as total_earning
                         ')
                         ->value('total_earning');
+
+                    $data['average_product_rating'] = round(
+                        ProductRating::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )->avg('product_rating'),
+                        1
+                    );
+
+                    $data['average_store_rating'] = round(
+                        ProductRating::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )->avg('store_rating'),
+                        1
+                    );
 
                     return $data;
                 });
@@ -341,6 +374,7 @@ class SellerManagementService
                 $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
                     ? $seller->subcription_plan->toArray()
                     : null;
+                    
 
                 return $data;
             });
@@ -440,6 +474,22 @@ class SellerManagementService
                             as total_earning
                         ')
                         ->value('total_earning');
+
+            $data['average_product_rating'] = round(
+                        ProductRating::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )->avg('product_rating'),
+                        1
+                    );
+
+            $data['average_store_rating'] = round(
+                ProductRating::whereIn(
+                    'product_id',
+                    product::where('seller_id', $seller->id)->pluck('id')
+                )->avg('store_rating'),
+                1
+            );
 
 
             return [
