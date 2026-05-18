@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+
 
 <head>
     <meta charset="utf-8">
@@ -51,34 +53,33 @@
             <a href="#"><img src="{{ asset('/dealer') }}/assets/img/desynat-logo.svg" alt="image"
                     class="img-fluid logo-login"> </a>
         </div>
-        <div class="des-language">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                                    data-bs-toggle="dropdown">
+                  <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+                                                        data-bs-toggle="dropdown">
 
-                                    <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
+                                                        <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif </span>
 
-                                </button>
 
-                                <ul class="dropdown-menu dropdown-menu-end langu">
+                                                    </button>
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
-                                        </a>
-                                    </li>
+                                                    <ul class="dropdown-menu dropdown-menu-end langu">
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
-                                        </a>
-                                    </li>
+                                                        <li>
+                                                            <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
+                                                                <span>AR</span> {{ __('seller_messages.Arabic') }} 
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
+                                                                <span>EN</span> {{ __('seller_messages.English') }} 
+                                                            </a>
+                                                        </li>
 
-                                </ul>
-            </div>
-        </div>
+                                                    </ul>
+                                </div>
+</div>
     </div>
 
     <div class="login-wapper">
@@ -95,12 +96,12 @@
                                             class="img-fluid">
                                     </div>
                                     <div class="group-radio-btn text-center">
-                                        <h2 class="mb-3">Your account registration is under review !!</h2>
-                                        <p>Please wait for 3-4 hrs. Thank you for your patience. Team Desynat App</p>
+                                        <h2 class="mb-3">{{ __('seller_messages.account_under_review') }}</h2>
+                                        <p>{{ __('seller_messages.review_wait_message') }}</p>
                                     </div>
 
                                     <div class="login-btn padding-top-60">
-                                        <a href="{{ route('seller.logout') }}" class="btn btn-success w-100">Logout</a>
+                                        <a href="{{ route('seller.logout') }}" class="btn btn-success w-100">{{ __('seller_messages.logout') }}</a>
                                     </div>
 
                                 </form>

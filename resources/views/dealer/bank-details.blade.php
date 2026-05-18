@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+
 
 <head>
     <meta charset="utf-8">
@@ -60,28 +62,28 @@
             <a href="#"><img src="{{ asset('/dealer') }}/assets/img/desynat-logo.svg" alt="image"
                     class="img-fluid logo-login"> </a>
         </div>
-        <div class="des-language">
+         <div class="des-language">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
                                     data-bs-toggle="dropdown">
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                     <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif </span>
+
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
+                                     <li>
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
+                                            <span>AR</span> {{ __('seller_messages.Arabic') }} 
                                         </a>
                                     </li>
-
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
+                                        <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
+                                            <span>EN</span> {{ __('seller_messages.English') }} 
                                         </a>
                                     </li>
 
@@ -108,8 +110,7 @@
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
                                 <div class="cmn-header mb-3">
                                     <h1><a href="{{ route('seller.store_information', Request()->id) }}"><i
-                                                class="bi bi-chevron-left"></i></a> Upload
-                                        documents & Bank details</h1>
+                                                class="bi bi-chevron-left"></i></a> {{ __('seller_messages.upload_documents_bank_details') }}</h1>
                                 </div>
 
                                 <form action="{{ route('seller.upload_document', Request()->id) }}" method="post"
@@ -142,7 +143,7 @@
 
                                     <div class="owner-pnl">
                                         <div class="form-group">
-                                            <label for="name">Owner's Documents</label>
+                                            <label for="name">{{ __('seller_messages.owners_documents') }} </label>
                                             <div class="row">
                                                 <div class="col-lg-6 col-md-6">
                                                     <div class="upload-image w-100">
@@ -150,7 +151,7 @@
                                                             style="cursor:pointer;text-align:center;">
                                                             <img
                                                                 src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                                                            <div class="text-color-upload">Document 1</div>
+                                                            <div class="text-color-upload">{{ __('seller_messages.document_1') }}</div>
                                                             <input type="file" name="owner_document[]"
                                                                 accept="image/*" hidden onchange="showPreview(event,1)">
 
@@ -197,7 +198,7 @@
                                                             style="cursor:pointer;text-align:center;">
                                                             <img
                                                                 src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                                                            <div class="text-color-upload">Document 1</div>
+                                                            <div class="text-color-upload">{{ __('seller_messages.document_2') }}</div>
                                                             <input type="file" name="owner_document[]"
                                                                 accept="image/*" hidden
                                                                 onchange="showPreview(event,2)">
@@ -239,7 +240,7 @@
                                     </div>
                                     <div class="owner-pnl">
                                         <div class="form-group">
-                                            <label for="name">Store Documents</label>
+                                            <label for="name">{{ __('seller_messages.store_documents') }}</label>
                                             <div class="row">
                                                 <div class="col-lg-6 col-md-6">
                                                     <div class="upload-image w-100">
@@ -247,7 +248,7 @@
                                                             style="cursor:pointer;text-align:center;">
                                                             <img
                                                                 src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                                                            <div class="text-color-upload">Document 1</div>
+                                                            <div class="text-color-upload">{{ __('seller_messages.document_1') }}</div>
                                                             <input type="file" name="store_document[]"
                                                                 accept="image/*" hidden
                                                                 onchange="showPreview(event,3)">
@@ -288,7 +289,7 @@
                                                             style="cursor:pointer;text-align:center;">
                                                             <img
                                                                 src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                                                            <div class="text-color-upload">Document 1</div>
+                                                            <div class="text-color-upload">{{ __('seller_messages.document_2') }}</div>
                                                             <input type="file" name="store_document[]"
                                                                 accept="image/*" hidden
                                                                 onchange="showPreview(event,4)">
@@ -334,22 +335,22 @@
                                     @enderror
 
                                     <div class="owner-pnl mt-4">
-                                        <h5 class="mb-2">Bank details</h5>
+                                        <h5 class="mb-2">{{ __('seller_messages.bank_details') }}</h5>
                                         <div class="form-group">
-                                            <label for="name">Account Type</label>
+                                            <label for="name">{{ __('seller_messages.account_type') }}</label>
                                             <div class="d-flex gap-4">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio"
                                                         name="account_type" value="0"
                                                         @if (@$seller_bank->account_type == '0') checked @endif>
-                                                    <label class="form-check-label mt-0" for="personal"> Personal
+                                                    <label class="form-check-label mt-0" for="personal"> {{ __('seller_messages.personal') }}
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio"
                                                         name="account_type" value="1"
                                                         @if (@$seller_bank->account_type == '1') checked @endif>
-                                                    <label class="form-check-label mt-0" for="personal"> Business
+                                                    <label class="form-check-label mt-0" for="personal"> {{ __('seller_messages.business') }}
                                                     </label>
                                                 </div>
                                             </div>
@@ -363,9 +364,9 @@
 
 
                                     <div class="form-group">
-                                        <label for="name">IBAN</label>
+                                        <label for="name">{{ __('seller_messages.iban') }}</label>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter IBAN Number" name="iban"
+                                            placeholder="{{ __('seller_messages.enter_iban_number') }}" name="iban"
                                             value="{{ old('iban', @$seller_bank->iban) }}">
 
                                         @error('iban')
@@ -375,9 +376,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">SWIFT/BIC</label>
+                                        <label for="name">{{ __('seller_messages.swift_bic') }}</label>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter SWIFT/BIC Number" name="swift"
+                                            placeholder="{{ __('seller_messages.enter_swift_bic_number') }}" name="swift"
                                             value="{{ old('bank_name', @$seller_bank->swift) }}">
                                         @error('swift')
                                             <span class="text-danger">{{ $message }}</span>
@@ -385,9 +386,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">Bank Name</label>
+                                        <label for="name">{{ __('seller_messages.bank_name') }}</label>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter Bank Name" name="bank_name"
+                                            placeholder="{{ __('seller_messages.enter_bank_name') }}" name="bank_name"
                                             value="{{ old('bank_name', @$seller_bank->bank_name) }}">
                                         @error('bank_name')
                                             <span class="text-danger">{{ $message }}</span>
@@ -395,9 +396,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">Account holder name</label>
+                                        <label for="name">{{ __('seller_messages.account_holder_name') }}</label>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter Account holder name" name="account_holder_name"
+                                            placeholder="{{ __('seller_messages.enter_account_holder_name') }}" name="account_holder_name"
                                             value="{{ old('account_holder_name', @$seller_bank->account_holder_name) }}"
                                             oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
                                         @error('account_holder_name')
@@ -428,7 +429,7 @@
 
                                     <div class="owner-pnl">
                                         <div class="form-group">
-                                            <label for="name">Upload proof of account</label>
+                                            <label for="name">{{ __('seller_messages.upload_proof_of_account') }}</label>
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <div class="upload-image w-100">
@@ -436,7 +437,7 @@
                                                             style="cursor:pointer;text-align:center;">
                                                             <img
                                                                 src="{{ asset('/dealer/assets/img/upload-icon.svg') }}">
-                                                            <div class="text-color-upload">Upload proof of account
+                                                            <div class="text-color-upload">{{ __('seller_messages.upload_proof_of_account') }}
                                                             </div>
                                                             <input type="file" accept="image/*" hidden
                                                                 onchange="showPreview(event,5)" name="upload_proof">
@@ -479,7 +480,7 @@
 
                                     <div class="login-btn mt-5">
 
-                                        <input type="submit" class="btn btn-success w-100" value="Continue">
+                                        <input type="submit" class="btn btn-success w-100" value="{{ __('seller_messages.continue') }}">
 
                                         <!-- <a href="summary_page.php" class="btn btn-success w-100">Continue</a> -->
                                     </div>
@@ -527,7 +528,6 @@
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
-
 
 <script>
     function showPreview(e, id) {

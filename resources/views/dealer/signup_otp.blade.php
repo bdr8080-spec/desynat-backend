@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+
 
 <head>
     <meta charset="utf-8">
@@ -53,34 +55,33 @@
             <a href="#"><img src="{{ asset('/dealer') }}/assets/img/desynat-logo.svg" alt="image"
                     class="img-fluid logo-login"> </a>
         </div>
-        <div class="des-language">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                                    data-bs-toggle="dropdown">
+                   <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+                                                        data-bs-toggle="dropdown">
 
-                                    <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
+                                                        <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif </span>
 
-                                </button>
 
-                                <ul class="dropdown-menu dropdown-menu-end langu">
+                                                    </button>
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
-                                        </a>
-                                    </li>
+                                                    <ul class="dropdown-menu dropdown-menu-end langu">
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
-                                        </a>
-                                    </li>
+                                                        <li>
+                                                            <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
+                                                                <span>AR</span> {{ __('seller_messages.Arabic') }} 
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
+                                                                <span>EN</span> {{ __('seller_messages.English') }} 
+                                                            </a>
+                                                        </li>
 
-                                </ul>
-            </div>
-        </div>
+                                                    </ul>
+                                </div>
+</div>
     </div>
 
     <div class="login-wapper">
@@ -100,7 +101,7 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="{{ url()->previous() }} "><i class="bi bi-chevron-left"></i></a> OTP
+                                    <h1><a href="{{ url()->previous() }} "><i class="bi bi-chevron-left"></i></a> {{ __('seller_messages.otp') }}
                                     </h1>
                                 </div>
 
@@ -126,7 +127,7 @@
                                 <form action="{{ route('seller.register_otp_verify', request()->id) }}" method="Post">
 
                                     <div class="group-radio-btn">
-                                        <h3>6 digit OTP has been sent to your registered Mobile Number <span
+                                        <h3>{{ __('seller_messages.otp_sent_message') }} <span
                                                 class="gold-color"> {{ $seller_details->country_code }}
                                                 {{ $seller_details->mobile }}</span></h3>
 
@@ -176,7 +177,7 @@
                                     @endif
 
                                     <div class="login-btn padding-top-60">
-                                        <input type="submit" class="btn btn-success w-100" value="Verify">
+                                        <input type="submit" class="btn btn-success w-100" value="{{ __('seller_messages.verify') }}">
                                         <!-- <a href="store_page.php" class="btn btn-success w-100">Verify</a> -->
                                     </div>
 

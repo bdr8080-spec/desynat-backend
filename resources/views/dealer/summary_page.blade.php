@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+
 
 <head>
     <meta charset="utf-8">
@@ -53,34 +55,33 @@
             <a href="#"><img src="{{ asset('/dealer') }}/assets/img/desynat-logo.svg" alt="image"
                     class="img-fluid logo-login"> </a>
         </div>
-        <div class="des-language">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                                    data-bs-toggle="dropdown">
+                  <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+                                                        data-bs-toggle="dropdown">
 
-                                    <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
+                                                        <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif </span>
 
-                                </button>
 
-                                <ul class="dropdown-menu dropdown-menu-end langu">
+                                                    </button>
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
-                                        </a>
-                                    </li>
+                                                    <ul class="dropdown-menu dropdown-menu-end langu">
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
-                                        </a>
-                                    </li>
+                                                        <li>
+                                                            <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
+                                                                <span>AR</span> {{ __('seller_messages.Arabic') }} 
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
+                                                                <span>EN</span> {{ __('seller_messages.English') }} 
+                                                            </a>
+                                                        </li>
 
-                                </ul>
-            </div>
-        </div>
+                                            </ul>
+                                </div>
+                            </div>
     </div>
 
     <div class="login-wapper">
@@ -100,11 +101,11 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="{{ url()->previous() }}"><i class="bi bi-chevron-left"></i></a> Summary
-                                        information</h1>
+                                    <h1><a href="{{ url()->previous() }}"><i class="bi bi-chevron-left"></i></a>
+                                        {{ __('seller_messages.summary_information') }}</h1>
                                 </div>
 
-                                <h5 class="summary-title">Personal Information</h5>
+                                <h5 class="summary-title">{{ __('seller_messages.personal_information') }}</h5>
                                 <div class="personal-box">
                                     <div class="upload-image w-50">
                                         <label class="uploadLabel-summary">
@@ -114,53 +115,53 @@
                                 </div>
 
                                 <div class="personal-list">
-                                    <div class="lightName">Full Name</div>
+                                    <div class="lightName">{{ __('seller_messages.full_name') }}</div>
                                     <div class="title_black">{{ $review->first_name }} {{ $review->last_name }}</div>
                                 </div>
                                 <div class="personal-list">
-                                    <div class="lightName">Phone Number</div>
+                                    <div class="lightName">{{ __('seller_messages.phone_number') }}</div>
                                     <div class="title_black">{{ $review->country_code }} - {{ $review->mobile }}
                                     </div>
                                 </div>
                                 <div class="personal-list">
-                                    <div class="lightName">Mail Id</div>
+                                    <div class="lightName">{{ __('seller_messages.mail_id') }}</div>
                                     <div class="title_black">{{ $review->email }}</div>
                                 </div>
 
                                 <hr class="light-line">
 
-                                <h5 class="summary-title">Store Information</h5>
+                                <h5 class="summary-title">{{ __('seller_messages.store_information') }}</h5>
                                 <div class="personal-box">
 
 
                                 </div>
                                 <div class="personal-list">
-                                    <div class="lightName">Store Name</div>
+                                    <div class="lightName">{{ __('seller_messages.store_name') }}</div>
                                     <div class="title_black">{{ $review->store_info->store_name }}</div>
                                 </div>
                                 <div class="personal-list">
-                                    <div class="lightName">Address</div>
+                                    <div class="lightName">{{ __('seller_messages.address') }}</div>
                                     <div class="title_black">{{ $review->store_info->store_address }}</div>
                                 </div>
                                 <div class="personal-list">
-                                    <div class="lightName">Phone Number</div>
+                                    <div class="lightName">{{ __('seller_messages.phone_number') }}</div>
                                     <div class="title_black"> {{ $review->store_info->country_code }} -
                                         {{ $review->store_info->store_phone }}</div>
                                 </div>
                                 <div class="personal-list">
-                                    <div class="lightName">Mail Id</div>
+                                    <div class="lightName">{{ __('seller_messages.mail_id') }}</div>
                                     <div class="title_black">{{ $review->store_info->store_mail_id }}</div>
                                 </div>
                                 <div class="personal-list">
-                                    <div class="lightName">Bio</div>
+                                    <div class="lightName">{{ __('seller_messages.bio') }}</div>
                                     <div class="title_black">{{ $review->store_info->bio }}</div>
                                 </div>
                                 <hr class="light-line">
-                                <h5 class="summary-title">Documents</h5>
+                                <h5 class="summary-title">{{ __('seller_messages.documents') }}</h5>
 
                                 <div class="owner-pnl">
                                     <div class="form-group">
-                                        <label for="name">Owner's Documents</label>
+                                        <label for="name">{{ __('seller_messages.owners_documents') }}</label>
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="upload-image w-100">
@@ -183,7 +184,7 @@
                                 </div>
                                 <div class="owner-pnl">
                                     <div class="form-group">
-                                        <label for="name">Store Documents</label>
+                                        <label for="name">{{ __('seller_messages.store_documents') }}</label>
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="upload-image w-100">
@@ -205,42 +206,42 @@
                                     </div>
                                 </div>
                                 <hr class="light-line">
-                                <h5 class="summary-title">Bank Details</h5>
+                                <h5 class="summary-title">{{ __('seller_messages.bank_details') }}</h5>
                                 <div class="personal-list">
-                                    <div class="lightName">Account Type</div>
+                                    <div class="lightName">{{ __('seller_messages.account_type') }}</div>
                                     <div class="title_black">
                                         @if ($review->seller_bank_details->account_type == '0')
-                                            Personal
+                                            {{ __('seller_messages.personal') }}
                                         @else
-                                            Business
+                                            {{ __('seller_messages.business') }}
                                         @endif
                                     </div>
                                 </div>
                                 @isset($review->seller_bank_details->iban)
                                     <div class="personal-list">
-                                        <div class="lightName">IBAN</div>
+                                        <div class="lightName">{{ __('seller_messages.iban') }}</div>
                                         <div class="title_black">{{ $review->seller_bank_details->iban }}</div>
                                     </div>
                                 @endisset
 
                                 @isset($review->seller_bank_details->swift)
                                     <div class="personal-list">
-                                        <div class="lightName">SWIFT/BIC</div>
+                                        <div class="lightName">{{ __('seller_messages.swift_bic') }}</div>
                                         <div class="title_black">{{ $review->seller_bank_details->swift }}</div>
                                     </div>
                                 @endisset
 
                                 <div class="personal-list">
-                                    <div class="lightName">Bank Name</div>
+                                    <div class="lightName">{{ __('seller_messages.bank_name') }}</div>
                                     <div class="title_black">{{ $review->seller_bank_details->bank_name }}</div>
                                 </div>
                                 <div class="personal-list">
-                                    <div class="lightName">Account holder name</div>
+                                    <div class="lightName">{{ __('seller_messages.account_holder_name') }}</div>
                                     <div class="title_black">{{ $review->seller_bank_details->account_holder_name }}
                                     </div>
                                 </div>
                                 <div class="personal-list">
-                                    <div class="lightName">Proof of account</div>
+                                    <div class="lightName">{{ __('seller_messages.proof_of_account') }}</div>
                                     <div class="upload-image w-50">
                                         <label class="uploadLabel-summary">
                                             <img src="{{ $review->seller_bank_details->upload_proof }}"
@@ -252,13 +253,10 @@
 
                                 <form action="{{ route('seller.review_submit_page', Request()->id) }}">
                                     <div class="login-btn mt-5">
-                                        <input type="submit" class="btn btn-success w-100" value="Submit">
+                                        <input type="submit" class="btn btn-success w-100" value="{{ __('seller_messages.submit') }}">
                                     </div>
                                 </form>
-
-
                             </div>
-
 
                         </div>
                     </div>

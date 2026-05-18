@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+
 
 <head>
     <meta charset="utf-8">
@@ -81,34 +83,33 @@
             <a href="#"><img src="{{ asset('/dealer') }}/assets/img/desynat-logo.svg" alt="image"
                     class="img-fluid logo-login"> </a>
         </div>
-        <div class="des-language">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                                    data-bs-toggle="dropdown">
+                  <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
+                                                        data-bs-toggle="dropdown">
 
-                                    <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
+                                                        <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                                        <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif </span>
 
-                                </button>
 
-                                <ul class="dropdown-menu dropdown-menu-end langu">
+                                                    </button>
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
-                                        </a>
-                                    </li>
+                                                    <ul class="dropdown-menu dropdown-menu-end langu">
 
-                                    <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
-                                        </a>
-                                    </li>
+                                                        <li>
+                                                            <a class="dropdown-item" data-lang="ar" href="{{route('sellerLanguage','ar')}}" >
+                                                                <span>AR</span> {{ __('seller_messages.Arabic') }} 
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" data-lang="en"  href="{{route('sellerLanguage','en')}}" >
+                                                                <span>EN</span> {{ __('seller_messages.English') }} 
+                                                            </a>
+                                                        </li>
 
-                                </ul>
-            </div>
-        </div>
+                                                    </ul>
+                                </div>
+</div>
     </div>
 
     @if ($errors->any())
@@ -136,8 +137,7 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="#"><i class="bi bi-chevron-left"></i></a> Store
-                                        information</h1>
+                                    <h1><a href="#"><i class="bi bi-chevron-left"></i></a> {{ __('seller_messages.store_information') }}</h1>
                                 </div>
 
                                 <form action="{{ route('seller.store_information', request()->id) }}" method="Post">
@@ -169,7 +169,7 @@
                                     <div class="upload-image w-100">
                                         <label id="uploadLabel" style="cursor:pointer;text-align:center;">
                                             <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                                            <div>Upload Store Image </div>
+                                            <div>{{ __('seller_messages.upload_store_image') }} </div>
                                             <input type="file" accept="image/*" hidden
                                                 onchange="showPreview(event)" id="edit_imageUpload">
                                         </label>
@@ -202,9 +202,9 @@
                                     @csrf
 
                                     <div class="form-group">
-                                        <label for="name">Store Name</label>
+                                       <label>{{ __('seller_messages.store_name') }}</label>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter Store name" name="store_name"
+                                            placeholder="{{ __('seller_messages.enter_store_name') }}" name="store_name"
                                             value="{{ old('store_address', @$store_info->store_name) }}">
 
                                         @error('store_name')
@@ -216,11 +216,11 @@
 
 
                                     <div class="form-group">
-                                        <label for="name">Choose Country</label>
+                                        <label for="name">{{ __('seller_messages.choose_country') }}</label>
                                         <!-- <input type="text" class="form-control" placeholder="Enter Last Name" name="country" value="{{ old('country') }}"> -->
 
                                         <select name="country" class="form-control form-select">
-                                            <option value=""> Please Select Country </option>
+                                            <option value=""> {{ __('seller_messages.please_select_country') }} </option>
                                             @foreach ($country as $val)
                                                 <option value="{{ $val->id }}"
                                                     {{ old('country', @$store_info->country) == $val->id ? 'selected' : '' }}>
@@ -245,10 +245,10 @@
                                     </div> --}}
 
                                     <div class="form-group">
-                                        <label for="name">Store Address</label>
+                                        <label for="name">{{ __('seller_messages.store_address') }}</label>
                                         <div class="store-map  position-relative">
                                             <input type="text" class="form-control blockFirstTime"
-                                                placeholder="Enter Store Address" name="store_address"
+                                                placeholder="{{ __('seller_messages.enter_store_address') }}" name="store_address"
                                                 value="{{ old('store_address', @$store_info->store_address) }}"
                                                 id="store_address">
                                             {{-- <div class="mapIcon" data-bs-toggle="offcanvas"
@@ -269,9 +269,9 @@
 
 
                                     <div class="form-group">
-                                        <label for="name">Address line 1</label>
+                                        <label for="name">{{ __('seller_messages.address_line_1') }}</label>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter Address line 1" name="address_line1"
+                                            placeholder="{{ __('seller_messages.enter_address_line_1') }}" name="address_line1"
                                             value="{{ old('address_line1', @$store_info->address_line1) }}"
                                             id="address_line1">
                                         @error('address_line1')
@@ -280,9 +280,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">Address line 2</label>
+                                        <label for="name">{{ __('seller_messages.address_line_2') }}</label>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter Address line 2" name="address_line2"
+                                            placeholder="{{ __('seller_messages.enter_address_line_2') }}" name="address_line2"
                                             value="{{ old('address_line2', @$store_info->address_line2) }}"
                                             id="address_line2">
                                         @error('address_line2')
@@ -294,7 +294,7 @@
 
 
                                     <div class="form-group phone-pnl">
-                                        <label for="name">Store Phone Number</label>
+                                        <label for="name">{{ __('seller_messages.store_phone_number') }}</label>
 
                                         <div class="form-group d-flex gap-2">
 
@@ -344,7 +344,7 @@
 
                                             <div class="w-100">
                                                 <input class="form-control notapplyspace" type="number"
-                                                    id="phone" placeholder="Enter Store Phone Number"
+                                                    id="phone" placeholder="{{ __('seller_messages.enter_store_phone_number') }}"
                                                     name="store_phone"
                                                     value="{{ old('store_phone', @$store_info->store_phone) }}"
                                                     oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
@@ -357,9 +357,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">Store email id</label>
+                                        <label for="name">{{ __('seller_messages.store_email_id') }}</label>
                                         <input type="text" class="form-control notapplyspace"
-                                            placeholder="Enter Store email Id" name="store_mail_id"
+                                            placeholder="{{ __('seller_messages.enter_store_email_id') }}" name="store_mail_id"
                                             value="{{ old('store_mail_id', @$store_info->store_mail_id) }}">
                                         @error('store_mail_id')
                                             <span class="text-danger">{{ $message }}</span>
@@ -367,8 +367,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">Bio</label>
-                                        <textarea class="form-control blockFirstTime" rows="3" placeholder="Write a massage...." name="bio"> {{ old('bio', @$store_info->bio) }} </textarea>
+                                        <label for="name">{{ __('seller_messages.bio') }}</label>
+                                        <textarea class="form-control blockFirstTime" rows="3" placeholder="{{ __('seller_messages.write_message') }}" name="bio"> {{ old('bio', @$store_info->bio) }} </textarea>
                                         @error('bio')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -376,7 +376,7 @@
                                     </div>
 
                                     <div class="login-btn mt-5">
-                                        <input type="submit" class="btn btn-success w-100" value="Continue">
+                                        <input type="submit" class="btn btn-success w-100" value="{{ __('seller_messages.continue') }}">
 
                                         <!-- <a href="bank-details.php" class="btn btn-success w-100">Continue</a> -->
                                     </div>
@@ -424,7 +424,7 @@
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="gpspanel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title">Set Location</h5>
+            <h5 class="offcanvas-title">{{ __('seller_messages.set_location') }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
@@ -433,14 +433,14 @@
                 <div class="setup-maps mb-0 position-relative">
 
 
-                    <input id="searchBox" type="text" placeholder="Search your address"
+                    <input id="searchBox" type="text" placeholder="{{ __('seller_messages.search_your_address') }}"
                         class="form-control position-absolute"
                         style="top:10px;left:10px;width:300px;z-index:9999;padding:6px 10px;border-radius:4px;">
 
                     <div id="googleMap" style="width: 100%; height: 500px;"></div>
 
                     <div id="useCurrentLocation">
-                        <i class="bi bi-crosshair"></i> Use Current Location
+                        <i class="bi bi-crosshair"></i> {{ __('seller_messages.use_current_location') }}
                     </div>
                 </div>
 
@@ -455,7 +455,7 @@
 
                 <!-- Done button -->
                 <div class="setup-done">
-                    <button type="button" class="btn btn-success w-100" data-bs-dismiss="offcanvas">Done</button>
+                    <button type="button" class="btn btn-success w-100" data-bs-dismiss="offcanvas">{{ __('seller_messages.done') }}</button>
                 </div>
             </div>
         </div>

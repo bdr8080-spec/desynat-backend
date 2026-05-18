@@ -1355,6 +1355,158 @@ return [
 'sku' => 'SKU',
 'save_changes' => 'Save Changes',
 
+// Seller Web Login 
+'sign_in' => 'Sign In',
+'welcome_back' => 'Welcome back !',
+'mobile_or_email' => 'Mobile Number or Email Address',
+'password' => 'Password',
+'enter_password' => 'Enter Your Password',
+'forgot_password' => 'Forgot Password ?',
+'login' => 'Login',
+'dont_have_account' => "Don’t have an account?",
+'sign_up' => 'Sign up',
+
+// forgot_password
+'forgot_password' => 'Forgot Password',
+'mobile_number' => 'Mobile Number',
+'email_address' => 'Email Address',
+'enter_mobile_number' => 'Enter mobile number',
+'enter_email_address' => 'Enter email address',
+'continue' => 'Continue',
+
+// otp verify Screen 
+'otp' => 'OTP',
+'otp_sent_message' => '6 digit OTP has been sent to your registered Mobile Number',
+'verify' => 'Verify',
+
+
+// seller create Account 
+
+'sign_up' => 'Sign Up',
+'create_your_account' => 'Create your account!',
+'upload_profile_photo' => 'Upload Profile Photo',
+
+'first_name' => 'First Name',
+'enter_first_name' => 'Enter First Name',
+
+'last_name' => 'Last Name',
+'enter_last_name' => 'Enter Last Name',
+
+'email_address' => 'Email Address',
+'enter_email_address' => 'Enter Email Address',
+
+'mobile_number' => 'Mobile Number',
+'enter_mobile_number' => 'Enter Mobile Number',
+
+'create_password' => 'Create Password',
+'enter_password' => 'Enter Password',
+
+'confirm_password' => 'Confirm Password',
+'enter_confirm_password' => 'Enter Confirm Password',
+
+'accept_terms_text' => 'I accept the',
+'terms_conditions' => 'Terms & Conditions',
+'and' => 'and',
+'policies' => 'Policies',
+
+'continue' => 'Continue',
+
+'already_have_account' => 'Already have an account?',
+'sign_in' => 'Sign In',
+
+
+// Update Store information 
+
+'store_information' => 'Store Information',
+'upload_store_image' => 'Upload Store Image',
+
+'store_name' => 'Store Name',
+'enter_store_name' => 'Enter Store Name',
+
+'choose_country' => 'Choose Country',
+'please_select_country' => 'Please Select Country',
+
+'store_address' => 'Store Address',
+'enter_store_address' => 'Enter Store Address',
+
+'address_line_1' => 'Address Line 1',
+'enter_address_line_1' => 'Enter Address Line 1',
+
+'address_line_2' => 'Address Line 2',
+'enter_address_line_2' => 'Enter Address Line 2',
+
+'store_phone_number' => 'Store Phone Number',
+'enter_store_phone_number' => 'Enter Store Phone Number',
+
+'store_email_id' => 'Store Email ID',
+'enter_store_email_id' => 'Enter Store Email ID',
+
+'bio' => 'Bio',
+'write_message' => 'Write a message....',
+
+'continue' => 'Continue',
+
+'set_location' => 'Set Location',
+'search_your_address' => 'Search your address',
+'use_current_location' => 'Use Current Location',
+'done' => 'Done',
+
+// seller bank deatils 
+
+  'upload_documents_bank_details' => 'Upload Documents & Bank Details',
+    'owners_documents' => "Owner's Documents",
+    'document_1' => 'Document 1',
+    'document_2' => 'Document 2',
+    'store_documents' => 'Store Documents',
+
+    'bank_details' => 'Bank Details',
+    'account_type' => 'Account Type',
+    'personal' => 'Personal',
+    'business' => 'Business',
+    'iban' => 'IBAN',
+    'enter_iban_number' => 'Enter IBAN Number',
+    'swift_bic' => 'SWIFT/BIC',
+    'enter_swift_bic_number' => 'Enter SWIFT/BIC Number',
+    'bank_name' => 'Bank Name',
+    'enter_bank_name' => 'Enter Bank Name',
+    'account_holder_name' => 'Account Holder Name',
+    'enter_account_holder_name' => 'Enter Account Holder Name',
+    'upload_proof_of_account' => 'Upload Proof of Account',
+    'continue' => 'Continue',
+
+
+    // store document summary
+    'summary_information' => 'Summary Information',
+    'personal_information' => 'Personal Information',
+    'full_name' => 'Full Name',
+    'phone_number' => 'Phone Number',
+    'mail_id' => 'Mail Id',
+    'store_information' => 'Store Information',
+    'store_name' => 'Store Name',
+    'address' => 'Address',
+    'bio' => 'Bio',
+    'documents' => 'Documents',
+    'owners_documents' => "Owner's Documents",
+    'store_documents' => 'Store Documents',
+
+    'bank_details' => 'Bank Details',
+    'account_type' => 'Account Type',
+    'personal' => 'Personal',
+    'business' => 'Business',
+
+    'iban' => 'IBAN',
+    'swift_bic' => 'SWIFT/BIC',
+    'bank_name' => 'Bank Name',
+    'account_holder_name' => 'Account Holder Name',
+    'proof_of_account' => 'Proof of Account',
+
+    'submit' => 'Submit',
+
+    'account_under_review' => 'Your account registration is under review !!',
+    'review_wait_message' => 'Please wait for 3-4 hrs. Thank you for your patience. Team Desynat App',
+    'logout' => 'Logout',
+
+
 
     
 ];
