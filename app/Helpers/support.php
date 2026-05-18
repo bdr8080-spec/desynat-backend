@@ -460,7 +460,7 @@ if (!function_exists('SellerChatproductRequestStatus')) {
             $val->product_request == '0' ||
             ($val->product_request == '1' && $val->action == '0')
         ) {
-            $data['text']  = 'New';
+            $data['text']  = __('seller_messages.new');
             $data['color'] = '#EA9413';
             $data['bg']    = '#EA94131A';
         }
@@ -470,7 +470,7 @@ if (!function_exists('SellerChatproductRequestStatus')) {
             $val->product_request == '1' &&
             in_array($val->action, ['1', '2'])
         ) {
-            $data['text']  = 'Quotation Sent';
+            $data['text']  =  __('seller_messages.quotation_sent');
             $data['color'] = '#172B85';
             $data['bg']    = '#172B851A';
         }
@@ -480,7 +480,7 @@ if (!function_exists('SellerChatproductRequestStatus')) {
             $val->product_request == '1' &&
             in_array($val->action, ['3', '4'])
         ) {
-            $data['text']  = 'Request Rejected';
+            $data['text']  =  __('seller_messages.request_rejected');
             $data['color'] = '#f31616ff';
             $data['bg']    = '#b3b3b3ff';
             $data['class'] = 'red-bg yellow-bg';
@@ -492,7 +492,7 @@ if (!function_exists('SellerChatproductRequestStatus')) {
             $val->action == '5' &&
             !isset($val->order_create_status)
         ) {
-            $data['text']  = 'Quotation Accepted';
+            $data['text']  = __('seller_messages.quotation_accepted');
             $data['color'] = '#17854C';
             $data['bg']    = '#17854C1A';
         }
@@ -503,7 +503,7 @@ if (!function_exists('SellerChatproductRequestStatus')) {
             $val->action == '5' &&
             isset( $val->order_create_status )
         ) {
-            $data['text']  = 'Place Order';
+            $data['text']  = __('seller_messages.place_order');
             $data['color'] = '#17854C';
             $data['bg']    = '#17854C1A';
             $data['class'] = 'red-bg yellow-bg';

@@ -1311,5 +1311,52 @@ return [
 'confirm_password_validation' => 'يرجى تأكيد كلمة المرور',
 'password_not_match' => 'تأكيد كلمة المرور غير متطابق',
 
+
+
+// chatlist web 
+
+'chat' => 'الدردشة',
+'filter' => 'تصفية',
+'apply' => 'تطبيق',
+'all' => 'الكل',
+'new' => 'جديد',
+'quotation_sent' => 'تم إرسال عرض السعر',
+'quotation_accepted' => 'تم قبول عرض السعر',
+'search' => 'بحث',
+'request_rejected' => 'تم رفض الطلب',
+'place_order' => 'إتمام الطلب',
+
+// View Single chat 
+
+'request_id' => 'رقم الطلب',
+'size' => 'المقاس',
+'color' => 'اللون',
+'view_request' => 'عرض الطلب',
+'total_quantity' => 'إجمالي الكمية',
+'custom_details' => 'تفاصيل مخصصة',
+'quotation' => 'عرض السعر',
+'per_item_price' => 'سعر القطعة',
+'total_amount' => 'المبلغ الإجمالي',
+'eg_20_kd' => 'مثال 20 دينار',
+'send_quotation' => 'إرسال عرض السعر',
+'modify_quotation' => 'تعديل عرض السعر',
+'type_message_here' => 'اكتب رسالتك هنا...',
+'confirm_modify' => 'تأكيد وتعديل',
+'quotation_sent_successfully' => 'تم إرسال عرض السعر بنجاح!',
+'quotation_modified_successfully' => 'تم تعديل عرض السعر بنجاح!',
+
+'shipping_fees' => 'رسوم الشحن',
+'tax' => 'الضريبة',
+'total_amount' => 'المبلغ الإجمالي',
+'quotation' => 'عرض السعر',
+'per_item_price' => 'سعر القطعة',
+'per_item_price_1' => 'سعر القطعة 1',
+'send_quotation' => 'إرسال عرض السعر',
+'modify_quotation' => 'تعديل عرض السعر',
+'type_message_here' => 'اكتب الرسالة هنا...',
+'confirm_modify' => 'تأكيد والتعديل',
+'quotation_sent_successfully' => 'تم إرسال عرض السعر بنجاح!',
+'quotation_modify_successfully' => 'تم تعديل عرض السعر بنجاح!',
+
     
 ];
