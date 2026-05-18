@@ -16,6 +16,8 @@ return [
 "View" => "عرض",
 "Action" => "إجراء",
 "Submit" => "إرسال",
+'percent_off' => '٪ خصم',
+'kd_off' => 'دينار خصم',
 
 
 // Seller Dashboard language code 
@@ -1358,5 +1360,12 @@ return [
 'quotation_sent_successfully' => 'تم إرسال عرض السعر بنجاح!',
 'quotation_modify_successfully' => 'تم تعديل عرض السعر بنجاح!',
 
+
+
+// View inventory
+'edit_inventory' => 'تعديل المخزون',
+'total_stocks' => 'إجمالي المخزون',
+'sku' => 'رمز المنتج',
+'save_changes' => 'حفظ التغييرات',
     
 ];

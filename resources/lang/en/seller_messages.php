@@ -17,6 +17,8 @@ return [
  "View"=>"View",
 "Action"=>"Action",
 "Submit" => "Submit",
+'percent_off' => '% off',
+'kd_off' => 'KD off',
 
 
 
@@ -1345,6 +1347,13 @@ return [
 'confirm_modify' => 'Confirm & Modify',
 'quotation_sent_successfully' => 'Quotation Sent Successfully!',
 'quotation_modify_successfully' => 'Quotation Modify Successfully!',
+
+
+// View inventory
+'edit_inventory' => 'Edit Inventory',
+'total_stocks' => 'Total Stocks',
+'sku' => 'SKU',
+'save_changes' => 'Save Changes',
 
 
     

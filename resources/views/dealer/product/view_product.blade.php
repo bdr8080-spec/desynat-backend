@@ -362,7 +362,7 @@ a:hover {
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="sizeGuideModalLabel">Size Guide</h5>
+                    <h5 class="modal-title" id="sizeGuideModalLabel">{{ __('seller_messages.size_guide') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="position: relative">
