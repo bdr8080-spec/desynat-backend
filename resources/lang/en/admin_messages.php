@@ -415,6 +415,8 @@ return [
     'reson_arabic' => 'Reason (Arabic)',
     'enter_reason_in_english' => 'Enter reason in English',
     'enter_reason_in_arabic' => 'Enter reason in Arabic',
+    'add_reason' => 'Add Reason',
+    'edit_reason' => 'Edit Reason',
 
     //delivery charges & tax management
     'manage_delivery_charges' => 'Manage Delivery Charges',

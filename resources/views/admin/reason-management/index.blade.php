@@ -12,7 +12,7 @@
 
 
 <div class="inner-content management">
-    <h2 class="h2">REASON MANAGEMENT</h2>
+    <h2 class="h2">{{ __('admin_messages.reason_management') }}</h2>
 
     <div class="d-flex justify-content-center">
         <ul class="nav nav-pills tabs-pnl custom" id="pills-tab" role="tablist">
@@ -20,21 +20,21 @@
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="false">
-                    Exchange
+                    {{ __('admin_messages.exchange') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0 active" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="true">
-                    Return
+                    {{ __('admin_messages.return') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-return-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-return" type="button" role="tab" aria-controls="pills-return"
                     aria-selected="false">
-                    Cancel
+                    {{ __('admin_messages.cancel') }}
                 </button>
             </li>
         </ul>
@@ -50,7 +50,7 @@
                         @if(in_array(10, $permissions) || $admin->type == 1)
                         <div class="d-flex justify-content-end mb-3">
                             <a class="btn btn-dark customBtn button add-reason-btn" data-type="1" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                                <span>Add</span>
+                                <span>{{ __('admin_messages.add') }}</span>
                             </a>
                         </div>
                         @endif
@@ -61,10 +61,10 @@
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Exchange Reason</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.exchange_reason') }}</th>
                                 @if(in_array(10, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
 
 
@@ -74,7 +74,13 @@
                             @forelse($exchangeReason as $index => $reason)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $reason['reason_english'] }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $reason['reason_english'] }}
+                                    @else
+                                    {{ $reason['reason_arabic'] }}
+                                    @endif
+                                </td>
                                 @if(in_array(10, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -105,7 +111,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">No data found</td>
+                                <td colspan="3" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                         @endforelse
 
@@ -124,7 +130,7 @@
                         @if(in_array(10, $permissions) || $admin->type == 1)
                         <div class="d-flex justify-content-end mb-3">
                             <a class="btn btn-dark customBtn button add-reason-btn" data-type="2" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                                <span>Add</span>
+                                <span>{{ __('admin_messages.add') }}</span>
                             </a>
                         </div>
                         @endif
@@ -135,10 +141,10 @@
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Return Reason</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.return_reason') }}</th>
                                 @if(in_array(10, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
 
 
@@ -148,7 +154,13 @@
                             @forelse($returnReason as $index => $reason)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $reason['reason_english'] }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $reason['reason_english'] }}
+                                    @else
+                                    {{ $reason['reason_arabic'] }}
+                                    @endif
+                                </td>
                                 @if(in_array(10, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -179,7 +191,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">No data found</td>
+                                <td colspan="3" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                         @endforelse
 
@@ -199,7 +211,7 @@
                         @if(in_array(10, $permissions) || $admin->type == 1)
                         <div class="d-flex justify-content-end mb-3">
                             <a class="btn btn-dark customBtn button add-reason-btn" data-type="3" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                                <span>Add</span>
+                                <span>{{ __('admin_messages.add') }}</span>
                             </a>
                         </div>
                         @endif
@@ -210,10 +222,10 @@
                     <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Cancle Reason</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.cancel_reason') }}</th>
                                 @if(in_array(10, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
 
 
@@ -223,7 +235,13 @@
                             @forelse($cancelReason as $index => $reason)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $reason['reason_english'] }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $reason['reason_english'] }}
+                                    @else
+                                    {{ $reason['reason_arabic'] }}
+                                    @endif
+                                </td>
                                 @if(in_array(10, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -254,7 +272,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">No data found</td>
+                                <td colspan="3" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                         @endforelse
 
@@ -274,30 +292,30 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add Reason</h2>
+                <h2 class="h2">{{ __('admin_messages.add_reason') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="reasonForm">
                     <input type="hidden" id="reasonType" name="type" value="" />
                     <div class="mb-3">
-                        <label for="reasonEnglish" class="form-label">Reason (English)</label>
-                        <textarea id="reasonEnglish" name="reason_english" class="form-control" placeholder="Enter Reason in English"
+                        <label for="reasonEnglish" class="form-label">{{ __('admin_messages.reson_english') }}</label>
+                        <textarea id="reasonEnglish" name="reason_english" class="form-control" placeholder="{{ __('admin_messages.enter_reason_in_english') }}"
                             oninput="this.value=this.value.replace(/[^A-Za-z0-9 \n]/g,'').replace(/^\s+/,'')"
                             rows="3"></textarea>
                         <div class="text-danger mt-1 error-message" id="englishError" style="display:none;"></div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="reasonArabic" class="form-label">Reason (Arabic)</label>
-                        <textarea id="reasonArabic" name="reason_arabic" class="form-control" placeholder="Enter Reason in Arabic"
+                        <label for="reasonArabic" class="form-label">{{ __('admin_messages.reson_arabic') }}</label>
+                        <textarea id="reasonArabic" name="reason_arabic" class="form-control" placeholder="{{ __('admin_messages.enter_reason_in_arabic') }}"
                             oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF \n]/g,'').replace(/^\s+/,'')"
                             rows="3"></textarea>
                         <div class="text-danger mt-1 error-message" id="arabicError" style="display:none;"></div>
                     </div>
                     <div class="d-flex justify-content-center gap-3 mt-3">
-                        <button type="button" class="btn btn-dark customBtn" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-dark customBtn">Add</button>
+                        <button type="button" class="btn btn-dark customBtn" data-bs-dismiss="modal">{{ __('admin_messages.cancel') }}</button>
+                        <button type="submit" class="btn btn-dark customBtn">{{ __('admin_messages.add') }}</button>
                     </div>
                 </form>
             </div>
@@ -310,31 +328,31 @@
   <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
           <div class="modal-header management border-0">
-              <h5 class="modal-title" id="editReasonModalLabel">Edit Reason</h5>
+              <h5 class="modal-title" id="editReasonModalLabel">{{ __('admin_messages.edit_reason') }}</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
             <form id="editReasonForm">
           <input type="hidden" id="editReasonId" name="reason_id" value="">
           <div class="mb-3">
-                <label for="editReasonEnglish" class="form-label">Reason (English)</label>
-                <textarea id="editReasonEnglish" name="reason_english" class="form-control"
+                <label for="editReasonEnglish" class="form-label">{{ __('admin_messages.reson_english') }}</label>
+                <textarea id="editReasonEnglish" name="reason_english" class="form-control" placeholder="{{ __('admin_messages.enter_reason_in_english') }}"
                     oninput="this.value=this.value.replace(/[^A-Za-z0-9 \n]/g,'').replace(/^\s+/,'')"
                     rows="3"></textarea>
                 <div id="editEnglishError" class="text-danger small" style="display:none;"></div>
             </div>
 
             <div class="mb-3">
-                <label for="editReasonArabic" class="form-label">Reason (Arabic)</label>
-                <textarea id="editReasonArabic" name="reason_arabic" class="form-control"
+                <label for="editReasonArabic" class="form-label">{{ __('admin_messages.reson_arabic') }}</label>
+                <textarea id="editReasonArabic" name="reason_arabic" class="form-control" placeholder="{{ __('admin_messages.enter_reason_in_arabic') }}"
                     oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF \n]/g,'').replace(/^\s+/,'')"
                     rows="3"></textarea>
                 <div id="editArabicError" class="text-danger small" style="display:none;"></div>
             </div>
 
           <div class="d-flex justify-content-center gap-3 mt-3">
-            <button type="button" class="btn btn-dark customBtn" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-dark customBtn">Update</button>
+            <button type="button" class="btn btn-dark customBtn" data-bs-dismiss="modal">{{ __('admin_messages.cancel') }}</button>
+            <button type="submit" class="btn btn-dark customBtn">{{ __('admin_messages.update') }}</button>
            </div>
         </form>
         </div>
@@ -424,13 +442,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let reasonId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteReason/${reasonId}`, {
@@ -501,13 +520,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Frontend validation
         if (!reasonEnglish) {
-            englishError.innerText = "Enter Reason in English";
+            englishError.innerText = "{{ __('admin_messages.enter_reason_in_english') }}";
             englishError.style.display = "block";
             hasError = true;
         }
 
         if (!reasonArabic) {
-            arabicError.innerText = "Enter Reason in Arabic";
+            arabicError.innerText = "{{ __('admin_messages.enter_reason_in_arabic') }}";
             arabicError.style.display = "block";
             hasError = true;
         }
@@ -594,12 +613,12 @@ document.addEventListener("DOMContentLoaded", function() {
         let hasError = false;
 
         if (!reasonEnglish) {
-            editEnglishError.innerText = "Enter Reason in English";
+            editEnglishError.innerText = "{{ __('admin_messages.enter_reason_in_english') }}";
             editEnglishError.style.display = "block";
             hasError = true;
         }
         if (!reasonArabic) {
-            editArabicError.innerText = "Enter Reason in Arabic";
+            editArabicError.innerText = "{{ __('admin_messages.enter_reason_in_arabic') }}";
             editArabicError.style.display = "block";
             hasError = true;
         }

@@ -412,6 +412,8 @@ return [
     'reson_arabic' => 'السبب (بالعربية)',
     'enter_reason_in_english' => 'أدخل السبب بالإنجليزية',
     'enter_reason_in_arabic' => 'أدخل السبب بالعربية',
+    'add_reason' => 'إضافة سبب',
+    'edit_reason' => 'تعديل السبب',
 
     //delivery charges & tax management
     'manage_delivery_charges' => 'إدارة رسوم التوصيل',
