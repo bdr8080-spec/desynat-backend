@@ -41,7 +41,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col">{{ __('admin_messages.s_no') }}</th>
-                                    <th scope="col">{{ __('admin_messages.country') }}</th>
+                                    <th scope="col">
+                                        {{ __('admin_messages.country') }}
+                                    </th>
                                     @if(in_array(5, $permissions) || $admin->type == 1)
                                     <th scope="col">{{ __('admin_messages.manage_city') }}</th>
                                     @endif
@@ -53,7 +55,13 @@
                                     <tr>
                                         <th scope="row">{{ $index + 1 }}</th>
 
-                                        <td>{{ $country->name }}</td>
+                                        <td>
+                                            @if(app()->getLocale() == 'en')
+                                            {{ $country->name }}
+                                            @else
+                                            {{ $country->name_ar }}
+                                            @endif
+                                        </td>
                                         @if(in_array(5, $permissions) || $admin->type == 1)
                                         <td>
                                             <a class="btn btn-dark customBtn" href="{{ route('manageCities', ['id' => $country->id]) }}">

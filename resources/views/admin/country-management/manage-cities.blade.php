@@ -59,7 +59,13 @@
                                 @forelse ($serviceCities as $index => $city)
                                     <tr>
                                         <th scope="row">{{ $index + 1 }}</th>
-                                        <td>{{ $city->name }}</td>
+                                        <td>
+                                            @if(app()->getLocale() == 'en')
+                                            {{ $city->name }}
+                                            @else
+                                            {{ $city->name_ar }}
+                                            @endif
+                                        </td>
                                         <td>
                                             <a class="btn btn-dark customBtn"
                                             href="{{ route('manageZones', ['id' => $city->id ]) }}">
