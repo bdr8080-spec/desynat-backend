@@ -10,10 +10,19 @@ return [
 
     'arabic' => 'Arabic',
     'english' => 'English',
+
+    
     'please_select_a_color' => 'Please select a color.',
     'please_select_a_size' => 'Please select a size.',
     'please_select_product_and_variant' => 'Please select a product and variant.',
     'no_size_chart_available' => 'No size chart available.',
+    'seller_live' => 'Seller Live',
+    'no_live_request_found' => 'No Live Request Found',
+    'watch_live' => 'Watch Live',
+    'leave' => 'Leave',
+    'watching' => 'Watching',
+    'waiting_for_seller_to_go_live' => 'Waiting for seller to go LIVE',
+    'please_stay_tuned' => 'Please stay tuned...',
 
     //common
     'no_data_found' => 'No data found',

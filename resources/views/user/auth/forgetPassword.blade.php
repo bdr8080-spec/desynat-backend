@@ -45,7 +45,7 @@
         <div class="login_content login_content_right">
             <div class="login_content_content align-self-center">
                 <div>
-                    <h3 class="h3-heading"><span><a href="{{ route('userLogin') }}"><i class="fa-solid fa-chevron-left"></i></a></span>Forgot Password</h3>
+                    <h3 class="h3-heading"><span><a href="{{ route('userLogin') }}"><i class="fa-solid fa-chevron-left"></i></a></span>{{ __('user_messages.forgot_password') }}</h3>
                     <form id="forgetPassword">
                         @csrf
                     <div class="radio-group my-4">

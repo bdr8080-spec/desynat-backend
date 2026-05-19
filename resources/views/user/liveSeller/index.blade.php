@@ -5,7 +5,7 @@
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="/"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
-        <h3>Seller Live</h3>
+        <h3>{{ __('user_messages.seller_live') }}</h3>
     </div>
 
 
@@ -50,7 +50,7 @@
 
             @empty
             <div class="col-12 text-center">
-                <h5>No Live Request Found</h5>
+                <h5>{{ __('user_messages.no_live_request_found') }}</h5>
             </div>
             @endforelse
 
@@ -96,7 +96,7 @@ function checkAllLive() {
                         <a href="/user/View-live-seller-records?channel_id=${room.channel_id}"
                            class="btn customBtn5 text-white"
                            style="width:130px;">
-                           Watch Live
+                           {{ __('user_messages.watch_live') }}
                         </a>
                     `;
                 } else {
