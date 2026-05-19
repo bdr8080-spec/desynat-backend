@@ -3489,3 +3489,26 @@ img.img-fluid.circle-image {
     width:max-content;
     direction:rtl;
 }
+
+[dir="rtl"] .modal-header .btn-close {
+    margin-right: auto;
+    margin-left: inherit;
+}
+[dir="rtl"] .toggle-passwordone, .toggle-password, .toggle-passwordtwo {
+    left: 10px;
+    right: inherit;
+}
+[dir="rtl"] .custom-password {
+    padding-right: 10px !important;
+}
+[dir="rtl"] .fa-chevron-left:before {
+    content: "\f054";
+}
+[dir="rtl"] .category-store .category-store-content .user {
+    margin-right: 1px;
+    margin-left: 10px;
+}
+[dir="rtl"] .categoryDetail_content .seArch input.form-control {
+    padding: 10px 70px 10px 40px;
+}
+
