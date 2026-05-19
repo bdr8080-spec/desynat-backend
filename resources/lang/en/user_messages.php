@@ -10,6 +10,8 @@ return [
 
     'arabic' => 'Arabic',
     'english' => 'English',
+    'please_select_a_color' => 'Please select a color.',
+    'please_select_a_size' => 'Please select a size.',
 
     //common
     'no_data_found' => 'No data found',

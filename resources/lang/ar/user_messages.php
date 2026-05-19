@@ -10,6 +10,8 @@ return [
 
     'arabic' => 'عربي',
     'english' => 'إنجليزي',
+    'please_select_a_color' => 'يرجى اختيار لون.',
+    'please_select_a_size' => 'يرجى اختيار المقاس.',
 
     //common
     'no_data_found' => 'لم يتم العثور على بيانات',
