@@ -50,7 +50,7 @@
 
 <body>
 
-    <div class="login-header">
+    <div class="login-header des-language">
         <div class="des-logo">
             <a href="#"><img src="{{ asset('/dealer') }}/assets/img/desynat-logo.svg" alt="image"
                     class="img-fluid logo-login"> </a>
@@ -205,7 +205,7 @@
                                                                 <input type="radio" name="country_code"
                                                                     value="{{ $item->dial_code }}"
                                                                     data-flag="{{ $item->flag }}"
-                                                                    data-name="{{ $item->name }}"
+                                                                    data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif"
                                                                     class="country-radio"
                                                                     {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                                                     hidden>
@@ -214,7 +214,7 @@
                                                                     height="16"> -->
                                                                     <div width="25" height="16">
                                                                         <span>{{ $item->flag }} {{ $item->dial_code }}
-                                                                            ({{ $item->name }})
+                                                                            (@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif )
                                                                         </span>
                                                                     </div>
                                                             </label>

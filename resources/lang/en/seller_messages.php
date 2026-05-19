@@ -1635,7 +1635,18 @@ return [
 'Return_Cancelled' => 'Return Cancelled',
 
 
-'First_Name_Arabic' => "First Name Arbic"
+'First_Name_Arabic' => "First Name Arbic",
+
+
+// reset password
+
+'Reset_Password' => 'Reset Password',
+'Create_New_Password' => 'Create New Password',
+'Enter_new_password' => 'Enter new password',
+'Confirm_Password' => 'Confirm Password',
+'Enter_confirm_password' => 'Enter confirm password',
+'Done' => 'Done',
+'Password_Reset_Successfully' => 'Password Reset Successfully !',
 
 
     

@@ -49,7 +49,7 @@
 </style> -->
 
 <body>
-    <div class="login-header">
+    <div class="login-header des-language">
         <div class="des-logo">
             <a href="#"><img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image"
                     class="img-fluid logo-login"> </a>
@@ -101,8 +101,7 @@
                             <div class="login-grid-2">
                                 <form method="POST" action="{{ route('seller.create_password', Request()->id) }}">
                                     <div class="cmn-header mb-3">
-                                        <h1><a href="otp_verify.php"><i class="bi bi-chevron-left"></i></a> Reset
-                                            Password</h1>
+                                        <h1><a href="otp_verify.php"><i class="bi bi-chevron-left"></i></a> {{ __('seller_messages.Reset_Password') }}</h1>
                                     </div>
                                     @csrf
 
@@ -111,9 +110,9 @@
                                     @enderror
 
                                     <div class="form-group position-relative">
-                                        <label for="password">Create New Password</label>
+                                        <label for="password">{{ __('seller_messages.Create_New_Password') }}</label>
                                         <input type="password" class="form-control notapplyspace" id="password"
-                                            placeholder="Enter new password" name="password">
+                                            placeholder="{{ __('seller_messages.Enter_new_password') }}" name="password">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
                                         @error('password')
                                             <span class="text-danger">{{ $message }}</span>
@@ -121,9 +120,9 @@
                                     </div>
 
                                     <div class="form-group position-relative">
-                                        <label for="password">Confirm Password</label>
+                                        <label for="password">{{ __('seller_messages.Confirm_Password') }}</label>
                                         <input type="password" class="form-control notapplyspace" id="password"
-                                            placeholder="Enter confirm password" name="confirm_password">
+                                            placeholder="{{ __('seller_messages.Enter_confirm_password') }}" name="confirm_password">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
 
                                         @error('confirm_password')
@@ -135,8 +134,8 @@
 
                                     <div class="login-btn padding-top-60">
                                         {{-- <a href="#" class="btn btn-success w-100" data-bs-toggle="modal"
-                                            data-bs-target="#alertModal">Done</a> --}}
-                                        <input type="submit" value="Done" class="btn btn-success w-100">
+                                            data-bs-target="#alertModal">{{ __('seller_messages.Done') }}</a> --}}
+                                        <input type="submit" value="{{ __('seller_messages.Done') }}" class="btn btn-success w-100">
 
                                     </div>
 
@@ -158,7 +157,7 @@
                 <div class="modal-body  p-3">
                     <div class="alertbody text-center">
                         <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="image" class="img-fluid py-4">
-                        <h3>Password Reset Successfully !</h3>
+                        <h3>{{ __('seller_messages.Password_Reset_Successfully') }}</h3>
                     </div>
                 </div>
             </div>

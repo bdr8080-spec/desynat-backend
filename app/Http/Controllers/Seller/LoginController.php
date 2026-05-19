@@ -134,11 +134,12 @@ class LoginController extends Controller
             
             return redirect()->route('seller.upload_document',$seller_details->id)->with('error',__('seller_messages.document_rejected'));
         
-               }
+            }
 
+        if(!session('lang')){
             session(['locale' => $seller_details->lang]);
             session(['lang' => $seller_details->lang]);
-        
+        } 
 
         return redirect()->route('seller.dashboard')->with('success',__('seller_messages.login_success'));
            
