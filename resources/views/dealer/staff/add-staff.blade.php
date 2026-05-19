@@ -110,12 +110,12 @@
                                 <label class="dropdown-item d-flex align-items-center gap-2 country-option"
                                     style="cursor: pointer;">
                                     <input type="radio" name="country_code" value="{{ $item->dial_code }}"
-                                        data-flag="{{ $item->flag }}" data-name="{{ $item->name }}"
+                                        data-flag="{{ $item->flag }}"  data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif"
                                         class="country-radio" hidden>
 
                                     <div width="25" height="16">
                                         <span>{{ $item->flag }}
-                                            {{ $item->dial_code }} {{ $item->name }}
+                                            {{ $item->dial_code }}  (@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif )
                                         </span>
                                     </div>
                                 </label>

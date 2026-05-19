@@ -40,7 +40,11 @@ $can_action=$menu_permission['can_action'];
                         </div>
                         <div class="ticket">
                             <p class="text-muted mb-1">
+                                @if(App::getlocale()=='en')
                                 {{ $ticket->ticket_type_details->name ?? 'N/A' }}
+                                @else 
+                                {{ $ticket->ticket_type_details->name_arabic ?? 'N/A' }}
+                                @endif
                             </p>
                         </div>
                     </div>
@@ -120,7 +124,7 @@ $can_action=$menu_permission['can_action'];
                         <select id="ticket_type_id" name="ticket_type_id" class="form-select form-control" aria-label="Default select example">
                             <option value=""> {{ __('seller_messages.Select_Ticket_Type') }}</option>
                             @foreach($ticketTypes as $type)
-                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                <option value="{{ $type->id }}">@if(App::getlocale()=='en') {{ $type->name }} @else {{ $type->name_arabic }} @endif</option>
                             @endforeach
                         </select>
                         <span class="text-danger small d-none" id="ticket_type_error"> {{ __('seller_messages.Please_Select_Ticket_Type') }}</span>
