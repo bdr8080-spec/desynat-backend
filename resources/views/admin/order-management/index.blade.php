@@ -27,35 +27,35 @@
 
 
 <div class="inner-content management">
-    <h2 class="h2">Order Management</h2>
+    <h2 class="h2">{{ __('admin_messages.order_management') }}</h2>
     <div class="d-flex justify-content-center">
         <ul class="nav nav-pills tabs-pnl custom" id="pills-tab" role="tablist">
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="true">
-                    Active Orders
+                    {{ __('admin_messages.active_orders') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="false">
-                    Return & Exchange
+                    {{ __('admin_messages.return_&_exchange') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-return-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-return" type="button" role="tab" aria-controls="pills-return"
                     aria-selected="false">
-                    Completed
+                    {{ __('admin_messages.completed') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-cancelled-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-cancelled" type="button" role="tab" aria-controls="pills-cancelled"
                     aria-selected="false">
-                    Cancelled
+                    {{ __('admin_messages.cancelled') }}
                 </button>
             </li>
         </ul>
@@ -79,7 +79,7 @@
                     </div> -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
                                 value="{{ request('type') == 'active' ? request()->from_date : '' }}"
                                 onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -88,7 +88,7 @@
 
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">To:</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
                                 value="{{ request('type') == 'active' ? request()->to_date : '' }}"
                                 onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -96,15 +96,19 @@
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                             <select name="country_name" id="country_name"
                                 class="form-select form-select-lg"
                                 onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Select country</option>
+                                <option value="">{{ __('admin_messages.select_country') }}</option>
                                 @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('type') == 'active' && request('country_name') == $country['name'] ? 'selected' : '' }}>
-                                        {{ $country['name'] }}
+                                        @if(app()->getLocale() == 'en')
+                                            {{ $country->name }}
+                                            @else
+                                            {{ $country->name_ar }}
+                                            @endif
                                     </option>
                                 @endforeach
                             </select>
@@ -114,7 +118,7 @@
                         @if(in_array(15, $permissions) || $admin->type == 1)
                         <div class="d-dlex justify-content-end" style="text-align: end">
                             <a href="{{ route('admin.export_active_orders_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
-                                <span>Export</span></a>
+                                <span>{{ __('admin_messages.export') }}</span></a>
                         </div>
                         @endif
                     </div>
@@ -125,24 +129,24 @@
                     <table id="myTable" class="table allTable">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Order ID</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_id') }}</th>
                                 <!-- <th scope="col">Order Type</th> -->
-                                <th scope="col">Seller Name</th>
-                                <th scope="col">Customer Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Product details</th>
-                                <th scope="col">Delivery Address</th>
-                                <th scope="col">Order Amount</th>
-                                <th scope="col">Admin Commission</th>
-                                <th scope="col">Order Type</th>
-                                <th scope="col">Delivery Boy</th>
-                                <th scope="col">Delivery Boy Company Name</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Invoice</th>
-                                <th scope="col">Zone</th>
+                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.customer_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.product_details') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_address') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.admin_commission') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_type') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_boy') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_boy_company_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.status') }}</th>
+                                <th scope="col">{{ __('admin_messages.invoice') }}</th>
+                                <th scope="col">{{ __('admin_messages.zone') }}</th>
                                 @if(in_array(15, $permissions) || $admin->type == 1)
-                                <th scope="col">Assign Driver</th>
+                                <th scope="col">{{ __('admin_messages.assign_driver') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -162,11 +166,11 @@
                                     @if($seller)
                                         {{ $seller->first_name ?? '' }} {{ $seller->last_name ?? '' }}
                                     @else
-                                        Seller not found
+                                        {{ __('admin_messages.n/a') }}
                                     @endif
                                 </td>
                                 <td>{{ $data['order']['delivery_details']['name'] }}</td>
-                                <td>{{ $data['order']['delivery_details']['country_name'] ?? 'N/A' }}</td>
+                                <td>{{ $data['order']['delivery_details']['country_name'] ?? __('admin_messages.n/a') }}</td>
                                 <td>
                                     <a class="table-button view-products"
                                     data-bs-toggle="modal"

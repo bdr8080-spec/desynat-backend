@@ -299,7 +299,7 @@
       </thead>
     </table>
 
-    <div style="font-weight: 600; margin-top: 15px;">{{ __('user_messages.discpayment_informationount') }} </div>
+    <div style="font-weight: 600; margin-top: 15px;">{{ __('user_messages.payment_information') }} </div>
     <table style="width: 100%;margin-top: 5px;">
       <thead>
         <tr>
