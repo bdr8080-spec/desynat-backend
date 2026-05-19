@@ -872,12 +872,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (!selectedColor) {
             errorBox.style.display = "block";
-            errorBox.innerHTML = "Please Select a Color.";
+            errorBox.innerHTML = "{{ __('user_messages.please_select_a_color') }}";
             return;
         }
         if (!selectedSize) {
             errorBox.style.display = "block";
-            errorBox.innerHTML = "Please Select a Size.";
+            errorBox.innerHTML = "{{ __('user_messages.please_select_a_size') }}";
             return;
         }
 

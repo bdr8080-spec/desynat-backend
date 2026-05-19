@@ -634,6 +634,13 @@ return [
     'after_discount_price' => 'السعر بعد الخصم',
     'deal_added_successfully' => 'تمت إضافة العرض بنجاح',
     'deal_updated_successfully' => 'تم تحديث العرض بنجاح',
+    'revenue_generated' => 'الإيرادات المحققة',
+    'select_category' => 'اختر الفئة',
+    'select_sub_category' => 'اختر الفئة الفرعية',
+    'no_subcategories_found' => 'لا توجد فئات فرعية',
+    'error_fetching_subcategories' => 'حدث خطأ أثناء جلب الفئات الفرعية',
+    'please_select_a_category' => 'يرجى اختيار الفئة',
+    'please_select_a_subcategory' => 'يرجى اختيار الفئة الفرعية',
 
     //banner management
     'full_screen' => 'ملء الشاشة',

@@ -68,14 +68,14 @@ button.multiselect .caret {
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Deals Management</h2>
+            <h2 class="h2">{{ __('admin_messages.deal_management') }}</h2>
         </div>
 
         <div class="col-lg-3 col-md-4 col-12">
             @if(in_array(20, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
                 <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                    <span>Add Deals</span>
+                    <span>{{ __('admin_messages.add_deals') }}</span>
                 </a>
             </div>
             @endif
@@ -87,14 +87,14 @@ button.multiselect .caret {
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="true">
-                    Active
+                    {{ __('admin_messages.active') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="true">
-                    Expired
+                    {{ __('admin_messages.expired') }}
                 </button>
             </li>
         </ul>
@@ -126,17 +126,23 @@ button.multiselect .caret {
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Banner</th>
-                                <th scope="col">Deal Name</th>
-                                <th scope="col">Discount Percentage</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Sub-category</th>
-                                <th scope="col">Start From</th>
-                                <th scope="col">End To</th>
-                                <th scope="col">Number of Sellers Enrolled</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.banner_image') }}</th>
+                                <th scope="col">
+                                    @if(app()->getLocale() == 'en')
+                                    {{ __('admin_messages.deal_name_english') }}
+                                    @else
+                                    {{ __('admin_messages.deal_name_arabic') }}
+                                    @endif
+                                </th>
+                                <th scope="col">{{ __('admin_messages.discount_percentage') }}</th>
+                                <th scope="col">{{ __('admin_messages.category') }}</th>
+                                <th scope="col">{{ __('admin_messages.sub_category') }}</th>
+                                <th scope="col">{{ __('admin_messages.start_date') }}</th>
+                                <th scope="col">{{ __('admin_messages.end_date') }}</th>
+                                <th scope="col">{{ __('admin_messages.no_of_sellers_enrolled') }}</th>
                                 @if(in_array(20, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -147,18 +153,34 @@ button.multiselect .caret {
                                 <td>
                                     <img src="{{ $deal['image'] }}" alt="" width="40px" height="40px" class="square" />
                                 </td>
-                                <td>{{ $deal['name_english'] }}</td>
-                                <td>{{ $deal['discount'] }}%</td>
-                                <td>{{ $deal['category_details']['name'] }}</td>
                                 <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $deal['name_english'] }}
+                                    @else
+                                    {{ $deal['name_arabic'] }}
+                                    @endif
+                                </td>
+                                <td>{{ $deal['discount'] }}%</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $deal['category_details']['name'] }}
+                                    @else
+                                    {{ $deal['category_details']['name_ar'] }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
                                     {{ collect($deal['subCategory_details'])->pluck('name_english')->implode(', ') }}
+                                    @else
+                                    {{ collect($deal['subCategory_details'])->pluck('name_arabic')->implode(', ') }}
+                                    @endif
                                 </td>
 
                                 <td>{{ $deal['from'] }}</td>
                                 <td>{{ $deal['to'] }}</td>
                                 <td class="short-title">
                                     <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"
-                                        class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
+                                        class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} {{ __('admin_messages.seller') }}</a>
                                 </td>
                                 @if(in_array(20, $permissions) || $admin->type == 1)
                                 <td>
@@ -193,7 +215,7 @@ button.multiselect .caret {
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" class="text-center">No data found</td>
+                                <td colspan="6" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -226,16 +248,22 @@ button.multiselect .caret {
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Banner</th>
-                                <th scope="col">Deal Name</th>
-                                <th scope="col">Discount Percentage</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Sub-category</th>
-                                <th scope="col">Start From</th>
-                                <th scope="col">End To</th>
-                                <th scope="col">Number of Sellers Enrolled</th>
-                                <th scope="col">Revenue Generated</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.banner_image') }}</th>
+                                <th scope="col">
+                                    @if(app()->getLocale() == 'en')
+                                    {{ __('admin_messages.deal_name_english') }}
+                                    @else
+                                    {{ __('admin_messages.deal_name_arabic') }}
+                                    @endif
+                                </th>
+                                <th scope="col">{{ __('admin_messages.discount_percentage') }}</th>
+                                <th scope="col">{{ __('admin_messages.category') }}</th>
+                                <th scope="col">{{ __('admin_messages.sub_category') }}</th>
+                                <th scope="col">{{ __('admin_messages.start_date') }}</th>
+                                <th scope="col">{{ __('admin_messages.end_date') }}</th>
+                                <th scope="col">{{ __('admin_messages.no_of_sellers_enrolled') }}</th>
+                                <th scope="col">{{ __('admin_messages.revenue_generated') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -245,25 +273,42 @@ button.multiselect .caret {
                                 <td>
                                     <img src="{{ $deal['image'] }}" alt="" width="40px" height="40px" class="square" />
                                 </td>
-                                <td>{{ $deal['name_english'] }}</td>
-                                <td>{{ $deal['discount'] }}%</td>
-                                <td>{{ $deal['category_details']['name'] }}</td>
                                 <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $deal['name_english'] }}
+                                    @else
+                                    {{ $deal['name_arabic'] }}
+                                    @endif
+
+                                </td>
+                                <td>{{ $deal['discount'] }}%</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $deal['category_details']['name'] }}
+                                    @else
+                                    {{ $deal['category_details']['name_ar'] }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
                                     {{ collect($deal['subCategory_details'])->pluck('name_english')->implode(', ') }}
+                                    @else
+                                    {{ collect($deal['subCategory_details'])->pluck('name_arabic')->implode(', ') }}
+                                    @endif
                                 </td>
 
                                 <td>{{ $deal['from'] }}</td>
                                 <td>{{ $deal['to'] }}</td>
                                 <td class="short-title">
                                     <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"
-                                        class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
+                                        class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} {{ __('admin_messages.seller') }}</a>
                                 </td>
 
-                                <td>0 KD</td>
+                                <td>0 {{ __('admin_messages.kd') }}</td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" class="text-center">No data found</td>
+                                <td colspan="6" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -283,7 +328,7 @@ button.multiselect .caret {
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0 p-2">
-                <h2 class="h2">Add Deals</h2>
+                <h2 class="h2">{{ __('admin_messages.add_deals') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -293,12 +338,12 @@ button.multiselect .caret {
 
                         <!-- Image Upload -->
                         <div class="col-lg-12">
-                            <div class="upload-title text-center">Upload Image</div>
+                            <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
                             <label for="fileUpload" class="upload-box" style="cursor:pointer;">
                                 <img src="/admin/image/imge-upload.svg" id="uploadIcon" />
                                 <img id="previewImage" class="preview-image"
                                     style="display:none; max-width:216px; margin-top:-2px;" />
-                                <div class="upload-text">Upload Image</div>
+                                <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
                                 <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
                             </label>
                             <div class="text-danger" id="imageError"></div>
@@ -307,9 +352,9 @@ button.multiselect .caret {
                         <!-- Name English -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <label class="form-label" for="name">Name (English)</label>
+                                <label class="form-label" for="name">{{ __('admin_messages.deal_name_english') }}</label>
                                 <input type="text" name="name_english" class="form-control"
-                                    placeholder="Enter Deal Name in English"
+                                    placeholder="{{ __('admin_messages.enter_deal_name_english') }}"
                                     oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="nameEnError"></div>
                             </div>
@@ -318,9 +363,9 @@ button.multiselect .caret {
                         <!-- Name Arabic -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <label class="form-label" for="name">Name (Arabic)</label>
+                                <label class="form-label" for="name">{{ __('admin_messages.deal_name_arabic') }}</label>
                                 <input type="text" name="name_arabic" class="form-control"
-                                    placeholder="Enter Deal Name in Arabic"
+                                    placeholder="{{ __('admin_messages.enter_deal_name_arabic') }}"
                                     oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="nameArError"></div>
                             </div>
@@ -328,14 +373,18 @@ button.multiselect .caret {
 
                         <!-- Category -->
                         <div class="col-lg-12 col-md-12 col-12">
-                            <label for="category" class="form-label">Select Category</label>
+                            <label for="category" class="form-label">{{ __('admin_messages.select_category') }}</label>
                             <div class="d-flex gap-4 align-items-center">
                                 @foreach($categories as $index => $category)
                                 <div class="form-check">
                                     <input class="form-check-input category-radio" type="radio" name="category"
                                         id="category{{ $index }}" value="{{ $category->id }}" {{ $index == 0 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="category{{ $index }}">
+                                        @if(app()->getLocale() == 'en')
                                         {{ $category->name }}
+                                        @else
+                                        {{ $category->name_ar }}
+                                        @endif
                                     </label>
                                 </div>
                                 @endforeach
@@ -346,7 +395,7 @@ button.multiselect .caret {
                         <!-- Subcategory -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
-                                <label for="subCategory" class="form-label">Select Sub-Category</label>
+                                <label for="subCategory" class="form-label">{{ __('admin_messages.select_sub_category') }}</label>
                                 <!-- <select class="form-select form-select-lg" id="subCategorySelect"
                                     aria-label="Large select example">
                                     <option selected>Select Sub-Category</option>
@@ -363,8 +412,8 @@ button.multiselect .caret {
                         <!-- Discount -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
-                                <label class="form-label" for="discount">Discount %</label>
-                                <input type="text" name="discount" class="form-control" placeholder="Enter Discount"
+                                <label class="form-label" for="discount">{{ __('admin_messages.discount') }} %</label>
+                                <input type="text" name="discount" class="form-control" placeholder="{{ __('admin_messages.enter_discount_percentage') }}"
                                     oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^\s+|^0+/,'');if(this.value>100)this.value=100;" />
                                 <div class="text-danger" id="discountError"></div>
                             </div>
@@ -376,7 +425,7 @@ button.multiselect .caret {
 
                                 <div class="col-lg-6">
                                     <div class="form-group mt-0 w-100">
-                                        <label for="fromDate" class="form-label">From:</label>
+                                        <label for="fromDate" class="form-label">{{ __('admin_messages.from') }}:</label>
                                         <input type="date" id="fromDate" class="form-control" />
                                         <div class="text-danger" id="fromDateError"></div>
                                     </div>
@@ -384,7 +433,7 @@ button.multiselect .caret {
 
                                 <div class="col-lg-6">
                                     <div class="form-group mt-0 w-100">
-                                        <label for="toDate" class="form-label">To:</label>
+                                        <label for="toDate" class="form-label">{{ __('admin_messages.to') }}:</label>
                                         <input type="date" id="toDate" class="form-control" />
                                         <div class="text-danger" id="toDateError"></div>
                                     </div>
@@ -394,7 +443,7 @@ button.multiselect .caret {
 
                         <!-- Submit -->
                         <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                            <a type="button" id="submitDealBtn" class="btn btn-dark customBtn mt-3">Submit</a>
+                            <a type="button" id="submitDealBtn" class="btn btn-dark customBtn mt-3">{{ __('admin_messages.submit') }}</a>
                         </div>
 
                     </div>
@@ -409,7 +458,7 @@ button.multiselect .caret {
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Edit Deal</h2>
+                <h2 class="h2">{{ __('admin_messages.edit_deal') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -419,12 +468,12 @@ button.multiselect .caret {
 
                         <!-- Image Upload -->
                         <div class="col-lg-12">
-                            <div class="upload-title text-center">Upload Image</div>
+                            <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
                             <label for="editFileUpload" class="upload-box" style="cursor:pointer;">
                                 <img src="/admin/image/imge-upload.svg" id="editUploadIcon" />
                                 <img id="editPreviewImage" class="preview-image"
                                     style="display:none; max-width:216px; margin-top:-2px;" />
-                                <div class="upload-text">Upload Image</div>
+                                <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
                                 <input type="file" id="editFileUpload" name="image" accept="image/*" hidden />
                             </label>
                             <div class="text-danger" id="editImageError"></div>
@@ -433,9 +482,9 @@ button.multiselect .caret {
                         <!-- Name English -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <label class="form-label" for="editNameEnglish">Name (English)</label>
+                                <label class="form-label" for="editNameEnglish">{{ __('admin_messages.deal_name_english') }}</label>
                                 <input type="text" name="name_english" class="form-control" id="editNameEnglish"
-                                    placeholder="Enter Deal Name in English"
+                                    placeholder="{{ __('admin_messages.enter_deal_name_english') }}"
                                     oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="editNameEnError"></div>
                             </div>
@@ -444,9 +493,9 @@ button.multiselect .caret {
                         <!-- Name Arabic -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <label class="form-label" for="editNameArabic">Name (Arabic)</label>
+                                <label class="form-label" for="editNameArabic">{{ __('admin_messages.deal_name_arabic') }}</label>
                                 <input type="text" name="name_arabic" class="form-control" id="editNameArabic"
-                                    placeholder="Enter Deal Name in Arabic"
+                                    placeholder="{{ __('admin_messages.enter_deal_name_arabic') }}"
                                     oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="editNameArError"></div>
                             </div>
@@ -454,14 +503,18 @@ button.multiselect .caret {
 
                         <!-- Category -->
                         <div class="col-lg-12 col-md-12 col-12">
-                            <label class="form-label">Select Category</label>
+                            <label class="form-label">{{ __('admin_messages.select_category') }}</label>
                             <div class="d-flex gap-4 align-items-center" id="editCategories">
                                 @foreach($categories as $index => $category)
                                 <div class="form-check">
                                     <input class="form-check-input edit-category-radio" type="radio"
                                         name="edit_category" id="editCategory{{ $index }}" value="{{ $category->id }}">
                                     <label class="form-check-label" for="editCategory{{ $index }}">
+                                        @if(app()->getLocale() == 'en')
                                         {{ $category->name }}
+                                        @else
+                                        {{ $category->name_ar }}
+                                        @endif
                                     </label>
                                 </div>
                                 @endforeach
@@ -472,7 +525,7 @@ button.multiselect .caret {
                         <!-- Subcategory -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
-                                <label for="editSubCategorySelect" class="form-label">Select Sub-Category</label>
+                                <label for="editSubCategorySelect" class="form-label">{{ __('admin_messages.select_sub_category') }}</label>
                                 <!-- <select class="form-select form-select-lg" id="editSubCategorySelect"
                                     aria-label="Large select example">
                                     <option selected>Select Sub-Category</option>
@@ -489,9 +542,9 @@ button.multiselect .caret {
                         <!-- Discount -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
-                                <label class="form-label" for="editDiscount">Discount %</label>
+                                <label class="form-label" for="editDiscount">{{ __('admin_messages.discount') }} %</label>
                                 <input type="text" name="discount" class="form-control" id="editDiscount"
-                                    placeholder="Enter Discount"
+                                    placeholder="{{ __('admin_messages.enter_discount_percentage') }}"
                                     oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^\s+|^0+/,'');if(this.value>100)this.value=100;" />
                                 <div class="text-danger" id="editDiscountError"></div>
                             </div>
@@ -503,7 +556,7 @@ button.multiselect .caret {
 
                                 <div class="col-lg-6">
                                     <div class="form-group mt-0  w-100">
-                                        <label for="editFromDate" class="form-label">From:</label>
+                                        <label for="editFromDate" class="form-label">{{ __('admin_messages.from') }}:</label>
                                         <input type="date" id="editFromDate" class="form-control" />
                                         <div class="text-danger" id="editFromDateError"></div>
                                     </div>
@@ -511,7 +564,7 @@ button.multiselect .caret {
 
                                 <div class="col-lg-6">
                                     <div class="form-group mt-0 w-100">
-                                        <label for="editToDate" class="form-label">To:</label>
+                                        <label for="editToDate" class="form-label">{{ __('admin_messages.to') }}:</label>
                                         <input type="date" id="editToDate" class="form-control" />
                                         <div class="text-danger" id="editToDateError"></div>
                                     </div>
@@ -521,7 +574,7 @@ button.multiselect .caret {
 
                         <!-- Submit -->
                         <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                            <a type="button" id="submitEditDealBtn" class="btn btn-dark customBtn mt-3">Save Changes</a>
+                            <a type="button" id="submitEditDealBtn" class="btn btn-dark customBtn mt-3">{{ __('admin_messages.update') }}</a>
                         </div>
 
                     </div>
@@ -781,7 +834,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $(function () {
         const $subCategory = $('#subCategorySelect').multiselect({
             includeSelectAllOption: true,
-            nonSelectedText: 'Select Sub-Category',
+            nonSelectedText: "{{ __('admin_messages.select_sub_category') }}",
             onInitialized: function (_, c) {
                 c.find('button.multiselect').attr('data-bs-toggle', 'dropdown');
             },
@@ -805,19 +858,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then(res => res.json())
                     .then(data => {
                         if (data.status === 'success' && data.data.data.length) {
+                            const locale = "{{ app()->getLocale() }}";
                             data.data.data.forEach(sub => {
                                 $('#subCategorySelect').append(
-                                    `<option value="${sub.id}">${sub.name_english}</option>`
+                                    `<option value="${sub.id}">
+                                        ${locale === 'ar' ? sub.name_arabic : sub.name_english}
+                                    </option>`
                                 );
                             });
                         } else {
-                            $('#subCategorySelect').append('<option disabled>No subcategories found</option>');
+                            $('#subCategorySelect').append(
+                                `<option disabled>{{ __('admin_messages.no_subcategories_found') }}</option>`
+                            );
                         }
                         $('#subCategorySelect').multiselect('rebuild');
                     })
                     .catch(() => {
                         $('#subCategorySelect')
-                            .append('<option disabled>Error fetching subcategories</option>')
+                            .append(`<option disabled>{{ __('admin_messages.error_fetching_subcategories') }}</option>`)
                             .multiselect('rebuild');
                     });
             });
@@ -855,14 +913,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const toDate = document.getElementById('toDate').value;
 
         // Validation
-        if (!nameEnglish) { nameEnError.innerText = 'Please enter name in English'; hasError = true; }
-        if (!nameArabic) { nameArError.innerText = 'Please enter name in Arabic'; hasError = true; }
-        if (!category) { categoryError.innerText = 'Please select a category'; hasError = true; }
-        if (!subCategory.length) { subCategoryError.innerText = 'Please select a subcategory'; hasError = true; }
-        if (!discount) { discountError.innerText = 'Please enter discount'; hasError = true; }
-        if (!fromDate) { fromDateError.innerText = 'Please select from date'; hasError = true; }
-        if (!toDate) { toDateError.innerText = 'Please select to date'; hasError = true; }
-        if (fileUpload.files.length === 0) { imageError.innerText = 'Please upload an image'; hasError = true; }
+        if (!nameEnglish) { nameEnError.innerText = "{{ __('admin_messages.please_enter_deal_name_english') }}"; hasError = true; }
+        if (!nameArabic) { nameArError.innerText = "{{ __('admin_messages.please_enter_deal_name_arabic') }}"; hasError = true; }
+        if (!category) { categoryError.innerText = "{{ __('admin_messages.please_select_a_category') }}"; hasError = true; }
+        if (!subCategory.length) { subCategoryError.innerText = "{{ __('admin_messages.please_select_a_subcategory') }}"; hasError = true; }
+        if (!discount) { discountError.innerText = "{{ __('admin_messages.please_enter_discount_percentage') }}"; hasError = true; }
+        if (!fromDate) { fromDateError.innerText = "{{ __('admin_messages.please_select_from_date') }}"; hasError = true; }
+        if (!toDate) { toDateError.innerText = "{{ __('admin_messages.please_select_to_date') }}"; hasError = true; }
+        if (fileUpload.files.length === 0) { imageError.innerText = "{{ __('admin_messages.please_upload_image') }}"; hasError = true; }
 
         if (hasError) return;
 
@@ -931,7 +989,7 @@ document.addEventListener('DOMContentLoaded', function() {
     /* ===== Initialize Bootstrap Multiselect ===== */
     $(editSubCategorySelect).multiselect({
         includeSelectAllOption: true,
-        nonSelectedText: 'Select Sub-Category',
+        nonSelectedText: "{{ __('admin_messages.select_sub_category') }}",
         onInitialized: function(_, c) {
             c.find('button.multiselect').attr('data-bs-toggle', 'dropdown');
         },
@@ -943,27 +1001,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* ===== Function to Load Subcategories ===== */
     function loadSubCategories(categoryId, selectedSubCategories = []) {
-        editSubCategorySelect.innerHTML = '<option>Loading...</option>';
+        editSubCategorySelect.innerHTML = '<option>{{ __("admin_messages.loading") }}</option>';
 
         fetch(`/admin/getSubCategories/${categoryId}`)
             .then(res => res.json())
             .then(data => {
+                const locale = "{{ app()->getLocale() }}";
                 editSubCategorySelect.innerHTML = '';
                 if (data.status === 'success' && data.data.data.length > 0) {
                     data.data.data.forEach(sub => {
-                        const option = document.createElement('option');
-                        option.value = sub.id;
-                        option.textContent = sub.name_english;
+                    const option = document.createElement('option');
+                    option.value = sub.id;
+                    option.textContent = locale === 'ar' ? sub.name_arabic : sub.name_english;
 
-                        if (selectedSubCategories.includes(sub.id.toString())) {
-                            option.selected = true;
-                        }
+                    if (selectedSubCategories.includes(sub.id.toString())) {
+                        option.selected = true;
+                    }
 
-                        editSubCategorySelect.appendChild(option);
-                    });
+                    editSubCategorySelect.appendChild(option);
+                });
                 } else {
-                    editSubCategorySelect.innerHTML =
-                        '<option disabled>No subcategories found</option>';
+                    editSubCategorySelect.innerHTML = '<option disabled>{{ __("admin_messages.no_subcategories_found") }}</option>';
                 }
 
                 $(editSubCategorySelect).multiselect('rebuild');
@@ -971,7 +1029,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(err => {
                 console.error(err);
                 editSubCategorySelect.innerHTML =
-                    '<option disabled>Error fetching subcategories</option>';
+                    '<option disabled>{{ __("admin_messages.error_fetching_subcategories") }}</option>';
                 $(editSubCategorySelect).multiselect('rebuild');
             });
     }

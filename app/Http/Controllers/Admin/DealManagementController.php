@@ -169,7 +169,7 @@ class DealManagementController extends Controller
 
         $deal->save();
 
-        return response()->json(['success' => true, 'message' => 'Deal Added Successfully!']);
+        return response()->json(['success' => true, 'message' => __('admin_messages.deal_added_successfully')]);
     }
 
 
@@ -216,7 +216,7 @@ class DealManagementController extends Controller
 
         $deal->save();
 
-        return response()->json(['success' => true, 'message' => 'Deal Updated Successfully!']);
+        return response()->json(['success' => true, 'message' => __('admin_messages.deal_updated_successfully')]);
     }
 
     public function deleteDeal($id)
