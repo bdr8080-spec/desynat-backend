@@ -1485,9 +1485,8 @@ return [
     'continue' => 'متابعة',
 
     // store document summary
-
-
-      'summary_information' => 'ملخص المعلومات',
+    
+    'summary_information' => 'ملخص المعلومات',
 
     'personal_information' => 'المعلومات الشخصية',
     'full_name' => 'الاسم الكامل',
@@ -1519,6 +1518,48 @@ return [
     'account_under_review' => 'تسجيل حسابك قيد المراجعة !!',
     'review_wait_message' => 'يرجى الانتظار من 3 إلى 4 ساعات. شكراً لصبرك. فريق تطبيق ديسينات',
     'logout' => 'تسجيل الخروج',
+
+
+      // Banner Details Page
+    'Details' => 'التفاصيل',
+    'Pending_Admin_Wait_to_Approve' => 'قيد الانتظار - بانتظار موافقة الإدارة',
+    'Rejected_Admin_rejected' => 'مرفوض - تم الرفض من الإدارة',
+    'Active' => 'نشط',
+    'Expired' => 'منتهي',
+    'Confirmed' => 'تم التأكيد',
+    'Rejected_Payment_rejected' => 'مرفوض - تم رفض الدفع',
+    'Rejected' => 'مرفوض',
+
+    // Banner Info
+    'Banner_position' => 'مكان البانر',
+    'Homepage_Top' => 'الصفحة الرئيسية - الأعلى',
+    'Home_Banner' => 'بانر الصفحة الرئيسية',
+    'Category' => 'الفئة',
+
+    // Duration
+    'Duration' => 'المدة',
+    'Total_days' => 'إجمالي الأيام',
+
+    // Dates
+    'From' => 'من',
+    'To' => 'إلى',
+
+    // Payment
+    'SELECT_PAYMENT_METHOD' => 'اختر طريقة الدفع',
+    'Online_Payment' => 'الدفع الإلكتروني',
+
+    // Card Drawer
+    'Add_Card' => 'إضافة بطاقة',
+    'Card_Holder_Name' => 'اسم حامل البطاقة',
+    'Card_Number' => 'رقم البطاقة',
+    'Expiry_Date' => 'تاريخ الانتهاء',
+    'CVV' => 'رمز CVV',
+    'Save_Card_For_Future' => 'حفظ البطاقة للاستخدام مستقبلاً',
+
+    // Buttons
+    'Pay_Now' => 'ادفع الآن',
+    'Total_Price' => 'السعر الإجمالي',
+    'Paid' => 'مدفوع',
 
 
     
