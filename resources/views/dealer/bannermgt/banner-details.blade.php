@@ -8,13 +8,13 @@
 
 
     <div class="d-flex justify-content-between mt-4">
-        <a class="title24 alink" href="{{route('seller.show_banner')}}"> <i class="bi bi-chevron-left"></i>Details</a>
+        <a class="title24 alink" href="{{route('seller.show_banner')}}"> <i class="bi bi-chevron-left"></i>  {{ __('seller_messages.Details') }}</a>
 
         @if ($single_banner->Admin_verify == '0')
-        <span class="upper-text"> Pending- Admin Wait to Approve </span>
+        <span class="upper-text"> {{ __('seller_messages.Pending_Admin_Wait_to_Approve') }} </span>
 
         @elseif ($single_banner->Admin_verify == '2')
-        <span class="upper-text text-danger"> Rejected- Admin rejected </span>
+        <span class="upper-text text-danger">  {{ __('seller_messages.Rejected_Admin_rejected') }} </span>
 
 
         @elseif (
@@ -22,28 +22,32 @@
         $single_banner->payment_status == '1' &&
         $single_banner->start_date <= now() && $single_banner->end_date >= now()
             )
-            <span class="upper-text" style="color:#48DB8F;"> Active </span>
+            <span class="upper-text" style="color:#48DB8F;"> {{ __('seller_messages.Active') }} </span>
 
 
             @elseif (
             $single_banner->Admin_verify == '1' &&
             $single_banner->payment_status == '1' &&
-            $single_banner->end_date < now() ) Expired @elseif ($single_banner->Admin_verify == '1' &&
+            $single_banner->end_date < now() )
+             
+              {{ __('seller_messages.Expired') }} 
+             
+            @elseif ($single_banner->Admin_verify == '1' &&
                 $single_banner->payment_status == '1')
-                <span class="upper-text" style="color:#48DB8F;"> Confirmed </span>
+                <span class="upper-text" style="color:#48DB8F;">  {{ __('seller_messages.Confirmed') }} </span>
 
                 @elseif ($single_banner->Admin_verify == '1' && $single_banner->payment_status == '3' )
 
-                <span class="upper-text text-danger"> Rejected- Payment rejected </span>
+                <span class="upper-text text-danger"> {{ __('seller_messages.Rejected_Payment_rejected') }} </span>
 
                 @elseif ($single_banner->Admin_verify == '1' && $single_banner->payment_status == '0' )
-                <span class="upper-text" style="color:#48DB8F;"> Confirmed </span>
+                <span class="upper-text" style="color:#48DB8F;">  {{ __('seller_messages.Confirmed') }} </span>
 
                 @elseif ($single_banner->Admin_verify == '1' && $single_banner->payment_status == '2' )
-                <span class="upper-text text-danger"> Rejected - Payment is rejected </span>
+                <span class="upper-text text-danger">{{ __('seller_messages.Rejected_Payment_rejected') }} </span>
 
                 @else
-                <span class="upper-text text-danger"> Rejected </span>
+                <span class="upper-text text-danger">  {{ __('seller_messages.Rejected') }} </span>
 
 
 
@@ -70,32 +74,32 @@
                 <img src="{{$single_banner->upload_banner}}" alt="image">
             </div>
 
-            <label class="banner-text">Banner position</label>
+            <label class="banner-text">{{ __('seller_messages.Banner_position') }}</label>
 
             @if($single_banner->banner_position=='1')
 
-            <input type="text" class="form-control" value="Homepage - Top" />
+            <input type="text" class="form-control" value="{{ __('seller_messages.Homepage_Top') }}" />
 
             @elseif($single_banner->banner_position=='2')
-            <input type="text" class="form-control" value="Home Banner" />
+            <input type="text" class="form-control" value="{{ __('seller_messages.Home_Banner') }}" />
             @else
-            <input type="text" class="form-control" value="category" />
+            <input type="text" class="form-control" value="{{ __('seller_messages.Category') }}" />
             @endif
 
             <div class="d-flex justify-content-between mt-4">
-                <h6 class="banner-texts"> Duration</h6>
-                <span class="banner-texts">Total days - {{$single_banner->total_days}}</span>
+                <h6 class="banner-texts"> {{ __('seller_messages.Duration') }}</h6>
+                <span class="banner-texts">{{ __('seller_messages.Total_days') }}  - {{$single_banner->total_days}}</span>
             </div>
 
 
 
             <div class="row mt-3">
                 <div class="col-md-12">
-                    <label class="banner-text">From</label>
+                    <label class="banner-text">{{ __('seller_messages.From') }}</label>
                     <input type="date" class="form-control mb-4" value="{{$single_banner->start_date}}" readonly>
                 </div>
                 <div class="col-md-12">
-                    <label class="banner-text">To</label>
+                    <label class="banner-text"> {{ __('seller_messages.To') }}</label>
                     <input type="date" class="form-control" value="{{$single_banner->end_date}}" readonly>
                 </div>
             </div>
@@ -104,14 +108,14 @@
 
         @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
         <div class="col-md-6">
-            <h6>SELECT PAYMENT METHOD</h6>
+            <h6> {{ __('seller_messages.SELECT_PAYMENT_METHOD') }}</h6>
             <div class="payment-box">
                 <div class="check_radio">
                     <label class="radio-group">
                         <input type="radio" name="payment" id="onlinePayment" value="1" checked>
                         <span class="custom-radio"></span>
                         <img src="dealer/assets/img/credit-card.svg">
-                        <span class="radio-label"> Online Payment</span>
+                        <span class="radio-label"> {{ __('seller_messages.Online_Payment') }}</span>
                     </label>
                 </div>
                 <!-- 
@@ -144,20 +148,17 @@
                 <div class="col-lg-6">
                     <button type="button" class="btn total-outline w-100 ">
 
-                        Total Price
+                         {{ __('seller_messages.Total_Price') }}
                         @if($single_banner->payment_status==1)
-                        Paid
+                         {{ __('seller_messages.Paid') }}
                         @endif
-                        <strong>{{$single_banner->price}} KD</strong></button>
+                        <strong>{{$single_banner->price}} {{ __('seller_messages.KD') }}</strong></button>
                 </div>
                 <div class="col-lg-6">
                     <form id="bannerBuyForm">
                         @csrf
-
-
                         @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
-                        <button type="submit" class="btn add-fillbtn w-100" data-bs-toggle="modal">Pay Now</button>
-
+                        <button type="submit" class="btn add-fillbtn w-100" data-bs-toggle="modal">{{ __('seller_messages.Pay_Now') }}</button>
                         @endif
                     </form>
                 </div>
@@ -173,27 +174,27 @@
 <!-- ADD CARD DRAWER -->
 <div class="add-card-drawer" id="addCardDrawer">
     <div class="drawer-header">
-        <h5>Add Card</h5>
+        <h5> {{ __('seller_messages.Add_Card') }}</h5>
         <span class="close-btn" id="closeDrawer">&times;</span>
     </div>
     <div class="drawer-body">
 
         <!-- CARD INPUT BOX -->
         <div class="card-form-box">
-            <label>Card Holder Name</label>
-            <input type="text" placeholder="Card Holder Name" />
+            <label>{{ __('seller_messages.Card_Holder_Name') }}</label>
+            <input type="text" placeholder="{{ __('seller_messages.Card_Holder_Name') }}" />
 
-            <label>Card Number</label>
-            <input type="text" placeholder="Card Number" />
+            <label>{{ __('seller_messages.Card_Number') }}</label>
+            <input type="text" placeholder="{{ __('seller_messages.Card_Number') }}" />
 
             <div class="row">
                 <div class="col-8">
-                    <label>Expiry Date</label>
+                    <label>{{ __('seller_messages.Expiry_Date') }}</label>
                     <input type="text" placeholder="MM / YY" />
                 </div>
                 <div class="col-4">
-                    <label>CVV</label>
-                    <input type="password" placeholder="CVV" />
+                    <label> {{ __('seller_messages.CVV') }}</label>
+                    <input type="password" placeholder="{{ __('seller_messages.CVV') }}" />
                 </div>
             </div>
         </div>
@@ -206,14 +207,14 @@
 
         <div class="check-field">
             <input type='checkbox' />
-            <span>Save Card For Future </span>
+            <span>{{ __('seller_messages.Save_Card_For_Future') }} </span>
         </div>
 
     </div>
 
 
     <div class="drawer-footer">
-        <button class="pay-btn">Pay Now</button>
+        <button class="pay-btn">{{ __('seller_messages.Pay_Now') }}</button>
     </div>
 </div>
 
