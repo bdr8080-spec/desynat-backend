@@ -58,14 +58,18 @@
                     </div> -->
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Select Country</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                                 <select name="country_name" id="country_name" class="form-select form-select-lg"
                                     onchange="document.getElementById('filterForm').submit();">
-                                    <option value="">Select country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
                                     @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('type') == 'new' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                        @if(app()->getLocale() == 'en')
                                         {{ $country['name'] }}
+                                        @else
+                                        {{ $country['name_ar'] }}
+                                        @endif
                                     </option>
                                     @endforeach
                                 </select>
@@ -158,18 +162,18 @@
                     <table id="myTable" class="table">
                         <thead>
                             <tr>
-                                <th>Sr.No</th>
-                                <th>Request ID</th>
-                                <th>Seller Name</th>
-                                <th>Seller Country</th>
-                                <th>Request On</th>
-                                <th>Banner Image</th>
-                                <th>Banner Place</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>No. of Days</th>
+                                <th>{{ __('admin_messages.s_no') }}</th>
+                                <th>{{ __('admin_messages.request_id') }}</th>
+                                <th>{{ __('admin_messages.seller_name') }}</th>
+                                <th>{{ __('admin_messages.seller_country') }}</th>
+                                <th>{{ __('admin_messages.request_on') }}</th>
+                                <th>{{ __('admin_messages.banner_image') }}</th>
+                                <th>{{ __('admin_messages.banner_place') }}</th>
+                                <th>{{ __('admin_messages.start_date') }}</th>
+                                <th>{{ __('admin_messages.end_date') }}</th>
+                                <th>{{ __('admin_messages.no_of_days') }}</th>
                                 @if(in_array(17, $permissions) || $admin->type == 1)
-                                <th>Action</th>
+                                <th>{{ __('admin_messages.action') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -179,7 +183,13 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>#{{ $data['order_id'] ?? '' }}</td>
                                 <td>{{ optional($data['seller_details'])->first_name ?? '' }} {{ optional($data['seller_details'])->last_name ?? '' }}</td>
-                                <td>{{ \App\Models\Country::where('dial_code', optional($data['seller_details'])->country_code)->value('name') ?? '' }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ \App\Models\Country::where('dial_code', optional($data['seller_details'])->country_code)->value('name') ?? '' }}
+                                    @else
+                                    {{ \App\Models\Country::where('dial_code', optional($data['seller_details'])->country_code)->value('name_ar') ?? '' }}
+                                    @endif
+                                </td>
                                 <td>{{ optional($data['created_at']) ? \Carbon\Carbon::parse($data['created_at'])->format('jS F Y | h:i A') : '' }}</td>
                                 <td>
                                     @if(!empty($data['upload_banner']))
@@ -188,10 +198,18 @@
                                         </a>
                                     @endif
                                 </td>
-                                <td>{{ [1=>'Home Top',2=>'Home Bottom',3=>'Sub Category'][$data['banner_position']] ?? '' }}</td>
+                                <td>
+                                    {{
+                                        [
+                                            1 => __('admin_messages.home_top'),
+                                            2 => __('admin_messages.home_bottom'),
+                                            3 => __('admin_messages.sub_category')
+                                        ][$data['banner_position']] ?? ''
+                                    }}
+                                </td>
                                 <td>{{ optional($data['start_date']) ? \Carbon\Carbon::parse($data['start_date'])->format('d F Y') : '' }}</td>
                                 <td>{{ optional($data['end_date']) ? \Carbon\Carbon::parse($data['end_date'])->format('d F Y') : '' }}</td>
-                                <td>{{ $data['total_days'] ?? '' }} days</td>
+                                <td>{{ $data['total_days'] ?? '' }} {{__('admin_messages.days')}}</td>
                                 @if(in_array(17, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -227,14 +245,18 @@
                     </div> -->
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Select Country</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                                 <select name="country_name" id="country_name" class="form-select form-select-lg"
                                     onchange="document.getElementById('filterForm1').submit();">
-                                    <option value="">Select country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
                                     @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('type') == 'approved' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                        @if(app()->getLocale() == 'en')
                                         {{ $country['name'] }}
+                                        @else
+                                        {{ $country['name_ar'] }}
+                                        @endif
                                     </option>
                                     @endforeach
                                 </select>
@@ -247,20 +269,20 @@
                     <table id="myTable1" class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Request ID</th>
-                                <th scope="col">Seller Name</th>
-                                <th scope="col">Seller Country</th>
-                                <th scope="col">Request On</th>
-                                <th scope="col">Banner Image</th>
-                                <th scope="col">Position</th>
-                                <th scope="col">Start Date</th>
-                                <th scope="col">End Date</th>
-                                <th scope="col">No. of Days</th>
-                                <th scope="col">Seller Posted</th>
-                                <th scope="col">Amount Paid</th>
+                                <th>{{ __('admin_messages.s_no') }}</th>
+                                <th>{{ __('admin_messages.request_id') }}</th>
+                                <th>{{ __('admin_messages.seller_name') }}</th>
+                                <th>{{ __('admin_messages.seller_country') }}</th>
+                                <th>{{ __('admin_messages.request_on') }}</th>
+                                <th>{{ __('admin_messages.banner_image') }}</th>
+                                <th>{{ __('admin_messages.banner_place') }}</th>
+                                <th>{{ __('admin_messages.start_date') }}</th>
+                                <th>{{ __('admin_messages.end_date') }}</th>
+                                <th>{{ __('admin_messages.no_of_days') }}</th>
+                                <th scope="col">{{ __('admin_messages.seller_posted') }}</th>
+                                <th scope="col">{{ __('admin_messages.amount_paid') }}</th>
                                 @if(in_array(17, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
 
                             </tr>
@@ -274,12 +296,21 @@
                                 <td>{{ $data['seller_details']['first_name'] ?? 'N/A' }}
                                     {{ $data['seller_details']['last_name'] ?? '' }}</td>
                                <td>
+                                    @if(app()->getLocale() == 'en')
                                     {{
                                         \App\Models\Country::where(
                                             'dial_code',
                                             optional($data['seller_details'])->country_code
-                                        )->value('name') ?? 'N/A'
+                                        )->value('name') ?? __('admin_messages.na')
                                     }}
+                                    @else
+                                    {{
+                                        \App\Models\Country::where(
+                                            'dial_code',
+                                            optional($data['seller_details'])->country_code
+                                        )->value('name_ar') ?? __('admin_messages.na')
+                                    }}
+                                    @endif
                                 </td>
                                 <td>
                                     {{ \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kuwait')->format('jS F Y | h:i A') }}
@@ -292,10 +323,10 @@
                                 <td>
                                     {{
                                         [
-                                            1 => 'Home Top',
-                                            2 => 'Home Bottom',
-                                            3 => 'Sub Category',
-                                        ][$data['banner_position']] ?? 'N/A'
+                                            1 => __('admin_messages.home_top'),
+                                            2 => __('admin_messages.home_bottom'),
+                                            3 => __('admin_messages.sub_category')
+                                        ][$data['banner_position']] ?? ''
                                     }}
                                 </td>
                                 <td>
@@ -305,9 +336,11 @@
                                     {{ \Carbon\Carbon::parse($data['end_date'])->format('d F Y') }}
                                 </td>
 
-                                <td>{{ $data['total_days'] }} days</td>
+                                <td>{{ $data['total_days'] }} {{__('admin_messages.days')}}</td>
 
-                                <td>{{ $data['payment_status'] == 1 ? 'Yes' : 'No' }}</td>
+                                <td>
+                                    {{ $data['payment_status'] == 1 ? __('admin_messages.yes') : __('admin_messages.no') }}
+                                </td>
                                 <td>
                                     @if($data['payment_status'] == 1)
                                     @php
@@ -315,9 +348,9 @@
                                     $formattedPrice = ($price == floor($price)) ? intval($price) : number_format($price,
                                     2, '.', '');
                                     @endphp
-                                    {{ $formattedPrice }} KD
+                                    {{ $formattedPrice }} {{__('admin_messages.kd')}}
                                     @else
-                                    N/A
+                                    {{__('admin_messages.na')}}
                                     @endif
                                 </td>
                                 @if(in_array(17, $permissions) || $admin->type == 1)
@@ -338,7 +371,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="12" class="text-center">No data found</td>
+                                <td colspan="12" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -367,14 +400,18 @@
                     </div> -->
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Select Country</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                                 <select name="country_name" id="country_name" class="form-select form-select-lg"
                                     onchange="document.getElementById('filterForm2').submit();">
-                                    <option value="">Select country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
                                     @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('type') == 'rejected' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                        @if(app()->getLocale() == 'en')
                                         {{ $country['name'] }}
+                                        @else
+                                        {{ $country['name_ar'] }}
+                                        @endif
                                     </option>
                                     @endforeach
                                 </select>
@@ -388,17 +425,17 @@
                     <table id="myTable2" class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Request ID</th>
-                                <th scope="col">Seller Name</th>
-                                <th scope="col">Seller Country</th>
-                                <th scope="col">Request On</th>
-                                <th scope="col">Banner Image</th>
-                                <th scope="col">Banner Place</th>
-                                <th scope="col">Start Date</th>
-                                <th scope="col">End Date</th>
-                                <th scope="col">No. of Days</th>
-                                <th scope="col">Reason</th>
+                                <th>{{ __('admin_messages.s_no') }}</th>
+                                <th>{{ __('admin_messages.request_id') }}</th>
+                                <th>{{ __('admin_messages.seller_name') }}</th>
+                                <th>{{ __('admin_messages.seller_country') }}</th>
+                                <th>{{ __('admin_messages.request_on') }}</th>
+                                <th>{{ __('admin_messages.banner_image') }}</th>
+                                <th>{{ __('admin_messages.banner_place') }}</th>
+                                <th>{{ __('admin_messages.start_date') }}</th>
+                                <th>{{ __('admin_messages.end_date') }}</th>
+                                <th>{{ __('admin_messages.no_of_days') }}</th>
+                                <th scope="col">{{ __('admin_messages.reason') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -410,12 +447,21 @@
                                 <td>{{ $data['seller_details']['first_name'] }}
                                     {{ $data['seller_details']['last_name'] }}</td>
                                 <td>
+                                    @if(app()->getLocale() == 'en')
                                     {{
                                         \App\Models\Country::where(
                                             'dial_code',
-                                            $data['seller_details']['country_code']
-                                        )->value('name') ?? 'N/A'
+                                            optional($data['seller_details'])->country_code
+                                        )->value('name') ?? __('admin_messages.na')
                                     }}
+                                    @else
+                                    {{
+                                        \App\Models\Country::where(
+                                            'dial_code',
+                                            optional($data['seller_details'])->country_code
+                                        )->value('name_ar') ?? __('admin_messages.na')
+                                    }}
+                                    @endif
                                 </td>
                                 <td>
                                     {{ \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kuwait')->format('jS F Y | h:i A') }}
@@ -428,10 +474,10 @@
                                 <td>
                                     {{
                                         [
-                                            1 => 'Home Top',
-                                            2 => 'Home Bottom',
-                                            3 => 'Sub Category',
-                                        ][$data['banner_position']] ?? 'N/A'
+                                            1 => __('admin_messages.home_top'),
+                                            2 => __('admin_messages.home_bottom'),
+                                            3 => __('admin_messages.sub_category')
+                                        ][$data['banner_position']] ?? ''
                                     }}
                                 </td>
                                 <td>
@@ -441,15 +487,15 @@
                                     {{ \Carbon\Carbon::parse($data['end_date'])->format('d F Y') }}
                                 </td>
 
-                                <td>{{ $data['total_days'] }} days</td>
+                                <td>{{ $data['total_days'] }} {{__('admin_messages.days')}}</td>
 
                                 <td style="white-space: pre-wrap; word-break: break-word;">
-                                    {{ $data['cancelled_reason'] ?? 'N/A' }}
+                                    {{ $data['cancelled_reason'] ?? __('admin_messages.na') }}
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="12" class="text-center">No data found</td>
+                                <td colspan="12" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -467,18 +513,18 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="rejectModalLabel">Reject Banner Request</h5>
+                <h5 class="modal-title" id="rejectModalLabel">{{ __('admin_messages.reject_banner_request') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="rejectReason" class="form-label">Reason For Rejection</label>
-                    <textarea class="form-control" id="rejectReason" rows="3" placeholder="Enter reason"></textarea>
-                    <div id="error-message" class="text-danger mt-2" style="display:none;">Please Enter Reason</div>
+                    <label for="rejectReason" class="form-label">{{ __('admin_messages.reason_for_rejection') }}</label>
+                    <textarea class="form-control" id="rejectReason" rows="3" placeholder="{{ __('admin_messages.please_enter_reason') }}"></textarea>
+                    <div id="error-message" class="text-danger mt-2" style="display:none;">{{ __('admin_messages.please_enter_reason') }}</div>
                 </div>
 
                 <div class="d-flex justify-content-center mt-3">
-                    <button type="button" class="btn btn-dark customBtn" id="submitReject">Submit</button>
+                    <button type="button" class="btn btn-dark customBtn" id="submitReject">{{ __('admin_messages.submit') }}</button>
                 </div>
             </div>
 
