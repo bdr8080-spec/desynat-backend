@@ -324,7 +324,7 @@
                                                                 <input type="radio" name="country_code"
                                                                     value="{{ $item->dial_code }}"
                                                                     data-flag="{{ $item->flag1 }}"
-                                                                    data-name="{{ $item->name }}"
+                                                                    data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif"
                                                                     class="country-radio"
                                                                     {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                                                     hidden>
@@ -332,7 +332,7 @@
                                                                     alt="Flag of {{ $item->name }}" width="25"
                                                                     height="16">
                                                                 <span>{{ $item->dial_code }}
-                                                                    ({{ $item->name }})
+                                                                     (@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif )
                                                                 </span>
                                                             </label>
                                                         </li>
