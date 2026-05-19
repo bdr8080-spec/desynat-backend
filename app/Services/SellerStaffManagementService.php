@@ -93,6 +93,50 @@ class SellerStaffManagementService
 
           }
 
+        //   check Seller Plan 
+
+        $checkSellerPlan=seller::with('subcription_plan')->
+        whereHas('subcription_plan', function($query){
+            $query->where('plan_end_date','>',Now());
+        })
+        ->where('id',$request->seller_id)->first();
+
+        if($checkSellerPlan){
+
+            if($checkSellerPlan->subcription_plan[0]){
+
+                $staff_limit=IntVal($checkSellerPlan->subcription_plan[0]->no_of_employee);
+                // $staff_limit=3;
+
+                $sellerCount=seller::where('parent_id',$request->seller_id)->count();
+              
+                if($staff_limit<$sellerCount ){
+                    return [
+                'status' => 'error',
+                'message' => 'Your Plan is Over please buy new plan',
+                'data' => []
+            ];
+                }
+            }
+
+
+        }else{
+            return [
+                'status' => 'error',
+                'message' => 'No Plan Found You Canot Add Staff',
+                'data' => []
+            ];
+        }
+
+
+        
+
+
+
+
+
+
+
         $password_hash=Hash::make($request->password);
 
          $record=[
