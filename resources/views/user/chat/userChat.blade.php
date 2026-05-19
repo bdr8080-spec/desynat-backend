@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="cart-panel position-relative">
-                    <a href="order_details" class="link-content">
+                    <a href="{{ route('user.product_details', $chatData['record']['product_id']) }}" class="link-content">
                         <div class="cart-card">
                             <div class="card-left mb-2 d-flex">
                                 <div>
@@ -80,7 +80,7 @@
                     <div class="border-1 my-profile" id="customOrderFormContainer">
                         <div class="form-group mb-3">
                             <label>{{ __('user_messages.add_quantity') }}</label>
-                            <input type="text" name="quantity" class="form-control" placeholder="{{ __('user_messages.enter_quantity') }}">
+                            <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" name="quantity" class="form-control" placeholder="{{ __('user_messages.enter_quantity') }}">
                             <small class="text-danger d-none" id="quantityError">{{ __('user_messages.please_enter_quantity') }}</small>
                         </div>
 
