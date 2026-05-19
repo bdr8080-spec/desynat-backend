@@ -126,7 +126,8 @@
                                         </div>
                                         <div class="category-store-content">
                                             <div class="user-infoCat_detail d-flex align-items-center">
-                                                <div class="user sellerStory" id="sellerStory{{ $item->seller_information->id }}">
+                                                <div class="user sellerStory {{ !empty($item->seller_stories) && count($item->seller_stories) > 0 ? 'story-active' : '' }}" 
+                                                      id="sellerStory{{ $item->seller_information->id }}">
                                                     <img src="{{ $item->seller_information->profile_pic }}"
                                                         class="img-fluid" style="cursor:pointer" onclick="openSellerGallery(event, {{ $item->seller_information->id }})" />
                                                 </div>
@@ -264,9 +265,9 @@ function loadSellerStories(seller_id, openIndex = 0) {
 
             const hasStories = sellerStories.length > 0;
 
-            if (profileDiv) {
-                profileDiv.classList.toggle("story-active", hasStories);
-            }
+            // if (profileDiv) {
+            //     profileDiv.classList.toggle("story-active", hasStories);
+            // }
 
             if (hasStories) {
                 showSellerGallery(openIndex);
