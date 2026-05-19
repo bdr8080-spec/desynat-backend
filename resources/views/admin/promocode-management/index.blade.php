@@ -22,7 +22,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Promocode Management</h2>
+            <h2 class="h2">{{ __('admin_messages.promo_code_management') }}</h2>
         </div>
 
         <!-- <div class="col-lg-3 col-md-4 col-12">
@@ -36,7 +36,7 @@
             @if(in_array(14, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
                 <a class="btn btn-dark customBtn" href="{{route('admin.addPromocode')}}" >
-                    <span>Add New Promocode</span>
+                    <span>{{ __('admin_messages.add_new_promocode') }}</span>
                 </a>
             </div>
             @endif
@@ -51,7 +51,7 @@
                     <!-- From Date Filter -->
                     <div class="col-lg-2 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
                                 value="{{ request()->from_date }}"
                                 onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -61,7 +61,7 @@
                     <!-- To Date Filter -->
                     <div class="col-lg-2 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">To:</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
                                 value="{{ request()->to_date }}"
                                 onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -71,15 +71,19 @@
                     <!-- Country Filter -->
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                             <select name="country_id" id="country_id"
                                 class="form-select form-select-lg "
                                 onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Select country</option>
+                                <option value="">{{ __('admin_messages.select_country') }}</option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country['id'] }}"
                                     {{ request('country_id') == $country['id'] ? 'selected' : '' }}>
+                                    @if(app()->getLocale() == 'en')
                                     {{ $country['name'] }}
+                                    @else
+                                    {{ $country['name_ar'] }}
+                                    @endif
                                 </option>
                                 @endforeach
                             </select>
@@ -87,12 +91,12 @@
                     </div>
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="status" class="form-label">Status-</label>
+                            <label for="status" class="form-label">{{ __('admin_messages.status') }}</label>
                             <select id="status" name="status" class="form-select form-select-lg"
                                     onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Select Status</option>
-                                <option value="1" {{ request()->status == '1' ? 'selected' : '' }}>Active</option>
-                                <option value="0" {{ request()->status == '0' ? 'selected' : '' }}>Inactive</option>
+                                <option value="">{{ __('admin_messages.select_status') }}</option>
+                                <option value="1" {{ request()->status == '1' ? 'selected' : '' }}>{{ __('admin_messages.active') }}</option>
+                                <option value="0" {{ request()->status == '0' ? 'selected' : '' }}>{{ __('admin_messages.inactive') }}</option>
                             </select>
                         </div>
                     </div>
@@ -100,7 +104,7 @@
                     <div class="d-flex gap-3 justify-content-end" >
                         <a href="{{route('admin.promoCodeManagement')}}" class="btn btn-dark customBtn"
                             style="margin-top: 60px">
-                            <span>Reset</span>
+                            <span>{{ __('admin_messages.reset') }}</span>
                         </a>
                     </div>
                 </div>
@@ -111,19 +115,19 @@
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
-                            <th scope="col">SR No.</th>
-                            <th scope="col">Promocode <br> Name</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">View <br> Description</th>
-                            <th scope="col">Applicable for</th>
-                            <th scope="col">Minimum <br> Order <br> Value</th>
-                            <th scope="col">Upto <br> Discount</th>
-                            <th scope="col">Discount %</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">End date</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                            <th scope="col">{{ __('admin_messages.promocode_name') }}</th>
+                            <th scope="col">{{ __('admin_messages.country') }}</th>
+                            <th scope="col">{{ __('admin_messages.view_description') }}</th>
+                            <th scope="col">{{ __('admin_messages.applicable_for') }}</th>
+                            <th scope="col">{{ __('admin_messages.minimum_order_value') }}</th>
+                            <th scope="col">{{ __('admin_messages.upto_discount') }}</th>
+                            <th scope="col">{{ __('admin_messages.discount') }} %</th>
+                            <th scope="col">{{ __('admin_messages.start_date') }}</th>
+                            <th scope="col">{{ __('admin_messages.end_date') }}</th>
+                            <th scope="col">{{ __('admin_messages.status') }}</th>
                             @if(in_array(14, $permissions) || $admin->type == 1)
-                            <th scope="col">Action</th>
+                            <th scope="col">{{ __('admin_messages.action') }}</th>
                             @endif
                         </tr>
                     </thead>
@@ -131,30 +135,44 @@
                         @foreach($promoCodes as $index => $pc)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td>{{$pc['name_english']}}</td>
-                            <td>{{ $pc['country_info']['name'] }}</td>
-                            <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#sentModal1"
-                                    data-description="{{ $pc['description_english'] }}">
-                                    <i class="bi bi-eye-fill"></i>
-                                </a></td>
                             <td>
-                                @if($pc['applicable_for'] == 1)
-                                    First Order
-                                @elseif($pc['applicable_for'] == 2)
-                                    Every Order
+                                @if(app()->getLocale() == 'en')
+                                {{$pc['name_english']}}
+                                @else
+                                {{$pc['name_arabic']}}
                                 @endif
                             </td>
-                            <td>{{$pc['min_order_value']}} KD</td>
-                            <td>{{$pc['upto_discount']}} KD</td>
+                            <td>
+                                @if(app()->getLocale() == 'en')
+                                {{ $pc['country_info']['name'] }}
+                                @else
+                                {{ $pc['country_info']['name_ar'] }}
+                                @endif
+                            </td>
+                            <td> <a class="table-button" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#sentModal1"
+                                    data-description-en="{{ $pc['description_english'] }}"
+                                    data-description-ar="{{ $pc['description_arabic'] }}">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                            </td>
+                            <td>
+                                @if($pc['applicable_for'] == 1)
+                                    {{ __('admin_messages.first_order') }}
+                                @elseif($pc['applicable_for'] == 2)
+                                    {{ __('admin_messages.every_order') }}
+                                @endif
+                            </td>
+                            <td>{{$pc['min_order_value']}} {{ __('admin_messages.kd') }}</td>
+                            <td>{{$pc['upto_discount']}} {{ __('admin_messages.kd') }}</td>
                             <td>{{$pc['discount_percent']}}%</td>
                             <td>{{ \Carbon\Carbon::parse($pc['start_date'])->format('d-m-Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($pc['end_date'])->format('d-m-Y') }}</td>
                             <td>
                                 @if($pc['status'] == 1)
-                                    Active
+                                    {{ __('admin_messages.active') }}
                                 @elseif($pc['status'] == 0)
-                                    Inactive
+                                    {{ __('admin_messages.inactive') }}
                                 @endif
                             </td>
                             @if(in_array(14, $permissions) || $admin->type == 1)
@@ -221,7 +239,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add New Promocode</h2>
+                <h2 class="h2">{{ __('admin_messages.add_new_promocode') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -231,11 +249,17 @@
                         <!-- Country Select -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group mb-3">
-                                <label>Select Country-</label>
+                                <label>{{ __('admin_messages.select_country') }}</label>
                                 <select name="country_id" id="country_id1" class="form-select">
-                                    <option value="">Select Country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
                                     @foreach($countries as $country)
-                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                        <option value="{{ $country->id }}">
+                                            @if(app()->getLocale() == 'en')
+                                            {{ $country->name }}
+                                            @else
+                                            {{ $country->name_ar }}
+                                            @endif
+                                        </option>
                                     @endforeach
                                 </select>
                                 <div id="countryError" class="text-danger small" style="display:none;"></div>
@@ -245,8 +269,8 @@
                         <!-- Promocode Name English -->
                         <div class="col-lg-6 col-md-12 col-12">
                             <div class="form-group">
-                                <label class="form-label">Promocode Name (English)</label>
-                                <input type="text" id="nameEnglish" name="name_english" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Promocode in English" />
+                                <label class="form-label">{{ __('admin_messages.promocode_name_english') }}</label>
+                                <input type="text" id="nameEnglish" name="name_english" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="{{ __('admin_messages.please_enter_promocode_name_in_english') }}" />
                                 <div id="nameEnglishError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
@@ -254,8 +278,8 @@
                         <!-- Promocode Name Arabic -->
                         <div class="col-lg-6 col-md-12 col-12">
                             <div class="form-group">
-                                <label class="form-label">Promocode Name (Arabic)</label>
-                                <input type="text" id="nameArabic" name="name_arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Promocode in Arabic" />
+                                <label class="form-label">{{ __('admin_messages.promocode_name_arabic') }}</label>
+                                <input type="text" id="nameArabic" name="name_arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="{{ __('admin_messages.please_enter_promocode_name_in_arabic') }}" />
                                 <div id="nameArabicError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
@@ -263,7 +287,7 @@
                         <!-- Description English -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="mb-3">
-                                <label for="descriptionEnglish" class="form-label">Description (English)</label>
+                                <label for="descriptionEnglish" class="form-label">{{ __('admin_messages.description_english') }}</label>
                                 <textarea id="descriptionEnglish" name="description_english" oninput="this.value = this.value.replace(/[^A-Za-z0-9 \n]/g,'').replace(/^\s+/,'')" class="form-control" rows="3"></textarea>
                                 <div id="descriptionEnglishError" class="text-danger small" style="display:none;"></div>
                             </div>
@@ -272,7 +296,7 @@
                         <!-- Description Arabic -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="mb-3">
-                                <label for="descriptionArabic" class="form-label">Description (Arabic)</label>
+                                <label for="descriptionArabic" class="form-label">{{ __('admin_messages.description_arabic') }}</label>
                                 <textarea id="descriptionArabic"  name="description_arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF \n]/g,'').replace(/^\s+/,'')" class="form-control" rows="3"></textarea>
                                 <div id="descriptionArabicError" class="text-danger small" style="display:none;"></div>
                             </div>
@@ -281,11 +305,11 @@
                         <!-- Applicable for -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group mb-3">
-                                <label>Applicable for-</label>
+                                <label>{{ __('admin_messages.applicable_for') }}</label>
                                 <select id="applicableFor" name="applicable_for" class="form-select">
-                                    <option value="">Select Applicable</option>
-                                    <option value="1">First Order</option>
-                                    <option value="2">Every Order</option>
+                                    <option value="">{{ __('admin_messages.select_applicable') }}</option>
+                                    <option value="1">{{ __('admin_messages.first_order') }}</option>
+                                    <option value="2">{{ __('admin_messages.every_order') }}</option>
                                 </select>
                                 <div id="applicableForError" class="text-danger small" style="display:none;"></div>
                             </div>
@@ -294,8 +318,8 @@
                         <!-- Discount Percent -->
                         <div class="col-lg-6 ">
                             <div class="form-group mb-3">
-                                <label class="form-label">Discount %</label>
-                                <input type="text" oninput="this.value = this.value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 3); if (this.value > 100) this.value = 100;" id="discountPercent" name="discount_percent" class="form-control" placeholder="Enter Discount %" />
+                                <label class="form-label">{{ __('admin_messages.discount') }} %</label>
+                                <input type="text" oninput="this.value = this.value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 3); if (this.value > 100) this.value = 100;" id="discountPercent" name="discount_percent" class="form-control" placeholder="{{ __('admin_messages.enter_discount_percentage') }}" />
                                 <div id="discountPercentError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
@@ -303,8 +327,8 @@
                         <!-- Minimum Order Value -->
                         <div class="col-lg-6 ">
                             <div class="form-group mb-3">
-                                <label class="form-label">Minimum Order Value</label>
-                                <input type="text" id="minOrderValue" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" name="min_order_value" class="form-control" placeholder="Enter Minimum Order Value" />
+                                <label class="form-label">{{ __('admin_messages.minimum_order_value') }}</label>
+                                <input type="text" id="minOrderValue" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" name="min_order_value" class="form-control" placeholder="{{ __('admin_messages.enter_minimum_order_value') }}" />
                                 <div id="minOrderValueError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
@@ -312,8 +336,8 @@
                         <!-- Upto Discount -->
                         <div class="col-lg-12 ">
                             <div class="form-group mb-3">
-                                <label class="form-label">Upto Discount</label>
-                                <input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" id="uptoDiscount" name="upto_discount" class="form-control" placeholder="Enter Upto Discount" />
+                                <label class="form-label">{{ __('admin_messages.upto_discount') }}</label>
+                                <input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" id="uptoDiscount" name="upto_discount" class="form-control" placeholder="{{ __('admin_messages.enter_upto_discount') }}" />
                                 <div id="uptoDiscountError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
@@ -321,7 +345,7 @@
                         <!-- Start Date -->
                         <div class="col-lg-6 col-md-4 col-12">
                             <div class="form-group mb-3">
-                                <label for="startDate" class="form-label">From:</label>
+                                <label for="startDate" class="form-label">{{ __('admin_messages.from') }}:</label>
                                 <input type="date" onchange="updateToDate1();" id="startDate" name="start_date" class="form-control" />
                                 <div id="startDateError" class="text-danger small" style="display:none;"></div>
                             </div>
@@ -330,7 +354,7 @@
                         <!-- End Date -->
                         <div class="col-lg-6 col-md-4 col-12">
                             <div class="form-group mb-3">
-                                <label for="endDate" class="form-label">To:</label>
+                                <label for="endDate" class="form-label">{{ __('admin_messages.to') }}:</label>
                                 <input type="date" onchange="updateToDate1();" id="endDate" name="end_date" class="form-control" />
                                 <div id="endDateError" class="text-danger small" style="display:none;"></div>
                             </div>
@@ -338,7 +362,7 @@
 
                         <!-- Submit Button -->
                         <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                            <button type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">Submit</button>
+                            <button type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">{{ __('admin_messages.submit') }}</button>
                         </div>
                     </div>
                 </div>
@@ -494,7 +518,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Description</h2>
+                <h2 class="h2">{{ __('admin_messages.description') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -522,15 +546,25 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+
     const sentModal = document.getElementById('sentModal1');
     const descriptionTextarea = document.getElementById('description');
 
-    sentModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget; 
-        const description = button.getAttribute('data-description');
+    sentModal.addEventListener('show.bs.modal', function(event) {
 
-        descriptionTextarea.value = description;
+        const button = event.relatedTarget;
+
+        const descriptionEn = button.getAttribute('data-description-en');
+        const descriptionAr = button.getAttribute('data-description-ar');
+
+        @if(app()->getLocale() == 'en')
+            descriptionTextarea.value = descriptionEn;
+        @else
+            descriptionTextarea.value = descriptionAr;
+        @endif
+
     });
+
 });
 </script>
 
@@ -542,13 +576,14 @@ document.addEventListener('DOMContentLoaded', function () {
             let promoCodeId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deletePromocode/${promoCodeId}`, {
