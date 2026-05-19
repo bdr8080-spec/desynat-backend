@@ -34,7 +34,7 @@ SellerMenus_table::insert([
         'title_ar' => 'إدارة المنتجات',
         'route' => 'seller.products',
         'icon' => 'dealer/assets/img/all-icons/product.svg',
-        'active_patterns' => json_encode(['seller/products','seller/Add-product']),
+        'active_patterns' => json_encode(['seller/products','seller/Add-product','seller/edit-product/*']),
         'order_by' => 2,
         'status' => 1
     ],

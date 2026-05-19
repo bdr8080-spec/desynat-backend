@@ -286,7 +286,16 @@ class UserManagementService
     {
         try {
 
-            if(isset($request->category_id)){
+            if(isset($request->subcategory) ){
+
+                $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
+                 ->where('category_id', $request->category_id)
+                 ->where('subcategory_id', $request->subcategory)
+                 
+                 ->pluck('store_id');
+        
+
+            }elseif(isset($request->category_id)){
                       $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
                  ->where('category_id', $request->category_id)->pluck('store_id');
             }else{

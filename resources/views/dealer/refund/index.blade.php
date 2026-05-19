@@ -181,5 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+@include('dealer.layout.languagetableCode');
 
 
