@@ -3,7 +3,7 @@
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">{{__('seller_messages.Refund_Management')}}</div>
-        <a href="{{ route('seller.export_refund_management_data', request()->all()) }}" class="btn btn-success">Export</a>
+        <a href="{{ route('seller.export_refund_management_data', request()->all()) }}" class="btn btn-success">{{__('seller_messages.export')}}  </a>
     </div>
 
     <div class="datatable-wapper mt-5">
@@ -21,12 +21,12 @@
                     <div class="from-group">
                         <div class="show-date d-flex gap-2  flex-wrap">
                             <div class="date-form-pnl">
-                                <input type="date" class="form-control" name="from_date" id="fromDate"
+                                <input type="date" class="form-control datepicker" name="from_date" id="fromDate"
                                     value="{{request()->from_date }}">
                                 <p class="text-danger" id="error-start_date"></p>
                             </div>
                             <div class="date-form-pnl">
-                                <input type="date" class="form-control" name="to_date" id="toDate"
+                                <input type="date" class="form-control datepicker" name="to_date" id="toDate"
                                     value="{{request()->to_date }}">
 
                                 <p class="text-danger" id="error-end_date"></p>
@@ -37,7 +37,7 @@
                     <div class="from-group">
                         <select class="form-select form-control width-50" aria-label="Default select example">
                             <option value="">{{__('seller_messages.Payment_Status')}} </option>
-                            <option value="1"> {{__('seller_messages.Complete')}}  </option>
+                            <option value="1"> {{__('seller_messages.complete')}}  </option>
                             <option value="2"> {{__('seller_messages.Pending')}}  </option>
                         </select>
                     </div>
