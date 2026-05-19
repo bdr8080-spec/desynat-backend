@@ -24,23 +24,23 @@ $can_action=$menu_permission['can_action'];
         </div>
         <div class="col-lg-6">
             <div class="deal-deatils">
-                <h4 class="greentitle">Starts From - {{ date('d M Y', strtotime($single_deal['deal_data']->from)) }}
+                <h4 class="greentitle">{{ __('seller_messages.Starts_From') }} - {{ date('d M Y', strtotime($single_deal['deal_data']->from)) }}
                 </h4>
                 <div class="duration-table">
                     <table class="table table-borderless">
                         <tr>
-                            <td>Duration - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
+                            <td>{{ __('seller_messages.Duration') }} - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
                             </td>
-                            <td>Category - {{  $single_deal['deal_data']->category_details->name}}</td>
+                            <td>{{ __('seller_messages.Category') }} - {{  $single_deal['deal_data']->category_details->name}}</td>
                         </tr>
                         <tr>
-                            <td>Discount% - {{  $single_deal['deal_data']->discount }} %</td>
+                            <td>{{ __('seller_messages.Discount') }}- {{  $single_deal['deal_data']->discount }} %</td>
                             @php
     $deal = $single_deal['deal_data'];
 @endphp
 
 <td>
-    Sub-Category -
+    {{ __('seller_messages.Sub_Category') }} -
     @foreach($deal->subCategory_details as $subCategory)
         {{ $subCategory->name_english }}@if(!$loop->last), @endif
     @endforeach
@@ -59,10 +59,10 @@ $can_action=$menu_permission['can_action'];
 
     <div class="search-field d-flex justify-content-between align-item-center">
         <div class="d-flex gap-3" style=" align-items: baseline;">
-            <h5>Select Product</h5>
+            <h5>{{ __('seller_messages.Select_Product') }}</h5>
             <div class="from-group position-relative">
                 <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
-                <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table2">
+                <input type="search" class="form-control tableSearch" placeholder="{{ __('seller_messages.search') }}" data-table="table2">
             </div>
         </div>
           @if($can_action == '1')
@@ -76,14 +76,28 @@ $can_action=$menu_permission['can_action'];
         <table class="table table-bordered datatable tablesearch" id="table2">
             <thead>
                 <tr>
-
-                    <th class="no-sort">S.No</th>
-                    <th class="no-sort">Banner Image</th>
-                    <th class="no-sort">Name</th>
-                    <th class="no-sort">Brand</th>
-                    <th class="no-sort">Rating</th>
-                    <th class="no-sort">Price</th>
-                    <th class="no-sort">Remove</th>
+                     <th class="no-sort">
+                        {{ __('seller_messages.Add') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.S_No') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.Banner_Image') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.Name') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.Brand') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.Rating') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.Price') }}
+                    </th>
+                
                 </tr>
             </thead>
             <tbody>
@@ -98,10 +112,25 @@ $can_action=$menu_permission['can_action'];
                                 class="img-fluid">
                         </div>
                     </td>
-                    <td>{{$val->product_details->product_name_en }}</td>
-                    <td>{{$val->product_details->brand->name_english }}</td>
+                     <td>
+                          @if(App::getLocale()=='en')
+                                  {{$val->product_details->product_name_en }}
+                                    @else
+                                  {{$val->product_details->product_name_ar }}
+                            @endif
+
+                        </td>
+                        <td>
+                        @if(App::getLocale()=='en')    
+                            {{$val->product_details->brand->name_english }}
+                        @else 
+                            {{$val->product_details->brand->name_arabic }}
+                        @endif
+
+                    </td>
+
                     <td><i class="bi bi-star-fill yellow-star"></i> {{$val->avg_product_rating ?? 0 }}</td>
-                    <td>{{$val->product_details->product_variants['0']->final_price}} KD</td>
+                    <td>{{$val->product_details->product_variants['0']->final_price}} {{ __('seller_messages.KD') }}</td>
                     <td>
                           @if($can_action == '1') 
                         <i class="bi bi-trash removeProductFromList fas-5" ref="{{$val->id }}"> </i>
@@ -131,7 +160,7 @@ $can_action=$menu_permission['can_action'];
             <div class="modal-body">
                 <div class="p-4 text-center">
                     <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
-                    <h5 class="mt-3">Products Remove Successfully!</h5>
+                    <h5 class="mt-3"> {{ __('seller_messages.Products_Remove_Successfully') }}</h5>
                 </div>
             </div>
 

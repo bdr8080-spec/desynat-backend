@@ -1662,5 +1662,28 @@ return [
 "Edit_Product"=>"تعديل المنتج",
 
 
+'Details' => 'التفاصيل',
+'Starts_From' => 'يبدأ من',
+'Duration' => 'المدة',
+'Category' => 'الفئة',
+'Discount' => 'نسبة الخصم',
+'Sub_Category' => 'الفئة الفرعية',
+'Select_Product' => 'اختر المنتج',
+'Search' => 'بحث',
+'Add' => 'إضافة',
+'S_No' => 'الرقم',
+'Banner_Image' => 'صورة البانر',
+'Name' => 'الاسم',
+'Brand' => 'العلامة التجارية',
+'Rating' => 'التقييم',
+'Price' => 'السعر',
+'Add_to_Deals' => 'إضافة إلى العروض',
+'Products_Added_Successfully' => 'تمت إضافة المنتجات بنجاح!',
+"Products_Remove_Successfully"=>"تمت إزالة المنتجات بنجاح",
+
+"Please_select_at_least_one_product"=>"يرجى اختيار منتج واحد على الأقل.",
+
+"Total_Revenue"=>"Total Revenue",
     
+
 ];

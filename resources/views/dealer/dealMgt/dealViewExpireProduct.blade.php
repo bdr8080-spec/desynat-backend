@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center mb-5">
-        <a class="title24 alink" href="{{ url()->previous() }} "> <i class="bi bi-chevron-left"></i> Details</a>
+        <a class="title24 alink" href="{{ url()->previous() }} "> <i class="bi bi-chevron-left"></i>{{ __('seller_messages.Details') }}</a>
     </div>
 
     <div class="row mt-3">
@@ -13,17 +13,17 @@
         </div>
         <div class="col-lg-6">
             <div class="deal-deatils">
-                <h4 style="color:red">Expired On - {{ date('d M Y', strtotime($single_deal['deal_data']->to)) }}</h4>
+                <h4 style="color:red">{{ __('seller_messages.Expired_On') }}- {{ date('d M Y', strtotime($single_deal['deal_data']->to)) }}</h4>
                 <div class="duration-table">
                     <table class="table table-borderless">
                         <tr>
-                            <td>Duration - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
+                            <td>{{ __('seller_messages.Duration') }} - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
                             </td>
-                            <td>Category - {{  $single_deal['deal_data']->category_details->name}}</td>
+                            <td>{{ __('seller_messages.Category') }}  - {{  $single_deal['deal_data']->category_details->name}}</td>
                         </tr>
                         <tr>
-                            <td>Discount% - {{  $single_deal['deal_data']->discount }} %</td>
-                            <td>Sub-Category - {{  $single_deal['deal_data']->subCategory_details->name_english}}</td>
+                            <td>{{ __('seller_messages.Discount') }} - {{  $single_deal['deal_data']->discount }} %</td>
+                            <td>{{ __('seller_messages.Sub_Category') }}  - {{  $single_deal['deal_data']->subCategory_details->name_english}}</td>
                         </tr>
                     </table>
 
@@ -38,12 +38,12 @@
         <div>
             <div class="from-group position-relative">
                 <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
-                <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table2">
+                <input type="search" class="form-control tableSearch" placeholder="{{ __('seller_messages.search') }}" data-table="table2">
             </div>
         </div>
 
         <div class="total-bg d-flex gap-3">
-            <h6>Total Revenue</h6>
+            <h6>{{ __('seller_messages.Total_Revenue') }}</h6>
             <h2><strong>0 KD</strong></h2>
         </div>
     </div>
@@ -52,14 +52,27 @@
         <table class="table table-bordered datatable tablesearch" id="table2">
             <thead>
                 <tr>
-
-                    <th class="no-sort">S.No</th>
-                    <th class="no-sort">Banner Image</th>
-                    <th class="no-sort">Name</th>
-                    <th class="no-sort">Brand</th>
-                    <th class="no-sort">Rating</th>
-                    <th class="no-sort">Price</th>
-                    <th class="no-sort">Total Sold</th>
+                     <th class="no-sort">
+                        {{ __('seller_messages.Add') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.S_No') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.Banner_Image') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.Name') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.Brand') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.Rating') }}
+                    </th>
+                    <th class="no-sort">
+                        {{ __('seller_messages.Price') }}
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -74,10 +87,23 @@
                                 class="img-fluid">
                         </div>
                     </td>
-                    <td>{{$val->product_details->product_name_en }}</td>
-                    <td>{{$val->product_details->brand->name_english }}</td>
+                     <td>
+                          @if(App::getLocale()=='en')
+                                  {{$val->product_details->product_name_en }}
+                                    @else
+                                  {{$val->product_details->product_name_ar }}
+                            @endif
+
+                        </td>
+                        <td>
+                        @if(App::getLocale()=='en')    
+                            {{$val->product_details->brand->name_english }}
+                        @else 
+                            {{$val->product_details->brand->name_arabic }}
+                        @endif
+                    </td>
                     <td><i class="bi bi-star-fill yellow-star"></i> {{$val->avg_product_rating ?? 0 }}</td>
-                    <td>{{$val->product_details->product_variants['0']->final_price}} KD</td>
+                    <td>{{$val->product_details->product_variants['0']->final_price}}   {{ __('seller_messages.KD') }}</td>
                     <td> 0 </td>
                 </tr>
                 @endforeach
