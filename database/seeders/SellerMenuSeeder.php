@@ -77,7 +77,7 @@ SellerMenus_table::insert([
         'title_ar' => 'إدارة الطلبات',
         'route' => 'seller.order_management',
         'icon' => 'dealer/assets/img/all-icons/order.svg',
-        'active_patterns' => json_encode(['seller/order-management']),
+        'active_patterns' => json_encode(['seller/order-management',"seller/single-order-view/*"]),
         'order_by' => 6,
         'status' => 1
     ],

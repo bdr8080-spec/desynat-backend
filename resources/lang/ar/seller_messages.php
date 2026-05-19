@@ -1646,5 +1646,8 @@ return [
 'Return_Picked' => 'تم استلام المرتجع',
 'Return_Cancelled' => 'تم إلغاء الإرجاع',
 
+
+'First_Name_Arabic' => 'الاسم الأول بالعربية',
+
     
 ];

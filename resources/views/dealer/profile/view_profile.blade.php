@@ -306,11 +306,10 @@
                             <h6>
 
                                 @if($key==0)
-                                Front
+                                 {{ __('seller_messages.Front') }}
                                 @else
-                                Back
+                                 {{ __('seller_messages.Back') }}
                                 @endif
-
 
                             </h6>
                         </div>
@@ -347,9 +346,9 @@
                         <div class="text-center mt-2">
                             <h6>
                                 @if($key==0)
-                                Front
+                                 {{ __('seller_messages.Front') }}
                                 @else
-                                Back
+                                 {{ __('seller_messages.Back') }}
                                 @endif
 
                             </h6>
