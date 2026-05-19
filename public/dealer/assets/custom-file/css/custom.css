@@ -245,6 +245,7 @@
     border: 1px solid #ac875e;
     border-radius: 10px;
     overflow: hidden;
+    padding: 0px;
 }
 
 .tabs-panel .nav-link {
@@ -1449,7 +1450,7 @@ table.dataTable td.dt-type-date {
 
 }
 [dir="rtl"] .form-select {
-    background: none;
+    background-position: left .75rem center;
 }
 
 [dir="rtl"] .asideicon {
@@ -1458,6 +1459,53 @@ table.dataTable td.dt-type-date {
 [dir="rtl"] .common-title img {
     transform: rotate(180deg);
 }
+
+[dir="rtl"] .float-end {
+    float: left !important;
+}
+
+[dir="rtl"] .title24 .bi-chevron-left::before {
+    content: "\f284";
+    transform: rotate(180deg);
+}
+[dir="rtl"] .btn-close {
+    margin: initial !important;
+}
+[dir="rtl"] .modal-header {
+    justify-content: space-between;
+    display: flex;
+    width: 100%;
+}
+.btn-close {
+    background-size: 50%;
+    opacity: 1;
+}
+[dir="rtl"] .search-icon2 {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+[dir="rtl"] .toggle-password {
+    left: 15px;
+    top: 46%;
+    right: inherit;
+}
+[dir="rtl"] .accordion-button::after {
+    margin-right: auto;
+    margin-left: inherit;
+}
+
+[dir="rtl"] .offcanvas-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+[dir="rtl"] .gpsmap1 {
+    left: 0;
+    right: inherit;
+    transform: translate(10px, 17px);
+}
+
 
 /* [dir="rtl"] .sidebar {
     right: 0;
