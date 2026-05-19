@@ -114,4 +114,38 @@ $(document).ready(function() {
 
 });
 
+
+// search Box Code 
+
+    $(document).ready(function() {
+
+        let dataTables = {};
+
+        $('.tableSearch').each(function() {
+
+            let tableId = $(this).data('table');
+
+            // Initialize table only once
+            if (!$.fn.DataTable.isDataTable('#' + tableId)) {
+                dataTables[tableId] = $('#' + tableId).DataTable({
+                    paging: false,
+                    ordering: true,
+                    info: false,
+                    searching: true
+                });
+            } else {
+                dataTables[tableId] = $('#' + tableId).DataTable();
+            }
+        });
+
+        // Search handler
+        $('.tableSearch').on('keyup', function() {
+            let tableId = $(this).data('table');
+            let value = $(this).val();
+
+            dataTables[tableId].search(value).draw();
+        });
+
+    });
+
 </script>
