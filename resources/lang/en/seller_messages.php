@@ -1648,9 +1648,31 @@ return [
 'Done' => 'Done',
 'Password_Reset_Successfully' => 'Password Reset Successfully !',
 
-
 "Edit_Product"=>"Edit Product",
 
 
+'Details' => 'Details',
+'Starts_From' => 'Starts From',
+'Duration' => 'Duration',
+'Category' => 'Category',
+'Discount' => 'Discount%',
+'Sub_Category' => 'Sub-Category',
+'Select_Product' => 'Select Product',
+'Search' => 'Search',
+'Add' => 'Add',
+'S_No' => 'S.No',
+'Banner_Image' => 'Banner Image',
+'Name' => 'Name',
+'Brand' => 'Brand',
+'Rating' => 'Rating',
+'Price' => 'Price',
+'Add_to_Deals' => 'Add to Deals',
+'Products_Added_Successfully' => 'Products Added Successfully!',
+
+"Products_Remove_Successfully"=>"Products Remove Successfully",
+
+"Please_select_at_least_one_product"=>"Please select at least one product.",
+
+"Total_Revenue"=>"Total Revenue",
     
 ];
