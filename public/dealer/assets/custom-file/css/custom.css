@@ -1505,12 +1505,27 @@ table.dataTable td.dt-type-date {
     right: inherit;
     transform: translate(10px, 17px);
 }
-
-
-/* [dir="rtl"] .sidebar {
-    right: 0;
+[dir="rtl"] .ms-auto {
+    margin-right: auto !important;
+    margin-left: initial !important;
 }
+
+
+
+[dir="rtl"] .sidebar {
+    position: fixed;
+    top: 50px;
+    right: 0;
+    left: initial;
+}
+
 [dir="rtl"] #main, #footer {
-    margin-left: 0px;
     margin-right: 300px;
-} */
+    margin-left: inherit;
+}
+[dir="rtl"] .toggle-sidebar .sidebar {
+    right: -300px !important;
+}
+[dir="rtl"] .toggle-sidebar #main, .toggle-sidebar #footer {
+    margin-right: 0 !important;
+}
