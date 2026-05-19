@@ -286,7 +286,16 @@ class UserManagementService
     {
         try {
 
-            if(isset($request->category_id)){
+            if(isset($request->subcategory) ){
+
+                $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
+                 ->where('category_id', $request->category_id)
+                 ->where('subcategory_id', $request->subcategory)
+                 
+                 ->pluck('store_id');
+        
+
+            }elseif(isset($request->category_id)){
                       $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
                  ->where('category_id', $request->category_id)->pluck('store_id');
             }else{
@@ -497,8 +506,15 @@ class UserManagementService
 
             if (!empty($data->rating)) {
 
-                $products->withAvg('review', 'product_rating')
-                    ->havingRaw('COALESCE(review_avg_product_rating, 0) <= ?', [$data->rating]);
+                $products->where(function ($q) use ($data) {
+
+                    $q->whereHas('review', function ($query) use ($data) {
+
+                        $query->where('product_rating', '<=', $data->rating);
+
+                    })
+                    ->orWhereDoesntHave('review');
+                });
             }
 
             //delivery time

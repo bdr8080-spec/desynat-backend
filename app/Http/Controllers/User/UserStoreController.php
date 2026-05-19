@@ -45,6 +45,7 @@ class UserStoreController extends Controller
         'availbility'=>$request->availability,
         'sort'=>$request->sort,
        ];
+
               
 
        $store_data=$this->UserManagementService->getStoreWithCatgory($request_data);

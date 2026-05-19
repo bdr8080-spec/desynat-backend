@@ -566,6 +566,10 @@ return [
     'amount_paid' => 'Amount Paid',
     'banner_request_blocked_successfully' => 'Banner request blocked successfully',
     'banner_request_unblocked_successfully' => 'Banner request unblocked successfully',
+    'days' => 'Days',
+    'reject_banner_request' => 'Reject Banner Request',
+    'reason_for_rejection' => 'Reason for Rejection',
+    'please_enter_reason' => 'Please enter reason',
 
     //live request & timeslot management
     'live_request_timeslot' => 'Live Request Timeslot',
@@ -586,6 +590,17 @@ return [
     'PM' => 'PM',
     'please_select_to_date' => 'Please select to date',
     'please_select_from_date' => 'Please select from date',
+    'please_select_from_hour' => 'Please select from hour',
+    'please_select_from_minute' => 'Please select from minute',
+    'please_select_from_am_pm' => 'Please select from AM/PM',
+    'please_select_to_hour' => 'Please select to hour',
+    'please_select_to_minute' => 'Please select to minute',
+    'please_select_to_am_pm' => 'Please select to AM/PM',
+    'please_select_a_date' => 'Please select a date',
+    'to_time_should_be_greater_than_from_time' => 'To time should be greater than From time',
+    'please_select_time_for' => 'Please select :field time',
+    'please_select_time' => 'Please select :prefix time',
+    'please_enter_reject_reason' => 'Please enter reject reason',
 
     //story management
     'seller_stories' => 'Seller Stories',
@@ -595,6 +610,12 @@ return [
     'upload_image_or_video' => 'Upload Image or Video',
     'please_select_an_image_or_video' => 'Please select an image or video',
     'add_new_story' => 'Add New Story',
+    'file_must_be_image_or_video' => 'File must be an image or video',
+    'uploading' => 'Uploading...',
+    'invalid_file_type' => 'Invalid file type',
+    'video_size_limit' => "You can't upload video of more than 20 MB",
+    'image_size_limit' => "You can't upload image of more than 20 MB",
+    'story_added_successfully' => 'Story Added Successfully',
 
     //deal management
     'add_deals' => 'Add Deals',

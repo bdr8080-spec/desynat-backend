@@ -94,7 +94,7 @@ class StoryController extends Controller
         if (!in_array($file->getClientOriginalExtension(), $allowedExtensions)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid file type'
+                'message' => __('admin_messages.invalid_file_type'),
             ], 422);
         }
 
@@ -105,13 +105,13 @@ class StoryController extends Controller
             if (str_starts_with($file->getMimeType(), 'video')) {
                 return response()->json([
                     'success' => false,
-                    'message' => "You can't upload video of more than 20 MB"
+                    'message' => __('admin_messages.video_size_limit'),
                 ], 422);
             }
 
             return response()->json([
                 'success' => false,
-                'message' => "You can't upload image of more than 20 MB"
+                'message' => __('admin_messages.image_size_limit'),
             ], 422);
         }
 
@@ -133,7 +133,7 @@ class StoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Story Added Successfully!'
+            'message' => __('admin_messages.story_added_successfully'),
         ]);
     }
 

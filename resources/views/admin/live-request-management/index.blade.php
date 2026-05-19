@@ -12,7 +12,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Live Request & Timeslot Management</h2>
+            <h2 class="h2">{{ __('admin_messages.live_request_timeslot_management') }}</h2>
         </div>
     </div>
     <div class="d-flex justify-content-center">
@@ -21,14 +21,14 @@
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="true">
-                    Live Request Timeslot
+                    {{ __('admin_messages.live_request_timeslot') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="true">
-                    Live Requests
+                    {{ __('admin_messages.live_request') }}
                 </button>
             </li>
         </ul>
@@ -47,11 +47,15 @@
                                     <div class="form-group mb-5 w-100">
                                         <select name="country_id" class="form-select form-select-lg w-50"
                                             onchange="document.getElementById('filterForm').submit();">
-                                            <option value="">Select country</option>
+                                            <option value="">{{ __('admin_messages.select_country') }}</option>
                                             @foreach($countries as $country)
                                             <option value="{{ $country['id'] }}"
                                                 {{ request('country_id') == $country['id'] ? 'selected' : '' }}>
+                                                @if(app()->getLocale() == 'en')
                                                 {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
                                             </option>
                                             @endforeach
                                         </select>
@@ -66,7 +70,7 @@
 
                                     <a class="btn btn-dark customBtn " style="margin-top: 60px" data-bs-toggle="modal"
                                         data-bs-target="#sentModal3">
-                                        <span>Add Timeslot</span>
+                                        <span>{{ __('admin_messages.add_timeslot') }}</span>
                                     </a>
                                 </div>
                                 @endif
@@ -125,7 +129,7 @@
                                         </div>
                                         @empty
                                         <tr>
-                                            <span class="text-center">No Timeslot Added</span>
+                                            <span class="text-center">{{ __('admin_messages.no_timeslot_added') }}</span>
                                         </tr>
                                         @endforelse
                                     </div>
@@ -145,14 +149,14 @@
                                 <button class="nav-link customBtn2 m-0" id="pills-new-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-new" type="button" role="tab" aria-controls="pills-new"
                                     aria-selected="true">
-                                    New Requests
+                                    {{ __('admin_messages.new') }}
                                 </button>
                             </li>
                             <li class="nav-item m-1" role="presentation">
                                 <button class="nav-link  active customBtn2 m-0" id="pills-approved-tab"
                                     data-bs-toggle="pill" data-bs-target="#pills-approved" type="button" role="tab"
                                     aria-controls="pills-approved" aria-selected="true">
-                                    Approved
+                                    {{ __('admin_messages.approved') }}
                                 </button>
                             </li>
 
@@ -160,7 +164,7 @@
                                 <button class="nav-link  customBtn2 m-0" id="pills-reject-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-reject" type="button" role="tab" aria-controls="pills-reject"
                                     aria-selected="false">
-                                    Rejected
+                                    {{ __('admin_messages.rejected') }}
                                 </button>
                             </li>
                         </ul>
@@ -194,11 +198,15 @@
                                                 <select name="country_name" id="country_name"
                                                     class="form-select form-select-lg"
                                                     onchange="document.getElementById('filterForm').submit();">
-                                                    <option value="">Select country</option>
+                                                    <option value="">{{ __('admin_messages.select_country') }}</option>
                                                     @foreach($countries as $country)
                                                         <option value="{{ $country['name'] }}"
                                                             {{ request('type') == 'new' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                                            @if(app()->getLocale() == 'en')
                                                             {{ $country['name'] }}
+                                                            @else
+                                                            {{ $country['name_ar'] }}
+                                                            @endif
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -212,14 +220,14 @@
                                     <table id="myTable" class="table w-100">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Sr.No</th>
-                                                <th scope="col">Request ID</th>
-                                                <th scope="col">Seller Name</th>
-                                                <th scope="col">Seller Country</th>
-                                                <th scope="col">Request On</th>
-                                                <th scope="col">Live Date & Time</th>
+                                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                                <th scope="col">{{ __('admin_messages.request_id') }}</th>
+                                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                                <th scope="col">{{ __('admin_messages.seller_country') }}</th>
+                                                <th scope="col">{{ __('admin_messages.request_on') }}</th>
+                                                <th scope="col">{{ __('admin_messages.live_date_&_time') }}</th>
                                                 @if(in_array(18, $permissions) || $admin->type == 1)
-                                                <th scope="col">Action</th>
+                                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                                 @endif
                                             </tr>
                                         </thead>
@@ -229,7 +237,13 @@
                                                 <th scope="row">{{ $index + 1 }}</th>
                                                 <td>#{{ $data['order_id'] }}</td>
                                                 <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['last_name'] }}</td>
-                                                <td>{{ $data['seller_details']['store_info']['country_info']['name']??'N/A' }}</td>
+                                                <td>
+                                                    @if(app()->getLocale() == 'en')
+                                                    {{ $data['seller_details']['store_info']['country_info']['name']??__('admin_messages.na') }}
+                                                    @else
+                                                    {{ $data['seller_details']['store_info']['country_info']['name_ar']??__('admin_messages.na') }}
+                                                    @endif
+                                                </td>
                                                 <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}</td>
                                                 @if(in_array(18, $permissions) || $admin->type == 1)
@@ -285,11 +299,15 @@
                                                 <select name="country_name" id="country_name"
                                                     class="form-select form-select-lg"
                                                     onchange="document.getElementById('filterForm1').submit();">
-                                                    <option value="">Select country</option>
+                                                    <option value="">{{ __('admin_messages.select_country') }}</option>
                                                     @foreach($countries as $country)
                                                         <option value="{{ $country['name'] }}"
                                                             {{ request('type') == 'approved' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                                            @if(app()->getLocale() == 'en')
                                                             {{ $country['name'] }}
+                                                            @else
+                                                            {{ $country['name_ar'] }}
+                                                            @endif
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -303,12 +321,12 @@
                                     <table id="myTable1" class="table w-100">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Sr.No</th>
-                                                <th scope="col">Request ID</th>
-                                                <th scope="col">Seller Name</th>
-                                                <th scope="col">Seller Country</th>
-                                                <th scope="col">Request On</th>
-                                                <th scope="col">Live Date & Time</th>
+                                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                                <th scope="col">{{ __('admin_messages.request_id') }}</th>
+                                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                                <th scope="col">{{ __('admin_messages.seller_country') }}</th>
+                                                <th scope="col">{{ __('admin_messages.request_on') }}</th>
+                                                <th scope="col">{{ __('admin_messages.live_date_&_time') }}</th>
                                             </tr>
                                         </thead>
 
@@ -318,7 +336,13 @@
                                                 <th scope="row">{{ $index + 1 }}</th>
                                                 <td>#{{ $data['order_id'] }}</td>
                                                 <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['last_name'] }}</td>
-                                                <td>{{ $data['seller_details']['store_info']['country_info']['name']??'N/A' }}</td>
+                                                <td>
+                                                    @if(app()->getLocale() == 'en')
+                                                    {{ $data['seller_details']['store_info']['country_info']['name']??__('admin_messages.na') }}
+                                                    @else
+                                                    {{ $data['seller_details']['store_info']['country_info']['name_ar']??__('admin_messages.na') }}
+                                                    @endif
+                                                </td>
                                                 <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}</td>
                                             </tr>
@@ -357,11 +381,15 @@
                                                 <select name="country_name" id="country_name"
                                                     class="form-select form-select-lg"
                                                     onchange="document.getElementById('filterForm2').submit();">
-                                                    <option value="">Select country</option>
+                                                    <option value="">{{ __('admin_messages.select_country') }}</option>
                                                     @foreach($countries as $country)
                                                         <option value="{{ $country['name'] }}"
                                                             {{ request('type') == 'reject' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                                            @if(app()->getLocale() == 'en')
                                                             {{ $country['name'] }}
+                                                            @else
+                                                            {{ $country['name_ar'] }}
+                                                            @endif
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -375,13 +403,13 @@
                                     <table id="myTable2" class="table w-100">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Sr.No</th>
-                                                <th scope="col">Request ID</th>
-                                                <th scope="col">Seller Name</th>
-                                                <th scope="col">Seller Country</th>
-                                                <th scope="col">Request On</th>
-                                                <th scope="col">Live Date & Time</th>
-                                                <th scope="col">Rejection Reason</th>
+                                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                                <th scope="col">{{ __('admin_messages.request_id') }}</th>
+                                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                                <th scope="col">{{ __('admin_messages.seller_country') }}</th>
+                                                <th scope="col">{{ __('admin_messages.request_on') }}</th>
+                                                <th scope="col">{{ __('admin_messages.live_date_&_time') }}</th>
+                                                <th scope="col">{{ __('admin_messages.reason') }}</th>
                                             </tr>
                                         </thead>
 
@@ -391,7 +419,13 @@
                                                 <th scope="row">{{ $index + 1 }}</th>
                                                 <td>#{{ $data['order_id'] }}</td>
                                                 <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['last_name'] }}</td>
-                                                <td>{{ $data['seller_details']['store_info']['country_info']['name']??'N/A' }}</td>
+                                                <td>
+                                                    @if(app()->getLocale() == 'en')
+                                                    {{ $data['seller_details']['store_info']['country_info']['name']??__('admin_messages.na') }}
+                                                    @else
+                                                    {{ $data['seller_details']['store_info']['country_info']['name_ar']??__('admin_messages.na') }}
+                                                    @endif
+                                                </td>
                                                 <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}</td>
                                                 <td>{{ $data['reject_reason'] }}</td>
@@ -418,7 +452,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Reason</h2>
+                <h2 class="h2">{{ __('admin_messages.reason') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -427,7 +461,7 @@
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="exampleFormControlInput1" class="form-label">Reason For Rejection
+                                    <label for="exampleFormControlInput1" class="form-label">{{ __('admin_messages.reason_for_rejection') }}
                                     </label>
                                     <textarea class="form-control" id="rejectReason" rows="3"></textarea>
                                 </div>
@@ -437,7 +471,7 @@
                         <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
                             <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
                                 style="margin-top: 30px">
-                                <a class="btn btn-dark customBtn" href=""> Submit</a>
+                                <a class="btn btn-dark customBtn" href=""> {{ __('admin_messages.submit') }}</a>
                             </div>
                         </div>
                     </div>
@@ -452,7 +486,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add Timeslot</h2>
+                <h2 class="h2">{{ __('admin_messages.add_timeslot') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -461,21 +495,21 @@
                         <div id="timeContainer">
                             <div class="time-row">
                                 <div class="time-block from-block flex-wrap">
-                                    <label>From</label>
+                                    <label>{{ __('admin_messages.from') }}</label>
                                     <div class="d-flex gap-2">
-                                    <select class="hh form-select" data-error="Please select From Hour"><option value="">HH</option></select>
-                                    <select class="mm form-select" data-error="Please select From Minute"><option value="">MM</option></select>
-                                    <select class="ap form-select" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
+                                    <select class="hh form-select" data-error="{{ __('admin_messages.please_select_from_hour') }}"><option value="">{{ __('admin_messages.hh') }}</option></select>
+                                    <select class="mm form-select" data-error="{{ __('admin_messages.please_select_from_minute') }}"><option value="">{{ __('admin_messages.mm') }}</option></select>
+                                    <select class="ap form-select" data-error="{{ __('admin_messages.please_select_from_am_pm') }}"><option value="">{{ __('admin_messages.AM') }}/{{ __('admin_messages.PM') }}</option></select>
                                     </div>
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
 
                                 <div class="time-block to-block flex-wrap">
-                                    <label>To</label>
+                                    <label>{{ __('admin_messages.to') }}</label>
                                      <div class="d-flex gap-2">
-                                    <select class="hh form-select" data-error="Please select To Hour"><option value="">HH</option></select>
-                                    <select class="mm form-select" data-error="Please select To Minute"><option value="">MM</option></select>
-                                    <select class="ap form-select" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
+                                    <select class="hh form-select" data-error="{{ __('admin_messages.please_select_to_hour') }}"><option value="">{{ __('admin_messages.hh') }}</option></select>
+                                    <select class="mm form-select" data-error="{{ __('admin_messages.please_select_to_minute') }}"><option value="">{{ __('admin_messages.mm') }}</option></select>
+                                    <select class="ap form-select" data-error="{{ __('admin_messages.please_select_to_am_pm') }}"><option value="">{{ __('admin_messages.AM') }}/{{ __('admin_messages.PM') }}</option></select>
                                     </div>
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
@@ -484,7 +518,7 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
                         <div class="d-flex align-items-center justify-content-center gap-3 mt-3" style="margin-top: 30px">
-                            <button type="submit" class="btn btn-dark customBtn">Submit</button>
+                            <button type="submit" class="btn btn-dark customBtn">{{ __('admin_messages.submit') }}</button>
                         </div>
                     </div>
                 </div>
@@ -498,7 +532,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Edit Timeslot</h2>
+                <h2 class="h2">{{ __('admin_messages.edit_timeslot') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -507,18 +541,18 @@
                         <div id="editTimeContainer">
                             <div class="time-row">
                                 <div class="time-block from-block">
-                                    <label>From</label>
-                                    <select class="hh form-select" data-error="Please select From Hour"><option value="">HH</option></select>
-                                    <select class="mm form-select" data-error="Please select From Minute"><option value="">MM</option></select>
-                                    <select class="ap form-select" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
+                                    <label>{{ __('admin_messages.from') }}</label>
+                                    <select class="hh form-select" data-error="{{ __('admin_messages.please_select_from_hour') }}"><option value="">{{ __('admin_messages.hh') }}</option></select>
+                                    <select class="mm form-select" data-error="{{ __('admin_messages.please_select_from_minute') }}"><option value="">{{ __('admin_messages.mm') }}</option></select>
+                                    <select class="ap form-select" data-error="{{ __('admin_messages.please_select_from_am_pm') }}"><option value="">{{ __('admin_messages.AM') }}/{{ __('admin_messages.PM') }}</option></select>
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
                                 
                                 <div class="time-block to-block">
-                                    <label>To</label>
-                                    <select class="hh form-select" data-error="Please select To Hour"><option value="">HH</option></select>
-                                    <select class="mm form-select" data-error="Please select To Minute"><option value="">MM</option></select>
-                                    <select class="ap form-select" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
+                                    <label>{{ __('admin_messages.to') }}</label>
+                                    <select class="hh form-select" data-error="{{ __('admin_messages.please_select_to_hour') }}"><option value="">{{ __('admin_messages.hh') }}</option></select>
+                                    <select class="mm form-select" data-error="{{ __('admin_messages.please_select_to_minute') }}"><option value="">{{ __('admin_messages.mm') }}</option></select>
+                                    <select class="ap form-select" data-error="{{ __('admin_messages.please_select_to_am_pm') }}"><option value="">{{ __('admin_messages.AM') }}/{{ __('admin_messages.PM') }}</option></select>
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
                                 
@@ -527,7 +561,7 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
                         <div class="d-flex align-items-center justify-content-center gap-3 mt-3" style="margin-top: 30px">
-                            <button type="submit" class="btn btn-dark customBtn" id="editTimeslotSubmit">Update</button>
+                            <button type="submit" class="btn btn-dark customBtn" id="editTimeslotSubmit">{{ __('admin_messages.update') }}</button>
                         </div>
                     </div>
                 </div>
@@ -643,13 +677,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let id = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteTimeslot/${id}`, {
@@ -742,7 +777,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const aps = row.querySelectorAll("select.ap");
 
         hhs.forEach(select => {
-            select.innerHTML = '<option value="">HH</option>';
+            select.innerHTML = '<option value="">{{ __("admin_messages.hh") }}</option>';
             for(let i=1;i<=12;i++){
                 const val = i.toString().padStart(2,'0');
                 select.innerHTML += `<option value="${val}">${val}</option>`;
@@ -750,7 +785,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         mms.forEach(select => {
-            select.innerHTML = '<option value="">MM</option>';
+            select.innerHTML = '<option value="">{{ __("admin_messages.mm") }}</option>';
             for(let i=0;i<=59;i++){
                 const val = i.toString().padStart(2,'0');
                 select.innerHTML += `<option value="${val}">${val}</option>`;
@@ -758,7 +793,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         aps.forEach(select => {
-            select.innerHTML = '<option value="AM">AM</option><option value="PM">PM</option>';
+            select.innerHTML =
+            '<option value="AM">{{ __("admin_messages.AM") }}</option>' +
+            '<option value="PM">{{ __("admin_messages.PM") }}</option>';
         });
     }
 
@@ -793,7 +830,12 @@ document.addEventListener("DOMContentLoaded", function() {
             if(errorEl) errorEl.innerText = '';
 
             if(!hh || !mm || !ap){
-                if(errorEl) errorEl.innerText = `Please select ${block.querySelector('label').innerText} time`;
+                if (errorEl) {
+                    const label = block.querySelector('label')?.innerText || '';
+
+                    errorEl.innerText = "{{ __('admin_messages.please_select_time_for') }}"
+                        .replace(':field', label);
+                }
                 valid = false;
             }
         });
@@ -814,12 +856,12 @@ document.addEventListener("DOMContentLoaded", function() {
         if(!validateRow(row)) return;
 
         if(!countryId){
-            toastr.error('Please select a country');
+            toastr.error("{{ __('admin_messages.please_select_a_country') }}");
             return;
         }
 
         if(!date){
-            toastr.error('Please select a date');
+            toastr.error("{{ __('admin_messages.please_select_a_date') }}");
             return;
         }
 
@@ -835,7 +877,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const toTotal = timeToMinutes(toHH, toMM, toAP);
 
         if(toTotal <= fromTotal){
-            toastr.error('To time should be greater than From time');
+            toastr.error("{{ __('admin_messages.to_time_should_be_greater_than_from_time') }}");
             return;
         }
 
@@ -890,7 +932,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Populate HH, MM, AP selects
     function populateDropdowns(container) {
         container.querySelectorAll("select.hh").forEach(select => {
-            select.innerHTML = '<option value="">HH</option>';
+            select.innerHTML = '<option value="">{{ __("admin_messages.hh") }}</option>';
             for(let i=1;i<=12;i++){
                 const val = i.toString().padStart(2,'0');
                 select.innerHTML += `<option value="${val}">${val}</option>`;
@@ -898,7 +940,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         container.querySelectorAll("select.mm").forEach(select => {
-            select.innerHTML = '<option value="">MM</option>';
+            select.innerHTML = '<option value="">{{ __("admin_messages.mm") }}</option>';
             for(let i=0;i<=59;i++){
                 const val = i.toString().padStart(2,'0');
                 select.innerHTML += `<option value="${val}">${val}</option>`;
@@ -906,7 +948,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         container.querySelectorAll("select.ap").forEach(select => {
-            select.innerHTML = '<option value="AM">AM</option><option value="PM">PM</option>';
+            select.innerHTML =
+            '<option value="AM">{{ __("admin_messages.AM") }}</option>' +
+            '<option value="PM">{{ __("admin_messages.PM") }}</option>';
         });
     }
 
@@ -920,7 +964,9 @@ document.addEventListener("DOMContentLoaded", function() {
         if(errorEl) errorEl.innerText = '';
 
         if(!hh || !mm || !ap){
-            if(errorEl) errorEl.innerText = `Please select ${prefix} time`;
+            if (errorEl) {
+                errorEl.innerText = `{{ __('admin_messages.please_select_time') }}`.replace(':prefix', prefix);
+            }
             return false;
         }
         return true;
@@ -991,11 +1037,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const date = urlParams.get('date');
 
         if(!countryId){
-            toastr.error('Please select a country');
+            toastr.error("{{ __('admin_messages.please_select_a_country') }}");
             return;
         }
         if(!date){
-            toastr.error('Please select a date');
+            toastr.error("{{ __('admin_messages.please_select_a_date') }}");
             return;
         }
 
@@ -1023,7 +1069,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const toTotal = timeTo24Hour(toHour, toMinute, toAP);
 
         if(toTotal <= fromTotal){
-            toastr.error('To time should be greater than From time');
+           toastr.error("{{ __('admin_messages.to_time_should_be_greater_than_from_time') }}");
             return;
         }
 
@@ -1141,7 +1187,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const reason = reasonInput.value.trim();
 
         if(!reason){
-            showError('Please Enter Reject Reason');
+            showError("{{ __('admin_messages.please_enter_reject_reason') }}");
             return;
         }
 
@@ -1234,74 +1280,154 @@ function removeRow(el) {
 }
 </script> -->
 <script>
+// document.addEventListener("DOMContentLoaded", function() {
+//     const url = new URL(window.location);
+//     const urlParams = url.searchParams;
+ 
+//     let reloadNeeded = false;
+ 
+//     if (!urlParams.has('country_id')) {
+//         urlParams.set('country_id', 1);
+//         reloadNeeded = true;
+//     }
+ 
+//     if (!urlParams.has('date')) {
+//         const today = new Date().toISOString().split('T')[0];
+//         urlParams.set('date', today);
+//         reloadNeeded = true;
+//     }
+ 
+//     if (reloadNeeded) {
+//         window.location.replace(url.toString());
+//         return;
+//     }
+ 
+//     const selectedDate = urlParams.get('date');
+//     const calendarEl = document.getElementById("calendar");
+ 
+//     const calendar = new FullCalendar.Calendar(calendarEl, {
+//         initialView: "dayGridMonth",
+//         selectable: true,
+//         height: "auto",
+//         initialDate: selectedDate,
+ 
+//         headerToolbar: {
+//             left: 'prev',
+//             center: 'title',
+//             right: 'next'
+//         },
+ 
+//         showNonCurrentDates: false,
+//         fixedWeekCount: false,  
+ 
+//         dateClick: function(info) {
+//             reloadWithDate(info.dateStr);
+//         }
+//     });
+ 
+//     calendar.render();
+//     calendar.select(selectedDate);
+//     showSelectedDate(selectedDate);
+// });
+ 
+// function showSelectedDate(dateStr) {
+//     const date = new Date(dateStr);
+//     const options = { day: 'numeric', month: 'long', year: 'numeric' };
+ 
+//     document.getElementById("selectedDateText").innerText =
+//         `Today, ${date.toLocaleDateString('en-GB', options)}`;
+ 
+//     document.getElementById("timeslotSection").style.display = "block";
+// }
+ 
+// function reloadWithDate(dateStr) {
+//     const url = new URL(window.location);
+//     url.searchParams.set('date', dateStr);
+ 
+//     if (!url.searchParams.has('country_id')) {
+//         url.searchParams.set('country_id', 1);
+//     }
+ 
+//     window.location.href = url.toString();
+// }
+
 document.addEventListener("DOMContentLoaded", function() {
+    const locale = "{{ app()->getLocale() }}";
+
     const url = new URL(window.location);
     const urlParams = url.searchParams;
- 
+
     let reloadNeeded = false;
- 
+
     if (!urlParams.has('country_id')) {
         urlParams.set('country_id', 1);
         reloadNeeded = true;
     }
- 
+
     if (!urlParams.has('date')) {
         const today = new Date().toISOString().split('T')[0];
         urlParams.set('date', today);
         reloadNeeded = true;
     }
- 
+
     if (reloadNeeded) {
         window.location.replace(url.toString());
         return;
     }
- 
+
     const selectedDate = urlParams.get('date');
     const calendarEl = document.getElementById("calendar");
- 
+
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
         selectable: true,
         height: "auto",
         initialDate: selectedDate,
- 
+
+        // ✅ IMPORTANT: locale switch
+        locale: locale,
+
         headerToolbar: {
             left: 'prev',
             center: 'title',
             right: 'next'
         },
- 
+
         showNonCurrentDates: false,
-        fixedWeekCount: false,  
- 
+        fixedWeekCount: false,
+
         dateClick: function(info) {
             reloadWithDate(info.dateStr);
         }
     });
- 
+
     calendar.render();
     calendar.select(selectedDate);
-    showSelectedDate(selectedDate);
+    showSelectedDate(selectedDate, locale);
 });
- 
-function showSelectedDate(dateStr) {
+
+function showSelectedDate(dateStr, locale) {
     const date = new Date(dateStr);
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
- 
+
+    const formattedDate = date.toLocaleDateString(locale === 'ar' ? 'ar-EG' : 'en-GB', options);
+
     document.getElementById("selectedDateText").innerText =
-        `Today, ${date.toLocaleDateString('en-GB', options)}`;
- 
+        locale === 'ar'
+            ? `اليوم، ${formattedDate}`
+            : `Today, ${formattedDate}`;
+
     document.getElementById("timeslotSection").style.display = "block";
 }
- 
+
 function reloadWithDate(dateStr) {
     const url = new URL(window.location);
     url.searchParams.set('date', dateStr);
- 
+
     if (!url.searchParams.has('country_id')) {
         url.searchParams.set('country_id', 1);
     }
- 
+
     window.location.href = url.toString();
 }
 </script>

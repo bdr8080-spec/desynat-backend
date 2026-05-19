@@ -563,6 +563,10 @@ return [
     'amount_paid' => 'المبلغ المدفوع',
     'banner_request_blocked_successfully' => 'تم حظر طلب البانر بنجاح',
     'banner_request_unblocked_successfully' => 'تم إلغاء حظر طلب البانر بنجاح',
+    'days' => 'أيام',
+    'reject_banner_request' => 'رفض طلب البانر',
+    'reason_for_rejection' => 'سبب الرفض',
+    'please_enter_reason' => 'يرجى إدخال السبب',
 
     //live request & timeslot management
     'live_request_timeslot' => 'جدولة طلب البث المباشر',
@@ -583,6 +587,17 @@ return [
     'PM' => 'مساءً',
     'please_select_to_date' => 'يرجى اختيار تاريخ الانتهاء',
     'please_select_from_date' => 'يرجى اختيار تاريخ البداية',
+    'please_select_from_hour' => 'يرجى اختيار ساعة البداية',
+    'please_select_from_minute' => 'يرجى اختيار دقيقة البداية',
+    'please_select_from_am_pm' => 'يرجى اختيار صباحًا / مساءً للبداية',
+    'please_select_to_hour' => 'يرجى اختيار ساعة النهاية',
+    'please_select_to_minute' => 'يرجى اختيار دقيقة النهاية',
+    'please_select_to_am_pm' => 'يرجى اختيار صباحًا / مساءً للنهاية',
+    'please_select_a_date' => 'يرجى اختيار التاريخ',
+    'to_time_should_be_greater_than_from_time' => 'يجب أن يكون وقت الانتهاء أكبر من وقت البداية',
+    'please_select_time_for' => 'يرجى اختيار وقت :field',
+    'please_select_time' => 'يرجى اختيار وقت :prefix',
+    'please_enter_reject_reason' => 'يرجى إدخال سبب الرفض',
 
     //story management
     'seller_stories' => 'قصص البائعين',
@@ -592,6 +607,12 @@ return [
     'upload_image_or_video' => 'رفع صورة أو فيديو',
     'please_select_an_image_or_video' => 'يرجى اختيار صورة أو فيديو',
     'add_new_story' => 'إضافة قصة جديدة',
+    'file_must_be_image_or_video' => 'يجب أن يكون الملف صورة أو فيديو',
+    'uploading' => 'جارٍ الرفع...',
+    'invalid_file_type' => 'نوع الملف غير صالح',
+    'video_size_limit' => 'لا يمكنك رفع فيديو بحجم يزيد عن 20 ميجابايت',
+    'image_size_limit' => 'لا يمكنك رفع صورة بحجم يزيد عن 20 ميجابايت',
+    'story_added_successfully' => 'تمت إضافة القصة بنجاح',
 
     //deal management
     'add_deals' => 'إضافة العروض',
