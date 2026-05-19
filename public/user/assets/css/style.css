@@ -3512,3 +3512,8 @@ img.img-fluid.circle-image {
     padding: 10px 70px 10px 40px;
 }
 
+[dir="rtl"] .dropdown-menu-end[data-bs-popper] {
+    right: inherit;
+    left: 0px;
+}
+
