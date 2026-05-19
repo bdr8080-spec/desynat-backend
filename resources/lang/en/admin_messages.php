@@ -637,6 +637,13 @@ return [
     'after_discount_price' => 'After Discount Price',
     'deal_added_successfully' => 'Deal added successfully',
     'deal_updated_successfully' => 'Deal updated successfully',
+    'revenue_generated' => 'Revenue Generated',
+    'select_category' => 'Select Category',
+    'select_sub_category' => 'Select Sub Category',
+    'no_subcategories_found' => 'No subcategories found',
+    'error_fetching_subcategories' => 'Error fetching subcategories',
+    'please_select_a_category' => 'Please select a category',
+    'please_select_a_subcategory' => 'Please select a subcategory',
 
     //banner management
     'full_screen' => 'Full Screen',
