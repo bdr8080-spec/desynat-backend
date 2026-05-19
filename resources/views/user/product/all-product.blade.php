@@ -26,9 +26,9 @@
                         <div class="category_filter">
                             <div class="d-flex align-items-center justify-content-between">
                                 <h3>{{ __('user_messages.filters') }}</h3>
-                                <a href="{{route('user.store_details',[request()->id])}}">{{ __('user_messages.clear') }}</a>
+                                <a href="">Clear</a>
                             </div>
-                            <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
+                            <form action="{{ url('user/all-product/') }}" method="GET">
                                 <div class="form-group mt-4">
                                     <h5>{{ __('user_messages.category') }}</h5>
                                     @foreach ($category as $key => $item)
@@ -279,30 +279,62 @@
                                             </div>
 
                                             <div class="product-content">
-                                                <h5 class="black-title">{{ $item->product_name_en }}
+                                                <h5 class="black-title">
+                                                    @if(app()->getLocale() == 'en')
+                                                    {{ $item->product_name_en }}
+                                                    @else
+                                                    {{ $item->product_name_ar }}
+                                                    @endif
+
+                                                    ({{ "by " . $store_details['store']['store_name'] }})
                                                 </h5>
                                                 <div class="rating">
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star-half-stroke"></i>
-                                                    <span>(1K)</span>
+                                                    @php
+                                                        $rating = $item->average_rating ?? 0;
+                                                        $fullStars = floor($rating);
+                                                        $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                                        $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                                                    @endphp
+
+                                                    @if($rating > 0)
+
+                                                        @for($i = 0; $i < $fullStars; $i++)
+                                                            <i class="fa-solid fa-star"></i>
+                                                        @endfor
+
+                                                        @if($hasHalfStar)
+                                                            <i class="fa-solid fa-star-half-stroke"></i>
+                                                        @endif
+
+                                                        @for($i = 0; $i < $emptyStars; $i++)
+                                                            <i class="fa-regular fa-star"></i>
+                                                        @endfor
+
+                                                    @else
+
+                                                        @for($i = 0; $i < 5; $i++)
+                                                            <i class="fa-regular fa-star"></i>
+                                                        @endfor
+
+                                                    @endif
+
+                                                    <span>({{ $item->review->count() ?? 0 }})</span>
                                                 </div>
 
                                                  <div class="price">
-                                                        <strong>
-                                                        {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
-                                                        </strong>
+                                                    <strong>
+                                                    {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                                                    </strong>
 
-                                                        <span class="old-price">
-                                                        {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
-                                                        </span>
+                                                    <span class="old-price">
+                                                    {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                                                    </span>
 
-                                                        <span class="discount">
-                                                        {{ $item->product_variants[0]->discount_value }}
-                                                        {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
-                                                        </span>
-                                                    </div>
+                                                    <span class="discount">
+                                                    {{ $item->product_variants[0]->discount_value }}
+                                                    {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                                                    </span>
+                                                </div>
 
 
 
