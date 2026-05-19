@@ -12,6 +12,8 @@ return [
     'english' => 'إنجليزي',
     'please_select_a_color' => 'يرجى اختيار لون.',
     'please_select_a_size' => 'يرجى اختيار المقاس.',
+    'please_select_product_and_variant' => 'يرجى اختيار المنتج والمواصفة.',
+    'no_size_chart_available' => 'لا يوجد جدول مقاسات متاح.',
 
     //common
     'no_data_found' => 'لم يتم العثور على بيانات',

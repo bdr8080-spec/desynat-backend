@@ -12,6 +12,8 @@ return [
     'english' => 'English',
     'please_select_a_color' => 'Please select a color.',
     'please_select_a_size' => 'Please select a size.',
+    'please_select_product_and_variant' => 'Please select a product and variant.',
+    'no_size_chart_available' => 'No size chart available.',
 
     //common
     'no_data_found' => 'No data found',

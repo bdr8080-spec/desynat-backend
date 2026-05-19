@@ -1155,13 +1155,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const from = document.getElementById('editFromDate').value;
         const to = document.getElementById('editToDate').value;
 
-        if (!nameEnglish) { editNameEnError.innerText = 'Please enter name in English'; hasError = true; }
-        if (!nameArabic) { editNameArError.innerText = 'Please enter name in Arabic'; hasError = true; }
-        if (!categoryId) { editCategoryError.innerText = 'Please select a category'; hasError = true; }
-        if (!subCategoryIds.length) { editSubCategoryError.innerText = 'Please select at least one subcategory'; hasError = true; }
-        if (!discount) { editDiscountError.innerText = 'Please enter discount'; hasError = true; }
-        if (!from) { editFromDateError.innerText = 'Please select from date'; hasError = true; }
-        if (!to) { editToDateError.innerText = 'Please select to date'; hasError = true; }
+        if (!nameEnglish) { editNameEnError.innerText = "{{ __('admin_messages.please_enter_name_in_english') }}"; hasError = true; }
+        if (!nameArabic) { editNameArError.innerText = "{{ __('admin_messages.please_enter_name_in_arabic') }}"; hasError = true; }
+        if (!categoryId) { editCategoryError.innerText = "{{ __('admin_messages.please_select_a_category') }}"; hasError = true; }
+        if (!subCategoryIds.length) { editSubCategoryError.innerText = "{{ __('admin_messages.please_select_at_least_one_subcategory') }}"; hasError = true; }
+        if (!discount) { editDiscountError.innerText = "{{ __('admin_messages.please_enter_discount_percentage') }}"; hasError = true; }
+        if (!from) { editFromDateError.innerText = "{{ __('admin_messages.please_select_from_date') }}"; hasError = true; }
+        if (!to) { editToDateError.innerText = "{{ __('admin_messages.please_select_to_date') }}"; hasError = true; }
 
         if (hasError) return;
 
@@ -1214,13 +1214,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let dealId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteDeal/${dealId}`, {

@@ -597,7 +597,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let variant_id = document.getElementById("variantId").value;
 
         if (!product_id || !variant_id) {
-            toastr.error("Something went wrong. Please reselect options.");
+            //toastr.error("Something went wrong. Please reselect options.");
             return;
         }
 
@@ -947,13 +947,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (!selectedColor) {
             errorBox.style.display = "block";
-            errorBox.innerHTML = "Please Select a Color.";
+            errorBox.innerHTML = "{{ __('user_messages.please_select_a_color') }}";
             return;
         }
 
         if (!selectedSize) {
             errorBox.style.display = "block";
-            errorBox.innerHTML = "Please Select a Size.";
+            errorBox.innerHTML = "{{ __('user_messages.please_select_a_size') }}";
             return;
         }
 
@@ -1025,7 +1025,7 @@ document.addEventListener("DOMContentLoaded", function() {
             sizeChartBody.innerHTML =
                 `<img src="${sizeChartImage}" class="img-fluid" alt="Size Chart" style="max-width: 100%; height: 400px; object-fit: contain;">`;
         } else {
-            sizeChartBody.innerHTML = `<p class="text-center">No size chart available.</p>`;
+            sizeChartBody.innerHTML = `<p class="text-center">{{ __('user_messages.no_size_chart_available') }}</p>`;
         }
     });
 
@@ -1106,7 +1106,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         //  Validation
         if (!product_id || !variant_id) {
-            optionError.textContent = "Please select a product and variant.";
+            optionError.textContent = "{{ __('user_messages.please_select_product_and_variant') }}";
             optionError.style.display = 'block';
             return;
         }
@@ -1161,7 +1161,7 @@ document.addEventListener('click', function (e) {
 
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(link).then(function () {
-                toastr.success('Link copied to clipboard');
+                toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
             }).catch(function () {
                 fallbackCopy(link);
             });
@@ -1182,7 +1182,7 @@ function fallbackCopy(text) {
     document.execCommand("copy");
     document.body.removeChild(temp);
 
-    toastr.success('Link copied to clipboard');
+    toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
 }
 </script>
 

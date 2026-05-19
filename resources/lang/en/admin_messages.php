@@ -644,6 +644,10 @@ return [
     'error_fetching_subcategories' => 'Error fetching subcategories',
     'please_select_a_category' => 'Please select a category',
     'please_select_a_subcategory' => 'Please select a subcategory',
+    'number_of_products_added' => 'Number of Products Added',
+    'number_of_products_sold_till_date' => 'Number of Products Sold Till Date',
+    'products' => 'Products',
+    'select_brand' => 'Select Brand',
 
     //banner management
     'full_screen' => 'Full Screen',

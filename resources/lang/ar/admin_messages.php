@@ -641,6 +641,10 @@ return [
     'error_fetching_subcategories' => 'حدث خطأ أثناء جلب الفئات الفرعية',
     'please_select_a_category' => 'يرجى اختيار الفئة',
     'please_select_a_subcategory' => 'يرجى اختيار الفئة الفرعية',
+    'number_of_products_added' => 'عدد المنتجات المضافة',
+    'number_of_products_sold_till_date' => 'عدد المنتجات المباعة حتى الآن',
+    'products' => 'المنتجات',
+    'select_brand' => 'اختر العلامة التجارية',
 
     //banner management
     'full_screen' => 'ملء الشاشة',
@@ -664,6 +668,7 @@ return [
     'edit_advertisement' => 'تعديل الإعلان',
     'banner_deleted_successfully' => 'تم حذف البانر بنجاح',
     'promotional_banner_deleted_successfully' => 'تم حذف البانر الترويجي بنجاح',
+
 
     //product management
     'specification' => 'المواصفات',

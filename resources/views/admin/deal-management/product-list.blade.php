@@ -35,11 +35,15 @@
                         <select name="filter" id="filter"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select brand</option>
+                            <option value="">{{ __('admin_messages.select_brand') }}</option>
                             @foreach($brands as $brand)
                             <option value="{{ $brand['name_english'] }}"
                                 {{ request('filter') == $brand['name_english'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $brand['name_english'] }}
+                                @else
+                                {{ $brand['name_arabic'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -53,12 +57,12 @@
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
-                            <th scope="col">SR No.</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Products Name</th>
-                            <th scope="col">Brand</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">After Discount Price</th>
+                            <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                            <th scope="col">{{ __('admin_messages.image') }}</th>
+                            <th scope="col">{{ __('admin_messages.product_name') }}</th>
+                            <th scope="col">{{ __('admin_messages.brand') }}</th>
+                            <th scope="col">{{ __('admin_messages.price') }}</th>
+                            <th scope="col">{{ __('admin_messages.after_discount_price') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,13 +78,19 @@
                                         <th scope="row">{{ $sr++ }}</th>
                                         <td>
                                             <img src="{{ $variant->variant_image[0] }}" 
-                                                alt="{{ $productDetails->product_name_en ?? 'N/A' }}" 
+                                                alt="{{ $productDetails->product_name_en ??  __('admin_messages.na')  }}" 
                                                 width="40" height="40" class="square" />
                                         </td>
-                                        <td>{{ $productDetails->product_name_en ?? 'N/A' }}</td>
-                                        <td>{{ $brand->name_english ?? 'N/A' }}</td>
-                                        <td>{{ $variant->final_price ?? 0 }} KD</td>
-                                        <td>{{ $variant->deal_discount_price ?? 0 }} KD</td>
+                                        <td>
+                                            @if(app()->getLocale() == 'en')
+                                            {{ $productDetails->product_name_en ?? __('admin_messages.na') }}
+                                            @else
+                                            {{ $productDetails->product_name_ar ?? __('admin_messages.na') }}
+                                            @endif
+                                        </td>
+                                        <td>{{ $brand->name_english ?? __('admin_messages.na') }}</td>
+                                        <td>{{ $variant->final_price ?? 0 }} {{ __('admin_messages.kd') }}</td>
+                                        <td>{{ $variant->deal_discount_price ?? 0 }} {{ __('admin_messages.kd') }}</td>
                                     </tr>
                                 @endforeach
                             @endforeach

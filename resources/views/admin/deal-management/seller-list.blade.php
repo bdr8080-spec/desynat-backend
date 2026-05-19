@@ -16,7 +16,7 @@
             </div>
             
         </div>
-        <h2 class="h2 text-start"  style="font-size: 27px;margin-left: 13px;margin: 26px;">{{ $sellers->name_english }}</h2>
+        <h2 class="h2 text-start"  style="font-size: 27px;margin-left: 13px;margin: 26px;">@if(app()->getLocale() == 'en'){{ $sellers->name_english }}@else{{ $sellers->name_arabic }}@endif</h2>
 
     <div class="userManagecontent">
         <div class="mt-4">
@@ -27,11 +27,15 @@
                         <select name="country" id="country"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select country</option>
+                            <option value="">{{ __('admin_messages.select_country') }}</option>
                             @foreach($countries as $country)
                             <option value="{{ $country['name'] }}"
                                 {{ request('country') == $country['name'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $country['name'] }}
+                                @else
+                                {{ $country['name_ar'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -45,11 +49,11 @@
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
-                            <th scope="col">SR No.</th>
-                            <th scope="col">Seller Name</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">Number of Products Added</th>
-                            <th scope="col">Number of Products Sold Till Date</th>
+                            <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                            <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                            <th scope="col">{{ __('admin_messages.country') }}</th>
+                            <th scope="col">{{ __('admin_messages.number_of_products_added') }}</th>
+                            <th scope="col">{{ __('admin_messages.number_of_products_sold_till_date') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,13 +62,19 @@
                                 <tr>
                                     <th scope="row">{{ $index + 1 }}</th>
                                     <td>{{ $sellerRecord->seller_details->first_name ?? '' }} {{ $sellerRecord->seller_details->last_name ?? '' }}</td>
-                                    <td>{{ $sellerRecord->seller_details->country_details->name ?? 'N/A' }}</td>
+                                    <td>
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $sellerRecord->seller_details->country_details->name ?? __('admin_messages.na') }}
+                                        @else
+                                        {{ $sellerRecord->seller_details->country_details->name_ar ?? __('admin_messages.na') }}
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('admin.productList', [
                                                 'deal_id' => $sellerRecord->deal_id, 
                                                 'seller_id' => $sellerRecord->seller_id
                                             ]) }}" class="text">
-                                            {{ $sellerRecord->product_count ?? 0 }} products
+                                            {{ $sellerRecord->product_count ?? 0 }} {{ __('admin_messages.products') }}
                                         </a>
                                     </td>
                                     <td>0</td>
@@ -72,7 +82,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="5">No sellers found.</td>
+                                <td colspan="5">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                         @endif
 
