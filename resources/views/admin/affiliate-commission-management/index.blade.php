@@ -13,7 +13,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Affiliate Commission Management </h2>
+            <h2 class="h2">{{ __('admin_messages.affiliate_commission_management') }} </h2>
         </div>
     </div>
 
@@ -38,11 +38,11 @@
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
-                            <th scope="col">SR No.</th>
-                            <th scope="col">Country Name</th>
-                            <th scope="col">Commission Percentage</th>
+                            <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                            <th scope="col">{{ __('admin_messages.country') }}</th>
+                            <th scope="col">{{ __('admin_messages.commission_percentage') }}</th>
                             @if(in_array(16, $permissions) || $admin->type == 1)
-                            <th scope="col">Action</th>
+                            <th scope="col">{{ __('admin_messages.action') }}</th>
                             @endif
                         </tr>
                     </thead>
@@ -50,7 +50,13 @@
                         @forelse($commissionData as $index => $data)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td>{{ $data['name'] }}</td>
+                            <td>
+                                @if(app()->getLocale() == 'en')
+                                {{ $data['name'] }}
+                                @else
+                                {{ $data['name_ar'] }}
+                                @endif
+                            </td>
                             <td>
                                 {{ 
                                     floor($data['affiliate_commission_info']['commission']) == $data['affiliate_commission_info']['commission']
@@ -75,7 +81,7 @@
                         </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center">No data found</td>
+                                <td colspan="4" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -95,7 +101,7 @@
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
-                <h2 class="h2">Affiliate Commission Percentage</h2>
+                <h2 class="h2">{{ __('admin_messages.affiliate_commission_percentage') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="editCommissionForm">
@@ -104,8 +110,8 @@
                     <input type="hidden" id="editCommissionId" name="commission_id">
                     <div class="col-lg-12">
                         <div class="form-group w-100 m-auto">
-                            <label for="from" class="form-label">Set Commission</label>
-                            <input type="text" name="commission" id="commission" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+(\d)/,'$1').replace(/^0(\.|$)/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1');if(parseFloat(this.value)>100)this.value='100';" class="w-100" placeholder="Enter Commission" class="form-control"
+                            <label for="from" class="form-label">{{ __('admin_messages.set_commission') }}</label>
+                            <input type="text" name="commission" id="commission" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+(\d)/,'$1').replace(/^0(\.|$)/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1');if(parseFloat(this.value)>100)this.value='100';" class="w-100" placeholder="{{ __('admin_messages.enter_commission') }}" class="form-control"
                                 aria-describedby="passwordHelpInline" />
                                 <div id="editCommissionError" class="text-danger small" style="display:none;"></div>
                             <span style="
@@ -124,7 +130,7 @@
                             <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
                                 style="margin-top: 30px">
                                 <button type="submit" class="btn btn-dark customBtn">
-                                    Save
+                                    {{ __('admin_messages.save') }}
                                 </button>
                                 <!-- <button type="button" class="btn btn-dark customBtn" href=""> Submit</button> -->
                             </div>
@@ -180,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const commission_id = editCommissionIdInput.value;
 
         if (!commission) {
-            editCommissionError.innerText = "Please enter commission";
+            editCommissionError.innerText = "{{ __('admin_messages.please_enter_commission') }}";
             editCommissionError.style.display = "block";
             return;
         }

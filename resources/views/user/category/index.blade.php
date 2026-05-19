@@ -281,7 +281,7 @@
                                         class="form-check my-4 color-item {{ $key >= 10 ? 'd-none extra-color' : '' }}">
                                         <input class="form-check-input" type="checkbox" name="color_id[]"
                                             value="{{ $item->id }}" id="color{{ $item->id }}"
-                                            {{ request()->color_id == $item->id ? 'checked' : '' }}>
+                                            {{ is_array(request()->color_id) && in_array($item->id, request()->color_id) ? 'checked' : '' }}>
 
                                         <label class="form-check-label" for="color{{ $item->id }}">
                                             @if(app()->getLocale() == 'en')
