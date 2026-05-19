@@ -497,8 +497,15 @@ class UserManagementService
 
             if (!empty($data->rating)) {
 
-                $products->withAvg('review', 'product_rating')
-                    ->havingRaw('COALESCE(review_avg_product_rating, 0) <= ?', [$data->rating]);
+                $products->where(function ($q) use ($data) {
+
+                    $q->whereHas('review', function ($query) use ($data) {
+
+                        $query->where('product_rating', '<=', $data->rating);
+
+                    })
+                    ->orWhereDoesntHave('review');
+                });
             }
 
             //delivery time
