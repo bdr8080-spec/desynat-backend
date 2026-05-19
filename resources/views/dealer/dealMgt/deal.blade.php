@@ -83,14 +83,14 @@ $can_action=$menu_permission['can_action'];
                                 <input type="search"
                                     class="form-control @if(count($deal_record['listed_deal']) > 0) tableSearch @endif"
                                     placeholder="{{ __('seller_messages.search') }}"
-                                    data-table="table1">
+                                    data-table="datatable1">
 
                             </div>
                         </div>
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered datatable" id="table1">
+                        <table class="table table-bordered datatable" id="datatable1">
 
                             <thead>
                                 <tr>
@@ -168,14 +168,14 @@ $can_action=$menu_permission['can_action'];
                                 <input type="search"
                                     class="form-control @if(count($deal_record['enrolled']) > 0) tableSearch @endif"
                                     placeholder="{{ __('seller_messages.search') }}"
-                                    data-table="table2">
+                                    data-table="datatable2">
 
                             </div>
                         </div>
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered datatable" id="table2">
+                        <table class="table table-bordered datatable" id="datatable2">
 
                             <thead>
                                 <tr>
@@ -286,14 +286,14 @@ $can_action=$menu_permission['can_action'];
                                 <input type="search"
                                     class="form-control @if(count($deal_record['expired_deal']) > 0) tableSearch @endif"
                                     placeholder="{{ __('seller_messages.search') }}"
-                                    data-table="table3">
+                                    data-table="datatable3">
 
                             </div>
                         </div>
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered datatable" id="table3">
+                        <table class="table table-bordered datatable" id="datatable3">
 
                             <thead>
                                 <tr>
@@ -449,7 +449,7 @@ $(document).ready(function() {
     };
 
     const tables = [
-        '#table1',
+        // '#datatable1',
         '#table2',
         '#table3',
     ];
