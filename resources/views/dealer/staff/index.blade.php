@@ -25,7 +25,7 @@
                         class="dt-input tableSearch form-control"
                         id="customTableSearch"
                         placeholder="{{ __('seller_messages.Search') }}"
-                        aria-controls="table1">
+                        aria-controls="datatable_search">
                 </div>
             </div>
 
@@ -104,7 +104,7 @@
 
         <!-- Table -->
         <div class="table-responsive">
-            <table class="table table-bordered datatable tablesearch" id="table1">
+            <table class="table table-bordered datatable tablesearch" id="datatable_search">
                 <thead>
                     <tr>
                         <th class="no-sort">{{ __('seller_messages.S.No') }}</th>
@@ -246,6 +246,8 @@
 
 @include('dealer.layout.custom_code');
 @include('dealer.layout.footer');
+
+
 
 <script>
 $(document).ready(function() {
@@ -457,6 +459,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
-
-
-</script>
+@include('dealer.layout.languagetableCode');
