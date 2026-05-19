@@ -57,16 +57,11 @@ class WebSellerDashboard extends Controller
         }
 
 
+    // $seller_details=Auth::guard('seller')->user();
+     $seller_details=sellerAndStaffId();
 
-
-        // $seller_details=Auth::guard('seller')->user();
-
-         $seller_details=sellerAndStaffId();
-
-        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details)->first();
-
-       $plan_page=Cache::get('plan_page');
-
+    $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details)->first();
+    $plan_page=Cache::get('plan_page');
 
    if($plan_page!=='yes'){
 
@@ -103,6 +98,7 @@ class WebSellerDashboard extends Controller
             ];
   
           $data= $this->SellerDashboardService->GetDashboardData($request_data1)['data'];
+
 
           return view('dealer.index',compact('seller_details','data'));
       }

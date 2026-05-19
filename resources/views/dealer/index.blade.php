@@ -298,12 +298,12 @@ $can_action=$menu_permission['can_action'];
                             <div class="show-date d-flex gap-2">
                                 <div class="date-form-pnl">
                                     <input type="date" id="from_date_analytics" name="from_date_analytics"
-                                        class="form-control" value="{{ request()->from_date_analytics }}"
+                                        class="form-control datepicker" value="{{ request()->from_date_analytics }}"
                                         onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
                                 </div>
                                 <div class="date-form-pnl">
                                     <input type="date" id="to_date_analytics" name="to_date_analytics"
-                                        class="form-control" value="{{ request()->to_date_analytics }}"
+                                        class="form-control datepicker" value="{{ request()->to_date_analytics }}"
                                         onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
                                 </div>
                             </div>
