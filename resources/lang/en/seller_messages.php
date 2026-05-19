@@ -1551,5 +1551,90 @@ return [
 
 
 
+     // Single order View Page
+    'Details' => 'Details',
+    'Confirmed' => 'Confirmed',
+    'Cancelled' => 'Cancelled',
+    'Delivered' => 'Delivered',
+    'Ongoing' => 'Ongoing',
+    'Returned' => 'Returned',
+    'Exchange' => 'Exchange',
+
+    // Order Info
+    'Order_ID' => 'Order ID',
+    'Order_Type' => 'Order Type',
+    'Normal_Order' => 'Normal Order',
+    'Custom_Order' => 'Custom Order',
+    'Date_Time' => 'Date & Time',
+
+    // Customer Details
+    'Customer_Detail' => 'Customer Detail',
+    'Phone' => 'Phone',
+    'Mail_id' => 'Mail id',
+    'Delivery_Address' => 'Delivery Address',
+
+    // Payment Summary
+    'Payment_Summary' => 'Payment Summary',
+    'Transaction_id' => 'Transaction id',
+    'Sub_Total' => 'Sub Total',
+    'Coupon_Applied' => 'Coupon Applied',
+    'Shipping_Charges' => 'Shipping Charges',
+    'Tax' => 'Tax',
+    'Total' => 'Total',
+    'Total_Amount' => 'Total Amount',
+    'Paid_By_Customer' => 'Paid By Customer',
+    'Admin_Commission' => 'Admin Commission',
+    'Per_Item' => 'Per Item',
+
+    // Product Details
+    'Size' => 'Size',
+    'Color' => 'Color',
+    'Category' => 'Category',
+    'Quantity' => 'Quantity',
+
+    // Ratings
+    'Customer_Ratings' => 'Customer Ratings',
+    'Store_Ratings' => 'Store Ratings',
+
+    // Return
+    'Return_Details' => 'Return Details',
+    'Return_Id' => 'Return Id',
+    'Requested_on' => 'Requested on',
+    'Reason' => 'Reason',
+    'Uploaded_image' => 'Uploaded image',
+    'Return_Request' => 'Return Request',
+    'Return_Request_Accepted' => 'Return Request Accepted',
+
+    // Exchange
+    'Exchange_Details' => 'Exchange Details',
+    'Exchange_Id' => 'Exchange Id',
+    'Exchange_requested_on' => 'Exchange requested on',
+    'Exchange_size' => 'Exchange size',
+    'Exchange_Request' => 'Exchange Request',
+
+    // Cancelled
+    'Cancelled_Details' => 'Cancelled Details',
+    'Cancelled_Id' => 'Cancelled Id',
+    'Cancelled_on' => 'Cancelled on',
+
+    // Forms
+    'Update_Return_status' => 'Update Return status',
+    'Select_Exchange_request' => 'Select Exchange request',
+    'Accept' => 'Accept',
+    'Reject' => 'Reject',
+    'Update_Status' => 'Update Status',
+
+    // Delivery
+    'Shipped' => 'Shipped',
+
+
+'On_The_Way' => 'On The Way',
+'Exchange_Request_Accepted' => 'Exchange Request Accepted',
+'Return_Complete' => 'Return Complete',
+'Return_Picked' => 'Return Picked',
+'Return_Cancelled' => 'Return Cancelled',
+
+
+
     
 ];
