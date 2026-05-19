@@ -68,10 +68,10 @@ $product_Variation_inside_count = 0;
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a href="{{ route('seller.products') }}" class="title24 alink">
-            <i class="bi bi-chevron-left"></i> Edit Product
+            <i class="bi bi-chevron-left"></i> {{ __('seller_messages.Edit_Product') }}
         </a>
     </div>
-
+    
     <form id="editproduct" action="{{ route('seller.edit_product_code', request()->id) }}" method="post">
 
         @csrf

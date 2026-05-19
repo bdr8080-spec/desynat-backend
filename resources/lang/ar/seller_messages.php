@@ -1467,7 +1467,7 @@ return [
   'upload_documents_bank_details' => 'رفع المستندات والتفاصيل البنكية',
     'owners_documents' => 'مستندات المالك',
     'document_1' => 'المستند 1',
-    'document_2' => 'Document 2',
+    'document_2' => 'الوثيقة 2',
     'store_documents' => 'مستندات المتجر',
     'bank_details' => 'التفاصيل البنكية',
     'account_type' => 'نوع الحساب',
@@ -1659,6 +1659,8 @@ return [
 'Enter_confirm_password' => 'أدخل تأكيد كلمة المرور',
 'Done' => 'تم',
 'Password_Reset_Successfully' => 'تم إعادة تعيين كلمة المرور بنجاح!',
+"Edit_Product"=>"تعديل المنتج",
+
 
     
 ];
