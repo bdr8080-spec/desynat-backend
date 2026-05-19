@@ -610,6 +610,12 @@ return [
     'upload_image_or_video' => 'Upload Image or Video',
     'please_select_an_image_or_video' => 'Please select an image or video',
     'add_new_story' => 'Add New Story',
+    'file_must_be_image_or_video' => 'File must be an image or video',
+    'uploading' => 'Uploading...',
+    'invalid_file_type' => 'Invalid file type',
+    'video_size_limit' => "You can't upload video of more than 20 MB",
+    'image_size_limit' => "You can't upload image of more than 20 MB",
+    'story_added_successfully' => 'Story Added Successfully',
 
     //deal management
     'add_deals' => 'Add Deals',

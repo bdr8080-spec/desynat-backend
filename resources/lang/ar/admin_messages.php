@@ -607,6 +607,12 @@ return [
     'upload_image_or_video' => 'رفع صورة أو فيديو',
     'please_select_an_image_or_video' => 'يرجى اختيار صورة أو فيديو',
     'add_new_story' => 'إضافة قصة جديدة',
+    'file_must_be_image_or_video' => 'يجب أن يكون الملف صورة أو فيديو',
+    'uploading' => 'جارٍ الرفع...',
+    'invalid_file_type' => 'نوع الملف غير صالح',
+    'video_size_limit' => 'لا يمكنك رفع فيديو بحجم يزيد عن 20 ميجابايت',
+    'image_size_limit' => 'لا يمكنك رفع صورة بحجم يزيد عن 20 ميجابايت',
+    'story_added_successfully' => 'تمت إضافة القصة بنجاح',
 
     //deal management
     'add_deals' => 'إضافة العروض',

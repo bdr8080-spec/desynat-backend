@@ -53,7 +53,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Story Management</h2>
+            <h2 class="h2">{{ __('admin_messages.story_management') }}</h2>
         </div>
 
 
@@ -64,14 +64,14 @@
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="true">
-                    Seller Stories
+                    {{ __('admin_messages.seller_stories') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="true">
-                    Admin Platform Stories
+                    {{ __('admin_messages.admin_platform_stories') }}
                 </button>
             </li>
 
@@ -107,11 +107,15 @@
                             <select name="country"
                                 class="form-select form-select-lg w-50 "
                                 onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Select country</option>
+                                <option value="">{{ __('admin_messages.select_country') }}</option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country['name'] }}"
                                     {{ request('country') == $country['name'] ? 'selected' : '' }}>
-                                    {{ $country['name'] }}
+                                    @if(app()->getLocale() == 'en')
+                                        {{ $country['name'] }}
+                                        @else
+                                        {{ $country['name_ar'] }}
+                                        @endif
                                 </option>
                                 @endforeach
                             </select>
@@ -127,11 +131,11 @@
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Seller Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Posted Image/Video</th>
-                                <th scope="col">Posted On</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.posted_image_video') }}</th>
+                                <th scope="col">{{ __('admin_messages.posted_on') }}</th>
 
 
                             </tr>
@@ -142,12 +146,16 @@
                                 <th scope="row">{{ $index + 1 }}</th>
 
                                 <td>
-                                    {{ $story->seller_details?->first_name ?? 'N/A' }} 
+                                    {{ $story->seller_details?->first_name ?? __('admin_messages.na') }} 
                                     {{ $story->seller_details?->last_name ?? '' }}
                                 </td>
 
                                 <td>
-                                    {{ $story->seller_details?->store_info?->country_info?->name ?? 'N/A' }}
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $story->seller_details?->store_info?->country_info?->name ?? __('admin_messages.posted_on') }}
+                                    @else
+                                    {{ $story->seller_details?->store_info?->country_info?->name_ar ?? __('admin_messages.posted_on') }}
+                                    @endif
                                 </td>
 
                                 <td>
@@ -182,7 +190,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" class="text-center">No data found</td>
+                                <td colspan="6" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -219,7 +227,7 @@
                             <div class="d-flex  align-items-end justify-content-end">
                                 <a class="btn btn-dark customBtn" data-bs-toggle="modal"
                                     data-bs-target="#sentModalphoto">
-                                    <span>Add</span>
+                                    <span>{{ __('admin_messages.add') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -232,12 +240,12 @@
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Posted Image/Video</th>
-                                <th scope="col">Posted On Date & Time</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.posted_image_video') }}</th>
+                                <th scope="col">{{ __('admin_messages.posted_on') }}</th>
+                                <th scope="col">{{ __('admin_messages.status') }}</th>
                                 @if(in_array(19, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
 
 
@@ -292,7 +300,7 @@
                             </tr>
                              @empty
                             <tr>
-                                <td colspan="6" class="text-center">No data found</td>
+                                <td colspan="6" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -343,7 +351,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add New</h2>
+                <h2 class="h2">{{ __('admin_messages.add_new_story') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -354,13 +362,13 @@
 
                             <!-- Upload Image/Video -->
                             <div class="col-lg-12">
-                                <div class="upload-title text-center">Upload Image or Video</div>
+                                <div class="upload-title text-center">{{ __('admin_messages.upload_image_or_video') }}</div>
 
                                 <label for="fileUpload" class="upload-box" style="cursor:pointer;">
                                     <img src="/admin/image/upload-icon.svg" id="uploadIcon" />
                                     <img id="previewImage" class="preview-image" style="display:none; max-width:216px; margin-top:-2px;" />
                                     <video id="previewVideo" class="preview-image" style="display:none; max-width:216px; margin-top:-2px;" controls></video>
-                                    <div class="upload-text">Upload Image or Video</div>
+                                    <div class="upload-text">{{ __('admin_messages.upload_image_or_video') }}</div>
                                     <input type="file" id="fileUpload" name="file" accept="image/*,video/*" hidden />
                                 </label>
                                 <div id="fileError" style="color:red; font-size: 0.875rem; margin-top:5px;"></div>
@@ -368,7 +376,7 @@
 
                             <!-- Submit Button -->
                             <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                <a type="button" id="submitStoryBtn" class="btn btn-dark customBtn mt-3">Submit</a>
+                                <a type="button" id="submitStoryBtn" class="btn btn-dark customBtn mt-3">{{ __('admin_messages.submit') }}</a>
                             </div>
                         </div>
                     </form>
@@ -409,13 +417,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let storyId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteStory/${storyId}`, {
@@ -477,7 +486,7 @@ document.addEventListener('DOMContentLoaded', function() {
             previewVideo.src = URL.createObjectURL(file);
             previewVideo.style.display = 'block';
         } else {
-            fileError.innerText = 'File must be an image or video';
+            fileError.innerText = "{{ __('admin_messages.file_must_be_image_or_video') }}";
             fileUpload.value = '';
             previewImage.style.display = 'none';
             previewVideo.style.display = 'none';
@@ -492,11 +501,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const file = fileUpload.files[0];
         if(!file){
-            fileError.innerText = 'Please select an image or video';
+            fileError.innerText = "{{ __('admin_messages.please_select_an_image_or_video') }}";
             return;
         }
 
-        submitBtn.innerText = 'Uploading...';
+        submitBtn.innerText = "{{ __('admin_messages.uploading') }}";
         submitBtn.classList.add('disabled');
         submitBtn.style.pointerEvents = 'none';
 
