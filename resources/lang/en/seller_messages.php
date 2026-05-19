@@ -1649,5 +1649,8 @@ return [
 'Password_Reset_Successfully' => 'Password Reset Successfully !',
 
 
+"Edit_Product"=>"Edit Product",
+
+
     
 ];
