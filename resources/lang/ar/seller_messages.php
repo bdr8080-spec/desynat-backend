@@ -1649,5 +1649,16 @@ return [
 
 'First_Name_Arabic' => 'الاسم الأول بالعربية',
 
+
+// reset Password  Arabic
+
+'Reset_Password' => 'إعادة تعيين كلمة المرور',
+'Create_New_Password' => 'إنشاء كلمة مرور جديدة',
+'Enter_new_password' => 'أدخل كلمة المرور الجديدة',
+'Confirm_Password' => 'تأكيد كلمة المرور',
+'Enter_confirm_password' => 'أدخل تأكيد كلمة المرور',
+'Done' => 'تم',
+'Password_Reset_Successfully' => 'تم إعادة تعيين كلمة المرور بنجاح!',
+
     
 ];

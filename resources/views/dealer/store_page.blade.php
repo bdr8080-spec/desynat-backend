@@ -224,7 +224,9 @@
                                             @foreach ($country as $val)
                                                 <option value="{{ $val->id }}"
                                                     {{ old('country', @$store_info->country) == $val->id ? 'selected' : '' }}>
-                                                    {{ $val->name }}
+                                                
+                                                    @if(App::getlocale()=='en'){{ $val->name }} @else {{ $val->name_ar }} @endif
+                                                                       
                                                 </option>
                                             @endforeach
                                         </select>
