@@ -29,7 +29,7 @@
     <section class="section dashboard container">
         <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
             <a href="{{route('seller.staff_edit_profile')}}" style="color:rgb(57, 55, 55)" class="title24">
-                <i class="bi bi-chevron-left"></i> Edit
+                <i class="bi bi-chevron-left"></i> {{ __('seller_messages.Edit') }}
             </a>
         </div>
 
@@ -38,7 +38,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-allproduct" type="button" role="tab" aria-controls="pills-allproduct"
-                        aria-selected="true">Personal Info</button>
+                        aria-selected="true">{{ __('seller_messages.Personal_Info') }}</button>
                 </li>
             </ul>
         </div>
@@ -67,7 +67,7 @@
                                                 class="img-fluid">
                                         </div>
                                         <label class="img_changes">
-                                            <h6>Change Image</h6>
+                                            <h6>{{ __('seller_messages.Change_Image') }}</h6>
                                             <input type="file" id="uploadImage2" class="form-control" accept="image/*"
                                                 name="profile_pic">
                                         </label>
@@ -77,10 +77,10 @@
                                 <div class="col-lg-6 col-md-6">
                                     <div class="sub-form">
                                         <div class="label-flex">
-                                            <label>First Name</label>
+                                            <label>{{ __('seller_messages.First_Name') }}</label>
                                         </div>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter First Name" name="first_name"
+                                            placeholder="{{ __('seller_messages.Enter_First_Name') }}" name="first_name"
                                             value="{{$seller_details->first_name}}">
 
                                         <p class="text-danger" id="error-first_name"></p>
@@ -89,10 +89,10 @@
                                 <div class="col-lg-6 col-md-6">
                                     <div class="sub-form">
                                         <div class="label-flex">
-                                            <label>First Name Arabic</label>
+                                            <label>{{ __('seller_messages.First_Name_Arabic') }}</label>
                                         </div>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter Last Name" name="name_ar"
+                                            placeholder="{{ __('seller_messages.First_Name_Arabic') }}" name="name_ar"
                                             value="{{$seller_details->name_ar}}">
                                         <p class="text-danger" id="error-name_ar"></p>
                                     </div>
@@ -100,7 +100,7 @@
                                 <div class="col-lg-6 col-md-6">
                                     <div class="sub-form">
                                         <div class="label-flex">
-                                            <label>Mobile No.</label>
+                                            <label>{{ __('seller_messages.Mobile_No') }}</label>
                                         </div>
                                         <input type="text" class="form-control" placeholder="Mobile number" readonly
                                             value="{{$seller_details->country_code}} {{$seller_details->mobile}}">
@@ -109,7 +109,7 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="sub-form">
                                         <div class="label-flex">
-                                            <label>Email Id</label>
+                                            <label>{{ __('seller_messages.Email_Id') }}</label>
                                         </div>
                                         <input type="text" class="form-control" placeholder="Email id" readonly
                                             value="{{$seller_details->email}}">
@@ -119,7 +119,7 @@
                             </div>
 
                             <div class="dashboard-button mt-4">
-                                <button type="submit" class="btn add-fillbtn w-100">Save Changes</button>
+                                <button type="submit" class="btn add-fillbtn w-100">{{ __('seller_messages.Save_Changes') }}</button>
                             </div>
                         </div>
 

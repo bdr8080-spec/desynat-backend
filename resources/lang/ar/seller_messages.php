@@ -1562,5 +1562,92 @@ return [
     'Paid' => 'مدفوع',
 
 
+     // Single order View Page
+
+      // Common
+    'Details' => 'التفاصيل',
+    'Confirmed' => 'تم التأكيد',
+    'Cancelled' => 'ملغي',
+    'Delivered' => 'تم التوصيل',
+    'Ongoing' => 'قيد التنفيذ',
+    'Returned' => 'مرتجع',
+    'Exchange' => 'استبدال',
+
+    // Order Info
+    'Order_ID' => 'رقم الطلب',
+    'Order_Type' => 'نوع الطلب',
+    'Normal_Order' => 'طلب عادي',
+    'Custom_Order' => 'طلب مخصص',
+    'Date_Time' => 'التاريخ والوقت',
+
+    // Customer Details
+    'Customer_Detail' => 'تفاصيل العميل',
+    'Phone' => 'الهاتف',
+    'Mail_id' => 'البريد الإلكتروني',
+    'Delivery_Address' => 'عنوان التوصيل',
+
+    // Payment Summary
+    'Payment_Summary' => 'ملخص الدفع',
+    'Transaction_id' => 'رقم العملية',
+    'Sub_Total' => 'المجموع الفرعي',
+    'Coupon_Applied' => 'الكوبون المطبق',
+    'Shipping_Charges' => 'رسوم الشحن',
+    'Tax' => 'الضريبة',
+    'Total' => 'الإجمالي',
+    'Total_Amount' => 'إجمالي المبلغ',
+    'Paid_By_Customer' => 'المدفوع من العميل',
+    'Admin_Commission' => 'عمولة الإدارة',
+    'Per_Item' => 'لكل قطعة',
+
+    // Product Details
+    'Size' => 'المقاس',
+    'Color' => 'اللون',
+    'Category' => 'الفئة',
+    'Quantity' => 'الكمية',
+
+    // Ratings
+    'Customer_Ratings' => 'تقييمات العميل',
+    'Store_Ratings' => 'تقييمات المتجر',
+
+    // Return
+    'Return_Details' => 'تفاصيل الإرجاع',
+    'Return_Id' => 'رقم الإرجاع',
+    'Requested_on' => 'تاريخ الطلب',
+    'Reason' => 'السبب',
+    'Uploaded_image' => 'الصورة المرفوعة',
+    'Return_Request' => 'طلب إرجاع',
+    'Return_Request_Accepted' => 'تم قبول طلب الإرجاع',
+
+    // Exchange
+    'Exchange_Details' => 'تفاصيل الاستبدال',
+    'Exchange_Id' => 'رقم الاستبدال',
+    'Exchange_requested_on' => 'تاريخ طلب الاستبدال',
+    'Exchange_size' => 'مقاس الاستبدال',
+    'Exchange_Request' => 'طلب استبدال',
+
+    // Cancelled
+    'Cancelled_Details' => 'تفاصيل الإلغاء',
+    'Cancelled_Id' => 'رقم الإلغاء',
+    'Cancelled_on' => 'تاريخ الإلغاء',
+
+    // Forms
+    'Update_Return_status' => 'تحديث حالة الإرجاع',
+    'Select_Exchange_request' => 'اختر طلب الاستبدال',
+    'Accept' => 'قبول',
+    'Reject' => 'رفض',
+    'Update_Status' => 'تحديث الحالة',
+
+    // Delivery
+'Shipped' => 'تم الشحن',
+
+'On_The_Way' => 'في الطريق',
+'Exchange_Request_Accepted' => 'تم قبول طلب الاستبدال',
+'Return_Complete' => 'اكتمل الإرجاع',
+'Return_Picked' => 'تم استلام المرتجع',
+'Return_Cancelled' => 'تم إلغاء الإرجاع',
+
+
+'First_Name_Arabic' => 'الاسم الأول بالعربية',
+
     
 ];

@@ -347,77 +347,78 @@ if (!function_exists('Seller_orderItemViewData')) {
 
         $image = $images[0] ?? asset('user/assets/images/categorie1.png');
 
+        // {{ __('seller_messages.Cancelled') }}
         // Order status text
         $statusText = match (true) {
 
             // Cancelled
             $orderDetail->payment_status == '2' ||
             $orderDetail->payment_status == '3'
-            => 'Cancelled',
+            => __('seller_messages.Cancelled'),
 
             // Shipped
             $orderDetail->delivery_status == '2.1' &&
             $orderDetail->return_type == '0'
-            => 'Shipped',
+            => __('seller_messages.Shipped'),
 
             // On the way
             $orderDetail->delivery_status == '2.2' &&
             $orderDetail->return_type == '0'
-            => 'On The Way',
+            =>__('seller_messages.On_The_Way'),
 
             // Delivered
             $orderDetail->delivery_status == '3' &&
             $orderDetail->return_type == '0'
-            => 'Delivered',
+            => __('seller_messages.Delivered'),
 
             // Exchange request
             $orderDetail->delivery_status == '3' &&
             $orderDetail->return_type == '2' && $orderDetail->r_e_approve == '0'
-            => 'Exchange Request',
+            => __('seller_messages.Exchange_Request'),
 
             $orderDetail->delivery_status == '3' &&
             $orderDetail->return_type == '2' && $orderDetail->r_e_approve == '1'
-            => 'Exchange Request Accepted',
+            => __('seller_messages.Exchange_Request_Accepted'),
 
             $orderDetail->r_e_approve == '1' &&
             $orderDetail->return_type == '1' && $orderDetail->is_picked == "0"
-            => 'Return Request Accepted',
+            => __('seller_messages.Return_Request_Accepted'),
 
             $orderDetail->r_e_approve == '1' &&
             $orderDetail->return_type == '1' &&  $orderDetail->is_picked == "1" &&  $orderDetail->delivery_status == "3" 
-            => 'Return complete',
+            => __('seller_messages.Return_Complete'),
 
             $orderDetail->r_e_approve == '1' &&
             $orderDetail->return_type == '1' &&  $orderDetail->is_picked == "1"
-            => 'Return Picked',
+            => __('seller_messages.Return_Picked'),
 
 
             $orderDetail->r_e_approve == '2' &&
             $orderDetail->return_type == '1'
-            => 'Return Cancelled',
+            => __('seller_messages.Return_Cancelled'),
 
               // Return request
             $orderDetail->delivery_status == '3' &&
             $orderDetail->return_type == '1'
-            => 'Return Request',
+            => __('seller_messages.Return_Request'),
 
               // Delivered
             $orderDetail->delivery_status == '7'
-            => 'On The Way',
+            => __('seller_messages.On_The_Way'),
 
             // Default
-            default => 'Ongoing',
+            default =>  __('seller_messages.Ongoing'),   
         };
 
         // Status colors
         [$statusColor, $bgColor] = match ($statusText) {
 
-            'Delivered' => ['#28a745', '#28a7451A'],
+            __('seller_messages.Delivered') => ['#28a745', '#28a7451A'],
 
-            'Cancelled' => ['#E70000', '#E700001A'],
+            __('seller_messages.Cancelled') => ['#E70000', '#E700001A'],
 
-            'Exchange Request',
-            'Return Request'
+            __('seller_messages.Exchange_Request'),
+            __('seller_messages.Return_Request')
             => ['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
 
             default => ['#FF5F1B', '#79d69d1a'],

@@ -12,7 +12,7 @@
 
     <div class="d-flex justify-content-between mt-2">
         <a class="title24 alink" href="{{route('seller.order_management')}}"> <i class="bi bi-chevron-left"></i>
-            Details</a>
+             {{ __('seller_messages.Details') }}</a>
         <div class="from-group-list">
 
             <!-- <div style="color:#FF5F1B;">Returned</div>
@@ -72,7 +72,7 @@
                 <div class="order-ic d-flex gap-2">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/order.svg" alt="icon" class="img-fluid">
                     <div class="order-cont">
-                        <div class="title-light">Order ID</div>
+                        <div class="title-light"> {{ __('seller_messages.Order_ID') }}</div>
                         <p>#{{ $order_details->id}}</p>
                     </div>
                 </div>
@@ -80,12 +80,12 @@
             <div class="col rightline">
                 <div class="order-ic">
                     <div class="order-cont">
-                        <div class="title-light">Order Type</div>
+                        <div class="title-light">  {{ __('seller_messages.Order_Type') }}</div>
                         <p>
                             @if($order_details->order_type=='1')
-                            Normal Order
+                             {{ __('seller_messages.Normal_Order') }}
                             @else
-                            Custom Order
+                             {{ __('seller_messages.Custom_Order') }}
                             @endif
 
                         </p>
@@ -95,7 +95,7 @@
             <div class="col">
                 <div class="order-ic">
                     <div class="order-cont">
-                        <div class="title-light">Date & Time </div>
+                        <div class="title-light"> {{ __('seller_messages.Date_Time') }} </div>
                         <p>{{$order_details->created_at}}</p>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
     <div class="row">
         <div class="col-lg-6 col-md-6">
             <div class="order-box border-radious-10 box-shadow mt-4">
-                <h6>Customer Detail</h6>
+                <h6>{{ __('seller_messages.Customer_Detail') }}</h6>
 
                 <div class="cust-deatils-pnl d-flex justify-content-between">
                     <div class="cust-deatils">
@@ -121,17 +121,17 @@
                             <div class="order-cont">
                                 <p>{{$order_details->order->delivery_details->name}}</p>
                                 <div class="title-light">
-                                    Phone:<span>{{$order_details->order->delivery_details->country_code}}
+                                {{ __('seller_messages.Phone') }}:<span>{{$order_details->order->delivery_details->country_code}}
                                         {{$order_details->order->delivery_details->mobile}}</span></div>
                             </div>
                         </div>
                         <div class="title-light mt-2">
-                            Mail id:<span> {{ $order_details->order->user_details->email }}</span>
+                             {{ __('seller_messages.Mail_id') }} :<span> {{ $order_details->order->user_details->email }}</span>
                         </div>
                     </div>
                     <div class="cust-deatils">
                         <div class="order-cont">
-                            <div class="title-light">Delivery Address</div>
+                            <div class="title-light">   {{ __('seller_messages.Delivery_Address') }}</div>
                             <p>{{$order_details->order->delivery_details->address}} </p>
                         </div>
                     </div>
@@ -154,38 +154,38 @@
 
 
             <div class="order-box border-radious-10 box-shadow mt-4">
-                <h6>Payment Summary</h6>
+                <h6>{{ __('seller_messages.Payment_Summary') }}</h6>
 
                 @isset($order_details->order->transaction_id)
                 <div class="pay-sum">
-                    <div class="summary-title-1">Transaction id</div>
+                    <div class="summary-title-1"> {{ __('seller_messages.Transaction_id') }}</div>
                     <div class="summary-value">#{{$order_details->order->transaction_id}} </div>
                 </div>
                 @endisset
                 <div class="pay-sum">
-                    <div class="summary-title-1">Sub Total</div>
-                    <div class="summary-value">{{$order_details->amount * $order_details->quantity}} KD</div>
+                    <div class="summary-title-1"> {{ __('seller_messages.Sub_Total') }}</div>
+                    <div class="summary-value">{{$order_details->amount * $order_details->quantity}} {{ __('seller_messages.KD') }}</div>
                 </div>
 
                 @isset($order_details->promocode_value)
                 <div class="pay-sum">
-                    <div class="summary-title-1">Coupon Applied</div>
-                    <div class="summary-value">{{$order_details->promocode_value}} KD</div>
+                    <div class="summary-title-1"> {{ __('seller_messages.Coupon_Applied') }}</div>
+                    <div class="summary-value">{{$order_details->promocode_value}} {{ __('seller_messages.KD') }}</div>
                 </div>
                 @endIsset
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Shipping Charges</div>
-                    <div class="summary-value">{{$order_details->shipping_fees}} KD</div>
+                    <div class="summary-title-1"> {{ __('seller_messages.Shipping_Charges') }}</div>
+                    <div class="summary-value">{{$order_details->shipping_fees}} {{ __('seller_messages.KD') }}</div>
                 </div>
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">tax</div>
-                    <div class="summary-value">{{$order_details->tax}} KD</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Tax') }}</div>
+                    <div class="summary-value">{{$order_details->tax}}  {{ __('seller_messages.KD') }}</div>
                 </div>
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Total</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Total') }}</div>
 
                     @php
 
@@ -197,56 +197,56 @@
 
                     @endphp
 
-                    <div class="summary-value">{{$total_amount}} KD</div>
+                    <div class="summary-value">{{$total_amount}}  {{ __('seller_messages.KD') }}</div>
                 </div>
                 <div class="pay-sum">
-                    <div class="summary-title-1">Paid By Customer</div>
-                    <div class="summary-value">{{$user_Paid_amount}} KD</div>
+                    <div class="summary-title-1"> {{ __('seller_messages.Paid_By_Customer') }}</div>
+                    <div class="summary-value">{{$user_Paid_amount}}  {{ __('seller_messages.KD') }}</div>
                 </div>
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Admin Commission</div>
-                    <div class="summary-value">{{$order_details->admin_commission}} KD</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Admin_Commission') }}</div>
+                    <div class="summary-value">{{$order_details->admin_commission}}  {{ __('seller_messages.KD') }}</div>
                 </div>
             </div>
 
             @else
 
             <div class="order-box border-radious-10 box-shadow mt-4">
-                <h6>Payment Summary</h6>
+                <h6>{{ __('seller_messages.Payment_Summary') }}</h6>
 
                 @isset($order_details->order->transaction_id)
                 <div class="pay-sum">
-                    <div class="summary-title-1">Transaction id</div>
+                    <div class="summary-title-1"> {{ __('seller_messages.Transaction_id') }}</div>
                     <div class="summary-value">#{{$order_details->order->transaction_id}} </div>
                 </div>
                 @endisset
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Per Item ( {{$order_details->amount}} KD x
+                    <div class="summary-title-1"> {{ __('seller_messages.Per_Item') }} ( {{$order_details->amount}} {{ __('seller_messages.KD') }} x
                         {{$order_details->quantity}}) </div>
-                    <div class="summary-value">{{$order_details->amount * $order_details->quantity}} KD</div>
+                    <div class="summary-value">{{$order_details->amount * $order_details->quantity}} {{ __('seller_messages.KD') }}</div>
                 </div>
 
                 @isset($order_details->promocode_value)
                 <div class="pay-sum">
-                    <div class="summary-title-1">Coupon Applied</div>
-                    <div class="summary-value">{{$order_details->promocode_value}} KD</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Coupon_Applied') }}</div>
+                    <div class="summary-value">{{$order_details->promocode_value}} {{ __('seller_messages.KD') }}</div>
                 </div>
                 @endIsset
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Shipping Charges</div>
-                    <div class="summary-value">{{$order_details->shipping_fees}} KD</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Shipping_Charges') }} </div>
+                    <div class="summary-value">{{$order_details->shipping_fees}} {{ __('seller_messages.KD') }}</div>
                 </div>
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">tax</div>
-                    <div class="summary-value">{{$order_details->tax}} KD</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Tax') }}</div>
+                    <div class="summary-value">{{$order_details->tax}} {{ __('seller_messages.KD') }}</div>
                 </div>
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Total Amount</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Total_Amount') }}</div>
 
                     @php
 
@@ -258,16 +258,16 @@
 
                     @endphp
 
-                    <div class="summary-value">{{$total_amount}} KD</div>
+                    <div class="summary-value">{{$total_amount}} {{ __('seller_messages.KD') }}</div>
                 </div>
                 <div class="pay-sum">
-                    <div class="summary-title-1">Paid By Customer</div>
-                    <div class="summary-value">{{$user_Paid_amount}} KD</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Paid_By_Customer') }} </div>
+                    <div class="summary-value">{{$user_Paid_amount}} {{ __('seller_messages.KD') }}</div>
                 </div>
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Admin Commission</div>
-                    <div class="summary-value">{{$order_details->admin_commission}} KD</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Admin_Commission') }} </div>
+                    <div class="summary-value">{{$order_details->admin_commission}} {{ __('seller_messages.KD') }}</div>
                 </div>
             </div>
 
@@ -291,22 +291,22 @@
                     <div class="w-100">
                         <div class="pay-sum">
                             <div class="summary-title-1">{{ $order_details->product_details->product_name_en }}</div>
-                            <div class="summary-value">{{ $order_details->amount * $order_details->quantity }} KD</div>
+                            <div class="summary-value">{{ $order_details->amount * $order_details->quantity }} {{ __('seller_messages.KD') }}</div>
                         </div>
                         <div class="pay-sum">
-                            <div class="summary-title-1">Size</div>
+                            <div class="summary-title-1">{{ __('seller_messages.Size') }}</div>
                             <div class="summary-value">{{ $order_details->variation_details->size->name }}</div>
                         </div>
                         <div class="pay-sum">
-                            <div class="summary-title-1">Color </div>
+                            <div class="summary-title-1"> {{ __('seller_messages.Color') }} </div>
                             <div class="summary-value">{{ $order_details->variation_details->color->name }}</div>
                         </div>
                         <div class="pay-sum">
-                            <div class="summary-title-1">Category </div>
+                            <div class="summary-title-1"> {{ __('seller_messages.Category') }} </div>
                             <div class="summary-value">{{ $order_details->product_details->category->name }}</div>
                         </div>
                         <div class="pay-sum">
-                            <div class="summary-title-1">Quantity</div>
+                            <div class="summary-title-1"> {{ __('seller_messages.Quantity') }}</div>
                             <div class="summary-value">{{ $order_details->quantity}}</div>
                         </div>
                     </div>
@@ -315,7 +315,7 @@
 
             @isset($order_details->UserRatingReviewProvide)
             <div class="order-box border-radious-10 box-shadow mt-4">
-                <h6>Customer Ratings</h6>
+                <h6> {{ __('seller_messages.Customer_Ratings') }}</h6>
 
                 <div class="star-rating mt-1">
 
@@ -332,7 +332,7 @@
                 </div>
 
                 <!-- Store rating  -->
-                <h6>Store Ratings</h6>
+                <h6>{{ __('seller_messages.Store_Ratings') }} </h6>
                 <div class="star-rating mt-1">
 
                     @for ($i = 0; $i < $order_details->UserRatingReviewProvide->store_rating ; $i++)
@@ -357,18 +357,18 @@
             @if($order_details->return_type==!'0' && $order_details->return_type=='1' )
 
             <div class="order-box border-radious-10 box-shadow mt-4">
-                <h6>Return Details</h6>
+                <h6>{{ __('seller_messages.Return_Details') }} </h6>
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Return Id</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Return_Id') }} </div>
                     <div class="summary-value">#{{$order_details->id }}</div>
                 </div>
                 <div class="pay-sum">
-                    <div class="summary-title-1">Requested on</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Requested_on') }} </div>
                     <div class="summary-value">{{$order_details->updated_at }}</div>
                 </div>
                 <div class="pay-sum">
-                    <div class="summary-title-1">Reason</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Reason') }} </div>
                     <div class="summary-value">{{$order_details->return_reason }} </div>
                 </div>
 
@@ -377,7 +377,7 @@
 
             @if(isset($order_details->return_image) && count(@$order_details->return_image) > 0)
             <div class="mt-4">
-                <h6>Uploaded image</h6>
+                <h6>{{ __('seller_messages.Uploaded_image') }}</h6>
 
                 <div class="order-box border-radious-10 box-shadow mt-4 d-flex justify-content-center">
                     <div class="prodimg">
@@ -403,18 +403,18 @@
             @if($order_details->payment_status=='2' || $order_details->payment_status=='3')
 
             <div class="order-box border-radious-10 box-shadow mt-4">
-                <h6>Cancelled Details</h6>
+                <h6>{{ __('seller_messages.Cancelled_Details') }} </h6>
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Cancelled Id</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Cancelled_Id') }}</div>
                     <div class="summary-value">#{{$order_details->id }}</div>
                 </div>
                 <div class="pay-sum">
-                    <div class="summary-title-1">Cancelled on</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Cancelled_on') }} </div>
                     <div class="summary-value"> {{$order_details->updated_at }}</div>
                 </div>
                 <div class="pay-sum">
-                    <div class="summary-title-1">Reason</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Reason') }} </div>
                     <div class="summary-value">{{$order_details->cancel_reason }}</div>
                 </div>
             </div>
@@ -427,22 +427,22 @@
 
 
             <div class="order-box border-radious-10 box-shadow mt-4">
-                <h6>Exchange Details</h6>
+                <h6>{{ __('seller_messages.Exchange_Details') }} Exchange Details</h6>
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Exchange Id</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Exchange_Id') }}</div>
                     <div class="summary-value">#{{$order_details->id }}</div>
                 </div>
                 <div class="pay-sum">
-                    <div class="summary-title-1">Exchange requested on</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Exchange_requested_on') }}</div>
                     <div class="summary-value"> {{$order_details->updated_at }}</div>
                 </div>
                 <div class="pay-sum">
-                    <div class="summary-title-1">Reason</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Reason') }} </div>
                     <div class="summary-value">{{$order_details->exchange_reason }}</div>
                 </div>
                 <div class="pay-sum">
-                    <div class="summary-title-1">Exchange size</div>
+                    <div class="summary-title-1">{{ __('seller_messages.Exchange_size') }}</div>
                     <div class="summary-value">{{@$order_details->exchange_new_size_data->name}}</div>
                 </div>
             </div>
@@ -464,13 +464,13 @@
                     <div class="from-group  w-100">
                         <select class="form-select form-control option width-50" aria-label="Default select example"
                             name="status">
-                            <option value="">Update Return status </option>
-                            <option value="1"> Accept </option>
-                            <option value="2"> Reject </option>
+                            <option value="">{{ __('seller_messages.Update_Return_status') }}  </option>
+                            <option value="1"> {{ __('seller_messages.Accept') }}  </option>
+                            <option value="2"> {{ __('seller_messages.Reject') }} </option>
 
                         </select>
                     </div>
-                    <button type="submit" class="btn add-fillbtn w-100">Update Status</button>
+                    <button type="submit" class="btn add-fillbtn w-100">{{ __('seller_messages.Update_Status') }}</button>
                 </div>
 
             </form>
@@ -491,13 +491,13 @@
                     <div class="from-group  w-100">
                         <select class="form-select form-control option width-50" aria-label="Default select example"
                             name="status">
-                            <option value="">Select Exchange request </option>
-                            <option value="1"> Accept </option>
-                            <option value="2"> Reject </option>
+                            <option value="">{{ __('seller_messages.Select_Exchange_request') }} Select Exchange request </option>
+                            <option value="1"> {{ __('seller_messages.Accept') }}  </option>
+                            <option value="2"> {{ __('seller_messages.Reject') }} </option>
 
                         </select>
                     </div>
-                    <button type="submit" class="btn add-fillbtn w-100">Update Status</button>
+                    <button type="submit" class="btn add-fillbtn w-100">{{ __('seller_messages.Update_Status') }}</button>
                 </div>
 
             </form>
@@ -518,16 +518,16 @@
                         <select class="form-select form-control option width-50" aria-label="Default select example"
                             name="status">
                             <!-- <option value="">Delivery process</option> -->
-                            <option value="1" @if($order_details->delivery_status=="1") selected @endif > Confirmed
+                            <option value="1" @if($order_details->delivery_status=="1") selected @endif > {{ __('seller_messages.Confirmed') }}
                             </option>
                             <!-- <option value="2.1" @if($order_details->delivery_status=="2.1") selected @endif > Packed
                             </option> -->
-                            <option value="2.1" @if($order_details->delivery_status=="2.2") selected @endif> Shipped
+                            <option value="2.1" @if($order_details->delivery_status=="2.2") selected @endif> {{ __('seller_messages.shipped') }}
                             </option>
                         </select>
                     </div>
 
-                    <button type="submit" class="btn add-fillbtn w-100">Update Status</button>
+                    <button type="submit" class="btn add-fillbtn w-100">{{ __('seller_messages.Update_Status') }} </button>
                 </div>
 
             </form>

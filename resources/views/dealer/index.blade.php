@@ -70,18 +70,16 @@ $can_action=$menu_permission['can_action'];
 </style>
 
 <section class="section dashboard">
-    <div class="page-wapper dashboard-pnl">
+    <div class="page-wapper dashboard-pnl d-flex justify-content-between">
         <div class="title24">  {{ __('seller_messages.Dashboard') }}
         </div>
+       
+        <a href="{{route('seller.dashboard')}}" class="btn btn-success">
+            <span>{{ __('seller_messages.reset') }}</span>
+        </a>
+        
     </div>
-    <div class=" col-lg-3">
-        <div class="d-flex  gap-3 mt-5">
-            <a href="{{route('seller.dashboard')}}" class="btn btn-success">
-                <span>{{ __('seller_messages.reset') }}</span>
-            </a>
-        </div>
-    </div>
-
+   
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <div class="row">
@@ -261,6 +259,7 @@ $can_action=$menu_permission['can_action'];
                             </div>
                         </div>
                     </div>
+                    
                 </form>
 
             </div>
