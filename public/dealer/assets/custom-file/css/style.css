@@ -2112,3 +2112,20 @@ label {
   border-radius: 3px;
   cursor: pointer;
 }
+
+[dir="rtl"] .toggle-password {
+  position: absolute;
+  right:inherit;
+  top: 50%;
+  left: 15px;
+  transform: translate(3px, 4px);
+}
+
+.btn.show, .btn:first-child:active{
+  background-color: #565e6400;  
+  border-color: #51585e;
+}
+
+[dir="rtl"] .cmn-header .bi-chevron-left::before {
+  content: "\f285";
+}

@@ -49,7 +49,7 @@
 </style> -->
 
 <body>
-    <div class="login-header">
+    <div class="login-header des-language">
         <div class="des-logo">
             <a href="#"><img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image"
                     class="img-fluid logo-login"> </a>
