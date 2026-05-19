@@ -485,6 +485,16 @@ return [
     'please_enter_discount_percentage' => 'يرجى إدخال نسبة الخصم',
     'please_enter_minimum_order_value' => 'يرجى إدخال الحد الأدنى لقيمة الطلب',
     'please_enter_upto_discount' => 'يرجى إدخال الحد الأقصى للخصم',
+    'select_status' => 'اختر الحالة',
+    'first_order' => 'الطلب الأول',
+    'every_order' => 'كل طلب',
+    'description_english' => 'الوصف (بالإنجليزية)',
+    'description_arabic' => 'الوصف (بالعربية)',
+    'description' => 'الوصف',
+    'please_select_a_country' => 'يرجى اختيار الدولة',
+    'please_enter_description_in_english' => 'يرجى إدخال الوصف باللغة الإنجليزية',
+    'please_enter_description_in_arabic' => 'يرجى إدخال الوصف باللغة العربية',
+    'from_date_must_be_greater_than_to_date' => 'يجب أن يكون تاريخ البداية أكبر من تاريخ النهاية',
     
     //order management
     'active_orders' => 'الطلبات النشطة',

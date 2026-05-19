@@ -55,7 +55,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Banner Per Day Charges for Sellers</h2>
+            <h2 class="h2">{{ __('admin_messages.banner_per_day_charges_for_sellers') }}</h2>
         </div>
     </div>
     <div class="d-flex justify-content-center">
@@ -64,14 +64,14 @@
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="true">
-                    Home Top
+                    {{ __('admin_messages.home_top') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="true">
-                    Home Bottom
+                    {{ __('admin_messages.home_bottom') }}
                 </button>
             </li>
 
@@ -79,7 +79,7 @@
                 <button class="nav-link customBtn2 m-0" id="pills-return-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-return" type="button" role="tab" aria-controls="pills-return"
                     aria-selected="false">
-                    Sub-Category
+                    {{ __('admin_messages.sub_category') }}
                 </button>
             </li>
         </ul>
@@ -96,11 +96,11 @@
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Country Name</th>
-                                <th scope="col">Per Day Charges</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.per_day_charges') }}</th>
                                 @if(in_array(13, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -108,8 +108,14 @@
                             @forelse($topBanner as $index => $banner)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $banner['country_info']['name'] }}</td>
-                                <td>{{ $banner['per_day_price'] }} KD</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $banner['country_info']['name'] }}
+                                    @else
+                                    {{ $banner['country_info']['name_ar'] }}
+                                    @endif
+                                </td>
+                                <td>{{ $banner['per_day_price'] }} {{ __('admin_messages.kd') }}</td>
                                 @if(in_array(13, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -128,7 +134,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">No data found</td>
+                                <td colspan="3" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                         @endforelse
 
@@ -149,11 +155,11 @@
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Country Name</th>
-                                <th scope="col">Per Day Charges</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.per_day_charges') }}</th>
                                 @if(in_array(13, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -161,8 +167,14 @@
                             @forelse($bottomBanner as $index => $banner)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $banner['country_info']['name'] }}</td>
-                                <td>{{ $banner['per_day_price'] }} KD</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $banner['country_info']['name'] }}
+                                    @else
+                                    {{ $banner['country_info']['name_ar'] }}
+                                    @endif
+                                </td>
+                                <td>{{ $banner['per_day_price'] }} {{ __('admin_messages.kd') }}</td>
                                 @if(in_array(13, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -181,7 +193,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">No data found</td>
+                                <td colspan="3" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                         @endforelse
 
@@ -204,11 +216,11 @@
                     <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Country Name</th>
-                                <th scope="col">Per Day Charges</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.per_day_charges') }}</th>
                                 @if(in_array(13, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -216,8 +228,14 @@
                             @forelse($subCategoryBanner as $index => $banner)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $banner['country_info']['name'] }}</td>
-                                <td>{{ $banner['per_day_price'] }} KD</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $banner['country_info']['name'] }}
+                                    @else
+                                    {{ $banner['country_info']['name_ar'] }}
+                                    @endif
+                                </td>
+                                <td>{{ $banner['per_day_price'] }} {{ __('admin_messages.kd') }}</td>
                                 @if(in_array(13, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -236,7 +254,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">No data found</td>
+                                <td colspan="3" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                             </tr>
                         @endforelse
 
@@ -256,7 +274,7 @@
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
-                <h2 class="h2">Per Day Price</h2>
+                <h2 class="h2">{{ __('admin_messages.per_day_charges') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="editBannerForm">
@@ -265,8 +283,8 @@
                         <div class="col-lg-12">
                             <input type="hidden" id="editBannerId" name="banner_id">
                             <div class="form-group w-50 m-auto">
-                                <label for="from" class="form-label"> Price</label>
-                                <input type="text" class="w-100" id="perDayPrice" name="per_day_price" placeholder="Enter Per Day Charge" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" class="form-control"
+                                <label for="from" class="form-label"> {{ __('admin_messages.per_day_price_in_kd') }}</label>
+                                <input type="text" class="w-100" id="perDayPrice" name="per_day_price" placeholder="{{ __('admin_messages.enter_per_day_charge') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" class="form-control"
                                     aria-describedby="passwordHelpInline" />
                                 <div id="editPerDayPriceError" class="text-danger small" style="display:none;"></div>
                             </div>
@@ -274,7 +292,7 @@
                                 <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
                                     style="margin-top: 30px">
                                     <button type="submit" class="btn btn-dark customBtn">
-                                        Save
+                                        {{ __('admin_messages.save') }}
                                     </button>
                                 </div>
                             </div>
@@ -319,7 +337,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let hasError = false;
 
         if (!per_day_price) {
-            editPerDayPriceError.innerText = "Please Enter Per Day Charge";
+            editPerDayPriceError.innerText = "{{ __('admin_messages.please_enter_per_day_charge') }}";
             editPerDayPriceError.style.display = "block";
             hasError = true;
         }

@@ -488,6 +488,16 @@ return [
     'please_enter_discount_percentage' => 'Please enter discount percentage',
     'please_enter_minimum_order_value' => 'Please enter minimum order value',
     'please_enter_upto_discount' => 'Please enter upto discount',
+    'select_status' => 'Select Status',
+    'first_order' => 'First Order',
+    'every_order' => 'Every Order',
+    'description_english' => 'Description (English)',
+    'description_arabic' => 'Description (Arabic)',
+    'description' => 'Description',
+    'please_select_a_country' => 'Please select a country',
+    'please_enter_description_in_english' => 'Please enter description in English',
+    'please_enter_description_in_arabic' => 'Please enter description in Arabic',
+    'from_date_must_be_greater_than_to_date' => 'From date must be greater than to date',
 
     //order management
     'active_orders' => 'Active Orders',
