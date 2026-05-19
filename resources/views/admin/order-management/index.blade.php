@@ -189,51 +189,55 @@
                                 <td>
                                     @if($data['order']['order_type'] == '1')
                                         @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
-                                            {{ intval($data['amount_with_charges']) }} KD
+                                            {{ intval($data['amount_with_charges']) }} {{ __('admin_messages.kd') }}
                                         @else
-                                            {{ number_format($data['amount_with_charges'], 2) }} KD
+                                            {{ number_format($data['amount_with_charges'], 2) }} {{ __('admin_messages.kd') }}
                                         @endif
                                     @else
-                                        {{ intval($data['order']['total_amount']) }} KD
+                                        {{ intval($data['order']['total_amount']) }} {{ __('admin_messages.kd') }}
                                     @endif
                                 </td>
                                 <td>
                                     {{ isset($data['admin_commission']) && $data['admin_commission'] !== null 
-                                        ? $data['admin_commission'] . ' KD' 
-                                        : 'N/A' }}
+                                    ? $data['admin_commission'] . ' ' . __('admin_messages.kd')
+                                    : __('admin_messages.na') }}
                                 </td>
                                 <td>
                                     @if($data['order']['order_type']=='1')
-                                    Normal
+                                    {{__('admin_messages.normal')}}
                                     @else
-                                    Custom
+                                    {{__('admin_messages.custom')}}
                                     @endif
                                 </td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
-                                        Not Assigned
+                                        {{__('admin_messages.not_assigned')}}
                                     @else
+                                        @if(app()->getLocale() == 'en')
                                         {{ $data['driver_details']['full_name_english'] }}
+                                        @else
+                                        {{ $data['driver_details']['full_name_arabic'] }}
+                                        @endif
                                     @endif
                                 </td>
-                                <td>N/A</td>
+                                <td>{{__('admin_messages.na')}}</td>
                                 @php
                                     $deliveryStatuses = [
-                                        '1' => 'Confirmed',
-                                        '2.1' => 'Shipped',
-                                        '2.2' => 'On the Way',
-                                        '3' => 'Delivered',
-                                        '4' => 'Cancelled',
-                                        '5' => 'Return',
-                                        '6' => 'Confirmed',
-                                        '7' => 'Picked',
-                                        '8' => 'Not Delivered',
+                                        '1' => __('admin_messages.confirmed'),
+                                        '2.1' => __('admin_messages.shipped'),
+                                        '2.2' => __('admin_messages.on_the_way'),
+                                        '3' => __('admin_messages.delivered'),
+                                        '4' => __('admin_messages.cancelled'),
+                                        '5' => __('admin_messages.return'),
+                                        '6' => __('admin_messages.confirmed'),
+                                        '7' => __('admin_messages.picked'),
+                                        '8' => __('admin_messages.not_delivered'),
                                     ];
                                 @endphp
-                                <td>{{ $deliveryStatuses[$data['delivery_status']] ?? 'Unknown' }}</td>
+                                <td>{{ $deliveryStatuses[$data['delivery_status']] ?? __('admin_messages.na') }}</td>
                                 <td>
                                     <a href="{{ url('Invoice', ['order_id' => $data['order']['order_id']]) }}" target="_blank" class="btn btn-dark customBtn">
-                                        <span>Download Invoice</span>
+                                        <span>{{__('admin_messages.download_invoice')}}</span>
                                     </a>
                                 </td>
                                 <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }}</td>
@@ -245,7 +249,7 @@
                                     data-order-id="{{ $data['id'] }}"
                                     data-bs-toggle="modal"
                                     data-bs-target="#assignModal">
-                                        <span>Assign Delivery Boy</span>
+                                        <span>{{__('admin_messages.assign_delivery_boy')}}</span>
                                     </a>
                                     @endif
                                 </td>
@@ -281,7 +285,7 @@
                     </div> -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
                                 value="{{ request('type') == 'return' ? request()->from_date : '' }}"
                                 onchange="updateToDate(); document.getElementById('filterForm1').submit();" />
@@ -290,7 +294,7 @@
 
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">To:</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
                                 value="{{ request('type') == 'return' ? request()->to_date : '' }}"
                                 onchange="updateToDate(); document.getElementById('filterForm1').submit();" />
@@ -298,15 +302,19 @@
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                             <select name="country_name" id="country_name"
                                 class="form-select form-select-lg"
                                 onchange="document.getElementById('filterForm1').submit();">
-                                <option value="">Select country</option>
+                                <option value="">{{ __('admin_messages.select_country') }}</option>
                                 @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('type') == 'return' && request('country_name') == $country['name'] ? 'selected' : '' }}>
-                                        {{ $country['name'] }}
+                                        @if(app()->getLocale() == 'en')
+                                            {{ $country->name }}
+                                            @else
+                                            {{ $country->name_ar }}
+                                            @endif
                                     </option>
                                 @endforeach
                             </select>
@@ -316,7 +324,7 @@
                         @if(in_array(15, $permissions) || $admin->type == 1)
                         <div class="d-dlex justify-content-end" style="text-align: end">
                             <a href="{{ route('admin.export_return_exchange_orders_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
-                                <span>Export</span></a>
+                                <span>{{ __('admin_messages.export') }}</span></a>
                         </div>
                         @endif
                     </div>
@@ -327,26 +335,24 @@
                     <table id="myTable1" class="table allTable">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Order ID</th>
-                                <th scope="col">Seller Name</th>
-                                <th scope="col">Customer Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Product details</th>
-                                <th scope="col">Delivery Address</th>
-
-                                <th scope="col">Order Amount</th>
-
-                                <th scope="col">Admin Commission</th>
-                                <th scope="col">Order Type</th>
-                                <th scope="col">Delivery Boy</th>
-                                <th scope="col">Delivery Boy Company Name</th>
-                                <th scope="col">Exchange or Return</th>
-                                <th scope="col">Reason</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Zone</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.customer_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.product_details') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_address') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.admin_commission') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_type') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_boy') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_boy_company_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.exchange_or_return') }}</th>
+                                <th scope="col">{{ __('admin_messages.reason') }}</th>
+                                <th scope="col">{{ __('admin_messages.status') }}</th>
+                                <th scope="col">{{ __('admin_messages.zone') }}</th>
                                 @if(in_array(15, $permissions) || $admin->type == 1)
-                                <th scope="col">Assign Driver</th>
+                                <th scope="col">{{ __('admin_messages.assign_driver') }}</th>
                                 @endif
 
 
@@ -366,11 +372,11 @@
                                     @if($seller)
                                         {{ $seller->first_name ?? '' }} {{ $seller->last_name ?? '' }}
                                     @else
-                                        Seller not found
+                                        {{ __('admin_messages.na') }}
                                     @endif
                                 </td>
                                 <td>{{ $data['order']['delivery_details']['name'] }}</td>
-                                <td>{{ $data['order']['delivery_details']['country_name'] ?? 'N/A' }}</td>
+                                <td>{{ $data['order']['delivery_details']['country_name'] ?? __('admin_messages.na') }}</td>
                                 <td>
                                     <a class="table-button view-products"
                                     data-bs-toggle="modal"
@@ -389,41 +395,45 @@
                                 <td>
                                     @if($data['order']['order_type'] == '1')
                                         @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
-                                            {{ intval($data['amount_with_charges']) }} KD
+                                            {{ intval($data['amount_with_charges']) }} {{ __('admin_messages.kd') }}
                                         @else
-                                            {{ number_format($data['amount_with_charges'], 2) }} KD
+                                            {{ number_format($data['amount_with_charges'], 2) }} {{ __('admin_messages.kd') }}
                                         @endif
                                     @else
-                                        {{ intval($data['order']['total_amount']) }} KD
+                                        {{ intval($data['order']['total_amount']) }} {{ __('admin_messages.kd') }}
                                     @endif
                                 </td>
                                 <td>
                                     {{ isset($data['admin_commission']) && $data['admin_commission'] !== null 
-                                        ? $data['admin_commission'] . ' KD' 
-                                        : 'N/A' }}
+                                    ? $data['admin_commission'] . ' ' . __('admin_messages.kd')
+                                    : __('admin_messages.na') }}
                                 </td>
                                 <td>
                                     @if($data['order']['order_type']=='1')
-                                    Normal
+                                    {{ __('admin_messages.normal') }}
                                     @else
-                                    Custom
+                                    {{ __('admin_messages.custom') }}
                                     @endif
                                 </td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
-                                        Not Assigned
+                                        {{ __('admin_messages.not_assigned') }}
                                     @else
+                                        @if(app()->getLocale() == 'en')
                                         {{ $data['driver_details']['full_name_english'] }}
+                                        @else
+                                        {{ $data['driver_details']['full_name_arabic'] }}
+                                        @endif
                                     @endif
                                 </td>
-                                <td>N/A</td>
+                                <td>{{ __('admin_messages.na') }}</td>
                                 @php
                                     $deliveryStatuses = [
-                                        '1' => 'Return',
-                                        '2' => 'Exchange',
+                                        '1' => __('admin_messages.return'),
+                                        '2' => __('admin_messages.exchange'),
                                     ];
                                 @endphp
-                                <td>{{ $deliveryStatuses[$data['return_type']] ?? 'Unknown' }}</td>
+                                <td>{{ $deliveryStatuses[$data['return_type']] ??  __('admin_messages.na')  }}</td>
                                 <td>
                                     @if($data['return_type'] == '1')
                                     {{ $data['return_reason'] ?? 'N/A' }}
@@ -433,45 +443,51 @@
                                 </td>
                                  @php
                                     $deliveryStatuses = [
-                                        '1' => 'Confirmed',
-                                        '2.1' => 'Shipped',
-                                        '2.2' => 'On the Way',
-                                        '3' => 'Complete',
-                                        '4' => 'Cancelled',
-                                        '5' => 'Return',
-                                        '6' => 'Confirmed',
-                                        '7' => 'Picked',
-                                        '8' => 'Not Delivered',
+                                        '1' => __('admin_messages.confirmed'),
+                                        '2.1' => __('admin_messages.shipped'),
+                                        '2.2' => __('admin_messages.on_the_way'),
+                                        '3' => __('admin_messages.delivered'),
+                                        '4' => __('admin_messages.cancelled'),
+                                        '5' => __('admin_messages.return'),
+                                        '6' => __('admin_messages.confirmed'),
+                                        '7' => __('admin_messages.picked'),
+                                        '8' => __('admin_messages.not_delivered'),
                                     ];
                                 @endphp
                                 <!-- <td>{{ $deliveryStatuses[$data['delivery_status']] ?? 'Unknown' }}</td> -->
                                  <td>
                                     @if($data['delivery_status']=='1')
-                                    Confirmed
+                                    {{ __('admin_messages.confirmed') }}
                                     @elseif($data['delivery_status']=='2.1')
-                                    Shipped
+                                    {{ __('admin_messages.shipped') }}
                                     @elseif($data['delivery_status']=='2.2')
-                                    On The Way
+                                    {{ __('admin_messages.on_the_way') }}
                                     @elseif($data['delivery_status']=='3' && $data['r_e_approve']=='0' && $data['return_type']=='0')
-                                    Completed
+                                    {{ __('admin_messages.completed') }}
                                     @elseif($data['delivery_status']=='3' && $data['r_e_approve']=='1' && $data['return_type']=='1')
-                                    Return Request
+                                    {{ __('admin_messages.return_request') }}
                                     @elseif($data['delivery_status']=='3' && $data['r_e_approve']=='2' && $data['return_type']=='1')
-                                    Return Rejected
+                                    {{ __('admin_messages.return_rejected') }}
                                     @elseif($data['delivery_status']=='3' && $data['r_e_approve']=='1' && $data['return_type']=='2')
-                                    Exchange Request
+                                    {{ __('admin_messages.exchange_request') }}
                                     @elseif($data['delivery_status']=='3' && $data['r_e_approve']=='2' && $data['return_type']=='2')
-                                    Exchange Rejected
+                                    {{ __('admin_messages.exchange_rejected') }}
                                     @elseif($data['delivery_status']=='7' && $data['is_picked']=='1')
-                                    Picked Up
+                                    {{ __('admin_messages.picked') }}
                                     @elseif($data['delivery_status']=='8')
-                                    Not Delivered
+                                    {{ __('admin_messages.not_delivered') }}
                                     @else
                                     @endif
 
                                  </td>
                                  
-                                <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $data['driver_details']['zone_info']['name_english'] ?? __('admin_messages.na') }}
+                                    @else
+                                    {{ $data['driver_details']['zone_info']['name_arabic'] ?? __('admin_messages.na') }}
+                                    @endif
+                                </td>
                                 @if(in_array(15, $permissions) || $admin->type == 1)
                                 <td>
                                     @if($data['assign_status'] == 0 && $data['order']['delivery_details']['country_code'] === '+965')
@@ -480,7 +496,7 @@
                                     data-order-id="{{ $data['id'] }}"
                                     data-bs-toggle="modal"
                                     data-bs-target="#assignModal">
-                                        <span>Assign Delivery Boy</span>
+                                        <span>{{ __('admin_messages.assign_delivery_boy') }}</span>
                                     </a>
                                     @endif
                                 </td>
@@ -514,7 +530,7 @@
                     </div> -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
                                 value="{{ request('type') == 'complete' ? request()->from_date : '' }}"
                                 onchange="updateToDate(); document.getElementById('filterForm2').submit();" />
@@ -523,7 +539,7 @@
 
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">To:</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
                                 value="{{ request('type') == 'complete' ? request()->to_date : '' }}"
                                 onchange="updateToDate(); document.getElementById('filterForm2').submit();" />
@@ -531,15 +547,19 @@
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                             <select name="country_name" id="country_name"
                                 class="form-select form-select-lg"
                                 onchange="document.getElementById('filterForm2').submit();">
-                                <option value="">Select country</option>
+                                <option value="">{{ __('admin_messages.select_country') }}</option>
                                 @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('type') == 'complete' && request('country_name') == $country['name'] ? 'selected' : '' }}>
-                                        {{ $country['name'] }}
+                                        @if(app()->getLocale() == 'en')
+                                            {{ $country->name }}
+                                            @else
+                                            {{ $country->name_ar }}
+                                            @endif
                                     </option>
                                 @endforeach
                             </select>
@@ -549,7 +569,7 @@
                         @if(in_array(15, $permissions) || $admin->type == 1)
                         <div class="d-dlex justify-content-end" style="text-align: end">
                             <a href="{{ route('admin.export_completed_orders_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
-                                <span>Export</span></a>
+                                <span>{{ __('admin_messages.export') }}</span></a>
                         </div>
                         @endif
                     </div>
@@ -560,20 +580,21 @@
                     <table id="myTable2" class="table allTable">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Order ID</th>
-                                <th scope="col">Seller Name</th>
-                                <th scope="col">Customer Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Product details</th>
-                                <th scope="col">Delivery Address</th>
-                                <th scope="col">Order Amount</th>
-                                <th scope="col">Admin Commission</th>
-                                <th scope="col">Order Type</th>
-                                <th scope="col">Delivery Boy</th>
-                                <th scope="col">Delivery Boy Company Name</th>
-                                <th scope="col">Rating & Review</th>
-                                <th scope="col">Invoice</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_id') }}</th>
+                                <!-- <th scope="col">Order Type</th> -->
+                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.customer_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.product_details') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_address') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.admin_commission') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_type') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_boy') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_boy_company_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.rating_&_review') }}</th>
+                                <th scope="col">{{ __('admin_messages.invoice') }}{{ __('admin_messages.invoice') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -590,11 +611,11 @@
                                     @if($seller)
                                         {{ $seller->first_name ?? '' }} {{ $seller->last_name ?? '' }}
                                     @else
-                                        Seller not found
+                                        {{ __('admin_messages.na') }}
                                     @endif
                                 </td>
                                 <td>{{ $data['order']['delivery_details']['name'] }}</td>
-                                <td>{{ $data['order']['delivery_details']['country_name'] ?? 'N/A' }}</td>
+                                <td>{{ $data['order']['delivery_details']['country_name'] ?? __('admin_messages.na') }}</td>
                                 <td>
                                     <a class="table-button view-products"
                                     data-bs-toggle="modal"
@@ -613,45 +634,49 @@
                                 <td>
                                     @if($data['order']['order_type'] == '1')
                                         @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
-                                            {{ intval($data['amount_with_charges']) }} KD
+                                            {{ intval($data['amount_with_charges']) }} {{ __('admin_messages.kd') }}
                                         @else
-                                            {{ number_format($data['amount_with_charges'], 2) }} KD
+                                            {{ number_format($data['amount_with_charges'], 2) }} {{ __('admin_messages.kd') }}
                                         @endif
                                     @else
-                                        {{ intval($data['order']['total_amount']) }} KD
+                                        {{ intval($data['order']['total_amount']) }} {{ __('admin_messages.kd') }}
                                     @endif
                                 </td>
 
                                 <td>
                                     {{ isset($data['admin_commission']) && $data['admin_commission'] !== null 
-                                        ? $data['admin_commission'] . ' KD' 
-                                        : 'N/A' }}
+                                    ? $data['admin_commission'] . ' ' . __('admin_messages.kd')
+                                    : __('admin_messages.na') }}
                                 </td>
                                 <td>
                                     @if($data['order']['order_type']=='1')
-                                    Normal
+                                    {{ __('admin_messages.normal') }}
                                     @else
-                                    Custom
+                                    {{ __('admin_messages.custom') }}
                                     @endif
                                 </td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
-                                        Not Assigned
+                                        {{ __('admin_messages.not_assigned') }}
                                     @else
+                                       @if(app()->getLocale() == 'en')
                                         {{ $data['driver_details']['full_name_english'] }}
+                                        @else
+                                        {{ $data['driver_details']['full_name_arabic'] }}
+                                        @endif
                                     @endif
                                 </td>
-                                <td>N/A</td>
+                                <td>{{ __('admin_messages.na') }}</td>
                                 <td data-bs-toggle="modal" 
                                     data-bs-target="#sentModalrating" 
                                     style="cursor: pointer;"
                                     data-user='@json($data)'>
                                     <i class="bi bi-star-fill text-warning"></i> 
-                                    <span class="rating-number">{{ $data['user_rating_review_provide']['product_rating'] ?? 'N/A' }} Rating</span>
+                                    <span class="rating-number">{{ $data['user_rating_review_provide']['product_rating'] ?? __('admin_messages.na') }} {{ __('admin_messages.rating') }}</span>
                                 </td>
                                 <td>
                                     <a href="{{ url('Invoice', ['order_id' => $data['order']['order_id']]) }}" target="_blank" class="btn btn-dark customBtn">
-                                        <span>Download Invoice</span>
+                                        <span>{{ __('admin_messages.download_invoice') }}</span>
                                     </a>
                                 </td>
                             </tr>
@@ -680,7 +705,7 @@
                     </div> -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
                                 value="{{ request('type') == 'cancelled' ? request()->from_date : '' }}"
                                 onchange="updateToDate(); document.getElementById('filterForm3').submit();" />
@@ -689,7 +714,7 @@
 
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">To:</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
                                 value="{{ request('type') == 'cancelled' ? request()->to_date : '' }}"
                                 onchange="updateToDate(); document.getElementById('filterForm3').submit();" />
@@ -697,15 +722,19 @@
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                             <select name="country_name" id="country_name"
                                 class="form-select form-select-lg"
                                 onchange="document.getElementById('filterForm3').submit();">
-                                <option value="">Select country</option>
+                                <option value="">{{ __('admin_messages.select_country') }}</option>
                                 @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('type') == 'cancelled' && request('country_name') == $country['name'] ? 'selected' : '' }}>
-                                        {{ $country['name'] }}
+                                        @if(app()->getLocale() == 'en')
+                                            {{ $country->name }}
+                                            @else
+                                            {{ $country->name_ar }}
+                                            @endif
                                     </option>
                                 @endforeach
                             </select>
@@ -715,7 +744,7 @@
                         @if(in_array(15, $permissions) || $admin->type == 1)
                         <div class="d-dlex justify-content-end" style="text-align: end">
                             <a href="{{ route('admin.export_cancelled_orders_data', request()->all()) }}" class="btn btn-dark customBtn w-50" style="margin-top: 63px">
-                                <span>Export</span></a>
+                                <span>{{ __('admin_messages.export') }}</span></a>
                         </div>
                         @endif
                     </div>
@@ -726,19 +755,20 @@
                     <table id="myTable3" class="table allTable">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Order ID</th>
-                                <th scope="col">Seller Name</th>
-                                <th scope="col">Customer Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Product details</th>
-                                <th scope="col">Delivery Address</th>
-                                <th scope="col">Order Amount</th>
-                                <th scope="col">Admin Commission</th>
-                                <th scope="col">Order Type</th>
-                                <th scope="col">Delivery Boy</th>
-                                <th scope="col">Delivery Boy Company Name</th>
-                                <th scope="col">Reason</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_id') }}</th>
+                                <!-- <th scope="col">Order Type</th> -->
+                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.customer_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.product_details') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_address') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.admin_commission') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_type') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_boy') }}</th>
+                                <th scope="col">{{ __('admin_messages.delivery_boy_company_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.reason') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -755,11 +785,11 @@
                                     @if($seller)
                                         {{ $seller->first_name ?? '' }} {{ $seller->last_name ?? '' }}
                                     @else
-                                        Seller not found
+                                        {{ __('admin_messages.na') }}
                                     @endif
                                 </td>
                                 <td>{{ $data['order']['delivery_details']['name'] }}</td>
-                                <td>{{ $data['order']['delivery_details']['country_name'] ?? 'N/A' }}</td>
+                                <td>{{ $data['order']['delivery_details']['country_name'] ?? __('admin_messages.na') }}</td>
                                 <td>
                                     <a class="table-button view-products"
                                     data-bs-toggle="modal"
@@ -778,35 +808,39 @@
                                 <td>
                                     @if($data['order']['order_type'] == '1')
                                         @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
-                                            {{ intval($data['amount_with_charges']) }} KD
+                                            {{ intval($data['amount_with_charges']) }} {{ __('admin_messages.kd') }}
                                         @else
-                                            {{ number_format($data['amount_with_charges'], 2) }} KD
+                                            {{ number_format($data['amount_with_charges'], 2) }} {{ __('admin_messages.kd') }}
                                         @endif
                                     @else
-                                        {{ intval($data['order']['total_amount']) }} KD
+                                        {{ intval($data['order']['total_amount']) }} {{ __('admin_messages.kd') }}
                                     @endif
                                 </td>
                                 <td>
                                     {{ isset($data['admin_commission']) && $data['admin_commission'] !== null 
-                                        ? $data['admin_commission'] . ' KD' 
-                                        : 'N/A' }}
+                                    ? $data['admin_commission'] . ' ' . __('admin_messages.kd')
+                                    : __('admin_messages.na') }}
                                 </td>
                                 <td>
                                     @if($data['order']['order_type']=='1')
-                                    Normal
+                                    {{ __('admin_messages.normal') }}
                                     @else
-                                    Custom
+                                    {{ __('admin_messages.custom') }}
                                     @endif
                                 </td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
-                                        Not Assigned
+                                        {{ __('admin_messages.not_assigned') }}
                                     @else
+                                        @if(app()->getLocale() == 'en')
                                         {{ $data['driver_details']['full_name_english'] }}
+                                        @else
+                                        {{ $data['driver_details']['full_name_arabic'] }}
+                                        @endif
                                     @endif
                                 </td>
-                                <td>N/A</td>
-                                <td>{{ $data['cancel_reason'] ?? 'N/A' }}</td>
+                                <td>{{ __('admin_messages.na') }}</td>
+                                <td>{{ $data['cancel_reason'] ?? __('admin_messages.na') }}</td>
                             </tr>
                             @empty
 
@@ -827,7 +861,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Seller rating & Review</h2>
+                <h2 class="h2">{{ __('admin_messages.seller_rating_&_review') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="overlay">
@@ -841,7 +875,7 @@
                         <div class="attached-images" id="sellerImagesContainer" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
                     </div>
 
-                    <h4 class="product-title" id="productTitle">Product Name</h4>
+                    <h4 class="product-title" id="productTitle">{{ __('admin_messages.product_name') }}</h4>
 
                     <!-- Product Review Box -->
                     <div class="review-box" id="productReviewBox">
@@ -865,7 +899,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0 mb-0">
-                <h2 class="h2">Product Details</h2>
+                <h2 class="h2">{{ __('admin_messages.product_details') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body pt-0">
@@ -877,13 +911,13 @@
                             </div>
                             <div class="product-info">
                                 <div class="left">
-                                    <p><strong class="product-name">Name</strong></p>
-                                    <p class="product-category">Category</p>
-                                    <p class="product-brand">Brand</p>
+                                    <p><strong class="product-name">{{ __('admin_messages.name') }}</strong></p>
+                                    <p class="product-category">{{ __('admin_messages.category') }}</p>
+                                    <p class="product-brand">{{ __('admin_messages.brand') }}</p>
                                 </div>
                                 <div class="right">
-                                    <p class="product-subcategory">Sub-Category</p>
-                                    <p class="product-price">Price</p>
+                                    <p class="product-subcategory">{{ __('admin_messages.sub_category') }}</p>
+                                    <p class="product-price">{{ __('admin_messages.price') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -903,7 +937,7 @@
         <div class="modal-content">
 
             <div class="modal-header management border-0">
-                <h2 class="h2">Assign Delivery Boy</h2>
+                <h2 class="h2">{{ __('admin_messages.assign_delivery_boy') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -916,13 +950,13 @@
 
                         <div class="form-group w-100 m-auto">
                             <select class="form-select form-select-lg mt-4 " id="driverSelect">
-                                <option value="">Loading...</option>
+                                <option value="">{{ __('admin_messages.loading') }}</option>
                             </select>
                         </div>
 
                         <div class="col-lg-12 d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-dark customBtn" id="assignDriverSubmit">
-                                Submit
+                                {{ __('admin_messages.submit') }}
                             </button>
                         </div>
 
@@ -963,7 +997,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const templateCard = document.getElementById('productCardTemplate');
 
     if (!modalBody || !templateCard) {
-        console.error('Modal elements not found. Check IDs.');
+       // console.error('Modal elements not found. Check IDs.');
         return;
     }
 
@@ -984,33 +1018,49 @@ document.addEventListener('DOMContentLoaded', function () {
             try {
                 item = JSON.parse(raw);
             } catch (e) {
-                console.error('JSON parse error:', e, raw);
+                //console.error('JSON parse error:', e, raw);
                 return;
             }
 
             const card = templateCard.cloneNode(true);
             card.classList.remove('d-none');
             card.removeAttribute('id');
+            
 
             // Product Image
             card.querySelector('.product-image').src =
                 item.variation_details?.variant_image?.[0] ?? '/admin/image/download.jpeg';
 
             // Product Name
+            const locale = "{{ app()->getLocale() }}";
+
             card.querySelector('.product-name').textContent =
-                item.product_details?.product_name_en ?? 'N/A';
+                locale === 'ar'
+                    ? (item.product_details?.product_name_ar ?? "{{ __('admin_messages.na') }}")
+                    : (item.product_details?.product_name_en ?? "{{ __('admin_messages.na') }}");
 
             // Category
             card.querySelector('.product-category').textContent =
-                'Category: ' + (item.product_details?.category?.name ?? 'N/A');
+                "{{ __('admin_messages.category') }}: " +
+                (locale === 'ar'
+                    ? (item.product_details?.category?.name_ar ?? "{{ __('admin_messages.na') }}")
+                    : (item.product_details?.category?.name ?? "{{ __('admin_messages.na') }}"));
 
             // Brand
+
             card.querySelector('.product-brand').textContent =
-                'Brand: ' + (item.product_details?.brand?.name_english ?? 'N/A');
+                "{{ __('admin_messages.brand') }}: " +
+                (locale === 'ar'
+                    ? (item.product_details?.brand?.name_arabic ?? "{{ __('admin_messages.na') }}")
+                    : (item.product_details?.brand?.name_english ?? "{{ __('admin_messages.na') }}"));
 
             // Sub-Category
+
             card.querySelector('.product-subcategory').textContent =
-                'Sub-Category: ' + (item.product_details?.subcategory?.name_english ?? 'N/A');
+                "{{ __('admin_messages.sub_category') }}: " +
+                (locale === 'ar'
+                    ? (item.product_details?.subcategory?.name_arabic ?? "{{ __('admin_messages.na') }}")
+                    : (item.product_details?.subcategory?.name_english ?? "{{ __('admin_messages.na') }}"));
 
             // Price
             let finalPrice = 0;
@@ -1025,7 +1075,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             card.querySelector('.product-price').textContent =
-                'Price: ' + finalPrice.toFixed(2) + ' KD';
+                "{{ __('admin_messages.price') }}: " +
+                finalPrice.toFixed(2) + " " +
+                "{{ __('admin_messages.kd') }}";
 
             // Append card to modal
             modalBody.appendChild(card);
@@ -1052,7 +1104,7 @@ document.addEventListener('click', function (e) {
     const orderIdInput = document.getElementById('orderId');
 
     orderIdInput.value = orderId;
-    driverSelect.innerHTML = '<option>Loading...</option>';
+    driverSelect.innerHTML = '<option>{{ __("admin_messages.loading") }}</option>';
 
     fetch(`{{ route('admin.getDriverListToAssign') }}?order_id=${orderId}`, {
         method: 'GET',
@@ -1070,7 +1122,7 @@ document.addEventListener('click', function (e) {
         }
 
         driverSelect.innerHTML =
-            '<option value="">Select Delivery Boy</option>';
+            driverSelect.innerHTML = '<option value="">{{ __("admin_messages.select_delivery_boy") }}</option>';
 
         response.data.forEach(driver => {
             const option = document.createElement('option');
@@ -1081,8 +1133,7 @@ document.addEventListener('click', function (e) {
     })
     .catch(err => {
         console.error(err);
-        driverSelect.innerHTML =
-            '<option>Error loading drivers</option>';
+        driverSelect.innerHTML = '<option>{{ __("admin_messages.error_loading_drivers") }}</option>';
     });
 });
 </script>
@@ -1095,7 +1146,7 @@ document.getElementById('assignDriverSubmit').addEventListener('click', function
     const driverId = document.getElementById('driverSelect').value;
 
     if (!driverId) {
-        toastr.error('Please select a delivery boy');
+       toastr.error("{{ __('admin_messages.please_select_delivery_boy') }}");
         return;
     }
 
@@ -1213,13 +1264,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Product data
         const productRating = parseFloat(reviewData.product_rating || 0);
-        const productReview = reviewData.product_review || "No review provided";
-        const productName = data.product_details?.product_name_en || "N/A";
+        const productReview = reviewData.product_review || "{{ __('admin_messages.no_review_provided') }}";
+        const locale = "{{ app()->getLocale() }}";
+        const productName = (locale === 'ar'
+                ? data.product_details?.product_name_ar
+                : data.product_details?.product_name_en
+            ) || "{{ __('admin_messages.na') }}";
         const productImages = reviewData.product_image ? JSON.parse(reviewData.product_image) : [];
 
         // Seller data
         const sellerRating = parseFloat(reviewData.store_rating || 0);
-        const sellerReview = reviewData.store_review || "No review provided";
+        const sellerReview = reviewData.store_review || "{{ __('admin_messages.no_review_provided') }}";
         const sellerImages = reviewData.store_image ? JSON.parse(reviewData.store_image) : [];
 
         // Update product modal
@@ -1237,30 +1292,6 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<script>
-$(document).ready(function() {
-
-    const tableIds = ['#myTable', '#myTable1', '#myTable2', '#myTable3'];
-
-    tableIds.forEach(function(id) {
-        // If already initialized, destroy first
-        if ( $.fn.DataTable.isDataTable(id) ) {
-            $(id).DataTable().clear().destroy();
-        }
-
-        // Initialize DataTable
-        $(id).DataTable({
-            paging: true,
-            searching: true,
-            ordering: true,
-            info: true,
-            responsive: true
-        });
-    });
-
-});
-
-</script>
 
 
 
