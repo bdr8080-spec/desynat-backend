@@ -1508,5 +1508,48 @@ return [
 
 
 
+    // Banner Details Page
+    'Details' => 'Details',
+    'Pending_Admin_Wait_to_Approve' => 'Pending - Admin Wait to Approve',
+    'Rejected_Admin_rejected' => 'Rejected - Admin rejected',
+    'Active' => 'Active',
+    'Expired' => 'Expired',
+    'Confirmed' => 'Confirmed',
+    'Rejected_Payment_rejected' => 'Rejected - Payment rejected',
+    'Rejected' => 'Rejected',
+
+    // Banner Info
+    'Banner_position' => 'Banner position',
+    'Homepage_Top' => 'Homepage - Top',
+    'Home_Banner' => 'Home Banner',
+    'Category' => 'Category',
+
+    // Duration
+    'Duration' => 'Duration',
+    'Total_days' => 'Total days',
+
+    // Dates
+    'From' => 'From',
+    'To' => 'To',
+
+    // Payment
+    'SELECT_PAYMENT_METHOD' => 'SELECT PAYMENT METHOD',
+    'Online_Payment' => 'Online Payment',
+
+    // Card Drawer
+    'Add_Card' => 'Add Card',
+    'Card_Holder_Name' => 'Card Holder Name',
+    'Card_Number' => 'Card Number',
+    'Expiry_Date' => 'Expiry Date',
+    'CVV' => 'CVV',
+    'Save_Card_For_Future' => 'Save Card For Future',
+
+    // Buttons
+    'Pay_Now' => 'Pay Now',
+    'Total_Price' => 'Total Price',
+    'Paid' => 'Paid',
+
+
+
     
 ];
