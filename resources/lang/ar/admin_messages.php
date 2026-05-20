@@ -674,6 +674,12 @@ return [
     'please_select_type' => 'يرجى اختيار النوع',
     'please_select_subcategory' => 'يرجى اختيار الفئة الفرعية',
     'please_select_category' => 'يرجى اختيار الفئة',
+    'image_upload_failed_ratio' => 'فشل رفع الصورة. يرجى رفع صورة بنسبة أبعاد :ratio',
+    'banner_added_successfully' => 'تمت إضافة البانر بنجاح',
+    'banner_updated_successfully' => 'تم تحديث البانر بنجاح',
+    'promotional_banner_added_successfully' => 'تمت إضافة البانر الترويجي بنجاح',
+    'promotional_banner_updated_successfully' => 'تم تحديث البانر الترويجي بنجاح',
+    'enter_pincode' => 'أدخل الرمز البريدي',
 
 
     //product management

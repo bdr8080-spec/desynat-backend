@@ -308,7 +308,7 @@
                     </div>
 
                     <div class="cd-input">
-                        <input type="number" placeholder="Enter Pincode" value="125478">
+                        <input type="number" placeholder="{{ __('admin_messages.enter_pincode') }}" value="125478">
                     </div>
 
                     <ul class="cd-info">
