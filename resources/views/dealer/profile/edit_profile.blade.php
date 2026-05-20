@@ -182,7 +182,7 @@
                                                     <span id="selected-flag1">
                                                         <img src="{{$seller_details->store_info->country_info->flag1}}"
                                                             alt="flag" width="25" height="16">
-                                                        {{$seller_details->store_info->country_info->name }}
+                                                        @if(App::getlocale()=='en') {{$seller_details->store_info->country_info->name }} @else  {{$seller_details->store_info->country_info->name_ar }} @endif 
                                                     </span>
 
                                                     <span id="selected-code1" class="ms-2">
@@ -197,12 +197,12 @@
                                                         class="dropdown-item d-flex align-items-center gap-3 country-option1"
                                                         style="cursor: pointer;">
                                                         <input type="radio" name="country" value="{{ $item->id }}"
-                                                            data-flag="{{ $item->flag }}" data-name="{{ $item->name }}"
+                                                            data-flag="{{ $item->flag }}"  data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif"
                                                             class="country-radio1"
                                                             {{ $seller_details->store_info->country == $item->id ? 'checked' : '' }}
                                                             hidden>
                                                         <div width="25" height="16">
-                                                            <span>{{ $item->flag.' '.' '. $item->name }}
+                                                            <span>{{ $item->flag }} @if(App::getlocale()=='en')  {{$item->name }} @else  {{$item->name_ar }} @endif 
                                                             </span>
                                                         </div>
                                                     </label>
@@ -304,13 +304,13 @@
                                                         style="cursor: pointer;">
                                                         <input type="radio" name="country_code"
                                                             value="{{ $item->dial_code }}" data-flag="{{ $item->flag }}"
-                                                            data-name="{{ $item->name }}" class="country-radio"
+                                                             data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif" class="country-radio"
                                                             {{ $seller_details->store_info->country_code == $item->dial_code ? 'checked' : '' }}
                                                             hidden>
 
                                                         <div width="25" height="16">
                                                             <span>{{ $item->flag }}
-                                                                {{ $item->dial_code }} {{ $item->name }}
+                                                                {{ $item->dial_code }} (@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif )
                                                             </span>
                                                         </div>
                                                     </label>
