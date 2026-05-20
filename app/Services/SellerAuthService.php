@@ -274,6 +274,10 @@ class SellerAuthService
           if($get_user_details->admin_verify=='3'){
             return ['status'=>'error','message' => __('Service_messages.account_rejected_by_admin'),'data'=>(object)[]];                
           }
+
+          if($get_user_details->is_block=='0'){
+            return ['status'=>'error','message' => __('Service_messages.account_rejected_by_dealer_reason'),'data'=>(object)[]];                
+          }
           
           // if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
           //   return ['status'=>'success','message'=>"Your Profile is Under Review",'data'=>$get_user_details];                

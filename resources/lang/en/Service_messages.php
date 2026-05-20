@@ -303,6 +303,7 @@ return [
 
   //user affiliate auth service
   'account_rejected_by_admin_reason' => 'Your account has been rejected by admin. Reason: :reason',
+
   'document_uploaded_successfully' => 'Document uploaded successfully',
   'address_updated_successfully' => 'Address updated successfully',
   'affiliate_product_removed_successfully' => 'Affiliate product removed successfully',
@@ -373,6 +374,11 @@ return [
   'withdraw_request_already_processed' => 'Withdraw request already processed',
   'withdraw_request_rejected_successfully' => 'Withdraw request rejected successfully',
   'withdraw_request_approved_successfully' => 'Withdraw request approved successfully',
+
+
+
+   'account_rejected_by_dealer_reason' => "Your account has been rejected by Dealer",
+ 
 
 
 

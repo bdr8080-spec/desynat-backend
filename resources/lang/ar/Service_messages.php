@@ -375,4 +375,8 @@ return [
  'withdraw_request_approved_successfully' => 'تمت الموافقة على طلب السحب بنجاح',
 
 
+
+ 'account_rejected_by_dealer_reason' => 'تم رفض حسابك من قبل التاجر',
+
+
 ];

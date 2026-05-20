@@ -176,7 +176,7 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input"
-                                            type="checkbox"
+                                            type="checkbox" id="switchCheckDefault"
                                             role="switch"
                                             rel="{{ $val->id }}"
                                             @if ($val->is_block == 0) checked @endif>
