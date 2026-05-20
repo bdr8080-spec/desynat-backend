@@ -533,9 +533,9 @@
                         <div class="contactUs mx-auto" style="max-width: 400px">
 
                             <div class="form-group mb-2">
-                                <label class="form-label" for="email">{{ __('admin_messages.email_id') }}</label>
+                                <label class="form-label" for="email">{{ __('admin_messages.email') }}</label>
                                 <input type="text" id="email" class="form-control space" name="email"
-                                    placeholder="{{ __('admin_messages.enter_email') }}"
+                                    placeholder="{{ __('admin_messages.enter_email_id') }}"
                                     value="{{ $userContactUs->content_english['email'] ?? '' }}" />
                                 <h6 class="text-danger error-email"></h6>
                             </div>
@@ -697,7 +697,7 @@
                             aria-labelledby="pills-privacy-tab-dealer">
                             <form id="sellerReturnForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.country') }}</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.return_policy') }}</h6>
 
                             </div>
                             <input type="hidden" name="type" value="2">
@@ -705,7 +705,7 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -723,7 +723,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -742,7 +742,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -755,14 +755,14 @@
                             aria-labelledby="pills-about-tab-dealer">
                             <form id="sellerAboutForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">About Us</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.about_us') }}</h6>
 
                             </div>
                             <input type="hidden" name="type" value="2">
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -780,7 +780,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -799,7 +799,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -811,13 +811,13 @@
                             aria-labelledby="pills-cancel-tab-dealer">
                             <form id="sellerCancellationForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Cancellation Policy</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.cancellation_policy') }}</h6>
                             </div>
                             <input type="hidden" name="type" value="2">
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -836,7 +836,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -855,7 +855,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -868,7 +868,7 @@
                             aria-labelledby="pills-exchange-tab-dealer">
                             <form id="sellerExchangeForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Exchange Policy</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.exchange_policy') }}</h6>
 
                                 <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#editModalAbout">
@@ -880,7 +880,7 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -898,7 +898,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -917,7 +917,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -928,14 +928,14 @@
                     <div class="tab-pane fade" id="pills-faq-dealer" role="tabpanel"
                         aria-labelledby="pills-faq-tab-dealer">
                         <div class="d-flex border-bottom align-items-center mb-3">
-                            <h5 class="flex-grow-1 text-start">FAQs</h5>
+                            <h5 class="flex-grow-1 text-start">{{ __('admin_messages.faqs') }}</h5>
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#faqquestionModalSeller">Add New Question</a>
+                                data-bs-target="#faqquestionModalSeller">{{ __('admin_messages.add_new_question') }}</a>
                             @endif
                         </div>
                         <div class="management mt-4 pb-5">
-                            <h6>List of Questions(English)</h6>
+                            <h6>{{ __('admin_messages.list_of_questions') }}</h6>
 
                             <div class="faq-list-panle">
                                 @forelse($sellerfaq as $index => $faq)
@@ -943,25 +943,25 @@
                                     <div class="form-grid">
 
                                         <div class="form-label">
-                                            Question {{ $index + 1 }} (English)
+                                            {{ __('admin_messages.question') }} {{ $index + 1 }} ({{ __('admin_messages.english') }})
                                         </div>
                                         <div class="form-text">
                                             {!! $faq->question_english ?? '' !!}
                                         </div>
 
-                                        <div class="form-label">Answer (English)</div>
+                                        <div class="form-label">{{ __('admin_messages.answer') }} ({{ __('admin_messages.english') }})</div>
                                         <div class="form-text">
                                             {!! $faq->answer_english ?? '' !!}
                                         </div>
 
                                         <div class="form-label">
-                                            Question {{ $index + 1 }} (Arabic)
+                                            {{ __('admin_messages.question') }} {{ $index + 1 }} ({{ __('admin_messages.arabic') }})
                                         </div>
                                         <div class="form-text">
                                             {!! $faq->question_arabic ?? '' !!}
                                         </div>
 
-                                        <div class="form-label">Answer (Arabic)</div>
+                                        <div class="form-label">{{ __('admin_messages.answer') }} ({{ __('admin_messages.arabic') }})</div>
                                         <div class="form-text">
                                             {!! $faq->answer_arabic ?? '' !!}
                                         </div>
@@ -990,7 +990,7 @@
                                 </div>
                                 @empty
                                 <div class="text-center text-muted">
-                                    No FAQs found.
+                                    {{ __('admin_messages.no_faqs_found') }}
                                 </div>
                                 @endforelse
                             </div>
@@ -1004,7 +1004,7 @@
                         aria-labelledby="pills-contact-tab-dealer">
 
                         <div class="d-flex border-bottom align-items-center mb-3">
-                            <h5 class="flex-grow-1 text-start">Contact Us</h5>
+                            <h5 class="flex-grow-1 text-start">{{ __('admin_messages.contact_us') }}</h5>
                         </div>
 
                         <input type="hidden" value="2" name="type" />
@@ -1012,26 +1012,26 @@
                         <div class="contactUs mx-auto" style="max-width: 400px">
 
                             <div class="form-group mb-2">
-                                <label class="form-label" for="email">Email id</label>
+                                <label class="form-label" for="email">{{ __('admin_messages.email') }}</label>
                                 <input type="text" id="email_seller" class="form-control space" name="email_seller"
-                                    placeholder="Enter Email"
+                                    placeholder="{{ __('admin_messages.enter_email_id') }}"
                                     value="{{ $sellerContactUs->content_english['email'] ?? '' }}" />
                                 <h6 class="text-danger error-email_seller"></h6>
                             </div>
 
                             <div class="form-group mb-2">
-                                <label class="form-label space" for="phone">Contact Number</label>
+                                <label class="form-label space" for="phone">{{ __('admin_messages.contact_number') }}</label>
                                 <input type="tel" id="mobile_seller" class="form-control space" name="mobile_seller"
-                                    placeholder="Enter Mobile Number"
+                                    placeholder="{{ __('admin_messages.enter_contact_number') }}"
                                     oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $sellerContactUs->content_english['mobile'] ?? '' }}" />
                                 <h6 class="text-danger error-mobile_seller"></h6>
                             </div>
 
                             <div class="form-group mb-2">
-                                <label class="form-label space" for="twitter">Whatsapp Number</label>
+                                <label class="form-label space" for="twitter">{{ __('admin_messages.whatsapp_number') }}</label>
                                 <input type="text" id="whatsapp_seller" class="form-control" name="whatsapp_seller"
-                                    placeholder="Enter Whatsapp Number"
+                                    placeholder="{{ __('admin_messages.enter_whatsapp_number') }}"
                                     oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $sellerContactUs->content_english['whatsapp'] ?? '' }}" />
                                 <h6 class="text-danger error-whatsapp_seller"></h6>
@@ -1039,7 +1039,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="button" id="contactSubmitBtnSeller" class="btn btn-dark customBtn">
-                                    <span>Submit</span>
+                                    <span>{{ __('admin_messages.submit') }}</span>
                                 </button>
                             </div>
                             @endif
@@ -1058,7 +1058,7 @@
                             <button class="nav-link customBtn2 active m-0" id="pills-home3-tab-driver"
                                 data-bs-toggle="pill" data-bs-target="#pills-home3-driver" type="button" role="tab"
                                 aria-controls="pills-home3-driver" aria-selected="true">
-                                Terms & Conditions
+                                {{ __('admin_messages.terms_&_conditions') }}
                             </button>
                         </li>
 
@@ -1066,42 +1066,42 @@
                             <button class="nav-link customBtn2 m-0" id="pills-privacy3-tab-driver" data-bs-toggle="pill"
                                 data-bs-target="#pills-privacy3-driver" type="button" role="tab"
                                 aria-controls="pills-privacy3-driver" aria-selected="false">
-                                Return Policy
+                                {{ __('admin_messages.return_policy') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-about3-tab-driver" data-bs-toggle="pill"
                                 data-bs-target="#pills-about3-driver" type="button" role="tab"
                                 aria-controls="pills-about3-driver" aria-selected="false">
-                                About Us
+                                {{ __('admin_messages.about_us') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-cancel3-tab-driver" data-bs-toggle="pill"
                                 data-bs-target="#pills-cancel3-driver" type="button" role="tab"
                                 aria-controls="pills-cancel3-driver" aria-selected="false">
-                                Cancellation Policy
+                                {{ __('admin_messages.cancellation_policy') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-exchange3-tab-driver" data-bs-toggle="pill"
                                 data-bs-target="#pills-exchange3-driver" type="button" role="tab"
                                 aria-controls="pills-exchange3-driver" aria-selected="false">
-                                Exchange Policy
+                                {{ __('admin_messages.exchange_policy') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-faq3-tab-driver" data-bs-toggle="pill"
                                 data-bs-target="#pills-faq3-driver" type="button" role="tab" aria-controls="pills-faq3-driver"
                                 aria-selected="false">
-                                FAQs
+                                {{ __('admin_messages.faqs') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-contact3-tab-driver" data-bs-toggle="pill"
                                 data-bs-target="#pills-contact3-driver" type="button" role="tab"
                                 aria-controls="pills-contact3-driver" aria-selected="false">
-                                Contact Us
+                                {{ __('admin_messages.contact_us') }}
                             </button>
                         </li>
                     </ul>
@@ -1115,7 +1115,7 @@
                             aria-labelledby="pills-home3-tab-driver">
                             <form id="driverTermsForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Terms & Conditions</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.terms_&_conditions') }}</h6>
                                 <input type="hidden" name="type" value="3">
 
                                 <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
@@ -1127,7 +1127,7 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -1145,7 +1145,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -1163,7 +1163,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -1177,7 +1177,7 @@
                             aria-labelledby="pills-privacy3-tab-driver">
                             <form id="driverReturnForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Retrun Policy</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.return_policy') }}</h6>
 
                             </div>
                             <input type="hidden" name="type" value="3">
@@ -1185,7 +1185,7 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -1203,7 +1203,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -1222,7 +1222,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -1235,14 +1235,14 @@
                             aria-labelledby="pills-about3-tab-driver">
                             <form id="driverAboutForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">About Us</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.about_us') }}</h6>
 
                             </div>
                             <input type="hidden" name="type" value="3">
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -1260,7 +1260,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -1279,7 +1279,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -1291,13 +1291,13 @@
                             aria-labelledby="pills-cancel3-tab-driver">
                             <form id="driverCancellationForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Cancellation Policy</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.cancellation_policy') }}</h6>
                             </div>
                             <input type="hidden" name="type" value="3">
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -1315,7 +1315,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -1334,7 +1334,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -1347,7 +1347,7 @@
                             aria-labelledby="pills-exchange3-tab-driver">
                             <form id="driverExchangeForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Exchange Policy</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.exchange_policy') }}</h6>
 
                                 <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#editModalAbout">
@@ -1359,7 +1359,7 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -1377,7 +1377,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -1396,7 +1396,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -1406,12 +1406,12 @@
                     <!-- FAQs -->
                     <div class="tab-pane fade" id="pills-faq3-driver" role="tabpanel" aria-labelledby="pills-faq3-tab-driver">
                         <div class="d-flex border-bottom align-items-center mb-3">
-                            <h5 class="flex-grow-1 text-start">FAQs</h5>
+                            <h5 class="flex-grow-1 text-start">{{ __('admin_messages.faqs') }}</h5>
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#faqquestionModalDriver">Add New Question</a>
+                                data-bs-target="#faqquestionModalDriver">{{ __('admin_messages.add_new_question') }}</a>
                         </div>
                         <div class="management mt-4 pb-5">
-                            <h6>List of Questions(English)</h6>
+                            <h6>{{ __('admin_messages.list_of_questions') }}</h6>
 
                             <div class="faq-list-panle mb-5">
                                 @forelse($driverfaq as $index => $faq)
@@ -1419,25 +1419,25 @@
                                     <div class="form-grid">
 
                                         <div class="form-label">
-                                            Question {{ $index + 1 }} (English)
+                                            {{ __('admin_messages.question') }} {{ $index + 1 }} ({{ __('admin_messages.english') }})
                                         </div>
                                         <div class="form-text">
                                             {!! $faq->question_english ?? '' !!}
                                         </div>
 
-                                        <div class="form-label">Answer (English)</div>
+                                        <div class="form-label">{{ __('admin_messages.answer') }} ({{ __('admin_messages.english') }})</div>
                                         <div class="form-text">
                                             {!! $faq->answer_english ?? '' !!}
                                         </div>
 
                                         <div class="form-label">
-                                            Question {{ $index + 1 }} (Arabic)
+                                            {{ __('admin_messages.question') }} {{ $index + 1 }} ({{ __('admin_messages.arabic') }})
                                         </div>
                                         <div class="form-text">
                                             {!! $faq->question_arabic ?? '' !!}
                                         </div>
 
-                                        <div class="form-label">Answer (Arabic)</div>
+                                        <div class="form-label">{{ __('admin_messages.answer') }} ({{ __('admin_messages.arabic') }})</div>
                                         <div class="form-text">
                                             {!! $faq->answer_arabic ?? '' !!}
                                         </div>
@@ -1466,7 +1466,7 @@
                                 </div>
                                 @empty
                                 <div class="text-center text-muted">
-                                    No FAQs found.
+                                    {{ __('admin_messages.no_faqs_found') }}
                                 </div>
                                 @endforelse
                             </div>
@@ -1480,7 +1480,7 @@
                         aria-labelledby="pills-contact3-tab-driver">
 
                         <div class="d-flex border-bottom align-items-center mb-3">
-                            <h5 class="flex-grow-1 text-start">Contact Us</h5>
+                            <h5 class="flex-grow-1 text-start">{{ __('admin_messages.contact_us') }}</h5>
                         </div>
 
                         <input type="hidden" value="3" name="type" />
@@ -1488,26 +1488,26 @@
                         <div class="contactUs mx-auto" style="max-width: 400px">
 
                             <div class="form-group mb-2">
-                                <label class="form-label" for="email">Email id</label>
+                                <label class="form-label" for="email">{{ __('admin_messages.email') }}</label>
                                 <input type="text" id="email_driver" class="form-control space" name="email"
-                                    placeholder="Enter Email"
+                                    placeholder="{{ __('admin_messages.enter_email_id') }}"
                                     value="{{ $driverContactUs->content_english['email'] ?? '' }}" />
                                 <h6 class="text-danger error-email_driver"></h6>
                             </div>
 
                             <div class="form-group mb-2">
-                                <label class="form-label space" for="phone">Contact Number</label>
+                                <label class="form-label space" for="phone">{{ __('admin_messages.contact_number') }}</label>
                                 <input type="tel" id="mobile_driver" class="form-control space" name="mobile"
-                                    placeholder="Enter Mobile Number"
+                                    placeholder="{{ __('admin_messages.enter_contact_number') }}"
                                     oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $driverContactUs->content_english['mobile'] ?? '' }}" />
                                 <h6 class="text-danger error-mobile_driver"></h6>
                             </div>
 
                             <div class="form-group mb-2">
-                                <label class="form-label space" for="twitter">Whatsapp Number</label>
+                                <label class="form-label space" for="twitter">{{ __('admin_messages.whatsapp_number') }}</label>
                                 <input type="text" id="whatsapp_driver" class="form-control" name="whatsapp"
-                                    placeholder="Enter Whatsapp Number"
+                                    placeholder="{{ __('admin_messages.enter_whatsapp_number') }}"
                                     oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $driverContactUs->content_english['whatsapp'] ?? '' }}" />
                                 <h6 class="text-danger error-whatsapp_driver"></h6>
@@ -1515,7 +1515,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="button" id="contactSubmitBtnDriver" class="btn btn-dark customBtn">
-                                    <span>Submit</span>
+                                    <span>{{ __('admin_messages.submit') }}</span>
                                 </button>
                             </div>
                             @endif
@@ -1540,32 +1540,32 @@
         <div class="modal-content">
 
             <div class="modal-header border-0">
-                <h3 class="modal-title">Add FAQ USER</h3>
+                <h3 class="modal-title">{{ __('admin_messages.add_faq_user') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
                 <div class="form-group">
 
-                    <label>Question English</label>
+                    <label>{{ __('admin_messages.question_english') }}</label>
                     <input id="question_english" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in English"
+                        placeholder="{{ __('admin_messages.enter_question_in_english') }}"
                         oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-question_english"></h6>
 
-                    <label>Answer English</label>
-                    <textarea id="answer_english" class="form-control mb-2" placeholder="Enter Answer in English"
+                    <label>{{ __('admin_messages.answer_english') }}</label>
+                    <textarea id="answer_english" class="form-control mb-2" placeholder="{{ __('admin_messages.enter_answer_in_english') }}"
                         oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-answer_english"></h6>
 
-                    <label>Question Arabic</label>
+                    <label>{{ __('admin_messages.question_arabic') }}</label>
                     <input id="question_arabic" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in Arabic"
+                        placeholder="{{ __('admin_messages.enter_question_in_arabic') }}"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-question_arabic"></h6>
 
-                    <label>Answer Arabic</label>
-                    <textarea id="answer_arabic" dir="rtl" style="text-align: right;" class="form-control mb-2" placeholder="Enter Answer in Arabic"
+                    <label>{{ __('admin_messages.answer_arabic') }}</label>
+                    <textarea id="answer_arabic" dir="rtl" style="text-align: right;" class="form-control mb-2" placeholder="{{ __('admin_messages.enter_answer_in_arabic') }}"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-answer_arabic"></h6>
 
@@ -1573,7 +1573,7 @@
 
                     <div class="text-center mt-3">
                         <button type="button" id="addFaqBtn" class="btn customBtn2 active text-white">
-                            <span>Add</span>
+                            <span>{{ __('admin_messages.add') }}</span>
                         </button>
                         
                     </div>
@@ -1591,32 +1591,32 @@
         <div class="modal-content">
 
             <div class="modal-header border-0">
-                <h3 class="modal-title">Add FAQ SELLER</h3>
+                <h3 class="modal-title">{{ __('admin_messages.add_faq_seller') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
                 <div class="form-group">
 
-                    <label>Question English</label>
+                    <label>{{ __('admin_messages.question_english') }}</label>
                     <input id="question_english_seller" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in English"
+                        placeholder="{{ __('admin_messages.enter_question_in_english') }}"
                         oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-question_english_seller"></h6>
 
-                    <label>Answer English</label>
-                    <textarea id="answer_english_seller" class="form-control mb-2" placeholder="Enter Answer in English"
+                    <label>{{ __('admin_messages.answer_english') }}</label>
+                    <textarea id="answer_english_seller" class="form-control mb-2" placeholder="{{ __('admin_messages.enter_answer_in_english') }}"
                         oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-answer_english_seller"></h6>
 
-                    <label>Question Arabic</label>
+                    <label>{{ __('admin_messages.question_arabic') }}</label>
                     <input id="question_arabic_seller" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in Arabic"
+                        placeholder="{{ __('admin_messages.enter_question_in_arabic') }}"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-question_arabic_seller"></h6>
 
-                    <label>Answer Arabic</label>
-                    <textarea id="answer_arabic_seller" dir="rtl" style="text-align: right;" class="form-control mb-2" placeholder="Enter Answer in Arabic"
+                    <label>{{ __('admin_messages.answer_arabic') }}</label>
+                    <textarea id="answer_arabic_seller" dir="rtl" style="text-align: right;" class="form-control mb-2" placeholder="{{ __('admin_messages.enter_answer_in_arabic') }}"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-answer_arabic_seller"></h6>
 
@@ -1624,7 +1624,7 @@
 
                     <div class="text-center mt-3">
                         <button type="button" id="addFaqBtnSeller" class="btn customBtn2 active text-white">
-                            <span>Add</span>
+                            <span>{{ __('admin_messages.add') }}</span>
                         </button>
                     </div>
 
@@ -1641,32 +1641,32 @@
         <div class="modal-content">
 
             <div class="modal-header border-0">
-                <h3 class="modal-title">Add FAQ DELIVERY BOY</h3>
+                <h3 class="modal-title">{{ __('admin_messages.add_faq_delivery_boy') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
                 <div class="form-group">
 
-                    <label>Question English</label>
+                    <label>{{ __('admin_messages.question_english') }}</label>
                     <input id="question_english_driver" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in English"
+                        placeholder="{{ __('admin_messages.enter_question_in_english') }}"
                         oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-question_english_driver"></h6>
 
-                    <label>Answer English</label>
-                    <textarea id="answer_english_driver" class="form-control mb-2" placeholder="Enter Answer in English"
+                    <label>{{ __('admin_messages.answer_english') }}</label>
+                    <textarea id="answer_english_driver" class="form-control mb-2" placeholder="{{ __('admin_messages.enter_answer_in_english') }}"
                         oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-answer_english_driver"></h6>
 
-                    <label>Question Arabic</label>
+                    <label>{{ __('admin_messages.question_arabic') }}</label>
                     <input id="question_arabic_driver" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in Arabic"
+                        placeholder="{{ __('admin_messages.enter_question_in_arabic') }}"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-question_arabic_driver"></h6>
 
-                    <label>Answer Arabic</label>
-                    <textarea id="answer_arabic_driver" dir="rtl" style="text-align: right;" class="form-control mb-2" placeholder="Enter Answer in Arabic"
+                    <label>{{ __('admin_messages.answer_arabic') }}</label>
+                    <textarea id="answer_arabic_driver" dir="rtl" style="text-align: right;" class="form-control mb-2" placeholder="{{ __('admin_messages.enter_answer_in_arabic') }}"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-answer_arabic_driver"></h6>
 
@@ -1674,7 +1674,7 @@
 
                     <div class="text-center mt-3">
                         <button type="button" id="addFaqBtnDriver" class="btn customBtn2 active text-white">
-                            <span>Add</span>
+                            <span>{{ __('admin_messages.add') }}</span>
                         </button>
                     </div>
 
@@ -1691,7 +1691,7 @@
         <div class="modal-content">
 
             <div class="modal-header border-0">
-                <h3 class="modal-title">Edit FAQ USER</h3>
+                <h3 class="modal-title">{{ __('admin_messages.edit_faq_user') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -1701,30 +1701,30 @@
                     <!-- hidden id -->
                     <input type="hidden" id="edit_faq_id">
 
-                    <label>Question English</label>
+                    <label>{{ __('admin_messages.question_english') }}</label>
                     <input id="edit_question_english" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
+                        placeholder="{{ __('admin_messages.enter_question_in_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-edit_question_english"></h6>
 
-                    <label>Answer English</label>
+                    <label>{{ __('admin_messages.answer_english') }}</label>
                     <textarea id="edit_answer_english" class="form-control mb-2"
-                        placeholder="Enter Answer in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
+                        placeholder="{{ __('admin_messages.enter_answer_in_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-edit_answer_english"></h6>
 
-                    <label>Question Arabic</label>
+                    <label>{{ __('admin_messages.question_arabic') }}</label>
                     <input id="edit_question_arabic" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
+                        placeholder="{{ __('admin_messages.enter_question_in_arabic') }}" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-edit_question_arabic"></h6>
 
-                    <label>Answer Arabic</label>
+                    <label>{{ __('admin_messages.answer_arabic') }}</label>
                     <textarea id="edit_answer_arabic" dir="rtl" style="text-align: right;" class="form-control mb-2"
-                        placeholder="Enter Answer in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
+                        placeholder="{{ __('admin_messages.enter_answer_in_arabic') }}" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-edit_answer_arabic"></h6>
 
                     <div class="text-center mt-3">
                         <button type="button" id="updateFaqBtn"
                             class="btn customBtn2 active text-white">
-                            <span>Update</span>
+                            <span>{{ __('admin_messages.update') }}</span>
                         </button>
                     </div>
 
@@ -1741,7 +1741,7 @@
         <div class="modal-content">
 
             <div class="modal-header border-0">
-                <h3 class="modal-title">Edit FAQ SELLER</h3>
+                <h3 class="modal-title">{{ __('admin_messages.edit_faq_seller') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -1750,30 +1750,30 @@
 
                     <input type="hidden" id="edit_faq_id_seller">
 
-                    <label>Question English</label>
+                    <label>{{ __('admin_messages.question_english') }}</label>
                     <input id="edit_question_english_seller" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
+                        placeholder="{{ __('admin_messages.enter_question_in_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-edit_question_english_seller"></h6>
 
-                    <label>Answer English</label>
+                    <label>{{ __('admin_messages.answer_english') }}</label>
                     <textarea id="edit_answer_english_seller" class="form-control mb-2"
-                        placeholder="Enter Answer in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
+                        placeholder="{{ __('admin_messages.enter_answer_in_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-edit_answer_english_seller"></h6>
 
-                    <label>Question Arabic</label>
+                    <label>{{ __('admin_messages.question_arabic') }}</label>
                     <input id="edit_question_arabic_seller" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
+                        placeholder="{{ __('admin_messages.enter_question_in_arabic') }}" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-edit_question_arabic_seller"></h6>
 
-                    <label>Answer Arabic</label>
+                    <label>{{ __('admin_messages.answer_arabic') }}</label>
                     <textarea id="edit_answer_arabic_seller" dir="rtl" style="text-align: right;" class="form-control mb-2"
-                        placeholder="Enter Answer in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
+                        placeholder="{{ __('admin_messages.enter_answer_in_arabic') }}" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-edit_answer_arabic_seller"></h6>
 
                     <div class="text-center mt-3">
                         <button type="button" id="updateFaqBtnSeller"
                             class="btn customBtn2 active text-white">
-                            <span>Update</span>
+                            <span>{{ __('admin_messages.update') }}</span>
                         </button>
                     </div>
 
@@ -1790,7 +1790,7 @@
         <div class="modal-content">
 
             <div class="modal-header border-0">
-                <h3 class="modal-title">Edit FAQ DRIVER</h3>
+                <h3 class="modal-title">{{ __('admin_messages.edit_faq_delivery_boy') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -1799,30 +1799,30 @@
 
                     <input type="hidden" id="edit_faq_id_driver">
 
-                    <label>Question English</label>
+                    <label>{{ __('admin_messages.question_english') }}</label>
                     <input id="edit_question_english_driver" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
+                        placeholder="{{ __('admin_messages.enter_question_in_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-edit_question_english_driver"></h6>
 
-                    <label>Answer English</label>
+                    <label>{{ __('admin_messages.answer_english') }}</label>
                     <textarea id="edit_answer_english_driver" class="form-control mb-2"
-                        placeholder="Enter Answer in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
+                        placeholder="{{ __('admin_messages.enter_answer_in_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-edit_answer_english_driver"></h6>
 
-                    <label>Question Arabic</label>
+                    <label>{{ __('admin_messages.question_arabic') }}</label>
                     <input id="edit_question_arabic_driver" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
-                        placeholder="Enter Question in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></input>
+                        placeholder="{{ __('admin_messages.enter_question_in_arabic') }}" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-edit_question_arabic_driver"></h6>
 
-                    <label>Answer Arabic</label>
+                    <label>{{ __('admin_messages.answer_arabic') }}</label>
                     <textarea id="edit_answer_arabic_driver" dir="rtl" style="text-align: right;" class="form-control mb-2"
-                        placeholder="Enter Answer in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
+                        placeholder="{{ __('admin_messages.enter_answer_in_arabic') }}" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-edit_answer_arabic_driver"></h6>
 
                     <div class="text-center mt-3">
                         <button type="button" id="updateFaqBtnDriver"
                             class="btn customBtn2 active text-white">
-                            <span>Update</span>
+                            <span>{{ __('admin_messages.update') }}</span>
                         </button>
                     </div>
 
@@ -1897,26 +1897,11 @@ document.addEventListener("DOMContentLoaded", function() {
 let editors = {};
 
 document.addEventListener("DOMContentLoaded", function() {
-    // document.querySelectorAll('.ckeditorfile').forEach(function(element) {
-    //     ClassicEditor
-    //         .create(element)
-    //         .then(editor => {
-    //             editors[element.name] = editor;
-
-    //             editor.model.document.on('change:data', function() {
-    //                 let data = editor.getData().replace(/<[^>]*>/g, '').trim();
-
-    //                 if (data) {
-    //                     $('#error_' + element.name).text('');
-    //                 }
-    //             });
-    //         })
-    //         .catch(error => console.error(error));
-    // });
     document.querySelectorAll('.ckeditorfile').forEach(function(element) {
         ClassicEditor
             .create(element, {
                 language: {
+                    ui: "{{ app()->getLocale() === 'ar' ? 'ar' : 'en' }}",
                     content: element.name.includes('arabic') ? 'ar' : 'en'
                 }, 
                 toolbar: [
@@ -1979,12 +1964,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic').text('');
 
         if (!content_english) {
-            $('#error_content_english').text('Please enter content in English');
+            $('#error_content_english').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic').text('Please enter content in Arabic');
+            $('#error_content_arabic').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2024,12 +2009,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_return').text('');
 
         if (!content_english_return) {
-            $('#error_content_english_return').text('Please enter content in English');
+            $('#error_content_english_return').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic_return) {
-            $('#error_content_arabic_return').text('Please enter content in Arabic');
+            $('#error_content_arabic_return').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2065,12 +2050,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_about').text('');
 
         if (!content_english) {
-            $('#error_content_english_about').text('Please enter content in English');
+            $('#error_content_english_about').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_about').text('Please enter content in Arabic');
+            $('#error_content_arabic_about').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2106,12 +2091,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_cancellation').text('');
 
         if (!content_english) {
-            $('#error_content_english_cancellation').text('Please enter content in English');
+            $('#error_content_english_cancellation').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_cancellation').text('Please enter content in Arabic');
+            $('#error_content_arabic_cancellation').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2147,12 +2132,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_exchange').text('');
 
         if (!content_english) {
-            $('#error_content_english_exchange').text('Please enter content in English');
+            $('#error_content_english_exchange').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_exchange').text('Please enter content in Arabic');
+            $('#error_content_arabic_exchange').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2190,12 +2175,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_seller').text('');
 
         if (!content_english) {
-            $('#error_content_english_seller').text('Please enter content in English');
+            $('#error_content_english_seller').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_seller').text('Please enter content in Arabic');
+            $('#error_content_arabic_seller').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2235,12 +2220,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_return_seller').text('');
 
         if (!content_english) {
-            $('#error_content_english_return_seller').text('Please enter content in English');
+            $('#error_content_english_return_seller').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_return_seller').text('Please enter content in Arabic');
+            $('#error_content_arabic_return_seller').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2276,12 +2261,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_about_seller').text('');
 
         if (!content_english) {
-            $('#error_content_english_about_seller').text('Please enter content in English');
+            $('#error_content_english_about_seller').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_about_seller').text('Please enter content in Arabic');
+            $('#error_content_arabic_about_seller').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2317,12 +2302,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_cancellation_seller').text('');
 
         if (!content_english) {
-            $('#error_content_english_cancellation_seller').text('Please enter content in English');
+            $('#error_content_english_cancellation_seller').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_cancellation_seller').text('Please enter content in Arabic');
+            $('#error_content_arabic_cancellation_seller').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2359,12 +2344,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_exchange_seller').text('');
 
         if (!content_english) {
-            $('#error_content_english_exchange_seller').text('Please enter content in English');
+            $('#error_content_english_exchange_seller').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_exchange_seller').text('Please enter content in Arabic');
+            $('#error_content_arabic_exchange_seller').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2402,12 +2387,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_driver').text('');
 
         if (!content_english) {
-            $('#error_content_english_driver').text('Please enter content in English');
+            $('#error_content_english_driver').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_driver').text('Please enter content in Arabic');
+            $('#error_content_arabic_driver').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2447,12 +2432,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_return_driver').text('');
 
         if (!content_english) {
-            $('#error_content_english_return_driver').text('Please enter content in English');
+            $('#error_content_english_return_driver').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_return_driver').text('Please enter content in Arabic');
+            $('#error_content_arabic_return_driver').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2488,12 +2473,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_about_driver').text('');
 
         if (!content_english) {
-            $('#error_content_english_about_driver').text('Please enter content in English');
+            $('#error_content_english_about_driver').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_about_driver').text('Please enter content in Arabic');
+            $('#error_content_arabic_about_driver').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2529,12 +2514,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_cancellation_driver').text('');
 
         if (!content_english) {
-            $('#error_content_english_cancellation_driver').text('Please enter content in English');
+            $('#error_content_english_cancellation_driver').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_cancellation_driver').text('Please enter content in Arabic');
+            $('#error_content_arabic_cancellation_driver').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2571,12 +2556,12 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#error_content_arabic_exchange_driver').text('');
 
         if (!content_english) {
-            $('#error_content_english_exchange_driver').text('Please enter content in English');
+            $('#error_content_english_exchange_driver').text("{{ __('admin_messages.please_enter_content_in_english') }}");
             hasError = true;
         }
 
         if (!content_arabic) {
-            $('#error_content_arabic_exchange_driver').text('Please enter content in Arabic');
+            $('#error_content_arabic_exchange_driver').text("{{ __('admin_messages.please_enter_content_in_arabic') }}");
             hasError = true;
         }
 
@@ -2629,29 +2614,29 @@ $(document).ready(function() {
 
         // ✅ Frontend validation (instant, no reload)
         if (!question_english) {
-            $('.error-question_english').text('Please enter question in English');
+            $('.error-question_english').text("{{ __('admin_messages.please_enter_question_in_english') }}");
             hasError = true;
         }
 
         if (!answer_english) {
-            $('.error-answer_english').text('Please enter answer in English');
+            $('.error-answer_english').text("{{ __('admin_messages.please_enter_answer_in_english') }}");
             hasError = true;
         }
 
         if (!question_arabic) {
-            $('.error-question_arabic').text('Please enter question in Arabic');
+            $('.error-question_arabic').text("{{ __('admin_messages.please_enter_question_in_arabic') }}");
             hasError = true;
         }
 
         if (!answer_arabic) {
-            $('.error-answer_arabic').text('Please enter answer in Arabic');
+            $('.error-answer_arabic').text("{{ __('admin_messages.please_enter_answer_in_arabic') }}");
             hasError = true;
         }
 
         if (hasError) return;
 
         // disable button
-        $('#addFaqBtn').prop('disabled', true).find('span').text('Saving...');
+       // $('#addFaqBtn').prop('disabled', true).find('span').text('Saving...');
 
         $.ajax({
             url: "{{ route('admin.add_faq') }}",
@@ -2674,7 +2659,7 @@ $(document).ready(function() {
             },
 
             error: function(xhr) {
-                $('#addFaqBtn').prop('disabled', false).find('span').text('Add');
+                //$('#addFaqBtn').prop('disabled', false).find('span').text('Add');
 
                 let res = xhr.responseJSON;
 
@@ -2716,42 +2701,42 @@ $(document).ready(function() {
 
         // ✅ Email validation
         if (!email) {
-            $('.error-email').text('Please enter email');
+            $('.error-email').text("{{ __('admin_messages.please_enter_email_id') }}");
             hasError = true;
         } else {
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(email)) {
-                $('.error-email').text('Please enter a valid email');
+                $('.error-email').text("{{ __('admin_messages.please_enter_valid_email') }}");
                 hasError = true;
             }
         }
 
         // ✅ Mobile validation (7–15 digits)
         if (!mobile) {
-            $('.error-mobile').text('Please enter contact number');
+           $('.error-mobile').text("{{ __('admin_messages.please_enter_contact_number') }}");
             hasError = true;
         } else {
             const mobilePattern = /^\+?[0-9]{7,15}$/;
             if (!mobilePattern.test(mobile)) {
-                $('.error-mobile').text('Mobile number must be between 7 to 15 digits');
+                $('.error-mobile').text("{{ __('admin_messages.mobile_number_must_be_between_7_to_15_digits') }}");
                 hasError = true;
             }
         }
 
         if (!whatsapp) {
-            $('.error-whatsapp').text('Please enter whatsapp number');
+            $('.error-whatsapp').text("{{ __('admin_messages.please_enter_whatsapp_number') }}");
             hasError = true;
         } else {
             const whatsappPattern = /^\+?[0-9]{7,15}$/;
             if (!whatsappPattern.test(whatsapp)) {
-                $('.error-whatsapp').text('WhatsApp number must be between 7 to 15 digits');
+                $('.error-whatsapp').text("{{ __('admin_messages.whatsapp_number_must_be_between_7_to_15_digits') }}");
                 hasError = true;
             }
         }
 
         if (hasError) return;
 
-        $('#contactSubmitBtn').prop('disabled', true).find('span').text('Saving...');
+        //$('#contactSubmitBtn').prop('disabled', true).find('span').text('Saving...');
 
         $.ajax({
             url: "{{ route('admin.create_update_contact_us') }}",
@@ -2773,7 +2758,7 @@ $(document).ready(function() {
             },
 
             error: function(xhr) {
-                $('#contactSubmitBtn').prop('disabled', false).find('span').text('Submit');
+                //$('#contactSubmitBtn').prop('disabled', false).find('span').text('Submit');
 
                 let res = xhr.responseJSON;
 
@@ -2819,29 +2804,29 @@ $(document).ready(function() {
 
         // ✅ Frontend validation (instant, no reload)
         if (!question_english) {
-            $('.error-question_english_seller').text('Please enter question in English');
+            $('.error-question_english_seller').text("{{ __('admin_messages.please_enter_question_in_english') }}");
             hasError = true;
         }
 
         if (!answer_english) {
-            $('.error-answer_english_seller').text('Please enter answer in English');
+            $('.error-answer_english_seller').text("{{ __('admin_messages.please_enter_answer_in_english') }}");
             hasError = true;
         }
 
         if (!question_arabic) {
-            $('.error-question_arabic_seller').text('Please enter question in Arabic');
+            $('.error-question_arabic_seller').text("{{ __('admin_messages.please_enter_question_in_arabic') }}");
             hasError = true;
         }
 
         if (!answer_arabic) {
-            $('.error-answer_arabic_seller').text('Please enter answer in Arabic');
+            $('.error-answer_arabic_seller').text("{{ __('admin_messages.please_enter_answer_in_arabic') }}");
             hasError = true;
         }
 
         if (hasError) return;
 
         // disable button
-        $('#addFaqBtnSeller').prop('disabled', true).find('span').text('Saving...');
+       // $('#addFaqBtnSeller').prop('disabled', true).find('span').text('Saving...');
 
         $.ajax({
             url: "{{ route('admin.add_faq') }}",
@@ -2864,7 +2849,7 @@ $(document).ready(function() {
             },
 
             error: function(xhr) {
-                $('#addFaqBtnSeller').prop('disabled', false).find('span').text('Add');
+               // $('#addFaqBtnSeller').prop('disabled', false).find('span').text('Add');
 
                 let res = xhr.responseJSON;
 
@@ -2906,42 +2891,42 @@ $(document).ready(function() {
 
         // ✅ Email validation
         if (!email) {
-            $('.error-email_seller').text('Please enter email');
+            $('.error-email_seller').text("{{ __('admin_messages.please_enter_email_id') }}");
             hasError = true;
         } else {
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(email)) {
-                $('.error-email_seller').text('Please enter a valid email');
+                $('.error-email_seller').text("{{ __('admin_messages.please_enter_valid_email') }}");
                 hasError = true;
             }
         }
 
         // ✅ Mobile validation (7–15 digits)
         if (!mobile) {
-            $('.error-mobile_seller').text('Please enter contact number');
+            $('.error-mobile_seller').text("{{ __('admin_messages.please_enter_contact_number') }}");
             hasError = true;
         } else {
             const mobilePattern = /^\+?[0-9]{7,15}$/;
             if (!mobilePattern.test(mobile)) {
-                $('.error-mobile_seller').text('Mobile number must be between 7 to 15 digits');
+                $('.error-mobile_seller').text("{{ __('admin_messages.mobile_number_must_be_between_7_to_15_digits') }}");
                 hasError = true;
             }
         }
 
         if (!whatsapp) {
-            $('.error-whatsapp_seller').text('Please enter whatsapp number');
+            $('.error-whatsapp_seller').text("{{ __('admin_messages.please_enter_whatsapp_number') }}");
             hasError = true;
         } else {
             const whatsappPattern = /^\+?[0-9]{7,15}$/;
             if (!whatsappPattern.test(whatsapp)) {
-                $('.error-whatsapp_seller').text('WhatsApp number must be between 7 to 15 digits');
+                $('.error-whatsapp_seller').text("{{ __('admin_messages.whatsapp_number_must_be_between_7_to_15_digits') }}");
                 hasError = true;
             }
         }
 
         if (hasError) return;
 
-        $('#contactSubmitBtnSeller').prop('disabled', true).find('span').text('Saving...');
+       // $('#contactSubmitBtnSeller').prop('disabled', true).find('span').text('Saving...');
 
         $.ajax({
             url: "{{ route('admin.create_update_contact_us') }}",
@@ -2963,8 +2948,8 @@ $(document).ready(function() {
             },
 
             error: function(xhr) {
-                $('#contactSubmitBtnSeller').prop('disabled', false).find('span').text(
-                    'Submit');
+                // $('#contactSubmitBtnSeller').prop('disabled', false).find('span').text(
+                //     'Submit');
 
                 let res = xhr.responseJSON;
 
@@ -3010,29 +2995,29 @@ $(document).ready(function() {
 
         // ✅ Frontend validation (instant, no reload)
         if (!question_english) {
-            $('.error-question_english_driver').text('Please enter question in English');
+            $('.error-question_english_driver').text("{{ __('admin_messages.please_enter_question_in_english') }}");
             hasError = true;
         }
 
         if (!answer_english) {
-            $('.error-answer_english_driver').text('Please enter answer in English');
+            $('.error-answer_english_driver').text("{{ __('admin_messages.please_enter_answer_in_english') }}");
             hasError = true;
         }
 
         if (!question_arabic) {
-            $('.error-question_arabic_driver').text('Please enter question in Arabic');
+            $('.error-question_arabic_driver').text("{{ __('admin_messages.please_enter_question_in_arabic') }}");
             hasError = true;
         }
 
         if (!answer_arabic) {
-            $('.error-answer_arabic_driver').text('Please enter answer in Arabic');
+            $('.error-answer_arabic_driver').text("{{ __('admin_messages.please_enter_answer_in_arabic') }}");
             hasError = true;
         }
 
         if (hasError) return;
 
         // disable button
-        $('#addFaqBtnDriver').prop('disabled', true).find('span').text('Saving...');
+        //$('#addFaqBtnDriver').prop('disabled', true).find('span').text('Saving...');
 
         $.ajax({
             url: "{{ route('admin.add_faq') }}",
@@ -3055,7 +3040,7 @@ $(document).ready(function() {
             },
 
             error: function(xhr) {
-                $('#addFaqBtnDriver').prop('disabled', false).find('span').text('Add');
+                //$('#addFaqBtnDriver').prop('disabled', false).find('span').text('Add');
 
                 let res = xhr.responseJSON;
 
@@ -3097,42 +3082,42 @@ $(document).ready(function() {
 
         // ✅ Email validation
         if (!email) {
-            $('.error-email_driver').text('Please enter email');
+            $('.error-email_driver').text("{{ __('admin_messages.please_enter_email_id') }}");
             hasError = true;
         } else {
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(email)) {
-                $('.error-email_driver').text('Please enter a valid email');
+                $('.error-email_driver').text("{{ __('admin_messages.please_enter_valid_email') }}");
                 hasError = true;
             }
         }
 
         // ✅ Mobile validation (7–15 digits)
         if (!mobile) {
-            $('.error-mobile_driver').text('Please enter contact number');
+            $('.error-mobile_driver').text("{{ __('admin_messages.please_enter_contact_number') }}");
             hasError = true;
         } else {
             const mobilePattern = /^\+?[0-9]{7,15}$/;
             if (!mobilePattern.test(mobile)) {
-                $('.error-mobile_driver').text('Mobile number must be between 7 to 15 digits');
+                $('.error-mobile_driver').text("{{ __('admin_messages.mobile_number_must_be_between_7_to_15_digits') }}");
                 hasError = true;
             }
         }
 
         if (!whatsapp) {
-            $('.error-whatsapp_driver').text('Please enter whatsapp number');
+            $('.error-whatsapp_driver').text("{{ __('admin_messages.please_enter_whatsapp_number') }}");
             hasError = true;
         } else {
             const whatsappPattern = /^\+?[0-9]{7,15}$/;
             if (!whatsappPattern.test(whatsapp)) {
-                $('.error-whatsapp_driver').text('WhatsApp number must be between 7 to 15 digits');
+                $('.error-whatsapp_driver').text("{{ __('admin_messages.whatsapp_number_must_be_between_7_to_15_digits') }}");
                 hasError = true;
             }
         }
 
         if (hasError) return;
 
-        $('#contactSubmitBtnDriver').prop('disabled', true).find('span').text('Saving...');
+        //$('#contactSubmitBtnDriver').prop('disabled', true).find('span').text('Saving...');
 
         $.ajax({
             url: "{{ route('admin.create_update_contact_us') }}",
@@ -3154,8 +3139,8 @@ $(document).ready(function() {
             },
 
             error: function(xhr) {
-                $('#contactSubmitBtnDriver').prop('disabled', false).find('span').text(
-                    'Submit');
+                // $('#contactSubmitBtnDriver').prop('disabled', false).find('span').text(
+                //     'Submit');
 
                 let res = xhr.responseJSON;
 
@@ -3213,29 +3198,29 @@ $(document).ready(function () {
         let hasError = false;
 
         if (!qe) {
-            $('.error-edit_question_english').text('Please enter question in English');
+            $('.error-edit_question_english').text("{{ __('admin_messages.please_enter_question_in_english') }}");
             hasError = true;
         }
 
         if (!ae) {
-            $('.error-edit_answer_english').text('Please enter answer in English');
+            $('.error-edit_answer_english').text("{{ __('admin_messages.please_enter_answer_in_english') }}");
             hasError = true;
         }
 
         if (!qa) {
-            $('.error-edit_question_arabic').text('Please enter question in Arabic');
+            $('.error-edit_question_arabic').text("{{ __('admin_messages.please_enter_question_in_arabic') }}");
             hasError = true;
         }
 
         if (!aa) {
-            $('.error-edit_answer_arabic').text('Please enter answer in Arabic');
+            $('.error-edit_answer_arabic').text("{{ __('admin_messages.please_enter_answer_in_arabic') }}");
             hasError = true;
         }
 
         if (hasError) return;
 
         // disable button
-        $('#updateFaqBtn').prop('disabled', true).find('span').text('Updating...');
+        //$('#updateFaqBtn').prop('disabled', true).find('span').text('Updating...');
 
         $.ajax({
             url: "{{ route('admin.update_faq') }}",
@@ -3259,7 +3244,7 @@ $(document).ready(function () {
 
             error: function (xhr) {
 
-                $('#updateFaqBtn').prop('disabled', false).find('span').text('Update');
+               // $('#updateFaqBtn').prop('disabled', false).find('span').text('Update');
 
                 let res = xhr.responseJSON;
 
@@ -3316,28 +3301,28 @@ $(document).ready(function () {
         let hasError = false;
 
         if (!qe) {
-            $('.error-edit_question_english_seller').text('Please enter question in English');
+            $('.error-edit_question_english_seller').text("{{ __('admin_messages.please_enter_question_in_english') }}");
             hasError = true;
         }
 
         if (!ae) {
-            $('.error-edit_answer_english_seller').text('Please enter answer in English');
+            $('.error-edit_answer_english_seller').text("{{ __('admin_messages.please_enter_answer_in_english') }}");
             hasError = true;
         }
 
         if (!qa) {
-            $('.error-edit_question_arabic_seller').text('Please enter question in Arabic');
+            $('.error-edit_question_arabic_seller').text("{{ __('admin_messages.please_enter_question_in_arabic') }}");
             hasError = true;
         }
 
         if (!aa) {
-            $('.error-edit_answer_arabic_seller').text('Please enter answer in Arabic');
+            $('.error-edit_answer_arabic_seller').text("{{ __('admin_messages.please_enter_answer_in_arabic') }}");
             hasError = true;
         }
 
         if (hasError) return;
 
-        $('#updateFaqBtnSeller').prop('disabled', true).find('span').text('Updating...');
+       // $('#updateFaqBtnSeller').prop('disabled', true).find('span').text('Updating...');
 
         $.ajax({
             url: "{{ route('admin.update_faq') }}",
@@ -3361,7 +3346,7 @@ $(document).ready(function () {
 
             error: function (xhr) {
 
-                $('#updateFaqBtnSeller').prop('disabled', false).find('span').text('Update');
+               // $('#updateFaqBtnSeller').prop('disabled', false).find('span').text('Update');
 
                 let res = xhr.responseJSON;
 
@@ -3418,28 +3403,28 @@ $(document).ready(function () {
         let hasError = false;
 
         if (!qe) {
-            $('.error-edit_question_english_driver').text('Please enter question in English');
+            $('.error-edit_question_english_driver').text("{{ __('admin_messages.please_enter_question_in_english') }}");
             hasError = true;
         }
 
         if (!ae) {
-            $('.error-edit_answer_english_driver').text('Please enter answer in English');
+            $('.error-edit_answer_english_driver').text("{{ __('admin_messages.please_enter_answer_in_english') }}");
             hasError = true;
         }
 
         if (!qa) {
-            $('.error-edit_question_arabic_driver').text('Please enter question in Arabic');
+            $('.error-edit_question_arabic_driver').text("{{ __('admin_messages.please_enter_question_in_arabic') }}");
             hasError = true;
         }
 
         if (!aa) {
-            $('.error-edit_answer_arabic_driver').text('Please enter answer in Arabic');
+            $('.error-edit_answer_arabic_driver').text("{{ __('admin_messages.please_enter_answer_in_arabic') }}");
             hasError = true;
         }
 
         if (hasError) return;
 
-        $('#updateFaqBtnDriver').prop('disabled', true).find('span').text('Updating...');
+       // $('#updateFaqBtnDriver').prop('disabled', true).find('span').text('Updating...');
 
         $.ajax({
             url: "{{ route('admin.update_faq') }}",
@@ -3463,7 +3448,7 @@ $(document).ready(function () {
 
             error: function (xhr) {
 
-                $('#updateFaqBtnDriver').prop('disabled', false).find('span').text('Update');
+               // $('#updateFaqBtnDriver').prop('disabled', false).find('span').text('Update');
 
                 let res = xhr.responseJSON;
 
@@ -3493,13 +3478,14 @@ document.addEventListener('DOMContentLoaded', function () {
             let faqId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "This FAQ will be permanently deleted!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
 
                 if (result.isConfirmed) {
@@ -3512,7 +3498,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             'Accept': 'application/json'
                         },
                         body: JSON.stringify({
-                            faq_id: faqId   // ✅ IMPORTANT
+                            faq_id: faqId   
                         })
                     })
                     .then(response => response.json())
