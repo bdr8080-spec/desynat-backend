@@ -13,14 +13,14 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Refund Management</h2>
+            <h2 class="h2">{{ __('admin_messages.refund_management') }}</h2>
         </div>
 
         <div class="col-lg-3 col-md-4 col-12">
             @if(in_array(32, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
                 <a href="{{ route('admin.export_refund_data', request()->all()) }}" class="btn btn-dark customBtn" href="">
-                    <span>Export</span>
+                    <span>{{ __('admin_messages.export') }}</span>
                 </a>
             </div>
             @endif
@@ -35,7 +35,7 @@
                 <!-- From Date Filter -->
                 <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="from_date" class="form-label">From:</label>
+                        <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
                         <input type="date" id="from_date" name="from_date" class="form-control"
                             value="{{ request()->from_date }}"
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -45,7 +45,7 @@
                 <!-- To Date Filter -->
                 <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="to_date" class="form-label">To:</label>
+                        <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
                         <input type="date" id="to_date" name="to_date" class="form-control"
                             value="{{ request()->to_date }}"
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -53,14 +53,18 @@
                 </div>
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Country</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_country') }}</label>
                         <select name="country_name" id="country_name" onchange="document.getElementById('filterForm').submit();" class="form-select form-select-lg">
-                            <option value="">Select country</option>
+                            <option value="">{{ __('admin_messages.select_country') }}</option>
 
                             @foreach($countries as $country)
                                 <option value="{{ $country->name }}"
                                     {{ request('country_name') == $country->name ? 'selected' : '' }}>
+                                    @if(app()->getLocale() == 'en')
                                     {{ $country->name }}
+                                    @else
+                                    {{ $country->name_ar }}
+                                    @endif
                                 </option>
                             @endforeach
                         </select>
@@ -69,7 +73,7 @@
                 <div class="col-lg-2 col-md-12 col-12">
                     <div class="d-dlex justify-content-end mt-5">
                         <a href="{{route('admin.refundManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
-                            <span>Reset</span></a>
+                            <span>{{ __('admin_messages.reset') }}</span></a>
                     </div>
                 </div>
                 
@@ -81,30 +85,36 @@
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
-                            <th scope="col">SR No.</th>
-                            <th scope="col">Transaction ID</th>
-                            <th scope="col">Order ID</th>
-                            <th scope="col">Order Date & Time</th>
-                            <th scope="col">Cancellation Date & Time</th>
-                            <th scope="col">Seller Name</th>
-                            <th scope="col">User Name </th>
-                            <th scope="col">User Country</th>
-                            <th scope="col">Reason</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                            <th scope="col">{{ __('admin_messages.transaction_id') }}</th>
+                            <th scope="col">{{ __('admin_messages.order_id') }}</th>
+                            <th scope="col">{{ __('admin_messages.order_date_time') }}</th>
+                            <th scope="col">{{ __('admin_messages.cancellation_date_&_time') }}</th>
+                            <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                            <th scope="col">{{ __('admin_messages.user_name') }} </th>
+                            <th scope="col">{{ __('admin_messages.country') }}</th>
+                            <th scope="col">{{ __('admin_messages.reason') }}</th>
+                            <th scope="col">{{ __('admin_messages.amount') }}</th>
+                            <th scope="col">{{ __('admin_messages.status') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($refundData['data'] as $data)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{$data->order->transaction_id ?? 'N/A'}}</td>
-                            <td>{{$data->order->order_id ?? 'N/A'}}</td>
+                            <td>{{$data->order->transaction_id ?? __('admin_messages.na')}}</td>
+                            <td>{{$data->order->order_id ?? __('admin_messages.na')}}</td>
                             <td>{{ $data->created_at->format('jS F Y | g:i A') }} </td>
                             <td>{{ $data->updated_at->format('jS F Y | g:i A') }}</td>
-                            <td>{{$data->product_details->seller_details->first_name ?? 'N/A'}} {{$data->product_details->seller_details->last_name ?? ''}}</td>
-                            <td>{{$data->user_details->full_name ?? 'N/A'}}</td>
-                            <td>{{$data->user_details->country_info->name ?? 'N/A'}}</td>
+                            <td>{{$data->product_details->seller_details->first_name ?? __('admin_messages.na')}} {{$data->product_details->seller_details->last_name ?? ''}}</td>
+                            <td>{{$data->user_details->full_name ?? __('admin_messages.na')}}</td>
+                            <td>
+                                @if(app()->getLocale() == 'en')
+                                {{$data->user_details->country_info->name ?? __('admin_messages.na')}}
+                                @else
+                                {{$data->user_details->country_info->name_ar ?? __('admin_messages.na')}}
+                                @endif
+                            </td>
                             <td>@if(!empty($data->cancel_reason))
                                     <a class="table-button view-owner-btn"
                                     type="button"
@@ -114,11 +124,11 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                 @else
-                                    N/A
+                                    {{__('admin_messages.na')}}
                                 @endif
                             </td>
-                            <td>{{$data->amount}} KD</td>
-                            <td>Pending</td>
+                            <td>{{$data->amount}} {{__('admin_messages.kd')}}</td>
+                            <td>{{__('admin_messages.pending')}}</td>
                         </tr>
                          @empty
 
@@ -134,7 +144,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Reason</h2>
+                <h2 class="h2">{{__('admin_messages.reason')}}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

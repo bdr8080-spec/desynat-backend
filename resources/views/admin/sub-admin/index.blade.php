@@ -101,14 +101,14 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Sub-admin management</h2>
+            <h2 class="h2">{{ __('admin_messages.sub_admin_management') }}</h2>
         </div>
 
         <div class="col-lg-3 col-md-4 col-12">
             @if(in_array(31, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
                 <a class="btn btn-dark customBtn" href="{{route('admin.add_subadmin')}}">
-                    <span>Add Sub-admin</span>
+                    <span>{{ __('admin_messages.add_sub_admin') }}</span>
                 </a>
             </div>
             @endif
@@ -121,14 +121,18 @@
             <div class="row align-items-end">
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Country</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_country') }}</label>
                         <select name="country_id" id="country_id" onchange="document.getElementById('filterForm').submit();" class="form-select form-select-lg">
-                            <option value="">Select country</option>
+                            <option value="">{{ __('admin_messages.select_country') }}</option>
 
                             @foreach($countries as $country)
                                 <option value="{{ $country->id }}"
                                     {{ request('country_id') == $country->id ? 'selected' : '' }}>
+                                    @if(app()->getLocale() == 'en')
                                     {{ $country->name }}
+                                    @else
+                                    {{ $country->name_ar }}
+                                    @endif
                                 </option>
                             @endforeach
                         </select>
@@ -136,19 +140,19 @@
                 </div>
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Filter by status</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_status') }}</label>
                         <select name="status" id="status"
                             onchange="document.getElementById('filterForm').submit();"
                             class="form-select form-select-lg">
 
-                            <option value="">Select</option>
+                            <option value="">{{ __('admin_messages.select_status') }}</option>
 
                             <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>
-                                Active
+                                {{ __('admin_messages.active') }}
                             </option>
 
                             <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>
-                                Inactive
+                                {{ __('admin_messages.inactive') }}
                             </option>
 
                         </select>
@@ -156,7 +160,7 @@
                 </div>
                 <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="from_date" class="form-label">From:</label>
+                        <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
                         <input type="date" id="from_date" name="from_date" class="form-control"
                             value="{{ request()->from_date }}"
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -164,7 +168,7 @@
                 </div>
                 <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="to_date" class="form-label">To:</label>
+                        <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
                         <input type="date" id="to_date" name="to_date" class="form-control"
                             value="{{ request()->to_date }}"
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -173,7 +177,7 @@
                 <div class="col-lg-2 col-md-12 col-12">
                     <div class="d-dlex justify-content-end mt-5">
                         <a href="{{route('admin.subAdminManagement')}}" class="btn btn-dark customBtn w-50 mt-2">
-                            <span>Reset</span></a>
+                            <span>{{ __('admin_messages.reset') }}</span></a>
                     </div>
                 </div>
 
@@ -184,19 +188,19 @@
                 <table id="myTable" class="table w-100 custom-table">
                     <thead>
                         <tr>
-                            <th>SR No.</th>
-                            <th>Date</th>
-                            <th>Name</th>
-                            <th>Image</th>
-                            <th>Phone number</th>
-                            <th>Country</th>
-                            <th>Email</th>
-                            <th>View module</th>
-                            <th>View credentials</th>
-                            <th>Send credentials</th>
-                            <th>Status</th>
+                            <th>{{ __('admin_messages.s_no') }}</th>
+                            <th>{{ __('admin_messages.date') }}</th>
+                            <th>{{ __('admin_messages.name') }}</th>
+                            <th>{{ __('admin_messages.image') }}</th>
+                            <th>{{ __('admin_messages.phone_number') }}</th>
+                            <th>{{ __('admin_messages.country') }}</th>
+                            <th>{{ __('admin_messages.email_id') }}</th>
+                            <th>{{ __('admin_messages.view_module') }}</th>
+                            <th>{{ __('admin_messages.view_credential') }}</th>
+                            <th>{{ __('admin_messages.send_credential') }}</th>
+                            <th>{{ __('admin_messages.status') }}</th>
                             @if(in_array(31, $permissions) || $admin->type == 1)
-                            <th>Action</th>
+                            <th>{{ __('admin_messages.action') }}</th>
                             @endif
                         </tr>
                     </thead>
@@ -213,12 +217,18 @@
                                 <img src="{{$data->profile_pic}}" alt="Profile Image" width="40px" height="40px"
                                     class="square" />
                                     @else
-                                    N/A
+                                    {{ __('admin_messages.na') }}
                                     @endif
                             </td>
 
                             <td>{{$data->country_code}} {{$data->mobile}}</td>
-                            <td>{{$data->country_info->name}}</td>
+                            <td>
+                                @if(app()->getLocale() == 'en')
+                                {{$data->country_info->name}}
+                                @else
+                                {{$data->country_info->name_ar}}
+                                @endif
+                            </td>
                             <td>{{$data->email}}</td>
 
                             <!-- View module -->
@@ -255,9 +265,9 @@
                             <!-- Status -->
                             <td>
                                 @if($data->status=='1')
-                                <span class="status active">Active</span>
+                                <span class="status active">{{ __('admin_messages.active') }}</span>
                                 @else
-                                <span class="status active">Inactive</span>
+                                <span class="status active">{{ __('admin_messages.inactive') }}</span>
                                 @endif
                             </td>
 
@@ -308,7 +318,7 @@
         <div class="modal-content">
 
             <div class="modal-header management border-0">
-                <h2 class="h2" id="sentModal1Label">Modules</h2>
+                <h2 class="h2" id="sentModal1Label">{{ __('admin_messages.modules') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -320,7 +330,7 @@
 
                             <div id="moduleContainer">
 
-                                <p class="text-muted text-center">No modules found</p>
+                                <p class="text-muted text-center">{{ __('admin_messages.no_data_found') }}</p>
 
                             </div>
 
@@ -340,19 +350,19 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h3 class="modal-title fs-5">Credential</h3>
+                <h3 class="modal-title fs-5">{{ __('admin_messages.view_credential') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
 
                 <div class="form-group mb-2">
-                    <label class="form-label">Email</label>
+                    <label class="form-label">{{ __('admin_messages.email_id') }}</label>
                     <input type="text" id="cred_email" class="form-control" readonly>
                 </div>
 
                 <div class="form-group mb-2">
-                    <label class="form-label">Password</label>
+                    <label class="form-label">{{ __('admin_messages.password') }}</label>
                     <input type="text" id="cred_password" class="form-control" readonly>
                 </div>
 
@@ -475,7 +485,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             modules.forEach((item) => {
 
-                const moduleName = item?.module_details?.display_name || 'Module';
+                const locale = "{{ app()->getLocale() }}";
+
+                const moduleName = locale === 'en'
+                    ? (item?.module_details?.display_name || '')
+                    : (item?.module_details?.display_name_ar || '');
 
                 const canView = Number(item.can_view) === 1;
                 const canEdit = Number(item.can_action) === 1;
@@ -507,7 +521,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (html === '') {
-            container.innerHTML = `<p class="text-center text-muted">No modules found</p>`;
+            container.innerHTML = `<p class="text-center text-muted">{{ __('admin_messages.no_data_found') }}</p>`;
         } else {
             container.innerHTML = html;
         }
@@ -596,13 +610,14 @@ document.addEventListener('DOMContentLoaded', function () {
             let row = this.closest('tr');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
 
                 if (!result.isConfirmed) return;

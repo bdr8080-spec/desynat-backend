@@ -162,7 +162,7 @@
                     <i class="fas fa-angle-left"></i>
                 </a>
             </div>
-            <h2 class="h2 text-start">Add Sub Admin</h2>
+            <h2 class="h2 text-start">{{ __('admin_messages.add_sub_admin') }}</h2>
         </div>
 
         <div class="row">
@@ -186,14 +186,14 @@
             <div class="col-lg-6">
 
                 <div class="form-group">
-                    <label class="form-label">Full name(English)</label>
-                    <input type="text" name="full_name" class="form-control" placeholder="Enter full name in English"
+                    <label class="form-label">{{ __('admin_messages.full_name_english') }}</label>
+                    <input type="text" name="full_name" class="form-control" placeholder="{{ __('admin_messages.enter_full_name_in_english') }}"
                         oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
                     <small class="text-danger error" id="error_full_name"></small>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Phone number</label>
+                    <label class="form-label">{{ __('admin_messages.phone_number') }}</label>
                     <div class="input-group">
                         <div class="dropdown" style="width: 20%; position: absolute;">
                             <button
@@ -234,7 +234,7 @@
                         </div>
 
 
-                        <input type="text" name="mobile" class="form-control" placeholder="Enter phone number"
+                        <input type="text" name="mobile" class="form-control" placeholder="{{ __('admin_messages.enter_mobile_number') }}"
                             oninput="this.value = this.value.replace(/\D/g, '').slice(0, 15);">
                       </div>
                         <div class="d-flex gap-2">
@@ -245,8 +245,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <input type="text" id="old_password" name="password" class="form-control" placeholder="Enter password">
+                    <label class="form-label">{{ __('admin_messages.password') }}</label>
+                    <input type="text" id="old_password" name="password" class="form-control" placeholder="{{ __('admin_messages.enter_password') }}">
                     <i class="fas fa-eye toggle-password1" onclick="togglePasswordVisibility1()"
                                     style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 
@@ -254,13 +254,17 @@
                 </div>
 
                 <div class="form-group w-100">
-                    <label class="form-label">Country</label>
+                    <label class="form-label">{{ __('admin_messages.select_country') }}</label>
 
                     <select name="country_id" class="form-select form-select-lg">
-                        <option value="">Select country</option>
+                        <option value="">{{ __('admin_messages.select_country') }}</option>
                         @foreach($country as $data)
                         <option value="{{ $data->id }}">
-                            {{ $data->name }}
+                            @if(app()->getLocale() == 'en')
+                                  {{ $data->name }}
+                                  @else
+                                  {{ $data->name_ar }}
+                                  @endif
                         </option>
                         @endforeach
                     </select>
@@ -273,22 +277,22 @@
             <div class="col-lg-6">
 
                 <div class="form-group">
-                    <label class="form-label">Full name(Arabic)</label>
+                    <label class="form-label">{{ __('admin_messages.full_name_arabic') }}</label>
                     <input type="text" name="full_name_ar" class="form-control" dir="rtl" style="text-align: right;"
-                        placeholder="Enter full name in Arabic"
+                        placeholder="{{ __('admin_messages.enter_full_name_in_arabic') }}"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <small class="text-danger error" id="error_full_name_ar"></small>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="text" name="email" class="form-control" placeholder="Enter email address" >
+                    <label class="form-label">{{ __('admin_messages.email') }}</label>
+                    <input type="text" name="email" class="form-control" placeholder="{{ __('admin_messages.enter_email_id') }}" >
                     <small class="text-danger error" id="error_email"></small>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Confirm password</label>
-                    <input type="text" id="new_password" name="confirm_password" class="form-control" placeholder="Confirm password">
+                    <label class="form-label">{{ __('admin_messages.confirm_password') }}</label>
+                    <input type="text" id="new_password" name="confirm_password" class="form-control" placeholder="{{ __('admin_messages.enter_confirm_password') }}">
                       <i class="fas fa-eye toggle-password2" onclick="togglePasswordVisibility2()"
                                     style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                
@@ -298,7 +302,7 @@
             </div>
         </div>
 
-        <h2 class="h2 text-start">Access Modules</h2>
+        <h2 class="h2 text-start">{{ __('admin_messages.access_modules') }}</h2>
 
         <div class="row">
             <div class="col-lg-12">
@@ -308,7 +312,13 @@
 
                     <div class="module-block">
 
-                        <h5>{{ $module->display_name }}</h5>
+                        <h5>
+                            @if(app()->getLocale() == 'en')
+                            {{ $module->display_name }}
+                            @else
+                            {{ $module->display_name_ar }}
+                            @endif
+                        </h5>
 
                         <input type="hidden" name="modules[{{ $index }}][module_id]" value="{{ $module->id }}">
 
@@ -316,12 +326,12 @@
 
                             <label class="custom-checkbox">
                                 <input type="checkbox" class="view-checkbox" data-index="{{ $index }}">
-                                View
+                                {{ __('admin_messages.view') }}
                             </label>
 
                             <label class="custom-checkbox">
                                 <input type="checkbox" class="edit-checkbox" data-index="{{ $index }}">
-                                Edit
+                                {{ __('admin_messages.edit') }}
                             </label>
 
                             <!-- <label class="custom-checkbox">
@@ -348,7 +358,7 @@
 
         <!-- Submit -->
         <div class="text-center  mt-3 mb-4">
-            <button type="button" class="btn btn-dark customBtn px-4 w-25">Add</button>
+            <button type="button" class="btn btn-dark customBtn px-4 w-25">{{ __('admin_messages.add') }}</button>
         </div>
 
     </div>
@@ -589,43 +599,43 @@ document.addEventListener('DOMContentLoaded', function() {
         // }
 
         if (!full_name) {
-            setError('full_name', 'Please enter full name in English');
+            setError('full_name', "{{ __('admin_messages.please_enter_full_name_in_english') }}");
             valid = false;
         }
       
             if (!mobile) {
-            setError('mobile', 'Please enter mobile number');
+            setError('mobile', "{{ __('admin_messages.please_enter_mobile_number') }}");
             valid = false;
             } else if (!/^\d{7,15}$/.test(mobile)) {
-            setError('mobile', 'Mobile number must be 7 to 15 digits');
+            setError('mobile', "{{ __('admin_messages.mobile_number_must_be_between_7_to_15_digits') }}");
             valid = false;
             }
         if (!full_name_ar) {
-            setError('full_name_ar', 'Please enter full name in Arabic');
+            setError('full_name_ar', "{{ __('admin_messages.please_enter_full_name_in_arabic') }}");
             valid = false;
         }
 
         if (!email) {
-            setError('email', 'Please enter email');
+            setError('email', "{{ __('admin_messages.please_enter_email_id') }}");
             valid = false;
         } else if (!validateEmail(email)) {
-            setError('email', 'Please enter valid email');
+            setError('email', "{{ __('admin_messages.please_enter_valid_email') }}");
             valid = false;
         }
 
         if (!password) {
-            setError('password', 'Please enter password');
+            setError('password', "{{ __('admin_messages.please_enter_password') }}");
             valid = false;
         } else if (!validatePassword(password)) {
-            setError('password', 'Password must be 8+ chars with uppercase, number & special character');
+            setError('password', "{{ __('admin_messages.password_must_be_8_chars_uppercase_number_special') }}");
             valid = false;
         }
 
         if (!confirm_password) {
-            setError('confirm_password', 'Please confirm password');
+            setError('confirm_password', "{{ __('admin_messages.please_confirm_password') }}");
             valid = false;
         } else if (password !== confirm_password) {
-            setError('confirm_password', 'Confirm password does not match');
+            setError('confirm_password', "{{ __('admin_messages.confirm_password_does_not_match') }}");
             valid = false;
         }
 
@@ -636,7 +646,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         if (!hasModule) {
-            setError('modules', 'Please select at least one module');
+            setError('modules', "{{ __('admin_messages.please_select_at_least_one_module') }}");
             valid = false;
         }
 
