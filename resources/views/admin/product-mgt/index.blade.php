@@ -60,14 +60,14 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Product Management</h2>
+            <h2 class="h2">{{ __('admin_messages.product_management') }}</h2>
         </div>
 
         <div class="col-lg-3 col-md-4 col-12">
             @if(in_array(22, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
                 <a href="{{ route('admin.export_products_data', request()->all()) }}" class="btn btn-dark customBtn" href="">
-                    <span>Export</span>
+                    <span>{{ __('admin_messages.export') }}</span>
                 </a>
             </div>
             @endif
@@ -80,15 +80,19 @@
             <div class="row align-items-end">
                 <div class="col-lg-2 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Country</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_country') }}</label>
                         <select name="country" id="country"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select country</option>
+                            <option value="">{{ __('admin_messages.select_country') }}</option>
                             @foreach($countries as $country)
                             <option value="{{ $country['id'] }}"
                                 {{ request('country') == $country['id'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $country['name'] }}
+                                @else
+                                {{ $country['name_ar'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -96,15 +100,19 @@
                 </div>
                 <div class="col-lg-2 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Category</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_category') }}</label>
                         <select name="category" id="category"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select Category</option>
+                            <option value="">{{ __('admin_messages.select_category') }}</option>
                             @foreach($categories as $category)
                             <option value="{{ $category['id'] }}"
                                 {{ request('category') == $category['id'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $category['name'] }}
+                                @else
+                                {{ $category['name_ar'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -113,15 +121,19 @@
 
                 <div class="col-lg-2 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Sub-Category</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_sub_category') }}</label>
                         <select name="subcategory" id="subcategory"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select Sub-Category</option>
+                            <option value="">{{ __('admin_messages.select_sub_category') }}</option>
                             @foreach($subcategories as $subcategory)
                             <option value="{{ $subcategory['id'] }}"
                                 {{ request('subcategory') == $subcategory['id'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $subcategory['name_english'] }}
+                                @else
+                                {{ $subcategory['name_arabic'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -129,15 +141,19 @@
                 </div>
                 <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Brand</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_brand') }}</label>
                         <select name="brand" id="brand"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select Brand</option>
+                            <option value="">{{ __('admin_messages.select_brand') }}</option>
                             @foreach($brands as $brand)
                             <option value="{{ $brand['id'] }}"
                                 {{ request('brand') == $brand['id'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $brand['name_english'] }}
+                                @else
+                                {{ $brand['name_arabic'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -147,7 +163,7 @@
                     <div class="d-flex gap-3 justify-content-end" >
                         <a href="{{route('admin.productManagement')}}" class="btn btn-dark customBtn"
                             style="margin-top: 60px">
-                            <span>Reset</span>
+                            <span>{{ __('admin_messages.reset') }}</span>
                         </a>
                     </div>
                 </div>
@@ -158,43 +174,73 @@
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
-                            <th scope="col">SR No.</th>
-                            <th scope="col">Seller Name</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Sub-Category</th>
-                            <th scope="col">Brand</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Specification</th>
-                            <th scope="col">Actual Price</th>
-                            <th scope="col">Size Chart</th>
-                            <th scope="col">View Variants</th>
-                            <th scope="col">More Details</th>
-                            <th scope="col">Rating</th>
+                            <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                            <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                            <th scope="col">{{ __('admin_messages.country') }}</th>
+                            <th scope="col">{{ __('admin_messages.image') }}</th>
+                            <th scope="col">{{ __('admin_messages.category') }}</th>
+                            <th scope="col">{{ __('admin_messages.sub_category') }}</th>
+                            <th scope="col">{{ __('admin_messages.brand') }}</th>
+                            <th scope="col">{{ __('admin_messages.product_name') }}</th>
+                            <th scope="col">{{ __('admin_messages.description') }}</th>
+                            <th scope="col">{{ __('admin_messages.specification') }}</th>
+                            <th scope="col">{{ __('admin_messages.actual_price') }}</th>
+                            <th scope="col">{{ __('admin_messages.size_chart') }}</th>
+                            <th scope="col">{{ __('admin_messages.view_variants') }}</th>
+                            <th scope="col">{{ __('admin_messages.more_details') }}</th>
+                            <th scope="col">{{ __('admin_messages.rating') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($products as $index => $product)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td>{{$product['seller_details']['first_name']}} {{$product['seller_details']['last_name']}}</td>
-                            <td>{{$product['store']['country_info']['name']??'N/A'}}</td>
+                            <td>{{$product['seller_details']['first_name'] ?? __('admin_messages.na')}} {{$product['seller_details']['last_name'] ?? ''}}</td>
+                            <td>
+                                @if(app()->getLocale() == 'en')
+                                {{$product['store']['country_info']['name']?? __('admin_messages.na')}}
+                                @else
+                                {{$product['store']['country_info']['name_ar']?? __('admin_messages.na')}}
+                                @endif
+                            </td>
                             <td>
                                 <img src="{{$product['product_variants'][0]['variant_image'][0]}}" alt="Profile Image" width="40px" height="40px"
                                     class="square" />
                             </td>
-                            <td>{{$product['category']['name']}}</td>
-                            <td>{{$product['subcategory']['name_english'] ?? 'N/A'}}</td>
-                            <td>{{$product['brand']['name_english']??'N/A'}}</td>
-                            <td>{{$product['product_name_en']}}</td>
+                            <td>
+                                @if(app()->getLocale() == 'en')
+                                {{$product['category']['name']}}
+                                @else
+                                {{$product['category']['name_ar']}}
+                                @endif
+                            </td>
+                            <td>
+                                @if(app()->getLocale() == 'en')
+                                {{$product['subcategory']['name_english'] ?? __('admin_messages.na')}}
+                                @else
+                                {{$product['subcategory']['name_arabic'] ?? __('admin_messages.na')}}
+                                @endif
+                            </td>
+                            <td>
+                                @if(app()->getLocale() == 'en')
+                                {{$product['brand']['name_english']?? __('admin_messages.na')}}
+                                @else
+                                {{$product['brand']['name_arabic']?? __('admin_messages.na')}}
+                                @endif
+                            </td>
+                            <td>
+                                @if(app()->getLocale() == 'en')
+                                {{$product['product_name_en']}}
+                                @else
+                                {{$product['product_name_ar']}}
+                                @endif
+                            </td>
                             <td>
                                 <a class="table-button view-description-btn"
                                 type="button"
                                 data-bs-toggle="modal"
                                 data-bs-target="#sentModal1"
-                                data-description="{{ $product['description_en'] }}">
+                                data-description="{{ app()->getLocale() == 'en' ? $product['description_en'] : $product['description_ar'] }}">
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
                             </td>
@@ -207,7 +253,7 @@
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
                             </td>
-                            <td>{{$product['product_variants'][0]['actual_price']}} KD</td>
+                            <td>{{$product['product_variants'][0]['actual_price']}} {{__('admin_messages.kd')}}</td>
                             <td>
                                 <a class="table-button view-size-chart-btn"
                                 type="button"
@@ -254,7 +300,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Description</h2>
+                <h2 class="h2">{{ __('admin_messages.description') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -265,7 +311,7 @@
                         <div class="col-lg-12 col-md-12 col-12">
 
                             <div class="mb-3">
-                                <p class="fw-normal" id="modalDescription">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, eveniet amet assumenda sint illo rerum impedit quibusdam labore soluta. Illum minima nisi tempora voluptatem tempore perspiciatis dolorum deleniti iste iure.</p>
+                                <p class="fw-normal" id="modalDescription"></p>
                             </div>
                         </div>
 
@@ -283,7 +329,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title fs-5">Specification</h3>
+                <h3 class="modal-title fs-5">{{ __('admin_messages.specification') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -302,7 +348,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h3 class="modal-title fs-5">Variant</h3>
+                <h3 class="modal-title fs-5">{{ __('admin_messages.variant') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -321,7 +367,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title">Size Chart</h5>
+                <h5 class="modal-title">{{ __('admin_messages.size_chart') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -340,7 +386,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title fs-5">More Details</h3>
+                <h3 class="modal-title fs-5">{{ __('admin_messages.more_details') }}</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -382,15 +428,17 @@ document.addEventListener('DOMContentLoaded', function () {
             tableBody.innerHTML = '';
 
             if (specs.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="2">No specifications found</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="2">{{ __("admin_messages.no_specifications_found") }}</td></tr>';
                 return;
             }
+
+            const locale = "{{ app()->getLocale() }}";
 
             specs.forEach(spec => {
                 const row = `
                     <tr>
-                        <th>${spec.name_en}</th>
-                        <td>${spec.feature_en}</td>
+                        <th>${locale === 'en' ? spec.name_en : spec.name_ar}</th>
+                        <td>${locale === 'en' ? spec.feature_en : spec.feature_ar}</td>
                     </tr>
                 `;
                 tableBody.insertAdjacentHTML('beforeend', row);
@@ -439,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const container = document.getElementById('variantContainer');
 
     function valueOrNA(value) {
-        return (value === null || value === undefined || value === '') ? 'N/A' : value;
+        return (value === null || value === undefined || value === '') ?  "{{ __('admin_messages.na') }}" : value;
     }
 
     buttons.forEach(button => {
@@ -449,16 +497,16 @@ document.addEventListener('DOMContentLoaded', function () {
             container.innerHTML = '';
 
             if (!variants || variants.length === 0) {
-                container.innerHTML = '<p class="text-muted">No variants found</p>';
+                container.innerHTML = '<p class="text-muted">{{ __("admin_messages.no_variants_found") }}</p>';
                 return;
             }
 
             variants.forEach((variant, index) => {
 
                 let discountText = '';
-                if (variant.discount_value) {
+               if (variant.discount_value) {
                     discountText = variant.discount_value +
-                        (variant.discount_type == 1 ? ' %' : ' KD');
+                        (variant.discount_type == 1 ? ' %' : ' {{ __("admin_messages.kd") }}');
                 }
 
                 const images = variant.variant_image || [];
@@ -475,26 +523,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     return `<div class="v-row"><span>${label}</span><span>${value}${suffix}</span></div>`;
                 }
+                const locale = "{{ app()->getLocale() }}";
 
                 const html = `
                 <div class="variant-box ${index !== 0 ? 'mt-4' : ''}">
-                    <h6 class="variant-heading">Variant ${index + 1}</h6>
+                    <h6 class="variant-heading">{{ __("admin_messages.variant") }} ${index + 1}</h6>
 
                     <div class="variant-inner">
+                    
                         <div class="variant-left">
 
-                            ${createRow('Color', variant.color?.name)}
-                            ${createRow('Size', variant.size?.name)}
-                            ${createRow('Bust', variant.bust)}
-                            ${createRow('Waist', variant.waist)}
-                            ${createRow('Hip', variant.hip)}
-                            ${createRow('Shoulder', variant.shoulder)}
-                            ${createRow('Sleeve Length', variant.sleeve_length)}
-                            ${createRow('Length', variant.length)}
-                            ${createRow('Total Stock', variant.total_stock)}
-                            ${createRow('SKU', variant.sku)}
-                            ${createRow('Price', variant.actual_price, ' KD')}
-                            ${createRow('Discount', discountText)}
+                            ${createRow("{{ __('admin_messages.color') }}", locale === 'en' ? variant.color?.name : variant.color?.name_ar)}
+                            ${createRow("{{ __('admin_messages.size') }}", locale === 'en' ? variant.size?.name : variant.size?.name_ar)}
+                            ${createRow("{{ __('admin_messages.bust') }}", variant.bust)}
+                            ${createRow("{{ __('admin_messages.waist') }}", variant.waist)}
+                            ${createRow("{{ __('admin_messages.hip') }}", variant.hip)}
+                            ${createRow("{{ __('admin_messages.shoulder') }}", variant.shoulder)}
+                            ${createRow("{{ __('admin_messages.sleeve_length') }}", variant.sleeve_length)}
+                            ${createRow("{{ __('admin_messages.length') }}", variant.length)}
+                            ${createRow("{{ __('admin_messages.total_stock') }}", variant.total_stock)}
+                            ${createRow("{{ __('admin_messages.sku') }}", variant.sku)}
+                            ${createRow("{{ __('admin_messages.price') }}", variant.actual_price, " {{ __('admin_messages.kd') }}")}
+                            ${createRow("{{ __('admin_messages.discount') }}", discountText)}
 
                         </div>
 
@@ -522,11 +572,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const tableBody = document.getElementById('moreDetailsBody');
 
     function yesNo(value) {
-        return value == 1 ? 'Yes' : 'No';
+        return value == 1 ? "{{ __('admin_messages.yes') }}" : "{{ __('admin_messages.no') }}";
     }
 
     function valueOrNA(value) {
-        return (value === null || value === '') ? 'N/A' : value;
+        return (value === null || value === '') ? "{{ __('admin_messages.na') }}" : value;
     }
 
     buttons.forEach(button => {
@@ -536,16 +586,16 @@ document.addEventListener('DOMContentLoaded', function () {
             tableBody.innerHTML = '';
 
             const rows = [
-                ['Min. Cart Value', valueOrNA(product.min_card_quantity)],
-                ['Max. Cart Value', valueOrNA(product.max_card_quantity)],
-                ['Product Refundable', yesNo(product.product_return)],
-                ['Review & Rating Allowed', yesNo(product.review_rating)],
-                ['Affiliate Products', yesNo(product.affiliated_product)],
-                ['Customized Products', yesNo(product.customized_product)],
-                ['Ready to Ship', yesNo(product.ready_to_ship)],
-                ['Cash on Delivery Allowed', yesNo(product.cash_on_delivery)],
-                ['Return Days', valueOrNA(product.return_days)],
-                ['Exchange Days', valueOrNA(product.exchangable_days)]
+                ["{{ __('admin_messages.min_cart_value') }}", valueOrNA(product.min_card_quantity)],
+                ["{{ __('admin_messages.max_cart_value') }}", valueOrNA(product.max_card_quantity)],
+                ["{{ __('admin_messages.product_refundable') }}", yesNo(product.product_return)],
+                ["{{ __('admin_messages.review_rating_allowed') }}", yesNo(product.review_rating)],
+                ["{{ __('admin_messages.affiliate_products') }}", yesNo(product.affiliated_product)],
+                ["{{ __('admin_messages.customized_products') }}", yesNo(product.customized_product)],
+                ["{{ __('admin_messages.ready_to_ship') }}", yesNo(product.ready_to_ship)],
+                ["{{ __('admin_messages.cash_on_delivery_allowed') }}", yesNo(product.cash_on_delivery)],
+                ["{{ __('admin_messages.return_days') }}", valueOrNA(product.return_days)],
+                ["{{ __('admin_messages.exchange_days') }}", valueOrNA(product.exchangable_days)]
             ];
 
             rows.forEach(row => {

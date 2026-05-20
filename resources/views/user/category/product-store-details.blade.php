@@ -167,7 +167,7 @@
                     <del class="text-muted me-2" id="actualPrice">
                     {{ number_format(convertPriceInUserWeb($firstVariant['actual_price']), 2) }}  {{ $currency }} 
                     </del>
-                    <span class="text-danger fw-semibold">{{$firstVariant['discount_value']}}% off</span>
+                    <span class="text-danger fw-semibold">{{$firstVariant['discount_value']}}% {{ __('user_messages.off') }}</span>
                     @endif
 
                 </div>

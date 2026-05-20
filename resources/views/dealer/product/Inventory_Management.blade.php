@@ -88,7 +88,7 @@ $can_action=$menu_permission['can_action'];
 
                 {{-- All Product show --}}
                 <div class="table-responsive">
-                    <table  class="table  table-bordered @if(count($data['all_product_data']) > 0 ) datatable @endif" id="table1">
+                    <table  class="table  table-bordered @if(count($data['all_product_data']) > 0 ) datatable @endif"  @if(count($data['all_product_data']) > 0) id="table1" @endif>
                         <thead>
                             <tr>
                                  <th class="no-sort" >{{ __('seller_messages.S.No') }}</th>
@@ -232,7 +232,7 @@ $can_action=$menu_permission['can_action'];
 
                 {{-- // Active product List  --}}
                 <div class="table-responsive">
-                    <table class="table table-bordered @if(count($data['active_product']) > 0 ) datatable   @endif" id="table2">
+                    <table class="table table-bordered @if(count($data['active_product']) > 0 ) datatable   @endif"  @if(count($data['active_product']) > 0) id="table2" @endif>
                         <thead>
                             <tr>
                                   <th class="no-sort" >{{ __('seller_messages.S.No') }}</th>
@@ -370,7 +370,9 @@ $can_action=$menu_permission['can_action'];
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered  @if(count($data['inactive_product']) > 0 ) datatable  @endif" id="table3">
+                    <table class="table table-bordered  @if(count($data['inactive_product']) > 0 ) datatable  @endif" @if(count($data['inactive_product']) > 0)
+    id="table3"
+@endif >
                         
                         <thead>
                             <tr>
@@ -463,7 +465,7 @@ $can_action=$menu_permission['can_action'];
 
                              @empty
                       <tr>
-                          <td colspan="10" class="text-center text-muted">No product found</td>
+                          <td colspan="10" class="text-center text-muted">{{ __('seller_messages.No_Product_found') }}</td>
                       </tr>
                   @endforelse
 
@@ -545,6 +547,42 @@ $can_action=$menu_permission['can_action'];
         });
     </script>
 
+<script>
+
+// search Box Code 
+
+    $(document).ready(function() {
+
+        let dataTables = {};
+
+        $('.tableSearch').each(function() {
+
+            let tableId = $(this).data('table');
+
+            // Initialize table only once
+            if (!$.fn.DataTable.isDataTable('#' + tableId)) {
+                dataTables[tableId] = $('#' + tableId).DataTable({
+                    paging: false,
+                    ordering: true,
+                    info: false,
+                    searching: true
+                });
+            } else {
+                dataTables[tableId] = $('#' + tableId).DataTable();
+            }
+        });
+
+        // Search handler
+        $('.tableSearch').on('keyup', function() {
+            let tableId = $(this).data('table');
+            let value = $(this).val();
+
+            dataTables[tableId].search(value).draw();
+        });
+
+    });
+
+</script>
 
 
 

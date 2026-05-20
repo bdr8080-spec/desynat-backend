@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class all_countrie extends Model
 {
-    
+      protected $guarded=[];
 }

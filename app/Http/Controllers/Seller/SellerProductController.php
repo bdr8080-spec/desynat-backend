@@ -1117,8 +1117,8 @@ public function product_delete(Request $request, $id){
     
       $all_records= $this->SellerProductService->AllProduct($request_data);
 
-      
       $data=$all_records['data'];
+
 
     return view('dealer.product.Inventory_Management',compact('category','brand','data'));
 
@@ -1402,7 +1402,7 @@ public function Add_product_code1(Request $request){
                     $stockValue = $totalStock[$index][$index1] ?? null;
 
                     if ($stockValue !== null && $skuValue1 >= $stockValue) {
-                        $validate->errors()->add("sku.$index.$index1", "__('seller_messages.sku_limit_exceeded')");
+                        $validate->errors()->add("sku.$index.$index1",__('seller_messages.sku_limit_exceeded'));
                     }
                 }
 

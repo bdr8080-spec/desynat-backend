@@ -140,6 +140,7 @@ $(document).ready(function() {
 
         // Search handler
         $('.tableSearch').on('keyup', function() {
+
             let tableId = $(this).data('table');
             let value = $(this).val();
 
