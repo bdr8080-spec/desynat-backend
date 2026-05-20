@@ -91,8 +91,15 @@
                         <div class="plan-card plan-shadow plan-circle">
                             <div class="plan-circle plan-shadow p-3">
                                 <div class="pkg-list">
-                                    <h6>Package Name</h6>
-                                    <h6 class="font-600">{{ $plans->plan_name_english }}</h6>
+                                     <h6>{{ __('seller_messages.Package_Name') }}</h6>
+                                    <h6 class="font-600">
+                                    @if(App::getlocale()=='en')    
+                                        {{ $plans->plan_name_english }}
+                                    @else
+                                        {{ $plans->plan_name_arabic }}
+                                    @endif
+                                </h6>
+                            
                                 </div>
                                 
                                 <!-- <div class="pkg-list">
@@ -124,18 +131,18 @@
                             @endphp
 
                             <div class="pkg-list">
-                                <h6>Price</h6>
-                                <h6 class="font-600">{{ number_format($amount, 2) }} KD</h6>
+                                <h6>{{ __('seller_messages.Price') }}</h6>
+                                <h6 class="font-600">{{ number_format($amount, 2) }} {{ __('seller_messages.KD') }}</h6>
                             </div>
 
                             <div class="pkg-list">
-                                <h6>Duration</h6>
+                                <h6>{{ __('seller_messages.Duration') }}</h6>
                                 <h6 class="font-600">
                                     {{ $plans->duration }}
                                     @if ($plans->duration_type == '1')
-                                        Month
+                                        {{ __('seller_messages.Month') }}
                                     @else
-                                        Year
+                                          {{ __('seller_messages.Year') }}
                                     @endif
                                 </h6>
                             </div>
@@ -143,28 +150,28 @@
 
                             <div class="plan-body p-3">
                                 <ul class="list-inline">
-                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of Products:
+                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg"> {{ __('seller_messages.Number_of_Products') }}:
                                         <span class="font-600">{{ $plans->no_of_products }}</span>
                                     </li>
-                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of Videos
-                                        (Reels): <span class="font-600">{{ $plans->no_of_videos }}</span></li>
-                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
-                                        Highlights:
+                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">  {{ __('seller_messages.Number_of_Videos_Reels') }}:
+                                       <span class="font-600">{{ $plans->no_of_videos }}</span></li>
+                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">{{ __('seller_messages.Number_of_Highlights') }}:
                                         <span class="font-600">{{ $plans->no_of_highlights }}</span>
                                     </li>
-                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">No of Stories:
-                                    <span class="font-600">Unlimited</span
+                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">{{ __('seller_messages.No_of_Stories') }}:
+
+                                    <span class="font-600">{{ __('seller_messages.Unlimited') }}</span
                                         </li>
-                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">No of Employees:
+                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">{{ __('seller_messages.No_of_Employees') }}:
                                     <span class="font-600">{{ $plans->no_of_employee }}</span
                                     </li>
                                     @if ($plans->commission == '1')
-                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Commission :
+                                    <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">{{ __('seller_messages.Commission') }}:
                                         <span class="font-600">{{ $plans->commission_percentage }}%</span>
                                     </li>
                                     @endif
                                     @if (!empty($plans->no_of_free_months))
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">No Of free Months :
+                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg"> {{ __('seller_messages.No_Of_Free_Months') }}:
                                             <span class="font-600">{{ $plans->no_of_free_months }} </span>
                                         </li>
                                     @endif
@@ -185,15 +192,15 @@
                             <div class="plan-card plan-shadow plan-circle">
                                 <div class="plan-body p-3 pt-4">
                                     <div class="cmn-header">
-                                        <h1><a href="#"><i class="bi bi-chevron-left"></i></a> Payment method</h1>
+                                        <h1><a href="#"><i class="bi bi-chevron-left"></i></a>  {{ __('seller_messages.Payment_method') }}</h1>
                                     </div>
-                                    <div class="payment py-3">SELECT PAYMENT METHOD</div>
+                                    <div class="payment py-3"> {{ __('seller_messages.SELECT_PAYMENT_METHOD') }}</div>
 
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="payment_method"
                                             value="Myfatoorah" checked>
                                         <label class="form-check-label" for="flexRadioDefault2">
-                                            Myfatoorah
+                                            {{ __('seller_messages.Myfatoorah') }}
                                         </label>
                                     </div>
 
@@ -216,17 +223,17 @@
                                     @endphp
 
                                     <div class="total-pnl mt-4">
-                                        <div class="tamount">Total Amount</div>
-                                        <div class="price-kd"> {{ $amount }} KD</div>
+                                        <div class="tamount">{{ __('seller_messages.Total_Amount') }}</div>
+                                        <div class="price-kd"> {{ $amount }} {{ __('seller_messages.KD') }}</div>
                                     </div>
 
 
                                     <div class="py-3 mt-3">
 
-                                        <input type="submit" name="submit" value="Pay Now"
+                                        <input type="submit" name="submit" value="{{ __('seller_messages.Pay_Now') }}"
                                             class="btn btn-success w-100">
 
-                                        {{-- <a href="package-page.php" class="btn btn-success w-100">Pay Now</a> --}}
+                                        {{-- <a href="package-page.php" class="btn btn-success w-100">{{ __('seller_messages.Pay_Now') }}</a> --}}
                                     </div>
 
                                 </div>
@@ -251,7 +258,7 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
-                        <div class="title24 py-3">Plan Purchased Successfully!</div>
+                        <div class="title24 py-3"> {{ __('seller_messages.Plan_Purchased_Successfully') }}</div>
                     </div>
                 </div>
             </div>

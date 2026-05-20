@@ -1679,5 +1679,34 @@ return [
 "No_Plan_Found_You_Canot_Add_Staff"=>"No Plan Found You Canot Add Staff", 
 
 
+// Single Plan Show Web 
+
+   // Plan Page
+    'Package_Name' => 'Package Name',
+    'Price' => 'Price',
+    'Duration' => 'Duration',
+    'Month' => 'Month',
+    'Year' => 'Year',
+
+    // Plan Features
+    'Number_of_Products' => 'Number of Products',
+    'Number_of_Videos_Reels' => 'Number of Videos (Reels)',
+    'Number_of_Highlights' => 'Number of Highlights',
+    'No_of_Stories' => 'No of Stories',
+    'Unlimited' => 'Unlimited',
+    'No_of_Employees' => 'No of Employees',
+    'Commission' => 'Commission',
+    'No_Of_Free_Months' => 'No Of Free Months',
+
+    // Payment Section
+    'Payment_method' => 'Payment method',
+    'SELECT_PAYMENT_METHOD' => 'SELECT PAYMENT METHOD',
+    'Total_Amount' => 'Total Amount',
+    'Pay_Now' => 'Pay Now',
+
+    // Success Message
+    'Plan_Purchased_Successfully' => 'Plan Purchased Successfully!',
+    "Myfatoorah"=>"Myfatoorah"
+
 
 ];
