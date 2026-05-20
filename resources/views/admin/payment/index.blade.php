@@ -154,11 +154,11 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <td>#{{$payment->order->order_id}}</td>
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                                 <td>{{ $payment->updated_at->format('jS F Y | g:i A') }}</td>
-                                <td>{{$payment->user_details->full_name}}</td>
+                                <td>{{$payment->user_details->full_name ?? 'N/A'}}</td>
                                 <td>{{$payment->product_details->seller_details->first_name?? ''}}
                                     {{$payment->product_details->seller_details->last_name??''}}</td>
                                 <td>#{{$payment->id}}</td>
-                                <td>{{$payment->user_details->country_info->name}}</td>
+                                <td>{{$payment->user_details->country_info->name ?? 'N/A'}}</td>
                                 <td>{{$payment->total_paid_amount}} KD</td>
                                 <td>
                                     {{ $payment->promocode_details->name_english ?? 'No' }}

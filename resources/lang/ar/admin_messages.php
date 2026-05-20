@@ -821,6 +821,15 @@ return [
     'select_all' => 'تحديد الكل',
     'please_select_at_least_one_recipient' => 'يرجى اختيار مستلم واحد على الأقل',
     'notification_sent_successfully' => 'تم إرسال الإشعار بنجاح',
+    'user' => 'مستخدم',
+    'affiliate_user' => 'مستخدم أفلييت',
+    'seller' => 'بائع',
+    'delivery_boy' => 'مندوب توصيل',
+    'search_user' => 'بحث عن مستخدم',
+    'search_affiliate_user' => 'بحث عن مستخدم أفلييت',
+    'search_seller' => 'بحث عن بائع',
+    'search_delivery_boy' => 'بحث عن مندوب توصيل',
+    'select_all' => 'تحديد الكل',
 
     //ticket management
     'new' => 'جديد',
