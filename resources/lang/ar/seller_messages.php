@@ -1689,4 +1689,33 @@ return [
 "No_Plan_Found_You_Canot_Add_Staff" => "لم يتم العثور على خطة، لا يمكنك إضافة موظفين",
     
 
+// Single Plan Show Web 
+
+ // Plan Page
+    'Package_Name' => 'اسم الباقة',
+    'Price' => 'السعر',
+    'Duration' => 'المدة',
+    'Month' => 'شهر',
+    'Year' => 'سنة',
+
+    // Plan Features
+    'Number_of_Products' => 'عدد المنتجات',
+    'Number_of_Videos_Reels' => 'عدد الفيديوهات (ريلز)',
+    'Number_of_Highlights' => 'عدد المميزات',
+    'No_of_Stories' => 'عدد القصص',
+    'Unlimited' => 'غير محدود',
+    'No_of_Employees' => 'عدد الموظفين',
+    'Commission' => 'العمولة',
+    'No_Of_Free_Months' => 'عدد الأشهر المجانية',
+
+    // Payment Section
+    'Payment_method' => 'طريقة الدفع',
+    'SELECT_PAYMENT_METHOD' => 'اختر طريقة الدفع',
+    'Total_Amount' => 'المبلغ الإجمالي',
+    'Pay_Now' => 'ادفع الآن',
+
+    // Success Message
+    'Plan_Purchased_Successfully' => 'تم شراء الخطة بنجاح!',
+     "Myfatoorah"=>"ميفاتورة"
+     
 ];
