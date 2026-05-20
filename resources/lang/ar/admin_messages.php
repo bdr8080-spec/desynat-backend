@@ -698,7 +698,7 @@ return [
     'min_cart_value' => 'الحد الأدنى لقيمة السلة',
     'max_cart_value' => 'الحد الأقصى لقيمة السلة',
     'product_refundable' => 'المنتج قابل للاسترجاع',
-    'review_&_rating_allowed' => 'السماح بالتقييم والمراجعة',
+    'review_rating_allowed' => 'السماح بالتقييم والمراجعة',
     'affiliate_products' => 'منتجات التسويق بالعمولة',
     'customized_products' => 'منتجات مخصصة',
     'ready_to_ship' => 'جاهز للشحن',
@@ -706,6 +706,21 @@ return [
     'return_days' => 'أيام الإرجاع',
     'exchange_days' => 'أيام الاستبدال',
     'rating' => 'التقييم',
+    'no_specifications_found' => 'لا توجد مواصفات',
+    'variant' => 'النوع',
+    'no_variants_found' => 'لا توجد متغيرات',
+    'color' => 'اللون',
+    'size' => 'المقاس',
+    'bust' => 'الصدر',
+    'waist' => 'الخصر',
+    'hip' => 'الورك',
+    'shoulder' => 'الكتف',
+    'sleeve_length' => 'طول الكم',
+    'length' => 'الطول',
+    'total_stock' => 'إجمالي المخزون',
+    'sku' => 'رمز المنتج',
+    'price' => 'السعر',
+    'discount' => 'الخصم',
 
     //affiliate user withdraw request management
     'user_name' => 'اسم المستخدم',
@@ -713,6 +728,7 @@ return [
     'requested_amount' => 'المبلغ المطلوب',
     'bank_account_number' => 'رقم الحساب البنكي',
     'transaction_id' => 'رقم المعاملة',
+
 
     //cms management
     'user' => 'المستخدم',
