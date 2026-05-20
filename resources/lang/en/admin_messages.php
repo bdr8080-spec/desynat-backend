@@ -866,6 +866,10 @@ return [
     'plan_name' => 'Plan Name',
     'gift_card_name' => 'Gift Card Name',
     'purchased_by' => 'Purchased By',
+    'online' => 'Online',
+    'wallet' => 'Wallet',
+    'cod' => 'Cash on Delivery',
+    'amount' => 'Amount',
 
     //current live seller
     'watch_live' => 'Watch Live',

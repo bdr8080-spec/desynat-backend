@@ -134,20 +134,20 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Transaction Id</th>
-                                <th scope="col">Order Date & Time</th>
-                                <th scope="col">Transaction Date & Time</th>
-                                <th scope="col">Customer name</th>
-                                <th scope="col">Seller name</th>
-                                <th scope="col">Order Id</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Total Charges</th>
-                                <th scope="col">Applied Promo Code</th>
-                                <th scope="col">Applied Gift Card</th>
-                                <th scope="col">Discount</th>
-                                <th scope="col">Commission</th>
-                                <th scope="col">Payment Mode</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.transaction_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_date_time') }}</th>
+                                <th scope="col">{{ __('admin_messages.transaction_date_time') }}</th>
+                                <th scope="col">{{ __('admin_messages.customer_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.total_charges') }}</th>
+                                <th scope="col">{{ __('admin_messages.applied_promo_code') }}</th>
+                                <th scope="col">{{ __('admin_messages.applied_gift_card') }}</th>
+                                <th scope="col">{{ __('admin_messages.discount') }}</th>
+                                <th scope="col">{{ __('admin_messages.commission') }}</th>
+                                <th scope="col">{{ __('admin_messages.payment_mode') }}</th>
 
                             </tr>
                         </thead>
@@ -158,27 +158,43 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <td>#{{$payment->order->order_id}}</td>
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                                 <td>{{ $payment->updated_at->format('jS F Y | g:i A') }}</td>
-                                <td>{{$payment->user_details->full_name ?? 'N/A'}}</td>
-                                <td>{{$payment->product_details->seller_details->first_name?? ''}}
+                                <td>{{$payment->user_details->full_name ?? __('admin_messages.na')}}</td>
+                                <td>{{$payment->product_details->seller_details->first_name?? __('admin_messages.na')}}
                                     {{$payment->product_details->seller_details->last_name??''}}</td>
                                 <td>#{{$payment->id}}</td>
-                                <td>{{$payment->user_details->country_info->name ?? 'N/A'}}</td>
-                                <td>{{$payment->total_paid_amount}} KD</td>
                                 <td>
-                                    {{ $payment->promocode_details->name_english ?? 'No' }}
+                                    @if(app()->getLocale() == 'en')
+                                    {{$payment->user_details->country_info->name ?? __('admin_messages.na')}}
+                                    @else
+                                    {{$payment->user_details->country_info->name_ar ?? __('admin_messages.na')}}
+                                    @endif
                                 </td>
-                                <td>{{ $payment->gift_card_details->name_english ?? 'No' }}</td>
-                                <td>{{$payment->total_discount}} KD</td>
-                                <td>{{$payment->affiliate_admin_commission ?? '0'}} KD</td>
+                                <td>{{$payment->total_paid_amount}} {{__('admin_messages.kd')}}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $payment->promocode_details->name_english ?? __('admin_messages.no') }}
+                                    @else
+                                    {{ $payment->promocode_details->name_arabic ?? __('admin_messages.no') }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $payment->gift_card_details->name_english ?? __('admin_messages.no') }}
+                                    @else
+                                    {{ $payment->gift_card_details->name_arabic ?? __('admin_messages.no') }}
+                                    @endif
+                                </td>
+                                <td>{{$payment->total_discount}} {{__('admin_messages.kd')}}</td>
+                                <td>{{$payment->affiliate_admin_commission ?? '0'}} {{__('admin_messages.kd')}}</td>
                                 <td>
                                     @if($payment->order?->payment_method == 1)
-                                    Online
+                                    {{__('admin_messages.online')}}
                                     @elseif($payment->order?->payment_method == 2)
-                                    Wallet
+                                    {{__('admin_messages.wallet')}}
                                     @elseif($payment->order?->payment_method == 3)
-                                    COD
+                                    {{__('admin_messages.cod')}}
                                     @else
-                                    -
+                                    {{__('admin_messages.na')}}
                                     @endif
                                 </td>
                             </tr>
@@ -268,13 +284,13 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Transaction ID</th>
-                                <th scope="col">Seller Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Plan Name</th>
-                                <th scope="col">Date & Time</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.transaction_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.plan_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_date_time') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -282,11 +298,23 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>#{{ $payment->transaction_id }}</td>
-                                <td>{{ $payment->seller_details->first_name }} {{ $payment->seller_details->last_name }}
+                                <td>{{ $payment->seller_details->first_name ?? __('admin_messages.na') }} {{ $payment->seller_details->last_name ?? '' }}
                                 </td>
-                                <td>{{ $payment->seller_details->store_info->country_info->name }}</td>
-                                <td>{{ $payment->amount }} KD</td>
-                                <td>{{ $payment->plan_info->plan_name_english }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $payment->seller_details->store_info->country_info->name ?? __('admin_messages.na')}}
+                                    @else
+                                    {{ $payment->seller_details->store_info->country_info->name_ar ?? __('admin_messages.na')}}
+                                    @endif
+                                </td>
+                                <td>{{ $payment->amount }} {{__('admin_messages.kd')}}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $payment->plan_info->plan_name_english }}
+                                    @else
+                                    {{ $payment->plan_info->plan_name_arabic }}
+                                    @endif
+                                </td>
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                             </tr>
                             @empty
@@ -376,13 +404,13 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Transaction ID</th>
-                                <th scope="col">Gift Card Name</th>
-                                <th scope="col">Purchased By</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Date & Time</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.transaction_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.gift_card_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.purchased_by') }}</th>
+                                <th scope="col">{{ __('admin_messages.amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_date_time') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -390,10 +418,22 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>#{{ $payment->transaction_id }}</td>
-                                <td>{{ $payment->gift_details->name_english ?? 'N/A' }}</td>
-                                <td>{{ $payment->user_details->full_name }}</td>
-                                <td>{{ $payment->user_details->country_info->name }}</td>
-                                <td>{{ $payment->amount }} KD</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $payment->gift_details->name_english ?? __('admin_messages.na') }}
+                                    @else
+                                    {{ $payment->gift_details->name_arabic ?? __('admin_messages.na') }}
+                                    @endif
+                                </td>
+                                <td>{{ $payment->user_details->full_name ?? __('admin_messages.order_date_time') }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $payment->user_details->country_info->name ?? __('admin_messages.order_date_time') }}
+                                    @else
+                                    {{ $payment->user_details->country_info->name_ar ?? __('admin_messages.order_date_time') }}
+                                    @endif
+                                </td>
+                                <td>{{ $payment->amount }} {{__('admin_messages.kd')}}</td>
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                             </tr>
                             @empty
@@ -481,13 +521,13 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     <table id="myTable3" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Transaction ID</th>
-                                <th scope="col">Request ID</th>
-                                <th scope="col">Seller Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Date & Time</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.transaction_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.request_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.order_date_time') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -496,10 +536,16 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>#{{ $payment->transaction_id }}</td>
                                 <td>#{{ $payment->order_id }}</td>
-                                <td>{{ $payment->seller_details->first_name ?? '' }}
+                                <td>{{ $payment->seller_details->first_name ?? __('admin_messages.na') }}
                                     {{ $payment->seller_details->last_name ?? '' }}</td>
-                                <td>{{ $payment->seller_details->store_info->country_info->name ?? 'N/A' }}</td>
-                                <td>{{ $payment->price }} KD</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $payment->seller_details->store_info->country_info->name ?? __('admin_messages.na') }}
+                                    @else
+                                    {{ $payment->seller_details->store_info->country_info->name_ar ?? __('admin_messages.na') }}
+                                    @endif
+                                </td>
+                                <td>{{ $payment->price }} {{__('admin_messages.kd')}}</td>
                                 <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
                             </tr>
                             @empty

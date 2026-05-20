@@ -865,6 +865,10 @@ return [
     'plan_name' => 'اسم الخطة',
     'gift_card_name' => 'اسم بطاقة الهدايا',
     'purchased_by' => 'تم الشراء بواسطة',
+    'online' => 'أونلاين',
+    'wallet' => 'المحفظة',
+    'cod' => 'الدفع عند الاستلام',
+    'amount' => 'المبلغ',
 
     //current live seller
     'watch_live' => 'مشاهدة مباشرة',
