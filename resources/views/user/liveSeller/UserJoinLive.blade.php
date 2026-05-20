@@ -16,8 +16,8 @@
     <div class="container">
 
     <div class="d-flex justify-content-between">
-        <h4>Watch Live</h4>
-        <button onclick="leaveStream()" class="btn btn-danger">Leave</button>
+        <h4>{{ __('user_messages.watch_live') }}</h4>
+        <button onclick="leaveStream()" class="btn btn-danger">{{ __('user_messages.leave') }}</button>
     </div>
 
 <input type="hidden" id="channel" value="{{ request()->channel_id }}">
@@ -25,13 +25,13 @@
 
 
 <h3 style="display: none;">
-    👥 Watching: <span id="user-count">0</span>
+    👥 {{ __('user_messages.watching') }}: <span id="user-count">0</span>
 </h3>
 
 <!-- WAITING -->
 <div id="waiting-message" style="text-align:center; padding:40px;">
-    <h3>⏳ Waiting for seller to go LIVE</h3>
-    <p>Please stay tuned...</p>
+    <h3>⏳ {{ __('user_messages.waiting_for_seller_to_go_live') }</h3>
+    <p>{{ __('user_messages.please_stay_tuned') }}</p>
 </div>
 
 <!-- VIDEO -->

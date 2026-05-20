@@ -10,10 +10,19 @@ return [
 
     'arabic' => 'عربي',
     'english' => 'إنجليزي',
+
+    
     'please_select_a_color' => 'يرجى اختيار لون.',
     'please_select_a_size' => 'يرجى اختيار المقاس.',
     'please_select_product_and_variant' => 'يرجى اختيار المنتج والمواصفة.',
     'no_size_chart_available' => 'لا يوجد جدول مقاسات متاح.',
+    'seller_live' => 'البائع مباشر',
+    'no_live_request_found' => 'لا يوجد طلب مباشر',
+    'watch_live' => 'شاهد البث المباشر',
+    'leave' => 'مغادرة',
+    'watching' => 'المشاهدون',
+    'waiting_for_seller_to_go_live' => 'في انتظار بدء البث المباشر من البائع',
+    'please_stay_tuned' => 'يرجى الانتظار...',
 
     //common
     'no_data_found' => 'لم يتم العثور على بيانات',
