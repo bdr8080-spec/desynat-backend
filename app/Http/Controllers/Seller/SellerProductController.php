@@ -1117,8 +1117,8 @@ public function product_delete(Request $request, $id){
     
       $all_records= $this->SellerProductService->AllProduct($request_data);
 
-      
       $data=$all_records['data'];
+
 
     return view('dealer.product.Inventory_Management',compact('category','brand','data'));
 
