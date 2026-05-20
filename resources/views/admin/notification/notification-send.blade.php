@@ -109,7 +109,7 @@
                 </a>
             </div>
 
-            <h2 class="h2">Send Notification Management </h2>
+            <h2 class="h2">{{ __('admin_messages.send_notification') }}</h2>
         </div>
     </div>
 
@@ -117,30 +117,30 @@
         <!-- LEFT FORM -->
         <div class="col-md-4">
             <div class="mb-3">
-                <label class="form-group">Notification Title (English)</label>
-                <input type="text" id="title_english" placeholder="Enter Title English " oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                <label class="form-group">{{ __('admin_messages.notification_title_english') }}</label>
+                <input type="text" id="title_english" placeholder="{{ __('admin_messages.enter_title_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" />
             </div>
             <h6 class="text-danger error-title_english"></h6>
 
             <div class="mb-3">
-                <label class="form-group">Notification Title (Arabic)</label>
-                <input type="text" id="title_arabic" placeholder="Enter Title Arabic" dir="rtl" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                <label class="form-group">{{ __('admin_messages.notification_title_arabic') }}</label>
+                <input type="text" id="title_arabic" placeholder="{{ __('admin_messages.enter_title_arabic') }}" dir="rtl" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" />
             </div>
             <h6 class="text-danger error-title_arabic"></h6>
 
             <div class="mb-3">
-                <label class="form-group">Notification Description (English)</label>
-                <textarea rows="4" id="description_english" placeholder="Enter Description" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control"></textarea>
+                <label class="form-group">{{ __('admin_messages.notification_description_english') }}</label>
+                <textarea rows="4" id="description_english" placeholder="{{ __('admin_messages.enter_description_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control"></textarea>
             </div>
             <h6 class="text-danger error-description_english"></h6>
 
             <div class="mb-4">
-                <label class="form-group">Notification Description (Arabic)</label>
-                <textarea rows="4" id="description_arabic"  placeholder="Enter Description"  dir="rtl" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control"></textarea>
+                <label class="form-group">{{ __('admin_messages.notification_description_arabic') }}</label>
+                <textarea rows="4" id="description_arabic"  placeholder="{{ __('admin_messages.enter_description_arabic') }}"  dir="rtl" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control"></textarea>
             </div>
             <h6 class="text-danger error-description_arabic"></h6>
 
-            <button type="button" id="sendNotificationBtn" class="btn btn-dark customBtn px-4">Send</button>
+            <button type="button" id="sendNotificationBtn" class="btn btn-dark customBtn px-4">{{ __('admin_messages.send') }}</button>
         </div>
 
         <!-- RIGHT MULTI SELECT -->
@@ -153,11 +153,11 @@
 
                         <!-- Search -->
                         <input type="text" class="search-box users-search form-control"
-                            placeholder="Search users">
+                            placeholder="{{ __('admin_messages.search_user') }}">
 
                         <!-- Select All -->
                         <div class="user-item d-flex justify-content-between mt-3">
-                            <label>Select All</label>
+                            <label>{{ __('admin_messages.select_all') }}</label>
                             <input type="checkbox" class="users-select-all">
                         </div>
 
@@ -188,11 +188,11 @@
 
                         <!-- Search -->
                         <input type="text" class="search-box affiliate-search form-control"
-                            placeholder="Search affiliate user">
+                            placeholder="{{ __('admin_messages.search_affiliate_user') }}">
 
                         <!-- Select All -->
                         <div class="user-item d-flex justify-content-between mt-3">
-                            <label>Select All</label>
+                            <label>{{ __('admin_messages.select_all') }}</label>
                             <input type="checkbox" class="affiliate-select-all">
                         </div>
 
@@ -223,11 +223,11 @@
 
                         <!-- Search -->
                         <input type="text" class="search-box seller-search form-control"
-                            placeholder="Search seller">
+                            placeholder="{{ __('admin_messages.search_seller') }}">
 
                         <!-- Select All -->
                         <div class="user-item d-flex justify-content-between mt-3">
-                            <label>Select All</label>
+                            <label>{{ __('admin_messages.select_all') }}</label>
                             <input type="checkbox" class="seller-select-all">
                         </div>
 
@@ -258,11 +258,11 @@
 
                         <!-- Search -->
                         <input type="text" class="search-box delivery-search form-control"
-                            placeholder="Search delivery boys">
+                            placeholder="{{ __('admin_messages.search_delivery_boy') }}">
 
                         <!-- Select All -->
                         <div class="user-item d-flex justify-content-between mt-3">
-                            <label>Select All</label>
+                            <label>{{ __('admin_messages.select_all') }}</label>
                             <input type="checkbox" class="delivery-select-all">
                         </div>
 
@@ -317,22 +317,22 @@ document.addEventListener("DOMContentLoaded", function () {
         // ✅ FRONTEND VALIDATION
 
         if (!titleEnglish) {
-            showError("title_english", "Please enter notification title in English");
+            showError("title_english", "{{ __('admin_messages.please_enter_notification_title_in_english') }}");
             isValid = false;
         }
 
         if (!titleArabic) {
-            showError("title_arabic", "Please enter notification title in Arabic");
+            showError("title_arabic", "{{ __('admin_messages.please_enter_notification_title_in_arabic') }}");
             isValid = false;
         }
 
         if (!descEnglish) {
-            showError("description_english", "Please enter notification description in English");
+            showError("description_english", "{{ __('admin_messages.please_enter_notification_description_in_english') }}");
             isValid = false;
         }
 
         if (!descArabic) {
-            showError("description_arabic", "Please enter notification description in Arabic");
+            showError("description_arabic", "{{ __('admin_messages.please_enter_notification_description_in_arabic') }}");
             isValid = false;
         }
 
@@ -348,7 +348,7 @@ document.addEventListener("DOMContentLoaded", function () {
             sellers.length === 0 &&
             drivers.length === 0
         ) {
-            toastr.error("Please select at least one recipient");
+            toastr.error("{{ __('admin_messages.please_select_at_least_one_recipient') }}");
             isValid = false;
         }
 

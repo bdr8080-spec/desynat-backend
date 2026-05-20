@@ -13,7 +13,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Tickets Management </h2>
+            <h2 class="h2">{{ __('admin_messages.ticket_management') }} </h2>
         </div>
 
 
@@ -24,21 +24,21 @@
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="false">
-                    New
+                    {{ __('admin_messages.new') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="true">
-                    Ongoing
+                    {{ __('admin_messages.ongoing') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-return-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-return" type="button" role="tab" aria-controls="pills-return"
                     aria-selected="false">
-                    Past
+                    {{ __('admin_messages.past') }}
                 </button>
             </li>
         </ul>
@@ -50,7 +50,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="from_date" class="form-label">From:</label>
+                                <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
                                 <input type="date" id="from_date" name="from_date" class="form-control"
                                     value="{{ request()->from_date }}"
                                     onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -59,7 +59,7 @@
 
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to_date" class="form-label">To:</label>
+                                <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
                                 <input type="date" id="to_date" name="to_date" class="form-control"
                                     value="{{ request()->to_date }}"
                                     onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -67,14 +67,18 @@
                         </div>
                         <div class="col-lg-3 col-md-3 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Ticket type</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.ticket_type') }}</label>
 
                                 <select name="ticket_type_filter" id="ticket_type_filter" onchange="document.getElementById('filterForm').submit();" class="form-select form-select-lg">
-                                    <option value="">Select Ticket Type</option>
+                                    <option value="">{{ __('admin_messages.select_ticket_type') }}</option>
                                     @foreach($ticketTypes as $type)
                                         <option value="{{ $type->id }}"
-                                            {{ request('ticket_type_filter') == $type->id ? 'selected' : '' }}>
+                                            {{ request('ticket_type_filter') == $type->id ? 'selected' : '' }}
+                                            @if(app()->getLocale() == 'en')>
                                             {{ $type->name }}
+                                            @else
+                                            {{ $type->name_arabic }}
+                                            @endif
                                         </option>
                                     @endforeach
                                 </select>
@@ -82,29 +86,29 @@
                         </div>
                         <div class="col-lg-3 col-md-3 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Submitted by</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.submitted_by') }}</label>
 
                                 <select name="sender_type_filter" onchange="document.getElementById('filterForm').submit();" id="sender_type_filter" class="form-select form-select-lg">
-                                    <option value="">Select Submitted Type</option>
+                                    <option value="">{{ __('admin_messages.select_submitted_by') }}</option>
 
-                                    <option value="1" {{ request('sender_type_filter') == 1 ? 'selected' : '' }}>User</option>
-                                    <option value="2" {{ request('sender_type_filter') == 2 ? 'selected' : '' }}>Seller</option>
-                                    <option value="3" {{ request('sender_type_filter') == 3 ? 'selected' : '' }}>Affiliate User</option>
-                                    <option value="4" {{ request('sender_type_filter') == 4 ? 'selected' : '' }}>Delivery Boy</option>
+                                    <option value="1" {{ request('sender_type_filter') == 1 ? 'selected' : '' }}>{{ __('admin_messages.user') }}</option>
+                                    <option value="2" {{ request('sender_type_filter') == 2 ? 'selected' : '' }}>{{ __('admin_messages.seller') }}</option>
+                                    <option value="3" {{ request('sender_type_filter') == 3 ? 'selected' : '' }}>{{ __('admin_messages.affiliate_user') }}</option>
+                                    <option value="4" {{ request('sender_type_filter') == 4 ? 'selected' : '' }}>{{ __('admin_messages.delivery_boy') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-12 col-12">
                             <div class="">
                                 <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-100 mt-2">
-                                    <span>Reset</span></a>
+                                    <span>{{ __('admin_messages.reset') }}</span></a>
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-12 col-12">
                         @if(in_array(26, $permissions) || $admin->type == 1)
                         <div >
                             <a href="{{ route('admin.export_new_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-100 mt-2" >
-                                <span>Export</span></a>
+                                <span>{{ __('admin_messages.export') }}</span></a>
                         </div>
                         @endif
                     </div>
@@ -115,15 +119,15 @@
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Ticket Id </th>
-                                <th scope="col"> Submitted by</th>
-                                <th scope="col">Raised Date & Time</th>
-                                <th scope="col"> User name</th>
-                                <th scope="col">View Details & Attachment</th>
-                                <th scope="col">Type</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.ticket_id') }} </th>
+                                <th scope="col"> {{ __('admin_messages.submitted_by') }}</th>
+                                <th scope="col">{{ __('admin_messages.raise_date_and_time') }}</th>
+                                <th scope="col"> {{ __('admin_messages.user_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.view_details_&_attachment') }}</th>
+                                <th scope="col">{{ __('admin_messages.type') }}</th>
                                 @if(in_array(26, $permissions) || $admin->type == 1)
-                                <th scope="col">Update Status</th>
+                                <th scope="col">{{ __('admin_messages.update_status') }}</th>
                                 @endif
 
                             </tr>
@@ -134,10 +138,10 @@
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td>#{{ $ticket->ticket_id }}</td>
                                     <td>
-                                        @if($ticket->sender_type == 1) User
-                                        @elseif($ticket->sender_type == 2) Seller
-                                        @elseif($ticket->sender_type == 3) Affiliate User
-                                        @else Delivery Boy
+                                        @if($ticket->sender_type == 1) {{ __('admin_messages.user') }}
+                                        @elseif($ticket->sender_type == 2) {{ __('admin_messages.seller') }}
+                                        @elseif($ticket->sender_type == 3) {{ __('admin_messages.affiliate_user') }}
+                                        @else {{ __('admin_messages.delivery_boy') }}
                                         @endif
                                     </td>
                                     <td>{{ \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A') }}</td>
@@ -162,13 +166,19 @@
                                         </a>
                                     </td>
 
-                                    <td>{{ $ticket->ticket_type_details->name ?? '-' }}</td>
+                                    <td>
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $ticket->ticket_type_details->name ?? __('admin_messages.na') }}
+                                        @else
+                                        {{ $ticket->ticket_type_details->name_arabic ?? __('admin_messages.na') }}
+                                        @endif
+                                    </td>
                                     @if(in_array(26, $permissions) || $admin->type == 1)
                                     <td>
                                         <select class="form-select  statusChange"
                                                 data-id="{{ $ticket->id }}">
-                                            <option value="0" {{ $ticket->status == 0 ? 'selected' : '' }}>Pending</option>
-                                            <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>Resolved</option>
+                                            <option value="0" {{ $ticket->status == 0 ? 'selected' : '' }}>{{ __('admin_messages.pending') }}</option>
+                                            <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>{{ __('admin_messages.resolved') }}</option>
                                         </select>
                                     </td>
                                     @endif
@@ -187,7 +197,7 @@
                     <div class="row">
                     <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="from_date1" class="form-label">From:</label>
+                                <label for="from_date1" class="form-label">{{ __('admin_messages.from') }}:</label>
                                 <input type="date" id="from_date1" name="from_date1" class="form-control"
                                     value="{{ request()->from_date1 }}"
                                     onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
@@ -196,7 +206,7 @@
 
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to_date1" class="form-label">To:</label>
+                                <label for="to_date1" class="form-label">{{ __('admin_messages.to') }}:</label>
                                 <input type="date" id="to_date1" name="to_date1" class="form-control"
                                     value="{{ request()->to_date1 }}"
                                     onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
@@ -204,14 +214,18 @@
                         </div>
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Ticket type</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.ticket_type') }}</label>
 
                                 <select name="ticket_type_filter1" id="ticket_type_filter1" onchange="document.getElementById('filterForm1').submit();" class="form-select form-select-lg">
-                                    <option value="">Select Ticket Type</option>
+                                    <option value="">{{ __('admin_messages.select_ticket_type') }}</option>
                                     @foreach($ticketTypes as $type)
                                         <option value="{{ $type->id }}"
                                             {{ request('ticket_type_filter1') == $type->id ? 'selected' : '' }}>
+                                            @if(app()->getLocale() == 'en')>
                                             {{ $type->name }}
+                                            @else
+                                            {{ $type->name_arabic }}
+                                            @endif
                                         </option>
                                     @endforeach
                                 </select>
@@ -219,29 +233,29 @@
                         </div>
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Submitted by</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.submitted_by') }}</label>
 
                                 <select name="sender_type_filter1" onchange="document.getElementById('filterForm1').submit();" id="sender_type_filter1" class="form-select form-select-lg">
-                                    <option value="">Select Submitted Type</option>
+                                    <option value="">{{ __('admin_messages.select_submitted_by') }}</option>
 
-                                    <option value="1" {{ request('sender_type_filter1') == 1 ? 'selected' : '' }}>User</option>
-                                    <option value="2" {{ request('sender_type_filter1') == 2 ? 'selected' : '' }}>Seller</option>
-                                    <option value="3" {{ request('sender_type_filter1') == 3 ? 'selected' : '' }}>Affiliate User</option>
-                                    <option value="4" {{ request('sender_type_filter1') == 4 ? 'selected' : '' }}>Delivery Boy</option>
+                                    <option value="1" {{ request('sender_type_filter1') == 1 ? 'selected' : '' }}>{{ __('admin_messages.user') }}</option>
+                                    <option value="2" {{ request('sender_type_filter1') == 2 ? 'selected' : '' }}>{{ __('admin_messages.seller') }}</option>
+                                    <option value="3" {{ request('sender_type_filter1') == 3 ? 'selected' : '' }}>{{ __('admin_messages.affiliate_user') }}</option>
+                                    <option value="4" {{ request('sender_type_filter1') == 4 ? 'selected' : '' }}>{{ __('admin_messages.delivery_boy') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-12 col-12">
                             <div>
                                 <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-100 mt-2">
-                                    <span>Reset</span></a>
+                                    <span>{{ __('admin_messages.reset') }}</span></a>
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-12 col-12">
                         @if(in_array(26, $permissions) || $admin->type == 1)
                         <div>
                             <a href="{{ route('admin.export_ongoing_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-100 mt-2">
-                                <span>Export</span></a>
+                                <span>{{ __('admin_messages.export') }}</span></a>
                         </div>
                         @endif
                     </div>
@@ -252,15 +266,15 @@
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Ticket Id </th>
-                                <th scope="col"> Submitted by</th>
-                                <th scope="col">Raised Date & Time</th>
-                                <th scope="col"> User name</th>
-                                <th scope="col">View Details & Attachment</th>
-                                <th scope="col">Type</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.ticket_id') }} </th>
+                                <th scope="col"> {{ __('admin_messages.submitted_by') }}</th>
+                                <th scope="col">{{ __('admin_messages.raise_date_and_time') }}</th>
+                                <th scope="col"> {{ __('admin_messages.user_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.view_details_&_attachment') }}</th>
+                                <th scope="col">{{ __('admin_messages.type') }}</th>
                                 @if(in_array(26, $permissions) || $admin->type == 1)
-                                <th scope="col">Update Status</th>
+                                <th scope="col">{{ __('admin_messages.update_status') }}</th>
                                 @endif
 
                             </tr>
@@ -271,10 +285,10 @@
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td>#{{ $ticket->ticket_id }}</td>
                                     <td>
-                                        @if($ticket->sender_type == 1) User
-                                        @elseif($ticket->sender_type == 2) Seller
-                                        @elseif($ticket->sender_type == 3) Affiliate User
-                                        @else Delivery Boy
+                                         @if($ticket->sender_type == 1) {{ __('admin_messages.user') }}
+                                        @elseif($ticket->sender_type == 2) {{ __('admin_messages.seller') }}
+                                        @elseif($ticket->sender_type == 3) {{ __('admin_messages.affiliate_user') }}
+                                        @else {{ __('admin_messages.delivery_boy') }}
                                         @endif
                                     </td>
                                     <td>{{ \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A') }}</td>
@@ -299,13 +313,19 @@
                                         </a>
                                     </td>
 
-                                    <td>{{ $ticket->ticket_type_details->name ?? '-' }}</td>
+                                    <td>
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $ticket->ticket_type_details->name ?? __('admin_messages.na') }}
+                                        @else
+                                        {{ $ticket->ticket_type_details->name_arabic ?? __('admin_messages.na') }}
+                                        @endif
+                                    </td>
                                     @if(in_array(26, $permissions) || $admin->type == 1)
                                     <td>
                                         <select class="form-select  statusChange"
                                                 data-id="{{ $ticket->id }}">
-                                            <option value="0" {{ $ticket->status == 0 ? 'selected' : '' }}>Pending</option>
-                                            <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>Resolved</option>
+                                            <option value="0" {{ $ticket->status == 0 ? 'selected' : '' }}>{{ __('admin_messages.pending') }}</option>
+                                            <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>{{ __('admin_messages.resolved') }}</option>
                                         </select>
                                     </td>
                                     @endif
@@ -326,7 +346,7 @@
                     <div class="row">
                     <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="from_date2" class="form-label">From:</label>
+                                <label for="from_date2" class="form-label">{{ __('admin_messages.from') }}:</label>
                                 <input type="date" id="from_date2" name="from_date2" class="form-control"
                                     value="{{ request()->from_date2 }}"
                                     onchange="updateToDate2(); document.getElementById('filterForm2').submit();" />
@@ -335,7 +355,7 @@
 
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to_date2" class="form-label">To:</label>
+                                <label for="to_date2" class="form-label">{{ __('admin_messages.to') }}:</label>
                                 <input type="date" id="to_date2" name="to_date2" class="form-control"
                                     value="{{ request()->to_date2 }}"
                                     onchange="updateToDate2(); document.getElementById('filterForm2').submit();" />
@@ -343,14 +363,18 @@
                         </div>
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Ticket type</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.ticket_type') }}</label>
 
                                 <select name="ticket_type_filter2" id="ticket_type_filter2" onchange="document.getElementById('filterForm2').submit();" class="form-select form-select-lg">
-                                    <option value="">Select Ticket Type</option>
+                                    <option value="">{{ __('admin_messages.select_ticket_type') }}</option>
                                     @foreach($ticketTypes as $type)
                                         <option value="{{ $type->id }}"
                                             {{ request('ticket_type_filter2') == $type->id ? 'selected' : '' }}>
+                                            @if(app()->getLocale() == 'en')>
                                             {{ $type->name }}
+                                            @else
+                                            {{ $type->name_arabic }}
+                                            @endif
                                         </option>
                                     @endforeach
                                 </select>
@@ -358,29 +382,29 @@
                         </div>
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Submitted by</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.submitted_by') }}</label>
 
                                 <select name="sender_type_filter2" onchange="document.getElementById('filterForm2').submit();" id="sender_type_filter2" class="form-select form-select-lg">
-                                    <option value="">Select Submitted Type</option>
+                                    <option value="">{{ __('admin_messages.select_submitted_by') }}</option>
 
-                                    <option value="1" {{ request('sender_type_filter2') == 1 ? 'selected' : '' }}>User</option>
-                                    <option value="2" {{ request('sender_type_filter2') == 2 ? 'selected' : '' }}>Seller</option>
-                                    <option value="3" {{ request('sender_type_filter2') == 3 ? 'selected' : '' }}>Affiliate User</option>
-                                    <option value="4" {{ request('sender_type_filter2') == 4 ? 'selected' : '' }}>Delivery Boy</option>
+                                    <option value="1" {{ request('sender_type_filter2') == 1 ? 'selected' : '' }}>{{ __('admin_messages.user') }}</option>
+                                    <option value="2" {{ request('sender_type_filter2') == 2 ? 'selected' : '' }}>{{ __('admin_messages.seller') }}</option>
+                                    <option value="3" {{ request('sender_type_filter2') == 3 ? 'selected' : '' }}>{{ __('admin_messages.affiliate_user') }}</option>
+                                    <option value="4" {{ request('sender_type_filter2') == 4 ? 'selected' : '' }}>{{ __('admin_messages.delivery_boy') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-12 col-12">
                             <div class="">
                                 <a href="{{route('admin.ticketManagement')}}" class="btn btn-dark customBtn w-100 mt-2">
-                                    <span>Reset</span></a>
+                                    <span>{{ __('admin_messages.reset') }}</span></a>
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-12 col-12">
                         @if(in_array(26, $permissions) || $admin->type == 1)
                         <div class="">
                             <a href="{{ route('admin.export_past_tickets_data', request()->all()) }}" class="btn btn-dark customBtn w-100 mt-2" >
-                                <span>Export</span></a>
+                                <span>{{ __('admin_messages.export') }}</span></a>
                         </div>
                         @endif
                     </div>
@@ -391,15 +415,15 @@
                     <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Ticket Id </th>
-                                <th scope="col"> Submitted by</th>
-                                <th scope="col">Raised Date & Time</th>
-                                <th scope="col"> User name</th>
-                                <th scope="col">View Details & Attachment</th>
-                                <th scope="col">Type</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.ticket_id') }} </th>
+                                <th scope="col"> {{ __('admin_messages.submitted_by') }}</th>
+                                <th scope="col">{{ __('admin_messages.raise_date_and_time') }}</th>
+                                <th scope="col"> {{ __('admin_messages.user_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.view_details_&_attachment') }}</th>
+                                <th scope="col">{{ __('admin_messages.type') }}</th>
                                 @if(in_array(26, $permissions) || $admin->type == 1)
-                                <th scope="col">Update Status</th>
+                                <th scope="col">{{ __('admin_messages.update_status') }}</th>
                                 @endif
 
                             </tr>
@@ -410,10 +434,10 @@
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td>#{{ $ticket->ticket_id }}</td>
                                     <td>
-                                        @if($ticket->sender_type == 1) User
-                                        @elseif($ticket->sender_type == 2) Seller
-                                        @elseif($ticket->sender_type == 3) Affiliate User
-                                        @else Delivery Boy
+                                         @if($ticket->sender_type == 1) {{ __('admin_messages.user') }}
+                                        @elseif($ticket->sender_type == 2) {{ __('admin_messages.seller') }}
+                                        @elseif($ticket->sender_type == 3) {{ __('admin_messages.affiliate_user') }}
+                                        @else {{ __('admin_messages.delivery_boy') }}
                                         @endif
                                     </td>
                                     <td>{{ \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A') }}</td>
@@ -438,13 +462,19 @@
                                         </a>
                                     </td>
 
-                                    <td>{{ $ticket->ticket_type_details->name ?? '-' }}</td>
+                                    <td>
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $ticket->ticket_type_details->name ?? __('admin_messages.na') }}
+                                        @else
+                                        {{ $ticket->ticket_type_details->name_arabic ?? __('admin_messages.na') }}
+                                        @endif
+                                    </td>
                                     @if(in_array(26, $permissions) || $admin->type == 1)
                                     <td>
                                         <select class="form-select  statusChange"
                                                 data-id="{{ $ticket->id }}">
-                                            <option value="0" {{ $ticket->status == 0 ? 'selected' : '' }}>Pending</option>
-                                            <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>Resolved</option>
+                                            <option value="0" {{ $ticket->status == 0 ? 'selected' : '' }}>{{ __('admin_messages.pending') }}</option>
+                                            <option value="1" {{ $ticket->status == 1 ? 'selected' : '' }}>{{ __('admin_messages.resolved') }}</option>
                                         </select>
                                     </td>
                                     @endif
@@ -475,7 +505,7 @@
                         <!-- Title -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="mb-3">
-                                <label class="form-group">Title</label>
+                                <label class="form-group">{{ __('admin_messages.title') }}</label>
                                 <input type="text" id="modal_title" class="form-control" readonly />
                             </div>
                         </div>
@@ -483,7 +513,7 @@
                         <!-- Description -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
+                                <label for="description" class="form-label">{{ __('admin_messages.description') }}</label>
                                 <textarea id="modal_description" class="form-control" rows="3" readonly></textarea>
                             </div>
                         </div>

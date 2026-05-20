@@ -102,9 +102,9 @@
                             <td>{{$data->order->order_id ?? 'N/A'}}</td>
                             <td>{{ $data->created_at->format('jS F Y | g:i A') }} </td>
                             <td>{{ $data->updated_at->format('jS F Y | g:i A') }}</td>
-                            <td>{{$data->product_details->seller_details->first_name}} {{$data->product_details->seller_details->last_name}}</td>
-                            <td>{{$data->user_details->full_name}}</td>
-                            <td>{{$data->user_details->country_info->name}}</td>
+                            <td>{{$data->product_details->seller_details->first_name ?? 'N/A'}} {{$data->product_details->seller_details->last_name ?? ''}}</td>
+                            <td>{{$data->user_details->full_name ?? 'N/A'}}</td>
+                            <td>{{$data->user_details->country_info->name ?? 'N/A'}}</td>
                             <td>@if(!empty($data->cancel_reason))
                                     <a class="table-button view-owner-btn"
                                     type="button"

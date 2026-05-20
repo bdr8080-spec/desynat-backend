@@ -822,6 +822,15 @@ return [
     'select_all' => 'Select All',
     'please_select_at_least_one_recipient' => 'Please select at least one recipient',
     'notification_sent_successfully' => 'Notification sent successfully',
+    'user' => 'User',
+    'affiliate_user' => 'Affiliate User',
+    'seller' => 'Seller',
+    'delivery_boy' => 'Delivery Boy',
+    'search_user' => 'Search User',
+    'search_affiliate_user' => 'Search Affiliate User',
+    'search_seller' => 'Search Seller',
+    'search_delivery_boy' => 'Search Delivery Boy',
+    'select_all' => 'Select All',
 
     //ticket management
     'new' => 'New',
