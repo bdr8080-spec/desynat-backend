@@ -592,4 +592,40 @@ function getUserIdWithToken($request){
 
 
 
+    if (!function_exists('formatDateTimeByLocale')) {  // This format is for Arabic and englihs
+
+    function formatDateTimeByLocale($datetime)
+    {
+        $date = \Carbon\Carbon::parse($datetime);
+
+        // English format
+        if (App::getLocale() == 'en') {
+            return $date->format('Y-m-d h:i:s A');
+        }
+
+        // Arabic format
+        if (App::getLocale() == 'ar') {
+
+            $englishNumbers = ['0','1','2','3','4','5','6','7','8','9'];
+            $arabicNumbers  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+
+            $formattedDate = $date->format('Y-m-d h:i:s A');
+
+            // Convert AM/PM
+            $formattedDate = str_replace(
+                ['AM', 'PM'],
+                ['ص', 'م'],
+                $formattedDate
+            );
+
+            // Convert numbers to Arabic
+            return str_replace($englishNumbers, $arabicNumbers, $formattedDate);
+        }
+
+        return $date->format('Y-m-d h:i:s A');
+    }
+}
+
+
+
 }

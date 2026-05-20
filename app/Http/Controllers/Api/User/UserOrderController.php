@@ -658,7 +658,7 @@ public function product_rating(Request $request){
     "orderdetails_id"=>$request->orderdetails_id,
     "product_rating"=>$request->product_rating??null,
     "product_review"=>$request->product_review??null,
-    "product_image"=>$request->product_image??null,
+    "product_image"=>$request->product_image??[],
     "store_rating"=>$request->store_rating??null,
     "store_review"=>$request->store_review??null,
     "store_image"=>$request->store_image??null,

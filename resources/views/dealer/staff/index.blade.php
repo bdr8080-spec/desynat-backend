@@ -147,7 +147,7 @@
                                     : $val->seller_category->name_en }}
                             </td>
 
-                            <td>{{ $val->created_at->format('Y-m-d') }}</td>
+                            <td>{{ formatDateTimeByLocale($val->created_at) }}</td>
 
                             <!-- View Modules -->
                             <td>
