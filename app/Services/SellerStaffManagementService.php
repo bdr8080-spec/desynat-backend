@@ -113,7 +113,7 @@ class SellerStaffManagementService
                 if($staff_limit<$sellerCount ){
                     return [
                 'status' => 'error',
-                'message' => 'Your Plan is Over please buy new plan',
+                'message' => __('seller_messages.Your_Plan_under_Add_Staff_is_Over_please_buy_or_upgrade_new_plan'),
                 'data' => []
             ];
                 }
@@ -123,19 +123,10 @@ class SellerStaffManagementService
         }else{
             return [
                 'status' => 'error',
-                'message' => 'No Plan Found You Canot Add Staff',
+                'message' => __('seller_messages.No_Plan_Found_You_Canot_Add_Staff'),
                 'data' => []
             ];
         }
-
-
-        
-
-
-
-
-
-
 
         $password_hash=Hash::make($request->password);
 

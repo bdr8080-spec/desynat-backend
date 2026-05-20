@@ -1684,6 +1684,9 @@ return [
 "Please_select_at_least_one_product"=>"يرجى اختيار منتج واحد على الأقل.",
 
 "Total_Revenue"=>"Total Revenue",
+
+"Your_Plan_under_Add_Staff_is_Over_please_buy_or_upgrade_new_plan" => "انتهت خطتك الخاصة بإضافة الموظفين، يرجى شراء أو ترقية خطة جديدة",
+"No_Plan_Found_You_Canot_Add_Staff" => "لم يتم العثور على خطة، لا يمكنك إضافة موظفين",
     
 
 ];

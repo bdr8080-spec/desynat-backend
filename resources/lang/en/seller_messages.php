@@ -1674,5 +1674,10 @@ return [
 "Please_select_at_least_one_product"=>"Please select at least one product.",
 
 "Total_Revenue"=>"Total Revenue",
-    
+
+"Your_Plan_under_Add_Staff_is_Over_please_buy_or_upgrade_new_plan"=>"Your Plan under Add Staff is Over please buy or upgrade new plan",
+"No_Plan_Found_You_Canot_Add_Staff"=>"No Plan Found You Canot Add Staff", 
+
+
+
 ];
