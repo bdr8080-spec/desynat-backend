@@ -772,6 +772,10 @@ return [
     'enter_whatsapp_number' => 'أدخل رقم الواتساب',
     'please_enter_contact_number' => 'يرجى إدخال رقم التواصل',
     'please_enter_whatsapp_number' => 'يرجى إدخال رقم الواتساب',
+    'list_of_questions' => 'قائمة الأسئلة',
+    'question' => 'السؤال',
+    'answer' => 'الإجابة',
+    'no_faqs_found' => 'لا توجد أسئلة شائعة.',
 
     //notification management
     'received_notification' => 'الإشعارات المستلمة',
