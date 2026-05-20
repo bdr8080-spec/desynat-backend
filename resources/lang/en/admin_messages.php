@@ -677,6 +677,12 @@ return [
     'please_select_type' => 'Please select type',
     'please_select_subcategory' => 'Please select subcategory',
     'please_select_category' => 'Please select category',
+    'image_upload_failed_ratio' => 'Image upload failed. Please upload an image with a :ratio aspect ratio',
+    'banner_added_successfully' => 'Banner added successfully',
+    'banner_updated_successfully' => 'Banner updated successfully',
+    'promotional_banner_added_successfully' => 'Promotional Banner added successfully',
+    'promotional_banner_updated_successfully' => 'Promotional Banner updated successfully',
+    'enter_pincode' => 'Enter pincode',
 
     //product management
     'specification' => 'Specification',

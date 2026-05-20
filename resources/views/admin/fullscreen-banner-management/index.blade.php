@@ -1701,12 +1701,15 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
 
                 const subSelect = document.getElementById('editSubCategorySelect');
-                subSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                subSelect.innerHTML = '<option value="">{{ __("admin_messages.select_sub_category") }}</option>';
+
+                const locale = "{{ app()->getLocale() }}";
+
 
                 data.data.data.forEach(sub => {
                     subSelect.innerHTML += `
                         <option value="${sub.id}" ${sub.id == selectedSub ? 'selected' : ''}>
-                            ${sub.name_english}
+                            ${locale === 'en' ? sub.name_english : sub.name_arabic}
                         </option>`;
                 });
             });
@@ -1718,8 +1721,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function resetCategorySection() {
         document.getElementById('editCategoryWrapper').style.display = 'none';
         document.getElementById('editSubCategoryWrapper').style.display = 'none';
-        document.getElementById('editCategorySelect').innerHTML = '<option value="">Select Category</option>';
-        document.getElementById('editSubCategorySelect').innerHTML = '<option value="">Select Subcategory</option>';
+        document.getElementById('editCategorySelect').innerHTML = '<option value="">{{ __("admin_messages.select_category") }}</option>';
+        document.getElementById('editSubCategorySelect').innerHTML = '<option value="">{{ __("admin_messages.select_sub_category") }}</option>';
         // Clear errors when resetting
         document.getElementById('editCategoryError').innerText = '';
         document.getElementById('editSubcategoryError').innerText = '';

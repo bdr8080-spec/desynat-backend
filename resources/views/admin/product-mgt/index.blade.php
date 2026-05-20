@@ -186,7 +186,7 @@
                                     class="square" />
                             </td>
                             <td>{{$product['category']['name']}}</td>
-                            <td>{{$product['subcategory']['name_english']}}</td>
+                            <td>{{$product['subcategory']['name_english'] ?? 'N/A'}}</td>
                             <td>{{$product['brand']['name_english']??'N/A'}}</td>
                             <td>{{$product['product_name_en']}}</td>
                             <td>

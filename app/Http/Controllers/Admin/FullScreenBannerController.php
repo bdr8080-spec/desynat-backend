@@ -169,7 +169,7 @@ class FullScreenBannerController extends Controller
                     ) {
                         return response()->json([
                             'success' => false,
-                            'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
+                            'message' => __('admin_messages.image_upload_failed_ratio', ['ratio' => $ratioLabel]),
                         ]);
                     }
                 }
@@ -202,7 +202,7 @@ class FullScreenBannerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Banner Added Successfully!'
+            'message' => __('admin_messages.banner_added_successfully'),
         ]);
     }
 
@@ -317,7 +317,7 @@ class FullScreenBannerController extends Controller
                     ) {
                         return response()->json([
                             'success' => false,
-                            'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
+                            'message' => __('admin_messages.image_upload_failed_ratio', ['ratio' => $ratioLabel]),
                         ]);
                     }
                 }
@@ -350,7 +350,7 @@ class FullScreenBannerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Banner Updated Successfully!'
+            'message' => __('admin_messages.banner_updated_successfully'),
         ]);
     }
 
@@ -426,7 +426,7 @@ class FullScreenBannerController extends Controller
 
         $banner->save();
 
-        return response()->json(['success' => true, 'message' => 'Promotional Banner Added Successfully!']);
+        return response()->json(['success' => true, 'message' => __('admin_messages.promotional_banner_added_successfully')]);
     }
 
     public function getCategories(Request $req)
@@ -524,7 +524,7 @@ class FullScreenBannerController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Promotional Banner Updated Successfully'
+            'message' => __('admin_messages.promotional_banner_updated_successfully'),
         ]);
     }
 
