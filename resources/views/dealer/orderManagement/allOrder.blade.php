@@ -39,14 +39,13 @@
                         <div class="tab-pane fade show active" id="pills-all" role="tabpanel"
                             aria-labelledby="pills-all-tab" tabindex="0">
                             <div class="table-header mb-0 pt-3">
-                                <div class="search-field">
-                                    <div class="from-group position-relative">
-                                        <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
-                                            class="search-icon">
-                                        <input type="search" class="dt-input tableSearch form-control"
-                                            placeholder="{{ __('seller_messages.search') }}" name="search">
-                                    </div>
-                                </div>
+                        <div class="search-field">
+                        <div class="from-group position-relative">
+                        <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
+                        <input type="search" class="dt-input tableSearch form-control" id="customTableSearch"
+                        placeholder="{{__('seller_messages.search')}}" data-table="table1">
+                        </div>
+                        </div>
 
                                 <form method="GET" action="">
 
@@ -95,7 +94,7 @@
 
 
                             <div class="table-responsive">
-                                <table class="table table-bordered datatable">
+                                <table class="table table-bordered datatable" id="table1"> 
                                     <thead>
                                         <tr>
                                              <th>{{ __('seller_messages.s_no') }}</th>
@@ -184,7 +183,7 @@
                                         <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                             class="search-icon">
                                         <input type="search" class="dt-input tableSearch form-control"
-                                            placeholder=" {{ __('seller_messages.search') }}">
+                                            placeholder=" {{ __('seller_messages.search') }}" data-table="table2">
                                     </div>
                                 </div>
 
@@ -236,7 +235,7 @@
 
 
                             <div class="table-responsive">
-                                <table class="table table-bordered datatable">
+                                <table class="table table-bordered datatable" id="table2">
                                     <thead>
                                         <tr>
 
@@ -327,7 +326,7 @@
                                         <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                             class="search-icon">
                                         <input type="search" class="dt-input tableSearch form-control"
-                                            placeholder="  {{ __('seller_messages.search') }}">
+                                            placeholder="  {{ __('seller_messages.search') }}" data-table="table3">
                                     </div>
                                 </div>
 
@@ -378,7 +377,7 @@
 
 
                             <div class="table-responsive">
-                                <table class="table table-bordered datatable">
+                                <table class="table table-bordered datatable" id="table3">
                                     <thead>
                                         <tr>
                                                <th class="no-sort" >{{ __('seller_messages.s_no') }}</th>
@@ -466,428 +465,6 @@
 
             <!---------------- End Normal Orders ----------------------->
 
-            <div class="tab-pane fade" id="pills-Custom-Order" role="tabpanel" aria-labelledby="pills-Custom-Order-tab"
-                tabindex="0">
-
-                <div class="mini-tabs-panel py-0">
-                    <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active w-100" id="pills-all2-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-all2" type="button" role="tab" aria-controls="pills-all2"
-                                aria-selected="true">All ({{count($custom['All_order'])}}) </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link w-100" id="pills-ongoing2-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-ongoing2" type="button" role="tab" aria-controls="pills-ongoing2"
-                                aria-selected="false">Ongoing orders ({{count($custom['ongoing_order'])}})</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link w-100" id="pills-past2-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-past2" type="button" role="tab" aria-controls="pills-past2"
-                                aria-selected="false">Past orders ({{count($custom['past_order'])}})</button>
-                        </li>
-                    </ul>
-                </div>
-
-
-                <div class="ongoing-wapper">
-                    <div class="tab-content" id="pills-tabContent2">
-                        <div class="tab-pane fade show active" id="pills-all2" role="tabpanel"
-                            aria-labelledby="pills-all2-tab" tabindex="0">
-                            <div class="table-header mb-0 pt-3">
-                                <div class="search-field">
-                                    <div class="from-group position-relative">
-                                        <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
-                                            class="search-icon">
-                                        <input type="search" class="dt-input tableSearch form-control"
-                                            placeholder="Search">
-                                    </div>
-                                </div>
-
-                                <form method="GET" action="">
-
-                                    <input type="hidden" name="type" value="2">
-                                    <input type="hidden" name="tabs" value="1">
-
-                                    <div class="search-filter">
-                                        <div class="from-group">
-                                            <div class="show-date d-flex gap-2  flex-wrap">
-                                                <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control datepicker" name="from_date"
-                                                        @if(request()->type==2 && request()->tabs==1)
-                                                    value="{{request()->from_date}}" @endif>
-                                                </div>
-                                                <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control datepicker" name="to_date"
-                                                        onchange="this.form.submit()" @if(request()->type==2 &&
-                                                    request()->tabs==1)
-                                                    value="{{request()->to_date}}" @endif>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="from-group">
-                                            <select class="form-select form-control width-50"
-                                                aria-label="Default select example" onchange="this.form.submit()"
-                                                name="filters">
-                                                <option value="">Filter by status</option>
-                                                <option value="1" @if(request()->type==2 &&
-                                                    request()->tabs==1 && request()->filters==1) selected @endif>
-                                                    Confirmed </option>
-                                                <option value="2" @if(request()->type==2 &&
-                                                    request()->tabs==1 && request()->filters==2) selected @endif> Packed
-                                                </option>
-                                                <option value="3" @if(request()->type==2 &&
-                                                    request()->tabs==1 && request()->filters==3) selected @endif>
-                                                    Shipped </option>
-                                                <option value="4" @if(request()->type==2 &&
-                                                    request()->tabs==1 && request()->filters==4) selected @endif>
-                                                    Exchange </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-
-                            <div class="table-responsive">
-                                <table class="table table-bordered datatable">
-                                    <thead>
-                                        <tr>
-                                            <th class="no-sort">S.No</th>
-                                            <th class="no-sort">Image</th>
-                                            <th class="no-sort">Order ID</th>
-                                            <th class="no-sort">Date & Time</th>
-                                            <th class="no-sort">Product Name</th>
-                                            <th class="no-sort">Quantity</th>
-                                            <th class="no-sort">Customer Name</th>
-                                            <th class="no-sort">Location</th>
-                                            <th class="no-sort">Total Amount</th>
-                                            <th class="no-sort">Admin Commission</th>
-                                            <th class="no-sort">View Details</th>
-                                            <th class="no-sort">Product Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        @foreach($custom['All_order'] as $key => $val)
-
-                                        <tr>
-                                            <td>{{$key+1}}</td>
-                                            <td>
-                                                <img src="{{$val->variation_details->variant_image['0']}}"
-                                                    class="img-fluid" alt="image" class="pro-image"
-                                                    style="width: 80px;height: 80px;border-radius: 5%;object-fit: cover;">
-                                            </td>
-                                            <td> {{$val->id}}</td>
-                                            <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
-                                            <td> {{$val->quantity}}</td>
-                                            <td>{{$val->order->user_details->full_name}}</td>
-                                            <td>{{$val->order->delivery_details->address}}</td>
-                                            @php
-                                            $Total_Amount=0;
-                                            $Total_Amount= $val->amount * $val->quantity;
-                                            $Total_Amount+=$val->tax + $val->shipping_fees;
-
-                                            @endphp
-
-                                            <td>{{$Total_Amount}} KD</td>
-
-                                            <td>{{$val->admin_commission}}</td>
-                                            <td>
-                                                <a href="{{ route('seller.single_order_View', $val->id ) }}"
-                                                    class="eyebtn"><i class="bi bi-eye"></i></a>
-                                            </td>
-                                            <td>
-
-                                                @php
-                                                $statusCode = Seller_orderItemViewData($val);
-                                                @endphp
-                                                <div class="from-group">
-                                                    <div class="ongoing-title"
-                                                        style="color:{{ $statusCode['statusColor'] }};">
-                                                        {{ $statusCode['statusText'] }}
-                                                    </div>
-
-                                                </div>
-
-                                            </td>
-                                        </tr>
-                                        @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade" id="pills-ongoing2" role="tabpanel"
-                            aria-labelledby="pills-ongoing2-tab" tabindex="0">
-                            <div class="table-header mb-0 pt-3">
-                                <div class="search-field">
-                                    <div class="from-group position-relative">
-                                        <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
-                                            class="search-icon">
-                                        <input type="search" class="dt-input tableSearch form-control"
-                                            placeholder="Search">
-                                    </div>
-                                </div>
-
-                                <form method="GET" action="">
-
-                                    <input type="hidden" name="type" value="2">
-                                    <input type="hidden" name="tabs" value="2">
-
-                                    <div class="search-filter">
-                                        <div class="from-group">
-                                            <div class="show-date d-flex gap-2  flex-wrap">
-                                                <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control datepicker" name="from_date"
-                                                        @if(request()->type==2 && request()->tabs==2)
-                                                    value="{{request()->from_date}}" @endif>
-                                                </div>
-                                                <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control datepicker" name="to_date"
-                                                        onchange="this.form.submit()" @if(request()->type==2 &&
-                                                    request()->tabs==2)
-                                                    value="{{request()->to_date}}" @endif>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="from-group">
-                                            <select class="form-select form-control width-50"
-                                                aria-label="Default select example" onchange="this.form.submit()"
-                                                name="filters">
-                                                <option value="">Filter by status</option>
-                                                <option value="1" @if(request()->type==2 &&
-                                                    request()->tabs==2 && request()->filters==1) selected @endif>
-                                                    Confirmed </option>
-                                                <option value="2" @if(request()->type==2 &&
-                                                    request()->tabs==2 && request()->filters==2) selected @endif> Packed
-                                                </option>
-                                                <option value="3" @if(request()->type==2 &&
-                                                    request()->tabs==2 && request()->filters==3) selected @endif>
-                                                    Shipped </option>
-                                                <option value="4" @if(request()->type==2 &&
-                                                    request()->tabs==2 && request()->filters==4) selected @endif>
-                                                    Exchange </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-
-                            <div class="table-responsive">
-                                <table class="table table-bordered datatable">
-                                    <thead>
-                                        <tr>
-                                            <th class="no-sort">S.No</th>
-                                            <th class="no-sort">Image</th>
-                                            <th class="no-sort">Order ID</th>
-                                            <th class="no-sort">Date & Time</th>
-                                            <th class="no-sort">Product Name</th>
-                                            <th class="no-sort">Quantity</th>
-                                            <th class="no-sort">Customer Name</th>
-                                            <th class="no-sort">Location</th>
-                                            <th class="no-sort">Total Amount</th>
-                                            <th class="no-sort">Admin Commission</th>
-                                            <th class="no-sort">View Details</th>
-                                            <th class="no-sort">Product Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($custom['ongoing_order'] as $key => $val)
-
-                                        <tr>
-                                            <td>{{$key+1}}</td>
-                                            <td>
-                                                <img src="{{$val->variation_details->variant_image['0']}}"
-                                                    class="img-fluid" alt="image" class="pro-image"
-                                                    style="width: 80px;height: 80px;border-radius: 5%;object-fit: cover;">
-                                            </td>
-                                            <td> {{$val->id}}</td>
-                                            <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
-                                            <td> {{$val->quantity}}</td>
-                                            <td>{{$val->order->user_details->full_name}}</td>
-                                            <td>{{$val->order->delivery_details->address}}</td>
-                                            @php
-
-                                            $Total_Amount=0;
-                                            $Total_Amount= $val->amount * $val->quantity;
-                                            $Total_Amount+=$val->tax + $val->shipping_fees;
-
-                                            @endphp
-
-                                            <td>{{$Total_Amount}} KD</td>
-
-                                            <td>{{$val->admin_commission}} KD</td>
-
-                                            <td>
-                                                <a href="{{ route('seller.single_order_View', $val->id ) }}"
-                                                    class="eyebtn"><i class="bi bi-eye"></i></a>
-                                            </td>
-                                            <td>
-
-                                                @php
-                                                $statusCode = Seller_orderItemViewData($val);
-                                                @endphp
-                                                <div class="from-group">
-                                                    <div class="ongoing-title"
-                                                        style="color:{{ $statusCode['statusColor'] }};">
-                                                        {{ $statusCode['statusText'] }}
-                                                    </div>
-
-                                                </div>
-
-                                            </td>
-                                        </tr>
-                                        @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade" id="pills-past2" role="tabpanel" aria-labelledby="pills-past2-tab"
-                            tabindex="0">
-                            <div class="table-header mb-0 pt-3">
-                                <div class="search-field">
-                                    <div class="from-group position-relative">
-                                        <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
-                                            class="search-icon">
-                                        <input type="search" class="dt-input tableSearch form-control"
-                                            placeholder="Search">
-                                    </div>
-                                </div>
-
-                                <form method="GET" action="">
-
-                                    <input type="hidden" name="type" value="2">
-                                    <input type="hidden" name="tabs" value="3">
-
-                                    <div class="search-filter">
-                                        <div class="from-group">
-                                            <div class="show-date d-flex gap-2  flex-wrap">
-                                                <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control datepicker" name="from_date"
-                                                        @if(request()->type==2 && request()->tabs==3)
-                                                    value="{{request()->from_date}}" @endif>
-                                                </div>
-                                                <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control datepicker" name="to_date"
-                                                        onchange="this.form.submit()" @if(request()->type==2 &&
-                                                    request()->tabs==3)
-                                                    value="{{request()->to_date}}" @endif>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="from-group">
-                                            <select class="form-select form-control width-50"
-                                                aria-label="Default select example" onchange="this.form.submit()"
-                                                name="filters">
-                                                <option value="">Filter by status</option>
-                                                <option value="1" @if(request()->type==2 &&
-                                                    request()->tabs==3 && request()->filters==1) selected @endif>
-                                                    Confirmed </option>
-                                                <option value="2" @if(request()->type==2 &&
-                                                    request()->tabs==3 && request()->filters==2) selected @endif> Packed
-                                                </option>
-                                                <option value="3" @if(request()->type==2 &&
-                                                    request()->tabs==3 && request()->filters==3) selected @endif>
-                                                    Shipped </option>
-                                                <option value="4" @if(request()->type==2 &&
-                                                    request()->tabs==3 && request()->filters==4) selected @endif>
-                                                    Exchange </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-
-                            <div class="table-responsive">
-                                <table class="table table-bordered datatable">
-                                    <thead>
-                                        <tr>
-                                            <th class="no-sort">S.No</th>
-                                            <th class="no-sort">Image</th>
-                                            <th class="no-sort">Order ID</th>
-                                            <th class="no-sort">Date & Time</th>
-                                            <th class="no-sort">Product Name</th>
-                                            <th class="no-sort">Quantity</th>
-                                            <th class="no-sort">Customer Name</th>
-                                            <th class="no-sort">Location</th>
-                                            <th class="no-sort">Total Amount</th>
-                                            <th class="no-sort">Admin Commission</th>
-                                            <th class="no-sort">View Details</th>
-                                            <th class="no-sort">Product Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($custom['past_order'] as $key => $val)
-                                        <tr>
-                                            <td>{{$key+1}}</td>
-                                            <td>
-                                                <img src="{{$val->variation_details->variant_image['0']}}"
-                                                    class="img-fluid" alt="image" class="pro-image"
-                                                    style="width: 80px;height: 80px;border-radius: 5%;object-fit: cover;">
-                                            </td>
-                                            <td> {{$val->id}}</td>
-                                            <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
-                                            <td> {{$val->quantity}}</td>
-                                            <td>{{$val->order->user_details->full_name}}</td>
-                                            <td>{{$val->order->delivery_details->address}}</td>
-                                            @php
-
-                                            $Total_Amount=0;
-                                            $Total_Amount= $val->amount * $val->quantity;
-                                            $Total_Amount+=$val->tax + $val->shipping_fees;
-
-                                            @endphp
-
-                                            <td>{{$Total_Amount}} KD</td>
-
-                                            <td>{{$val->admin_commission}} KD</td>
-
-                                            <td>
-                                                <a href="{{ route('seller.single_order_View', $val->id ) }}"
-                                                    class="eyebtn"><i class="bi bi-eye"></i></a>
-                                            </td>
-                                            <td>
-
-                                                @php
-                                                $statusCode = Seller_orderItemViewData($val);
-                                                @endphp
-                                                <div class="from-group">
-                                                    <div class="ongoing-title"
-                                                        style="color:{{ $statusCode['statusColor'] }};">
-                                                        {{ $statusCode['statusText'] }}
-                                                    </div>
-
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
         </div>
 
     </div>
@@ -949,9 +526,13 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+
+
+
 @include('dealer.layout.custom_code');
 
 @include('dealer.layout.footer');
 
 
 @include('dealer.layout.languagetableCode');
+
