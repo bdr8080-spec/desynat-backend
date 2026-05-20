@@ -773,6 +773,10 @@ return [
     'enter_whatsapp_number' => 'Enter WhatsApp number',
     'please_enter_contact_number' => 'Please enter contact number',
     'please_enter_whatsapp_number' => 'Please enter WhatsApp number',
+    'list_of_questions' => 'List of Questions',
+    'question' => 'Question',
+    'answer' => 'Answer',
+    'no_faqs_found' => 'No FAQs found.',
 
     //notification management
     'received_notification' => 'Received Notification',

@@ -37,7 +37,7 @@
 <div class="inner-content management mb-5" id="tabContentContainer">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">CMS Management </h2>
+            <h2 class="h2">{{ __('admin_messages.cms_management') }} </h2>
         </div>
     </div>
 
@@ -49,21 +49,21 @@
                     <button class="nav-link customBtn2 active m-0" id="user-tab" data-bs-toggle="pill"
                         data-bs-target="#userContent" type="button" role="tab" aria-controls="userContent"
                         aria-selected="true">
-                        User
+                        {{ __('admin_messages.user') }}
                     </button>
                 </li>
                 <li class="nav-item m-1" role="presentation">
                     <button class="nav-link customBtn2 m-0" id="dealer-tab" data-bs-toggle="pill"
                         data-bs-target="#dealerCmsTabContent" type="button" role="tab"
                         aria-controls="dealerCmsTabContent" aria-selected="false">
-                        Seller
+                        {{ __('admin_messages.seller') }}
                     </button>
                 </li>
                 <li class="nav-item m-1" role="presentation">
                     <button class="nav-link customBtn2 m-0" id="delivery-tab" data-bs-toggle="pill"
                         data-bs-target="#deliveryboy" type="button" role="tab"
                         aria-controls="deliveryboy" aria-selected="false">
-                       Delivery Boy
+                       {{ __('admin_messages.delivery_boy') }}
                     </button>
                 </li>
             </ul>
@@ -80,7 +80,7 @@
                             <button class="nav-link customBtn2 active m-0" id="pills-home-tab-user"
                                 data-bs-toggle="pill" data-bs-target="#pills-home-user" type="button" role="tab"
                                 aria-controls="pills-home-user" aria-selected="true">
-                                Terms & Conditions
+                                {{ __('admin_messages.terms_&_conditions') }}
                             </button>
                         </li>
 
@@ -88,42 +88,42 @@
                             <button class="nav-link customBtn2 m-0" id="pills-privacy-tab-user" data-bs-toggle="pill"
                                 data-bs-target="#pills-privacy-user" type="button" role="tab"
                                 aria-controls="pills-privacy-user" aria-selected="false">
-                                Return Policy
+                                {{ __('admin_messages.return_policy') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-about-tab-user" data-bs-toggle="pill"
                                 data-bs-target="#pills-about-user" type="button" role="tab"
                                 aria-controls="pills-about-user" aria-selected="false">
-                                About Us
+                                {{ __('admin_messages.about_us') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-cancel-tab-user" data-bs-toggle="pill"
                                 data-bs-target="#pills-cancel-user" type="button" role="tab"
                                 aria-controls="pills-cancel-user" aria-selected="false">
-                                Cancellation Policy
+                                {{ __('admin_messages.cancellation_policy') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-exchange-tab-user" data-bs-toggle="pill"
                                 data-bs-target="#pills-exchange-user" type="button" role="tab"
                                 aria-controls="pills-exchange-user" aria-selected="false">
-                                Exchange Policy
+                                {{ __('admin_messages.exchange_policy') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-faq-tab-user" data-bs-toggle="pill"
                                 data-bs-target="#pills-faq-user" type="button" role="tab" aria-controls="pills-faq-user"
                                 aria-selected="false">
-                                FAQs
+                                {{ __('admin_messages.faqs') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-contact-tab-user" data-bs-toggle="pill"
                                 data-bs-target="#pills-contact-user" type="button" role="tab"
                                 aria-controls="pills-contact-user" aria-selected="false">
-                                Contact Us
+                                {{ __('admin_messages.contact_us') }}
                             </button>
                         </li>
                     </ul>
@@ -138,7 +138,7 @@
                             aria-labelledby="pills-home-tab-user">
                             <form id="userTermsForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Terms & Conditions</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.terms_&_conditions') }}</h6>
                                 <input type="hidden" name="type" value="1">
 
                                 <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
@@ -150,7 +150,7 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -168,7 +168,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -186,7 +186,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -200,7 +200,7 @@
                             aria-labelledby="pills-privacy-tab-user">
                             <form id="userReturnForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Retrun Policy</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.return_policy') }}</h6>
 
                             </div>
                             <input type="hidden" name="type" value="1">
@@ -208,7 +208,7 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -226,7 +226,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -245,7 +245,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -258,14 +258,14 @@
                             aria-labelledby="pills-about-tab-user">
                             <form id="userAboutForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">About Us</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.about_us') }}</h6>
 
                             </div>
                             <input type="hidden" name="type" value="1">
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -283,7 +283,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -302,7 +302,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -314,13 +314,13 @@
                             aria-labelledby="pills-cancel-tab-user">
                             <form id="userCancellationForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Cancellation Policy</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.cancellation_policy') }}</h6>
                             </div>
                             <input type="hidden" name="type" value="1">
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -338,7 +338,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -357,7 +357,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -370,7 +370,7 @@
                             aria-labelledby="pills-exchange-tab-user">
                             <form id="userExchangeForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Exchange Policy</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.exchange_policy') }}</h6>
 
                                 <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#editModalAbout">
@@ -382,7 +382,7 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -400,7 +400,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
                                     </a> -->
@@ -419,7 +419,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -429,14 +429,14 @@
                     <!-- FAQs -->
                     <div class="tab-pane fade" id="pills-faq-user" role="tabpanel" aria-labelledby="pills-faq-tab-user">
                         <div class="d-flex border-bottom align-items-center mb-3">
-                            <h5 class="flex-grow-1 text-start">FAQs</h5>
+                            <h5 class="flex-grow-1 text-start">{{ __('admin_messages.faqs') }}</h5>
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#faqquestionModal">Add New Question</a>
+                                data-bs-target="#faqquestionModal">{{ __('admin_messages.add_new_question') }}</a>
                             @endif
                         </div>
                         <div class="management mt-4 pb-5">
-                            <h6>List of Questions(English)</h6>
+                            <h6>{{ __('admin_messages.list_of_questions') }}</h6>
 
                             <!-- <div class="accordion" id="accordionExample">
                                 <div class="accordion-item">
@@ -463,25 +463,25 @@
                                     <div class="form-grid">
 
                                         <div class="form-label">
-                                            Question {{ $index + 1 }} (English)
+                                            {{ __('admin_messages.question') }} {{ $index + 1 }} ({{ __('admin_messages.english') }})
                                         </div>
                                         <div class="form-text">
                                             {!! $faq->question_english ?? '' !!}
                                         </div>
 
-                                        <div class="form-label">Answer (English)</div>
+                                        <div class="form-label">{{ __('admin_messages.answer') }} ({{ __('admin_messages.english') }})</div>
                                         <div class="form-text">
                                             {!! $faq->answer_english ?? '' !!}
                                         </div>
 
                                         <div class="form-label">
-                                            Question {{ $index + 1 }} (Arabic)
+                                            {{ __('admin_messages.question') }} {{ $index + 1 }} ({{ __('admin_messages.arabic') }})
                                         </div>
                                         <div class="form-text">
                                             {!! $faq->question_arabic ?? '' !!}
                                         </div>
 
-                                        <div class="form-label">Answer (Arabic)</div>
+                                        <div class="form-label">{{ __('admin_messages.answer') }} ({{ __('admin_messages.arabic') }})</div>
                                         <div class="form-text">
                                             {!! $faq->answer_arabic ?? '' !!}
                                         </div>
@@ -511,7 +511,7 @@
                                 </div>
                                 @empty
                                 <div class="text-center text-muted">
-                                    No FAQs found.
+                                    {{ __('admin_messages.no_faqs_found') }}
                                 </div>
                                 @endforelse
                             </div>
@@ -525,7 +525,7 @@
                         aria-labelledby="pills-contact-tab-user">
 
                         <div class="d-flex border-bottom align-items-center mb-3">
-                            <h5 class="flex-grow-1 text-start">Contact Us</h5>
+                            <h5 class="flex-grow-1 text-start">{{ __('admin_messages.contact_us') }}</h5>
                         </div>
 
                         <input type="hidden" value="1" name="type" />
@@ -533,26 +533,26 @@
                         <div class="contactUs mx-auto" style="max-width: 400px">
 
                             <div class="form-group mb-2">
-                                <label class="form-label" for="email">Email id</label>
+                                <label class="form-label" for="email">{{ __('admin_messages.email_id') }}</label>
                                 <input type="text" id="email" class="form-control space" name="email"
-                                    placeholder="Enter Email"
+                                    placeholder="{{ __('admin_messages.enter_email') }}"
                                     value="{{ $userContactUs->content_english['email'] ?? '' }}" />
                                 <h6 class="text-danger error-email"></h6>
                             </div>
 
                             <div class="form-group mb-2">
-                                <label class="form-label space" for="phone">Contact Number</label>
+                                <label class="form-label space" for="phone">{{ __('admin_messages.contact_number') }}</label>
                                 <input type="tel" id="mobile" class="form-control space" name="mobile"
-                                    placeholder="Enter Mobile Number"
+                                    placeholder="{{ __('admin_messages.enter_contact_number') }}"
                                     oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $userContactUs->content_english['mobile'] ?? '' }}" />
                                 <h6 class="text-danger error-mobile"></h6>
                             </div>
 
                             <div class="form-group mb-2">
-                                <label class="form-label space" for="twitter">Whatsapp Number</label>
+                                <label class="form-label space" for="twitter">{{ __('admin_messages.whatsapp_number') }}</label>
                                 <input type="text" id="whatsapp" class="form-control" name="whatsapp"
-                                    placeholder="Enter Whatsapp Number"
+                                    placeholder="{{ __('admin_messages.enter_whatsapp_number') }}"
                                     oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $userContactUs->content_english['whatsapp'] ?? '' }}" />
                                 <h6 class="text-danger error-whatsapp"></h6>
@@ -560,7 +560,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="button" id="contactSubmitBtn" class="btn btn-dark customBtn">
-                                    <span>Submit</span>
+                                    <span>{{ __('admin_messages.submit') }}</span>
                                 </button>
                             </div>
                             @endif
@@ -578,49 +578,49 @@
                             <button class="nav-link customBtn2 active m-0" id="pills-home-tab-dealer"
                                 data-bs-toggle="pill" data-bs-target="#pills-home-dealer" type="button" role="tab"
                                 aria-controls="pills-home-dealer" aria-selected="true">
-                                Terms & Conditions
+                                {{ __('admin_messages.terms_&_conditions') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-privacy-tab-dealer" data-bs-toggle="pill"
                                 data-bs-target="#pills-privacy-dealer" type="button" role="tab"
                                 aria-controls="pills-privacy-dealer" aria-selected="false">
-                                Return Policy
+                                {{ __('admin_messages.return_policy') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-about-tab-dealer" data-bs-toggle="pill"
                                 data-bs-target="#pills-about-dealer" type="button" role="tab"
                                 aria-controls="pills-about-dealer" aria-selected="false">
-                                About Us
+                                {{ __('admin_messages.about_us') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-cancel-tab-dealer" data-bs-toggle="pill"
                                 data-bs-target="#pills-cancel-dealer" type="button" role="tab"
                                 aria-controls="pills-cancel-dealer" aria-selected="false">
-                                Cancellation Policy
+                                {{ __('admin_messages.cancellation_policy') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-exchange-tab-dealer" data-bs-toggle="pill"
                                 data-bs-target="#pills-exchange-dealer" type="button" role="tab"
                                 aria-controls="pills-exchange-dealer" aria-selected="false">
-                                Exchange Policy
+                                {{ __('admin_messages.exchange_policy') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-faq-tab-dealer" data-bs-toggle="pill"
                                 data-bs-target="#pills-faq-dealer" type="button" role="tab"
                                 aria-controls="pills-faq-dealer" aria-selected="false">
-                                FAQs
+                                {{ __('admin_messages.faqs') }}
                             </button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="pills-contact-tab-dealer" data-bs-toggle="pill"
                                 data-bs-target="#pills-contact-dealer" type="button" role="tab"
                                 aria-controls="pills-contact-dealer" aria-selected="false">
-                                Contact Us
+                                {{ __('admin_messages.contact_us') }}
                             </button>
                         </li>
                     </ul>
@@ -634,7 +634,7 @@
                             aria-labelledby="pills-home-tab-dealer">
                             <form id="sellerTermsForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Terms & Conditions</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.terms_&_conditions') }}</h6>
                                 <input type="hidden" name="type" value="2">
 
                                 <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
@@ -646,7 +646,7 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>English</h6>
+                                        <h6>{{ __('admin_messages.english') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -664,7 +664,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h6>Arabic</h6>
+                                        <h6>{{ __('admin_messages.arabic') }}</h6>
                                         <!-- <a class="table-button eyebox mb-2">
                                             <i class="bi bi-pencil-square"></i>
                                         </a> -->
@@ -683,7 +683,7 @@
                             @if(in_array(24, $permissions) || $admin->type == 1)
                             <div class="d-flex justify-content-center mt-5">
                                 <button type="submit" class="btn customBtn2 active text-white">
-                                    Submit
+                                    {{ __('admin_messages.submit') }}
                                 </button>
                             </div>
                             @endif
@@ -697,7 +697,7 @@
                             aria-labelledby="pills-privacy-tab-dealer">
                             <form id="sellerReturnForm">
                             <div class="d-flex border-bottom align-items-center mb-3">
-                                <h6 class="flex-grow-1 text-start">Retrun Policy</h6>
+                                <h6 class="flex-grow-1 text-start">{{ __('admin_messages.country') }}</h6>
 
                             </div>
                             <input type="hidden" name="type" value="2">

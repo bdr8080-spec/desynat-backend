@@ -195,7 +195,7 @@
                         @foreach($products as $index => $product)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td>{{$product['seller_details']['first_name']}} {{$product['seller_details']['last_name']}}</td>
+                            <td>{{$product['seller_details']['first_name'] ?? __('admin_messages.na')}} {{$product['seller_details']['last_name'] ?? ''}}</td>
                             <td>
                                 @if(app()->getLocale() == 'en')
                                 {{$product['store']['country_info']['name']?? __('admin_messages.na')}}

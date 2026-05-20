@@ -28,28 +28,28 @@
 
 
 <div class="inner-content management">
-    <h2 class="h2">Withdrawal Request</h2>
+    <h2 class="h2">{{ __('admin_messages.affiliate_user_withdraw_request_management') }}</h2>
     <div class="d-flex justify-content-center">
         <ul class="nav nav-pills tabs-pnl custom" id="pills-tab" role="tablist">
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="false">
-                    New
+                    {{ __('admin_messages.new') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="true">
-                    Approved
+                    {{ __('admin_messages.approved') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-return-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-return" type="button" role="tab" aria-controls="pills-return"
                     aria-selected="false">
-                    Rejected
+                    {{ __('admin_messages.rejected') }}
                 </button>
             </li>
         </ul>
@@ -62,7 +62,7 @@
                     <!-- From Date Filter -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                             <input type="date" id="from_date" name="from_date" class="form-control"
                                 value="{{ request()->from_date }}"
                                 onchange="document.getElementById('filterForm').submit();" />
@@ -71,7 +71,7 @@
                     <!-- To Date Filter -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">To:</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                             <input type="date" id="to_date" name="to_date" class="form-control"
                                 value="{{ request()->to_date }}"
                                 onchange="document.getElementById('filterForm').submit();" />
@@ -81,15 +81,19 @@
                     <!-- Country Filter -->
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                             <select name="country" id="country"
                                 class="form-select form-select-lg "
                                 onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Select country</option>
+                                <option value="">{{ __('admin_messages.select_country') }}</option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country['name'] }}"
                                     {{ request('country') == $country['name'] ? 'selected' : '' }}>
+                                    @if(app()->getLocale() == 'en')
                                     {{ $country['name'] }}
+                                    @else
+                                    {{ $country['name_ar'] }}
+                                    @endif
                                 </option>
                                 @endforeach
                             </select>
@@ -99,7 +103,7 @@
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="d-flex gap-3 justify-content-start mt-5" style="text-align: start">
                             <a href="{{route('admin.affiliateWithdrawRequestManagement')}}" class="btn btn-dark customBtn mt-2">
-                                <span>Reset</span>
+                                <span>{{ __('admin_messages.reset') }}</span>
                             </a>
                             <!-- <a class="btn btn-dark customBtn" style="margin-top: 60px">
                                 <span>Export</span>
@@ -113,16 +117,16 @@
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Request ID</th>
-                                <th scope="col">User Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Request On</th>
-                                <th scope="col">Available Amount</th>
-                                <th scope="col">Requested Amount</th>
-                                <th scope="col">Bank Account Number</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.request_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.user_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.request_on') }}</th>
+                                <th scope="col">{{ __('admin_messages.available_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.requested_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.bank_account_number') }}</th>
                                 @if(in_array(23, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -131,12 +135,18 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $req['request_id'] }}</td>
-                                <td>{{ $req['affiliate__details']['full_name'] }}</td>
-                                <td>{{ $req['affiliate__details']['address_details']['country_details']['name'] }}</td>
+                                <td>{{ $req['affiliate__details']['full_name'] ?? __('admin_messages.na') }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $req['affiliate__details']['address_details']['country_details']['name'] ?? __('admin_messages.na') }}
+                                    @else
+                                    {{ $req['affiliate__details']['address_details']['country_details']['name_ar'] ?? __('admin_messages.na') }}
+                                    @endif
+                                </td>
                                 <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
-                                <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
-                                <td>{{ $req['amount'] }} KD</td>
-                                <td>{{ $req['bank_details']['account_no']??'N/A' }}</td>
+                                <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} {{__('admin_messages.kd')}}</td>
+                                <td>{{ $req['amount'] }} {{__('admin_messages.kd')}}</td>
+                                <td>{{ $req['bank_details']['account_no']??__('admin_messages.na') }}</td>
                                 @if(in_array(23, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -166,7 +176,7 @@
                     <!-- From Date Filter -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                             <input type="date" id="from_date1" name="from_date1" class="form-control"
                                 value="{{ request()->from_date1 }}"
                                 onchange="document.getElementById('filterForm1').submit();" />
@@ -175,7 +185,7 @@
                     <!-- To Date Filter -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">To:</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                             <input type="date" id="to_date1" name="to_date1" class="form-control"
                                 value="{{ request()->to_date1 }}"
                                 onchange="document.getElementById('filterForm1').submit();" />
@@ -185,15 +195,19 @@
                     <!-- Country Filter -->
                     <div class="col-lg-2 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                             <select name="country1" id="country1"
                                 class="form-select form-select-lg "
                                 onchange="document.getElementById('filterForm1').submit();">
-                                <option value="">Select country</option>
+                                <option value="">{{ __('admin_messages.select_country') }}</option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country['name'] }}"
                                     {{ request('country1') == $country['name'] ? 'selected' : '' }}>
+                                    @if(app()->getLocale() == 'en')
                                     {{ $country['name'] }}
+                                    @else
+                                    {{ $country['name_ar'] }}
+                                    @endif
                                 </option>
                                 @endforeach
                             </select>
@@ -202,13 +216,13 @@
 
                     <div class="col-lg-2 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Status</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.select_status') }}</label>
                             <select name="status" id="status"
                                 class="form-select form-select-lg "
                                 onchange="document.getElementById('filterForm1').submit();">
-                                <option value="">Select Status</option>
-                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Complete</option>
-                                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Pending</option>
+                                <option value="">{{ __('admin_messages.select_status') }}</option>
+                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>{{ __('admin_messages.completed') }}</option>
+                                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>{{ __('admin_messages.pending') }}</option>
                             </select>
                         </div>
                     </div>
@@ -216,7 +230,7 @@
                     <div class="col-lg-2 col-md-12 col-12">
                         <div class="d-flex gap-3 justify-content-start mt-5" style="text-align: start">
                             <a href="{{route('admin.affiliateWithdrawRequestManagement')}}" class="btn btn-dark customBtn mt-2">
-                                <span>Reset</span>
+                                <span>{{ __('admin_messages.reset') }}</span>
                             </a>
                             <!-- <a class="btn btn-dark customBtn" style="margin-top: 60px">
                                 <span>Export</span>
@@ -230,16 +244,16 @@
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Request ID</th>
-                                <th scope="col">User Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Request On</th>
-                                <th scope="col">Available Amount</th>
-                                <th scope="col">Requested Amount</th>
-                                <th scope="col">Bank Account Number</th>
-                                <th scope="col">Transaction Id</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.request_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.user_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.request_on') }}</th>
+                                <th scope="col">{{ __('admin_messages.available_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.requested_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.bank_account_number') }}</th>
+                                <th scope="col">{{ __('admin_messages.transaction_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.status') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -247,18 +261,24 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $req['request_id'] }}</td>
-                                <td>{{ $req['affiliate__details']['full_name'] }}</td>
-                                <td>{{ $req['affiliate__details']['address_details']['country_details']['name'] }}</td>
+                                <td>{{ $req['affiliate__details']['full_name'] ?? __('admin_messages.na') }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $req['affiliate__details']['address_details']['country_details']['name'] ?? __('admin_messages.na') }}
+                                    @else
+                                    {{ $req['affiliate__details']['address_details']['country_details']['name_ar'] ?? __('admin_messages.na') }}
+                                    @endif
+                                </td>
                                 <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
-                                <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
-                                <td>{{ $req['amount'] }} KD</td>
-                                <td>{{ $req['bank_details']['account_no']??'N/A' }}</td>
-                                <td>{{ $req['transaction_id'] ?? 'N/A' }}</td>
+                                <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} {{__('admin_messages.kd')}}</td>
+                                <td>{{ $req['amount'] }} {{__('admin_messages.kd')}}</td>
+                                <td>{{ $req['bank_details']['account_no']??__('admin_messages.na') }}</td>
+                                <td>{{ $req['transaction_id'] ?? __('admin_messages.na') }}</td>
                                 <td>
                                     @if($req['admin_verify'] == '1')
-                                        <span class="text-success">Complete</span>
+                                        <span class="text-success">{{__('admin_messages.completed')}}</span>
                                     @else
-                                        <span class="text-warning">Pending</span>
+                                        <span class="text-warning">{{__('admin_messages.pending')}}</span>
                                     @endif
                                 </td>
                             </tr>
@@ -277,7 +297,7 @@
                     <!-- From Date Filter -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
+                            <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
                             <input type="date" id="from_date2" name="from_date2" class="form-control"
                                 value="{{ request()->from_date2 }}"
                                 onchange="document.getElementById('filterForm2').submit();" />
@@ -286,7 +306,7 @@
                     <!-- To Date Filter -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">To:</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
                             <input type="date" id="to_date2" name="to_date2" class="form-control"
                                 value="{{ request()->to_date2 }}"
                                 onchange="document.getElementById('filterForm2').submit();" />
@@ -296,15 +316,19 @@
                     <!-- Country Filter -->
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
+                            <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
                             <select name="country2" id="country2"
                                 class="form-select form-select-lg "
                                 onchange="document.getElementById('filterForm2').submit();">
-                                <option value="">Select country</option>
+                                <option value="">{{ __('admin_messages.select_country') }}</option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country['name'] }}"
                                     {{ request('country2') == $country['name'] ? 'selected' : '' }}>
+                                    @if(app()->getLocale() == 'en')
                                     {{ $country['name'] }}
+                                    @else
+                                    {{ $country['name_ar'] }}
+                                    @endif
                                 </option>
                                 @endforeach
                             </select>
@@ -314,7 +338,7 @@
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="d-flex gap-3 justify-content-start mt-5" style="text-align: start">
                             <a href="{{route('admin.affiliateWithdrawRequestManagement')}}" class="btn btn-dark customBtn mt-2">
-                                <span>Reset</span>
+                                <span>{{ __('admin_messages.reset') }}</span>
                             </a>
                             <!-- <a class="btn btn-dark customBtn" style="margin-top: 60px">
                                 <span>Export</span>
@@ -328,15 +352,15 @@
                     <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Request ID</th>
-                                <th scope="col">User Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">Request On</th>
-                                <th scope="col">Available Amount</th>
-                                <th scope="col">Requested Amount</th>
-                                <th scope="col">Bank Account Number</th>
-                                <th scope="col">Reason</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.request_id') }}</th>
+                                <th scope="col">{{ __('admin_messages.user_name') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.request_on') }}</th>
+                                <th scope="col">{{ __('admin_messages.available_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.requested_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.bank_account_number') }}</th>
+                                <th scope="col">{{ __('admin_messages.reason') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -344,12 +368,18 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $req['request_id'] }}</td>
-                                <td>{{ $req['affiliate__details']['full_name'] }}</td>
-                                <td>{{ $req['affiliate__details']['address_details']['country_details']['name'] }}</td>
+                                <td>{{ $req['affiliate__details']['full_name'] ?? __('admin_messages.na') }}</td>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $req['affiliate__details']['address_details']['country_details']['name'] ?? __('admin_messages.na') }}
+                                    @else
+                                    {{ $req['affiliate__details']['address_details']['country_details']['name_ar'] ?? __('admin_messages.na') }}
+                                    @endif
+                                </td>
                                 <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
-                                <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
-                                <td>{{ $req['amount'] }} KD</td>
-                                <td>{{ $req['bank_details']['account_no']??'N/A' }}</td>
+                                <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} {{__('admin_messages.kd')}}</td>
+                                <td>{{ $req['amount'] }} {{__('admin_messages.kd')}}</td>
+                                <td>{{ $req['bank_details']['account_no']??__('admin_messages.na') }}</td>
                                 <td>
                                     {{ $req['reject_reason'] }}
                                 </td>
@@ -397,7 +427,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5>Reason For Rejection </h5>
+                <h5>{{ __('admin_messages.reason_for_rejection') }} </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -407,17 +437,17 @@
                     <textarea class="form-control" id="rejectReason" name="reject_reason" rows="3"></textarea>
 
                     <small id="reasonError" class="text-danger" style="display:none;">
-                        Please enter reason for rejection
+                        {{ __('admin_messages.please_enter_reason') }}
                     </small>
                 </div>
 
                 <div class="d-flex justify-content-center gap-3 mt-3">
                     <button type="button" class="btn btn-dark customBtn" data-bs-dismiss="modal">
-                        Cancel
+                        {{ __('admin_messages.cancel') }}
                     </button>
 
                     <button type="button" id="submitReject" class="btn btn-dark customBtn">
-                        Submit
+                        {{ __('admin_messages.submit') }}
                     </button>
                 </div>
 
