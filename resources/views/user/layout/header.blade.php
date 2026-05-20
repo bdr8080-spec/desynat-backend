@@ -315,7 +315,9 @@
                                     data-bs-toggle="dropdown" data-bs-auto-close="outside"
                                     {{ !$isHome ? 'disabled' : '' }}>
                                     <span id="selectedCurrency">
-                                        {{ session('currency', $GetsellerCountry[0]->currency_code) }}
+                                        
+                                    @if(App::getlocale()=='en'){{ session('currency', $GetsellerCountry[0]->currency_code) }} @else {{ session('currency', $GetsellerCountry[0]->currency_code_ar) }} @endif 
+
                                     </span>
                                 </button>
 
@@ -327,9 +329,12 @@
                                     @foreach($GetsellerCountry as $key=>$val)
                                     <li class="dropdown-item">
                                         <label class="custom-radio">
-                                            <input type="radio" name="currency" value="{{$val->currency_code}}"
+                                            <input type="radio" name="currency" value=" @if(App::getlocale()=='en'){{$val->currency_code}} @else {{$val->currency_code_ar}} @endif"
                                                 {{ session('currency', $GetsellerCountry[0]->currency_code) == $val->currency_code ? 'checked' : '' }}>
-                                            <span>{{$val->currency_code}}</span>
+                                            <span>  
+                                           @if(App::getlocale()=='en'){{$val->currency_code}} @else {{$val->currency_code_ar}} @endif 
+                                                                               
+                                        </span>
                                         </label>
                                     </li>
                                     @endforeach
