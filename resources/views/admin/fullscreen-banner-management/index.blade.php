@@ -1,6 +1,15 @@
 @extends('admin.layout.app')
 @section('content')
 
+@php
+    $admin = auth('admin')->user();
+
+    $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
+        ->where('can_action', 1)
+        ->pluck('module_id')
+        ->toArray();
+@endphp
+
 <style>
 #editPreviewImage {
     display: block;
@@ -55,7 +64,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Banner Management</h2>
+            <h2 class="h2">{{ __('admin_messages.banner_management') }}</h2>
         </div>
     </div>
 
@@ -66,14 +75,14 @@
                 <button class="nav-link customBtn2 m-0 active" id="pills-fullscreen-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-fullscreen" type="button" role="tab" aria-controls="pills-fullscreen"
                     aria-selected="true">
-                    Full Screen
+                    {{ __('admin_messages.full_screen') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link  customBtn2 m-0" id="pills-promo-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-promo" type="button" role="tab" aria-controls="pills-promo"
                     aria-selected="true">
-                    Promotional
+                    {{ __('admin_messages.promotional') }}
                 </button>
             </li>
         </ul>
@@ -86,14 +95,18 @@
             <div class="d-flex justify-content-between align-items-center">
                 <form method="GET" action="{{ route('admin.fullScreenBannerManagement') }}" id="filterForm">
                     <div class="form-group mb-3">
-                        <label for="from" class="form-label">Country Name</label>
+                        <label for="from" class="form-label">{{ __('admin_messages.select_country') }}</label>
                         <select name="country" class="form-select form-select-lg"
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select country</option>
+                            <option value="">{{ __('admin_messages.select_country') }}</option>
                             @foreach($countries as $country)
                             <option value="{{ $country['name'] }}"
                                 {{ request('country') == $country['name'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $country['name'] }}
+                                @else
+                                {{ $country['name_ar'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -102,7 +115,7 @@
                 @if(in_array(21, $permissions) || $admin->type == 1)
                 <div class="d-flex justify-content-end">
                     <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                        <span>Add Advertisement</span>
+                        <span>{{ __('admin_messages.add_advertisement') }}</span>
                     </a>
                 </div>
                 @endif
@@ -114,15 +127,15 @@
                         <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
-                                    <th scope="col">SR No.</th>
-                                    <th scope="col">Banner</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">Country</th>
-                                    <th scope="col">Start Date</th>
-                                    <th scope="col">End Date</th>
+                                    <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                    <th scope="col">{{ __('admin_messages.banner') }}</th>
+                                    <th scope="col">{{ __('admin_messages.title') }}</th>
+                                    <th scope="col">{{ __('admin_messages.type') }}</th>
+                                    <th scope="col">{{ __('admin_messages.country') }}</th>
+                                    <th scope="col">{{ __('admin_messages.start_date') }}</th>
+                                    <th scope="col">{{ __('admin_messages.end_date') }}</th>
                                     @if(in_array(21, $permissions) || $admin->type == 1)
-                                    <th scope="col">Action</th>
+                                    <th scope="col">{{ __('admin_messages.action') }}</th>
                                     @endif
 
                                 </tr>
@@ -140,12 +153,18 @@
                                     <td>{{ $banner['title'] }}</td>
                                     <td>
                                         @if($banner['type'] == '1')
-                                        Mobile
+                                        {{ __('admin_messages.mobile') }}
                                         @else
-                                        Web
+                                        {{ __('admin_messages.web') }}
                                         @endif
                                     </td>
-                                    <td>{{ $banner['country_info']['name'] }}</td>
+                                    <td>
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $banner['country_info']['name'] }}
+                                        @else
+                                        {{ $banner['country_info']['name_ar'] }}
+                                        @endif
+                                    </td>
                                     <td>{{ $banner['start_date'] }}</td>
                                     <td>{{ $banner['end_date'] }}</td>
                                     @if(in_array(21, $permissions) || $admin->type == 1)
@@ -174,7 +193,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">No data found</td>
+                                    <td colspan="6" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                                 </tr>
                                 @endforelse
                             </tbody>
@@ -204,7 +223,7 @@
                 @if(in_array(21, $permissions) || $admin->type == 1)
                 <div class="d-flex justify-content-end mb-3">
                     <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#addPromotional">
-                        <span>Add Promotional</span>
+                        <span>{{ __('admin_messages.add_promotional') }}</span>
                     </a>
                 </div>
                 @endif
@@ -215,18 +234,18 @@
                     <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">SR No.</th>
-                                <th scope="col">Banner</th>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.banner') }}</th>
                                 <!-- <th scope="col">Title</th>
                                 <th scope="col">Type</th> -->
-                                <th scope="col">Position</th>
+                                <th scope="col">{{ __('admin_messages.position') }}</th>
                                 <!-- <th scope="col">Country</th> -->
-                                 <th scope="col">Category</th>
-                                 <th scope="col">Sub-Category</th>
-                                <th scope="col">Start Date</th>
-                                <th scope="col">End Date</th>
+                                 <th scope="col">{{ __('admin_messages.category') }}</th>
+                                 <th scope="col">{{ __('admin_messages.sub_category') }}</th>
+                                <th scope="col">{{ __('admin_messages.start_date') }}</th>
+                                <th scope="col">{{ __('admin_messages.end_date') }}</th>
                                 @if(in_array(21, $permissions) || $admin->type == 1)
-                                <th scope="col">Action</th>
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
                                 @endif
 
                             </tr>
@@ -245,25 +264,33 @@
                                 <td>Mobile</td> -->
                                 <td>
                                     @if($banner['banner_position'] == '1')
-                                    Home Top
+                                    {{ __('admin_messages.home_top') }}
                                     @elseif($banner['banner_position'] == '2')
-                                    Home Bottom
+                                    {{ __('admin_messages.home_bottom') }}
                                     @elseif($banner['banner_position'] == '3')
-                                    Category
+                                    {{ __('admin_messages.category') }}
                                     @endif
                                 </td>
                                 <td>
                                     @if(!empty($banner['category_details']))
-                                    {{$banner['category_details']['name']}}
+                                        @if(app()->getLocale() == 'en')
+                                        {{$banner['category_details']['name']}}
+                                        @else
+                                        {{$banner['category_details']['name_ar']}}
+                                        @endif
                                     @else
-                                    N/A
+                                    {{ __('admin_messages.na') }}
                                     @endif
                                 </td>
                                 <td>
                                     @if(!empty($banner['subcategory_details']))
-                                    {{$banner['subcategory_details']['name_english']}}
+                                        @if(app()->getLocale() == 'en')
+                                        {{$banner['subcategory_details']['name_english']}}
+                                        @else
+                                        {{$banner['subcategory_details']['name_arabic']}}
+                                        @endif
                                     @else
-                                    N/A
+                                    {{ __('admin_messages.na') }}
                                     @endif
                                 </td>
                                 <!-- <td>India</td> -->
@@ -309,7 +336,7 @@
                             </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">No data found</td>
+                                    <td colspan="6" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
                                 </tr>
                             @endforelse
                             
@@ -329,7 +356,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add Promotional Banner</h2>
+                <h2 class="h2">{{ __('admin_messages.add_promotional') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -338,12 +365,12 @@
                     <div class="row">
                         <!-- Image Upload -->
                         <div class="col-lg-12">
-                            <div class="upload-title text-center">Upload Image</div>
+                            <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
                             <label for="fileUploadPromotional" class="upload-box" style="cursor:pointer;">
                                 <img src="/admin/image/imge-upload.svg" id="uploadIconPromotional" />
                                 <img id="previewImagePromotional" class="preview-image"
                                     style="display:none; max-width:216px; margin-top:-2px;" />
-                                <div class="upload-text">Upload Image</div>
+                                <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
                                 <input type="file" id="fileUploadPromotional" name="upload_banner" accept="image/*" hidden />
                             </label>
                             <div class="text-danger text-center" id="imagePromotionalError"></div>
@@ -352,30 +379,30 @@
                         <!-- Banner Position -->
                         <div class="col-lg-12 mt-0">
                             <div class="form-group w-100">
-                                <label class="form-label">Banner Position</label>
+                                <label class="form-label">{{ __('admin_messages.banner_position') }}</label>
                                 <select id="bannerPosition" name="banner_position" class="form-select form-select-lg">
-                                    <option value="">Select Position</option>
-                                    <option value="1">Home Top</option>
-                                    <option value="2">Home Bottom</option>
-                                    <option value="3">Category</option>
+                                    <option value="">{{ __('admin_messages.select_position') }}</option>
+                                    <option value="1">{{ __('admin_messages.home_top') }}</option>
+                                    <option value="2">{{ __('admin_messages.home_bottom') }}</option>
+                                    <option value="3">{{ __('admin_messages.category') }}</option>
                                 </select>
                                 <div class="text-danger" id="positionError"></div>
                             </div>
 
                             <!-- Category Dropdown (shown only if position = 3) -->
                             <div class="form-group w-100 mt-1" id="categoryWrapper" style="display:none;">
-                                <label class="form-label">Category</label>
+                                <label class="form-label">{{ __('admin_messages.category') }}</label>
                                 <select id="categorySelect" name="category" class="form-select form-select-lg">
-                                    <option value="">Select Category</option>
+                                    <option value="">{{ __('admin_messages.select_category') }}</option>
                                 </select>
                                 <div class="text-danger" id="categoryError"></div>
                             </div>
 
                             <!-- Subcategory Dropdown (shown after category selection) -->
                             <div class="form-group w-100 mt-1" id="subCategoryWrapper" style="display:none;">
-                                <label class="form-label">Subcategory</label>
+                                <label class="form-label">{{ __('admin_messages.sub_category') }}</label>
                                 <select id="subCategorySelect" name="subcatgory" class="form-select form-select-lg">
-                                    <option value="">Select Subcategory</option>
+                                    <option value="">{{ __('admin_messages.select_sub_category') }}</option>
                                 </select>
                                 <div class="text-danger" id="subcategoryError"></div>
                             </div>
@@ -386,7 +413,7 @@
                             <div class="d-flex gap-2">
                                 <div class="col-lg-6">
                                     <div class="form-group w-100">
-                                        <label class="form-label">From</label>
+                                        <label class="form-label">{{ __('admin_messages.from') }}</label>
                                         <input type="date" id="start_date_promotional" name="start_date_promotional" class="form-control" />
                                         <div class="text-danger" id="startDatePromotionalError"></div>
                                     </div>
@@ -394,7 +421,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group w-100">
-                                        <label class="form-label">To</label>
+                                        <label class="form-label">{{ __('admin_messages.to') }}</label>
                                         <input type="date" id="end_date_promotional" name="end_date_promotional" class="form-control" />
                                         <div class="text-danger" id="endDatePromotionalError"></div>
                                     </div>
@@ -405,7 +432,7 @@
                         <!-- Submit Button -->
                         <div class="col-lg-12 mt-3 d-flex justify-content-center">
                             <button type="button" id="submitPromotionalBannerBtn" class="btn btn-dark customBtn">
-                                Submit
+                                {{ __('admin_messages.submit') }}
                             </button>
                         </div>
                     </div>
@@ -424,7 +451,7 @@
 
             <!-- Header -->
             <div class="modal-header management border-0">
-                <h2 class="h2">Edit Promotional Banner</h2>
+                <h2 class="h2">{{ __('admin_messages.edit_promotional_banner') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
@@ -439,7 +466,7 @@
 
                         <!-- Image Upload -->
                         <div class="col-lg-12">
-                            <div class="upload-title text-center">Upload Image</div>
+                            <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
 
                             <label for="editFileUploadPromotional"
                                    class="upload-box"
@@ -452,7 +479,7 @@
                                      class="preview-image"
                                      style="display:none; max-width:216px; margin-top:-2px;" />
 
-                                <div class="upload-text">Upload Image</div>
+                                <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
 
                                 <input type="file"
                                        id="editFileUploadPromotional"
@@ -467,14 +494,14 @@
                         <!-- Banner Position -->
                         <div class="col-lg-12 mt-3">
                             <div class="form-group w-100">
-                                <label class="form-label">Banner Position</label>
+                                <label class="form-label">{{ __('admin_messages.banner_position') }}</label>
 
                                 <select id="editBannerPosition"
                                         class="form-select form-select-lg">
-                                    <option value="">Select Position</option>
-                                    <option value="1">Home Top</option>
-                                    <option value="2">Home Bottom</option>
-                                    <option value="3">Category</option>
+                                    <option value="">{{ __('admin_messages.select_position') }}</option>
+                                    <option value="1">{{ __('admin_messages.home_top') }}</option>
+                                    <option value="2">{{ __('admin_messages.home_bottom') }}</option>
+                                    <option value="3">{{ __('admin_messages.category') }}</option>
                                 </select>
 
                                 <div class="text-danger"
@@ -485,11 +512,11 @@
                             <div class="form-group w-100 mt-2"
                                  id="editCategoryWrapper"
                                  style="display:none;">
-                                <label class="form-label">Category</label>
+                                <label class="form-label">{{ __('admin_messages.category') }}</label>
 
                                 <select id="editCategorySelect"
                                         class="form-select form-select-lg">
-                                    <option value="">Select Category</option>
+                                    <option value="">{{ __('admin_messages.select_category') }}</option>
                                 </select>
 
                                 <div class="text-danger"
@@ -500,11 +527,11 @@
                             <div class="form-group w-100 mt-2"
                                  id="editSubCategoryWrapper"
                                  style="display:none;">
-                                <label class="form-label">Subcategory</label>
+                                <label class="form-label">{{ __('admin_messages.sub_category') }}</label>
 
                                 <select id="editSubCategorySelect"
                                         class="form-select form-select-lg">
-                                    <option value="">Select Subcategory</option>
+                                    <option value="">{{ __('admin_messages.select_sub_category') }}</option>
                                 </select>
 
                                 <div class="text-danger"
@@ -518,7 +545,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group w-100">
-                                        <label class="form-label">From</label>
+                                        <label class="form-label">{{ __('admin_messages.from') }}</label>
                                         <input type="date"
                                                id="editStartDatePromotional"
                                                class="form-control" />
@@ -529,7 +556,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group w-100">
-                                        <label class="form-label">To</label>
+                                        <label class="form-label">{{ __('admin_messages.to') }}</label>
                                         <input type="date"
                                                id="editEndDatePromotional"
                                                class="form-control" />
@@ -546,7 +573,7 @@
                             <button type="button"
                                     id="updatePromotionalBannerBtn"
                                     class="btn btn-dark customBtn">
-                                Update
+                                {{ __('admin_messages.update') }}
                             </button>
                         </div>
 
@@ -568,7 +595,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add Advertisement</h2>
+                <h2 class="h2">{{ __('admin_messages.add_advertisement') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -578,13 +605,13 @@
 
                         <!-- Image Upload -->
                         <div class="col-lg-12">
-                            <div class="upload-title text-center">Upload Image</div>
+                            <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
 
                             <label for="fileUpload" class="upload-box" style="cursor:pointer;">
                                 <img src="/admin/image/imge-upload.svg" id="uploadIcon" />
                                 <img id="previewImage" class="preview-image"
                                     style="display:none; max-width:216px; margin-top:-2px;" />
-                                <div class="upload-text">Upload Image</div>
+                                <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
                                 <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
                             </label>
                             <div class="text-danger text-center" id="imageError"></div>
@@ -593,9 +620,9 @@
                         <!-- Title -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <label class="form-label" for="title">Title</label>
+                                <label class="form-label" for="title">{{ __('admin_messages.title') }}</label>
                                 <input type="text" id="title" name="title" class="form-control"
-                                    placeholder="Enter Title"
+                                    placeholder="{{ __('admin_messages.enter_title') }}"
                                     oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="titleError"></div>
                             </div>
@@ -604,12 +631,18 @@
                         <!-- Country -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
-                                <label class="form-label">Select Country</label>
+                                <label class="form-label">{{ __('admin_messages.select_country') }}</label>
                                 <select id="countrySelect" name="country_id" class="form-select form-select-lg"
                                     aria-label="Large select example">
-                                    <option value="">Select Country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
                                     @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    <option value="{{ $country->id }}">
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $country->name }}
+                                        @else
+                                        {{ $country->name_ar }}
+                                        @endif
+                                    </option>
                                     @endforeach
                                 </select>
                                 <div class="text-danger" id="countryError"></div>
@@ -618,12 +651,12 @@
 
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
-                                <label class="form-label">For</label>
+                                <label class="form-label">{{ __('admin_messages.for') }}</label>
                                 <select id="forSelect" name="type" class="form-select form-select-lg"
                                     aria-label="Large select example">
-                                    <option value="">Select Type</option>
-                                    <option value="1">Mobile</option>
-                                    <option value="2">Web</option>
+                                    <option value="">{{ __('admin_messages.select_type') }}</option>
+                                    <option value="1">{{ __('admin_messages.mobile') }}</option>
+                                    <option value="2">{{ __('admin_messages.web') }}</option>
                                 </select>
                                 <div class="text-danger" id="forError"></div>
                             </div>
@@ -636,7 +669,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group  w-100">
-                                        <label class="form-label">From:</label>
+                                        <label class="form-label">{{ __('admin_messages.from') }}:</label>
                                         <input type="date" id="start_date" name="start_date" class="form-control" />
                                         <div class="text-danger" id="startDateError"></div>
                                     </div>
@@ -644,7 +677,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group  w-100">
-                                        <label class="form-label">To:</label>
+                                        <label class="form-label">{{ __('admin_messages.to') }}:</label>
                                         <input type="date" id="end_date" name="end_date" class="form-control" />
                                         <div class="text-danger" id="endDateError"></div>
                                     </div>
@@ -656,7 +689,7 @@
                         <!-- Submit -->
                         <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
                             <a type="button" id="submitBannerBtn" class="btn btn-dark customBtn mt-3">
-                                Submit
+                                {{ __('admin_messages.submit') }}
                             </a>
                         </div>
 
@@ -674,7 +707,7 @@
         <div class="modal-content">
 
             <div class="modal-header management border-0">
-                <h2 class="h2">Edit Advertisement</h2>
+                <h2 class="h2">{{ __('admin_messages.edit_advertisement') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -683,13 +716,13 @@
                     <div class="row">
 
                         <div class="col-lg-12">
-                            <div class="upload-title text-center">Upload Image</div>
+                            <div class="upload-title text-center">{{ __('admin_messages.upload_image') }}</div>
 
                             <label for="editFileUpload" class="upload-box" style="cursor:pointer;">
                                 <img src="/admin/image/imge-upload.svg" id="editUploadIcon" />
                                 <img id="editPreviewImage" class="preview-image"
                                     style="display:none; max-width:216px; margin-top:-2px;" />
-                                <div class="upload-text">Upload Image</div>
+                                <div class="upload-text">{{ __('admin_messages.upload_image') }}</div>
                                 <input type="file" id="editFileUpload" hidden />
                             </label>
                             <div class="text-danger text-center" id="editImageError"></div>
@@ -698,8 +731,8 @@
                         <div class="form-group">
                             <div class="col-lg-12">
 
-                                <label class="form-label">Title</label>
-                                <input type="text" id="editTitle" class="form-control"
+                                <label class="form-label">{{ __('admin_messages.title') }}</label>
+                                <input type="text" id="editTitle" class="form-control" placeholder="{{ __('admin_messages.enter_title') }}"
                                     oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')">
                                 <div class="text-danger" id="editTitleError"></div>
                             </div>
@@ -707,11 +740,17 @@
 
                         <div class="col-lg-12">
                             <div class="form-group w-100">
-                                <label class="form-label">Select Country</label>
+                                <label class="form-label">{{ __('admin_messages.select_country') }}</label>
                                 <select id="editCountrySelect" class="form-select form-select-lg">
-                                    <option value="">Select Country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
                                     @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    <option value="{{ $country->id }}">
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $country->name }}
+                                        @else
+                                        {{ $country->name_ar }}
+                                        @endif
+                                    </option>
                                     @endforeach
                                 </select>
                                 <div class="text-danger" id="editCountryError"></div>
@@ -720,12 +759,12 @@
 
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
-                                <label class="form-label">For</label>
+                                <label class="form-label">{{ __('admin_messages.for') }}</label>
                                 <select id="editForSelect" class="form-select form-select-lg"
                                     aria-label="Large select example">
-                                    <option value="">Select Type</option>
-                                    <option value="1">Mobile</option>
-                                    <option value="2">Web</option>
+                                    <option value="">{{ __('admin_messages.select_type') }}</option>
+                                    <option value="1">{{ __('admin_messages.mobile') }}</option>
+                                    <option value="2">{{ __('admin_messages.web') }}</option>
                                 </select>
                                 <div class="text-danger" id="editForError"></div>
                             </div>
@@ -735,7 +774,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group  w-100">
 
-                                        <label class="form-label">From</label>
+                                        <label class="form-label">{{ __('admin_messages.from') }}</label>
                                         <input type="date" id="editStartDate" class="form-control">
                                         <div class="text-danger" id="editStartDateError"></div>
                                     </div>
@@ -744,7 +783,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group  w-100">
 
-                                        <label class="form-label">To</label>
+                                        <label class="form-label">{{ __('admin_messages.to') }}</label>
                                         <input type="date" id="editEndDate" class="form-control">
                                         <div class="text-danger" id="editEndDateError"></div>
                                     </div>
@@ -756,7 +795,7 @@
                         </div>
                         <div class="col-lg-12 d-flex justify-content-center">
                             <a id="updateBannerBtn" class="btn btn-dark customBtn mt-3">
-                                Update
+                                {{ __('admin_messages.update') }}
                             </a>
                         </div>
 
@@ -777,13 +816,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let bannerId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteFullScreenBanner/${bannerId}`, {
@@ -885,27 +925,27 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('type', forSelect.value);
 
         if (!fileInput.files.length) {
-            imageError.innerText = 'Please upload image';
+            imageError.innerText = "{{ __('admin_messages.please_upload_image') }}";
             hasError = true;
         }
         if (!title.value.trim()) {
-            titleError.innerText = 'Please enter title';
+            titleError.innerText = "{{ __('admin_messages.please_enter_title') }}";
             hasError = true;
         }
         if (!countrySelect.value) {
-            countryError.innerText = 'Please select country';
+            countryError.innerText = "{{ __('admin_messages.please_select_country') }}";
             hasError = true;
         }
         if (!start_date.value) {
-            startDateError.innerText = 'Please select start date';
+            startDateError.innerText = "{{ __('admin_messages.please_select_start_date') }}";
             hasError = true;
         }
         if (!end_date.value) {
-            endDateError.innerText = 'Please select end date';
+            endDateError.innerText = "{{ __('admin_messages.please_select_end_date') }}";
             hasError = true;
         }
         if (!forSelect.value) {
-            forError.innerText = 'Please select type';
+            forError.innerText = "{{ __('admin_messages.please_select_type') }}";
             hasError = true;
         }
 
@@ -1052,27 +1092,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Validation
         if (!editTitle.value.trim()) {
-            editTitleError.innerText = 'Please enter title';
+            editTitleError.innerText = "{{ __('admin_messages.please_enter_title') }}";
             hasError = true;
         }
 
         if (!editCountrySelect.value) {
-            editCountryError.innerText = 'Please select country';
+            editCountryError.innerText = "{{ __('admin_messages.please_select_country') }}";
             hasError = true;
         }
 
         if (!editForSelect.value) {
-            editForError.innerText = 'Please select type';
+            editForError.innerText = "{{ __('admin_messages.please_select_type') }}";
             hasError = true;
         }
 
         if (!editStartDate.value) {
-            editStartDateError.innerText = 'Please select start date';
+            editStartDateError.innerText = "{{ __('admin_messages.please_select_start_date') }}";
             hasError = true;
         }
 
         if (!editEndDate.value) {
-            editEndDateError.innerText = 'Please select end date';
+            editEndDateError.innerText = "{{ __('admin_messages.please_select_end_date') }}";
             hasError = true;
         }
 
@@ -1249,13 +1289,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let bannerId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deletePromotionalBanner/${bannerId}`, {
@@ -1373,10 +1414,12 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') {
-                    categorySelect.innerHTML = '<option value="">Select Category</option>';
+                    categorySelect.innerHTML =
+                        '<option value="">{{ __("admin_messages.select_category") }}</option>';
+
                     data.data.forEach(cat => {
                         categorySelect.innerHTML +=
-                            `<option value="${cat.id}">${cat.name_english || cat.name}</option>`;
+                            `<option value="${cat.id}">{{ app()->getLocale() == 'en' ? '${cat.name}' : '${cat.name_ar}' }}</option>`;
                     });
                 }
             })
@@ -1401,10 +1444,12 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if (data.status === 'success' && data.data && data.data.data) {
                     subCategoryWrapper.style.display = 'block';
-                    subCategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
+                    subCategorySelect.innerHTML =
+                        '<option value="">{{ __("admin_messages.select_sub_category") }}</option>';
+
                     data.data.data.forEach(sub => {
                         subCategorySelect.innerHTML +=
-                            `<option value="${sub.id}">${sub.name_english}</option>`;
+                            `<option value="${sub.id}">{{ app()->getLocale() == 'en' ? '${sub.name_english}' : '${sub.name_arabic}' }}</option>`;
                     });
                 } else {
                     subCategoryWrapper.style.display = 'none';
@@ -1429,32 +1474,32 @@ document.addEventListener('DOMContentLoaded', function() {
         let hasError = false;
 
         if (!fileInput.files.length) {
-            document.getElementById('imagePromotionalError').innerText = 'Please upload banner';
+            document.getElementById('imagePromotionalError').innerText = "{{ __('admin_messages.please_upload_image') }}";
             hasError = true;
         }
 
         if (!bannerPosition.value) {
-            document.getElementById('positionError').innerText = 'Please select banner position';
+            document.getElementById('positionError').innerText = "{{ __('admin_messages.please_select_banner_position') }}";
             hasError = true;
         }
 
         if (bannerPosition.value == 3 && !categorySelect.value) {
-            document.getElementById('categoryError').innerText = 'Please select category';
+            document.getElementById('categoryError').innerText = "{{ __('admin_messages.please_select_category') }}";
             hasError = true;
         }
 
         if (bannerPosition.value == 3 && !subCategorySelect.value) {
-            document.getElementById('subcategoryError').innerText = 'Please select subcategory';
+            document.getElementById('subcategoryError').innerText = "{{ __('admin_messages.please_select_subcategory') }}";
             hasError = true;
         }
 
         if (!start_date.value) {
-            document.getElementById('startDatePromotionalError').innerText = 'Please select start date';
+            document.getElementById('startDatePromotionalError').innerText = "{{ __('admin_messages.please_select_start_date') }}";
             hasError = true;
         }
 
         if (!end_date.value) {
-            document.getElementById('endDatePromotionalError').innerText = 'Please select end date';
+            document.getElementById('endDatePromotionalError').innerText = "{{ __('admin_messages.please_select_end_date') }}";
             hasError = true;
         }
 
@@ -1597,7 +1642,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editCategoryError').innerText = '';
             document.getElementById('editSubcategoryError').innerText = '';
 
-            subSelect.innerHTML = '<option value="">Select Subcategory</option>';
+            subSelect.innerHTML = '<option value="">{{ __("admin_messages.select_sub_category") }}</option>';
 
             if (!this.value) {
                 subWrapper.style.display = 'none';
@@ -1628,12 +1673,14 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
 
                 const catSelect = document.getElementById('editCategorySelect');
-                catSelect.innerHTML = '<option value="">Select Category</option>';
+                catSelect.innerHTML = '<option value="">{{ __("admin_messages.select_category") }}</option>';
+
+                const locale = "{{ app()->getLocale() }}";
 
                 data.data.forEach(cat => {
                     catSelect.innerHTML += `
                         <option value="${cat.id}" ${cat.id == selectedCategory ? 'selected' : ''}>
-                            ${cat.name_english || cat.name}
+                            ${locale === 'en' ? (cat.name || '') : (cat.name_ar || '')}
                         </option>`;
                 });
 
@@ -1697,11 +1744,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (position == 3) {
             if (!category) {
-                document.getElementById('editCategoryError').innerText = 'Please select category';
+                document.getElementById('editCategoryError').innerText = "{{ __('admin_messages.please_select_category') }}";
                 hasError = true;
             }
             if (!subcat) {
-                document.getElementById('editSubcategoryError').innerText = 'Please select subcategory';
+                document.getElementById('editSubcategoryError').innerText = "{{ __('admin_messages.please_select_subcategory') }}";
                 hasError = true;
             }
         }

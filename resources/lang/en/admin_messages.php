@@ -671,6 +671,12 @@ return [
     'edit_advertisement' => 'Edit Advertisement',
     'banner_deleted_successfully' => 'Banner deleted successfully',
     'promotional_banner_deleted_successfully' => 'Promotional banner deleted successfully',
+    'mobile' => 'Mobile',
+    'web' => 'Web',
+    'please_enter_title' => 'Please enter title',
+    'please_select_type' => 'Please select type',
+    'please_select_subcategory' => 'Please select subcategory',
+    'please_select_category' => 'Please select category',
 
     //product management
     'specification' => 'Specification',
