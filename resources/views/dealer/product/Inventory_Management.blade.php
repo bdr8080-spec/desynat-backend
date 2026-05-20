@@ -88,7 +88,7 @@ $can_action=$menu_permission['can_action'];
 
                 {{-- All Product show --}}
                 <div class="table-responsive">
-                    <table  class="table  table-bordered @if(count($data['all_product_data']) > 0 ) datatable @endif" id="table1">
+                    <table  class="table  table-bordered @if(count($data['all_product_data']) > 0 ) datatable @endif" id="@if(count($data['all_product_data'])>0) table1 @endif ">
                         <thead>
                             <tr>
                                  <th class="no-sort" >{{ __('seller_messages.S.No') }}</th>
@@ -232,7 +232,7 @@ $can_action=$menu_permission['can_action'];
 
                 {{-- // Active product List  --}}
                 <div class="table-responsive">
-                    <table class="table table-bordered @if(count($data['active_product']) > 0 ) datatable   @endif" id="table2">
+                    <table class="table table-bordered @if(count($data['active_product']) > 0 ) datatable   @endif" id="@if(count($data['active_product']) > 0 ) table2 @endif">
                         <thead>
                             <tr>
                                   <th class="no-sort" >{{ __('seller_messages.S.No') }}</th>
@@ -370,7 +370,7 @@ $can_action=$menu_permission['can_action'];
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered  @if(count($data['inactive_product']) > 0 ) datatable  @endif" id="table3">
+                    <table class="table table-bordered  @if(count($data['inactive_product']) > 0 ) datatable  @endif" id="@if(count($data['inactive_product']) > 0 ) table3 @endif ">
                         
                         <thead>
                             <tr>
@@ -463,7 +463,7 @@ $can_action=$menu_permission['can_action'];
 
                              @empty
                       <tr>
-                          <td colspan="10" class="text-center text-muted">No product found</td>
+                          <td colspan="10" class="text-center text-muted">{{ __('seller_messages.No_Product_found') }}</td>
                       </tr>
                   @endforelse
 
