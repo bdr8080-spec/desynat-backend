@@ -60,14 +60,14 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Product Management</h2>
+            <h2 class="h2">{{ __('admin_messages.product_management') }}</h2>
         </div>
 
         <div class="col-lg-3 col-md-4 col-12">
             @if(in_array(22, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
                 <a href="{{ route('admin.export_products_data', request()->all()) }}" class="btn btn-dark customBtn" href="">
-                    <span>Export</span>
+                    <span>{{ __('admin_messages.export') }}</span>
                 </a>
             </div>
             @endif
@@ -80,15 +80,19 @@
             <div class="row align-items-end">
                 <div class="col-lg-2 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Country</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_country') }}</label>
                         <select name="country" id="country"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select country</option>
+                            <option value="">{{ __('admin_messages.select_country') }}</option>
                             @foreach($countries as $country)
                             <option value="{{ $country['id'] }}"
                                 {{ request('country') == $country['id'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $country['name'] }}
+                                @else
+                                {{ $country['name_ar'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -96,15 +100,19 @@
                 </div>
                 <div class="col-lg-2 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Category</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_category') }}</label>
                         <select name="category" id="category"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select Category</option>
+                            <option value="">{{ __('admin_messages.select_category') }}</option>
                             @foreach($categories as $category)
                             <option value="{{ $category['id'] }}"
                                 {{ request('category') == $category['id'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $category['name'] }}
+                                @else
+                                {{ $category['name_ar'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -113,15 +121,19 @@
 
                 <div class="col-lg-2 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Sub-Category</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_sub_category') }}</label>
                         <select name="subcategory" id="subcategory"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select Sub-Category</option>
+                            <option value="">{{ __('admin_messages.select_sub_category') }}</option>
                             @foreach($subcategories as $subcategory)
                             <option value="{{ $subcategory['id'] }}"
                                 {{ request('subcategory') == $subcategory['id'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $subcategory['name_english'] }}
+                                @else
+                                {{ $subcategory['name_arabic'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -129,15 +141,19 @@
                 </div>
                 <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Brand</label>
+                        <label for="status" class="form-label">{{ __('admin_messages.select_brand') }}</label>
                         <select name="brand" id="brand"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select Brand</option>
+                            <option value="">{{ __('admin_messages.select_brand') }}</option>
                             @foreach($brands as $brand)
                             <option value="{{ $brand['id'] }}"
                                 {{ request('brand') == $brand['id'] ? 'selected' : '' }}>
+                                @if(app()->getLocale() == 'en')
                                 {{ $brand['name_english'] }}
+                                @else
+                                {{ $brand['name_arabic'] }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -147,7 +163,7 @@
                     <div class="d-flex gap-3 justify-content-end" >
                         <a href="{{route('admin.productManagement')}}" class="btn btn-dark customBtn"
                             style="margin-top: 60px">
-                            <span>Reset</span>
+                            <span>{{ __('admin_messages.reset') }}</span>
                         </a>
                     </div>
                 </div>
@@ -158,21 +174,21 @@
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
-                            <th scope="col">SR No.</th>
-                            <th scope="col">Seller Name</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Sub-Category</th>
-                            <th scope="col">Brand</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Specification</th>
-                            <th scope="col">Actual Price</th>
-                            <th scope="col">Size Chart</th>
-                            <th scope="col">View Variants</th>
-                            <th scope="col">More Details</th>
-                            <th scope="col">Rating</th>
+                            <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                            <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                            <th scope="col">{{ __('admin_messages.country') }}</th>
+                            <th scope="col">{{ __('admin_messages.image') }}</th>
+                            <th scope="col">{{ __('admin_messages.category') }}</th>
+                            <th scope="col">{{ __('admin_messages.sub_category') }}</th>
+                            <th scope="col">{{ __('admin_messages.brand') }}</th>
+                            <th scope="col">{{ __('admin_messages.product_name') }}</th>
+                            <th scope="col">{{ __('admin_messages.description') }}</th>
+                            <th scope="col">{{ __('admin_messages.specification') }}</th>
+                            <th scope="col">{{ __('admin_messages.actual_price') }}</th>
+                            <th scope="col">{{ __('admin_messages.size_chart') }}</th>
+                            <th scope="col">{{ __('admin_messages.view_variants') }}</th>
+                            <th scope="col">{{ __('admin_messages.more_details') }}</th>
+                            <th scope="col">{{ __('admin_messages.rating') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -180,14 +196,14 @@
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
                             <td>{{$product['seller_details']['first_name']}} {{$product['seller_details']['last_name']}}</td>
-                            <td>{{$product['store']['country_info']['name']??'N/A'}}</td>
+                            <td>{{$product['store']['country_info']['name']?? __('admin_messages.na')}}</td>
                             <td>
                                 <img src="{{$product['product_variants'][0]['variant_image'][0]}}" alt="Profile Image" width="40px" height="40px"
                                     class="square" />
                             </td>
                             <td>{{$product['category']['name']}}</td>
-                            <td>{{$product['subcategory']['name_english'] ?? 'N/A'}}</td>
-                            <td>{{$product['brand']['name_english']??'N/A'}}</td>
+                            <td>{{$product['subcategory']['name_english'] ?? __('admin_messages.na')}}</td>
+                            <td>{{$product['brand']['name_english']?? __('admin_messages.na')}}</td>
                             <td>{{$product['product_name_en']}}</td>
                             <td>
                                 <a class="table-button view-description-btn"
@@ -207,7 +223,7 @@
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
                             </td>
-                            <td>{{$product['product_variants'][0]['actual_price']}} KD</td>
+                            <td>{{$product['product_variants'][0]['actual_price']}} {{__('admin_messages.kd')}}</td>
                             <td>
                                 <a class="table-button view-size-chart-btn"
                                 type="button"
