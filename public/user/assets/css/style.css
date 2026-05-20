@@ -3517,3 +3517,7 @@ img.img-fluid.circle-image {
     left: 0px;
 }
 
+[dir="rtl"] .common-title a img {
+    transform: rotate(180deg);
+}
+
