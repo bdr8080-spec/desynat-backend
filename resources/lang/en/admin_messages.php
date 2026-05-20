@@ -866,10 +866,17 @@ return [
     'plan_name' => 'Plan Name',
     'gift_card_name' => 'Gift Card Name',
     'purchased_by' => 'Purchased By',
+    'online' => 'Online',
+    'wallet' => 'Wallet',
+    'cod' => 'Cash on Delivery',
+    'amount' => 'Amount',
 
     //current live seller
     'watch_live' => 'Watch Live',
     'lived_on' => 'Lived On',
+    'waiting_for_seller_to_go_live' => 'Waiting for seller to go LIVE',
+    'please_stay_tuned' => 'Please stay tuned...',
+    'leave' => 'Leave',
 
     //account setting
     'account_seeting' => 'Account Setting',
@@ -881,6 +888,11 @@ return [
     'account_setting_updated_successfully' => 'Account setting updated successfully',
     'email_already_assigned_to_another_sub_admin' => 'Email already assigned to another sub admin',
     'mobile_number_already_assigned_to_another_sub_admin' => 'Mobile number already assigned to another sub admin',
+    'please_select_country_code' => 'Please select country code',
+    'please_enter_old_password' => 'Please enter old password',
+    'please_enter_new_password' => 'Please enter new password',
+    'password_must_be_8_chars_uppercase_number_special' => 'Password must be 8+ chars with uppercase, number & special character',
+    'please_confirm_password' => 'Please confirm password',
 
     //sub admin management
     'add_sub_admin' => 'Add Sub Admin',

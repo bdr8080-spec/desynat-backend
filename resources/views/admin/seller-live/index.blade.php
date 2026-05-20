@@ -17,7 +17,7 @@
         <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
                 <div class="col-lg-6 col-md-6 col-12">
-                    <h2 class="h2">Current Live Seller</h2>
+                    <h2 class="h2">{{ __('admin_messages.current_live_seller') }}</h2>
                 </div>
 
             </div>
@@ -28,11 +28,11 @@
                         <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
-                                    <th scope="col">SR No.</th>
-                                    <th scope="col">Seller Name</th>
-                                    <th scope="col">Country</th>
-                                    <th scope="col">Watch Live</th>
-                                    <th scope="col">Lived On</th>
+                                    <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                    <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                    <th scope="col">{{ __('admin_messages.country') }}</th>
+                                    <th scope="col">{{ __('admin_messages.watch_live') }}</th>
+                                    <th scope="col">{{ __('admin_messages.lived_on') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,8 +41,14 @@
 
                                 <tr>
                                     <td>{{$key+1}}</td>
-                                    <td>{{$val->seller_details->first_name}} {{$val->seller_details->last_name}}</td>
-                                    <td>{{$val->timeslot_details->country_info->name}}</td>
+                                    <td>{{$val->seller_details->first_name ?? __('admin_messages.na')}} {{$val->seller_details->last_name ?? ''}}</td>
+                                    <td>
+                                        @if(app()->getLocale() == 'en')
+                                        {{$val->timeslot_details->country_info->name ?? __('admin_messages.na')}}
+                                        @else
+                                        {{$val->timeslot_details->country_info->name_ar ?? __('admin_messages.na')}}
+                                        @endif
+                                    </td>
                                     <!-- <td>
                                         <div data-bs-toggle="modal" data-bs-target="#videoshow"
                                             data-channel="{{$val->channel_id}}"><i class="bi bi-eye-fill"></i></div>
@@ -64,7 +70,7 @@
 
                                 @empty
                                 <tr>
-                                    <td colspan="4">1</td>
+                                    <td colspan="4">{{ __('admin_messages.no_data_found') }}</td>
                                 </tr>
                                 @endforelse
 
@@ -86,7 +92,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title">👀 Watch Live</h5>
+                <h5 class="modal-title">👀 {{ __('admin_messages.watch_live') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -96,8 +102,8 @@
 
                 <!-- WAITING -->
                 <div id="waiting-message" style="text-align:center; padding:40px;">
-                    <h3>⏳ Waiting for seller to go LIVE</h3>
-                    <p>Please stay tuned...</p>
+                    <h3>⏳ {{ __('admin_messages.waiting_for_seller_to_go_live') }}</h3>
+                    <p>{{ __('admin_messages.please_stay_tuned') }}</p>
                 </div>
 
                 <!-- VIDEO -->
@@ -106,7 +112,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-danger" onclick="leaveStream()">🚪 Leave</button>
+                <button class="btn btn-danger" onclick="leaveStream()">🚪 {{ __('admin_messages.leave') }}</button>
             </div>
 
         </div>
@@ -242,9 +248,9 @@ function showWaiting() {
         div.style.textAlign = "center";
         div.style.padding = "40px";
 
-        div.innerHTML = `
-            <h3>⏳ Waiting for seller to go LIVE</h3>
-            <p>Please stay tuned...</p>
+       div.innerHTML = `
+            <h3>⏳ {{ __('admin_messages.waiting_for_seller_to_go_live') }}</h3>
+            <p>{{ __('admin_messages.please_stay_tuned') }}</p>
         `;
 
         document.querySelector('.modal-body').prepend(div);
