@@ -275,7 +275,7 @@ class SellerAuthService
             return ['status'=>'error','message' => __('Service_messages.account_rejected_by_admin'),'data'=>(object)[]];                
           }
 
-          if($get_user_details->is_block=='0'){
+          if($get_user_details->is_block=='1'){
             return ['status'=>'error','message' => __('Service_messages.account_rejected_by_dealer_reason'),'data'=>(object)[]];                
           }
           
