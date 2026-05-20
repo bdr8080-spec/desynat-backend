@@ -95,19 +95,19 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 </style>
 
 <div class="inner-content management">
-    <h2 class="h2">Account Settings</h2>
+    <h2 class="h2">{{ __('admin_messages.account_setting') }}</h2>
     <div class="d-flex justify-content-center">
         <ul class="nav nav-pills tabs-pnl custom" id="pills-tab" role="tablist">
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="received-tab" data-bs-toggle="pill"
                     data-bs-target="#received" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
-                    Account Settings
+                    {{ __('admin_messages.account_setting') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link m-0 customBtn2" id="sent-tab" data-bs-toggle="pill" data-bs-target="#sent"
                     type="button" role="tab" aria-controls="sent" aria-selected="false">
-                    Change Password
+                    {{ __('admin_messages.chaqnge_password') }}
                 </button>
             </li>
         </ul>
@@ -122,7 +122,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="text-center mb-4">
-                                <label class="form-label">Profile Picture</label>
+                                <label class="form-label">{{ __('admin_messages.profile_picture') }}</label>
 
                                 <div class="profile-box" style="cursor:pointer;">
 
@@ -148,9 +148,9 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                             <!-- Full Name -->
                             <div class="form-group">
-                                <label class="form-label">Full Name</label>
+                                <label class="form-label">{{ __('admin_messages.full_name') }}</label>
 
-                                <input type="text" name="full_name" class="form-control" placeholder="Enter name"
+                                <input type="text" name="full_name" class="form-control" placeholder="{{ __('admin_messages.please_enter_full_name') }}"
                                     value="{{ $data->full_name }}" />
 
                                 <div class="text-danger mt-1" id="error_full_name"></div>
@@ -158,7 +158,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                             <!-- Phone -->
                             <div class="form-group">
-                                <label class="form-label">Phone number</label>
+                                <label class="form-label">{{ __('admin_messages.mobile') }}</label>
                                 <div class="input-group">
                                     <div class="dropdown" style="width: 20%; position: absolute;">
                                         <button
@@ -212,7 +212,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
 
                                     <input type="text" name="mobile" class="form-control mt-2"
-                                        placeholder="Enter phone number" value="{{ $data->mobile }}"
+                                        placeholder="{{ __('admin_messages.enter_mobile_number') }}" value="{{ $data->mobile }}"
                                         style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
                                         oninput="this.value = this.value.replace(/\D/g, '').slice(0, 15);" />
                                 </div>
@@ -224,9 +224,9 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                             <!-- Email -->
                             <div class="form-group">
-                                <label class="form-label">Email</label>
+                                <label class="form-label">{{ __('admin_messages.email') }}</label>
 
-                                <input type="email" name="email" class="form-control" placeholder="Enter mail id"
+                                <input type="email" name="email" class="form-control" placeholder="{{ __('admin_messages.enter_email_id') }}"
                                     value="{{ $data->email }}" />
 
                                 <div class="text-danger mt-1" id="error_email"></div>
@@ -238,7 +238,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     <!-- Button -->
                     @if(in_array(30, $permissions) || $admin->type == 1)
                     <div class="text-center">
-                        <button type="submit" id="submitBtn" class="btn btn-dark customBtn px-4">Update</button>
+                        <button type="submit" id="submitBtn" class="btn btn-dark customBtn px-4">{{ __('admin_messages.update') }}</button>
                     </div>
                     @endif
 
@@ -253,28 +253,28 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                         <div class="col-lg-6">
                             <div class="form-group" style="position: relative;">
-                                <label class="form-label">Enter your old password*</label>
+                                <label class="form-label">{{ __('admin_messages.old_password') }}*</label>
 
                                 <input type="password" id="old_password" name="old_password" class="form-control"
-                                    placeholder="Enter old password" />
+                                    placeholder="{{ __('admin_messages.enter_old_password') }}" />
                                 <i class="fas fa-eye toggle-password1" onclick="togglePasswordVisibility1()"
                                     style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 <small id="error_old_password" class="text-danger"></small>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Enter your new password*</label>
+                                <label class="form-label">{{ __('admin_messages.new_password') }}*</label>
 
                                 <input type="password" id="new_password" name="new_password" class="form-control"
-                                    placeholder="Enter new password" />
+                                    placeholder="{{ __('admin_messages.enter_new_password') }}" />
                                 <i class="fas fa-eye toggle-password2" onclick="togglePasswordVisibility2()"
                                     style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 <small id="error_new_password" class="text-danger"></small>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Re-enter your new password*</label>
+                                <label class="form-label">{{ __('admin_messages.confirm_password') }}*</label>
 
                                 <input type="password" id="confirm_password" name="confirm_password"
-                                    class="form-control" placeholder="Re-enter new password" />
+                                    class="form-control" placeholder="{{ __('admin_messages.enter_confirm_password') }}" />
                                 <i class="fas fa-eye toggle-password3" onclick="togglePasswordVisibility3()"
                                     style="position: absolute; right: 10px; top: 51px; cursor: pointer;"></i>
                                 <small id="error_confirm_password" class="text-danger"></small>
@@ -287,11 +287,11 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     <div class="d-flex justify-content-center gap-3 mt-4">
 
                         <button type="button" class="btn btn-dark customBtn px-4 savePasswordBtn">
-                            Save Password
+                            {{ __('admin_messages.save') }}
                         </button>
 
                         <button type="button" class="btn btn-dark customBtn px-4" onclick="location.reload();">
-                            Cancel
+                            {{ __('admin_messages.cancel') }}
                         </button>
 
                     </div>
@@ -466,7 +466,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!value) {
                 mobileError.innerText = '';
             } else if (value.length < 7) {
-                mobileError.innerText = 'Please enter phone number between 7-15 digits';
+                mobileError.innerText = "{{ __('admin_messages.mobile_number_must_be_between_7_to_15_digits') }}";
             } else {
                 mobileError.innerText = '';
             }
@@ -498,28 +498,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const country = document.querySelector('input[name="country_code"]:checked');
 
         if (!full_name) {
-            if (fullNameError) fullNameError.innerText = 'Please enter full name';
+            if (fullNameError) fullNameError.innerText = "{{ __('admin_messages.please_enter_full_name') }}";
             hasError = true;
         }
 
         if (!email) {
-            if (emailError) emailError.innerText = 'Please enter email';
+            if (emailError) emailError.innerText = "{{ __('admin_messages.please_enter_email_id') }}";
             hasError = true;
         } else if (!validateEmail(email)) {
-            if (emailError) emailError.innerText = 'Please enter valid email';
+            if (emailError) emailError.innerText = "{{ __('admin_messages.please_enter_valid_email') }}";
             hasError = true;
         }
 
         if (!mobile) {
-            if (mobileError) mobileError.innerText = 'Please enter mobile number';
+            if (mobileError) mobileError.innerText = "{{ __('admin_messages.please_enter_contact_number') }}";
             hasError = true;
         } else if (!/^\d{7,15}$/.test(mobile)) {
-            if (mobileError) mobileError.innerText = 'Please enter phone number between 7-15 digits';
+            if (mobileError) mobileError.innerText = "{{ __('admin_messages.mobile_number_must_be_between_7_to_15_digits') }}";
             hasError = true;
         }
 
         if (!country) {
-            if (countryError) countryError.innerText = 'Please select country code';
+            if (countryError) countryError.innerText = "{{ __('admin_messages.please_select_country_code') }}";
             hasError = true;
         }
 
@@ -629,24 +629,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
             if (!old_password) {
-                oldError.innerText = 'Please enter old password';
+                oldError.innerText = "{{ __('admin_messages.please_enter_old_password') }}";
                 hasError = true;
             }
 
             if (!new_password) {
-                newError.innerText = 'Please enter new password';
+                newError.innerText = "{{ __('admin_messages.please_enter_new_password') }}";
                 hasError = true;
             } else if (!validatePassword(new_password)) {
-                newError.innerText =
-                    'Password must be 8+ chars with uppercase, number & special character';
+                newError.innerText = "{{ __('admin_messages.password_must_be_8_chars_uppercase_number_special') }}";
                 hasError = true;
             }
 
             if (!confirm_password) {
-                confirmError.innerText = 'Please confirm password';
+                confirmError.innerText = "{{ __('admin_messages.please_confirm_password') }}";
                 hasError = true;
             } else if (new_password !== confirm_password) {
-                confirmError.innerText = 'Confirm password does not match';
+                confirmError.innerText = "{{ __('admin_messages.confirm_password_does_not_match') }}";
                 hasError = true;
             }
 

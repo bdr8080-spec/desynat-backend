@@ -873,6 +873,9 @@ return [
     //current live seller
     'watch_live' => 'مشاهدة مباشرة',
     'lived_on' => 'بث مباشر في',
+    'waiting_for_seller_to_go_live' => 'في انتظار البائع ليصبح مباشرًا',
+    'please_stay_tuned' => 'يرجى البقاء على المتابعة...',
+    'leave' => 'مغادرة',
 
     //account setting
     'account_seeting' => 'إعدادات الحساب',
@@ -884,6 +887,11 @@ return [
     'account_setting_updated_successfully' => 'تم تحديث إعدادات الحساب بنجاح',
     'email_already_assigned_to_another_sub_admin' => 'البريد الإلكتروني مُستخدم بالفعل من قبل مشرف فرعي آخر',
     'mobile_number_already_assigned_to_another_sub_admin' => 'رقم الجوال مُستخدم بالفعل من قبل مشرف فرعي آخر',
+    'please_select_country_code' => 'يرجى اختيار رمز الدولة',
+    'please_enter_old_password' => 'يرجى إدخال كلمة المرور القديمة',
+    'please_enter_new_password' => 'يرجى إدخال كلمة المرور الجديدة',
+    'password_must_be_8_chars_uppercase_number_special' => 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل مع حرف كبير ورقم ورمز خاص',
+    'please_confirm_password' => 'يرجى تأكيد كلمة المرور',
 
     //sub admin management
     'add_sub_admin' => 'إضافة مشرف فرعي',
