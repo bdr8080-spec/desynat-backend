@@ -205,7 +205,7 @@ class WebSellerDashboard extends Controller
 
         $request_data=(object )[
             'transaction_id'=>$tranasaction_id,
-            'seller_id'=>$seller_details,
+            'seller_id'=>$seller_details->id,
             'plan_id' =>$request->plan_id,
             'payment_status'=>'0',
             "payment_method"=>$request->payment_method??'online'

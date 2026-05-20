@@ -548,6 +548,8 @@ class SellerAuthService
                   ];
 
 
+                  dd($array_data);
+
                 $data= SellerSubcriptionPlanBuy::create($array_data);
   
                 if($data){
