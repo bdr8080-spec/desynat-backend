@@ -346,7 +346,7 @@ foreach ($data->product_variants as $item) {
 
         $product_id = wishlist::where('user_id', $id)->pluck('product_id');
 
-        $wishListProduct = product::with('product_variants','review')->whereIn('id',$product_id)->get();
+        $wishListProduct = product::with('product_variants','review.user_details')->whereIn('id',$product_id)->get();
         
        $wishListProduct->map(function ($item) use ($request) {
 

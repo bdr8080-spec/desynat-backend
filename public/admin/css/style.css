@@ -349,7 +349,7 @@ h1 {
     overflow: hidden;
     background: rgba(255, 247, 234, 1);
     z-index: 4 !important;
-    padding: 70px 0px;
+    padding: 85px 0px;
     position: fixed;
 }
 
@@ -2789,4 +2789,24 @@ a.text {
    
 }
 
-  
+[dir="rtl"] .inner-content {
+    margin-right: 279px !important;
+    padding-top: 98px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+    height: 100%;
+}
+[dir="rtl"] .modal-header .btn-close {
+    margin: initial;
+}
+[dir="rtl"] .sidebar .nav-item .nav-link span {
+    padding: 0px;
+    padding-right: 0px;
+    padding-left: 9px;
+}
+[dir="rtl"] .table-button {
+    transform: rotate(180deg);
+}
+[dir="rtl"] .customSidebar {
+    padding: 80px 0px;
+}

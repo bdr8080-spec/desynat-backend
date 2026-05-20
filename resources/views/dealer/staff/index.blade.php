@@ -122,7 +122,7 @@
                 </thead>
 
                 <tbody>
-                    @forelse($all_staff as $key => $val)
+                    @foreach($all_staff as $key => $val)
                         <tr>
                             <td>{{ $key + 1 }}</td>
 
@@ -176,7 +176,7 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input"
-                                            type="checkbox"
+                                            type="checkbox" id="switchCheckDefault"
                                             role="switch"
                                             rel="{{ $val->id }}"
                                             @if ($val->is_block == 0) checked @endif>
@@ -200,13 +200,7 @@
                             </td>
                         </tr>
 
-                    @empty
-                        <tr>
-                            <td colspan="11" class="text-center">
-                                {{ __('seller_messages.No_data_found') }}
-                            </td>
-                        </tr>
-                    @endforelse
+                   @endforeach
                 </tbody>
             </table>
         </div>
