@@ -668,6 +668,12 @@ return [
     'edit_advertisement' => 'تعديل الإعلان',
     'banner_deleted_successfully' => 'تم حذف البانر بنجاح',
     'promotional_banner_deleted_successfully' => 'تم حذف البانر الترويجي بنجاح',
+    'mobile' => 'الهاتف المحمول',
+    'web' => 'الويب',
+    'please_enter_title' => 'يرجى إدخال العنوان',
+    'please_select_type' => 'يرجى اختيار النوع',
+    'please_select_subcategory' => 'يرجى اختيار الفئة الفرعية',
+    'please_select_category' => 'يرجى اختيار الفئة',
 
 
     //product management

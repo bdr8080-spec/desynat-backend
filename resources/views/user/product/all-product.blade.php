@@ -26,7 +26,7 @@
                         <div class="category_filter">
                             <div class="d-flex align-items-center justify-content-between">
                                 <h3>{{ __('user_messages.filters') }}</h3>
-                                <a href="">Clear</a>
+                                <a href="{{ url('user/all-product/') }}">{{ __('user_messages.clear') }}</a>
                             </div>
                             <form action="{{ url('user/all-product/') }}" method="GET">
                                 <div class="form-group mt-4">
