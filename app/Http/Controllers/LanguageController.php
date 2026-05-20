@@ -101,13 +101,19 @@ public function setCurrencyInUser(Request $request){
 
     $user_detail = Auth::guard('web')->user();
 
+    if(App::getLocale()=='en'){
     $selectCountry=all_countrie::where('currency_code',$request->currency)->first();
+    }else{
+     $selectCountry=all_countrie::where('currency_code_ar',$request->currency)->first();
+    }
 
     if($user_detail){
 
         User::where('id',$user_detail->id)->update(['selected_currency'=> IntVal($selectCountry->id)]);
-        // $user_detail->selected_currency=IntVal($request->currency);
     }
+
+        // $user_detail->selected_currency=IntVal($request->currency);
+    
     
    if($selectCountry){
        session([

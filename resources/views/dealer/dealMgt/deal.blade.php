@@ -122,7 +122,7 @@ $can_action=$menu_permission['can_action'];
                                     <td>{{ $val->from }}</td>
 
                                     <td>
-                                        {{ $val->from }} - {{ $val->to }}
+                                        {{ formatDateTimeByLocale($val->from) }} - {{ formatDateTimeByLocale($val->to) }}
                                     </td>
 
                                     <td>{{ $val->discount }} %</td>
