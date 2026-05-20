@@ -14,7 +14,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Payment Management </h2>
+            <h2 class="h2">{{ __('admin_messages.payment_management') }}</h2>
         </div>
 
 
@@ -25,28 +25,28 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="false">
-                    By Order
+                    {{ __('admin_messages.by_order') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                     aria-selected="true">
-                    By Subcription Plan
+                    {{ __('admin_messages.by_subscription_plan') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-return-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-return" type="button" role="tab" aria-controls="pills-return"
                     aria-selected="false">
-                    By Gift Card
+                    {{ __('admin_messages.by_gift_card') }}
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-Banner-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-Banner" type="button" role="tab" aria-controls="pills-Banner"
                     aria-selected="false">
-                    By Banner
+                    {{ __('admin_messages.by_banner') }}
                 </button>
             </li>
         </ul>
@@ -59,7 +59,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <!-- From Date Filter -->
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="from_date" class="form-label">From:</label>
+                                <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
                                 <input type="date" id="from_date" name="from_date" class="form-control"
                                     value="{{ request()->from_date }}"
                                     onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -69,7 +69,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <!-- To Date Filter -->
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to_date" class="form-label">To:</label>
+                                <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
                                 <input type="date" id="to_date" name="to_date" class="form-control"
                                     value="{{ request()->to_date }}"
                                     onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -77,17 +77,21 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         </div>
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Country</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
 
                                 <select name="country_id" id="country_id"
                                     onchange="document.getElementById('filterForm').submit();"
                                     class="form-select form-select-lg">
-                                    <option value="">Select country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
 
                                     @foreach($userCountry as $country)
                                     <option value="{{ $country->id }}"
                                         {{ request('country_id') == $country->id ? 'selected' : '' }}>
+                                        @if(app()->getLocale() == 'en')
                                         {{ $country->name }}
+                                        @else
+                                        {{ $country->name_ar }}
+                                        @endif
                                     </option>
                                     @endforeach
                                 </select>
@@ -99,7 +103,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 ">
                                 <a href="{{route('admin.paymentManagement')}}"
                                     class="btn btn-dark customBtn w-100 mt-2">
-                                    <span>Reset</span></a>
+                                    <span>{{ __('admin_messages.reset') }}</span></a>
                             </div>
                         </div>
                         <div class="col-lg-1 ">
@@ -109,7 +113,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 ">
                                 <a href="{{ route('admin.export_order_payment_data', request()->all()) }}"
                                     class="btn btn-dark customBtn w-100 mt-2">
-                                    <span>Export</span></a>
+                                    <span>{{ __('admin_messages.export') }}</span></a>
                             </div>
                             @endif
                         </div>
@@ -118,8 +122,8 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                             <div class=" mt-2">
 
                                 <a class="btn btn-dark customBtn">
-                                    <span>Total Revenue:- {{ number_format($orderPayment['total_revenue'], 2) }}
-                                        KD</span>
+                                    <span>{{ __('admin_messages.total_revenue') }}:- {{ number_format($orderPayment['total_revenue'], 2) }}
+                                        {{ __('admin_messages.kd') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -193,7 +197,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <!-- From Date Filter -->
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="from_date" class="form-label">From:</label>
+                                <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
                                 <input type="date" id="from_date1" name="from_date1" class="form-control"
                                     value="{{ request()->from_date1 }}"
                                     onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
@@ -203,7 +207,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <!-- To Date Filter -->
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to_date" class="form-label">To:</label>
+                                <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
                                 <input type="date" id="to_date1" name="to_date1" class="form-control"
                                     value="{{ request()->to_date1 }}"
                                     onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
@@ -211,17 +215,21 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         </div>
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Country</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
 
                                 <select name="country_id1" id="country_id1"
                                     onchange="document.getElementById('filterForm1').submit();"
                                     class="form-select form-select-lg">
-                                    <option value="">Select country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
 
                                     @foreach($sellerCountry as $country)
                                     <option value="{{ $country->id }}"
                                         {{ request('country_id1') == $country->id ? 'selected' : '' }}>
+                                        @if(app()->getLocale() == 'en')
                                         {{ $country->name }}
+                                        @else
+                                        {{ $country->name_ar }}
+                                        @endif
                                     </option>
                                     @endforeach
                                 </select>
@@ -230,7 +238,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-1 col-md-12 col-12">
                             <div class="">
                                 <a href="{{route('admin.paymentManagement')}}" class="btn btn-dark customBtn w-100 " style="margin-top: 63px">
-                                    <span>Reset</span></a>
+                                    <span>{{ __('admin_messages.reset') }}</span></a>
                             </div>
                         </div>
                         @if(in_array(27, $permissions) || $admin->type == 1)
@@ -239,7 +247,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                             <a href="{{ route('admin.export_plan_payment_data', request()->all()) }}"
                                 class="btn btn-dark customBtn w-100" style="margin-top: 63px">
-                                <span>Export</span></a>
+                                <span>{{ __('admin_messages.export') }}</span></a>
 </div>
                         </div>
                         @endif
@@ -248,8 +256,8 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                             <div class=" mt-2">
 
                                 <a class="btn btn-dark customBtn">
-                                    <span>Total Revenue:- {{ number_format($planPayment['total_revenue'], 2) }}
-                                        KD</span>
+                                    <span>{{ __('admin_messages.total_revenue') }}:- {{ number_format($planPayment['total_revenue'], 2) }}
+                                        {{ __('admin_messages.kd') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -298,7 +306,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <!-- From Date Filter -->
                         <div class="col-lg-2 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="from_date" class="form-label">From:</label>
+                                <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
                                 <input type="date" id="from_date2" name="from_date2" class="form-control"
                                     value="{{ request()->from_date2 }}"
                                     onchange="updateToDate2(); document.getElementById('filterForm2').submit();" />
@@ -308,7 +316,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <!-- To Date Filter -->
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to_date" class="form-label">To:</label>
+                                <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
                                 <input type="date" id="to_date2" name="to_date2" class="form-control"
                                     value="{{ request()->to_date2 }}"
                                     onchange="updateToDate2(); document.getElementById('filterForm2').submit();" />
@@ -316,17 +324,21 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         </div>
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Country</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
 
                                 <select name="country_id2" id="country_id2"
                                     onchange="document.getElementById('filterForm2').submit();"
                                     class="form-select form-select-lg">
-                                    <option value="">Select country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
 
                                     @foreach($userCountry as $country)
                                     <option value="{{ $country->id }}"
                                         {{ request('country_id2') == $country->id ? 'selected' : '' }}>
+                                        @if(app()->getLocale() == 'en')
                                         {{ $country->name }}
+                                        @else
+                                        {{ $country->name_ar }}
+                                        @endif
                                     </option>
                                     @endforeach
                                 </select>
@@ -335,7 +347,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-1 col-md-12 col-12">
                             <div class="">
                                 <a href="{{route('admin.paymentManagement')}}" class="btn btn-dark customBtn w-100 " style="margin-top: 63px">
-                                    <span>Reset</span></a>
+                                    <span>{{ __('admin_messages.reset') }}</span></a>
                             </div>
                         </div>
                         @if(in_array(27, $permissions) || $admin->type == 1)
@@ -343,7 +355,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="d-dlex justify-content-end" style="text-align: end">
                             <a href="{{ route('admin.export_giftcard_payment_data', request()->all()) }}"
                                 class="btn btn-dark customBtn w-100" style="margin-top: 63px">
-                                <span>Export</span></a>
+                                <span>{{ __('admin_messages.export') }}</span></a>
                         </div>
 </div>
                         @endif
@@ -352,8 +364,8 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                             <div class=" mt-2">
 
                                 <a class="btn btn-dark customBtn">
-                                    <span>Total Revenue:- {{ number_format($giftCardPayment['total_revenue'], 2) }}
-                                        KD</span>
+                                    <span>{{ __('admin_messages.total_revenue') }}:- {{ number_format($giftCardPayment['total_revenue'], 2) }}
+                                        {{ __('admin_messages.kd') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -399,7 +411,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <!-- From Date Filter -->
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="from_date" class="form-label">From:</label>
+                                <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
                                 <input type="date" id="from_date3" name="from_date3" class="form-control"
                                     value="{{ request()->from_date3 }}"
                                     onchange="updateToDate3(); document.getElementById('filterForm3').submit();" />
@@ -409,7 +421,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <!-- To Date Filter -->
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to_date" class="form-label">To:</label>
+                                <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
                                 <input type="date" id="to_date3" name="to_date3" class="form-control"
                                     value="{{ request()->to_date3 }}"
                                     onchange="updateToDate3(); document.getElementById('filterForm3').submit();" />
@@ -417,17 +429,21 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         </div>
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
-                                <label for="to" class="form-label">Country</label>
+                                <label for="to" class="form-label">{{ __('admin_messages.select_country') }}</label>
 
                                 <select name="country_id3" id="country_id3"
                                     onchange="document.getElementById('filterForm3').submit();"
                                     class="form-select form-select-lg">
-                                    <option value="">Select country</option>
+                                    <option value="">{{ __('admin_messages.select_country') }}</option>
 
                                     @foreach($sellerCountry as $country)
                                     <option value="{{ $country->id }}"
                                         {{ request('country_id3') == $country->id ? 'selected' : '' }}>
+                                        @if(app()->getLocale() == 'en')
                                         {{ $country->name }}
+                                        @else
+                                        {{ $country->name_ar }}
+                                        @endif
                                     </option>
                                     @endforeach
                                 </select>
@@ -436,7 +452,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-1 col-md-12 col-12">
                             <div class="">
                                 <a href="{{route('admin.paymentManagement')}}" class="btn btn-dark customBtn w-100 " style="margin-top: 63px">
-                                    <span>Reset</span></a>
+                                    <span>{{ __('admin_messages.reset') }}</span></a>
                             </div>
                         </div>
                         @if(in_array(27, $permissions) || $admin->type == 1)
@@ -444,7 +460,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="">
                             <a href="{{ route('admin.export_banner_payment_data', request()->all()) }}"
                                 class="btn btn-dark customBtn w-100" style="margin-top: 63px">
-                                <span>Export</span></a>
+                                <span>{{ __('admin_messages.export') }}</span></a>
                         </div>
                         </div>
                         @endif
@@ -453,8 +469,8 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                             <div class=" mt-2">
 
                                 <a class="btn btn-dark customBtn">
-                                    <span>Total Revenue:- {{ number_format($bannerPayment['total_revenue'], 2) }}
-                                        KD</span>
+                                    <span>{{ __('admin_messages.total_revenue') }}:- {{ number_format($bannerPayment['total_revenue'], 2) }}
+                                        {{ __('admin_messages.kd') }}</span>
                                 </a>
                             </div>
                         </div>
