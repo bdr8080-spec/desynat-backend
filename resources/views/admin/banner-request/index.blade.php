@@ -313,7 +313,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <td>{{ !empty($data['created_at']) ? formatDateTimeByLocale($data['created_at']) : '' }}</td>
+                                    {{ !empty($data['created_at']) ? formatDateTimeByLocale($data['created_at']) : '' }}
                                 </td>
                                 <td>
                                     <a href="{{ $data['upload_banner'] }}" target="blank"> <img

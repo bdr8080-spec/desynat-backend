@@ -141,7 +141,7 @@
         };
 
         const tables = [
-           '#myTable', '#myTable1', '#myTable3', '#myTable3', '#comyTable3'
+           '#myTable', '#myTable1', '#myTable2', '#myTable3', '#comyTable3'
         ];
 
         tables.forEach(function(selector) {
