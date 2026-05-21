@@ -102,8 +102,13 @@ class SellerController extends Controller
 
         $paginator = $response['data'] ?? null;
 
-        $sellers = collect($paginator->items() ?? []);
+        // $sellers = collect($paginator->items() ?? []);
         //dd($sellers);
+        $sellers = collect();
+
+        if ($paginator && is_object($paginator) && method_exists($paginator, 'items')) {
+            $sellers = collect($paginator->items());
+        }
 
         $fileName = 'new_sellers_' . now()->format('Y_m_d_H_i_s') . '.csv';
 
