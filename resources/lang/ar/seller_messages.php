@@ -59,16 +59,12 @@ return [
 "No_Product_found" => "لم يتم العثور على منتجات",
 
 
-
-
-
-
-
 // Settings 
 "Settings" => "الإعدادات",
 "In_app_Notifications" => "الإشعارات داخل التطبيق",
 "Push_Notifications" => "الإشعارات الفورية",
 "delete_account" => "حذف الحساب",
+"Notification"=>"إشعار",
 
 // Refund Management
 "Refund_Management" => "إدارة الاسترجاع",

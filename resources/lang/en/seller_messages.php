@@ -65,18 +65,12 @@ return [
 "No_Product_found"=>"No Product found",
 
 
-
-
-
-
-
-
 // Settings 
 "Settings"=>"Settings",
 "In_app_Notifications"=>"In-app Notifications",
 "Push_Notifications"=>"Push Notifications",
 "delete_account"=>"Delete Account",
-
+"Notification"=>"Notification",
 
 // Refund Management
 "Refund_Management"=>"Refund Management",

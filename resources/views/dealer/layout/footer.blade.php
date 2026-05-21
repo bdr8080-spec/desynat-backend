@@ -63,16 +63,29 @@
 
                     <div class="noti-header d-flex justify-content-between">
                         <div class="noti-title">
+
+                        @if(APP::getLocale()=='en')
                             {{ $notification->title_english ?? 'Notification' }}
+                        @else
+                            {{ $notification->title_arabic ?? __('seller_messages.Notification')}}
+                        
+                            @endif
+                        
                         </div>
 
                         <div class="post-date">
-                            {{ \Carbon\Carbon::parse($notification->created_at)->format('M d, h:i A') }}
+                           {{formatDateTimeByLocale(\Carbon\Carbon::parse($notification->created_at)->format('M d, h:i A'))}}
                         </div>
                     </div>
 
                     <p>
-                        {{ $notification->description_english }}
+                         @if(APP::getLocale()=='en')
+                             {{ $notification->description_english }}
+                        @else
+                             {{ $notification->description_arabic }}
+                            @endif
+
+                       
                     </p>
 
                 </div>
