@@ -1751,7 +1751,16 @@ public function View_seller_profile($request){
 
     try{
     
-        $seller_details=seller::with('store_info.country_info','store_info.dialer_info','seller_bank_details','subcription_plan','owner_document','store_document')->where('id',$request->seller_id)->first();
+        $seller_details=seller::with(
+            [
+        'store_info.store_review',
+        'store_info' => function ($query) {
+            $query->withAvg('store_review as store_rating', 'store_rating');
+        },
+            'store_info.country_info','store_info.dialer_info','seller_bank_details','subcription_plan','owner_document','store_document'
+            ])
+        
+        ->where('id',$request->seller_id)->first();
 
         if($seller_details){
         

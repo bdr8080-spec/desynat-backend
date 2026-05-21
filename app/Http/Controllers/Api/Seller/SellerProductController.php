@@ -1532,8 +1532,6 @@ public function view_profile(Request $request){
     $request_data=(object) [
     'seller_id'=>$seller_id,
     ];
-
-    dd("33");
     
       $data=  $this->SellerProductService->View_seller_profile($request_data);
     
