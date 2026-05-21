@@ -515,7 +515,9 @@ public function AllProduct($request)
         return ['status'=>'error','message'=>'Seller not found','data'=>[]];
     }
 
-    $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+    $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants.color','review'])
+     ->withAvg('review as product_rating', 'product_rating')
+    
                            ->where('seller_id', $seller->id);
         if ($request->search) {
         if ($request->type == '0') {
@@ -784,7 +786,11 @@ $inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('pr
 
 public function single_product_details_fetch($request){
         
-    $product_data=  product::with('seller_details.store_info','brand','category','subcategory','product_specifications','product_variants.color','product_variants.size','review.user_details')->where('id',$request->product_id)->first();
+    $product_data=  product::with(
+        'seller_details.store_info','brand','category','subcategory','product_specifications','product_variants.color','product_variants.size','review.user_details')
+        ->withAvg('review as product_rating', 'product_rating')
+    
+        ->where('id',$request->product_id)->first();
     
     if (!$product_data) {
         return ['status'=>'error','message'=>"No product id is invalid",'data'=>(object)[]];
