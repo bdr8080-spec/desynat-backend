@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desynat</title>
+    <title>{{ __('admin_messages.desynat_admin') }}</title>
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
 
@@ -54,21 +55,21 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('adminLanguage','ar')}}">
+                                            <span>AR</span> {{ __('admin_messages.arabic') }}
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
+                                        <a class="dropdown-item" data-lang="en" href="{{route('adminLanguage','en')}}">
+                                            <span>EN</span> {{ __('admin_messages.english') }}
                                         </a>
                                     </li>
 
@@ -106,16 +107,16 @@
                                                         <i class="fas fa-angle-left"></i>
                                                     </a>
                                                 </div>
-                                                <h6 class="m-0">Forgot Password</h6>
+                                                <h6 class="m-0">{{ __('admin_messages.forgot_password') }}</h6>
                                             </div>
                                         </div>
 
                                         <!-- EMAIL INPUT -->
                                         <div class="col-lg-12 mt-3">
                                             <div class="form-group">
-                                                <label for="email">Enter Email Id</label>
+                                                <label for="email">{{ __('admin_messages.email_id') }}</label>
                                                 <input type="email" class="form-control" id="email"
-                                                    placeholder="Enter Register Email id " required>
+                                                    placeholder="{{ __('admin_messages.enter_email_id') }}" required>
                                                 <small id="emailError" style="color: red;"></small>
                                             </div>
                                         </div>
@@ -125,7 +126,7 @@
                                             <div class="button d-flex align-items-center justify-content-center">
                                                 <button id="forgotBtn" class="btn custom-btn"
                                                     style="max-width: 100% !important;">
-                                                    Next
+                                                    {{ __('admin_messages.next') }}
                                                 </button>
                                             </div>
                                         </div>

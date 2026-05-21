@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Desynat</title>
+    <title>{{ __('admin_messages.desynat_admin') }}</title>
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
 
@@ -59,21 +60,21 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('adminLanguage','ar')}}">
+                                            <span>AR</span> {{ __('admin_messages.arabic') }}
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
+                                        <a class="dropdown-item" data-lang="en" href="{{route('adminLanguage','en')}}">
+                                            <span>EN</span> {{ __('admin_messages.english') }}
                                         </a>
                                     </li>
 
@@ -112,14 +113,14 @@
                                                         <i class="fas fa-angle-left"></i>
                                                     </a>
                                                 </div>
-                                                <h4 class="m-0">OTP</h4>
+                                                <h4 class="m-0">{{ __('admin_messages.otp') }}</h4>
                                             </div>
                                         </div>
 
                                         <!-- <div class="login">
                                 <div class="loginBackgroundeffect"> -->
                                         <h5 class="text-start" id="otpSentMessage">
-                                            6 digit OTP has been sent to: <span
+                                            {{ __('admin_messages.6_digit_otp_has_been_sent_to') }}: <span
                                                 id="adminEmail">{{ $email ?? '' }}</span>
                                         </h5>
 
@@ -139,17 +140,17 @@
 
                                             <div class="col-lg-12">
                                                 <div class="d-flex align-items-center justify-content-center">
-                                                    <a href="#" id="resendOtp">Resend OTP</a>
+                                                    <a href="#" id="resendOtp">{{ __('admin_messages.resend_otp') }}</a>
                                                 </div>
                                             </div>
 
                                             <div class=" text-center">
-                                                <div id="timerOtp">Resend OTP in <span id="seconds">30</span> Secs</div>
+                                                <div id="timerOtp">{{ __('admin_messages.resend_otp_in') }} <span id="seconds">30</span> {{ __('admin_messages.secs') }}</div>
                                             </div>
 
                                             <div class="button d-flex align-items-center justify-content-center">
                                                 <button class="btn custom-btn" id="submitOtp"
-                                                    style="max-width: 100% !important;">Submit</button>
+                                                    style="max-width: 100% !important;">{{ __('admin_messages.submit') }}</button>
                                             </div>
 
                                         </div>
@@ -240,10 +241,10 @@
             });
 
             if (otp.length === 0) {
-                $('#otpError').text('Please Enter OTP');
+                $('#otpError').text("{{ __('admin_messages.please_enter_otp') }}");
                 return;
             } else if (otp.length > 0 && otp.length < 6) {
-                $('#otpError').text('Please Enter Full 6-digit OTP');
+                $('#otpError').text("{{ __('admin_messages.please_enter_full_6_digit_otp') }}");
                 return;
             }
 
@@ -294,8 +295,10 @@
 
                         let email = $('#adminEmail').text();
                         $('#otpSentMessage').html(
-                            '6 digit OTP has been resent to: <span id="adminEmail">' +
-                            email + '</span>');
+                            "{{ __('admin_messages.6_digit_otp_has_been_resent_to') }}: <span id='adminEmail'>" 
+                            + email + 
+                            "</span>"
+                        );
 
                         toastr.success(response.message);
 

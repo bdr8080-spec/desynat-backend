@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Desynat</title>
+    <title>{{ __('admin_messages.desynat_admin') }}</title>
     <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
 
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
@@ -55,21 +56,21 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('adminLanguage','ar')}}">
+                                            <span>AR</span> {{ __('admin_messages.arabic') }}
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
+                                        <a class="dropdown-item" data-lang="en" href="{{route('adminLanguage','en')}}">
+                                            <span>EN</span> {{ __('admin_messages.english') }}
                                         </a>
                                     </li>
 
@@ -96,24 +97,24 @@
                             <div class="login-grid-2">
                                 <div class="login">
                                     <div class="loginBackgroundeffect">
-                                        <h4 class="login-text "> <span>Sign In </span></h4>
-                                        <h6 class="welcome-text"> <span>Welcome Back !</span></h6>
+                                        <h4 class="login-text "> <span>{{ __('admin_messages.sign_in') }} </span></h4>
+                                        <h6 class="welcome-text"> <span>{{ __('admin_messages.welcome_back') }} !</span></h6>
 
                                         <div class="row mt-4">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label for="email">Enter Email Id</label>
+                                                    <label for="email">{{ __('admin_messages.email_id') }}</label>
                                                     <input type="text" class="form-control" id="email" name="email"
-                                                        placeholder="Enter Email id" required />
+                                                        placeholder="{{ __('admin_messages.enter_email_id') }}" required />
                                                     <small id="emailError" style="color: red;"></small>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mt-4">
                                                 <div class="form-group">
-                                                    <label for="password">Password</label>
+                                                    <label for="password">{{ __('admin_messages.password') }}</label>
                                                     <input type="password" id="password"
                                                         class="form-control custom-password" name="password"
-                                                        placeholder="Enter password" required />
+                                                        placeholder="{{ __('admin_messages.enter_password') }}" required />
                                                     <i toggle="#password" class="fas fa-eye toggle-password"></i>
                                                 </div>
                                             </div>
@@ -121,11 +122,11 @@
                                             <div id="loginError" style="color: red; display:none;"></div>
                                             <div class="col-lg-12">
                                                 <div class="mt-2 d-flex align-items-center justify-content-center">
-                                                    <a href="{{ route('forgotPassword') }}">Forgot Password?</a>
+                                                    <a href="{{ route('forgotPassword') }}">{{ __('admin_messages.forgot_password') }}?</a>
                                                 </div>
                                             </div>
                                             <div class="button d-flex align-items-center justify-content-center">
-                                                <button id="loginBtn" class="btn custom-btn w-100">Login</button>
+                                                <button id="loginBtn" class="btn custom-btn w-100">{{ __('admin_messages.login') }}</button>
                                             </div>
                                         </div>
                                     </div>

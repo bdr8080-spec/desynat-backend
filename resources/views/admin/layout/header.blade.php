@@ -70,13 +70,13 @@
 
                                     <li>
                                         <a class="dropdown-item" data-lang="ar" href="{{route('adminLanguage','ar')}}">
-                                            <span>AR</span> Arabic
+                                            <span>AR</span> {{ __('admin_messages.arabic') }}
                                         </a>
                                     </li>
 
                                     <li>
                                         <a class="dropdown-item" data-lang="en" href="{{route('adminLanguage','en')}}">
-                                            <span>EN</span> English
+                                            <span>EN</span> {{ __('admin_messages.english') }}
                                         </a>
                                     </li>
 
