@@ -198,8 +198,22 @@ class SellerDashboardController extends Controller
     public function seller_profile(Request $request){
 
         $user_details=$request->user();
-        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$user_details->id)->first();
-        
+
+     $seller_details = seller::with([
+        'store_info' => function ($query) {
+            $query->withAvg('store_review as store_rating', 'store_rating');
+        },
+        'owner_document',
+        'store_document',
+        'seller_bank_details',
+        'subcription_plan',
+        'store_info.store_review'
+    ])
+    ->where('id', $user_details->id)
+    ->first();
+
+
+
         return ApiResponse::generateResponse('success','Seller Dashboard fetch Successfully',$seller_details, 200);
 
 
