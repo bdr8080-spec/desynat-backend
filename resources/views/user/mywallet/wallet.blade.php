@@ -73,7 +73,7 @@
                     <div class="giftinfo">
                         <div>{{ __('user_messages.date_&_time') }}</div>
                         <div>
-                            {{ \Carbon\Carbon::parse($history->created_at)->timezone('Asia/Kolkata')->format('d/m/Y, h:i A') }}
+                            {{ formatDateTimeByLocale($history->created_at) }}
                         </div>
                     </div>
                 </div>

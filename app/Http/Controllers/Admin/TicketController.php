@@ -108,15 +108,19 @@ class TicketController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($tickets) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($tickets, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // CSV Headers
-            fputcsv($file, [
+            /* =========================
+                HEADERS EN / AR
+            ========================= */
+
+            $headersEn = [
                 'Sr No',
                 'Ticket Id',
                 'Submitted By',
@@ -127,55 +131,92 @@ class TicketController extends Controller
                 'Attachment',
                 'Type',
                 'Status'
-            ]);
+            ];
+
+            $headersAr = [
+                'الرقم',
+                'رقم التذكرة',
+                'تم الإرسال بواسطة',
+                'تاريخ ووقت الإنشاء',
+                'اسم المستخدم',
+                'العنوان',
+                'الوصف',
+                'المرفق',
+                'النوع',
+                'الحالة'
+            ];
+
+            fputcsv($file, $locale == 'ar' ? $headersAr : $headersEn);
+
+            $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
 
             foreach ($tickets as $index => $ticket) {
 
-                // Submitted By
-                $submittedBy = match ($ticket->sender_type) {
+                /* Submitted By */
+                $submittedByMapEn = [
                     1 => 'User',
                     2 => 'Seller',
                     3 => 'Affiliate User',
-                    default => 'Delivery Boy',
-                };
+                    4 => 'Delivery Boy',
+                ];
 
-                // Name (safe handling)
+                $submittedByMapAr = [
+                    1 => 'مستخدم',
+                    2 => 'بائع',
+                    3 => 'مسوق بالعمولة',
+                    4 => 'موصل الطلب',
+                ];
+
+                $submittedBy = $locale == 'ar'
+                    ? ($submittedByMapAr[$ticket->sender_type] ?? 'غير معروف')
+                    : ($submittedByMapEn[$ticket->sender_type] ?? 'Unknown');
+
+                /* User Name */
                 $sender = $ticket->sender_details ?? null;
 
-                $userName = '-';
+                $userName = $na;
 
                 if ($sender) {
-                    $userName = trim(
+
+                    $userNameRaw = trim(
                         ($sender->full_name ?? '') . ' ' .
                         ($sender->first_name ?? '') . ' ' .
                         ($sender->last_name ?? '')
                     );
 
-                    $userName = $userName ?: ($sender->full_name_english ?? '-');
+                    $userName = $userNameRaw ?: ($sender->full_name_english ?? $na);
                 }
 
-                // Date
+                /* Date */
                 $raisedDate = $ticket->created_at
                     ? \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A')
-                    : '-';
+                    : $na;
 
-                // Type
-                $type = $ticket->ticket_type_details->name ?? '-';
+                /* Type */
+                $type = $ticket->ticket_type_details
+                    ? (
+                        $locale == 'ar'
+                            ? ($ticket->ticket_type_details->name_arabic ?? $ticket->ticket_type_details->name ?? $na)
+                            : ($ticket->ticket_type_details->name ?? $na)
+                    )
+                    : $na;
 
-                // Status
-                $status = $ticket->status == 1 ? 'Resolved' : 'Pending';
+                /* Status */
+                $status = $locale == 'ar'
+                    ? ($ticket->status == 1 ? 'تم الحل' : 'قيد الانتظار')
+                    : ($ticket->status == 1 ? 'Resolved' : 'Pending');
 
-                // Attachment
-                $attachment = $ticket->file ?? 'N/A';
+                /* Attachment */
+                $attachment = $ticket->file ?? $na;
 
                 fputcsv($file, [
                     $index + 1,
-                    $ticket->ticket_id,
+                    $ticket->ticket_id ?? $na,
                     $submittedBy,
                     $raisedDate,
                     $userName,
-                    $ticket->title ?? '-',
-                    strip_tags($ticket->description ?? '-'),
+                    $ticket->title ?? $na,
+                    strip_tags($ticket->description ?? $na),
                     $attachment,
                     $type,
                     $status
@@ -189,14 +230,14 @@ class TicketController extends Controller
 
     public function export_ongoing_tickets_data(Request $request)
     {
-        $request_data1=(object)[
-            'from_date'=>$request->from_date1??null,
-            'to_date'=>$request->to_date1??null,
-            'ticket_type_filter'=>$request->ticket_type_filter1??null,
-            'sender_type_filter'=>$request->sender_type_filter1??null,
-            ];
+        $request_data1 = (object)[
+            'from_date' => $request->from_date1 ?? null,
+            'to_date' => $request->to_date1 ?? null,
+            'ticket_type_filter' => $request->ticket_type_filter1 ?? null,
+            'sender_type_filter' => $request->sender_type_filter1 ?? null,
+        ];
 
-        $response=$this->TicketService->getOngoingTicketsOnAdmin($request_data1);
+        $response = $this->TicketService->getOngoingTicketsOnAdmin($request_data1);
 
         $data = $response['data'] ?? collect();
 
@@ -211,15 +252,19 @@ class TicketController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($tickets) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($tickets, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // CSV Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+
+            $headersEn = [
                 'Sr No',
                 'Ticket Id',
                 'Submitted By',
@@ -230,55 +275,96 @@ class TicketController extends Controller
                 'Attachment',
                 'Type',
                 'Status'
-            ]);
+            ];
+
+            $headersAr = [
+                'الرقم',
+                'رقم التذكرة',
+                'تم الإرسال بواسطة',
+                'تاريخ ووقت الإنشاء',
+                'اسم المستخدم',
+                'العنوان',
+                'الوصف',
+                'المرفق',
+                'النوع',
+                'الحالة'
+            ];
+
+            fputcsv($file, $locale == 'ar' ? $headersAr : $headersEn);
+
+            $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
+
+            /* =========================
+            LOOP
+            ========================= */
 
             foreach ($tickets as $index => $ticket) {
 
-                // Submitted By
-                $submittedBy = match ($ticket->sender_type) {
+                /* Sender Type */
+                $senderMapEn = [
                     1 => 'User',
                     2 => 'Seller',
                     3 => 'Affiliate User',
-                    default => 'Delivery Boy',
-                };
+                    4 => 'Delivery Boy',
+                ];
 
-                // Name (safe handling)
+                $senderMapAr = [
+                    1 => 'مستخدم',
+                    2 => 'بائع',
+                    3 => 'مسوق بالعمولة',
+                    4 => 'موصل الطلب',
+                ];
+
+                $submittedBy = $locale == 'ar'
+                    ? ($senderMapAr[$ticket->sender_type] ?? 'غير معروف')
+                    : ($senderMapEn[$ticket->sender_type] ?? 'Unknown');
+
+                /* User Name */
                 $sender = $ticket->sender_details ?? null;
 
-                $userName = '-';
+                $userName = $na;
 
                 if ($sender) {
-                    $userName = trim(
+
+                    $userNameRaw = trim(
                         ($sender->full_name ?? '') . ' ' .
                         ($sender->first_name ?? '') . ' ' .
                         ($sender->last_name ?? '')
                     );
 
-                    $userName = $userName ?: ($sender->full_name_english ?? '-');
+                    $userName = $userNameRaw ?: ($sender->full_name_english ?? $na);
                 }
 
-                // Date
+                /* Date */
                 $raisedDate = $ticket->created_at
                     ? \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A')
-                    : '-';
+                    : $na;
 
-                // Type
-                $type = $ticket->ticket_type_details->name ?? '-';
+                /* Type */
+                $type = $ticket->ticket_type_details
+                    ? (
+                        $locale == 'ar'
+                            ? ($ticket->ticket_type_details->name_arabic ?? $ticket->ticket_type_details->name ?? $na)
+                            : ($ticket->ticket_type_details->name ?? $na)
+                    )
+                    : $na;
 
-                // Status
-                $status = $ticket->status == 1 ? 'Resolved' : 'Pending';
+                /* Status */
+                $status = $locale == 'ar'
+                    ? ($ticket->status == 1 ? 'تم الحل' : 'قيد الانتظار')
+                    : ($ticket->status == 1 ? 'Resolved' : 'Pending');
 
-                // Attachment
-                $attachment = $ticket->file ?? 'N/A';
+                /* Attachment */
+                $attachment = $ticket->file ?? $na;
 
                 fputcsv($file, [
                     $index + 1,
-                    $ticket->ticket_id,
+                    $ticket->ticket_id ?? $na,
                     $submittedBy,
                     $raisedDate,
                     $userName,
-                    $ticket->title ?? '-',
-                    strip_tags($ticket->description ?? '-'),
+                    $ticket->title ?? $na,
+                    strip_tags($ticket->description ?? $na),
                     $attachment,
                     $type,
                     $status
@@ -292,14 +378,14 @@ class TicketController extends Controller
 
     public function export_past_tickets_data(Request $request)
     {
-        $request_data2=(object)[
-            'from_date'=>$request->from_date2??null,
-            'to_date'=>$request->to_date2??null,
-            'ticket_type_filter'=>$request->ticket_type_filter2??null,
-            'sender_type_filter'=>$request->sender_type_filter2??null,
-            ];
+        $request_data2 = (object)[
+            'from_date' => $request->from_date2 ?? null,
+            'to_date' => $request->to_date2 ?? null,
+            'ticket_type_filter' => $request->ticket_type_filter2 ?? null,
+            'sender_type_filter' => $request->sender_type_filter2 ?? null,
+        ];
 
-        $response=$this->TicketService->getResolvedTicketsOnAdmin($request_data2);
+        $response = $this->TicketService->getResolvedTicketsOnAdmin($request_data2);
 
         $data = $response['data'] ?? collect();
 
@@ -314,15 +400,19 @@ class TicketController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($tickets) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($tickets, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // CSV Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+
+            $headersEn = [
                 'Sr No',
                 'Ticket Id',
                 'Submitted By',
@@ -333,55 +423,96 @@ class TicketController extends Controller
                 'Attachment',
                 'Type',
                 'Status'
-            ]);
+            ];
+
+            $headersAr = [
+                'الرقم',
+                'رقم التذكرة',
+                'تم الإرسال بواسطة',
+                'تاريخ ووقت الإنشاء',
+                'اسم المستخدم',
+                'العنوان',
+                'الوصف',
+                'المرفق',
+                'النوع',
+                'الحالة'
+            ];
+
+            fputcsv($file, $locale == 'ar' ? $headersAr : $headersEn);
+
+            $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
+
+            /* =========================
+            LOOP
+            ========================= */
 
             foreach ($tickets as $index => $ticket) {
 
-                // Submitted By
-                $submittedBy = match ($ticket->sender_type) {
+                /* Sender Type Mapping */
+                $senderMapEn = [
                     1 => 'User',
                     2 => 'Seller',
                     3 => 'Affiliate User',
-                    default => 'Delivery Boy',
-                };
+                    4 => 'Delivery Boy',
+                ];
 
-                // Name (safe handling)
+                $senderMapAr = [
+                    1 => 'مستخدم',
+                    2 => 'بائع',
+                    3 => 'مسوق بالعمولة',
+                    4 => 'موصل الطلب',
+                ];
+
+                $submittedBy = $locale == 'ar'
+                    ? ($senderMapAr[$ticket->sender_type] ?? 'غير معروف')
+                    : ($senderMapEn[$ticket->sender_type] ?? 'Unknown');
+
+                /* User Name */
                 $sender = $ticket->sender_details ?? null;
 
-                $userName = '-';
+                $userName = $na;
 
                 if ($sender) {
-                    $userName = trim(
+
+                    $userNameRaw = trim(
                         ($sender->full_name ?? '') . ' ' .
                         ($sender->first_name ?? '') . ' ' .
                         ($sender->last_name ?? '')
                     );
 
-                    $userName = $userName ?: ($sender->full_name_english ?? '-');
+                    $userName = $userNameRaw ?: ($sender->full_name_english ?? $na);
                 }
 
-                // Date
+                /* Date */
                 $raisedDate = $ticket->created_at
                     ? \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A')
-                    : '-';
+                    : $na;
 
-                // Type
-                $type = $ticket->ticket_type_details->name ?? '-';
+                /* Type */
+                $type = $ticket->ticket_type_details
+                    ? (
+                        $locale == 'ar'
+                            ? ($ticket->ticket_type_details->name_arabic ?? $ticket->ticket_type_details->name ?? $na)
+                            : ($ticket->ticket_type_details->name ?? $na)
+                    )
+                    : $na;
 
-                // Status
-                $status = $ticket->status == 1 ? 'Resolved' : 'Pending';
+                /* Status */
+                $status = $locale == 'ar'
+                    ? ($ticket->status == 1 ? 'تم الحل' : 'قيد الانتظار')
+                    : ($ticket->status == 1 ? 'Resolved' : 'Pending');
 
-                // Attachment
-                $attachment = $ticket->file ?? 'N/A';
+                /* Attachment */
+                $attachment = $ticket->file ?? $na;
 
                 fputcsv($file, [
                     $index + 1,
-                    $ticket->ticket_id,
+                    $ticket->ticket_id ?? $na,
                     $submittedBy,
                     $raisedDate,
                     $userName,
-                    $ticket->title ?? '-',
-                    strip_tags($ticket->description ?? '-'),
+                    $ticket->title ?? $na,
+                    strip_tags($ticket->description ?? $na),
                     $attachment,
                     $type,
                     $status

@@ -317,7 +317,7 @@
                                                     <!-- <p class="delivery-label mb-2">{{ $statusText }}</p> -->
                                                     <p class="delivery-label mb-2">{{ __('user_messages.placed') }}</p>
                                                     <p class="delivery-date mb-2">
-                                                        {{ $order->created_at->timezone('Asia/Kolkata')->format('h:i A | d-m-Y') }}
+                                                        {{ formatDateTimeByLocale($order->created_at) }}
                                                     </p>
                                                 </div>
                                             </div>

@@ -100,7 +100,6 @@ class AffiliateUserController extends Controller
 
         $data = $response['data'] ?? collect();
 
-        // Handle paginator or collection
         $users = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
             ? collect($data->items())
             : collect($data);
@@ -112,15 +111,19 @@ class AffiliateUserController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($users) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($users, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // Excel UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            // UTF-8 BOM for Excel
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+            $headersEn = [
                 'Sr No',
                 'Joining Date',
                 'Image URL',
@@ -129,36 +132,68 @@ class AffiliateUserController extends Controller
                 'Email',
                 'Country',
                 'Address',
-            ]);
+            ];
 
+            $headersAr = [
+                'الرقم',
+                'تاريخ الانضمام',
+                'رابط الصورة',
+                'الاسم',
+                'رقم الجوال',
+                'البريد الإلكتروني',
+                'الدولة',
+                'العنوان',
+            ];
+
+            $csvHeaders = $locale == 'ar' ? $headersAr : $headersEn;
+
+            fputcsv($file, $csvHeaders);
+
+            /* =========================
+            DATA ROWS
+            ========================= */
             foreach ($users as $index => $user) {
 
+                $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
 
+                /* -------- MOBILE -------- */
                 $mobile = '="' . ($user['country_code'] . $user['mobile']) . '"';
 
+                /* -------- DATE -------- */
                 $joiningDate = '="' . \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') . '"';
 
-                $address = 
-                    ($user['address_details']['address1'] ?? '') . ' ' .
-                    ($user['address_details']['address2'] ?? '') . ' ' .
-                    ($user['address_details']['town'] ?? '') . ' ' .
-                    ($user['address_details']['city'] ?? '') . ' ' .
-                    ($user['address_details']['pincode'] ?? '') . ' ' .
-                    ($user['address_details']['state'] ?? '');
+                /* -------- ADDRESS -------- */
+                $address = ($user['address_details']['address1'] ?? '') . ' ' .
+                        ($user['address_details']['address2'] ?? '') . ' ' .
+                        ($user['address_details']['town'] ?? '') . ' ' .
+                        ($user['address_details']['city'] ?? '') . ' ' .
+                        ($user['address_details']['pincode'] ?? '') . ' ' .
+                        ($user['address_details']['state'] ?? '');
 
-                $address = str_replace(["\r", "\n"], ' ', $address);
-                $address = trim($address);
+                $address = trim(str_replace(["\r", "\n"], ' ', $address));
 
-                // $rejectReason = $seller['reject_reason'] ?? 'N/A';
+                $address = $address ?: $na;
 
+                /* -------- COUNTRY -------- */
+                $country = $user['country_details'] ?? null;
+
+                if ($country) {
+                    $country = $locale == 'ar'
+                        ? ($country['name_ar'] ?? $na)
+                        : ($country['name'] ?? $na);
+                } else {
+                    $country = $na;
+                }
+
+                /* -------- ROW -------- */
                 fputcsv($file, [
                     $index + 1,
                     $joiningDate,
-                    $user['profile_image'] ?? 'N/A',   
-                    $user['full_name'] ?? 'N/A',
+                    $user['profile_image'] ?? $na,
+                    $user['full_name'] ?? $na,
                     $mobile,
-                    $user['email'] ?? 'N/A',
-                    $user['country_details']['name'] ?? 'N/A',
+                    $user['email'] ?? $na,
+                    $country,
                     $address,
                 ]);
             }
@@ -174,7 +209,6 @@ class AffiliateUserController extends Controller
 
         $data = $response['data'] ?? collect();
 
-        // Handle paginator or collection
         $users = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
             ? collect($data->items())
             : collect($data);
@@ -186,15 +220,19 @@ class AffiliateUserController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($users) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($users, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // Excel UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            // Excel UTF-8 BOM
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+            $headersEn = [
                 'Sr No',
                 'Joining Date',
                 'Image URL',
@@ -205,39 +243,72 @@ class AffiliateUserController extends Controller
                 'Address',
                 'Total Orders',
                 'Total Earning',
-            ]);
+            ];
 
+            $headersAr = [
+                'الرقم',
+                'تاريخ الانضمام',
+                'رابط الصورة',
+                'الاسم',
+                'رقم الجوال',
+                'البريد الإلكتروني',
+                'الدولة',
+                'العنوان',
+                'إجمالي الطلبات',
+                'إجمالي الأرباح',
+            ];
+
+            $csvHeaders = $locale == 'ar' ? $headersAr : $headersEn;
+
+            fputcsv($file, $csvHeaders);
+
+            /* =========================
+            DATA ROWS
+            ========================= */
             foreach ($users as $index => $user) {
 
+                $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
 
+                /* -------- MOBILE -------- */
                 $mobile = '="' . ($user['country_code'] . $user['mobile']) . '"';
 
+                /* -------- DATE -------- */
                 $joiningDate = '="' . \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') . '"';
 
-                $address = 
-                    ($user['address_details']['address1'] ?? '') . ' ' .
-                    ($user['address_details']['address2'] ?? '') . ' ' .
-                    ($user['address_details']['town'] ?? '') . ' ' .
-                    ($user['address_details']['city'] ?? '') . ' ' .
-                    ($user['address_details']['pincode'] ?? '') . ' ' .
-                    ($user['address_details']['state'] ?? '');
+                /* -------- ADDRESS -------- */
+                $address = ($user['address_details']['address1'] ?? '') . ' ' .
+                        ($user['address_details']['address2'] ?? '') . ' ' .
+                        ($user['address_details']['town'] ?? '') . ' ' .
+                        ($user['address_details']['city'] ?? '') . ' ' .
+                        ($user['address_details']['pincode'] ?? '') . ' ' .
+                        ($user['address_details']['state'] ?? '');
 
-                $address = str_replace(["\r", "\n"], ' ', $address);
-                $address = trim($address);
+                $address = trim(str_replace(["\r", "\n"], ' ', $address));
+                $address = $address ?: $na;
 
-                // $rejectReason = $seller['reject_reason'] ?? 'N/A';
+                /* -------- COUNTRY -------- */
+                $country = $user['country_details'] ?? null;
 
+                if ($country) {
+                    $country = $locale == 'ar'
+                        ? ($country['name_ar'] ?? $na)
+                        : ($country['name'] ?? $na);
+                } else {
+                    $country = $na;
+                }
+
+                /* -------- ROW -------- */
                 fputcsv($file, [
                     $index + 1,
                     $joiningDate,
-                    $user['profile_image'] ?? 'N/A',   
-                    $user['full_name'] ?? 'N/A',
+                    $user['profile_image'] ?? $na,
+                    $user['full_name'] ?? $na,
                     $mobile,
-                    $user['email'] ?? 'N/A',
-                    $user['country_details']['name'] ?? 'N/A',
+                    $user['email'] ?? $na,
+                    $country,
                     $address,
-                    $user['total_orders'] ?? '0',
-                    $user['total_earning'] ?? '0',
+                    $user['total_orders'] ?? 0,
+                    $user['total_earning'] ?? 0,
                 ]);
             }
 
@@ -252,7 +323,6 @@ class AffiliateUserController extends Controller
 
         $data = $response['data'] ?? collect();
 
-        // Handle paginator or collection
         $users = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
             ? collect($data->items())
             : collect($data);
@@ -264,15 +334,19 @@ class AffiliateUserController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($users) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($users, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // Excel UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            // UTF-8 BOM for Excel
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+            $headersEn = [
                 'Sr No',
                 'Joining Date',
                 'Image URL',
@@ -282,36 +356,72 @@ class AffiliateUserController extends Controller
                 'Country',
                 'Address',
                 'Reject Reason',
-            ]);
+            ];
 
+            $headersAr = [
+                'الرقم',
+                'تاريخ الانضمام',
+                'رابط الصورة',
+                'الاسم',
+                'رقم الجوال',
+                'البريد الإلكتروني',
+                'الدولة',
+                'العنوان',
+                'سبب الرفض',
+            ];
+
+            $csvHeaders = $locale == 'ar' ? $headersAr : $headersEn;
+
+            fputcsv($file, $csvHeaders);
+
+            /* =========================
+            DATA ROWS
+            ========================= */
             foreach ($users as $index => $user) {
 
+                $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
 
+                /* -------- MOBILE -------- */
                 $mobile = '="' . ($user['country_code'] . $user['mobile']) . '"';
 
+                /* -------- DATE -------- */
                 $joiningDate = '="' . \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') . '"';
 
-                $address = 
-                    ($user['address_details']['address1'] ?? '') . ' ' .
-                    ($user['address_details']['address2'] ?? '') . ' ' .
-                    ($user['address_details']['town'] ?? '') . ' ' .
-                    ($user['address_details']['city'] ?? '') . ' ' .
-                    ($user['address_details']['pincode'] ?? '') . ' ' .
-                    ($user['address_details']['state'] ?? '');
+                /* -------- ADDRESS -------- */
+                $address = ($user['address_details']['address1'] ?? '') . ' ' .
+                        ($user['address_details']['address2'] ?? '') . ' ' .
+                        ($user['address_details']['town'] ?? '') . ' ' .
+                        ($user['address_details']['city'] ?? '') . ' ' .
+                        ($user['address_details']['pincode'] ?? '') . ' ' .
+                        ($user['address_details']['state'] ?? '');
 
-                $address = str_replace(["\r", "\n"], ' ', $address);
-                $address = trim($address);
+                $address = trim(str_replace(["\r", "\n"], ' ', $address));
+                $address = $address ?: $na;
 
-                $rejectReason = $user['reject_reason'] ?? 'N/A';
+                /* -------- COUNTRY -------- */
+                $country = $user['country_details'] ?? null;
 
+                if ($country) {
+                    $country = $locale == 'ar'
+                        ? ($country['name_ar'] ?? $na)
+                        : ($country['name'] ?? $na);
+                } else {
+                    $country = $na;
+                }
+
+                /* -------- REJECT REASON -------- */
+                $rejectReason = $user['reject_reason'] ?? $na;
+                $rejectReason = str_replace(["\r", "\n"], ' ', $rejectReason);
+
+                /* -------- ROW -------- */
                 fputcsv($file, [
                     $index + 1,
                     $joiningDate,
-                    $user['profile_image'] ?? 'N/A',   
-                    $user['full_name'] ?? 'N/A',
+                    $user['profile_image'] ?? $na,
+                    $user['full_name'] ?? $na,
                     $mobile,
-                    $user['email'] ?? 'N/A',
-                    $user['country_details']['name'] ?? 'N/A',
+                    $user['email'] ?? $na,
+                    $country,
                     $address,
                     $rejectReason,
                 ]);

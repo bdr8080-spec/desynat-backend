@@ -675,6 +675,9 @@ class AuthController extends Controller
             ? collect($data->items())
             : collect($data);
 
+        $isArabic = app()->getLocale() === 'ar';
+        $na = $isArabic ? 'غير متوفر' : 'N/A';
+
         $fileName = 'refund_orders_' . now()->format('Y_m_d_H_i_s') . '.csv';
 
         $headers = [
@@ -682,41 +685,48 @@ class AuthController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($refunds) {
+        return response()->stream(function () use ($refunds, $isArabic, $na) {
 
             $file = fopen('php://output', 'w');
 
-            // UTF-8 fix
             fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
 
-            // CSV Headers
             fputcsv($file, [
-                'Sr No',
-                'Transaction ID',
-                'Order ID',
-                'Order Date & Time',
-                'Cancellation Date & Time',
-                'Seller Name',
-                'User Name',
-                'User Country',
-                'Reason',
-                'Amount(KD)',
-                'Status'
+                $isArabic ? 'رقم' : 'Sr No',
+                $isArabic ? 'رقم المعاملة' : 'Transaction ID',
+                $isArabic ? 'رقم الطلب' : 'Order ID',
+                $isArabic ? 'تاريخ الطلب' : 'Order Date & Time',
+                $isArabic ? 'تاريخ الإلغاء' : 'Cancellation Date & Time',
+                $isArabic ? 'اسم البائع' : 'Seller Name',
+                $isArabic ? 'اسم المستخدم' : 'User Name',
+                $isArabic ? 'دولة المستخدم' : 'User Country',
+                $isArabic ? 'السبب' : 'Reason',
+                $isArabic ? 'المبلغ (دينار)' : 'Amount(KD)',
+                $isArabic ? 'الحالة' : 'Status',
             ]);
 
             foreach ($refunds as $index => $data) {
 
-                $transactionId = '="' . ($data->order->transaction_id ?? 'N/A') . '"';
-                $orderId = $data->order->order_id ?? 'N/A';
+                $transactionId = $data->order->transaction_id ?? $na;
 
-                $sellerName = trim(
-                    ($data->product_details->seller_details->first_name ?? '') . ' ' .
-                    ($data->product_details->seller_details->last_name ?? '')
-                ) ?: 'N/A';
+                $orderId = $data->order->order_id ?? $na;
 
-                $userName = $data->user_details->full_name ?? 'N/A';
+                $sellerName = $data->product_details->seller_details
+                    ? trim(
+                        ($data->product_details->seller_details->first_name ?? '') . ' ' .
+                        ($data->product_details->seller_details->last_name ?? '')
+                    )
+                    : $na;
 
-                $country = $data->user_details->country_info->name ?? 'N/A';
+                $userName = $data->user_details->full_name ?? $na;
+
+                $country = $data->user_details->country_info
+                    ? (
+                        $isArabic
+                            ? ($data->user_details->country_info->name_ar ?? $data->user_details->country_info->name ?? $na)
+                            : ($data->user_details->country_info->name ?? $data->user_details->country_info->name_ar ?? $na)
+                    )
+                    : $na;
 
                 $orderDate = $data->created_at
                     ? $data->created_at->format('jS F Y | g:i A')
@@ -726,9 +736,9 @@ class AuthController extends Controller
                     ? $data->updated_at->format('jS F Y | g:i A')
                     : '-';
 
-                $reason = $data->cancel_reason ?? 'N/A';
+                $reason = $data->cancel_reason ?? $na;
 
-                $amount = ($data->amount ?? 0);
+                $amount = $data->amount ?? 0;
 
                 $status = 'Pending';
 

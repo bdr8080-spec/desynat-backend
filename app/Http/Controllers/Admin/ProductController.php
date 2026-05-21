@@ -38,10 +38,9 @@ class ProductController extends Controller
 
         $data = $response['data'] ?? collect();
 
-            // Handle paginator or collection
-            $products = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                ? collect($data->items())
-                : collect($data);
+        $products = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
+            ? collect($data->items())
+            : collect($data);
 
         $fileName = 'products_' . now()->format('Y_m_d_H_i_s') . '.csv';
 
@@ -50,15 +49,19 @@ class ProductController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($products) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($products, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // CSV Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+
+            $headersEn = [
                 'SR No',
                 'Seller Name',
                 'Country',
@@ -68,66 +71,117 @@ class ProductController extends Controller
                 'Brand',
                 'Product Name',
                 'Description',
-                'Specification',
-                'Actual Price(KD)',
+                //'Specification',
+                'Actual Price (KD)',
                 'Size Chart',
                 'Rating'
-            ]);
+            ];
+
+            $headersAr = [
+                'الرقم',
+                'اسم البائع',
+                'الدولة',
+                'الصورة',
+                'الفئة',
+                'الفئة الفرعية',
+                'العلامة التجارية',
+                'اسم المنتج',
+                'الوصف',
+                //'المواصفات',
+                'السعر (دينار)',
+                'مخطط المقاسات',
+                'التقييم'
+            ];
+
+            fputcsv($file, $locale == 'ar' ? $headersAr : $headersEn);
+
+            $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
 
             foreach ($products as $index => $product) {
 
-                // Seller Name
+                /* Seller */
                 $sellerName = trim(
                     ($product['seller_details']['first_name'] ?? '') . ' ' .
                     ($product['seller_details']['last_name'] ?? '')
-                ) ?: 'N/A';
+                ) ?: $na;
 
-                // Country
-                $country = $product['store']['country_info']['name'] ?? 'N/A';
+                /* Country */
+                $country = $product['store']['country_info'] ?? null;
 
-                // Image (first variant image)
-                $image = $product['product_variants'][0]['variant_image'][0] ?? 'N/A';
+                $countryName = $country
+                    ? ($locale == 'ar'
+                        ? ($country['name_ar'] ?? $country['name'] ?? $na)
+                        : ($country['name'] ?? $na))
+                    : $na;
 
-                // Category
-                $category = $product['category']['name'] ?? 'N/A';
+                /* Image */
+                $image = $product['product_variants'][0]['variant_image'][0] ?? $na;
 
-                // Sub Category
-                $subCategory = $product['subcategory']['name_english'] ?? 'N/A';
+                /* Category */
+                $category = $product['category'] ?? null;
 
-                // Brand
-                $brand = $product['brand']['name_english'] ?? 'N/A';
+                $categoryName = $category
+                    ? ($locale == 'ar'
+                        ? ($category['name_ar'] ?? $category['name'] ?? $na)
+                        : ($category['name'] ?? $na))
+                    : $na;
 
-                // Product Name
-                $productName = $product['product_name_en'] ?? 'N/A';
+                /* Sub Category */
+                $subCategory = $product['subcategory'] ?? null;
 
-                // Description
-                $description = strip_tags($product['description_en'] ?? 'N/A');
+                $subCategoryName = $subCategory
+                    ? ($locale == 'ar'
+                        ? ($subCategory['name_arabic'] ?? $subCategory['name_english'] ?? $na)
+                        : ($subCategory['name_english'] ?? $na))
+                    : $na;
 
-                // Specification (JSON safe)
+                /* Brand */
+                $brand = $product['brand'] ?? null;
+
+                $brandName = $brand
+                    ? ($locale == 'ar'
+                        ? ($brand['name_arabic'] ?? $brand['name_english'] ?? $na)
+                        : ($brand['name_english'] ?? $na))
+                    : $na;
+
+                /* Product Name */
+                $productName = $locale == 'ar'
+                    ? ($product['product_name_ar'] ?? $product['product_name_en'] ?? $na)
+                    : ($product['product_name_en'] ?? $na);
+
+                /* Description */
+                $description = strip_tags(
+                    $locale == 'ar'
+                        ? ($product['description_ar'] ?? $product['description_en'] ?? $na)
+                        : ($product['description_en'] ?? $na)
+                );
+
+                /* Specification */
                 $specification = isset($product['product_specifications'])
                     ? json_encode($product['product_specifications'], JSON_UNESCAPED_UNICODE)
-                    : 'N/A';
+                    : $na;
 
-                // Actual Price
-                $actualPrice = $product['product_variants'][0]['actual_price'] ?? 'N/A';
+                /* Price */
+                $actualPrice = $product['product_variants'][0]['actual_price'] ?? $na;
 
-                // Size Chart
-                $sizeChart = $product['upload_size_chart'] ?? 'N/A';
+                /* Size Chart */
+                $sizeChart = $product['upload_size_chart'] ?? $na;
 
-                // Rating
+                /* Rating */
                 $rating = $product['average_rating']['product'] ?? '0';
 
+                /* CSV ROW */
                 fputcsv($file, [
                     $index + 1,
                     $sellerName,
-                    $country,
+                    $countryName,
                     $image,
-                    $category,
-                    $subCategory,
-                    $brand,
+                    $categoryName,
+                    $subCategoryName,
+                    $brandName,
                     $productName,
                     $description,
-                    $specification,
+                   // $specification,
                     $actualPrice,
                     $sizeChart,
                     $rating

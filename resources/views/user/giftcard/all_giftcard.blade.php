@@ -48,7 +48,7 @@
                     <div class="gift-card-body p-3">
                         <div class="gift-title">
                             <h5>{{ $gift->sender_name ??  __('user_messages.na')  }}</h5>
-                            <div class="giftdate">{{ $gift->created_at->format('d M y, h:i a') }}</div>
+                            <div class="giftdate">{{ formatDateTimeByLocale($gift->created_at) }}</div>
                         </div>
                         <div class="gift-title">
                             <h5>{{ number_format(convertPriceInUserWeb($gift->amount), 2) }}  {{ $currency }}</h5>

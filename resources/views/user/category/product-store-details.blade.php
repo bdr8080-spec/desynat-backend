@@ -314,7 +314,7 @@
                     <ul class="cd-info">
                         <li>
                             <i class="bi bi-truck"></i>
-                            {{ __('user_messages.get_it_buy') }} <strong>24/12/2024</strong>
+                            {{ __('user_messages.get_it_buy') }} @if(app()->getLocale() == 'en')<strong>24/12/2024</strong>@else<strong>٢٤/١٢/٢٠٢٤</strong>@endif
                         </li>
                         <li>
                             <i class="bi bi-cash-coin"></i>

@@ -537,11 +537,11 @@
                         @if($orderData->payment_status=='2' || $orderData->payment_status=='3' ||
                         $orderData->delivery_status=='4')
                         <div class="order-14">{{ __('user_messages.cancelled_on') }}
-                            {{ \Carbon\Carbon::parse($orderData->updated_at)->format('d/m/Y') }}</div>
+                            {{ formatDateTimeByLocale($orderData->updated_at) }}</div>
                         @elseif($orderData->return_type!=='0')
                         <div class="order-14">{{ __('user_messages.expected_pickup_date') }}:
                             <!-- 3-5 Working Days -->
-                            {{ $orderData->updated_at->copy()->addDays(6)->format('d M Y') }}
+                            {{ formatDateTimeByLocale($orderData->updated_at->copy()->addDays(6)) }}
 
                         </div>
                         @else
@@ -549,7 +549,7 @@
                             <!-- {{ \Carbon\Carbon::parse($orderData->created_at)->addDays(6)->format('d/m/Y') }}</div> -->
                             <!-- 3-5 Working Days -->
 
-                            {{ $orderData->updated_at->copy()->addDays(6)->format('d M Y') }}
+                            {{ formatDateTimeByLocale($orderData->updated_at->copy()->addDays(6)) }}
 
                         </div>
                         @endif

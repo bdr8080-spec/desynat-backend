@@ -666,7 +666,6 @@ class DeliveryBoyController extends Controller
 
         $data = $response['data'] ?? collect();
 
-        // Handle paginator or collection
         $users = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
             ? collect($data->items())
             : collect($data);
@@ -678,15 +677,19 @@ class DeliveryBoyController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($users) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($users, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // Excel UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            // UTF-8 BOM for Excel
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+            $headersEn = [
                 'Sr No',
                 'Joining Date',
                 'Image URL',
@@ -695,40 +698,75 @@ class DeliveryBoyController extends Controller
                 'Email',
                 'Zone',
                 'Address',
-                'Vechicle Name',
+                'Vehicle Name',
                 'Registration Number',
                 'Total Order Delivered',
-            ]);
+            ];
 
+            $headersAr = [
+                'الرقم',
+                'تاريخ الانضمام',
+                'رابط الصورة',
+                'الاسم',
+                'رقم الجوال',
+                'البريد الإلكتروني',
+                'المنطقة',
+                'العنوان',
+                'اسم المركبة',
+                'رقم اللوحة',
+                'إجمالي الطلبات المسلمة',
+            ];
+
+            $csvHeaders = $locale == 'ar' ? $headersAr : $headersEn;
+
+            fputcsv($file, $csvHeaders);
+
+            /* =========================
+            DATA ROWS
+            ========================= */
             foreach ($users as $index => $user) {
 
+                $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
 
+                /* -------- MOBILE -------- */
                 $mobile = '="' . ($user['country_code'] . $user['mobile']) . '"';
 
+                /* -------- DATE -------- */
                 $joiningDate = '="' . \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') . '"';
 
-                $address = 
-                    ($user['address_line1'] ?? '') . ' ' .
-                    ($user['address_line2'] ?? '') . ' ' .
-                    ($user['city'] ?? '') . ' ' .
-                    ($user['state'] ?? '');
+                /* -------- ADDRESS -------- */
+                $address = ($user['address_line1'] ?? '') . ' ' .
+                        ($user['address_line2'] ?? '') . ' ' .
+                        ($user['city'] ?? '') . ' ' .
+                        ($user['state'] ?? '');
 
-                $address = str_replace(["\r", "\n"], ' ', $address);
-                $address = trim($address);
+                $address = trim(str_replace(["\r", "\n"], ' ', $address));
+                $address = $address ?: $na;
 
+                /* -------- ZONE -------- */
+                $zone = $user['zone_info'] ?? null;
 
+                if ($zone) {
+                    $zone = $locale == 'ar'
+                        ? ($zone['name_arabic']  ?? $na)
+                        : ($zone['name_english'] ?? $na);
+                } else {
+                    $zone = $na;
+                }
+
+                /* -------- ROW -------- */
                 fputcsv($file, [
                     $index + 1,
                     $joiningDate,
-                    $user['profile_pic'] ?? 'N/A',   
-                    $user['full_name_english'] ?? 'N/A',
+                    $user['profile_pic'] ?? $na,
+                    $user['full_name_english'] ?? $na,
                     $mobile,
-                    $user['email'] ?? 'N/A',
-                    $user['zone_info']['name_english'] ?? 'N/A',
+                    $user['email'] ?? $na,
+                    $zone,
                     $address,
-                    $user['vehicle_name'] ?? 'N/A',
-                    $user['vehicle_reg_no'] ?? 'N/A',
-                    $user['Total_order_delivered'] ?? '0'
+                    $user['vehicle_name'] ?? $na,
+                    $user['vehicle_reg_no'] ?? $na,
+                    $user['Total_order_delivered'] ?? 0,
                 ]);
             }
 

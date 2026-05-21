@@ -102,8 +102,6 @@ class SellerController extends Controller
 
         $paginator = $response['data'] ?? null;
 
-        // $sellers = collect($paginator->items() ?? []);
-        //dd($sellers);
         $sellers = collect();
 
         if ($paginator && is_object($paginator) && method_exists($paginator, 'items')) {
@@ -117,13 +115,19 @@ class SellerController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($sellers) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($sellers, $locale) {
 
             $file = fopen('php://output', 'w');
 
+            // UTF-8 BOM for Excel
             fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            fputcsv($file, [
+            /* =========================
+            HEADERS (EN / AR)
+            ========================= */
+            $headersEn = [
                 'Sr No',
                 'Joining Date',
                 'Image Url',
@@ -137,40 +141,90 @@ class SellerController extends Controller
                 'Store Email',
                 'Bio',
                 'Status'
-            ]);
+            ];
 
+            $headersAr = [
+                'الرقم',
+                'تاريخ الانضمام',
+                'رابط الصورة',
+                'الاسم الأول',
+                'الاسم الأخير',
+                'رقم الجوال',
+                'البريد الإلكتروني',
+                'الدولة',
+                'اسم المتجر',
+                'عنوان المتجر',
+                'بريد المتجر',
+                'السيرة الذاتية',
+                'الحالة'
+            ];
+
+            $csvHeaders = $locale == 'ar' ? $headersAr : $headersEn;
+
+            fputcsv($file, $csvHeaders);
+
+            /* =========================
+            DATA ROWS
+            ========================= */
             foreach ($sellers as $index => $seller) {
 
-                $country = 'N/A';
+                // -------------------------
+                // COUNTRY (EN / AR)
+                // -------------------------
+                $country = $locale == 'ar' ? 'غير متوفر' : 'N/A';
+
                 if (!empty($seller['store_info']['country'])) {
                     $countryModel = \App\Models\country::find($seller['store_info']['country']);
-                    $country = $countryModel->name ?? 'N/A';
+
+                    if ($countryModel) {
+                        $country = $locale == 'ar'
+                            ? ($countryModel->name_ar ?? 'غير متوفر')
+                            : ($countryModel->name ?? 'N/A');
+                    }
                 }
 
+                // -------------------------
+                // N/A TRANSLATION
+                // -------------------------
+                $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
+
+                // -------------------------
+                // MOBILE
+                // -------------------------
                 $mobile = '="' . ($seller['country_code'] . $seller['mobile']) . '"';
 
+                // -------------------------
+                // DATE
+                // -------------------------
                 $joiningDate = '="' . \Carbon\Carbon::parse($seller['created_at'])->format('d-m-Y') . '"';
 
-                $status = 'Pending';
+                // -------------------------
+                // STATUS (EN / AR)
+                // -------------------------
+                $status = $locale == 'ar' ? 'قيد الانتظار' : 'Pending';
+
                 if (($seller['admin_verify'] ?? 0) == 2) {
-                    $status = 'Approved';
+                    $status = $locale == 'ar' ? 'مقبول' : 'Approved';
                 } elseif (($seller['admin_verify'] ?? 0) == 3) {
-                    $status = 'Rejected';
+                    $status = $locale == 'ar' ? 'مرفوض' : 'Rejected';
                 }
 
+                // -------------------------
+                // CSV ROW
+                // -------------------------
                 fputcsv($file, [
                     $index + 1,
                     $joiningDate,
-                    $seller['profile_pic'] ?? 'N/A',
-                    $seller['first_name'] ?? 'N/A',
-                    $seller['last_name'] ?? 'N/A',
+                    $seller['profile_pic'] ?? $na,
+                    $seller['first_name'] ?? $na,
+                    $seller['last_name'] ?? $na,
                     $mobile,
-                    $seller['email'] ?? 'N/A',
+                    $seller['email'] ?? $na,
                     $country,
-                    $seller['store_info']['store_name'] ?? 'N/A',
-                    $seller['store_info']['store_address'] ?? 'N/A',
-                    $seller['store_info']['store_mail_id'] ?? 'N/A',
-                    $seller['store_info']['bio'] ?? 'N/A',
+                    $seller['store_info']['store_name'] ?? $na,
+                    $seller['store_info']['store_address'] ?? $na,
+                    $seller['store_info']['store_mail_id'] ?? $na,
+                    $seller['store_info']['bio'] ?? $na,
                     $status,
                 ]);
             }
@@ -197,15 +251,19 @@ class SellerController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($sellers) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($sellers, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // Fix Excel UTF-8 encoding
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            // UTF-8 BOM for Excel
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+            $headersEn = [
                 'Sr No',
                 'Joining Date',
                 'Image URL',
@@ -225,55 +283,99 @@ class SellerController extends Controller
                 'Commission Paid',
                 'Rating',
                 'Status'
-            ]);
+            ];
 
+            $headersAr = [
+                'الرقم',
+                'تاريخ الانضمام',
+                'رابط الصورة',
+                'الاسم الأول',
+                'الاسم الأخير',
+                'رقم الجوال',
+                'البريد الإلكتروني',
+                'الدولة',
+                'اسم المتجر',
+                'عنوان المتجر',
+                'بريد المتجر',
+                'السيرة الذاتية',
+                'الخطة الحالية',
+                'الطلبات المكتملة',
+                'الطلبات الملغاة',
+                'إجمالي الأرباح',
+                'العمولة المدفوعة',
+                'التقييم',
+                'الحالة'
+            ];
+
+            $csvHeaders = $locale == 'ar' ? $headersAr : $headersEn;
+
+            fputcsv($file, $csvHeaders);
+
+            /* =========================
+            DATA ROWS
+            ========================= */
             foreach ($sellers as $index => $seller) {
 
-                // Country
-                $country = 'N/A';
+                $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
+
+                /* -------- COUNTRY -------- */
+                $country = $na;
                 if (!empty($seller['store_info']['country'])) {
                     $countryModel = \App\Models\country::find($seller['store_info']['country']);
-                    $country = $countryModel->name ?? 'N/A';
+                    if ($countryModel) {
+                        $country = $locale == 'ar'
+                            ? ($countryModel->name_ar ?? $na)
+                            : ($countryModel->name ?? $na);
+                    }
                 }
 
-                // Plan
-                $planName = 'N/A';
+                /* -------- PLAN -------- */
+                $planName = $na;
                 if (!empty($seller['subcription_plan'][0]['plan_id'])) {
                     $plan = \App\Models\Plan::find($seller['subcription_plan'][0]['plan_id']);
-                    $planName = $plan->plan_name_english ?? 'N/A';
+
+                    if ($plan) {
+                        $planName = $locale == 'ar'
+                            ? ($plan->plan_name_ar ?? $plan->plan_name_english ?? $na)
+                            : ($plan->plan_name_english ?? $na);
+                    }
                 }
 
-                // FIX: date safe for Excel
-            $mobile = '="' . ($seller['country_code'] . $seller['mobile']) . '"';
+                /* -------- MOBILE -------- */
+                $mobile = '="' . ($seller['country_code'] . $seller['mobile']) . '"';
 
+                /* -------- DATE -------- */
                 $joiningDate = '="' . \Carbon\Carbon::parse($seller['created_at'])->format('d-m-Y') . '"';
 
-                // FIX: BIO (prevents row breaking issue)
-                $bio = $seller['store_info']['bio'] ?? 'N/A';
+                /* -------- BIO SAFE -------- */
+                $bio = $seller['store_info']['bio'] ?? $na;
                 $bio = str_replace(["\r", "\n"], ' ', $bio);
 
-                // Status
-                $status = ($seller['is_block'] == 0) ? 'Active' : 'Inactive';
+                /* -------- STATUS -------- */
+                $status = ($seller['is_block'] == 0)
+                    ? ($locale == 'ar' ? 'نشط' : 'Active')
+                    : ($locale == 'ar' ? 'غير نشط' : 'Inactive');
 
+                /* -------- ROW -------- */
                 fputcsv($file, [
                     $index + 1,
                     $joiningDate,
-                    $seller['profile_pic'] ?? 'N/A',   // IMAGE URL KEPT
-                    $seller['first_name'] ?? 'N/A',
-                    $seller['last_name'] ?? 'N/A',
+                    $seller['profile_pic'] ?? $na,
+                    $seller['first_name'] ?? $na,
+                    $seller['last_name'] ?? $na,
                     $mobile,
-                    $seller['email'] ?? 'N/A',
+                    $seller['email'] ?? $na,
                     $country,
-                    $seller['store_info']['store_name'] ?? 'N/A',
-                    $seller['store_info']['store_address'] ?? 'N/A',
-                    $seller['store_info']['store_mail_id'] ?? 'N/A',
+                    $seller['store_info']['store_name'] ?? $na,
+                    $seller['store_info']['store_address'] ?? $na,
+                    $seller['store_info']['store_mail_id'] ?? $na,
                     $bio,
                     $planName,
-                    $seller['completed_orders'] ?? 0,
-                    $seller['cancelled_orders'] ?? 0,
+                    $seller['total_completed_orders'] ?? 0,
+                    $seller['total_cancelled_orders'] ?? 0,
                     $seller['total_earning'] ?? 0,
                     $seller['commission_paid'] ?? 0,
-                    $seller['rating'] ?? 0,
+                    $seller['average_product_rating'] ?? 0,
                     $status,
                 ]);
             }
@@ -289,7 +391,6 @@ class SellerController extends Controller
 
         $data = $response['data'] ?? collect();
 
-        // Handle paginator or collection
         $sellers = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
             ? collect($data->items())
             : collect($data);
@@ -301,15 +402,19 @@ class SellerController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($sellers) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($sellers, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // Excel UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            // Excel UTF-8 BOM
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+            $headersEn = [
                 'Sr No',
                 'Joining Date',
                 'Image URL',
@@ -323,39 +428,76 @@ class SellerController extends Controller
                 'Store Email',
                 'Bio',
                 'Reject Reason'
-            ]);
+            ];
 
+            $headersAr = [
+                'الرقم',
+                'تاريخ الانضمام',
+                'رابط الصورة',
+                'الاسم الأول',
+                'الاسم الأخير',
+                'رقم الجوال',
+                'البريد الإلكتروني',
+                'الدولة',
+                'اسم المتجر',
+                'عنوان المتجر',
+                'بريد المتجر',
+                'السيرة الذاتية',
+                'سبب الرفض'
+            ];
+
+            $csvHeaders = $locale == 'ar' ? $headersAr : $headersEn;
+
+            fputcsv($file, $csvHeaders);
+
+            /* =========================
+            DATA ROWS
+            ========================= */
             foreach ($sellers as $index => $seller) {
 
-                $country = 'N/A';
+                $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
+
+                /* -------- COUNTRY -------- */
+                $country = $na;
+
                 if (!empty($seller['store_info']['country'])) {
                     $countryModel = \App\Models\Country::find($seller['store_info']['country']);
-                    $country = $countryModel->name ?? 'N/A';
+
+                    if ($countryModel) {
+                        $country = $locale == 'ar'
+                            ? ($countryModel->name_ar ?? $na)
+                            : ($countryModel->name ?? $na);
+                    }
                 }
 
+                /* -------- MOBILE -------- */
                 $mobile = '="' . ($seller['country_code'] . $seller['mobile']) . '"';
 
+                /* -------- DATE -------- */
                 $joiningDate = '="' . \Carbon\Carbon::parse($seller['created_at'])->format('d-m-Y') . '"';
 
-                $bio = $seller['store_info']['bio'] ?? 'N/A';
+                /* -------- BIO -------- */
+                $bio = $seller['store_info']['bio'] ?? $na;
                 $bio = str_replace(["\r", "\n"], ' ', $bio);
 
-                $rejectReason = $seller['reject_reason'] ?? 'N/A';
+                /* -------- REJECT REASON -------- */
+                $rejectReason = $seller['reject_reason'] ?? $na;
+                $rejectReason = str_replace(["\r", "\n"], ' ', $rejectReason);
 
+                /* -------- ROW -------- */
                 fputcsv($file, [
                     $index + 1,
                     $joiningDate,
-                    $seller['profile_pic'] ?? 'N/A',   // IMAGE URL KEPT
-                    $seller['first_name'] ?? 'N/A',
-                    $seller['last_name'] ?? 'N/A',
+                    $seller['profile_pic'] ?? $na,
+                    $seller['first_name'] ?? $na,
+                    $seller['last_name'] ?? $na,
                     $mobile,
-                    $seller['email'] ?? 'N/A',
+                    $seller['email'] ?? $na,
                     $country,
-                    $seller['store_info']['store_name'] ?? 'N/A',
-                    $seller['store_info']['store_address'] ?? 'N/A',
-                    $seller['store_info']['store_mail_id'] ?? 'N/A',
+                    $seller['store_info']['store_name'] ?? $na,
+                    $seller['store_info']['store_address'] ?? $na,
+                    $seller['store_info']['store_mail_id'] ?? $na,
                     $bio,
-
                     $rejectReason,
                 ]);
             }

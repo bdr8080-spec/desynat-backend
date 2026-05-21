@@ -76,15 +76,23 @@ class UserController extends Controller
         $fileName = 'users_export_' . now()->format('Y_m_d_H_i_s') . '.csv';
 
         $headers = [
-            "Content-Type" => "text/csv",
+            "Content-Type" => "text/csv; charset=UTF-8",
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        $callback = function () use ($users) {
+        $locale = app()->getLocale();
+
+        $callback = function () use ($users, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            fputcsv($file, [
+            // UTF-8 BOM for Excel
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+            $headersEn = [
                 'SR No',
                 'Joining Date',
                 'Name',
@@ -94,32 +102,71 @@ class UserController extends Controller
                 'Email',
                 'Completed Orders',
                 'Cancelled Orders',
-                'Wallet Balance(KD)',
+                'Wallet Balance (KD)',
                 'Status'
-            ]);
+            ];
 
+            $headersAr = [
+                'الرقم',
+                'تاريخ الانضمام',
+                'الاسم',
+                'رابط الصورة',
+                'رقم الهاتف',
+                'الدولة',
+                'البريد الإلكتروني',
+                'الطلبات المكتملة',
+                'الطلبات الملغاة',
+                'رصيد المحفظة (دينار)',
+                'الحالة'
+            ];
+
+            $csvHeaders = $locale == 'ar' ? $headersAr : $headersEn;
+
+            fputcsv($file, $csvHeaders);
+
+            /* =========================
+            DATA ROWS
+            ========================= */
             foreach ($users as $index => $user) {
 
-                $wallet = $user->wallet_info->amount ?? 0;
-                $country = $user->country_info->name ?? 'N/A';
-                $status = $user->status == 1 ? 'Active' : 'Inactive';
+                $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
 
+                /* -------- WALLET -------- */
+                $wallet = $user->wallet_info->amount ?? 0;
+
+                /* -------- COUNTRY -------- */
+                $country = $user->country_info ?? null;
+
+                if ($country) {
+                    $country = $locale == 'ar'
+                        ? ($country->name_ar ?? $na)
+                        : ($country->name ?? $na);
+                } else {
+                    $country = $na;
+                }
+
+                /* -------- STATUS -------- */
+                $status = $user->status == 1
+                    ? ($locale == 'ar' ? 'نشط' : 'Active')
+                    : ($locale == 'ar' ? 'غير نشط' : 'Inactive');
+
+                /* -------- PHONE -------- */
+                $mobile = '="' . ($user->country_code . $user->mobile) . '"';
+
+                /* -------- DATE -------- */
+                $joiningDate = '="' . \Carbon\Carbon::parse($user->created_at)->format('d-m-Y') . '"';
+
+                /* -------- ROW -------- */
                 fputcsv($file, [
                     $index + 1,
-
-                    '="' . \Carbon\Carbon::parse($user->created_at)->format('d-m-Y') . '"',
-
-                    $user->full_name ?? 'N/A',
+                    $joiningDate,
+                    $user->full_name ?? $na,
                     $user->profile_image ?? '',
-
-                    '="' . ($user->country_code . $user->mobile) . '"',
-
+                    $mobile,
                     $country,
-                    $user->email ?? 'N/A',
-
-                    'N/A',
-                    'N/A',
-
+                    $user->email ?? $na,
+                    $na,
+                    $na,
                     $wallet,
                     $status,
                 ]);

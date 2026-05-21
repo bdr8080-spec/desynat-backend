@@ -125,21 +125,20 @@ class OrderController extends Controller
         $type = $request->get('type'); 
         $country = $request->get('country_name');
         $fromDate = $request->get('from_date');
-       // dd($fromDate);
         $toDate = $request->get('to_date');
 
-        // Active Orders
         $activeRequestParams = [];
+
         if ($type === 'active') {
             $activeRequestParams['country_name'] = $country;
             $activeRequestParams['from_date'] = $fromDate;
             $activeRequestParams['to_date'] = $toDate;
         }
+
         $response = $this->OrderManagementService->ActiveOrdersNew(new Request($activeRequestParams));
 
         $data = $response['data'] ?? collect();
 
-        // Handle paginator or collection
         $orders = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
             ? collect($data->items())
             : collect($data);
@@ -151,15 +150,20 @@ class OrderController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($orders) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($orders, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // Excel UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            // UTF-8 fix for Excel
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS
+            ========================= */
+
+            $headersEn = [
                 'Sr No',
                 'Order Id',
                 'Seller Name',
@@ -171,123 +175,186 @@ class OrderController extends Controller
                 'Sub Category',
                 'Brand',
                 'Delivery Address',
-                'Order Amount(KD)',
-                'Admin Commission(KD)',
+                'Order Amount (KD)',
+                'Admin Commission (KD)',
                 'Order Type',
                 'Delivery Boy',
-                'Delivery Boy Comapany Name',
+                'Delivery Boy Company Name',
                 'Status',
                 'Zone'
-            ]);
+            ];
+
+            $headersAr = [
+                'الرقم',
+                'رقم الطلب',
+                'اسم البائع',
+                'اسم العميل',
+                'الدولة',
+                'اسم المنتج',
+                'رابط صورة المنتج',
+                'الفئة',
+                'الفئة الفرعية',
+                'العلامة التجارية',
+                'عنوان التوصيل',
+                'إجمالي الطلب (دينار)',
+                'عمولة الإدارة (دينار)',
+                'نوع الطلب',
+                'مندوب التوصيل',
+                'اسم شركة التوصيل',
+                'الحالة',
+                'المنطقة'
+            ];
+
+            $csvHeaders = $locale == 'ar' ? $headersAr : $headersEn;
+
+            fputcsv($file, $csvHeaders);
+
+            $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
+
+            /* =========================
+            DELIVERY STATUS (EN/AR)
+            ========================= */
+            $deliveryStatuses = $locale == 'ar' ? [
+                '1'   => 'تم التأكيد',
+                '2.1' => 'تم الشحن',
+                '2.2' => 'في الطريق',
+                '3'   => 'تم التوصيل',
+                '4'   => 'ملغي',
+                '5'   => 'مرتجع',
+                '6'   => 'تم التأكيد',
+                '7'   => 'تم الاستلام',
+                '8'   => 'لم يتم التوصيل',
+            ] : [
+                '1'   => 'Confirmed',
+                '2.1' => 'Shipped',
+                '2.2' => 'On the Way',
+                '3'   => 'Delivered',
+                '4'   => 'Cancelled',
+                '5'   => 'Return',
+                '6'   => 'Confirmed',
+                '7'   => 'Picked',
+                '8'   => 'Not Delivered',
+            ];
+
+            /* =========================
+            DATA LOOP
+            ========================= */
 
             foreach ($orders as $index => $data) {
 
-                // Seller Name
-               $product = $data->product_details ?? null;
+                $product = $data->product_details ?? null;
 
-                $sellerName = 'Seller not found';
-
+                /* Seller */
+                $sellerName = $na;
                 if ($product && $product->seller_details) {
                     $seller = $product->seller_details;
 
                     $sellerName = trim(
-                        ($seller->first_name ?? '') . ' ' .
+                        ($seller->first_name ?? '') . ' ' . 
                         ($seller->last_name ?? '')
                     );
                 }
 
-                // Customer Name
-                $customerName = $data['order']['delivery_details']['name'] ?? 'N/A';
+                /* Customer */
+                $customerName = $data['order']['delivery_details']['name'] ?? $na;
 
-                // Country
-                $country = $data['order']['delivery_details']['country_name'] ?? 'N/A';
+                /* Country */
+                $country = $data['order']['delivery_details']['country_name'] ?? $na;
 
-                // Product Details (you can customize this)
-                $productDetails = 'View Products';
-
-                // Address
+                /* Address */
                 $delivery = $data['order']['delivery_details'] ?? [];
-                $address =
-                    ($delivery['address'] ?? '') . ' ' .
-                    ($delivery['postal_code'] ?? '') . ' ' .
-                    ($delivery['state'] ?? '');
 
-                $address = str_replace(["\r", "\n"], ' ', $address);
-                $address = trim($address);
+                $address = ($delivery['address'] ?? '') . ' ' .
+                        ($delivery['postal_code'] ?? '') . ' ' .
+                        ($delivery['state'] ?? '');
 
-                // Order Amount
-                if ($data['order']['order_type'] == '1') {
-                    $amount = $data['amount_with_charges'];
-                    $orderAmount = ($amount == floor($amount)) ? intval($amount) : number_format($amount, 2);
-                } else {
-                    $orderAmount = intval($data['order']['total_amount']);
-                }
+                $address = trim(str_replace(["\r", "\n"], ' ', $address));
+                $address = $address ?: $na;
 
-                // Admin Commission
-                $adminCommission = isset($data['admin_commission']) && $data['admin_commission'] !== null
-                    ? $data['admin_commission']
-                    : 'N/A';
+                /* Product Name */
+                $productName = $locale == 'ar'
+                    ? ($product->product_name_ar ?? $product->product_name_en ?? $na)
+                    : ($product->product_name_en ?? $na);
 
-                // Order Type
-                $orderType = ($data['order']['order_type'] == '1') ? 'Normal' : 'Custom';
-
-                // Delivery Boy
-                $deliveryBoy = $data['driver_details']['full_name_english'] ?? 'Not Assigned';
-
-                // Company Name
-                $companyName = 'N/A';
-
-                // Status Mapping
-                $deliveryStatuses = [
-                    '1' => 'Confirmed',
-                    '2.1' => 'Shipped',
-                    '2.2' => 'On the Way',
-                    '3' => 'Delivered',
-                    '4' => 'Cancelled',
-                    '5' => 'Return',
-                    '6' => 'Confirmed',
-                    '7' => 'Picked',
-                    '8' => 'Not Delivered',
-                ];
-
-                $status = $deliveryStatuses[$data['delivery_status']] ?? 'Unknown';
-
-                // Zone
-                $zone = $data['driver_details']['zone_info']['name_english'] ?? 'N/A';
-
-                // Product Name
-                $productName = $product->product_name_en ?? 'N/A';
-
-                // Product Image Url
+                /* Product Image */
                 $variant = $data->variation_details ?? null;
 
-                $productImage = 'N/A';
+                $productImage = $na;
 
                 if ($variant && !empty($variant->variant_image)) {
+                    $images = is_string($variant->variant_image)
+                        ? json_decode($variant->variant_image, true)
+                        : $variant->variant_image;
 
-                    $images = $variant->variant_image;
-
-                    // If stored as JSON string, decode it
-                    if (is_string($images)) {
-                        $images = json_decode($images, true);
-                    }
-
-                    // Take first image only
                     if (is_array($images) && isset($images[0])) {
                         $productImage = $images[0];
                     }
                 }
 
-                // Category
-                $category = $product->category->name ?? 'N/A';
+                /* Category */
+                $category = $product->category ?? null;
 
-                // Sub Category
-                $subCategory = $product->subcategory->name_english ?? 'N/A';
+                $categoryName = $category
+                    ? ($locale == 'ar'
+                        ? ($category->name_ar ?? $category->name ?? $na)
+                        : ($category->name ?? $na))
+                    : $na;
 
-                // Brand
-                $brand = $product->brand->name_english ?? 'N/A';
+                /* Sub Category */
+                $subCategory = $product->subcategory ?? null;
 
-                // Final CSV row
+                $subCategoryName = $subCategory
+                    ? ($locale == 'ar'
+                        ? ($subCategory->name_arabic ?? $subCategory->name_english ?? $na)
+                        : ($subCategory->name_english ?? $na))
+                    : $na;
+
+                /* Brand */
+                $brand = $product->brand ?? null;
+
+                $brandName = $brand
+                    ? ($locale == 'ar'
+                        ? ($brand->name_arabic ?? $brand->name_english ?? $na)
+                        : ($brand->name_english ?? $na))
+                    : $na;
+
+                /* Zone */
+                $zone = $data['driver_details']['zone_info'] ?? null;
+
+                $zoneName = $zone
+                    ? ($locale == 'ar'
+                        ? ($zone['name_arabic'] ?? $zone['name_english'] ?? $na)
+                        : ($zone['name_english'] ?? $na))
+                    : $na;
+
+                /* Order Amount */
+                if ($data['order']['order_type'] == '1') {
+                    $amount = $data['amount_with_charges'];
+                    $orderAmount = ($amount == floor($amount))
+                        ? intval($amount)
+                        : number_format($amount, 2);
+                } else {
+                    $orderAmount = intval($data['order']['total_amount']);
+                }
+
+                /* Commission */
+                $adminCommission = $data['admin_commission'] ?? $na;
+
+                /* Order Type */
+                $orderType = ($data['order']['order_type'] == '1')
+                    ? ($locale == 'ar' ? 'عادي' : 'Normal')
+                    : ($locale == 'ar' ? 'مخصص' : 'Custom');
+
+                /* Delivery Boy */
+                $deliveryBoy = $data['driver_details']['full_name_english'] ?? $na;
+
+                /* Company */
+                $companyName = $na;
+
+                /* Status */
+                $status = $deliveryStatuses[$data['delivery_status']] ?? ($locale == 'ar' ? 'غير معروف' : 'Unknown');
+
+                /* Final CSV Row */
                 fputcsv($file, [
                     $index + 1,
                     $data['id'],
@@ -296,9 +363,9 @@ class OrderController extends Controller
                     $country,
                     $productName,
                     $productImage,
-                    $category,
-                    $subCategory,
-                    $brand,
+                    $categoryName,
+                    $subCategoryName,
+                    $brandName,
                     $address,
                     $orderAmount,
                     $adminCommission,
@@ -306,7 +373,7 @@ class OrderController extends Controller
                     $deliveryBoy,
                     $companyName,
                     $status,
-                    $zone
+                    $zoneName
                 ]);
             }
 
@@ -320,20 +387,21 @@ class OrderController extends Controller
         $type = $request->get('type'); 
         $country = $request->get('country_name');
         $fromDate = $request->get('from_date');
-       // dd($fromDate);
         $toDate = $request->get('to_date');
 
-       $returnRequestParams = [];
+        $returnRequestParams = [];
+
         if ($type === 'return' && $country) {
             $returnRequestParams['country_name'] = $country;
             $returnRequestParams['from_date'] = $fromDate;
             $returnRequestParams['to_date'] = $toDate;
         }
-        $response = $this->OrderManagementService->ReturnExchangeOrdersNew(new Request($returnRequestParams));
+
+        $response = $this->OrderManagementService
+            ->ReturnExchangeOrdersNew(new Request($returnRequestParams));
 
         $data = $response['data'] ?? collect();
 
-        // Handle paginator or collection
         $orders = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
             ? collect($data->items())
             : collect($data);
@@ -345,15 +413,20 @@ class OrderController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($orders) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($orders, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // Excel UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            // UTF-8 BOM
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+
+            $headersEn = [
                 'Sr No',
                 'Order Id',
                 'Seller Name',
@@ -365,140 +438,216 @@ class OrderController extends Controller
                 'Sub Category',
                 'Brand',
                 'Delivery Address',
-                'Order Amount(KD)',
-                'Admin Commission(KD)',
+                'Order Amount (KD)',
+                'Admin Commission (KD)',
                 'Order Type',
                 'Delivery Boy',
-                'Delivery Boy Comapany Name',
+                'Delivery Boy Company Name',
                 'Type',
                 'Reason',
                 'Status',
                 'Zone'
-            ]);
+            ];
+
+            $headersAr = [
+                'الرقم',
+                'رقم الطلب',
+                'اسم البائع',
+                'اسم العميل',
+                'الدولة',
+                'اسم المنتج',
+                'رابط صورة المنتج',
+                'الفئة',
+                'الفئة الفرعية',
+                'العلامة التجارية',
+                'عنوان التوصيل',
+                'إجمالي الطلب (دينار)',
+                'عمولة الإدارة (دينار)',
+                'نوع الطلب',
+                'مندوب التوصيل',
+                'اسم شركة التوصيل',
+                'النوع',
+                'السبب',
+                'الحالة',
+                'المنطقة'
+            ];
+
+            $csvHeaders = $locale == 'ar' ? $headersAr : $headersEn;
+
+            fputcsv($file, $csvHeaders);
+
+            $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
+
+            /* =========================
+            DELIVERY STATUS (EN/AR)
+            ========================= */
+
+            $deliveryStatuses = $locale == 'ar' ? [
+                '1'   => 'تم التأكيد',
+                '2.1' => 'تم الشحن',
+                '2.2' => 'في الطريق',
+                '3'   => 'تم التوصيل',
+                '4'   => 'ملغي',
+                '5'   => 'مرتجع',
+                '6'   => 'تم التأكيد',
+                '7'   => 'تم الاستلام',
+                '8'   => 'لم يتم التوصيل',
+            ] : [
+                '1'   => 'Confirmed',
+                '2.1' => 'Shipped',
+                '2.2' => 'On the Way',
+                '3'   => 'Delivered',
+                '4'   => 'Cancelled',
+                '5'   => 'Return',
+                '6'   => 'Confirmed',
+                '7'   => 'Picked',
+                '8'   => 'Not Delivered',
+            ];
+
+            /* =========================
+            TYPE (RETURN / EXCHANGE)
+            ========================= */
+
+            $returnTypeMap = $locale == 'ar' ? [
+                '1' => 'مرتجع',
+                '2' => 'استبدال',
+            ] : [
+                '1' => 'Return',
+                '2' => 'Exchange',
+            ];
+
+            /* =========================
+            LOOP
+            ========================= */
 
             foreach ($orders as $index => $data) {
 
-                // Seller Name
-               $product = $data->product_details ?? null;
+                $product = $data->product_details ?? null;
 
-                $sellerName = 'Seller not found';
-
+                /* Seller */
+                $sellerName = $na;
                 if ($product && $product->seller_details) {
                     $seller = $product->seller_details;
 
                     $sellerName = trim(
-                        ($seller->first_name ?? '') . ' ' .
+                        ($seller->first_name ?? '') . ' ' . 
                         ($seller->last_name ?? '')
                     );
                 }
 
-                // Customer Name
-                $customerName = $data['order']['delivery_details']['name'] ?? 'N/A';
+                /* Customer */
+                $customerName = $data['order']['delivery_details']['name'] ?? $na;
 
-                // Country
-                $country = $data['order']['delivery_details']['country_name'] ?? 'N/A';
+                /* Country */
+                $country = $data['order']['delivery_details']['country_name'] ?? $na;
 
-                // Product Details (you can customize this)
-                $productDetails = 'View Products';
-
-                // Address
+                /* Address */
                 $delivery = $data['order']['delivery_details'] ?? [];
-                $address =
-                    ($delivery['address'] ?? '') . ' ' .
-                    ($delivery['postal_code'] ?? '') . ' ' .
-                    ($delivery['state'] ?? '');
 
-                $address = str_replace(["\r", "\n"], ' ', $address);
-                $address = trim($address);
+                $address = ($delivery['address'] ?? '') . ' ' .
+                        ($delivery['postal_code'] ?? '') . ' ' .
+                        ($delivery['state'] ?? '');
 
-                // Order Amount
-                if ($data['order']['order_type'] == '1') {
-                    $amount = $data['amount_with_charges'];
-                    $orderAmount = ($amount == floor($amount)) ? intval($amount) : number_format($amount, 2);
-                } else {
-                    $orderAmount = intval($data['order']['total_amount']);
-                }
+                $address = trim(str_replace(["\r", "\n"], ' ', $address));
+                $address = $address ?: $na;
 
-                // Admin Commission
-                $adminCommission = isset($data['admin_commission']) && $data['admin_commission'] !== null
-                    ? $data['admin_commission']
-                    : 'N/A';
+                /* Product Name */
+                $productName = $locale == 'ar'
+                    ? ($product->product_name_ar ?? $product->product_name_en ?? $na)
+                    : ($product->product_name_en ?? $na);
 
-                // Order Type
-                $orderType = ($data['order']['order_type'] == '1') ? 'Normal' : 'Custom';
-
-                // Delivery Boy
-                $deliveryBoy = $data['driver_details']['full_name_english'] ?? 'Not Assigned';
-
-                // Company Name
-                $companyName = 'N/A';
-
-                $deliveryStatuses = [
-                    '1' => 'Return',
-                    '2' => 'Exchange',
-                ];
-
-                $type = $deliveryStatuses[$data['return_type']] ?? 'Unknown';
-
-                $reason = 'N/A';
-
-                if ($data['return_type'] == '1') {
-                    $reason = $data['return_reason'] ?? 'N/A';
-                } elseif ($data['return_type'] == '2') {
-                    $reason = $data['exchange_reason'] ?? 'N/A';
-                }
-
-                // Status Mapping
-                $deliveryStatuses = [
-                    '1' => 'Confirmed',
-                    '2.1' => 'Shipped',
-                    '2.2' => 'On the Way',
-                    '3' => 'Delivered',
-                    '4' => 'Cancelled',
-                    '5' => 'Return',
-                    '6' => 'Confirmed',
-                    '7' => 'Picked',
-                    '8' => 'Not Delivered',
-                ];
-
-                $status = $deliveryStatuses[$data['delivery_status']] ?? 'Unknown';
-
-                // Zone
-                $zone = $data['driver_details']['zone_info']['name_english'] ?? 'N/A';
-
-                // Product Name
-                $productName = $product->product_name_en ?? 'N/A';
-
-                // Product Image Url
+                /* Image */
                 $variant = $data->variation_details ?? null;
 
-                $productImage = 'N/A';
+                $productImage = $na;
 
                 if ($variant && !empty($variant->variant_image)) {
 
-                    $images = $variant->variant_image;
+                    $images = is_string($variant->variant_image)
+                        ? json_decode($variant->variant_image, true)
+                        : $variant->variant_image;
 
-                    // If stored as JSON string, decode it
-                    if (is_string($images)) {
-                        $images = json_decode($images, true);
-                    }
-
-                    // Take first image only
                     if (is_array($images) && isset($images[0])) {
                         $productImage = $images[0];
                     }
                 }
 
-                // Category
-                $category = $product->category->name ?? 'N/A';
+                /* Category */
+                $category = $product->category ?? null;
 
-                // Sub Category
-                $subCategory = $product->subcategory->name_english ?? 'N/A';
+                $categoryName = $category
+                    ? ($locale == 'ar'
+                        ? ($category->name_ar ?? $category->name ?? $na)
+                        : ($category->name ?? $na))
+                    : $na;
 
-                // Brand
-                $brand = $product->brand->name_english ?? 'N/A';
+                /* Sub Category */
+                $subCategory = $product->subcategory ?? null;
 
-                // Final CSV row
+                $subCategoryName = $subCategory
+                    ? ($locale == 'ar'
+                        ? ($subCategory->name_arabic ?? $subCategory->name_english ?? $na)
+                        : ($subCategory->name_english ?? $na))
+                    : $na;
+
+                /* Brand */
+                $brand = $product->brand ?? null;
+
+                $brandName = $brand
+                    ? ($locale == 'ar'
+                        ? ($brand->name_arabic ?? $brand->name_english ?? $na)
+                        : ($brand->name_english ?? $na))
+                    : $na;
+
+                /* Zone */
+                $zone = $data['driver_details']['zone_info'] ?? null;
+
+                $zoneName = $zone
+                    ? ($locale == 'ar'
+                        ? ($zone['name_arabic'] ?? $zone['name_english'] ?? $na)
+                        : ($zone['name_english'] ?? $na))
+                    : $na;
+
+                /* Order Amount */
+                if ($data['order']['order_type'] == '1') {
+                    $amount = $data['amount_with_charges'];
+                    $orderAmount = ($amount == floor($amount))
+                        ? intval($amount)
+                        : number_format($amount, 2);
+                } else {
+                    $orderAmount = intval($data['order']['total_amount']);
+                }
+
+                /* Commission */
+                $adminCommission = $data['admin_commission'] ?? $na;
+
+                /* Order Type */
+                $orderType = ($data['order']['order_type'] == '1')
+                    ? ($locale == 'ar' ? 'عادي' : 'Normal')
+                    : ($locale == 'ar' ? 'مخصص' : 'Custom');
+
+                /* Delivery Boy */
+                $deliveryBoy = $data['driver_details']['full_name_english'] ?? $na;
+
+                /* Company */
+                $companyName = $na;
+
+                /* TYPE */
+                $typeValue = $returnTypeMap[$data['return_type']] ?? $na;
+
+                /* REASON */
+                $reason = $na;
+
+                if ($data['return_type'] == '1') {
+                    $reason = $data['return_reason'] ?? $na;
+                } elseif ($data['return_type'] == '2') {
+                    $reason = $data['exchange_reason'] ?? $na;
+                }
+
+                /* STATUS */
+                $status = $deliveryStatuses[$data['delivery_status']] ?? ($locale == 'ar' ? 'غير معروف' : 'Unknown');
+
+                /* ROW */
                 fputcsv($file, [
                     $index + 1,
                     $data['id'],
@@ -507,19 +656,19 @@ class OrderController extends Controller
                     $country,
                     $productName,
                     $productImage,
-                    $category,
-                    $subCategory,
-                    $brand,
+                    $categoryName,
+                    $subCategoryName,
+                    $brandName,
                     $address,
                     $orderAmount,
                     $adminCommission,
                     $orderType,
                     $deliveryBoy,
                     $companyName,
-                    $type,
+                    $typeValue,
                     $reason,
                     $status,
-                    $zone
+                    $zoneName
                 ]);
             }
 
@@ -534,20 +683,22 @@ class OrderController extends Controller
         $type = $request->get('type'); 
         $country = $request->get('country_name');
         $fromDate = $request->get('from_date');
-       // dd($fromDate);
         $toDate = $request->get('to_date');
 
-       $completeRequestParams = [];
+        $completeRequestParams = [];
+
         if ($type === 'complete' && $country) {
             $completeRequestParams['country_name'] = $country;
             $completeRequestParams['from_date'] = $fromDate;
             $completeRequestParams['to_date'] = $toDate;
         }
-        $response = $this->OrderManagementService->CompletedOrdersNew(new Request($completeRequestParams));
+
+        $response = $this->OrderManagementService->CompletedOrdersNew(
+            new Request($completeRequestParams)
+        );
 
         $data = $response['data'] ?? collect();
 
-        // Handle paginator or collection
         $orders = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
             ? collect($data->items())
             : collect($data);
@@ -559,15 +710,19 @@ class OrderController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($orders) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($orders, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // Excel UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+
+            $headersEn = [
                 'Sr No',
                 'Order Id',
                 'Seller Name',
@@ -579,129 +734,151 @@ class OrderController extends Controller
                 'Sub Category',
                 'Brand',
                 'Delivery Address',
-                'Order Amount(KD)',
-                'Admin Commission(KD)',
+                'Order Amount (KD)',
+                'Admin Commission (KD)',
                 'Order Type',
                 'Delivery Boy',
-                'Delivery Boy Comapany Name',
-            ]);
+                'Delivery Boy Company Name',
+            ];
+
+            $headersAr = [
+                'الرقم',
+                'رقم الطلب',
+                'اسم البائع',
+                'اسم العميل',
+                'الدولة',
+                'اسم المنتج',
+                'رابط صورة المنتج',
+                'الفئة',
+                'الفئة الفرعية',
+                'العلامة التجارية',
+                'عنوان التوصيل',
+                'إجمالي الطلب (دينار)',
+                'عمولة الإدارة (دينار)',
+                'نوع الطلب',
+                'مندوب التوصيل',
+                'اسم شركة التوصيل',
+            ];
+
+            fputcsv($file, $locale == 'ar' ? $headersAr : $headersEn);
+
+            $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
 
             foreach ($orders as $index => $data) {
 
-                // Seller Name
-               $product = $data->product_details ?? null;
+                $product = $data->product_details ?? null;
 
-                $sellerName = 'Seller not found';
-
+                /* Seller */
+                $sellerName = $na;
                 if ($product && $product->seller_details) {
                     $seller = $product->seller_details;
 
                     $sellerName = trim(
-                        ($seller->first_name ?? '') . ' ' .
+                        ($seller->first_name ?? '') . ' ' . 
                         ($seller->last_name ?? '')
                     );
                 }
 
-                // Customer Name
-                $customerName = $data['order']['delivery_details']['name'] ?? 'N/A';
+                /* Customer */
+                $customerName = $data['order']['delivery_details']['name'] ?? $na;
 
-                // Country
-                $country = $data['order']['delivery_details']['country_name'] ?? 'N/A';
+                /* Country */
+                $countryVal = $data['order']['delivery_details']['country_name'] ?? $na;
 
-                // Product Details (you can customize this)
-                $productDetails = 'View Products';
-
-                // Address
+                /* Address */
                 $delivery = $data['order']['delivery_details'] ?? [];
-                $address =
-                    ($delivery['address'] ?? '') . ' ' .
-                    ($delivery['postal_code'] ?? '') . ' ' .
-                    ($delivery['state'] ?? '');
 
-                $address = str_replace(["\r", "\n"], ' ', $address);
-                $address = trim($address);
+                $address = ($delivery['address'] ?? '') . ' ' .
+                        ($delivery['postal_code'] ?? '') . ' ' .
+                        ($delivery['state'] ?? '');
 
-                // Order Amount
-                if ($data['order']['order_type'] == '1') {
-                    $amount = $data['amount_with_charges'];
-                    $orderAmount = ($amount == floor($amount)) ? intval($amount) : number_format($amount, 2);
-                } else {
-                    $orderAmount = intval($data['order']['total_amount']);
-                }
+                $address = trim(str_replace(["\r", "\n"], ' ', $address));
+                $address = $address ?: $na;
 
-                // Admin Commission
-                $adminCommission = isset($data['admin_commission']) && $data['admin_commission'] !== null
-                    ? $data['admin_commission']
-                    : 'N/A';
+                /* Product Name */
+                $productName = $locale == 'ar'
+                    ? ($product->product_name_ar ?? $product->product_name_en ?? $na)
+                    : ($product->product_name_en ?? $na);
 
-                // Order Type
-                $orderType = ($data['order']['order_type'] == '1') ? 'Normal' : 'Custom';
-
-                // Delivery Boy
-                $deliveryBoy = $data['driver_details']['full_name_english'] ?? 'Not Assigned';
-
-                // Company Name
-                $companyName = 'N/A';
-
-
-                // Status Mapping
-                $deliveryStatuses = [
-                    '1' => 'Confirmed',
-                    '2.1' => 'Shipped',
-                    '2.2' => 'On the Way',
-                    '3' => 'Delivered',
-                    '4' => 'Cancelled',
-                    '5' => 'Return',
-                    '6' => 'Confirmed',
-                    '7' => 'Picked',
-                    '8' => 'Not Delivered',
-                ];
-
-
-                // Product Name
-                $productName = $product->product_name_en ?? 'N/A';
-
-                // Product Image Url
+                /* Image */
                 $variant = $data->variation_details ?? null;
 
-                $productImage = 'N/A';
+                $productImage = $na;
 
                 if ($variant && !empty($variant->variant_image)) {
 
-                    $images = $variant->variant_image;
+                    $images = is_string($variant->variant_image)
+                        ? json_decode($variant->variant_image, true)
+                        : $variant->variant_image;
 
-                    // If stored as JSON string, decode it
-                    if (is_string($images)) {
-                        $images = json_decode($images, true);
-                    }
-
-                    // Take first image only
                     if (is_array($images) && isset($images[0])) {
                         $productImage = $images[0];
                     }
                 }
 
-                // Category
-                $category = $product->category->name ?? 'N/A';
+                /* Category */
+                $category = $product->category ?? null;
 
-                // Sub Category
-                $subCategory = $product->subcategory->name_english ?? 'N/A';
+                $categoryName = $category
+                    ? ($locale == 'ar'
+                        ? ($category->name_ar ?? $category->name ?? $na)
+                        : ($category->name ?? $na))
+                    : $na;
 
-                // Brand
-                $brand = $product->brand->name_english ?? 'N/A';
+                /* Sub Category */
+                $subCategory = $product->subcategory ?? null;
 
-                // Final CSV row
+                $subCategoryName = $subCategory
+                    ? ($locale == 'ar'
+                        ? ($subCategory->name_arabic ?? $subCategory->name_english ?? $na)
+                        : ($subCategory->name_english ?? $na))
+                    : $na;
+
+                /* Brand */
+                $brand = $product->brand ?? null;
+
+                $brandName = $brand
+                    ? ($locale == 'ar'
+                        ? ($brand->name_arabic ?? $brand->name_english ?? $na)
+                        : ($brand->name_english ?? $na))
+                    : $na;
+
+                /* Order Amount */
+                if ($data['order']['order_type'] == '1') {
+                    $amount = $data['amount_with_charges'];
+                    $orderAmount = ($amount == floor($amount))
+                        ? intval($amount)
+                        : number_format($amount, 2);
+                } else {
+                    $orderAmount = intval($data['order']['total_amount']);
+                }
+
+                /* Commission */
+                $adminCommission = $data['admin_commission'] ?? $na;
+
+                /* Order Type */
+                $orderType = ($data['order']['order_type'] == '1')
+                    ? ($locale == 'ar' ? 'عادي' : 'Normal')
+                    : ($locale == 'ar' ? 'مخصص' : 'Custom');
+
+                /* Delivery Boy */
+                $deliveryBoy = $data['driver_details']['full_name_english'] ?? $na;
+
+                /* Company */
+                $companyName = $na;
+
+                /* ROW */
                 fputcsv($file, [
                     $index + 1,
                     $data['id'],
                     $sellerName,
                     $customerName,
-                    $country,
+                    $countryVal,
                     $productName,
                     $productImage,
-                    $category,
-                    $subCategory,
-                    $brand,
+                    $categoryName,
+                    $subCategoryName,
+                    $brandName,
                     $address,
                     $orderAmount,
                     $adminCommission,
@@ -721,20 +898,22 @@ class OrderController extends Controller
         $type = $request->get('type'); 
         $country = $request->get('country_name');
         $fromDate = $request->get('from_date');
-       // dd($fromDate);
         $toDate = $request->get('to_date');
 
-       $cancelledRequestParams = [];
+        $cancelledRequestParams = [];
+
         if ($type === 'cancelled' && $country) {
             $cancelledRequestParams['country_name'] = $country;
             $cancelledRequestParams['from_date'] = $fromDate;
             $cancelledRequestParams['to_date'] = $toDate;
         }
-        $response = $this->OrderManagementService->CancelledOrdersNew(new Request($cancelledRequestParams));
+
+        $response = $this->OrderManagementService->CancelledOrdersNew(
+            new Request($cancelledRequestParams)
+        );
 
         $data = $response['data'] ?? collect();
 
-        // Handle paginator or collection
         $orders = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
             ? collect($data->items())
             : collect($data);
@@ -746,15 +925,19 @@ class OrderController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($orders) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($orders, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // Excel UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+
+            $headersEn = [
                 'Sr No',
                 'Order Id',
                 'Seller Name',
@@ -766,21 +949,69 @@ class OrderController extends Controller
                 'Sub Category',
                 'Brand',
                 'Delivery Address',
-                'Order Amount(KD)',
-                'Admin Commission(KD)',
+                'Order Amount (KD)',
+                'Admin Commission (KD)',
                 'Order Type',
                 'Delivery Boy',
-                'Delivery Boy Comapany Name',
+                'Delivery Boy Company Name',
                 'Reason',
-            ]);
+            ];
+
+            $headersAr = [
+                'الرقم',
+                'رقم الطلب',
+                'اسم البائع',
+                'اسم العميل',
+                'الدولة',
+                'اسم المنتج',
+                'رابط صورة المنتج',
+                'الفئة',
+                'الفئة الفرعية',
+                'العلامة التجارية',
+                'عنوان التوصيل',
+                'إجمالي الطلب (دينار)',
+                'عمولة الإدارة (دينار)',
+                'نوع الطلب',
+                'مندوب التوصيل',
+                'اسم شركة التوصيل',
+                'السبب',
+            ];
+
+            fputcsv($file, $locale == 'ar' ? $headersAr : $headersEn);
+
+            $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
+
+            /* =========================
+            DELIVERY STATUS (optional future use)
+            ========================= */
+            $deliveryStatuses = $locale == 'ar' ? [
+                '1' => 'تم التأكيد',
+                '2.1' => 'تم الشحن',
+                '2.2' => 'في الطريق',
+                '3' => 'تم التوصيل',
+                '4' => 'ملغي',
+                '5' => 'مرتجع',
+                '6' => 'تم التأكيد',
+                '7' => 'تم الاستلام',
+                '8' => 'لم يتم التوصيل',
+            ] : [
+                '1' => 'Confirmed',
+                '2.1' => 'Shipped',
+                '2.2' => 'On the Way',
+                '3' => 'Delivered',
+                '4' => 'Cancelled',
+                '5' => 'Return',
+                '6' => 'Confirmed',
+                '7' => 'Picked',
+                '8' => 'Not Delivered',
+            ];
 
             foreach ($orders as $index => $data) {
 
-                // Seller Name
-               $product = $data->product_details ?? null;
+                $product = $data->product_details ?? null;
 
-                $sellerName = 'Seller not found';
-
+                /* Seller */
+                $sellerName = $na;
                 if ($product && $product->seller_details) {
                     $seller = $product->seller_details;
 
@@ -790,108 +1021,109 @@ class OrderController extends Controller
                     );
                 }
 
-                // Customer Name
-                $customerName = $data['order']['delivery_details']['name'] ?? 'N/A';
+                /* Customer */
+                $customerName = $data['order']['delivery_details']['name'] ?? $na;
 
-                // Country
-                $country = $data['order']['delivery_details']['country_name'] ?? 'N/A';
+                /* Country */
+                $countryVal = $data['order']['delivery_details']['country_name'] ?? $na;
 
-                // Product Details (you can customize this)
-                $productDetails = 'View Products';
-
-                // Address
+                /* Address */
                 $delivery = $data['order']['delivery_details'] ?? [];
-                $address =
-                    ($delivery['address'] ?? '') . ' ' .
-                    ($delivery['postal_code'] ?? '') . ' ' .
-                    ($delivery['state'] ?? '');
 
-                $address = str_replace(["\r", "\n"], ' ', $address);
-                $address = trim($address);
+                $address = ($delivery['address'] ?? '') . ' ' .
+                        ($delivery['postal_code'] ?? '') . ' ' .
+                        ($delivery['state'] ?? '');
 
-                // Order Amount
-                if ($data['order']['order_type'] == '1') {
-                    $amount = $data['amount_with_charges'];
-                    $orderAmount = ($amount == floor($amount)) ? intval($amount) : number_format($amount, 2);
-                } else {
-                    $orderAmount = intval($data['order']['total_amount']);
-                }
+                $address = trim(str_replace(["\r", "\n"], ' ', $address));
+                $address = $address ?: $na;
 
-                // Admin Commission
-                $adminCommission = isset($data['admin_commission']) && $data['admin_commission'] !== null
-                    ? $data['admin_commission']
-                    : 'N/A';
+                /* Product Name */
+                $productName = $locale == 'ar'
+                    ? ($product->product_name_ar ?? $product->product_name_en ?? $na)
+                    : ($product->product_name_en ?? $na);
 
-                // Order Type
-                $orderType = ($data['order']['order_type'] == '1') ? 'Normal' : 'Custom';
-
-                // Delivery Boy
-                $deliveryBoy = $data['driver_details']['full_name_english'] ?? 'Not Assigned';
-
-                // Company Name
-                $companyName = 'N/A';
-
-                $reason = $data['cancel_reason'] ?? 'N/A';
-
-
-                // Status Mapping
-                $deliveryStatuses = [
-                    '1' => 'Confirmed',
-                    '2.1' => 'Shipped',
-                    '2.2' => 'On the Way',
-                    '3' => 'Delivered',
-                    '4' => 'Cancelled',
-                    '5' => 'Return',
-                    '6' => 'Confirmed',
-                    '7' => 'Picked',
-                    '8' => 'Not Delivered',
-                ];
-
-
-                // Product Name
-                $productName = $product->product_name_en ?? 'N/A';
-
-                // Product Image Url
+                /* Image */
                 $variant = $data->variation_details ?? null;
 
-                $productImage = 'N/A';
+                $productImage = $na;
 
                 if ($variant && !empty($variant->variant_image)) {
 
-                    $images = $variant->variant_image;
+                    $images = is_string($variant->variant_image)
+                        ? json_decode($variant->variant_image, true)
+                        : $variant->variant_image;
 
-                    // If stored as JSON string, decode it
-                    if (is_string($images)) {
-                        $images = json_decode($images, true);
-                    }
-
-                    // Take first image only
                     if (is_array($images) && isset($images[0])) {
                         $productImage = $images[0];
                     }
                 }
 
-                // Category
-                $category = $product->category->name ?? 'N/A';
+                /* Category */
+                $category = $product->category ?? null;
 
-                // Sub Category
-                $subCategory = $product->subcategory->name_english ?? 'N/A';
+                $categoryName = $category
+                    ? ($locale == 'ar'
+                        ? ($category->name_ar ?? $category->name ?? $na)
+                        : ($category->name ?? $na))
+                    : $na;
 
-                // Brand
-                $brand = $product->brand->name_english ?? 'N/A';
+                /* Sub Category */
+                $subCategory = $product->subcategory ?? null;
 
-                // Final CSV row
+                $subCategoryName = $subCategory
+                    ? ($locale == 'ar'
+                        ? ($subCategory->name_arabic ?? $subCategory->name_english ?? $na)
+                        : ($subCategory->name_english ?? $na))
+                    : $na;
+
+                /* Brand */
+                $brand = $product->brand ?? null;
+
+                $brandName = $brand
+                    ? ($locale == 'ar'
+                        ? ($brand->name_arabic ?? $brand->name_english ?? $na)
+                        : ($brand->name_english ?? $na))
+                    : $na;
+
+                /* Order Amount */
+                if ($data['order']['order_type'] == '1') {
+                    $amount = $data['amount_with_charges'];
+                    $orderAmount = ($amount == floor($amount))
+                        ? intval($amount)
+                        : number_format($amount, 2);
+                } else {
+                    $orderAmount = intval($data['order']['total_amount']);
+                }
+
+                /* Admin Commission */
+                $adminCommission = $data['admin_commission'] ?? $na;
+
+                /* Order Type */
+                $orderType = ($data['order']['order_type'] == '1')
+                    ? ($locale == 'ar' ? 'عادي' : 'Normal')
+                    : ($locale == 'ar' ? 'مخصص' : 'Custom');
+
+                /* Delivery Boy */
+                $deliveryBoy = $data['driver_details']['full_name_english'] ?? $na;
+
+                /* Company */
+                $companyName = $na;
+
+                /* Reason */
+                $reason = $data['cancel_reason'] ?? $na;
+
+                /* Final CSV */
                 fputcsv($file, [
                     $index + 1,
                     $data['id'],
                     $sellerName,
                     $customerName,
-                    $country,
+                    $countryVal,
                     $productName,
                     $productImage,
-                    $category,
-                    $subCategory,
-                    $brand,
+                    $categoryName,
+                    $subCategoryName,
+                    $brandName,
                     $address,
                     $orderAmount,
                     $adminCommission,

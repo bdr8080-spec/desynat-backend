@@ -86,15 +86,19 @@ class PaymentController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($payments) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($payments, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // CSV Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+
+            $headersEn = [
                 'Sr No',
                 'Transaction Id',
                 'Order Date & Time',
@@ -103,75 +107,115 @@ class PaymentController extends Controller
                 'Seller Name',
                 'Order Id',
                 'Country',
-                'Total Charges(KD)',
+                'Total Charges (KD)',
                 'Applied Promo Code',
                 'Applied Gift Card',
-                'Discount(KD)',
-                'Commission(KD)',
+                'Discount (KD)',
+                'Commission (KD)',
                 'Payment Mode'
-            ]);
+            ];
+
+            $headersAr = [
+                'الرقم',
+                'رقم المعاملة',
+                'تاريخ الطلب',
+                'تاريخ المعاملة',
+                'اسم العميل',
+                'اسم البائع',
+                'رقم الطلب',
+                'الدولة',
+                'إجمالي الرسوم',
+                'كود الخصم',
+                'بطاقة الهدية',
+                'الخصم',
+                'العمولة',
+                'طريقة الدفع'
+            ];
+
+            fputcsv($file, $locale == 'ar' ? $headersAr : $headersEn);
+
+            $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
+
+            /* =========================
+            LOOP
+            ========================= */
 
             foreach ($payments as $index => $payment) {
 
-                // Customer Name
-                $customerName = $payment->user_details->full_name ?? 'N/A';
+                /* Customer */
+                $customerName = $payment->user_details->full_name ?? $na;
 
-                // Seller Name
+                /* Seller */
                 $sellerName = trim(
                     ($payment->product_details->seller_details->first_name ?? '') . ' ' .
                     ($payment->product_details->seller_details->last_name ?? '')
-                ) ?: 'N/A';
+                ) ?: $na;
 
-                // Country
-                $country = $payment->user_details->country_info->name ?? 'N/A';
+                /* Country */
+                $countryData = $payment->user_details->country_info ?? null;
 
-                // Order Date
+                $country = $countryData
+                    ? ($locale == 'ar'
+                        ? ($countryData->name_ar ?? $countryData->name ?? $na)
+                        : ($countryData->name ?? $na))
+                    : $na;
+
+                /* Order Date */
                 $orderDate = $payment->created_at
                     ? $payment->created_at->format('jS F Y | g:i A')
-                    : '-';
+                    : $na;
 
-                // Transaction Date
+                /* Transaction Date */
                 $transactionDate = $payment->updated_at
                     ? $payment->updated_at->format('jS F Y | g:i A')
-                    : '-';
+                    : $na;
 
-                // Promo Code
-                $promoCode = $payment->promocode_details->name_english ?? 'No';
+                /* Promo Code */
+                $promo = $payment->promocode_details ?? null;
 
-                // Gift Card
-                $giftCard = $payment->gift_card_details->name_english ?? 'No';
+                $promoCode = $promo
+                    ? ($locale == 'ar'
+                        ? ($promo->name_arabic ?? $promo->name_english ?? $na)
+                        : ($promo->name_english ?? $na))
+                    : ($locale == 'ar' ? 'لا يوجد' : 'No');
 
-                // Payment Mode
+                /* Gift Card */
+                $gift = $payment->gift_card_details ?? null;
+
+                $giftCard = $gift
+                    ? ($locale == 'ar'
+                        ? ($gift->name_arabic ?? $gift->name_english ?? $na)
+                        : ($gift->name_english ?? $na))
+                    : ($locale == 'ar' ? 'لا يوجد' : 'No');
+
+                /* Payment Mode */
                 $order = $payment->order ?? null;
 
-                $paymentMode = 'N/A';
+                $paymentMode = $na;
 
                 if ($order && isset($order['payment_method'])) {
-                    if ($order['payment_method'] == 1) {
-                        $paymentMode = 'Online';
-                    } elseif ($order['payment_method'] == 2) {
-                        $paymentMode = 'Wallet';
-                    } elseif ($order['payment_method'] == 3) {
-                        $paymentMode = 'COD';
-                    } else {
-                        $paymentMode = '-';
-                    }
+                    $paymentMode = match ($order['payment_method']) {
+                        1 => $locale == 'ar' ? 'الدفع الإلكتروني' : 'Online',
+                        2 => $locale == 'ar' ? 'المحفظة' : 'Wallet',
+                        3 => $locale == 'ar' ? 'الدفع عند الاستلام' : 'COD',
+                        default => $na,
+                    };
                 }
 
                 fputcsv($file, [
                     $index + 1,
-                    '#' . ($payment->order->order_id ?? $payment->order_id ?? 'N/A'),
+                    '#' . ($payment->order->order_id ?? $payment->order_id ?? $na),
                     $orderDate,
                     $transactionDate,
                     $customerName,
                     $sellerName,
                     '#' . $payment->id,
                     $country,
-                    ($payment->total_paid_amount ?? 0),
+                    $payment->total_paid_amount ?? 0,
                     $promoCode,
                     $giftCard,
-                    ($payment->total_discount ?? 0),
-                    ($payment->affiliate_admin_commission ?? 0),
+                    $payment->total_discount ?? 0,
+                    $payment->affiliate_admin_commission ?? 0,
                     $paymentMode
                 ]);
             }
@@ -204,44 +248,79 @@ class PaymentController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($payments) {
+        $locale = app()->getLocale();
+
+        return response()->stream(function () use ($payments, $locale) {
 
             $file = fopen('php://output', 'w');
 
-            // UTF-8 fix
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-            // CSV Headers
-            fputcsv($file, [
+            /* =========================
+            HEADERS EN / AR
+            ========================= */
+
+            $headersEn = [
                 'Sr No',
                 'Transaction ID',
                 'Seller Name',
                 'Country',
-                'Amount(KD)',
+                'Amount (KD)',
                 'Plan Name',
                 'Date & Time'
-            ]);
+            ];
+
+            $headersAr = [
+                'الرقم',
+                'رقم المعاملة',
+                'اسم البائع',
+                'الدولة',
+                'المبلغ',
+                'اسم الباقة',
+                'التاريخ والوقت'
+            ];
+
+            fputcsv($file, $locale == 'ar' ? $headersAr : $headersEn);
+
+            $na = $locale == 'ar' ? 'غير متوفر' : 'N/A';
 
             foreach ($payments as $index => $payment) {
 
+                /* Seller Name */
                 $sellerName = trim(
                     ($payment->seller_details->first_name ?? '') . ' ' .
                     ($payment->seller_details->last_name ?? '')
-                ) ?: 'N/A';
+                ) ?: $na;
 
-                $country = $payment->seller_details->store_info->country_info->name ?? 'N/A';
+                /* Country */
+                $countryData = $payment->seller_details->store_info->country_info ?? null;
 
-                $amount = ($payment->amount ?? 0);
+                $country = $countryData
+                    ? ($locale == 'ar'
+                        ? ($countryData->name_ar ?? $countryData->name ?? $na)
+                        : ($countryData->name ?? $na))
+                    : $na;
 
-                $planName = $payment->plan_info->plan_name_english ?? 'N/A';
+                /* Plan Name */
+                $plan = $payment->plan_info ?? null;
 
+                $planName = $plan
+                    ? ($locale == 'ar'
+                        ? ($plan->plan_name_arabic ?? $plan->plan_name_english ?? $na)
+                        : ($plan->plan_name_english ?? $na))
+                    : $na;
+
+                /* Amount */
+                $amount = $payment->amount ?? 0;
+
+                /* Date */
                 $dateTime = $payment->created_at
                     ? $payment->created_at->format('jS F Y | g:i A')
-                    : '-';
+                    : $na;
 
                 fputcsv($file, [
                     $index + 1,
-                    '#' . ($payment->transaction_id ?? 'N/A'),
+                    '#' . ($payment->transaction_id ?? $na),
                     $sellerName,
                     $country,
                     $amount,
@@ -271,6 +350,9 @@ class PaymentController extends Controller
             ? collect($data->items())
             : collect($data);
 
+        $isArabic = app()->getLocale() === 'ar';
+        $na = $isArabic ? 'غير متوفر' : 'N/A';
+
         $fileName = 'giftcard_payments_' . now()->format('Y_m_d_H_i_s') . '.csv';
 
         $headers = [
@@ -278,33 +360,51 @@ class PaymentController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($payments) {
+        return response()->stream(function () use ($payments, $isArabic, $na) {
 
             $file = fopen('php://output', 'w');
 
-            // UTF-8 fix
             fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
 
-            // CSV Headers
             fputcsv($file, [
-                'Sr No',
-                'Transaction ID',
-                'Gift Card Name',
-                'Purchased By',
-                'Country',
-                'Amount(KD)',
-                'Date & Time'
+                $isArabic ? 'رقم' : 'Sr No',
+                $isArabic ? 'رقم المعاملة' : 'Transaction ID',
+                $isArabic ? 'اسم بطاقة الهدية' : 'Gift Card Name',
+                $isArabic ? 'تم الشراء بواسطة' : 'Purchased By',
+                $isArabic ? 'الدولة' : 'Country',
+                $isArabic ? 'المبلغ (دينار) ' : 'Amount(KD)',
+                $isArabic ? 'التاريخ والوقت' : 'Date & Time',
             ]);
 
             foreach ($payments as $index => $payment) {
 
-                $giftCardName = $payment->gift_details->name_english ?? 'N/A';
+                $giftCardName = $payment->gift_details
+                    ? (
+                        $isArabic
+                            ? ($payment->gift_details->name_arabic
+                                ?? $payment->gift_details->name_english
+                                ?? $na)
+                            : ($payment->gift_details->name_english
+                                ?? $payment->gift_details->name_arabic
+                                ?? $na)
+                    )
+                    : $na;
 
-                $purchasedBy = $payment->user_details->full_name ?? 'N/A';
+                $purchasedBy = $payment->user_details->full_name ?? $na;
 
-                $country = $payment->user_details->country_info->name ?? 'N/A';
+                $country = $payment->user_details->country_info
+                    ? (
+                        $isArabic
+                            ? ($payment->user_details->country_info->name_ar
+                                ?? $payment->user_details->country_info->name
+                                ?? $na)
+                            : ($payment->user_details->country_info->name
+                                ?? $payment->user_details->country_info->name_ar
+                                ?? $na)
+                    )
+                    : $na;
 
-                $amount = ($payment->amount ?? 0);
+                $amount = $payment->amount ?? 0;
 
                 $dateTime = $payment->created_at
                     ? $payment->created_at->format('jS F Y | g:i A')
@@ -312,7 +412,7 @@ class PaymentController extends Controller
 
                 fputcsv($file, [
                     $index + 1,
-                    '#' . ($payment->transaction_id ?? 'N/A'),
+                    '#' . ($payment->transaction_id ?? $na),
                     $giftCardName,
                     $purchasedBy,
                     $country,
@@ -342,6 +442,9 @@ class PaymentController extends Controller
             ? collect($data->items())
             : collect($data);
 
+        $isArabic = app()->getLocale() === 'ar';
+        $na = $isArabic ? 'غير متوفر' : 'N/A';
+
         $fileName = 'banner_payments_' . now()->format('Y_m_d_H_i_s') . '.csv';
 
         $headers = [
@@ -349,33 +452,42 @@ class PaymentController extends Controller
             "Content-Disposition" => "attachment; filename=$fileName",
         ];
 
-        return response()->stream(function () use ($payments) {
+        return response()->stream(function () use ($payments, $isArabic, $na) {
 
             $file = fopen('php://output', 'w');
 
-            // UTF-8 fix
             fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
 
-            // CSV Headers
             fputcsv($file, [
-                'Sr No',
-                'Transaction ID',
-                'Request ID',
-                'Seller Name',
-                'Country',
-                'Amount(KD)',
-                'Date & Time'
+                $isArabic ? 'رقم' : 'Sr No',
+                $isArabic ? 'رقم المعاملة' : 'Transaction ID',
+                $isArabic ? 'رقم الطلب' : 'Request ID',
+                $isArabic ? 'اسم البائع' : 'Seller Name',
+                $isArabic ? 'الدولة' : 'Country',
+                $isArabic ? 'المبلغ (دينار)' : 'Amount(KD)',
+                $isArabic ? 'التاريخ والوقت' : 'Date & Time',
             ]);
 
             foreach ($payments as $index => $payment) {
-                $sellerName = trim(
-                    ($payment->seller_details->first_name ?? '') . ' ' .
-                    ($payment->seller_details->last_name ?? '')
-                ) ?: 'N/A';
 
-                $country = $payment->seller_details->store_info->country_info->name ?? 'N/A';
+                $sellerName = $payment->seller_details
+                    ? trim(
+                        ($payment->seller_details->first_name ?? '') . ' ' .
+                        ($payment->seller_details->last_name ?? '')
+                    )
+                    : $na;
 
-                $amount = ($payment->price ?? 0);
+                $country = $payment->seller_details->store_info->country_info ?? null;
+
+                $countryName = $country
+                    ? (
+                        $isArabic
+                            ? ($country->name_ar ?? $country->name ?? $na)
+                            : ($country->name ?? $country->name_ar ?? $na)
+                    )
+                    : $na;
+
+                $amount = $payment->price ?? 0;
 
                 $dateTime = $payment->created_at
                     ? $payment->created_at->format('jS F Y | g:i A')
@@ -383,10 +495,10 @@ class PaymentController extends Controller
 
                 fputcsv($file, [
                     $index + 1,
-                    '#' . ($payment->transaction_id ?? 'N/A'),
-                    '#' . ($payment->order_id ?? 'N/A'),
+                    '#' . ($payment->transaction_id ?? $na),
+                    '#' . ($payment->order_id ?? $na),
                     $sellerName,
-                    $country,
+                    $countryName,
                     $amount,
                     $dateTime
                 ]);
