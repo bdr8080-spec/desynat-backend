@@ -31,6 +31,10 @@ class sellerStoreInformation extends Model
         return $this->hasMany(product::class, 'store_id', 'id');
     }
 
+     public function store_review()
+    {
+        return $this->hasMany(productRatings::class, 'store_id', 'id');
+    }
 
     
 
