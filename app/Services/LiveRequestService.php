@@ -156,21 +156,11 @@ class LiveRequestService
                 'data' => $data
             ];
 
-        // } catch (\Exception $e) {
-        //     \Log::error('Add timeslot error: '.$e->getMessage());
-        //     return [
-        //         'status' => 'error',
-        //         'message' => 'Failed to add timeslot',
-        //         'data' => []
-        //     ];
-        // }
-        }catch (\Exception $e) {
-
-           // \Log::error('Add timeslot error: ' . $e->getMessage());
-
+        } catch (\Exception $e) {
+            \Log::error('Add timeslot error: '.$e->getMessage());
             return [
                 'status' => 'error',
-                'message' => $e->getMessage(),
+                'message' => 'Failed to add timeslot',
                 'data' => []
             ];
         }
