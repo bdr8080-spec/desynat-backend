@@ -72,10 +72,10 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
-        ], [
-            'email.required' => 'Please Enter Email Id',
-            'email.email' => 'Please Enter a Valid Email Id',
-            'password.required' => 'Please Enter Password'
+        ], [           
+            'email.required' => __('admin_messages.please_enter_email_id'),
+            'email.email' => __('admin_messages.please_enter_valid_email_id'),
+            'password.required' => __('admin_messages.please_enter_password'),
         ]);
 
         if ($validator->fails()) {
@@ -90,14 +90,14 @@ class AuthController extends Controller
         if (!$admin) {
             return response()->json([
                 'type' => 'auth',
-                'message' => 'Email is not registered'
+                'message' => __('admin_messages.email_is_not_registered')
             ], 422);
         }
 
         if ($admin->status == '0') {
             return response()->json([
                 'type' => 'auth',
-                'message' => 'Your Account Is Blocked'
+                'message' => __('admin_messages.your_account_is_blocked')
             ], 422);
         }
 
@@ -107,13 +107,13 @@ class AuthController extends Controller
         ])) {
             return response()->json([
                 'type' => 'auth',
-                'message' => 'Password is Incorrect'
+                'message' => __('admin_messages.password_is_incorrect')
             ], 422);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Login Successful'
+            'message' => __('admin_messages.login_successfull')
         ]);
     }
 
@@ -133,9 +133,9 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email|exists:admins,email',
             ], [
-                'email.required' => 'Please Enter Email Id',
-                'email.email' => 'Please Enter a Valid Email Id',
-                'email.exists' => 'Email not found in admin records.'
+                'email.required' => __('admin_messages.please_enter_email_id'),
+                'email.email' => __('admin_messages.please_enter_valid_email_id'),
+                'email.exists' => __('admin_messages.email_is_not_registered'),
             ]);
 
             if ($validator->fails()) {
@@ -152,7 +152,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'OTP sent successfully.'
+                'message' => __('admin_messages.otp_sent_successfully')
             ]);
         }
     }
@@ -175,7 +175,12 @@ class AuthController extends Controller
             $admin = Admin::where('email', $request->email)->first();
 
             if($admin->otp !== $request->otp){
-                return response()->json(['errors' => ['otp' => ['Invalid OTP']]], 422);
+                // return response()->json(['errors' => ['otp' => ['Invalid OTP']]], 422);
+                return response()->json([
+                    'errors' => [
+                        'otp' => [__('admin_messages.invalid_otp')]
+                    ]
+                ], 422);
             }
 
             $admin->otp = null;
@@ -185,7 +190,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'OTP verified successfully.'
+                'message' => __('admin_messages.otp_verified_successfully')
             ]);
         }
     }
@@ -199,9 +204,10 @@ class AuthController extends Controller
             $admin->otp_verify = 0;
             $admin->save();
             session(['reset_email' => $admin->email]);
+            Mail::to($admin->email)->send(new AdminOtpMail($admin, $otp));
             return response()->json([
                 'success' => true,
-                'message' => 'OTP resent successfully.'
+                'message' => __('admin_messages.otp_resent_successfully')
             ]);
         }
         return response()->json(['errors' => ['email' => ['Admin not found']]], 422);

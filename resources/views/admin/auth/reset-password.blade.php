@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desynat</title>
+    <title>{{ __('admin_messages.desynat_admin') }}</title>
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
 
@@ -51,21 +52,21 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">EN</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
 
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end langu">
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="ar">
-                                            <span>AR</span> Arabic
+                                        <a class="dropdown-item" data-lang="ar" href="{{route('adminLanguage','ar')}}">
+                                            <span>AR</span> {{ __('admin_messages.arabic') }}
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" data-lang="en">
-                                            <span>EN</span> English
+                                        <a class="dropdown-item" data-lang="en" href="{{route('adminLanguage','en')}}">
+                                            <span>EN</span> {{ __('admin_messages.english') }}
                                         </a>
                                     </li>
 
@@ -100,15 +101,15 @@
                                             <i class="fas fa-angle-left"></i>
                                         </a>
                                     </div>
-                                    <h6 class="m-0">Reset Password</h6>
+                                    <h6 class="m-0">{{ __('admin_messages.reset_password') }}</h6>
                                 </div>
                             </div>
 
                             <div class="col-lg-12 mt-3">
                                 <div class="form-group">
-                                    <label for="newPassword" >Create New Password</label>
+                                    <label for="newPassword" >{{ __('admin_messages.create_new_password') }}</label>
                                     <input type="password" class="form-control" id="newPassword"
-                                        placeholder="Enter New Password" required>
+                                        placeholder="{{ __('admin_messages.enter_new_password') }}" required>
                                     <i toggle="#newPassword" class="fas fa-eye toggle-password"></i>
                                 </div>
                                 <span id="passwordError" class="text-danger"></span>
@@ -116,9 +117,9 @@
 
                             <div class="col-lg-12 mt-3">
                                 <div class="form-group">
-                                    <label for="confirmPassword" >Confirm Password</label>
+                                    <label for="confirmPassword" >{{ __('admin_messages.confirm_password') }}</label>
                                     <input type="password" id="confirmPassword" class="form-control"
-                                        placeholder="Enter Confirm Password" required>
+                                        placeholder="{{ __('admin_messages.enter_confirm_password') }}" required>
                                     <i toggle="#confirmPassword" class="fas fa-eye toggle-password"></i>
                                 </div>
                                 <span id="confirmPasswordError" class="text-danger"></span>
@@ -127,7 +128,7 @@
                             <div class="col-lg-12 mt-5">
                                 <div class="button d-flex align-items-center justify-content-center">
                                     <button class="btn custom-btn" id="submitPassword"
-                                        style="max-width: 100% !important;">Submit</button>
+                                        style="max-width: 100% !important;">{{ __('admin_messages.submit') }}</button>
                                 </div>
                             </div>
 
@@ -154,8 +155,8 @@
                 <div class="modal-body mb-5">
                     <div class="change-success text-center">
                         <img src="image/check.png" class="img-fluid" width="100px" />
-                        <h2 class="mt-4">Password Reset</h2>
-                        <p>Use the new password during logging in to get access your account</p>
+                        <h2 class="mt-4">{{ __('admin_messages.password_reset_successfully') }}</h2>
+                        <p>{{ __('admin_messages.use_the_new_password_during_logging_in_to_get_access_to_your_account') }}</p>
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
@@ -204,8 +205,9 @@
     $(document).ready(function() {
 
         // Validation criteria function
+        const passwordHintText = "{{ __('admin_messages.password_should_be_combination_of_at_least_8_characters_1_uppercase_letter_1_lowercase_letter_1_number_and_1_special_character') }}";
         function passwordHint(password) {
-            return "Password should be combination of at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character";
+            return passwordHintText;
         }
 
         // Check if password meets criteria
@@ -243,11 +245,11 @@
 
             // Check fields empty
             if (!newPassword) {
-                $('#passwordError').text('Please Enter Password');
+                $('#passwordError').text("{{ __('admin_messages.please_enter_password') }}");
 
             }
             if (!confirmPassword) {
-                $('#confirmPasswordError').text('Please Enter Confirm Password');
+                $('#confirmPasswordError').text("{{ __('admin_messages.please_enter_confirm_password') }}");
                 return;
             }
 
@@ -259,7 +261,7 @@
 
             // Check match
             if (newPassword !== confirmPassword) {
-                $('#confirmPasswordError').text('Passwords do not match');
+                $('#confirmPasswordError').text("{{ __('admin_messages.password_do_not_match') }}");
                 return;
             }
 

@@ -10,6 +10,7 @@ return [
 
     'arabic' => 'Arabic',
     'english' => 'English',
+    'date_placeholder' => 'dd-mm-yyyy',
 
     //common
     'to' => 'To',
@@ -909,6 +910,55 @@ return [
     //refund management
     'cancellation_date_&_time' => 'Cancellation Date & Time',
     'user_country' => 'User Country',
+
+    //login
+    'desynat_admin' => 'Desynat Admin',
+    'sign_in' => 'Sign In',
+    'welcome_back' => 'Welcome Back',
+    'forgot_password' => 'Forgot Password',
+    'login' => 'Login',
+    'email_id' => 'Email ID',
+    'password' => 'Password',
+    'enter_email_id' => 'Enter Email ID',
+    'enter_password' => 'Enter Password',
+    'please_enter_email_id' => 'Please Enter Email ID',
+    'please_enter_valid_email_id' => 'Please Enter Valid Email ID',
+    'please_enter_password' => 'Please Enter Password',
+    'email_is_not_registered' => 'Email is not registered',
+    'your_account_is_blocked' => 'Your account is blocked',
+    'password_is_incorrect' => 'Password is incorrect',
+    'login_successfull' => 'Login Successful',
+
+    //forgot password
+    'otp_sent_successfully' => 'OTP sent successfully.',
+
+    //otp verify
+    'invalid_otp' => 'Invalid OTP',
+    'otp_verified_successfully' => 'OTP verified successfully.',
+    'otp_resent_successfully' => 'OTP resent successfully.',
+    'otp' => 'OTP',
+    'resend_otp' => 'Resend OTP',
+    'resend_otp_in' => 'Resend OTP in',
+    'please_enter_otp' => 'Please enter OTP',
+    'please_enter_full_6_digit_otp' => 'Please enter full 6 digit OTP',
+    '6_digit_otp_has_been_sent_to' => '6 digit OTP has been sent to',
+    '6_digit_otp_has_been_resent_to' => '6 digit OTP has been resent to',
+    'secs' => 'Secs',
+
+    //reset password
+    'reset_password' => 'Reset Password',
+    'create_new_password' => 'Create New Password',
+    'enter_new_password' => 'Enter New Password',
+    'confirm_password' => 'Confirm Password',
+    'enter_confirm_password' => 'Enter Confirm Password',
+    'please_enter_password' => 'Please Enter Password',
+    'please_enter_confirm_password' => 'Please Enter Confirm Password',
+    'password_do_not_match' => 'Password Do Not Match',
+    'password_should_be_combination_of_at_least_8_characters_1_uppercase_letter_1_lowercase_letter_1_number_and_1_special_character' 
+        => 'Password should be combination of at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character',
+    'password_reset_successfully' => 'Password Reset Successfully',
+    'use_the_new_password_during_logging_in_to_get_access_to_your_account' 
+        => 'Use the new password during logging in to get access to your account',
 
 
 

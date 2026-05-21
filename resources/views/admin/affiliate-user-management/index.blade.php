@@ -45,7 +45,7 @@
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
-                                <input type="date" id="from" name="from_date" class="form-control"
+                                <input type="date" id="from" name="from_date" class="form-control datepicker"
                                     value="{{ request()->from_date }}"
                                     onchange="document.getElementById('filterForm').submit();" />
                             </div>
@@ -55,7 +55,7 @@
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
-                                <input type="date" id="to" name="to_date" class="form-control"
+                                <input type="date" id="to" name="to_date" class="form-control datepicker"
                                     value="{{ request()->to_date }}"
                                     onchange="document.getElementById('filterForm').submit();" />
                             </div>
@@ -216,7 +216,7 @@
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
                                         <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
-                                        <input type="date" id="from" name="from_date1" class="form-control"
+                                        <input type="date" id="from" name="from_date1" class="form-control datepicker"
                                             value="{{ request()->from_date1 }}"
                                             onchange="document.getElementById('filterForm1').submit();" />
                                     </div>
@@ -226,7 +226,7 @@
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
                                         <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
-                                        <input type="date" id="to" name="to_date1" class="form-control"
+                                        <input type="date" id="to" name="to_date1" class="form-control datepicker"
                                             value="{{ request()->to_date1 }}"
                                             onchange="document.getElementById('filterForm1').submit();" />
                                     </div>
@@ -391,7 +391,7 @@
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
                                         <label for="from" class="form-label">{{ __('admin_messages.from') }}:</label>
-                                        <input type="date" id="from" name="from_date2" class="form-control"
+                                        <input type="date" id="from" name="from_date2" class="form-control datepicker"
                                             value="{{ request()->from_date2 }}"
                                             onchange="document.getElementById('filterForm2').submit();" />
                                     </div>
@@ -401,7 +401,7 @@
                                 <div class="col-lg-3 col-md-4 col-12">
                                     <div class="form-group mt-4 w-100">
                                         <label for="to" class="form-label">{{ __('admin_messages.to') }}:</label>
-                                        <input type="date" id="to" name="to_date2" class="form-control"
+                                        <input type="date" id="to" name="to_date2" class="form-control datepicker"
                                             value="{{ request()->to_date2 }}"
                                             onchange="document.getElementById('filterForm2').submit();" />
                                     </div>

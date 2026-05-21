@@ -10,6 +10,7 @@ return [
 
     'arabic' => 'عربي',
     'english' => 'إنجليزي',
+    'date_placeholder' => 'يوم-شهر-سنة',
 
     //common
     'to' => 'إلى',
@@ -908,6 +909,56 @@ return [
     //refund management
     'cancellation_date_&_time' => 'تاريخ ووقت الإلغاء',
     'user_country' => 'بلد المستخدم',
+
+    //login
+    'desynat_admin' => 'ديسينات أدمن',
+    'sign_in' => 'تسجيل الدخول',
+    'welcome_back' => 'مرحباً بعودتك',
+    'forgot_password' => 'نسيت كلمة المرور',
+    'login' => 'دخول',
+    'email_id' => 'البريد الإلكتروني',
+    'password' => 'كلمة المرور',
+    'enter_email_id' => 'أدخل البريد الإلكتروني',
+    'enter_password' => 'أدخل كلمة المرور',
+    'please_enter_email_id' => 'يرجى إدخال البريد الإلكتروني',
+    'please_enter_valid_email_id' => 'يرجى إدخال بريد إلكتروني صالح',
+    'please_enter_password' => 'يرجى إدخال كلمة المرور',
+    'email_is_not_registered' => 'البريد الإلكتروني غير مسجل',
+    'your_account_is_blocked' => 'تم حظر حسابك',
+    'password_is_incorrect' => 'كلمة المرور غير صحيحة',
+    'login_successfull' => 'تم تسجيل الدخول بنجاح',
+
+    //forgot password
+    'otp_sent_successfully' => 'تم إرسال رمز التحقق بنجاح.',
+
+    //otp verify
+    'invalid_otp' => 'رمز التحقق غير صالح',
+    'otp_verified_successfully' => 'تم التحقق من رمز التحقق بنجاح.',
+    'otp_resent_successfully' => 'تم إعادة إرسال رمز التحقق بنجاح.',
+    'otp' => 'رمز التحقق',
+    'resend_otp' => 'إعادة إرسال رمز التحقق',
+    'resend_otp_in' => 'إعادة إرسال رمز التحقق خلال',
+    'please_enter_otp' => 'يرجى إدخال رمز التحقق',
+    'please_enter_full_6_digit_otp' => 'يرجى إدخال رمز التحقق المكون من 6 أرقام بالكامل',
+    '6_digit_otp_has_been_sent_to' => 'تم إرسال رمز التحقق المكون من 6 أرقام إلى',
+    '6_digit_otp_has_been_resent_to' => 'تم إعادة إرسال رمز التحقق المكون من 6 أرقام إلى',
+    'secs' => 'ثواني',
+
+    //reset password
+    'reset_password' => 'إعادة تعيين كلمة المرور',
+    'create_new_password' => 'إنشاء كلمة مرور جديدة',
+    'enter_new_password' => 'أدخل كلمة المرور الجديدة',
+    'confirm_password' => 'تأكيد كلمة المرور',
+    'enter_confirm_password' => 'أدخل تأكيد كلمة المرور',
+    'please_enter_password' => 'يرجى إدخال كلمة المرور',
+    'please_enter_confirm_password' => 'يرجى إدخال تأكيد كلمة المرور',
+    'password_do_not_match' => 'كلمتا المرور غير متطابقتين',
+    'password_should_be_combination_of_at_least_8_characters_1_uppercase_letter_1_lowercase_letter_1_number_and_1_special_character' 
+        => 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل، حرف كبير واحد، حرف صغير واحد، رقم واحد ورمز خاص واحد',
+    'password_reset_successfully' => 'تم إعادة تعيين كلمة المرور بنجاح',
+    'use_the_new_password_during_logging_in_to_get_access_to_your_account' 
+        => 'استخدم كلمة المرور الجديدة عند تسجيل الدخول للوصول إلى حسابك',
+
 
 
     
