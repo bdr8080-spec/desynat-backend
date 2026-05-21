@@ -10,6 +10,7 @@ return [
 
     'arabic' => 'عربي',
     'english' => 'إنجليزي',
+    'date_placeholder' => 'يوم-شهر-سنة',
 
     //common
     'to' => 'إلى',

@@ -473,5 +473,39 @@ observer.observe(document.body, { childList: true, subtree: true });
 
 </script> -->
 
+@if (App::getlocale() == 'ar')
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const appLocale = "{{ App::getLocale() }}";
+
+        const options = {
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d F Y",
+            allowInput: true,
+            altInputClass: "form-control",
+
+            onReady: function(selectedDates, dateStr, instance) {
+                instance.altInput.setAttribute(
+                    "placeholder",
+                    appLocale === 'ar' ? "اختر التاريخ" : "Select Date"
+                );
+            }
+        };
+
+        if (appLocale === 'ar') {
+            options.locale = "ar";
+        }
+
+        flatpickr(".datepicker", options);
+    });
+</script>
+@endif
+
 
 </footer>

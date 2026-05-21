@@ -60,7 +60,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
-                                <input type="date" id="from_date" name="from_date" class="form-control"
+                                <input type="date" id="from_date" name="from_date" class="form-control datepicker"
                                     value="{{ request()->from_date }}"
                                     onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                             </div>
@@ -70,7 +70,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
-                                <input type="date" id="to_date" name="to_date" class="form-control"
+                                <input type="date" id="to_date" name="to_date" class="form-control datepicker"
                                     value="{{ request()->to_date }}"
                                     onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                             </div>
@@ -214,7 +214,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
-                                <input type="date" id="from_date1" name="from_date1" class="form-control"
+                                <input type="date" id="from_date1" name="from_date1" class="form-control datepicker"
                                     value="{{ request()->from_date1 }}"
                                     onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
                             </div>
@@ -224,7 +224,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
-                                <input type="date" id="to_date1" name="to_date1" class="form-control"
+                                <input type="date" id="to_date1" name="to_date1" class="form-control datepicker"
                                     value="{{ request()->to_date1 }}"
                                     onchange="updateToDate1(); document.getElementById('filterForm1').submit();" />
                             </div>
@@ -335,7 +335,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-2 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
-                                <input type="date" id="from_date2" name="from_date2" class="form-control"
+                                <input type="date" id="from_date2" name="from_date2" class="form-control datepicker"
                                     value="{{ request()->from_date2 }}"
                                     onchange="updateToDate2(); document.getElementById('filterForm2').submit();" />
                             </div>
@@ -345,7 +345,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
-                                <input type="date" id="to_date2" name="to_date2" class="form-control"
+                                <input type="date" id="to_date2" name="to_date2" class="form-control datepicker"
                                     value="{{ request()->to_date2 }}"
                                     onchange="updateToDate2(); document.getElementById('filterForm2').submit();" />
                             </div>
@@ -452,7 +452,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
-                                <input type="date" id="from_date3" name="from_date3" class="form-control"
+                                <input type="date" id="from_date3" name="from_date3" class="form-control datepicker"
                                     value="{{ request()->from_date3 }}"
                                     onchange="updateToDate3(); document.getElementById('filterForm3').submit();" />
                             </div>
@@ -462,7 +462,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
-                                <input type="date" id="to_date3" name="to_date3" class="form-control"
+                                <input type="date" id="to_date3" name="to_date3" class="form-control datepicker"
                                     value="{{ request()->to_date3 }}"
                                     onchange="updateToDate3(); document.getElementById('filterForm3').submit();" />
                             </div>

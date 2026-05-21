@@ -161,7 +161,7 @@
                 <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
                         <label for="from_date" class="form-label">{{ __('admin_messages.from') }}:</label>
-                        <input type="date" id="from_date" name="from_date" class="form-control"
+                        <input type="date" id="from_date" name="from_date" class="form-control datepicker"
                             value="{{ request()->from_date }}"
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                     </div>
@@ -169,7 +169,7 @@
                 <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
                         <label for="to_date" class="form-label">{{ __('admin_messages.to') }}:</label>
-                        <input type="date" id="to_date" name="to_date" class="form-control"
+                        <input type="date" id="to_date" name="to_date" class="form-control datepicker"
                             value="{{ request()->to_date }}"
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                     </div>

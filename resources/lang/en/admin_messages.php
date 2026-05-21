@@ -10,6 +10,7 @@ return [
 
     'arabic' => 'Arabic',
     'english' => 'English',
+    'date_placeholder' => 'dd-mm-yyyy',
 
     //common
     'to' => 'To',
