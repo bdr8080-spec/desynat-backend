@@ -68,12 +68,12 @@
                     <!-- DATE FILTER -->
                     <div class="show-date d-flex gap-2 flex-wrap">
                         <div class="date-form-pnl">
-                            <input type="date" id="from_date" name="from_date" class="form-control"
+                            <input type="date" id="from_date" name="from_date" class="form-control datepicker"
                             value="{{ request()->from_date }}"
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                         </div>
                         <div class="date-form-pnl">
-                            <input type="date" id="to_date" name="to_date" class="form-control"
+                            <input type="date" id="to_date" name="to_date" class="form-control datepicker"
                             value="{{ request()->to_date }}"
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                         </div>
