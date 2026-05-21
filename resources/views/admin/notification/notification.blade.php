@@ -93,7 +93,7 @@
                                         </p>
 
                                         <p class="d-flex justify-content-end">
-                                            {{ \Carbon\Carbon::parse($notification->created_at)->format('d/m/y h:i A') }}
+                                            {{ formatDateTimeByLocale($notification->created_at ?? '') }}
                                         </p>
 
                                     </div>
@@ -261,7 +261,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            {{ \Carbon\Carbon::parse($notification['created_at'])->format('d/m/y \a\t h:i A') }}
+                                            {{ formatDateTimeByLocale($notification['created_at'] ?? '') }}
                                         </td>
                                     </tr>
                                 @empty

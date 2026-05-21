@@ -106,7 +106,7 @@
                         @foreach($deliveryBoys as $index => $deliveryBoy)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td>{{ \Carbon\Carbon::parse($deliveryBoy['created_at'])->format('d-m-Y') }}</td>
+                            <td>{{ formatDateTimeByLocale($deliveryBoy['created_at']) }}</td>
                             <td>
                                 <img src="{{ $deliveryBoy['profile_pic'] }}" alt="" width="100px" height="100px" class="square" style="object-fit: inherit;" />
                             </td>

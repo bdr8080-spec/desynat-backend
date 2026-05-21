@@ -123,7 +123,7 @@
                         <div class="col-lg-6 col-md-4 col-12">
                             <div class="form-group mb-3">
                                 <label for="startDate" class="form-label">{{ __('admin_messages.from') }}:</label>
-                                <input type="date" onchange="updateToDate1();" id="startDate" name="start_date" class="form-control" />
+                                <input type="date" onchange="updateToDate1();" id="startDate" name="start_date" class="form-control datepicker" />
                                 <div id="startDateError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                         <div class="col-lg-6 col-md-4 col-12">
                             <div class="form-group mb-3">
                                 <label for="endDate" class="form-label">{{ __('admin_messages.to') }}:</label>
-                                <input type="date" onchange="updateToDate1();" id="endDate" name="end_date" class="form-control" />
+                                <input type="date" onchange="updateToDate1();" id="endDate" name="end_date" class="form-control datepicker" />
                                 <div id="endDateError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>

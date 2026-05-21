@@ -166,8 +166,8 @@
                             <td>{{$pc['min_order_value']}} {{ __('admin_messages.kd') }}</td>
                             <td>{{$pc['upto_discount']}} {{ __('admin_messages.kd') }}</td>
                             <td>{{$pc['discount_percent']}}%</td>
-                            <td>{{ \Carbon\Carbon::parse($pc['start_date'])->format('d-m-Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($pc['end_date'])->format('d-m-Y') }}</td>
+                            <td>{{ formatDateTimeByLocale($pc['start_date']) }}</td>
+                            <td>{{ formatDateTimeByLocale($pc['end_date']) }}</td>
                             <td>
                                 @if($pc['status'] == 1)
                                     {{ __('admin_messages.active') }}

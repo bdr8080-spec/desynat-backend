@@ -143,7 +143,7 @@
                                     {{ $req['affiliate__details']['address_details']['country_details']['name_ar'] ?? __('admin_messages.na') }}
                                     @endif
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
+                                <td>{{ formatDateTimeByLocale($req['created_at'] ?? '') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} {{__('admin_messages.kd')}}</td>
                                 <td>{{ $req['amount'] }} {{__('admin_messages.kd')}}</td>
                                 <td>{{ $req['bank_details']['account_no']??__('admin_messages.na') }}</td>
@@ -269,7 +269,7 @@
                                     {{ $req['affiliate__details']['address_details']['country_details']['name_ar'] ?? __('admin_messages.na') }}
                                     @endif
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
+                                <td>{{ formatDateTimeByLocale($req['created_at'] ?? '') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} {{__('admin_messages.kd')}}</td>
                                 <td>{{ $req['amount'] }} {{__('admin_messages.kd')}}</td>
                                 <td>{{ $req['bank_details']['account_no']??__('admin_messages.na') }}</td>
@@ -376,7 +376,7 @@
                                     {{ $req['affiliate__details']['address_details']['country_details']['name_ar'] ?? __('admin_messages.na') }}
                                     @endif
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
+                                <td>{{ formatDateTimeByLocale($req['created_at'] ?? '') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} {{__('admin_messages.kd')}}</td>
                                 <td>{{ $req['amount'] }} {{__('admin_messages.kd')}}</td>
                                 <td>{{ $req['bank_details']['account_no']??__('admin_messages.na') }}</td>

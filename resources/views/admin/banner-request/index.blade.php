@@ -190,7 +190,7 @@
                                     {{ \App\Models\Country::where('dial_code', optional($data['seller_details'])->country_code)->value('name_ar') ?? '' }}
                                     @endif
                                 </td>
-                                <td>{{ optional($data['created_at']) ? \Carbon\Carbon::parse($data['created_at'])->format('jS F Y | h:i A') : '' }}</td>
+                                <td>{{ !empty($data['created_at']) ? formatDateTimeByLocale($data['created_at']) : '' }}</td>
                                 <td>
                                     @if(!empty($data['upload_banner']))
                                         <a href="{{ $data['upload_banner'] }}" target="_blank">
@@ -207,8 +207,8 @@
                                         ][$data['banner_position']] ?? ''
                                     }}
                                 </td>
-                                <td>{{ optional($data['start_date']) ? \Carbon\Carbon::parse($data['start_date'])->format('d F Y') : '' }}</td>
-                                <td>{{ optional($data['end_date']) ? \Carbon\Carbon::parse($data['end_date'])->format('d F Y') : '' }}</td>
+                                <td>{{ !empty($data['start_date']) ? formatDateTimeByLocale($data['start_date']) : '' }}</td>
+                                <td>{{ !empty($data['end_date']) ? formatDateTimeByLocale($data['end_date']) : '' }}</td>
                                 <td>{{ $data['total_days'] ?? '' }} {{__('admin_messages.days')}}</td>
                                 @if(in_array(17, $permissions) || $admin->type == 1)
                                 <td>
@@ -313,7 +313,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kuwait')->format('jS F Y | h:i A') }}
+                                    <td>{{ !empty($data['created_at']) ? formatDateTimeByLocale($data['created_at']) : '' }}</td>
                                 </td>
                                 <td>
                                     <a href="{{ $data['upload_banner'] }}" target="blank"> <img
@@ -330,10 +330,10 @@
                                     }}
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($data['start_date'])->format('d F Y') }}
+                                    {{ formatDateTimeByLocale($data['start_date']) }}
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($data['end_date'])->format('d F Y') }}
+                                    {{ formatDateTimeByLocale($data['end_date']) }}
                                 </td>
 
                                 <td>{{ $data['total_days'] }} {{__('admin_messages.days')}}</td>
@@ -464,7 +464,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kuwait')->format('jS F Y | h:i A') }}
+                                    {{ formatDateTimeByLocale($data['created_at']) }}
                                 </td>
                                 <td>
                                     <a href="{{ $data['upload_banner'] }}" target="blank"> <img
@@ -481,10 +481,10 @@
                                     }}
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($data['start_date'])->format('d F Y') }}
+                                    {{ formatDateTimeByLocale($data['start_date']) }}
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($data['end_date'])->format('d F Y') }}
+                                    {{ formatDateTimeByLocale($data['end_date']) }}
                                 </td>
 
                                 <td>{{ $data['total_days'] }} {{__('admin_messages.days')}}</td>

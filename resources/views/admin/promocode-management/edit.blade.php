@@ -145,7 +145,7 @@
                                 <div class="form-group mb-3">
                                     <label for="update_startDate" class="form-label">{{ __('admin_messages.from') }}:</label>
                                     <input type="date" id="update_startDate" name="start_date"
-                                        class="form-control" 
+                                        class="form-control datepicker" 
                                         value="{{ old('start_date', \Carbon\Carbon::parse($promoCode->start_date)->format('Y-m-d')) }}" />
                                     <div id="update_startDateError" class="text-danger small" style="display:none;"></div>
                                 </div>
@@ -156,7 +156,7 @@
                                 <div class="form-group mb-3">
                                     <label for="update_endDate" class="form-label">{{ __('admin_messages.to') }}:</label>
                                     <input type="date" id="update_endDate" name="end_date"
-                                        class="form-control" 
+                                        class="form-control datepicker" 
                                         value="{{ old('end_date', \Carbon\Carbon::parse($promoCode->end_date)->format('Y-m-d')) }}" />
                                     <div id="update_endDateError" class="text-danger small" style="display:none;"></div>
                                 </div>

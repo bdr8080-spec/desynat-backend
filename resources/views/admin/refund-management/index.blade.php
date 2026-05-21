@@ -104,8 +104,8 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{$data->order->transaction_id ?? __('admin_messages.na')}}</td>
                             <td>{{$data->order->order_id ?? __('admin_messages.na')}}</td>
-                            <td>{{ $data->created_at->format('jS F Y | g:i A') }} </td>
-                            <td>{{ $data->updated_at->format('jS F Y | g:i A') }}</td>
+                            <td>{{ formatDateTimeByLocale($data->created_at ?? '') }}</td>
+                            <td>{{ formatDateTimeByLocale($data->updated_at ?? '') }}</td>
                             <td>{{$data->product_details->seller_details->first_name ?? __('admin_messages.na')}} {{$data->product_details->seller_details->last_name ?? ''}}</td>
                             <td>{{$data->user_details->full_name ?? __('admin_messages.na')}}</td>
                             <td>

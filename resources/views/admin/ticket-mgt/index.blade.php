@@ -144,7 +144,7 @@
                                         @else {{ __('admin_messages.delivery_boy') }}
                                         @endif
                                     </td>
-                                    <td>{{ \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A') }}</td>
+                                    <td>{{ formatDateTimeByLocale($ticket->created_at ?? '') }}</td>
 
                                     @php
                                         $name = $ticket->sender_details->full_name
@@ -291,7 +291,7 @@
                                         @else {{ __('admin_messages.delivery_boy') }}
                                         @endif
                                     </td>
-                                    <td>{{ \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A') }}</td>
+                                    <td>{{ formatDateTimeByLocale($ticket->created_at ?? '') }}</td>
 
                                     @php
                                         $name = $ticket->sender_details->full_name
@@ -440,7 +440,7 @@
                                         @else {{ __('admin_messages.delivery_boy') }}
                                         @endif
                                     </td>
-                                    <td>{{ \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A') }}</td>
+                                    <td>{{ formatDateTimeByLocale($ticket->created_at ?? '') }}</td>
 
                                     @php
                                         $name = $ticket->sender_details->full_name

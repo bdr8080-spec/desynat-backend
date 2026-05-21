@@ -121,7 +121,7 @@
                             @foreach($newUsers as $index => $user)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') }}</td>
+                                <td>{{ formatDateTimeByLocale($user['created_at']) }}</td>
                                 <td>
                                     <img src="{{ $user['profile_image'] }}" alt="" width="40px" height="40px" class="square" />
                                 </td>
@@ -295,7 +295,7 @@
                             @foreach($approvedUsers as $index => $user)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') }}</td>
+                                <td>{{ formatDateTimeByLocale($user['created_at']) }}</td>
                                 <td>
                                     <img src="{{ $user['profile_image'] }}" alt="" width="40px" height="40px" class="square" />
                                 </td>
@@ -466,7 +466,7 @@
                             @foreach($rejectedUsers as $index => $user)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') }}</td>
+                                <td>{{ formatDateTimeByLocale($user['created_at']) }}</td>
                                 <td>
                                     <img src="{{ $user['profile_image'] }}" alt="" width="40px" height="40px" class="square" />
                                 </td>

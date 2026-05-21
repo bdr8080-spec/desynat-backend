@@ -130,7 +130,7 @@
                                     @foreach($newSellers as $index => $seller)
                                     <tr>
                                         <th scope="row">{{ $index + 1 }}</th>
-                                        <td>{{ \Carbon\Carbon::parse($seller['created_at'])->format('d-m-Y') }}</td>
+                                        <td>{{ formatDateTimeByLocale($seller['created_at']) }}</td>
                                         <td>
                                             <img src="{{ $seller['profile_pic'] }}" alt="Profile Image" width="40px"
                                                 height="40px" class="square" />
@@ -328,7 +328,7 @@
                                     @foreach($approvedSellers as $index => $seller)
                                     <tr>
                                         <th scope="row">{{ $index + 1 }}</th>
-                                        <td>{{ \Carbon\Carbon::parse($seller['created_at'])->format('d-m-Y') }}</td>
+                                        <td>{{ formatDateTimeByLocale($seller['created_at']) }}</td>
                                         <td>
                                             <img src="{{ $seller['profile_pic'] }}" alt="Profile Image" width="40px"
                                                 height="40px" class="square" />
@@ -540,7 +540,7 @@
                                     @foreach($rejectedSellers as $index => $seller)
                                     <tr>
                                         <th scope="row">{{ $index + 1 }}</th>
-                                        <td>{{ \Carbon\Carbon::parse($seller['created_at'])->format('d-m-Y') }}</td>
+                                        <td>{{ formatDateTimeByLocale($seller['created_at']) }}</td>
                                         <td>
                                             <img src="{{ $seller['profile_pic'] }}" alt="Profile Image" width="40px"
                                                 height="40px" class="square" />

@@ -176,8 +176,8 @@ button.multiselect .caret {
                                     @endif
                                 </td>
 
-                                <td>{{ $deal['from'] }}</td>
-                                <td>{{ $deal['to'] }}</td>
+                                <td>{{ formatDateTimeByLocale($deal['from'] ?? '') }}</td>
+                                <td>{{ formatDateTimeByLocale($deal['to'] ?? '') }}</td>
                                 <td class="short-title">
                                     <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"
                                         class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} {{ __('admin_messages.seller') }}</a>
@@ -297,8 +297,8 @@ button.multiselect .caret {
                                     @endif
                                 </td>
 
-                                <td>{{ $deal['from'] }}</td>
-                                <td>{{ $deal['to'] }}</td>
+                                <td>{{ formatDateTimeByLocale($deal['from'] ?? '') }}</td>
+                                <td>{{ formatDateTimeByLocale($deal['to'] ?? '') }}</td>
                                 <td class="short-title">
                                     <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"
                                         class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} {{ __('admin_messages.seller') }}</a>
@@ -426,7 +426,7 @@ button.multiselect .caret {
                                 <div class="col-lg-6">
                                     <div class="form-group mt-0 w-100">
                                         <label for="fromDate" class="form-label">{{ __('admin_messages.from') }}:</label>
-                                        <input type="date" id="fromDate" class="form-control" />
+                                        <input type="date" id="fromDate" class="form-control datepicker" />
                                         <div class="text-danger" id="fromDateError"></div>
                                     </div>
                                 </div>
@@ -434,7 +434,7 @@ button.multiselect .caret {
                                 <div class="col-lg-6">
                                     <div class="form-group mt-0 w-100">
                                         <label for="toDate" class="form-label">{{ __('admin_messages.to') }}:</label>
-                                        <input type="date" id="toDate" class="form-control" />
+                                        <input type="date" id="toDate" class="form-control datepicker" />
                                         <div class="text-danger" id="toDateError"></div>
                                     </div>
                                 </div>
@@ -557,7 +557,7 @@ button.multiselect .caret {
                                 <div class="col-lg-6">
                                     <div class="form-group mt-0  w-100">
                                         <label for="editFromDate" class="form-label">{{ __('admin_messages.from') }}:</label>
-                                        <input type="date" id="editFromDate" class="form-control" />
+                                        <input type="date" id="editFromDate" class="form-control datepicker" />
                                         <div class="text-danger" id="editFromDateError"></div>
                                     </div>
                                 </div>
@@ -565,7 +565,7 @@ button.multiselect .caret {
                                 <div class="col-lg-6">
                                     <div class="form-group mt-0 w-100">
                                         <label for="editToDate" class="form-label">{{ __('admin_messages.to') }}:</label>
-                                        <input type="date" id="editToDate" class="form-control" />
+                                        <input type="date" id="editToDate" class="form-control datepicker" />
                                         <div class="text-danger" id="editToDateError"></div>
                                     </div>
                                 </div>

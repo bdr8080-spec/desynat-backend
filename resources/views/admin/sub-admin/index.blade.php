@@ -209,7 +209,7 @@
                         @forelse($subAdmins->list as $data)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d/m/y') }}</td>
+                            <td>{{ formatDateTimeByLocale($data->created_at ?? '') }}</td>
                             <td>{{$data->full_name}}</td>
 
                             <td>

@@ -244,8 +244,11 @@
                                                     {{ $data['seller_details']['store_info']['country_info']['name_ar']??__('admin_messages.na') }}
                                                     @endif
                                                 </td>
-                                                <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}</td>
+                                                <td>{{ formatDateTimeByLocale($data['created_at']) }}</td>
+                                                <td>
+                                                    {{ formatDateTimeByLocale($data['timeslot_details']['date']) }}
+                                                    | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}
+                                                </td>
                                                 @if(in_array(18, $permissions) || $admin->type == 1)
                                                 <td>
                                                     <div class="d-flex gap-3 justify-content-center">
@@ -343,8 +346,11 @@
                                                     {{ $data['seller_details']['store_info']['country_info']['name_ar']??__('admin_messages.na') }}
                                                     @endif
                                                 </td>
-                                                <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}</td>
+                                                <td>{{ formatDateTimeByLocale($data['created_at']) }}</td>
+                                                <td>
+                                                    {{ formatDateTimeByLocale($data['timeslot_details']['date']) }}
+                                                    | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}
+                                                </td>
                                             </tr>
                                             @empty
 
@@ -426,8 +432,11 @@
                                                     {{ $data['seller_details']['store_info']['country_info']['name_ar']??__('admin_messages.na') }}
                                                     @endif
                                                 </td>
-                                                <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}</td>
+                                                <td>{{ formatDateTimeByLocale($data['created_at']) }}</td>
+                                                <td>
+                                                    {{ formatDateTimeByLocale($data['timeslot_details']['date']) }}
+                                                    | {{ $data['timeslot_details']['from'] }}-{{ $data['timeslot_details']['to'] }}
+                                                </td>
                                                 <td>{{ $data['reject_reason'] }}</td>
                                             </tr>
                                             @empty

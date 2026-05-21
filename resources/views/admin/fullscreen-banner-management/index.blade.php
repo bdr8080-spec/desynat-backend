@@ -165,8 +165,8 @@
                                         {{ $banner['country_info']['name_ar'] }}
                                         @endif
                                     </td>
-                                    <td>{{ $banner['start_date'] }}</td>
-                                    <td>{{ $banner['end_date'] }}</td>
+                                    <td>{{ formatDateTimeByLocale($banner['start_date'] ?? '') }}</td>
+                                    <td>{{ formatDateTimeByLocale($banner['end_date'] ?? '') }}</td>
                                     @if(in_array(21, $permissions) || $admin->type == 1)
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
@@ -294,8 +294,8 @@
                                     @endif
                                 </td>
                                 <!-- <td>India</td> -->
-                                <td>{{ $banner['start_date'] }}</td>
-                                <td>{{ $banner['end_date'] }}</td>
+                                <td>{{ formatDateTimeByLocale($banner['start_date'] ?? '') }}</td>
+                                    <td>{{ formatDateTimeByLocale($banner['end_date'] ?? '') }}</td>
                                 @if(in_array(21, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -414,7 +414,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group w-100">
                                         <label class="form-label">{{ __('admin_messages.from') }}</label>
-                                        <input type="date" id="start_date_promotional" name="start_date_promotional" class="form-control" />
+                                        <input type="date" id="start_date_promotional" name="start_date_promotional" class="form-control datepicker" />
                                         <div class="text-danger" id="startDatePromotionalError"></div>
                                     </div>
                                 </div>
@@ -422,7 +422,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group w-100">
                                         <label class="form-label">{{ __('admin_messages.to') }}</label>
-                                        <input type="date" id="end_date_promotional" name="end_date_promotional" class="form-control" />
+                                        <input type="date" id="end_date_promotional" name="end_date_promotional" class="form-control datepicker" />
                                         <div class="text-danger" id="endDatePromotionalError"></div>
                                     </div>
                                 </div>
@@ -548,7 +548,7 @@
                                         <label class="form-label">{{ __('admin_messages.from') }}</label>
                                         <input type="date"
                                                id="editStartDatePromotional"
-                                               class="form-control" />
+                                               class="form-control datepicker" />
                                         <div class="text-danger"
                                              id="editStartDateError"></div>
                                     </div>
@@ -559,7 +559,7 @@
                                         <label class="form-label">{{ __('admin_messages.to') }}</label>
                                         <input type="date"
                                                id="editEndDatePromotional"
-                                               class="form-control" />
+                                               class="form-control datepicker" />
                                         <div class="text-danger"
                                              id="editEndDateError"></div>
                                     </div>
@@ -670,7 +670,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group  w-100">
                                         <label class="form-label">{{ __('admin_messages.from') }}:</label>
-                                        <input type="date" id="start_date" name="start_date" class="form-control" />
+                                        <input type="date" id="start_date" name="start_date" class="form-control datepicker" />
                                         <div class="text-danger" id="startDateError"></div>
                                     </div>
                                 </div>
@@ -678,7 +678,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group  w-100">
                                         <label class="form-label">{{ __('admin_messages.to') }}:</label>
-                                        <input type="date" id="end_date" name="end_date" class="form-control" />
+                                        <input type="date" id="end_date" name="end_date" class="form-control datepicker" />
                                         <div class="text-danger" id="endDateError"></div>
                                     </div>
                                 </div>
@@ -775,7 +775,7 @@
                                     <div class="form-group  w-100">
 
                                         <label class="form-label">{{ __('admin_messages.from') }}</label>
-                                        <input type="date" id="editStartDate" class="form-control">
+                                        <input type="date" id="editStartDate" class="form-control datepicker">
                                         <div class="text-danger" id="editStartDateError"></div>
                                     </div>
                                 </div>
@@ -784,7 +784,7 @@
                                     <div class="form-group  w-100">
 
                                         <label class="form-label">{{ __('admin_messages.to') }}</label>
-                                        <input type="date" id="editEndDate" class="form-control">
+                                        <input type="date" id="editEndDate" class="form-control datepicker">
                                         <div class="text-danger" id="editEndDateError"></div>
                                     </div>
                                 </div>

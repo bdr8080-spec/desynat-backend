@@ -156,8 +156,8 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>#{{$payment->order->order_id}}</td>
-                                <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
-                                <td>{{ $payment->updated_at->format('jS F Y | g:i A') }}</td>
+                                <td>{{ formatDateTimeByLocale($payment->created_at ?? '') }}</td>
+                                <td>{{ formatDateTimeByLocale($payment->updated_at ?? '') }}</td>
                                 <td>{{$payment->user_details->full_name ?? __('admin_messages.na')}}</td>
                                 <td>{{$payment->product_details->seller_details->first_name?? __('admin_messages.na')}}
                                     {{$payment->product_details->seller_details->last_name??''}}</td>
@@ -315,7 +315,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                     {{ $payment->plan_info->plan_name_arabic }}
                                     @endif
                                 </td>
-                                <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
+                                <td>{{ formatDateTimeByLocale($payment->created_at ?? '') }}</td>
                             </tr>
                             @empty
 
@@ -434,7 +434,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                     @endif
                                 </td>
                                 <td>{{ $payment->amount }} {{__('admin_messages.kd')}}</td>
-                                <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
+                                <td>{{ formatDateTimeByLocale($payment->created_at ?? '') }}</td>
                             </tr>
                             @empty
 
@@ -546,7 +546,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                     @endif
                                 </td>
                                 <td>{{ $payment->price }} {{__('admin_messages.kd')}}</td>
-                                <td>{{ $payment->created_at->format('jS F Y | g:i A') }}</td>
+                                <td>{{ formatDateTimeByLocale($payment->created_at ?? '') }}</td>
                             </tr>
                             @empty
 

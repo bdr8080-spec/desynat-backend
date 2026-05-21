@@ -97,7 +97,7 @@
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
 
-                            <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') }}</td>
+                            <td>{{ formatDateTimeByLocale($user['created_at']) }}</td>
                             <td>{{ $user['full_name'] }}</td>
                             <td>
                                 <img src="{{ $user['profile_image'] }}" alt="" width="60px" height="60px" class="square" />

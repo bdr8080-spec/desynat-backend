@@ -62,8 +62,8 @@
 
 
                                     <td>
-                                        {{ \Carbon\Carbon::parse($val->timeslot_details->date)->format('d F Y') }}
-                                        {{ \Carbon\Carbon::parse($val->timeslot_details->from)->format('g A') }}
+                                        {{ formatDateTimeByLocale($val->timeslot_details->date ?? '') }}
+                                        {{ formatDateTimeByLocale($val->timeslot_details->from ?? '') }}
 
                                     </td>
                                 </tr>
