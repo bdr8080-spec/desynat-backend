@@ -338,11 +338,11 @@ foreach ($check_chatRecord as $key => $val) {
                     'receiver_id' => $check_chatRecord->seller_id,
                     'receiver_type' => 3,
 
-                    'title_english' => $request->message,
-                    'title_arabic' => $request->message,
+                    'title_english' => "You have a new message",
+                    'title_arabic' => "لديك رسالة جديدة",
 
-                    'description_english' => "You have a new message",
-                    'description_arabic' => "لديك رسالة جديدة",
+                    'description_english' => $request->message,
+                    'description_arabic' => $request->messageAr,
 
                     'notification_type' => 'chat_message'
                 ]);
@@ -356,11 +356,11 @@ foreach ($check_chatRecord as $key => $val) {
                     'receiver_id' => $check_chatRecord->user_id,
                     'receiver_type' => 2,
 
-                    'title_english' => $request->message,
-                    'title_arabic' => $request->message,
+                    'title_english' => "You have a new message",
+                    'title_arabic' => "لديك رسالة جديدة",
 
-                    'description_english' => "You have a new message",
-                    'description_arabic' => "لديك رسالة جديدة",
+                    'description_english' => $request->message,
+                    'description_arabic' => $request->messageAr,
 
                     'notification_type' => 'chat_message'
                 ]);
