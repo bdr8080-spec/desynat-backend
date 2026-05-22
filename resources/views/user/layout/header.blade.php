@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desynat</title>
+    <title>{{ __('user_messages.desynat') }}</title>
     <link href="{{ asset('user/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('user/assets/css/responsive.css') }}" rel="stylesheet" />
     <!-- <link href="assets/css/fontawesome.min.css" rel="stylesheet" /> -->
@@ -82,7 +82,7 @@
     $userLocation = UserCurrentLocation::where('user_id', $user->id)->first();
     }
 
-    $data = Category::with('subCategories')->get();
+    $data = Category::with('subCategories')->where('status',1)->get();
 
     $adminStories = Story::where('type','1')->where('status','1')->get();
 
