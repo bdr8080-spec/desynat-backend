@@ -30,4 +30,9 @@ class AffilatedUser extends Authenticatable
       return $this->belongsTo(all_countrie::class,'country_code','dial_code');
      }
 
+     public function order_details()
+     {
+     return $this->hasMany(orderdetail::class, 'affiliate_id');
+     }
+
 }

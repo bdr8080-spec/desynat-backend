@@ -242,7 +242,7 @@ class AffiliateUserController extends Controller
                 'Country',
                 'Address',
                 'Total Orders',
-                'Total Earning',
+                'Total Earning(KD)',
             ];
 
             $headersAr = [
@@ -307,7 +307,7 @@ class AffiliateUserController extends Controller
                     $user['email'] ?? $na,
                     $country,
                     $address,
-                    $user['total_orders'] ?? 0,
+                    $user['total_completed_orders'] ?? 0,
                     $user['total_earning'] ?? 0,
                 ]);
             }

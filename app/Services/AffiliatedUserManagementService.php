@@ -76,12 +76,35 @@ class AffiliatedUserManagementService
         try {
             $limit = (int)($request->input('limit')); 
 
+            // $query = AffilatedUser::where('admin_verify', '2')
+            //     ->with([
+            //         'address_details',
+            //         'bank_details',
+            //         'country_details'
+            //     ]);
+
             $query = AffilatedUser::where('admin_verify', '2')
-                ->with([
-                    'address_details',
-                    'bank_details',
-                    'country_details'
-                ]);
+            ->with([
+                'address_details',
+                'bank_details',
+                'country_details'
+            ])
+
+            // Total completed orders
+            ->withCount([
+                'order_details as total_completed_orders' => function ($q) {
+                    $q->where('delivery_status', '3')
+                      ->where('payment_status', '1');
+                }
+            ])
+
+            // Total earning
+            ->withSum([
+                'order_details as total_earning' => function ($q) {
+                    $q->where('delivery_status', '3')
+                      ->where('payment_status', '1');
+                }
+            ], \DB::raw('(amount + tax + shipping_fees)'));
 
             // ✅ Country filter
             if (!empty($request->country1)) {
@@ -129,6 +152,7 @@ class AffiliatedUserManagementService
                     $data['address_details'] = $user->address_details ? $user->address_details->toArray() : null;
                     $data['bank_details'] = $user->bank_details ? $user->bank_details->toArray() : null;
                     $data['country_details'] = $user->country_details ? $user->country_details->toArray() : null;
+                    $data['total_earning'] = $user->total_earning ?? 0;
 
                     return $data;
                 });
@@ -143,6 +167,7 @@ class AffiliatedUserManagementService
                     $data['address_details'] = $user->address_details ? $user->address_details->toArray() : null;
                     $data['bank_details'] = $user->bank_details ? $user->bank_details->toArray() : null;
                     $data['country_details'] = $user->country_details ? $user->country_details->toArray() : null;
+                    $data['total_earning'] = $user->total_earning ?? 0;
 
                     return $data;
                 });

@@ -361,8 +361,8 @@
                                     N/A
                                     @endif
                                 </td> -->
-                                <td>0</td>
-                                <td>0 {{ __('admin_messages.kd') }}</td>
+                                <td>{{ $user['total_completed_orders'] }}</td>
+                                <td>{{ $user['total_earning'] }} {{ __('admin_messages.kd') }}</td>
                                 @if(in_array(8, $permissions) || $admin->type == 1)
                                  <td>
                                 <div class="form-check form-switch" style="justify-content: center;">
