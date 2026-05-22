@@ -11,6 +11,8 @@ return [
     'arabic' => 'Arabic',
     'english' => 'English',
     'date_placeholder' => 'dd-mm-yyyy',
+    'ar' => 'AR',
+    'en' => 'EN',
 
     //common
     'to' => 'To',

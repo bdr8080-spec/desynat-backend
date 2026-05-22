@@ -55,7 +55,7 @@
 
                                     <img src="{{asset('user/assets/images/global.svg')}}" style="width:15px" />
 
-                                    <span id="currentLang">@if(app()->getLocale()=='en') En @else AR @endif</span>
+                                    <span id="currentLang">@if(app()->getLocale()=='en') {{ __('admin_messages.en') }} @else {{ __('admin_messages.ar') }} @endif</span>
 
                                 </button>
 
@@ -63,13 +63,13 @@
 
                                     <li>
                                         <a class="dropdown-item" data-lang="ar" href="{{route('adminLanguage','ar')}}">
-                                            <span>AR</span> {{ __('admin_messages.arabic') }}
+                                            <span>{{ __('admin_messages.ar') }}</span> {{ __('admin_messages.arabic') }}
                                         </a>
                                     </li>
 
                                     <li>
                                         <a class="dropdown-item" data-lang="en" href="{{route('adminLanguage','en')}}">
-                                            <span>EN</span> {{ __('admin_messages.english') }}
+                                            <span>{{ __('admin_messages.en') }}</span> {{ __('admin_messages.english') }}
                                         </a>
                                     </li>
 

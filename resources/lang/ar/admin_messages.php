@@ -11,6 +11,8 @@ return [
     'arabic' => 'عربي',
     'english' => 'إنجليزي',
     'date_placeholder' => 'يوم-شهر-سنة',
+    'ar' => 'ع',
+    'en' => 'إ',
 
     //common
     'to' => 'إلى',

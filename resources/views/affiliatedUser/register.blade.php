@@ -37,11 +37,11 @@
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    <img src="{{ asset('/dealer') }}/assets/img/global.svg" class="img-fluid" /> @if(app()->getLocale()=='en') En @else AR @endif
+                    <img src="{{ asset('/dealer') }}/assets/img/global.svg" class="img-fluid" /> @if(app()->getLocale()=='en') {{ __('admin_messages.en') }} @else {{ __('admin_messages.ar') }} @endif
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}"><span>AR</span> {{ __('affiliate_messages.arabic') }}</a></li>
-                    <li><a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}"><span>EN</span> {{ __('affiliate_messages.english') }}</a></li>
+                    <li><a class="dropdown-item" data-lang="ar" href="{{route('userLanguage','ar')}}"><span>{{ __('admin_messages.ar') }}</span> {{ __('affiliate_messages.arabic') }}</a></li>
+                    <li><a class="dropdown-item" data-lang="en" href="{{route('userLanguage','en')}}"><span>{{ __('admin_messages.en') }}</span> {{ __('affiliate_messages.english') }}</a></li>
                 </ul>
             </div>
         </div>
