@@ -215,7 +215,7 @@ return [
     '3_5_days' => '3 - 5 أيام',
     'available' => 'متوفر',
     'busy' => 'مشغول',
-    'no_highlights' => 'لا يوجد أبرز',
+    'no_of_highlights' => 'أبرز الأحداث',
     'kd' => 'د.ك',
     'delivery_time' => 'وقت التوصيل',
     'no_reels_found' => 'لا توجد ريلز',
