@@ -50,6 +50,7 @@ class TicketController extends Controller
         $commonController = new CommonController();
         $ticketTypesResponse = $commonController->ticket_types($request);
         $ticketTypes = $ticketTypesResponse->original['data'];
+        //dd($ticketTypes);
 
         return view('admin.ticket-mgt.index',compact('newTickets','ongoingTickets','resolvedTickets','ticketTypes'));
     }
