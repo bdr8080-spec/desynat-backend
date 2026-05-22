@@ -17,17 +17,17 @@
                 <div class="duration-table">
                     <table class="table table-borderless">
                         <tr>
-                            <td>{{ __('seller_messages.Duration') }} - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
+                            <td>{{ __('seller_messages.Duration') }} - {{ formatDateTimeByLocale($single_deal['deal_data']->from) }} - {{ formatDateTimeByLocale($single_deal['deal_data']->to) }}
                             </td>
-                            <td>{{ __('seller_messages.Category') }}  - {{  $single_deal['deal_data']->category_details->name}}</td>
+                            <td>{{ __('seller_messages.Category') }}  - {{ App::getLocale() == 'ar' ? ($single_deal['deal_data']->category_details->name_ar ?? __('admin_messages.na')) : ($single_deal['deal_data']->category_details->name ?? __('admin_messages.na')) }}</td>
                         </tr>
                         <tr>
                             <td>{{ __('seller_messages.Discount') }} - {{  $single_deal['deal_data']->discount }} %</td>
-                            <td>{{ __('seller_messages.Sub_Category') }}  - {{  $single_deal['deal_data']->subCategory_details->name_english}}</td>
+                            <td>{{ __('seller_messages.Sub_Category') }}  - {{ App::getLocale() == 'ar' ? ($single_deal['deal_data']->subCategory_details->name_arabic ?? __('admin_messages.na')) : ($single_deal['deal_data']->subCategory_details->name_english ?? __('admin_messages.na')) }}</td>
                         </tr>
                     </table>
 
-                    <p class="single-pad">{{  $single_deal['deal_data']->name_english }}</p>
+                    <p class="single-pad">{{ App::getLocale() == 'ar' ? ($single_deal['deal_data']->name_arabic ?? __('admin_messages.na')) : ($single_deal['deal_data']->name_english ?? __('admin_messages.na')) }}</p>
                 </div>
             </div>
         </div>

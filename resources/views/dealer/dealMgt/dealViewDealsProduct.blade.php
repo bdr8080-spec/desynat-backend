@@ -13,7 +13,7 @@ $can_action=$menu_permission['can_action'];
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center mb-5">
         <a class="title24 alink" href="{{ route('seller.deal_management') }} "> <i class="bi bi-chevron-left"></i>
-            Details</a>
+            {{ __('seller_messages.Details') }}</a>
     </div>
 
     <div class="row mt-3">

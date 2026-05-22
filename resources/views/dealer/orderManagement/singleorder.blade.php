@@ -96,7 +96,7 @@
                 <div class="order-ic">
                     <div class="order-cont">
                         <div class="title-light"> {{ __('seller_messages.Date_Time') }} </div>
-                        <p>{{$order_details->created_at}}</p>
+                        <p>{{ formatDateTimeByLocale($order_details->created_at) }}</p>
                     </div>
                 </div>
             </div>
@@ -290,20 +290,40 @@
 
                     <div class="w-100">
                         <div class="pay-sum">
-                            <div class="summary-title-1">{{ $order_details->product_details->product_name_en }}</div>
+                            <div class="summary-title-1">
+                                {{ App::getLocale() == 'ar'
+                                    ? ($order_details->product_details->product_name_ar ?? __('admin_messages.na'))
+                                    : ($order_details->product_details->product_name_en ?? __('admin_messages.na'))
+                                }}
+                            </div>
                             <div class="summary-value">{{ $order_details->amount * $order_details->quantity }} {{ __('seller_messages.KD') }}</div>
                         </div>
                         <div class="pay-sum">
                             <div class="summary-title-1">{{ __('seller_messages.Size') }}</div>
-                            <div class="summary-value">{{ $order_details->variation_details->size->name }}</div>
+                            <div class="summary-value">
+                                {{ App::getLocale() == 'ar'
+                                    ? ($order_details->variation_details->size->name_ar ?? __('admin_messages.na'))
+                                    : ($order_details->variation_details->size->name ?? __('admin_messages.na'))
+                                }}
+                            </div>
                         </div>
                         <div class="pay-sum">
                             <div class="summary-title-1"> {{ __('seller_messages.Color') }} </div>
-                            <div class="summary-value">{{ $order_details->variation_details->color->name }}</div>
+                            <div class="summary-value">
+                                {{ App::getLocale() == 'ar'
+                                    ? ($order_details->variation_details->color->name_ar ?? __('admin_messages.na'))
+                                    : ($order_details->variation_details->color->name ?? __('admin_messages.na'))
+                                }}
+                            </div>
                         </div>
                         <div class="pay-sum">
                             <div class="summary-title-1"> {{ __('seller_messages.Category') }} </div>
-                            <div class="summary-value">{{ $order_details->product_details->category->name }}</div>
+                            <div class="summary-value">
+                                {{ App::getLocale() == 'ar'
+                                    ? ($order_details->product_details->category->name_ar ?? __('admin_messages.na'))
+                                    : ($order_details->product_details->category->name ?? __('admin_messages.na'))
+                                }}
+                            </div>
                         </div>
                         <div class="pay-sum">
                             <div class="summary-title-1"> {{ __('seller_messages.Quantity') }}</div>

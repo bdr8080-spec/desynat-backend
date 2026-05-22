@@ -125,8 +125,13 @@
                                                     style="width: 80px;height: 80px;border-radius: 5%;object-fit: cover;">
                                             </td>
                                             <td> {{$val->id}}</td>
-                                            <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
+                                            <td>{{ formatDateTimeByLocale($val->created_at) }}</td>
+                                            <td>
+                                                {{ App::getLocale() == 'en'
+                                                    ? ($val->product_details->product_name_en ?? __('admin_messages.na'))
+                                                    : ($val->product_details->product_name_ar ?? __('admin_messages.na'))
+                                                }}
+                                            </td>
                                             <td>
                                                 @if($val->order_type=='1')
                                                  {{ __('seller_messages.normal') }}
@@ -268,8 +273,13 @@
                                                     style="width: 80px;height: 80px;border-radius: 5%;object-fit: cover;">
                                             </td>
                                             <td> {{$val->id}}</td>
-                                            <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
+                                            <td>{{ formatDateTimeByLocale($val->created_at) }}</td>
+                                            <td>
+                                                {{ App::getLocale() == 'en'
+                                                    ? ($val->product_details->product_name_en ?? __('admin_messages.na'))
+                                                    : ($val->product_details->product_name_ar ?? __('admin_messages.na'))
+                                                }}
+                                            </td>
                                             <td>
                                                 @if($val->order_type=='1')
                                                   {{ __('seller_messages.normal') }}
@@ -407,8 +417,13 @@
                                                     style="width: 80px;height: 80px;border-radius: 5%;object-fit: cover;">
                                             </td>
                                             <td> {{$val->id}}</td>
-                                            <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
+                                            <td>{{ formatDateTimeByLocale($val->created_at) }}</td>
+                                            <td>
+                                                {{ App::getLocale() == 'en'
+                                                    ? ($val->product_details->product_name_en ?? __('admin_messages.na'))
+                                                    : ($val->product_details->product_name_ar ?? __('admin_messages.na'))
+                                                }}
+                                            </td>
                                             <td>
                                                 @if($val->order_type=='1')
                                                 Normal

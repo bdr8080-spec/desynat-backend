@@ -119,7 +119,7 @@ $can_action=$menu_permission['can_action'];
                                         </div>
                                     </td>
 
-                                    <td>{{ $val->from }}</td>
+                                    <td>{{ formatDateTimeByLocale($val->from) }}</td>
 
                                     <td>
                                         {{ formatDateTimeByLocale($val->from) }} - {{ formatDateTimeByLocale($val->to) }}
@@ -207,10 +207,10 @@ $can_action=$menu_permission['can_action'];
                                         </div>
                                     </td>
 
-                                    <td>{{ $val->from }}</td>
+                                    <td>{{ formatDateTimeByLocale($val->from) }}</td>
 
                                     <td>
-                                        {{ $val->from }} - {{ $val->to }}
+                                        {{ formatDateTimeByLocale($val->from) }} - {{ formatDateTimeByLocale($val->to) }}
                                     </td>
 
                                     <td>{{ $val->discount }} %</td>
@@ -323,10 +323,10 @@ $can_action=$menu_permission['can_action'];
                                         </div>
                                     </td>
 
-                                    <td>{{ $val->from }}</td>
+                                    <td>{{ formatDateTimeByLocale($val->from) }}</td>
 
                                     <td>
-                                        {{ $val->from }} - {{ $val->to }}
+                                        {{ formatDateTimeByLocale($val->from) }} - {{ formatDateTimeByLocale($val->to) }}
                                     </td>
 
                                     <td>{{ $val->discount }} %</td>
