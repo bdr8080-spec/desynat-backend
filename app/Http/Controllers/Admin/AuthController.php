@@ -657,109 +657,125 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function export_refund_data(Request $request)
+
+    public function export_refund_data_new(Request $request)
     {
-        $request_data = (object)[
-            'limit' => $request->limit ?? null,
-            'country_name' => $request->country_name ?? null,
-            'from_date' => $request->from_date ?? null,
-            'to_date' => $request->to_date ?? null,
-            'search' => $request->search ?? null,
-        ];
+        try {
 
-        $response = $this->OrderManagementService->RefundOrders($request_data);
+            $request_data = (object)[
+                'limit' => $request->limit ?? null,
+                'country_name' => $request->country_name ?? null,
+                'from_date' => $request->from_date ?? null,
+                'to_date' => $request->to_date ?? null,
+                'search' => $request->search ?? null,
+            ];
 
-        $data = $response['data'] ?? collect();
+            $response = $this->OrderManagementService->RefundOrders($request_data);
 
-        $refunds = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
-            ? collect($data->items())
-            : collect($data);
+            $data = data_get($response, 'data', collect());
 
-        $isArabic = app()->getLocale() === 'ar';
-        $na = $isArabic ? 'غير متوفر' : 'N/A';
+            $refunds = ($data instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                ? collect($data->items())
+                : collect($data);
 
-        $fileName = 'refund_orders_' . now()->format('Y_m_d_H_i_s') . '.csv';
+            $isArabic = app()->getLocale() === 'ar';
+            $na = $isArabic ? 'غير متوفر' : 'N/A';
 
-        $headers = [
-            "Content-Type" => "text/csv; charset=UTF-8",
-            "Content-Disposition" => "attachment; filename=$fileName",
-        ];
+            $fileName = 'refund_orders_' . now()->format('Y_m_d_H_i_s') . '.csv';
 
-        return response()->stream(function () use ($refunds, $isArabic, $na) {
+            $headers = [
+                "Content-Type" => "text/csv; charset=UTF-8",
+                "Content-Disposition" => "attachment; filename=$fileName",
+            ];
 
-            $file = fopen('php://output', 'w');
+            return response()->stream(function () use ($refunds, $isArabic, $na) {
 
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+                $file = fopen('php://output', 'w');
 
-            fputcsv($file, [
-                $isArabic ? 'رقم' : 'Sr No',
-                $isArabic ? 'رقم المعاملة' : 'Transaction ID',
-                $isArabic ? 'رقم الطلب' : 'Order ID',
-                $isArabic ? 'تاريخ الطلب' : 'Order Date & Time',
-                $isArabic ? 'تاريخ الإلغاء' : 'Cancellation Date & Time',
-                $isArabic ? 'اسم البائع' : 'Seller Name',
-                $isArabic ? 'اسم المستخدم' : 'User Name',
-                $isArabic ? 'دولة المستخدم' : 'User Country',
-                $isArabic ? 'السبب' : 'Reason',
-                $isArabic ? 'المبلغ (دينار)' : 'Amount(KD)',
-                $isArabic ? 'الحالة' : 'Status',
-            ]);
+                // UTF-8 BOM
+                fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
 
-            foreach ($refunds as $index => $data) {
-
-                $transactionId = $data->order->transaction_id ?? $na;
-
-                $orderId = $data->order->order_id ?? $na;
-
-                $sellerName = $data->product_details->seller_details
-                    ? trim(
-                        ($data->product_details->seller_details->first_name ?? '') . ' ' .
-                        ($data->product_details->seller_details->last_name ?? '')
-                    )
-                    : $na;
-
-                $userName = $data->user_details->full_name ?? $na;
-
-                $country = $data->user_details->country_info
-                    ? (
-                        $isArabic
-                            ? ($data->user_details->country_info->name_ar ?? $data->user_details->country_info->name ?? $na)
-                            : ($data->user_details->country_info->name ?? $data->user_details->country_info->name_ar ?? $na)
-                    )
-                    : $na;
-
-                $orderDate = $data->created_at
-                    ? $data->created_at->format('jS F Y | g:i A')
-                    : '-';
-
-                $cancelDate = $data->updated_at
-                    ? $data->updated_at->format('jS F Y | g:i A')
-                    : '-';
-
-                $reason = $data->cancel_reason ?? $na;
-
-                $amount = $data->amount ?? 0;
-
-                $status = 'Pending';
-
+                // Header row
                 fputcsv($file, [
-                    $index + 1,
-                    $transactionId,
-                    $orderId,
-                    $orderDate,
-                    $cancelDate,
-                    $sellerName,
-                    $userName,
-                    $country,
-                    $reason,
-                    $amount,
-                    $status
+                    $isArabic ? 'رقم' : 'Sr No',
+                    $isArabic ? 'رقم المعاملة' : 'Transaction ID',
+                    $isArabic ? 'رقم الطلب' : 'Order ID',
+                    $isArabic ? 'تاريخ الطلب' : 'Order Date & Time',
+                    $isArabic ? 'تاريخ الإلغاء' : 'Cancellation Date & Time',
+                    $isArabic ? 'اسم البائع' : 'Seller Name',
+                    $isArabic ? 'اسم المستخدم' : 'User Name',
+                    $isArabic ? 'دولة المستخدم' : 'User Country',
+                    $isArabic ? 'السبب' : 'Reason',
+                    $isArabic ? 'المبلغ (دينار)' : 'Amount(KD)',
+                    $isArabic ? 'الحالة' : 'Status',
                 ]);
-            }
 
-            fclose($file);
+                foreach ($refunds as $index => $data) {
 
-        }, 200, $headers);
+                    $transactionId = optional($data->order)->transaction_id 
+                        ? '="' . optional($data->order)->transaction_id . '"'
+                        : $na;
+                    $orderId = optional($data->order)->order_id ?? $na;
+
+                    $sellerFirst = optional(optional($data->product_details)->seller_details)->first_name;
+                    $sellerLast  = optional(optional($data->product_details)->seller_details)->last_name;
+
+                    $sellerName = trim($sellerFirst . ' ' . $sellerLast);
+                    if ($sellerName == '') {
+                        $sellerName = $na;
+                    }
+
+                    $userName = optional($data->user_details)->full_name ?? $na;
+
+                    $countryInfo = optional(optional($data->user_details)->country_info);
+
+                    if ($isArabic) {
+                        $country = $countryInfo->name_ar ?? $countryInfo->name ?? $na;
+                    } else {
+                        $country = $countryInfo->name ?? $countryInfo->name_ar ?? $na;
+                    }
+
+                   $orderDate = $data->created_at
+                        ? "\t" . formatDateTimeByLocale($data->created_at)
+                        : '-';
+
+                    $cancelDate = $data->updated_at
+                        ? "\t" . formatDateTimeByLocale($data->updated_at)
+                        : '-';
+
+                    $reason = $data->cancel_reason ?? $na;
+                    $amount = $data->amount ?? 0;
+
+                    $status = $isArabic ? 'قيد الانتظار' : 'Pending';
+
+                    fputcsv($file, [
+                        $index + 1,
+                        $transactionId,
+                        $orderId,
+                        $orderDate,
+                        $cancelDate,
+                        $sellerName,
+                        $userName,
+                        $country,
+                        $reason,
+                        $amount,
+                        $status
+                    ]);
+                }
+
+                fclose($file);
+
+            }, 200, $headers);
+
+        } catch (\Throwable $e) {
+
+            \Log::error('Refund Export Failed: ' . $e->getMessage());
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
 }

@@ -19,7 +19,7 @@
         <div class="col-lg-3 col-md-4 col-12">
             @if(in_array(32, $permissions) || $admin->type == 1)
             <div class="d-flex justify-content-end">
-                <a href="{{ route('admin.export_refund_data', request()->all()) }}" class="btn btn-dark customBtn" href="">
+                <a href="{{ route('admin.export_refund_data_new', request()->all()) }}" class="btn btn-dark customBtn" href="">
                     <span>{{ __('admin_messages.export') }}</span>
                 </a>
             </div>

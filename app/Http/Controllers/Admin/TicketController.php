@@ -189,7 +189,7 @@ class TicketController extends Controller
 
                 /* Date */
                 $raisedDate = $ticket->created_at
-                    ? \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A')
+                    ? "\t" . formatDateTimeByLocale($ticket->created_at)
                     : $na;
 
                 /* Type */
@@ -337,7 +337,7 @@ class TicketController extends Controller
 
                 /* Date */
                 $raisedDate = $ticket->created_at
-                    ? \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A')
+                    ? "\t" . formatDateTimeByLocale($ticket->created_at)
                     : $na;
 
                 /* Type */
@@ -485,7 +485,7 @@ class TicketController extends Controller
 
                 /* Date */
                 $raisedDate = $ticket->created_at
-                    ? \Carbon\Carbon::parse($ticket->created_at)->format('d M Y | h:i A')
+                    ? "\t" . formatDateTimeByLocale($ticket->created_at)
                     : $na;
 
                 /* Type */

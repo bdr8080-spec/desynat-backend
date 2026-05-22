@@ -162,12 +162,12 @@ class PaymentController extends Controller
 
                 /* Order Date */
                 $orderDate = $payment->created_at
-                    ? $payment->created_at->format('jS F Y | g:i A')
+                    ? "\t" . formatDateTimeByLocale($payment->created_at)
                     : $na;
 
                 /* Transaction Date */
                 $transactionDate = $payment->updated_at
-                    ? $payment->updated_at->format('jS F Y | g:i A')
+                    ? "\t" . formatDateTimeByLocale($payment->updated_at)
                     : $na;
 
                 /* Promo Code */
@@ -315,7 +315,7 @@ class PaymentController extends Controller
 
                 /* Date */
                 $dateTime = $payment->created_at
-                    ? $payment->created_at->format('jS F Y | g:i A')
+                    ? "\t" . formatDateTimeByLocale($payment->created_at)
                     : $na;
 
                 fputcsv($file, [
@@ -407,8 +407,8 @@ class PaymentController extends Controller
                 $amount = $payment->amount ?? 0;
 
                 $dateTime = $payment->created_at
-                    ? $payment->created_at->format('jS F Y | g:i A')
-                    : '-';
+                    ? "\t" . formatDateTimeByLocale($payment->created_at)
+                    : $na;
 
                 fputcsv($file, [
                     $index + 1,
@@ -490,8 +490,8 @@ class PaymentController extends Controller
                 $amount = $payment->price ?? 0;
 
                 $dateTime = $payment->created_at
-                    ? $payment->created_at->format('jS F Y | g:i A')
-                    : '-';
+                    ? "\t" . formatDateTimeByLocale($payment->created_at)
+                    : $na;
 
                 fputcsv($file, [
                     $index + 1,

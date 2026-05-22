@@ -160,7 +160,9 @@ class AffiliateUserController extends Controller
                 $mobile = '="' . ($user['country_code'] . $user['mobile']) . '"';
 
                 /* -------- DATE -------- */
-                $joiningDate = '="' . \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') . '"';
+                $joiningDate = $user['created_at']
+                    ? "\t" . formatDateTimeByLocale($user['created_at'])
+                    : '-';
 
                 /* -------- ADDRESS -------- */
                 $address = ($user['address_details']['address1'] ?? '') . ' ' .
@@ -273,7 +275,9 @@ class AffiliateUserController extends Controller
                 $mobile = '="' . ($user['country_code'] . $user['mobile']) . '"';
 
                 /* -------- DATE -------- */
-                $joiningDate = '="' . \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') . '"';
+                $joiningDate = $user['created_at']
+                    ? "\t" . formatDateTimeByLocale($user['created_at'])
+                    : '-';
 
                 /* -------- ADDRESS -------- */
                 $address = ($user['address_details']['address1'] ?? '') . ' ' .
@@ -385,7 +389,9 @@ class AffiliateUserController extends Controller
                 $mobile = '="' . ($user['country_code'] . $user['mobile']) . '"';
 
                 /* -------- DATE -------- */
-                $joiningDate = '="' . \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') . '"';
+                $joiningDate = $user['created_at']
+                    ? "\t" . formatDateTimeByLocale($user['created_at'])
+                    : '-';
 
                 /* -------- ADDRESS -------- */
                 $address = ($user['address_details']['address1'] ?? '') . ' ' .
