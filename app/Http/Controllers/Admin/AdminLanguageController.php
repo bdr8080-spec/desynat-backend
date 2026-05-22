@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Auth;
+
+use App\Models\Admin;
+
 class AdminLanguageController extends Controller
 {
 
@@ -14,6 +18,11 @@ class AdminLanguageController extends Controller
         session(['locale' => $locale]);
         session(['lang' => $locale]);
         
+    }
+    
+    if(Auth::guard('admin')->check() && Auth::guard('admin')->user()){
+        $user_id=Auth::guard('admin')->user()->id;
+        Admin::where('id',$user_id)->update(['lang'=>$locale]);
     }
 
     return redirect()->back();

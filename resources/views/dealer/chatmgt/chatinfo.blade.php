@@ -58,7 +58,7 @@
 
                                             </div>
                                             <h6 class="product-title mt-2">
-                                                {{ @$single_chats['record']->product_variation->final_price }}  {{ __('seller_messages.KD') }}</h6>
+                                                {{ $single_chats['record']->product_variation->final_price }}  {{ __('seller_messages.KD') }}</h6>
                                         </div>
 
                                     </div>

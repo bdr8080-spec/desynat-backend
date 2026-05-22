@@ -5,6 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\User;
+use App\Models\AffilatedUser;
+
 class UserLanguageController extends Controller
 {
 
@@ -14,6 +17,13 @@ class UserLanguageController extends Controller
         session(['locale' => $locale]);
         session(['lang' => $locale]);
         
+    }
+
+
+    if(Auth::guard('web')->check() && Auth::guard('web')->user()){
+        $user_id=Auth::guard('web')->user()->id;
+        User::where('id',$user_id)->update(['lang'=>$locale]);
+        AffilatedUser::where('user_id',$user_id)->update(['lang'=>$locale]);
     }
 
     return redirect()->back();
