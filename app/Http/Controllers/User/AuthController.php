@@ -884,14 +884,18 @@ class AuthController extends Controller
                 'email' => $googleUser->email,
             ],
             [
-                'name' => $googleUser->name,
-                'google_id' => $googleUser->id,
+                "socialType"=>"1",
+                'email' => $googleUser->email, 
+                'full_name' => $googleUser->name,
+                'unique_id' => $googleUser->id,
+                'profile_image' => $googleUser->avatar,
+                'otp_verify' => 1,                 
             ]
         );
 
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return redirect('/');
     }
 
     // FACEBOOK LOGIN
