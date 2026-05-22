@@ -196,7 +196,9 @@ class SellerController extends Controller
                 // -------------------------
                 // DATE
                 // -------------------------
-                $joiningDate = '="' . \Carbon\Carbon::parse($seller['created_at'])->format('d-m-Y') . '"';
+                $joiningDate = $seller['created_at']
+                    ? "\t" . formatDateTimeByLocale($seller['created_at'])
+                    : '-';
 
                 // -------------------------
                 // STATUS (EN / AR)
@@ -345,7 +347,9 @@ class SellerController extends Controller
                 $mobile = '="' . ($seller['country_code'] . $seller['mobile']) . '"';
 
                 /* -------- DATE -------- */
-                $joiningDate = '="' . \Carbon\Carbon::parse($seller['created_at'])->format('d-m-Y') . '"';
+                $joiningDate = $seller['created_at']
+                    ? "\t" . formatDateTimeByLocale($seller['created_at'])
+                    : '-';
 
                 /* -------- BIO SAFE -------- */
                 $bio = $seller['store_info']['bio'] ?? $na;
@@ -474,7 +478,9 @@ class SellerController extends Controller
                 $mobile = '="' . ($seller['country_code'] . $seller['mobile']) . '"';
 
                 /* -------- DATE -------- */
-                $joiningDate = '="' . \Carbon\Carbon::parse($seller['created_at'])->format('d-m-Y') . '"';
+                $joiningDate = $seller['created_at']
+                    ? "\t" . formatDateTimeByLocale($seller['created_at'])
+                    : '-';
 
                 /* -------- BIO -------- */
                 $bio = $seller['store_info']['bio'] ?? $na;

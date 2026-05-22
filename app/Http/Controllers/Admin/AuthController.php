@@ -735,12 +735,12 @@ class AuthController extends Controller
                         $country = $countryInfo->name ?? $countryInfo->name_ar ?? $na;
                     }
 
-                    $orderDate = $data->created_at
-                        ? $data->created_at->format('jS F Y | g:i A')
+                   $orderDate = $data->created_at
+                        ? "\t" . formatDateTimeByLocale($data->created_at)
                         : '-';
 
                     $cancelDate = $data->updated_at
-                        ? $data->updated_at->format('jS F Y | g:i A')
+                        ? "\t" . formatDateTimeByLocale($data->updated_at)
                         : '-';
 
                     $reason = $data->cancel_reason ?? $na;
