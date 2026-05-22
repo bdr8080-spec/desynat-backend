@@ -192,13 +192,13 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                                                     <input type="radio" name="country_code"
                                                         value="{{ $item->dial_code }}" data-flag="{{ $item->flag1 }}"
-                                                        data-name="{{ $item->name }}" class="country-radio"
+                                                        data-name="{{ App::getLocale() == 'en' ? $item->name : $item->name_ar }}" class="country-radio"
                                                         {{ ($data->country_code == $item->dial_code) ? 'checked' : '' }}
                                                         hidden>
 
                                                     <span>
                                                         <img src="{{ $item->flag1 }}" width="25" height="16">
-                                                        {{ $item->dial_code }} ({{ $item->name }})
+                                                        {{ $item->dial_code }} ({{ App::getLocale() == 'en' ? $item->name : $item->name_ar }})
                                                     </span>
 
                                                 </label>
