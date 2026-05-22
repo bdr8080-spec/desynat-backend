@@ -65,16 +65,16 @@
                                     onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-12">
+                        <div class="col-lg-3 col-md-12 col-12">
                             <div class="form-group mt-4 w-100">
                                 <label for="to" class="form-label">{{ __('admin_messages.ticket_type') }}</label>
 
-                                <select name="ticket_type_filter" id="ticket_type_filter" onchange="document.getElementById('filterForm').submit();" class="form-select form-select-lg">
+                                <select name="ticket_type_filter1" id="ticket_type_filter1" onchange="document.getElementById('filterForm').submit();" class="form-select form-select-lg">
                                     <option value="">{{ __('admin_messages.select_ticket_type') }}</option>
                                     @foreach($ticketTypes as $type)
                                         <option value="{{ $type->id }}"
-                                            {{ request('ticket_type_filter') == $type->id ? 'selected' : '' }}
-                                            @if(app()->getLocale() == 'en')>
+                                            {{ request('ticket_type_filter') == $type->id ? 'selected' : '' }}>
+                                            @if(app()->getLocale() == 'en')
                                             {{ $type->name }}
                                             @else
                                             {{ $type->name_arabic }}
@@ -221,7 +221,7 @@
                                     @foreach($ticketTypes as $type)
                                         <option value="{{ $type->id }}"
                                             {{ request('ticket_type_filter1') == $type->id ? 'selected' : '' }}>
-                                            @if(app()->getLocale() == 'en')>
+                                            @if(app()->getLocale() == 'en')
                                             {{ $type->name }}
                                             @else
                                             {{ $type->name_arabic }}
@@ -370,7 +370,7 @@
                                     @foreach($ticketTypes as $type)
                                         <option value="{{ $type->id }}"
                                             {{ request('ticket_type_filter2') == $type->id ? 'selected' : '' }}>
-                                            @if(app()->getLocale() == 'en')>
+                                            @if(app()->getLocale() == 'en')
                                             {{ $type->name }}
                                             @else
                                             {{ $type->name_arabic }}
