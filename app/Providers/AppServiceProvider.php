@@ -27,22 +27,41 @@ class AppServiceProvider extends ServiceProvider
        
     }
 
-//     private function loadHeaderCountryData()
+
+// private function loadHeaderCountryData()
 // {
 //     View::composer('user.layout.header', function ($view) {
-//         $view->with('GetsellerCountry', \App\Models\all_countrie::get());
+//         $view->with(
+//             'GetsellerCountry',
+//             \App\Models\all_countrie::get()->unique('currency_code')->values()
+//         );
 //     });
 // }
 
-private function loadHeaderCountryData()
-{
-    View::composer('user.layout.header', function ($view) {
-        $view->with(
-            'GetsellerCountry',
-            \App\Models\all_countrie::get()->unique('currency_code')->values()
-        );
-    });
-}
+    private function loadHeaderCountryData()
+    {
+        View::composer('user.layout.header', function ($view) {
+
+            $allowedCurrencies = [
+                'KWD',
+                'SAR',
+                'AED',
+                'QAR',
+                'OMR',
+                'BHD',
+                'USD',
+                'EUR'
+            ];
+
+            $view->with(
+                'GetsellerCountry',
+                \App\Models\all_countrie::whereIn('currency_code', $allowedCurrencies)
+                    ->get()
+                    ->unique('currency_code')
+                    ->values()
+            );
+        });
+    }
 
 
 }

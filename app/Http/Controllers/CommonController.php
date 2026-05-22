@@ -738,16 +738,47 @@ class CommonController extends Controller
         }
     }
 
-    public function all_country_unique_currency(Request $request){
+    // public function all_country_unique_currency(Request $request){
         
-        $all_country = all_countrie::whereIn('id', function($query) {
-            $query->selectRaw('MIN(id)')
-                ->from('all_countries')
-                ->groupBy('currency_code');
-        })->get();
+    //     $all_country = all_countrie::whereIn('id', function($query) {
+    //         $query->selectRaw('MIN(id)')
+    //             ->from('all_countries')
+    //             ->groupBy('currency_code');
+    //     })->get();
         
-        return ApiResponse::generateResponse('success', 'All Country Details fetch Successfully', $all_country, 200);
+    //     return ApiResponse::generateResponse('success', 'All Country Details fetch Successfully', $all_country, 200);
         
+    // }
+
+    public function all_country_unique_currency(Request $request)
+    {
+        $allowedCurrencies = [
+            'KWD',
+            'SAR',
+            'AED',
+            'QAR',
+            'OMR',
+            'BHD',
+            'USD',
+            'EUR'
+        ];
+
+        $all_country = all_countrie::whereIn('currency_code', $allowedCurrencies)
+            ->whereIn('id', function ($query) use ($allowedCurrencies) {
+
+                $query->selectRaw('MIN(id)')
+                    ->from('all_countries')
+                    ->whereIn('currency_code', $allowedCurrencies)
+                    ->groupBy('currency_code');
+            })
+            ->get();
+
+        return ApiResponse::generateResponse(
+            'success',
+            'All Country Details fetch Successfully',
+            $all_country,
+            200
+        );
     }
 
     
