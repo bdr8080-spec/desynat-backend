@@ -801,7 +801,7 @@ $(document).ready(function() {
                             }
                         }
 
-                        let time = response.data.times;
+                        let time = formatDateTimeByLocale(response.data.times);
 
                         appendRightMessage({
                             message: msg ?? '',
@@ -935,43 +935,33 @@ function loadChatMessages() {
 
                 const msg = messages[msgId];
 
-                const time = new Date(msg.times).toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
+                 const locale = appLocale === 'ar' ? 'ar-EG' : 'en-US';
 
-                // if (msg.by === 'user') {
-                //     appendLeftMessage({
-                //         message: msg.type == '0' ?
-                //             if (App::getLocale() == 'ar') {
-                //                 msg.message
-                //             } else {
-                //                 msg.messageAr
-                //             } : '',
-                //         image: msg.type == '1' ? msg.message : '',
-                //         time: time
-                //     });
-                // } else {
-                //     appendRightMessage({
-                //         message: msg.type == '0' ? msg.message : '',
-                //         image: msg.type == '1' ? msg.message : '',
-                //         time: time
-                //     });
-                // }
+                const newTime = new Date(msg.times).toLocaleTimeString(locale, {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
 
+                // const time = new Date(msg.times).toLocaleTimeString([], {
+                //     hour: '2-digit',
+                //     minute: '2-digit'
+                // });
+
+              
                 if (msg.by === 'user') {
                     appendLeftMessage({
                         message: msg.type === '0' ?
                             (appLocale === 'ar' ? msg.messageAr : msg.message) : '',
                         image: msg.type === '1' ? msg.message : '',
-                        time: time
+                        time: newTime
                     });
                 } else {
                     appendRightMessage({
                         message: msg.type === '0' ?
                             (appLocale === 'ar' ? msg.messageAr : msg.message) : '',
                         image: msg.type === '1' ? msg.message : '',
-                        time: time
+                        time: newTime
                     });
                 }
 
