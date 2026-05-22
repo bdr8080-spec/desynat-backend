@@ -908,19 +908,26 @@ class AuthController extends Controller
     {
         $facebookUser = Socialite::driver('facebook')->user();
 
+
         $user = User::updateOrCreate(
             [
-                'email' => $facebookUser->email,
+                'unique_id' => $facebookUser->id,
             ],
             [
-                'name' => $facebookUser->name,
-                'facebook_id' => $facebookUser->id,
+                'email' => $facebookUser->email,
+                "socialType"=>"1",
+                'full_name' => $facebookUser->name,
+                'unique_id' => $facebookUser->id,
+                
+                // 'profile_image' => $googleUser->avatar,
+                'otp_verify' => 1,       
+
             ]
         );
 
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return redirect('/');
     }
 
 

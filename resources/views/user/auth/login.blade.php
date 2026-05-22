@@ -179,7 +179,7 @@
                         <i class="fa-brands fa-google"></i>
                     </a>
                     <a class="google" href="/auth/facebook">
-                        <i class="fa-brands fa-apple"></i>
+                        <i class="fa-brands fa-facebook"></i>
                     </a>
                     
                 </div>
