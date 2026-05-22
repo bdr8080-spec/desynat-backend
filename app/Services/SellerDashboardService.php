@@ -128,30 +128,67 @@ class SellerDashboardService
             ->orderBy('month')
             ->get();
 
+            // $months = [
+            //     1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr',
+            //     5 => 'May', 6 => 'Jun', 7 => 'Jul', 8 => 'Aug',
+            //     9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec'
+            // ];
+
             $months = [
-                1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr',
-                5 => 'May', 6 => 'Jun', 7 => 'Jul', 8 => 'Aug',
-                9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dec'
+                1 => ['en' => 'Jan', 'ar' => 'يناير'],
+                2 => ['en' => 'Feb', 'ar' => 'فبراير'],
+                3 => ['en' => 'Mar', 'ar' => 'مارس'],
+                4 => ['en' => 'Apr', 'ar' => 'أبريل'],
+                5 => ['en' => 'May', 'ar' => 'مايو'],
+                6 => ['en' => 'Jun', 'ar' => 'يونيو'],
+                7 => ['en' => 'Jul', 'ar' => 'يوليو'],
+                8 => ['en' => 'Aug', 'ar' => 'أغسطس'],
+                9 => ['en' => 'Sep', 'ar' => 'سبتمبر'],
+                10 => ['en' => 'Oct', 'ar' => 'أكتوبر'],
+                11 => ['en' => 'Nov', 'ar' => 'نوفمبر'],
+                12 => ['en' => 'Dec', 'ar' => 'ديسمبر'],
             ];
 
             $order_chart = [];
 
+            // foreach ($months as $num => $name) {
+            //     $order_chart[] = [
+            //         'month' => $name,
+            //         'orders' => $orderAnalytics->firstWhere('month', $num)->total_orders ?? 0
+            //     ];
+            // }
+
+            $order_chart = [];
+
             foreach ($months as $num => $name) {
+
                 $order_chart[] = [
-                    'month' => $name,
+                    'month' => $name['en'],
+                    'month_ar' => $name['ar'],
                     'orders' => $orderAnalytics->firstWhere('month', $num)->total_orders ?? 0
                 ];
             }
 
             $visitor_chart = [];
 
+            // foreach ($months as $num => $name) {
+            //     $data = $visitorAnalytics->firstWhere('month', $num);
+
+            //     $visitor_chart[] = [
+            //         'month' => $name,
+            //         //'registered_visitors' => $data->registered_visitors ?? 0,
+            //         //'guest_visitors' => $data->guest_visitors ?? 0,
+            //         'total_visitors' => ($data->registered_visitors ?? 0) + ($data->guest_visitors ?? 0),
+            //     ];
+            // }
+
             foreach ($months as $num => $name) {
+
                 $data = $visitorAnalytics->firstWhere('month', $num);
 
                 $visitor_chart[] = [
-                    'month' => $name,
-                    //'registered_visitors' => $data->registered_visitors ?? 0,
-                    //'guest_visitors' => $data->guest_visitors ?? 0,
+                    'month' => $name['en'],
+                    'month_ar' => $name['ar'],
                     'total_visitors' => ($data->registered_visitors ?? 0) + ($data->guest_visitors ?? 0),
                 ];
             }

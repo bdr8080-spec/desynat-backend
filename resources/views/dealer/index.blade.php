@@ -482,23 +482,40 @@ document.addEventListener("tidioChat-ready", function() {
 });
 </script>
 
+
 <script>
 const dashboardData = @json($data);
 
+const isArabic = "{{ App::getLocale() }}" === 'ar';
+
 function getOrderData() {
     return {
-        labels: dashboardData.order_analytics.map(item => item.month),
+        labels: dashboardData.order_analytics.map(item => 
+            isArabic ? item.month_ar : item.month
+        ),
+
         data: dashboardData.order_analytics.map(item => item.orders),
-        label: 'Total Order Conversion',
+
+        label: isArabic
+            ? 'إجمالي تحويل الطلبات'
+            : 'Total Order Conversion',
+
         color: '#55000099'
     };
 }
 
 function getVisitorData() {
     return {
-        labels: dashboardData.visitor_analytics.map(item => item.month),
+        labels: dashboardData.visitor_analytics.map(item => 
+            isArabic ? item.month_ar : item.month
+        ),
+
         data: dashboardData.visitor_analytics.map(item => item.total_visitors),
-        label: 'Total Customer Visits',
+
+        label: isArabic
+            ? 'إجمالي زيارات العملاء'
+            : 'Total Customer Visits',
+
         color: '#007bff'
     };
 }
@@ -509,8 +526,10 @@ let initialData = getOrderData();
 
 const pointChart = new Chart(ctx, {
     type: 'line',
+
     data: {
         labels: initialData.labels,
+
         datasets: [{
             label: initialData.label,
             data: initialData.data,
@@ -524,19 +543,24 @@ const pointChart = new Chart(ctx, {
             backgroundColor: '#F3D1A2'
         }]
     },
+
     options: {
         responsive: true
     }
 });
 
 document.querySelectorAll('input[name="radio"]').forEach(radio => {
+
     radio.addEventListener('change', function() {
 
         let selectedData;
 
         if (this.value === 'orders') {
+
             selectedData = getOrderData();
+
         } else {
+
             selectedData = getVisitorData();
         }
 
