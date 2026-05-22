@@ -26,6 +26,17 @@ use App\Http\Controllers\SaveFirebaseToken;
 use App\Http\Controllers\AgoraController;
 
 
+
+// Google Login 
+Route::get('/auth/google', [AuthController::class, 'googleLogin']);
+Route::get('/auth/google/callback', [AuthController::class, 'googleCallback']);
+
+// facebook Login 
+Route::get('/auth/facebook', [AuthController::class, 'facebookLogin']);
+Route::get('/auth/facebook/callback', [AuthController::class, 'facebookCallback']);
+
+
+
 Route::middleware(['checkLanguage'])->group(function(){
 
 Route::get('/user-change-language/{locale}', [UserLanguageController::class, 'UserChangelanguage'])->name("userLanguage");

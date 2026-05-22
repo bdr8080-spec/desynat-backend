@@ -15,7 +15,7 @@ use App\Models\SubCategory;
 use App\Models\FullBanner;
 use App\Models\all_countrie;
 use Illuminate\Validation\Rule;
-use Auth;
+// use Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Session;
@@ -25,6 +25,11 @@ use App\Services\UserAuthService;
 use App\Services\TwilioService;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserOtpMail;
+
+
+use Laravel\Socialite\Facades\Socialite;
+
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -861,5 +866,61 @@ class AuthController extends Controller
             );
         }
     }
+
+    // Login With Ggogle and facebook Code
+
+ // GOOGLE LOGIN
+    public function googleLogin()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googleCallback()
+    {
+        $googleUser = Socialite::driver('google')->user();
+
+        $user = User::updateOrCreate(
+            [
+                'email' => $googleUser->email,
+            ],
+            [
+                'name' => $googleUser->name,
+                'google_id' => $googleUser->id,
+            ]
+        );
+
+        Auth::login($user);
+
+        return redirect('/dashboard');
+    }
+
+    // FACEBOOK LOGIN
+    public function facebookLogin()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function facebookCallback()
+    {
+        $facebookUser = Socialite::driver('facebook')->user();
+
+        $user = User::updateOrCreate(
+            [
+                'email' => $facebookUser->email,
+            ],
+            [
+                'name' => $facebookUser->name,
+                'facebook_id' => $facebookUser->id,
+            ]
+        );
+
+        Auth::login($user);
+
+        return redirect('/dashboard');
+    }
+
+
+
+
 
 }
