@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\AffilatedUser;
 
+use Auth;
+
 class UserLanguageController extends Controller
 {
 
@@ -18,7 +20,6 @@ class UserLanguageController extends Controller
         session(['lang' => $locale]);
         
     }
-
 
     if(Auth::guard('web')->check() && Auth::guard('web')->user()){
         $user_id=Auth::guard('web')->user()->id;
