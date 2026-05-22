@@ -147,14 +147,14 @@
                                                             <input type="radio" name="country_code"
                                                                 value="{{ $item->dial_code }}"
                                                                 data-flag="{{ $item->flag1 }}"
-                                                                data-name="{{ $item->name }}"
+                                                                data-name="{{ App::getLocale() == 'en' ? $item->name : $item->name_ar }}"
                                                                 class="country-radio"
                                                                 {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                                                 hidden>
 
                                                             <div width="25" height="16">
                                                                 <span>{{ $item->flag1 }} {{ $item->dial_code }}
-                                                                    ({{ $item->name }})
+                                                                    ({{ App::getLocale() == 'en' ? $item->name : $item->name_ar }})
                                                                 </span>
                                                             </div>
 
