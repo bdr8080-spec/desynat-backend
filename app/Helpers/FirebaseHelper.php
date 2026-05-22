@@ -108,7 +108,7 @@ use App\Models\DeliveryBoy;
 // }
 
 if (!function_exists('sendPushNotificationNew')) {
-    function sendPushNotificationNew($deviceTokens, $title_en, $title_ar = null, $body_en, $body_ar = null, $deviceType = 0, $badge = 0, $lang = 'en')
+    function sendPushNotificationNew($deviceTokens, $title_en, $title_ar = null, $body_en=null, $body_ar = null, $deviceType = 0, $badge = 0, $lang = 'en')
     {
         $projectId = 'desynat';
         $keyFilePath = storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json');

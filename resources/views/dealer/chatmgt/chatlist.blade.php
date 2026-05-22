@@ -104,10 +104,9 @@
 
                                                 @endif
 
-                                                <div class="chat-user-light"> {{ $val->last_chat_time }}
+                                                <div class="chat-user-light"> {{ formatDateTimeByLocale($val->last_chat_time) }}
                                                 </div>
                                             </div>
-
                                             @php
 
                                             $status = SellerChatproductRequestStatus($val);
@@ -128,11 +127,6 @@
                     </div>
 
                     @endforeach
-
-
-
-
-
 
                 </div>
             </div>
