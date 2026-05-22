@@ -178,7 +178,7 @@ return [
 "Year" => "سنة",
 "Number_of_Products" => "عدد المنتجات",
 "Number_of_Videos" => "عدد الفيديوهات (ريلز)",
-"Number_of_Highlights" => "عدد المميزات",
+'Number_of_Highlights' => 'أبرز الأحداث',
 "Stories" => "القصص",
 "Yes" => "نعم",
 "No" => "لا",
