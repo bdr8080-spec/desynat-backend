@@ -172,16 +172,16 @@
                 </div>
 
                 <div class="social-icon">
-                    <a class="apple">
+                    {{-- <a class="apple" >
                         <i class="fa-brands fa-facebook"></i>
-                    </a>
-                    <a class="facebook">
+                    </a> --}}
+                    <a class="facebook" href="/auth/google">
                         <i class="fa-brands fa-google"></i>
                     </a>
-                    <a class="google">
+                    <a class="google" href="/auth/facebook">
                         <i class="fa-brands fa-apple"></i>
                     </a>
-
+                    
                 </div>
                  <p class="mt-3 dontAccount">{{ __('user_messages.do_not_have_an_account') }} <a href="{{route('userRegister')}}">{{ __('user_messages.sign_up_small') }}</a></p>
                  
