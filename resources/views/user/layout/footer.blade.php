@@ -162,7 +162,7 @@
      <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="notificationDialogUser">
 
          <div class="offcanvas-header">
-             <h5 class="offcanvas-title">Notifications</h5>
+             <h5 class="offcanvas-title">{{__('seller_messages.Notification')}}</h5>
              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
          </div>
 
@@ -194,7 +194,7 @@
                          </div>
 
                          <div class="post-date">
-                             {{ \Carbon\Carbon::parse($notification->created_at)->format('M d, h:i A') }}
+                             {{formatDateTimeByLocale(\Carbon\Carbon::parse($notification->created_at)->format('M d, h:i A'))}}
                          </div>
                      </div>
 

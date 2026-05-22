@@ -77,13 +77,13 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->order->order_id }}</td>
-                        <td>{{ $data->order->transaction_id ??__('seller_messages.N_A')  }}</td>
-                        <td>{{ formatDateTimeByLocale(\Carbon\Carbon::parse($data->updated_at)->format('d/m/y \a\t h:iA')) }}</td>
+                        <td>{{ $data->order->transaction_id ??__('admin_messages.na')  }}</td>
+                        <td>{{ formatDateTimeByLocale($data->updated_at) }}</td>
                         <td>{{ $data->user_details->full_name ?? '' }}</td>
                         <td>{{ $data->id }}</td>
                         <td>{{ $data->amount }} {{__('seller_messages.KD')}}</td>
                         <!-- <td>20 KD</td> -->
-                         <td>Pending</td>
+                         <td>{{__('admin_messages.pending')}}</td>
                     </tr>
                     @empty
 

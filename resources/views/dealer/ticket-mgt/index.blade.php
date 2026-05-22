@@ -41,9 +41,9 @@ $can_action=$menu_permission['can_action'];
                         <div class="ticket">
                             <p class="text-muted mb-1">
                                 @if(App::getlocale()=='en')
-                                {{ $ticket->ticket_type_details->name ?? 'N/A' }}
+                                {{ $ticket->ticket_type_details->name ?? __('admin_messages.na') }}
                                 @else 
-                                {{ $ticket->ticket_type_details->name_arabic ?? 'N/A' }}
+                                {{ $ticket->ticket_type_details->name_arabic ?? __('admin_messages.na') }}
                                 @endif
                             </p>
                         </div>
@@ -58,7 +58,7 @@ $can_action=$menu_permission['can_action'];
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="text-muted mb-1"> {{ __('seller_messages.Raised_On') }}</p>
                             <p class="fst-500">
-                                {{ \Carbon\Carbon::parse($ticket->created_at)->format('d M Y, h:i A') }}
+                                {{ formatDateTimeByLocale($ticket->created_at) }}
                             </p>
                         </div>
 
@@ -132,7 +132,7 @@ $can_action=$menu_permission['can_action'];
 
                     <div class="sub-form">
                         <div class="label-flex">
-                            <label>Title</label>
+                            <label>{{ __('seller_messages.Title') }}</label>
                         </div>
                         <input type="text" id="title" name="title" class="form-control" placeholder="{{ __('seller_messages.Enter_Title') }}">
                         <span class="text-danger small d-none" id="title_error"> {{ __('seller_messages.Please_Enter_Title') }}</span>

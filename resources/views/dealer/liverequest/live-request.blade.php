@@ -91,11 +91,9 @@
                         <td>{{ $index + 1 }}</td>
                         <td>#{{ $req['order_id'] }}</td>
                         <td>
-                            {{ \Carbon\Carbon::parse($req['created_at'])
-                                ->setTimezone(config('app.timezone'))
-                                ->format('Y/m/d \a\t h:i A') }}
+                            {{ formatDateTimeByLocale($req['created_at']) }}
                         </td>
-                        <td>{{ str_replace('-', '/', $req['timeslot_details']['date']) }} at {{ $req['timeslot_details']['from'] }}</td>
+                        <td>{{ formatDateTimeByLocale($req['timeslot_details']['date']) }} at {{ $req['timeslot_details']['from'] }}</td>
                         <td>
                             @php
                             $now = \Carbon\Carbon::now();
@@ -127,8 +125,8 @@
                             @if($req['admin_verify'] == '2' || $req['admin_verify'] == '3')
                             <a href="javascript:void(0)" class="eyebtn view-reason-btn" data-bs-toggle="modal"
                                 data-bs-target="#Addreason"
-                                data-status="{{ $req['admin_verify'] == '2' ? 'Rejected' : 'Cancelled' }}"
-                                data-date="{{ \Carbon\Carbon::parse($req['updated_at'])->format('d/m/Y') }}"
+                                data-status="{{ $req['admin_verify'] == '2' ? __('admin_messages.rejected') : __('admin_messages.cancelled') }}"
+                                data-date="{{ formatDateTimeByLocale($req['updated_at']) }}"
                                 data-reason="{{ $req['admin_verify'] == '2' ? ($req['reject_reason'] ?? '-') : ($req['cancel_reason'] ?? '-') }}">
                                 <i class="bi bi-eye"></i>
                             </a>
@@ -247,7 +245,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h3>Cancel Reason </h3>
+                <h3>{{ __('admin_messages.reason') }} </h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -259,7 +257,7 @@
                         <small id="cancelReasonError" class="text-danger" style="display:none;"></small>
                     </div>
                     <div class="py-3">
-                        <button type="button" class="btn add-fillbtn w-100" id="submitCancelReason">Submit</button>
+                        <button type="button" class="btn add-fillbtn w-100" id="submitCancelReason">{{ __('admin_messages.submit') }}</button>
                     </div>
                 </div>
             </div>
@@ -293,8 +291,17 @@
 
 
 <script>
+const isArabic = "{{ App::getLocale() }}" === 'ar';
 
-const months = [
+// const months = [
+//     'January', 'February', 'March', 'April', 'May', 'June',
+//     'July', 'August', 'September', 'October', 'November', 'December'
+// ];
+
+const months = isArabic ? [
+    'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+    'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+] : [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
@@ -415,7 +422,9 @@ function loadTimeslots(date) {
             });
 
         } else {
-            html = `<p class="text-danger">No Timeslot Available</p>`;
+            html = isArabic
+                ? `<p class="text-danger">لا توجد أوقات متاحة</p>`
+                : `<p class="text-danger">No Timeslot Available</p>`;
             $('#totalSlots').text(0);
         }
 
@@ -547,6 +556,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('Addreason');
     const statusDate = document.getElementById('reason-status-date');
     const reasonText = document.getElementById('reason-text');
+    const isArabic = "{{ App::getLocale() }}" === 'ar';
 
     modal.addEventListener('show.bs.modal', function(event) {
         const button = event.relatedTarget;
@@ -554,7 +564,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const date = button.getAttribute('data-date');
         const reason = button.getAttribute('data-reason');
 
-        statusDate.textContent = `${status} on - ${date}`;
+        statusDate.textContent = isArabic
+            ? `${status} - في ${date}`
+            : `${status} on - ${date}`;
         reasonText.textContent = reason;
     });
 });
@@ -568,13 +580,14 @@ document.addEventListener('DOMContentLoaded', function() {
             let reqId = this.getAttribute('data-id');
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "{{ __('admin_messages.are_you_sure?') }}",
+                text: "{{ __('admin_messages.you_wont_be_able_to_revert_this') }}",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#6c757d",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "{{ __('admin_messages.yes_delete_it') }}",
+                cancelButtonText: "{{ __('admin_messages.cancel') }}"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/seller/deleteLiveRequest/${reqId}`, {
@@ -645,7 +658,7 @@ $(document).ready(function() {
         let id = $('#requestId').val();
 
         if (!cancelReason) {
-            $('#cancelReasonError').text('Please enter reason').show();
+            $('#cancelReasonError').text("{{ __('admin_messages.please_enter_reason') }}").show();
             return;
         }
 

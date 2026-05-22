@@ -1169,7 +1169,7 @@ return [
     'Business' => 'تجاري',
 
     'IBAN' => 'رقم الآيبان',
-    'SWIFT_BIC' => 'سويفت / BIC',
+    'SWIFT_BIC' => 'سويفت / رمز تعريف البنك',
     'Bank_Name' => 'اسم البنك',
     'Account_Holder_Name' => 'اسم صاحب الحساب',
     'Proof_Of_Documents' => 'إثبات المستندات',

@@ -37,7 +37,7 @@
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="notificationDialog">
     
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Notifications</h5>
+        <h5 class="offcanvas-title">{{__('seller_messages.Notification')}}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
@@ -64,12 +64,11 @@
                     <div class="noti-header d-flex justify-content-between">
                         <div class="noti-title">
 
-                        @if(APP::getLocale()=='en')
-                            {{ $notification->title_english ?? 'Notification' }}
+                        @if(App::getLocale() == 'en')
+                            {{ $notification->title_english ?? __('seller_messages.Notification') }}
                         @else
-                            {{ $notification->title_arabic ?? __('seller_messages.Notification')}}
-                        
-                            @endif
+                            {{ $notification->title_arabic ?? __('seller_messages.Notification') }}
+                        @endif
                         
                         </div>
 
@@ -94,7 +93,7 @@
 
             @empty
             <div class="text-center text-muted">
-                No notifications found
+                {{ __('user_messages.no_notification_found') }}
             </div>
             @endforelse
 

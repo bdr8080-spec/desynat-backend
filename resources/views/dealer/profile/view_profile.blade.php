@@ -454,7 +454,7 @@
 
             <div class="add-caption mt-3">
                  <h6>{{ __('seller_messages.Caption') }}</h6>
-                <textarea id="storyCaption" class="form-control" placeholder="Write here..."></textarea>
+                <textarea id="storyCaption" class="form-control" placeholder="{{ __('user_messages.write_here') }}..."></textarea>
 
                 <!-- Caption Error -->
                 <div id="captionError" style="color:red; font-size:0.9rem; margin-top:0.5rem;"></div>

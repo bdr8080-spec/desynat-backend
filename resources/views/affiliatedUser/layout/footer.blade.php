@@ -122,7 +122,7 @@
                         </div>
 
                         <div class="post-date">
-                            {{ \Carbon\Carbon::parse($notification->created_at)->format('M d, h:i A') }}
+                            {{formatDateTimeByLocale(\Carbon\Carbon::parse($notification->created_at)->format('M d, h:i A'))}}
                         </div>
                     </div>
 
