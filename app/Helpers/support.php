@@ -338,6 +338,7 @@ if (!function_exists('Seller_orderItemViewData')) {
         $color = $variant->color ?? null;
         $size  = $variant->size ?? null;
 
+        if(isset($variant->variant_image)){
         // Variant image handling
         if (is_array($variant->variant_image)) {
             $images = $variant->variant_image;
@@ -346,6 +347,10 @@ if (!function_exists('Seller_orderItemViewData')) {
         }
 
         $image = $images[0] ?? asset('user/assets/images/categorie1.png');
+        }else{
+            $image =asset('user/assets/images/categorie1.png');
+       
+        }
 
         // {{ __('seller_messages.Cancelled') }}
         // Order status text
