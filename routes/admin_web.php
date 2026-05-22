@@ -302,7 +302,7 @@ Route::group(['prefix'=>'admin'], function(){
      Route::get('/export_giftcard_payment_data', [PaymentController::class, 'export_giftcard_payment_data'])->name('admin.export_giftcard_payment_data');
      Route::get('/export_banner_payment_data', [PaymentController::class, 'export_banner_payment_data'])->name('admin.export_banner_payment_data');
      //refund export
-     Route::get('/export_refund_data', [AuthController::class, 'export_refund_data'])->name('admin.export_refund_data');
+     Route::get('/export_refund_data_new', [AuthController::class, 'export_refund_data_new'])->name('admin.export_refund_data_new');
 
         
 
