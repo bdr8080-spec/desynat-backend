@@ -341,8 +341,8 @@ foreach ($check_chatRecord as $key => $val) {
                     'title_english' => "You have a new message",
                     'title_arabic' => "لديك رسالة جديدة",
 
-                    'description_english' => $request->message,
-                    'description_arabic' => $request->messageAr,
+                    'description_english' => $request->message??null,
+                    'description_arabic' => $request->messageAr??null,
 
                     'notification_type' => 'chat_message'
                 ]);
@@ -359,8 +359,8 @@ foreach ($check_chatRecord as $key => $val) {
                     'title_english' => "You have a new message",
                     'title_arabic' => "لديك رسالة جديدة",
 
-                    'description_english' => $request->message,
-                    'description_arabic' => $request->messageAr,
+                    'description_english' => $request->message??null,
+                    'description_arabic' => $request->messageAr??null,
 
                     'notification_type' => 'chat_message'
                 ]);
