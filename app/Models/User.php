@@ -92,4 +92,9 @@ class User extends Authenticatable
         return $this->hasOne(all_countrie::class, 'id', 'selected_currency');
     }
 
+    public function order_details()
+    {
+        return $this->hasMany(orderdetail::class, 'user_id');
+    }
+
 }

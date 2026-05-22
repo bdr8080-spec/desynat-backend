@@ -92,7 +92,22 @@ class UserManagementService
         try {
             $limit = (int) $request->input('limit');
 
-            $query = User::with(['country_info', 'wallet_info']);
+            // $query = User::with(['country_info', 'wallet_info']);
+            $query = User::with(['country_info', 'wallet_info'])
+            ->withCount([
+
+                // Total completed orders
+                'order_details as total_completed_orders' => function ($q) {
+                    $q->where('payment_status', '1')
+                      ->where('delivery_status', '3');
+                },
+
+                // Total cancelled orders
+                'order_details as total_cancelled_orders' => function ($q) {
+                    $q->where('payment_status', '2');
+                }
+
+            ]);
 
             if (!empty($request->country_id)) {
                 $query->whereHas('country_info', function ($q) use ($request) {

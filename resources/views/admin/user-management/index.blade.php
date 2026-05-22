@@ -111,8 +111,8 @@
                                 @endif
                             </td>
                             <td>{{ $user['email'] }}</td>
-                            <td>N/A</td>
-                            <td>N/A</td>
+                            <td>{{ $user['total_completed_orders'] }}</td>
+                            <td>{{ $user['total_cancelled_orders'] }}</td>
                             @php
                                 $amount = $user->wallet_info ? $user->wallet_info->amount : null;
                             @endphp

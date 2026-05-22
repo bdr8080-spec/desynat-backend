@@ -165,8 +165,8 @@ class UserController extends Controller
                     $mobile,
                     $country,
                     $user->email ?? $na,
-                    $na,
-                    $na,
+                    $user->total_completed_orders,
+                    $user->total_cancelled_orders,
                     $wallet,
                     $status,
                 ]);
