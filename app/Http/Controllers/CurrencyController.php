@@ -27,7 +27,7 @@ $all_currency = all_countrie::pluck('currency_code')
 
 
 $convert_currency=$all_currency;
-$url="http://api.currencylayer.com/live?access_key=2653f17ed11852c91f0201e2d8ea4d56&source=$filterCurrency&currencies=$convert_currency&format=1";
+$url="http://api.currencylayer.com/live?access_key=43ebb413d372c6362cf312c17fbe415d&source=$filterCurrency&currencies=$convert_currency&format=1";
 
 // $url="http://api.currencylayer.com/live?access_key=2653f17ed11852c91f0201e2d8ea4d56&source=KWD&currencies=USD%2CAUD%2CCAD%2CPLN%2CMXN&format=1";
 
