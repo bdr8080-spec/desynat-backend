@@ -413,6 +413,22 @@ class DeliveryBoyOrderService
 
                     'notification_type' => 'order_delivered'
                 ]);
+
+                CreateNotification([
+                    'sender_id' => $orderDetail->delivery_boy_id,
+                    'sender_type' => 5,
+
+                    'receiver_id' => $orderDetail->seller_id,
+                    'receiver_type' => 3,
+
+                    'title_english' => 'Order Status',
+                    'title_arabic' => 'حالة الطلب',
+
+                    'description_english' => "Order with order id: {$order->order_id} is delivered",
+                    'description_arabic' => "تم توصيل الطلب رقم: {$order->order_id} بنجاح",
+
+                    'notification_type' => 'order_delivered'
+                ]);
             }
 
             if ($status == 8) {
@@ -440,6 +456,22 @@ class DeliveryBoyOrderService
 
                     'receiver_id' => 1,
                     'receiver_type' => 1,
+
+                    'title_english' => 'Order Status',
+                    'title_arabic' => 'حالة الطلب',
+
+                    'description_english' => "Order with order id: {$order->order_id} failed to be delivered, Reason: {$request->reason}",
+                    'description_arabic' => "فشل توصيل الطلب رقم: {$order->order_id}، السبب: {$request->reason}",
+
+                    'notification_type' => 'order_not_delivered'
+                ]);
+
+                CreateNotification([
+                    'sender_id' => $orderDetail->delivery_boy_id,
+                    'sender_type' => 5,
+
+                    'receiver_id' => $orderDetail->seller_id,
+                    'receiver_type' => 3,
 
                     'title_english' => 'Order Status',
                     'title_arabic' => 'حالة الطلب',
@@ -496,6 +528,22 @@ class DeliveryBoyOrderService
 
                     'receiver_id' => 1,
                     'receiver_type' => 1,
+
+                    'title_english' => 'Order Status',
+                    'title_arabic' => 'حالة الطلب',
+
+                    'description_english' => "Order with order id: {$order->order_id} will be delivered on {$nextDeliveryDate->format('d M Y')}",
+                    'description_arabic' => "سيتم توصيل الطلب رقم: {$order->order_id} بتاريخ {$nextDeliveryDate->format('d M Y')}",
+
+                    'notification_type' => 'order_next_delivery_date'
+                ]);
+
+                CreateNotification([
+                    'sender_id' => $orderDetail->delivery_boy_id,
+                    'sender_type' => 5,
+
+                    'receiver_id' => $orderDetail->seller_id,
+                    'receiver_type' => 3,
 
                     'title_english' => 'Order Status',
                     'title_arabic' => 'حالة الطلب',
@@ -1096,6 +1144,22 @@ class DeliveryBoyOrderService
 
                 'receiver_id' => 1,
                 'receiver_type' => 1,
+
+                'title_english' => 'Order Status',
+                'title_arabic' => 'حالة الطلب',
+
+                'description_english' => "Order with order id: {$data->order_id} is picked by our delivery boy {$driver->full_name_english}",
+                'description_arabic' => "تم استلام الطلب برقم الطلب: {$data->order_id} بواسطة مندوب التوصيل {$driver->full_name_arabic}",
+
+                'notification_type' => 'order_picked'
+            ]);
+
+            CreateNotification([
+                'sender_id' => $data->delivery_boy_id,
+                'sender_type' => 5,
+
+                'receiver_id' => $data->seller_id,
+                'receiver_type' => 3,
 
                 'title_english' => 'Order Status',
                 'title_arabic' => 'حالة الطلب',
