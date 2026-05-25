@@ -105,7 +105,8 @@
                                         data-bs-toggle="dropdown" aria-expanded="false">
 
                                         <span id="selected-flag">
-                                            {{ old('country_flag', $country[0]->flag1) }}
+                                            <!-- {{ old('country_flag', $country[0]->flag1) }} -->
+                                            <img src="{{ old('country_flag', $country[0]->flag) }}" width="20" height="14">
                                             
 
                                         </span>
@@ -124,7 +125,7 @@
                                                     style="cursor: pointer;">
                                                     <input type="radio" name="country_code"
                                                         value="{{ $item->dial_code }}"
-                                                        data-flag="{{ $item->flag1 }}"
+                                                        data-flag="{{ $item->flag }}"
                                                         data-name="{{ App::getLocale() == 'en' ? $item->name : $item->name_ar }}"
                                                         class="country-radio"
                                                         {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
@@ -139,7 +140,9 @@
                                                     </span> -->
 
                                                     <div width="25" height="16">
-                                                        <span>{{ $item->flag1 }} {{ $item->dial_code }}
+                                                        <span>
+                                                            <img src="{{ $item->flag }}" width="25" height="16">
+                                                            {{ $item->dial_code }}
                                                             ({{ App::getLocale() == 'en' ? $item->name : $item->name_ar }})
                                                         </span>
                                                     </div>
@@ -178,42 +181,42 @@
 
 
 
-        // document.addEventListener('DOMContentLoaded', function () {
-        //         const radios = document.querySelectorAll('.country-radio');
-        //         const selectedFlag = document.getElementById('selected-flag');
-        //         const selectedCode = document.getElementById('selected-code');
+        document.addEventListener('DOMContentLoaded', function () {
+                const radios = document.querySelectorAll('.country-radio');
+                const selectedFlag = document.getElementById('selected-flag');
+                const selectedCode = document.getElementById('selected-code');
 
-        //         radios.forEach(radio => {
-        //             radio.addEventListener('change', function () {
-        //                 const parent = this.closest('label');
-        //                 const flagImg = parent.querySelector('img').src;
-        //                 const dialCode = this.value;
+                radios.forEach(radio => {
+                    radio.addEventListener('change', function () {
+                        const parent = this.closest('label');
+                        const flagImg = parent.querySelector('img').src;
+                        const dialCode = this.value;
 
-        //                 selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
-        //                 selectedCode.textContent = dialCode;
-        //             });
-        //         });
-        //     });
-
-        $(document).ready(function() {
-            // When a user selects a country (clicks a label)
-            $(document).on('click', '.country-option', function() {
-                let radio = $(this).find('.country-radio');
-                let flag = radio.data('flag');
-                let code = radio.val();
-                let name = radio.data('name');
-
-                // Update the flag and code shown on the button
-                $('#selected-flag').html(flag);
-                $('#selected-code').text(code);
-
-                // Set the radio input as checked
-                radio.prop('checked', true);
-
-                // Close the dropdown (Bootstrap 5)
-                $('#countryDropdown').dropdown('hide');
+                        selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
+                        selectedCode.textContent = dialCode;
+                    });
+                });
             });
-        });
+
+        // $(document).ready(function() {
+        //     // When a user selects a country (clicks a label)
+        //     $(document).on('click', '.country-option', function() {
+        //         let radio = $(this).find('.country-radio');
+        //         let flag = radio.data('flag');
+        //         let code = radio.val();
+        //         let name = radio.data('name');
+
+        //         // Update the flag and code shown on the button
+        //         $('#selected-flag').html(flag);
+        //         $('#selected-code').text(code);
+
+        //         // Set the radio input as checked
+        //         radio.prop('checked', true);
+
+        //         // Close the dropdown (Bootstrap 5)
+        //         $('#countryDropdown').dropdown('hide');
+        //     });
+        // });
 
 
 
