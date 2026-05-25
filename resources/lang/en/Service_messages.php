@@ -377,7 +377,7 @@ return [
 
 
 
-   'account_rejected_by_dealer_reason' => "Your account has been rejected by Dealer",
+   'account_rejected_by_dealer_reason' => "Your account has been Blocked by Dealer",
  
 
 
