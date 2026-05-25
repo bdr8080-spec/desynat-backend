@@ -191,7 +191,7 @@ public function HomescreenBanner(Request $request){
     // 'user_id'=>$user_id,
     "type"=>$request->type,
     'category'=>$request->category??null,
-    'subcatgory'=>$request->subcategory??null,
+    'subcategory'=>$request->subcategory??null,
     
     ];
 
