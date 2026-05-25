@@ -30,7 +30,7 @@
                             <div class="card-left mb-2 d-flex">
                                 <div>
                                     <div class="chat-odr me-3">
-                                        <img src="{{$chatData['record']['product_variation']['variant_image'][0]}}"
+                                        <img src="{{@$chatData['record']['product_variation']['variant_image'][0]}}"
                                             alt="Product" class="img-fluid">
                                     </div>
                                 </div>
@@ -926,7 +926,9 @@ document.addEventListener("DOMContentLoaded", function() {
             content = `<div class="msg-text">${FireMsg ?? ''}</div>`;
         }
 
-        const timeString = formatISOTime(msg.times);
+
+        // const timeString = formatISOTime(msg.times);
+        const timeString = formatChatDate(msg.times);
 
         chatBox.insertAdjacentHTML('beforeend', `
             <div class="msg ${side}">
@@ -954,6 +956,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Auto refresh every 10 seconds
     setInterval(fetchMessages, 10000);
+
+
+
+// firebase date format change 
+
+let lastDate = '';
+
+function formatChatDate(dateString) {
+
+    const locale = appLocale === 'ar' ? 'ar-EG' : 'en-US';
+
+    const date = new Date(dateString);
+
+    // current message date
+    const currentDate = date.toDateString();
+
+    // only time
+    const timeOnly = date.toLocaleTimeString(locale, {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+
+    // full date + time
+    const fullDateTime = date.toLocaleString(locale, {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+
+    // if same date show only time
+    if (lastDate === currentDate) {
+        return timeOnly;
+    }
+
+    // update last date
+    lastDate = currentDate;
+
+    return fullDateTime;
+}
+
 
 });
 </script>

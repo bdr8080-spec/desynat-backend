@@ -35,7 +35,7 @@
                             <div class="card-left mb-2 d-flex">
                                 <div>
                                     <div class="chat-odr me-3">
-                                        <img src="{{ $single_chats['record']->product_variation->variant_image[0]}}"
+                                        <img src="{{ @$single_chats['record']->product_variation->variant_image[0]}}"
                                             alt="Product" class="img-fluid">
                                     </div>
                                 </div>
@@ -44,11 +44,11 @@
                                     <div class="card-right d-flex w-100 justify-content-between">
                                         <div class="product-info">
                                             <h5 class="product-title">
-                                                {{ $single_chats['record']->product_variation->product_details->product_name_en  }}
+                                                {{ @$single_chats['record']->product_variation->product_details->product_name_en  }}
                                             </h5>
                                             <div class="psize d-flex gap-4 mt-2">
                                                 <span>{{ __('seller_messages.size') }}::
-                                                    {{ $single_chats['record']->product_variation->size->name  }}</span>
+                                                    {{ @$single_chats['record']->product_variation->size->name  }}</span>
                                                 <span class="d-flex align-items-center gap-2">
                                                      {{ __('seller_messages.color') }}::
                                                     <div class="colorbox"
@@ -801,7 +801,7 @@ $(document).ready(function() {
                             }
                         }
 
-                        let time = response.data.times;
+                        let time = formatDateTimeByLocale(response.data.times);
 
                         appendRightMessage({
                             message: msg ?? '',
@@ -935,43 +935,33 @@ function loadChatMessages() {
 
                 const msg = messages[msgId];
 
-                const time = new Date(msg.times).toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
+                 const locale = appLocale === 'ar' ? 'ar-EG' : 'en-US';
 
-                // if (msg.by === 'user') {
-                //     appendLeftMessage({
-                //         message: msg.type == '0' ?
-                //             if (App::getLocale() == 'ar') {
-                //                 msg.message
-                //             } else {
-                //                 msg.messageAr
-                //             } : '',
-                //         image: msg.type == '1' ? msg.message : '',
-                //         time: time
-                //     });
-                // } else {
-                //     appendRightMessage({
-                //         message: msg.type == '0' ? msg.message : '',
-                //         image: msg.type == '1' ? msg.message : '',
-                //         time: time
-                //     });
-                // }
+                const newTime = new Date(msg.times).toLocaleTimeString(locale, {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
 
+                // const time = new Date(msg.times).toLocaleTimeString([], {
+                //     hour: '2-digit',
+                //     minute: '2-digit'
+                // });
+
+              
                 if (msg.by === 'user') {
                     appendLeftMessage({
                         message: msg.type === '0' ?
                             (appLocale === 'ar' ? msg.messageAr : msg.message) : '',
                         image: msg.type === '1' ? msg.message : '',
-                        time: time
+                        time: newTime
                     });
                 } else {
                     appendRightMessage({
                         message: msg.type === '0' ?
                             (appLocale === 'ar' ? msg.messageAr : msg.message) : '',
                         image: msg.type === '1' ? msg.message : '',
-                        time: time
+                        time: newTime
                     });
                 }
 
