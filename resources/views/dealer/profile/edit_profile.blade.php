@@ -197,12 +197,12 @@
                                                         class="dropdown-item d-flex align-items-center gap-3 country-option1"
                                                         style="cursor: pointer;">
                                                         <input type="radio" name="country" value="{{ $item->id }}"
-                                                            data-flag="{{ $item->flag }}"  data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif"
+                                                            data-flag="{{ $item->flag1 }}"  data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif"
                                                             class="country-radio1"
                                                             {{ $seller_details->store_info->country == $item->id ? 'checked' : '' }}
                                                             hidden>
                                                         <div width="25" height="16">
-                                                            <span>{{ $item->flag }} @if(App::getlocale()=='en')  {{$item->name }} @else  {{$item->name_ar }} @endif 
+                                                            <span><img src="{{ $item->flag1 }}" width="25" height="16"> @if(App::getlocale()=='en')  {{$item->name }} @else  {{$item->name_ar }} @endif 
                                                             </span>
                                                         </div>
                                                     </label>
@@ -303,13 +303,13 @@
                                                         class="dropdown-item d-flex align-items-center gap-2 country-option"
                                                         style="cursor: pointer;">
                                                         <input type="radio" name="country_code"
-                                                            value="{{ $item->dial_code }}" data-flag="{{ $item->flag }}"
+                                                            value="{{ $item->dial_code }}" data-flag="{{ $item->flag1 }}"
                                                              data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif" class="country-radio"
                                                             {{ $seller_details->store_info->country_code == $item->dial_code ? 'checked' : '' }}
                                                             hidden>
 
                                                         <div width="25" height="16">
-                                                            <span>{{ $item->flag }}
+                                                            <span><img src="{{ $item->flag1 }}" width="25" height="16">
                                                                 {{ $item->dial_code }} (@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif )
                                                             </span>
                                                         </div>
@@ -424,10 +424,10 @@
                                 <div class="col-lg-6 col-md-6">
                                     <div class="sub-form">
                                         <div class="label-flex">
-                                            <label>{{ __('seller_messages.SWIFT_BIC') }}</label>
+                                            <label>{{ __('affiliate_messages.swift_bic') }}</label>
                                         </div>
                                         <input type="text" class="form-control notapplyspace"
-                                            placeholder="{{ __('seller_messages.Enter_SWIFT_BIC') }}" name="swift"
+                                            placeholder="{{ __('affiliate_messages.enter_swift_bic') }}" name="swift"
                                             value="{{ @$seller_details->seller_bank_details->swift }}">
                                         <p class="text-danger" id="error-iban"></p>
                                     </div>
@@ -1046,24 +1046,41 @@ $(document).on('submit', 'form#editbankdetails', function(event) {
 </script>
 
 <script>
-$(document).ready(function() {
-    // When a user selects a country (clicks a label)
-    $(document).on('click', '.country-option', function() {
-        let radio = $(this).find('.country-radio');
-        let flag = radio.data('flag');
-        let code = radio.val();
-        let name = radio.data('name');
+// $(document).ready(function() {
+//     // When a user selects a country (clicks a label)
+//     $(document).on('click', '.country-option', function() {
+//         let radio = $(this).find('.country-radio');
+//         let flag = radio.data('flag');
+//         let code = radio.val();
+//         let name = radio.data('name');
 
-        // Update the flag and code shown on the button
-        $('#selected-flag').html(flag);
-        $('#selected-code').text(code);
+//         // Update the flag and code shown on the button
+//         $('#selected-flag').html(flag);
+//         $('#selected-code').text(code);
 
-        // Set the radio input as checked
-        radio.prop('checked', true);
+//         // Set the radio input as checked
+//         radio.prop('checked', true);
 
-        // Close the dropdown (Bootstrap 5)
-        $('#countryDropdown').dropdown('hide');
-    });
+//         // Close the dropdown (Bootstrap 5)
+//         $('#countryDropdown').dropdown('hide');
+//     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+                const radios = document.querySelectorAll('.country-radio');
+                const selectedFlag = document.getElementById('selected-flag');
+                const selectedCode = document.getElementById('selected-code');
+
+                radios.forEach(radio => {
+                    radio.addEventListener('change', function () {
+                        const parent = this.closest('label');
+                        const flagImg = parent.querySelector('img').src;
+                        const dialCode = this.value;
+
+                        selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
+                        selectedCode.textContent = dialCode;
+                    });
+                });
+            });
 
 
     $(document).on('click', '.country-option1', function() {

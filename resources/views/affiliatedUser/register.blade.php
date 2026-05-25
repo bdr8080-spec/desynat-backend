@@ -131,7 +131,8 @@
                                                         aria-expanded="false">
 
                                                         <span id="selected-flag">
-                                                            {{ old('country_flag', $country[0]->flag) }}
+                                                            <!-- {{ old('country_flag', $country[0]->flag) }} -->
+                                                            <img src="{{ old('country_flag', $country[0]->flag1) }}" width="20" height="14">
                                                         </span>
 
                                                         <span id="selected-code" class="ms-2">
@@ -149,13 +150,13 @@
                                                                 style="cursor: pointer;">
                                                                 <input type="radio" name="country_code"
                                                                     value="{{ $item->dial_code }}"
-                                                                    data-flag="{{ $item->flag }}"
+                                                                    data-flag="{{ $item->flag1 }}"
                                                                     data-name="{{ App::getLocale() == 'en' ? $item->name : $item->name_ar }}" class="country-radio"
                                                                     {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                                                     hidden>
 
                                                                 <div width="25" height="16">
-                                                                    <span>{{ $item->flag }} {{ $item->dial_code }}
+                                                                    <span><img src="{{ $item->flag1 }}" width="25" height="16"> {{ $item->dial_code }}
                                                                         ({{ App::getLocale() == 'en' ? $item->name : $item->name_ar }})
                                                                     </span>
                                                                 </div>
@@ -291,21 +292,38 @@
 <!-- <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script> -->
 
 <script>
-$(document).ready(function() {
-    $(document).on('click', '.country-option', function() {
-        let radio = $(this).find('.country-radio');
-        let flag = radio.data('flag');
-        let code = radio.val();
-        let name = radio.data('name');
-        $('#selected-flag').html(flag);
-        $('#selected-code').text(code);
+// $(document).ready(function() {
+//     $(document).on('click', '.country-option', function() {
+//         let radio = $(this).find('.country-radio');
+//         let flag = radio.data('flag');
+//         let code = radio.val();
+//         let name = radio.data('name');
+//         $('#selected-flag').html(flag);
+//         $('#selected-code').text(code);
 
-        radio.prop('checked', true);
+//         radio.prop('checked', true);
 
-        // Close the dropdown (Bootstrap 5)
-        $('#countryDropdown').dropdown('hide');
-    });
-});
+//         // Close the dropdown (Bootstrap 5)
+//         $('#countryDropdown').dropdown('hide');
+//     });
+// });
+
+document.addEventListener('DOMContentLoaded', function () {
+                const radios = document.querySelectorAll('.country-radio');
+                const selectedFlag = document.getElementById('selected-flag');
+                const selectedCode = document.getElementById('selected-code');
+
+                radios.forEach(radio => {
+                    radio.addEventListener('change', function () {
+                        const parent = this.closest('label');
+                        const flagImg = parent.querySelector('img').src;
+                        const dialCode = this.value;
+
+                        selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
+                        selectedCode.textContent = dialCode;
+                    });
+                });
+            });
 
 
 

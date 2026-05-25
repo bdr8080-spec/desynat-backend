@@ -191,7 +191,7 @@
                                 <div class="col-6">  {{ __('seller_messages.Plan') }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        {{ $plan->plan_info->plan_name_english ?? 'N/A' }}
+                                        {{ $plan->plan_info->plan_name_english ?? __('user_messages.na') }}
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +200,8 @@
                                 <div class="col-6">  {{ __('seller_messages.Purchased_On') }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        {{ \Carbon\Carbon::parse($plan->plan_start_date)->format('d/m/Y \a\t h:i A') }}
+                                        
+                                        {{formatDateTimeByLocale($plan->plan_start_date)}}
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +209,7 @@
                                 <div class="col-6">  {{ __('seller_messages.Expired_On') }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        {{ \Carbon\Carbon::parse($plan->plan_end_date)->format('d/m/Y \a\t h:i A') }}
+                                        {{formatDateTimeByLocale($plan->plan_end_date)}}
                                     </div>
                                 </div>
                             </div>
