@@ -508,8 +508,11 @@ $homeScreenBanner=sellerBanner::with('seller_details.store_info','category_detai
 
 if($request->type=='3'){
     $homeScreenBanner=$homeScreenBanner->where('category',$request->category);
-}elseif($request->type=='3' && isset($request->subcatgory)){
-    $homeScreenBanner=$homeScreenBanner->where('subcatgory',$request->subcatgory);
+}
+
+if($request->type=='3' && isset($request->subcategory)){
+    $homeScreenBanner=$homeScreenBanner->where('subcatgory',$request->subcategory);
+
 }
 
 
