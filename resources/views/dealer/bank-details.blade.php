@@ -365,7 +365,7 @@
 
                                     <div class="form-group">
                                         <label for="name">{{ __('seller_messages.iban') }}</label>
-                                        <input type="text" class="form-control blockFirstTime"
+                                        <input type="text" minlength="7" maxlength="15" class="form-control blockFirstTime"
                                             placeholder="{{ __('seller_messages.enter_iban_number') }}" name="iban"
                                             value="{{ old('iban', @$seller_bank->iban) }}">
 
@@ -377,7 +377,7 @@
 
                                     <div class="form-group">
                                         <label for="name">{{ __('seller_messages.swift_bic') }}</label>
-                                        <input type="text" class="form-control blockFirstTime"
+                                        <input type="text" minlength="7" maxlength="15" class="form-control blockFirstTime"
                                             placeholder="{{ __('seller_messages.enter_swift_bic_number') }}" name="swift"
                                             value="{{ old('bank_name', @$seller_bank->swift) }}">
                                         @error('swift')
@@ -387,7 +387,7 @@
 
                                     <div class="form-group">
                                         <label for="name">{{ __('seller_messages.bank_name') }}</label>
-                                        <input type="text" class="form-control blockFirstTime"
+                                        <input type="text" maxlength="50" class="form-control blockFirstTime"
                                             placeholder="{{ __('seller_messages.enter_bank_name') }}" name="bank_name"
                                             value="{{ old('bank_name', @$seller_bank->bank_name) }}">
                                         @error('bank_name')

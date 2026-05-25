@@ -125,7 +125,7 @@
                                         <label id="uploadLabel" style="cursor:pointer;text-align:center;">
                                             <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
                                             <div>{{ __('seller_messages.upload_profile_photo') }}</div>
-                                            <input type="file" accept="image/*" hidden onchange="showPreview(event)"
+                                            <input type="file" accept="image/*" hidden onchange="showPreviewAndUpload(event)"
                                                 id="edit_imageUpload">
                                         </label>
                                         <div class="imgshow">
@@ -137,7 +137,7 @@
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="profile_pic" id="Profile_image">
+                                    <input type="hidden" name="profile_pic" id="Profile_image" value="{{ old('profile_pic') }}">
 
                                     @error('profile_pic')
                                         <span class="text-danger" id="remove_error_message1">{{ $message }}</span>
@@ -425,6 +425,17 @@
 
 
     $(document).ready(function() {
+
+        let oldImage = $('#Profile_image').val();
+
+        if (oldImage) {
+
+            $('#preview').attr('src', oldImage).show();
+
+            $('#remove').show();
+
+            $('#uploadLabel').hide();
+        }
         // When user types in any input or textarea
         $(document).on('input', '.form-control, .form-check-input', function() {
             // Check if input has a value (not empty)
