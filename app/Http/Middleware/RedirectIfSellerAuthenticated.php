@@ -23,8 +23,7 @@ class RedirectIfSellerAuthenticated
         if (Auth::guard('seller')->check()) {   
             $seller = Auth::guard('seller')->user();
 
-
-            
+          
             // If store info not completed and not already on store info page
             if ($seller->store_information == '0') {
 
