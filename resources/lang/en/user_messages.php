@@ -683,6 +683,18 @@ return [
     'account_deleted_successfully' => 'Account deleted successfully',
     'notification_on' => 'Notification is set to On',
     'notification_off' => 'Notification is set to Off',
+
+    'recommended' => 'Recommended',
+    'price' => 'Price',
+    'high_to_low' => 'High to Low',
+    'low_to_high' => 'Low to High',
+    'newest_first' => 'Newest First',
+    'customer_ratings' => 'Customer Ratings',
+    'best_selling' => 'Best Selling',
+    'fastest_delivery' => 'Fastest Delivery',
+    'sort_by' => 'Sort By',
+    'apply' => 'Apply',
+    'clear' => 'Clear',
     
 
     

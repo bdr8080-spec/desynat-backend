@@ -683,6 +683,21 @@ return [
     'notification_on' => 'تم تفعيل الإشعارات',
     'notification_off' => 'تم إيقاف الإشعارات',
 
+    'recommended' => 'موصى به',
+    'price' => 'السعر',
+    'high_to_low' => 'من الأعلى إلى الأقل',
+    'low_to_high' => 'من الأقل إلى الأعلى',
+    'newest_first' => 'الأحدث أولاً',
+    'customer_ratings' => 'تقييمات العملاء',
+    'best_selling' => 'الأكثر مبيعاً',
+    'fastest_delivery' => 'أسرع توصيل',
+    'sort_by' => 'ترتيب حسب',
+    'apply' => 'تطبيق',
+    'clear' => 'مسح',
+
+
+
+
 
 
 
