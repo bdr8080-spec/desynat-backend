@@ -464,7 +464,7 @@
 </div>
 
 
-<form action="{{ url('user/all-product'}}" method="GET">
+<form action="{{ url('user/all-product')}}" method="GET">
     <div class="modal fade" id="sortMOdal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
