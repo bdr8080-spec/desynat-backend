@@ -2409,7 +2409,7 @@ i.bi.icons {
 }
 
 #phone {
-    padding-left: 90px !important;
+    padding-left: 100px !important;
     /* height: 45px; */
 }
 
@@ -3554,4 +3554,19 @@ img.img-fluid.circle-image {
 }
 [dir="rtl"] .scroll-left .fa-chevron-left {
     transform: rotate(180deg);
+}
+[dir="rtl"] .saved_track_address {
+    right: inherit;
+    left: 10px;
+}
+[dir="rtl"] .userDropdown .dropdown-menu li a {
+    margin: 0px !important;
+    direction: ltr;
+}
+[dir="rtl"] .profile.d-flex {
+    width: 100%;
+}
+[dir="rtl"] .iti--allow-dropdown .iti__flag-container, .iti--separate-dial-code .iti__flag-container {
+    right: 0;
+    left: initial;
 }
