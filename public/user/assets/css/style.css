@@ -833,6 +833,7 @@ h3.mid-headng {
     padding: 10px 20px;
     /* leave space for arrows */
     scrollbar-width: none;
+    width: 100%;
 }
 
 .scroll-content::-webkit-scrollbar {
@@ -1654,6 +1655,9 @@ h3.mid-headng {
     border: 1px solid transparent;
     background: linear-gradient(#fff, #fff) padding-box,
         linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+        border-radius: 10px;
+        overflow: hidden;
+        padding: 0;
 }
 
 .product_reels .customNavTabs .nav-item {
@@ -3462,6 +3466,10 @@ img.img-fluid.circle-image {
     color: #6E4527;
     text-decoration: none;
 }
+.giftsearch .form-group {
+    position: relative;
+}
+
 .dropdown-menu {
     --bs-dropdown-zindex: 1000;
     --bs-dropdown-min-width: 10rem;
@@ -3521,3 +3529,29 @@ img.img-fluid.circle-image {
     transform: rotate(180deg);
 }
 
+[dir="rtl"] .customNavbar .dropdown-menu.sell_clothes.show {
+    position: absolute;
+    left: 0px !important;
+    right: 0 !important;
+     min-width: 500px;
+    margin: 0 !important;
+    border-radius: 0;
+    background-color: #fff;
+    transform: translate(17%, 0%);
+    width: 100%;
+}
+
+[dir="rtl"] .giftsearch .form-group {
+    position: relative;
+}
+
+[dir="rtl"] .searchicon {
+    left: 0;
+}
+[dir="rtl"] .btnsearch {
+    width: 100px;
+    border-radius: 8px 0px 0px 8px;
+}
+[dir="rtl"] .scroll-left .fa-chevron-left {
+    transform: rotate(180deg);
+}

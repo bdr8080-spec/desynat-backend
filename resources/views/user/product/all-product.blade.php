@@ -286,7 +286,7 @@
                                                     {{ $item->product_name_ar }}
                                                     @endif
 
-                                                    ({{ "by " . $store_details['store']['store_name'] }})
+                                                    ({{ "by " . @$store_details['store']['store_name'] }})
                                                 </h5>
                                                 <div class="rating">
                                                     @php
