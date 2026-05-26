@@ -833,6 +833,7 @@ h3.mid-headng {
     padding: 10px 20px;
     /* leave space for arrows */
     scrollbar-width: none;
+    width: 100%;
 }
 
 .scroll-content::-webkit-scrollbar {
@@ -3532,7 +3533,7 @@ img.img-fluid.circle-image {
     position: absolute;
     left: 0px !important;
     right: 0 !important;
-    min-width: max-content;
+     min-width: 500px;
     margin: 0 !important;
     border-radius: 0;
     background-color: #fff;
@@ -3546,4 +3547,11 @@ img.img-fluid.circle-image {
 
 [dir="rtl"] .searchicon {
     left: 0;
+}
+[dir="rtl"] .btnsearch {
+    width: 100px;
+    border-radius: 8px 0px 0px 8px;
+}
+[dir="rtl"] .scroll-left .fa-chevron-left {
+    transform: rotate(180deg);
 }
