@@ -1654,6 +1654,8 @@ h3.mid-headng {
     border: 1px solid transparent;
     background: linear-gradient(#fff, #fff) padding-box,
         linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+        border-radius: 10px;
+        overflow: hidden;
 }
 
 .product_reels .customNavTabs .nav-item {
