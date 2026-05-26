@@ -286,7 +286,7 @@
                                     <!-- From -->
                                     <div class="d-flex align-items-center" style="gap: 10px;">
                                         <label class="form-label mb-0">{{ __('admin_messages.from') }}</label>
-                                        <div style="position: relative; ">
+                                        <div class="mgtrtl" style="position: relative; ">
                                             <input type="text" name="range_from"
                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
                                                 class="form-control" placeholder="{{ __('admin_messages.enter_from') }}" />
@@ -308,7 +308,7 @@
                                     </div>
                                     <div class="d-flex align-items-center" style="gap: 10px;">
                                         <label class="form-label mb-0">{{ __('admin_messages.to') }}</label>
-                                        <div style="position: relative;">
+                                        <div class="mgtrtl" style="position: relative;">
                                             <input type="text" name="range_to"
                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
                                                 class="form-control" placeholder="{{ __('admin_messages.enter_to') }}" />

@@ -2830,3 +2830,22 @@ a.text {
 [dir="rtl"] .form-select{
     background-position: left .75rem center;
 }
+
+[dir="rtl"] .form-group .input-group input.form-control {
+    margin-top: 0 !important;
+    margin-left: 1px !important;
+    padding-right: 120px;
+}
+[dir="rtl"] .toggle-password1 {
+    left: 10px;
+    right: inherit !important;
+}
+[dir="rtl"] .toggle-password2 {
+    left: 10px;
+    right: inherit !important;
+}
+[dir="rtl"] .toggle-password3 {
+    left: 10px;
+    right: inherit !important;
+}
+
