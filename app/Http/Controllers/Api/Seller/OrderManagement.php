@@ -123,7 +123,8 @@ class OrderManagement extends Controller
 
        $request_data=(object) [
         'seller_id'=>$seller_details,
-        "filters"=>$request->filters??null
+        "filters"=>$request->filters??null,
+        "search"=>$request->search??null
        ];
 
        $data= $this->SellerOrderService->SellerAllChatdata($request_data);

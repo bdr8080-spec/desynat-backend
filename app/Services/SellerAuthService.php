@@ -310,11 +310,9 @@ class SellerAuthService
 
                 $Staff_user_details=seller::where('id',$get_user_details->parent_id)->first();
 
-
-                $get_user_details->accessToken = $Staff_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+                $get_user_details->accessToken = $Staff_user_details->createToken('seller-token', ['seller'])->plainTextToken; // staff Token
               
-              
-                $get_user_details->staffaccessToken = $get_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+                $get_user_details->staffaccessToken = $get_user_details->createToken('seller-token', ['seller'])->plainTextToken; // seller token 
 
                 }else{
 

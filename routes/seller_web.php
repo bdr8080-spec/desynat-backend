@@ -53,7 +53,7 @@ Route::group(['prefix' => 'seller'], function () {
     });
     
  
-    Route::middleware(['seller_login','prevent-back-history'])->group(function(){
+    Route::middleware(['seller_login','prevent-back-history','staffStatus'])->group(function(){
     
     route::Match(['get','post'],'/store_information/{id}',[LoginController::class,'store_information'])->name('seller.store_information');
     route::Match(['get','post'],'/upload_document/{id}',[LoginController::class,'upload_document'])->name('seller.upload_document');

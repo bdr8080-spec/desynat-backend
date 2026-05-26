@@ -42,7 +42,7 @@ route::post('/forgot_password',[AuthController::class,'forgot_password']);
 route::post('/create_password',[AuthController::class,'create_password']);
 
 // Auth Checking
-Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
+Route::middleware(['auth:sanctum', 'ability:seller','staffStatus'])->group(function () {
 
   Route::post('/seller-dashboard', [SellerDashboardController::class,'index']);
 

@@ -101,7 +101,7 @@ class LoginController extends Controller
             Auth::guard('seller')->logout(); 
 
              return redirect()->back()
-            ->withErrors(['password'=>'This Account is Blocked'])
+            ->withErrors(['password'=> __('Service_messages.account_rejected_by_dealer_reason')])
             ->withInput();
            }
 

@@ -400,6 +400,11 @@ public function SellerAllChatdata($request){
 try{
 
   $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details','order_create_status')->where('seller_id',$request->seller_id);
+
+    if(isset($request->search) && $request->search ){
+        $check_chatRecord=$check_chatRecord->where('unique_id','Like','%'.$request->search.'%');
+    }
+
   
     if(isset($request->filters) && $request->filters ){
 
