@@ -1202,7 +1202,7 @@ class OrderManagementService
                     // 3 = Exchange
                     if (in_array("3", $filters) || in_array(3, $filters)) {
 
-                        $query->orWhere('return_type', '2');
+                        $query->orWhere('payment_status', '3');
 
                     }
 
