@@ -22,6 +22,9 @@ class Kernel extends ConsoleKernel
                  ->onFailure(function () {
                      \Log::error('Subscription update failed.');
                  });
+
+        $schedule->command('cart:reminder')
+                 ->hourly();
     }
 
     /**
@@ -35,4 +38,5 @@ class Kernel extends ConsoleKernel
         // Load commands defined in routes/console.php
         require base_path('routes/console.php');
     }
+
 }
