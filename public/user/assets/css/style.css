@@ -3566,6 +3566,7 @@ img.img-fluid.circle-image {
 [dir="rtl"] .profile.d-flex {
     width: 100%;
 }
+
 [dir="rtl"] .iti--allow-dropdown .iti__flag-container, .iti--separate-dial-code .iti__flag-container {
     right: 0;
     left: initial;
