@@ -33,8 +33,8 @@ class CartReminderNotification extends Command
                 'title_english' => 'Cart Reminder',
                 'title_arabic' => 'تذكير بالسلة',
 
-                'description_english' => 'You have some products in your cart. Please complete your order.',
-                'description_arabic' => 'لديك بعض المنتجات في سلة التسوق الخاصة بك. يرجى إكمال طلبك.',
+                'description_english' => 'Your favorite pieces are waiting! Complete your order now before they run out.',
+                'description_arabic' => 'القطع المفضلة لديك بانتظارك في السلة! أكمل طلبكِ الآن قبل أن تنفد الكمية.',
 
                 'notification_type' => 'cart_reminder'
             ]);
