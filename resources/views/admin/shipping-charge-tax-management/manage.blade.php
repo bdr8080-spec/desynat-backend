@@ -73,9 +73,9 @@
                                 @forelse ($shippingCharges as $key => $charge)
                                 <tr>
                                     <th scope="row">{{ $key + 1 }}</th>
-                                    <td>{{ rtrim(rtrim(number_format($charge['range_from'], 2, '.', ''), '0'), '.') }}Km
+                                    <td>{{ rtrim(rtrim(number_format($charge['range_from'], 2, '.', ''), '0'), '.') }}{{ __('admin_messages.km') }}
                                         {{ __('admin_messages.to') }}
-                                        {{ rtrim(rtrim(number_format($charge['range_to'], 2, '.', ''), '0'), '.') }}Km
+                                        {{ rtrim(rtrim(number_format($charge['range_to'], 2, '.', ''), '0'), '.') }}{{ __('admin_messages.km') }}
                                     </td>
 
                                     <td>{{ rtrim(rtrim(number_format($charge['shipping_fee'], 2, '.', ''), '0'), '.') }}
@@ -299,7 +299,7 @@
                                                             pointer-events: none;
                                                             font-weight: 500;
                                                         ">
-                                                KM
+                                                {{ __('admin_messages.km') }}
                                             </span>
 
                                         </div>
@@ -321,7 +321,7 @@
                                                             pointer-events: none;
                                                             font-weight: 500;
                                                         ">
-                                                KM
+                                                {{ __('admin_messages.km') }}
                                             </span>
 
                                         </div>
@@ -467,7 +467,7 @@
                                                         pointer-events: none;
                                                         font-weight: 500;
                                                     ">
-                                            KM
+                                            {{ __('admin_messages.km') }}
                                         </span>
 
                                     </div>
@@ -489,7 +489,7 @@
                                                         pointer-events: none;
                                                         font-weight: 500;
                                                     ">
-                                            KM
+                                            {{ __('admin_messages.km') }}
                                         </span>
 
                                     </div>
