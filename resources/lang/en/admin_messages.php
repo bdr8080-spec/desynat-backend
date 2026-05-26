@@ -13,6 +13,7 @@ return [
     'date_placeholder' => 'dd-mm-yyyy',
     'ar' => 'AR',
     'en' => 'EN',
+    'km' => 'km',
 
     //common
     'to' => 'To',

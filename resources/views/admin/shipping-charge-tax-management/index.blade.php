@@ -54,7 +54,7 @@
                                             <span>{{ __('admin_messages.manage') }} </span>
                                         </a></td>
                                     @endif
-                                    <td>{{ $country['tax_info'] ? $country['tax_info']->tax : 'N/A' }}</td>
+                                    <td>{{ $country['tax_info'] ? $country['tax_info']->tax : __('admin_messages.na') }}</td>
                                     @if(in_array(11, $permissions) || $admin->type == 1)
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
