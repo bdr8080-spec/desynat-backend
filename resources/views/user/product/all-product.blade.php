@@ -464,13 +464,13 @@
 </div>
 
 
-<form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
+<form action="{{ url('user/all-product')}}" method="GET">
     <div class="modal fade" id="sortMOdal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <div class="modal-header border-0">
-                    <h3 class="modal-title fs-5">Sort By</h3>
+                    <h3 class="modal-title fs-5">{{ __('user_messages.sort_by') }}</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -481,52 +481,52 @@
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort1" value="1"
                                 {{ request('sort_filter') == 1 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort1">Recommended</label>
+                            <label class="form-check-label" for="sort1">{{ __('user_messages.recommended') }}</label>
                         </div>
 
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort2" value="2"
                                 {{ request('sort_filter') == 2 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort2">Price: Low to High</label>
+                            <label class="form-check-label" for="sort2">{{ __('user_messages.price') }}: {{ __('user_messages.low_to_high') }}</label>
                         </div>
 
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort3" value="3"
                                 {{ request('sort_filter') == 3 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort3">Price: High to Low</label>
+                            <label class="form-check-label" for="sort3">{{ __('user_messages.price') }}: {{ __('user_messages.high_to_low') }}</label>
                         </div>
 
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort4" value="4"
                                 {{ request('sort_filter') == 4 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort4">Newest First</label>
+                            <label class="form-check-label" for="sort4">{{ __('user_messages.newest_first') }}</label>
                         </div>
 
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort5" value="5"
                                 {{ request('sort_filter') == 5 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort5">Customer Ratings</label>
+                            <label class="form-check-label" for="sort5">{{ __('user_messages.customer_ratings') }}</label>
                         </div>
 
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort6" value="6"
                                 {{ request('sort_filter') == 6 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort6">Best Selling</label>
+                            <label class="form-check-label" for="sort6">{{ __('user_messages.best_selling') }}</label>
                         </div>
 
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort7" value="7"
                                 {{ request('sort_filter') == 7 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort7">Fastest Delivery</label>
+                            <label class="form-check-label" for="sort7">{{ __('user_messages.fastest_delivery') }}</label>
                         </div>
 
                     </div>
 
                     <div class="d-flex align-items-center gap-3 mt-3">
-                        <a href="" id="clearSort" class="custom-btn6 text-center w-100 text-white"
-                            style="    text-decoration: auto;">Clear</a>
+                        <a href="{{ url('user/all-product')}}" id="clearSort" class="custom-btn6 text-center w-100 text-white"
+                            style="    text-decoration: auto;">{{ __('user_messages.clear') }}</a>
                         <button type="submit" class="custom-btn6" style="padding:8px 10px; color:#fff !important;">
-                            Apply
+                            {{ __('user_messages.apply') }}
                         </button>
                     </div>
 
