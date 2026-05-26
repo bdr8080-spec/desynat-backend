@@ -523,7 +523,7 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-3 mt-3">
-                        <a href="{{route('user.all-product')}}" id="clearSort" class="custom-btn6 text-center w-100 text-white"
+                        <a href="{{ url('user/all-product')}}" id="clearSort" class="custom-btn6 text-center w-100 text-white"
                             style="    text-decoration: auto;">{{ __('user_messages.clear') }}</a>
                         <button type="submit" class="custom-btn6" style="padding:8px 10px; color:#fff !important;">
                             {{ __('user_messages.apply') }}
