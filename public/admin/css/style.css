@@ -2804,9 +2804,29 @@ a.text {
     padding-right: 0px;
     padding-left: 9px;
 }
-[dir="rtl"] .table-button {
+[dir="rtl"] .table-button .fa-angle-left {
     transform: rotate(180deg);
 }
 [dir="rtl"] .customSidebar {
     padding: 80px 0px;
+}
+[dir="rtl"] .toggle-password {
+    left: 10px;
+    right: inherit !important;
+}
+[dir="rtl"] .dropdown-menu-end {
+    right: inherit !important;
+    left: 0 !important;
+}
+[dir="rtl"] .bi-crosshair {
+    left: 10px !important;
+    right: initial !important;
+}
+[dir="rtl"] .mgtrtl span {
+    left: 10px !important;
+    right: inherit !important;
+}
+
+[dir="rtl"] .form-select{
+    background-position: left .75rem center;
 }

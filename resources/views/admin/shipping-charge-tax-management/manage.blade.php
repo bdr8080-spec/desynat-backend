@@ -4,12 +4,11 @@
 <style>
     a.btn.btn-dark.customBtn {
     border: 1px solid rgba(168, 130, 79, 1);
-    /* background: var(--bg-color); */
     background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
     color: #fff;
-    /* line-height: 18px; */
-    font-size: 20px;
-    height: 53px !important;
+    line-height: 22px;
+    font-size: 18px;
+    padding: 10px;
 }
 </style>
 
@@ -37,9 +36,9 @@
                 </div>
 
                 <div class="col-lg-6 col-md-4 col-12">
-                    <div class="d-flex justify-content-end gap-2">
+                    <div class="d-flex justify-content-end gap-2  align-items-center">
                          <div class="">
-                            <div class="form-group">
+                            <div class="form-group mgtrtl">
                                 <label class="form-label">{{ __('admin_messages.default_delivery_charge') }}</label>
                                 <div style="position: relative;">
                                     <input type="text" id="default_shipping_fee_display" class="form-control" placeholder="{{ __('admin_messages.enter_tax') }}" data-bs-toggle="modal" data-bs-target="#sentModal1" value="{{$defaultShippingCharge->shipping_fee}}" readOnly/>
@@ -50,7 +49,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a class="btn btn-dark customBtn mt-3" data-bs-toggle="modal" data-bs-target="#sentModal2">
+                        <a class="btn btn-dark customBtn mt-4" data-bs-toggle="modal" data-bs-target="#sentModal2">
                             <span>{{ __('admin_messages.add_delivery_charges') }}</span>
                         </a>
                     </div>
@@ -455,7 +454,7 @@
                                 <!-- From -->
                                 <div class="d-flex align-items-center" style="gap: 10px;">
                                     <label class="form-label mb-0">{{ __('admin_messages.from') }}</label>
-                                    <div style="position: relative; width: 145px;">
+                                    <div class="mgtrtl" style="position: relative; width: 145px;">
                                         <input type="text" id="edit_range_from"
                                             oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
                                             class="form-control" placeholder="{{ __('admin_messages.enter_from') }}">
@@ -477,7 +476,7 @@
                                 </div>
                                 <div class="d-flex align-items-center" style="gap: 10px;">
                                     <label class="form-label mb-0">{{ __('admin_messages.to') }}</label>
-                                    <div style="position: relative; width: 145px;">
+                                    <div class="mgtrtl" style="position: relative; width: 145px;">
                                         <input type="text" id="edit_range_to"
                                             oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
                                             class="form-control" placeholder="{{ __('admin_messages.enter_to') }}">
