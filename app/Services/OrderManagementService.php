@@ -1179,6 +1179,36 @@ class OrderManagementService
             }
 
 
+            if (!empty($request->filter) && is_array($request->filter)) {
+
+                $filters = $request->filter;
+
+                $checkOrder->where(function ($query) use ($filters) {
+
+                    // 1 = Not Delivered
+                    if (in_array("1", $filters) || in_array(1, $filters)) {
+
+                        $query->orWhere('delivery_status', '8');
+
+                    }
+
+                    // 2 = Return
+                    if (in_array("2", $filters) || in_array(2, $filters)) {
+
+                        $query->orWhere('return_type', '1');
+
+                    }
+
+                    // 3 = Exchange
+                    if (in_array("3", $filters) || in_array(3, $filters)) {
+
+                        $query->orWhere('return_type', '2');
+
+                    }
+
+                });
+            }
+
             $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
 
             DB::commit();
