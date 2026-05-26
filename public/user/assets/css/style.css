@@ -3521,3 +3521,15 @@ img.img-fluid.circle-image {
     transform: rotate(180deg);
 }
 
+[dir="rtl"] .customNavbar .dropdown-menu.sell_clothes.show {
+    position: absolute;
+    left: 0px !important;
+    right: 0 !important;
+    min-width: max-content;
+    margin: 0 !important;
+    border-radius: 0;
+    background-color: #fff;
+    transform: translate(17%, 0%);
+    width: 100%;
+}
+
