@@ -778,16 +778,16 @@ document.addEventListener('DOMContentLoaded', function() {
      </script>
 
      <script>
-// $(document).ready(function() {
-//     $('.nav-item.dropdown').hover(
-//         function() {
-//             $(this).find('.dropdown-menu').addClass('show');
-//         },
-//         function() {
-//             $(this).find('.dropdown-menu').removeClass('show');
-//         }
-//     );
-// });
+$(document).ready(function() {
+    $('.nav-item.dropdown').hover(
+        function() {
+            $(this).find('.dropdown-menu').addClass('show');
+        },
+        function() {
+            $(this).find('.dropdown-menu').removeClass('show');
+        }
+    );
+});
      </script>
 
      <script>

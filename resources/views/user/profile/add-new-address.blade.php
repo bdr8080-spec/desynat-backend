@@ -36,7 +36,7 @@ input[type=number] {
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="">{{ __('user_messages.mobile_number') }}</label>
-                    <input id="phone" type="tel" placeholder="{{ __('user_messages.please_enter_mobile_number') }}" name="mobile" class="form-control"
+                    <input id="phone" type="tel" placeholder="{{ __('user_messages.please_enter_mobile_number') }}" name="mobile" class="form-control phonefield"
                         value="{{ @$address->mobile ? @$address->mobile : '' }}" minlength="7" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '');"/>
                     <input type="hidden" id="country_code" name="country_code"
                         value="{{ @$address->country_code ? @$address->country_code : '' }}">
