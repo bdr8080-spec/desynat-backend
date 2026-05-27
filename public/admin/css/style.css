@@ -1371,6 +1371,7 @@ p {
 
 .form-check-input:checked {
     background-color: var(--primary-color) !important;
+    border-color: #99724b !important;
 }
 
 a.nav-link.active {

@@ -174,7 +174,7 @@ width: fit-content;
                                 </div>
 
                                 <!-- Password -->
-                                <div class="mt-3 position-relative">
+                                <div class="mt-3 position-relative rtlpnl-1">
                                     <label>{{ __('admin_messages.password') }}</label>
                                     <input type="password" id="password" class="form-control" name="password"
                                         placeholder="{{ __('admin_messages.enter_password') }}" value="{{ $step1Data['password'] ?? $deliveryBoy->unhashed_password ?? '' }}"style="font-size: 17px;" />
@@ -254,7 +254,7 @@ width: fit-content;
                                 </div>
 
                                 <!-- Confirm Password -->
-                                <div class="mt-3 position-relative">
+                                <div class="mt-3 position-relative rtlpnl-1">
                                     <label>{{ __('admin_messages.confirm_password') }}</label>
                                     <input type="password" id="confirmPassword" class="form-control" name="confirm_password"
                                         placeholder="{{ __('admin_messages.enter_confirm_password') }}"
