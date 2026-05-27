@@ -110,7 +110,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mt-4">
-                                                <div class="form-group">
+                                                <div class="form-group rtlpnl-1 rtlpnl-2">
                                                     <label for="password">{{ __('admin_messages.password') }}</label>
                                                     <input type="password" id="password"
                                                         class="form-control custom-password" name="password"

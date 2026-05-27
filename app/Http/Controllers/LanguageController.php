@@ -117,6 +117,7 @@ public function setCurrencyInUser(Request $request){
     
    if($selectCountry){
        session([
+        'currencyAr' => $selectCountry->currency_code_ar, // table id
         'currency' => $request->currency, // table id
         'iso_code' => $selectCountry->iso_code,
         'rate' => $selectCountry->exchange_rate_to_kwd ?? 1

@@ -1371,6 +1371,7 @@ p {
 
 .form-check-input:checked {
     background-color: var(--primary-color) !important;
+    border-color: #99724b !important;
 }
 
 a.nav-link.active {
@@ -2849,3 +2850,15 @@ a.text {
     right: inherit !important;
 }
 
+[dir="rtl"] .rtlpnl span {
+    left: 10px !important;
+    right: inherit !important;
+}
+
+[dir="rtl"] .rtlpnl-1 input {
+    padding-left: 50px;
+}
+
+[dir="ltr"] .rtlpnl-2 input{
+    padding-right: 50px;
+}

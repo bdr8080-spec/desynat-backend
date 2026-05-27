@@ -3,7 +3,12 @@
 @section('content')
 
 @php
-    $currency = session('currency', 'KWD');
+
+if(App::getLocale()=='en'){
+$currency = session('currency', 'KWD');
+}else{
+$currency = session('currencyAr', 'دينار كويتي');
+}
 
 @endphp
 

@@ -41,7 +41,14 @@
                     "previous": "Previous"
                 }
             }
+
         });
+
+        $(document).on('input', '.dataTables_filter input', function () {
+            this.value = this.value.replace(/^\s+/, '');
+        });
+
+       
         $('#myTable1').DataTable({
             "paging": true, // Enable pagination
             "searching": true, // Enable searching

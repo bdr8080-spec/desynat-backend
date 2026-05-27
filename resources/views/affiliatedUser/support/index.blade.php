@@ -90,7 +90,7 @@
                         <form action="#" method="GET" class="w-100 d-flex gap-3">
                             <div class="form-group w-100 d-flex position-relative">
                                 <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon2">
-                                <input type="search" name="search"  class="form-control giftcontrol" placeholder="{{ __('affiliate_messages.search') }}" value="{{ request('search') }}">
+                                <input type="search" name="search" oninput="this.value = this.value.replace(/^\s+/, '')" class="form-control giftcontrol" placeholder="{{ __('affiliate_messages.search') }}" value="{{ request('search') }}">
                             </div>
                             <button type="submit" class="btn btn-success searchlin">{{ __('affiliate_messages.search') }}</button>
                         </form>

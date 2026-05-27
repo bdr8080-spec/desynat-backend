@@ -342,7 +342,7 @@
                                     <li class="dropdown-item">
                                         <label class="custom-radio">
                                             <input type="radio" name="currency" value=" @if(App::getlocale()=='en'){{$val->currency_code}} @else {{$val->currency_code_ar}} @endif"
-                                                {{ session('currency', $GetsellerCountry[0]->currency_code) == $val->currency_code ? 'checked' : '' }}>
+                                                {{ session('currency', $GetsellerCountry[0]->currency_code) == $val->currency_code ? 'checked' : '' }} data-english="{{$val->currency_code}}" data-arabic="{{$val->currency_code_ar}}"  >
                                             <span>  
                                            @if(App::getlocale()=='en'){{$val->currency_code}} @else {{$val->currency_code_ar}} @endif 
                                                                                
@@ -587,14 +587,29 @@
     <!-- chnage country and currency Code  -->
 
     <script>
+
+    var locale="{{App::getlocale()}}";
+
+
     document.addEventListener("DOMContentLoaded", function() {
+        
+            debugger
 
         // ================= LOAD FROM LOCAL STORAGE =================
         let currency = localStorage.getItem("currency");
+        let currencyAr = localStorage.getItem("currencyAr");
         let flag = localStorage.getItem("flag");
         let country_id = localStorage.getItem("country_id");
 
         if (currency) {
+            
+            if(locale=='en'){
+                currency=currency
+            }else{
+                currency=currencyAr;
+            }
+            
+
             document.getElementById("selectedCurrency").innerText = currency;
             document.querySelectorAll('[name="currency"]').forEach(r => {
                 if (r.value === currency) r.checked = true;
@@ -603,6 +618,7 @@
 
         if (flag) document.getElementById("selectedFlag").src = flag;
 
+            debugger
         if (country_id) {
             document.querySelectorAll('[name="country_language"]').forEach(r => {
                 if (r.value === country_id) r.checked = true;
@@ -642,12 +658,21 @@
 
             let selected = document.querySelector('[name="currency"]:checked');
 
+            debugger
+
             if (selected) {
                 let value = selected.value;
 
                 document.getElementById("selectedCurrency").innerText = value;
 
-                localStorage.setItem("currency", value);
+
+                            // fetch data attributes
+                let englishValue = selected.dataset.english;
+                let arabicValue = selected.dataset.arabic;
+
+
+                localStorage.setItem("currency", englishValue);
+                localStorage.setItem("currencyAr", arabicValue);
 
                 // SAVE IN LARAVEL SESSION
                 fetch("/set-currency", {

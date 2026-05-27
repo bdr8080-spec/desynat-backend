@@ -8,7 +8,7 @@
     <div class="search-field d-flex align-items-center py-4">
         <div class="from-group position-relative w-100">
             <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon2">
-            <input type="search" class="form-control py-3" placeholder="{{ __('affiliate_messages.search') }}">
+            <input type="search" class="form-control py-3" placeholder="{{ __('affiliate_messages.search') }}" oninput="this.value = this.value.replace(/^\s+/, '')">
         </div>
         <button type="button" class="btn btn-success searchlin">{{ __('affiliate_messages.search') }}</button>
     </div>

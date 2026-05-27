@@ -106,7 +106,7 @@
                             </div>
 
                             <div class="col-lg-12 mt-3">
-                                <div class="form-group">
+                                <div class="form-group rtlpnl-1">
                                     <label for="newPassword" >{{ __('admin_messages.create_new_password') }}</label>
                                     <input type="password" class="form-control" id="newPassword"
                                         placeholder="{{ __('admin_messages.enter_new_password') }}" required>
@@ -116,7 +116,7 @@
                             </div>
 
                             <div class="col-lg-12 mt-3">
-                                <div class="form-group">
+                                <div class="form-group rtlpnl-1">
                                     <label for="confirmPassword" >{{ __('admin_messages.confirm_password') }}</label>
                                     <input type="password" id="confirmPassword" class="form-control"
                                         placeholder="{{ __('admin_messages.enter_confirm_password') }}" required>
