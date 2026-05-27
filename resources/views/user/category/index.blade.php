@@ -529,7 +529,10 @@ $currency = session('currencyAr', 'دينار كويتي');
 
                                                     <span class="discount">
                                                     {{ $item->product_variants[0]->discount_value }}
-                                                    {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                                                    {{ $item->product_variants[0]->discount_type == '1' 
+                                                        ? '% ' . __('user_messages.off') 
+                                                        : __('user_messages.off') 
+                                                    }}
                                                     </span>
                                                 </div>
 
