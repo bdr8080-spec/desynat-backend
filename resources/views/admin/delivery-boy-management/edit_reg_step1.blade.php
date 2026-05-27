@@ -153,7 +153,7 @@ width: fit-content;
                                     <div class="d-flex justify-content-between align-items-center">
                                         <label class="mb-0">{{ __('admin_messages.enter_address_line1') }}</label>
                                     </div>
-                                    <div class="position-relative mt-1">
+                                    <div class="position-relative mt-1 rtlpnl-1">
                                         <input type="text" class="form-control" name="address_line1"
                                             placeholder="{{ __('admin_messages.enter_address_line1') }}"
                                             value="{{ $step1Data['address_line1'] ?? $deliveryBoy->address_line1 ?? '' }}" />
