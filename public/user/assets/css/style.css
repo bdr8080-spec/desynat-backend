@@ -3621,3 +3621,8 @@ img.img-fluid.circle-image {
 [dir="ltr"] .rtlspace .form-control{
     padding-right: 45px !important;
 }
+
+[dir="rtl"] .offcanvas-header .btn-close {
+    margin-left: inherit !important;
+    margin-right: auto !important;
+}
