@@ -11,6 +11,11 @@ return [
     'arabic' => 'عربي',
     'english' => 'إنجليزي',
 
+    'showing' => 'عرض',
+    'to' => 'إلى',
+    'of' => 'من',
+    'results' => 'نتيجة',
+
     
     'please_select_a_color' => 'يرجى اختيار لون.',
     'please_select_a_size' => 'يرجى اختيار المقاس.',
@@ -694,6 +699,31 @@ return [
     'sort_by' => 'ترتيب حسب',
     'apply' => 'تطبيق',
     'clear' => 'مسح',
+
+    // support
+    'support' => 'الدعم',
+    'support_email_address' => 'عنوان البريد الإلكتروني للدعم',
+    'support_contact_number' => 'رقم التواصل للدعم',
+    'ticket_type' => 'نوع التذكرة',
+    'ticket_id' => 'رقم التذكرة',
+    'raised_on' => 'تاريخ الإنشاء',
+    'status' => 'الحالة',
+    'pending' => 'قيد الانتظار',
+    'in_progress' => 'قيد المعالجة',
+    'resolved' => 'تم الحل',
+    'closed' => 'مغلقة',
+    'ticket_details' => 'تفاصيل التذكرة',
+    'select_ticket_type' => 'اختر نوع التذكرة',
+    'title' => 'العنوان',
+    'enter_title' => 'أدخل العنوان',
+    'description' => 'الوصف',
+    'enter_description' => 'أدخل الوصف',
+    'upload_attachment_if_any' => 'تحميل مرفق (إن وجد)',
+    'upload_image' => 'تحميل صورة',
+    'submit' => 'إرسال',
+    'please_select_ticket_type' => 'يرجى اختيار نوع التذكرة',
+    'please_enter_title' => 'يرجى إدخال العنوان',
+    'please_enter_description' => 'يرجى إدخال الوصف',
 
 
 

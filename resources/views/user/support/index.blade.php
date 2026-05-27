@@ -3,7 +3,7 @@
 @section('content')
 <div class="my-profile-2 customContainer my-lg-5 my-2 mb-4">
     <div class="d-lg-flex d-md-flex d-block align-items-center mt-3 justify-content-between">
-        <div class="my-profie-nav"><a class="text-black" href="#"><i class="fa-solid fa-chevron-left"></i></a> Support
+        <div class="my-profie-nav"><a class="text-black" href="#"><i class="fa-solid fa-chevron-left"></i></a> {{ __('user_messages.support') }}
         </div>
     </div>
 
@@ -12,11 +12,11 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link active w-100" id="pills-listed-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-listed" type="button" role="tab" aria-controls="pills-listed"
-                    aria-selected="true">Contact </button>
+                    aria-selected="true">{{ __('admin_messages.contact_us') }} </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-plan-tab" data-bs-toggle="pill" data-bs-target="#pills-plan"
-                    type="button" role="tab" aria-controls="pills-plan" aria-selected="false">Ticket Management</button>
+                    type="button" role="tab" aria-controls="pills-plan" aria-selected="false">{{ __('admin_messages.ticket_management') }}</button>
             </li>
         </ul>
     </div>
@@ -35,7 +35,7 @@
                                     </div>
 
                                     <div class="giftinfo-2">
-                                        <p>Support Email Address</p>
+                                        <p>{{ __('user_messages.support_email_address') }}</p>
                                         <a href="mailto:{{ $ContactUs->content_english['email'] ?? 'Loremipsum@gmail.com' }}" target="_blank">{{ $ContactUs->content_english['email'] ?? 'Loremipsum@gmail.com' }}</a>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                                     </div>
 
                                     <div class="giftinfo-2">
-                                        <p>Support Contact Number</p>
+                                        <p>{{ __('user_messages.support_contact_number') }}</p>
                                         <a href="tel:{{ $ContactUs->content_english['mobile'] ?? '+7837687648576' }}">{{ $ContactUs->content_english['mobile'] ?? '+7837687648576' }}</a>
                                     </div>
                                 </div>
@@ -94,9 +94,9 @@
                         <form action="#" method="GET" class="w-100 d-flex gap-0">
                             <div class="form-group w-100 d-flex">
                                 <div class="searchicon"><i class="bi bi-search"></i></div>
-                                <input type="search" name="search"  class="form-control giftcontrol" placeholder="Search" value="{{ request('search') }}">
+                                <input type="search" name="search"  class="form-control giftcontrol" placeholder="{{ __('user_messages.search') }}" value="{{ request('search') }}">
                             </div>
-                            <button type="submit" class="btn btnsearch">Search</button>
+                            <button type="submit" class="btn btnsearch">{{ __('user_messages.search') }}</button>
                         </form>
 
                         <a href="javascript:void(0)" class="add-icon2 ms-3" data-bs-toggle="modal" data-bs-target="#ticketModal">
@@ -110,30 +110,34 @@
                         <div class="card mb-4">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="ticket">
-                                    <p class="text-muted mb-1">Ticket Type</p>
+                                    <p class="text-muted mb-1">{{ __('user_messages.ticket_type') }}</p>
                                 </div>
                                 <div class="ticket">
                                     <p class="text-muted mb-1">
-                                        {{ $ticket->ticket_type_details->name ?? 'N/A' }}
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $ticket->ticket_type_details->name ?? __('user_messages.na') }}
+                                        @else
+                                        {{ $ticket->ticket_type_details->name_arabic ?? __('user_messages.na') }}
+                                        @endif
                                     </p>
                                 </div>
                             </div>
 
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted mb-1">Ticket ID</p>
+                                    <p class="text-muted mb-1">{{ __('user_messages.ticket_id') }}</p>
                                     <p class="fst-500">{{ $ticket->ticket_id }}</p>
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted mb-1">Raised on</p>
+                                    <p class="text-muted mb-1">{{ __('user_messages.raised_on') }}</p>
                                     <p class="fst-500">
-                                        {{ \Carbon\Carbon::parse($ticket->created_at)->format('d M Y, h:i A') }}
+                                        {{formatDateTimeByLocale($ticket->created_at)}}
                                     </p>
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <p class="text-muted mb-1">Status</p>
+                                    <p class="text-muted mb-1">{{ __('user_messages.status') }}</p>
                                     <p class="fst-500">
                                         @php
                                             $createdDate = \Carbon\Carbon::parse($ticket->created_at)->toDateString();
@@ -141,16 +145,16 @@
                                         @endphp
 
                                         @if($ticket->status == 0 && $createdDate == $todayDate)
-                                            <span class="text-warning">Pending</span>
+                                            <span class="text-warning">{{ __('user_messages.pending') }}</span>
 
                                         @elseif($ticket->status == 0 && $createdDate < $todayDate)
-                                            <span class="text-danger">In Progress</span>
+                                            <span class="text-danger">{{ __('user_messages.in_progress') }}</span>
 
                                         @elseif($ticket->status == 1)
-                                            <span class="text-success">Resolved</span>
+                                            <span class="text-success">{{ __('user_messages.resolved') }}</span>
 
                                         @else
-                                            <span class="text-danger">Closed</span>
+                                            <span class="text-danger">{{ __('user_messages.closed') }}</span>
                                         @endif
                                     </p>
                                 </div>
@@ -158,7 +162,7 @@
                         </div>
                     @empty
                         <div class="text-center py-5">
-                            <p class="text-muted">No Ticket Found</p>
+                            <p class="text-muted">{{ __('user_messages.no_data_found') }}</p>
                         </div>
                     @endforelse
 
@@ -183,7 +187,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Ticket deatils </h1>
+                <h1 class="modal-title fs-5">{{ __('user_messages.ticket_details') }} </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
            <form id="ticketModalForm" enctype="multipart/form-data">
@@ -191,41 +195,47 @@
                 <div class="modal-body">
                     <div class="sub-form mb-3">
                         <div class="label-flex">
-                            <label>Ticket Type</label>
+                            <label>{{ __('user_messages.ticket_type') }}</label>
                         </div>
                         <select id="ticket_type_id" name="ticket_type_id" class="form-select form-control" aria-label="Default select example">
-                            <option value="">Select Ticket Type</option>
+                            <option value="">{{ __('user_messages.select_ticket_type') }}</option>
                             @foreach($ticketTypes as $type)
-                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                <option value="{{ $type->id }}">
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $type->name }}
+                                    @else
+                                    {{ $type->name_arabic }}
+                                    @endif
+                                </option>
                             @endforeach
                         </select>
-                        <span class="text-danger small d-none" id="ticket_type_error">Please select ticket type</span>
+                        <span class="text-danger small d-none" id="ticket_type_error">{{ __('user_messages.please_select_ticket_type') }}</span>
                     </div>
 
                     <div class="sub-form mb-3">
                         <div class="label-flex">
-                            <label>Title</label>
+                            <label>{{ __('user_messages.title') }}</label>
                         </div>
-                        <input type="text" id="title" name="title" class="form-control" placeholder="Enter title name">
-                        <span class="text-danger small d-none" id="title_error">Please enter title</span>
+                        <input type="text" id="title" name="title" class="form-control" placeholder="{{ __('user_messages.enter_title') }}">
+                        <span class="text-danger small d-none" id="title_error">{{ __('user_messages.please_enter_title') }}</span>
                     </div>
 
                     <div class="sub-form mb-3">
                         <div class="label-flex">
-                            <label>Description</label>
+                            <label>{{ __('user_messages.description') }}</label>
                         </div>
-                        <textarea id="description" class="form-control" name="description" rows="4" placeholder="Enter description"></textarea>
-                        <span class="text-danger small d-none" id="description_error">Please enter description</span>
+                        <textarea id="description" class="form-control" name="description" rows="4" placeholder="{{ __('user_messages.enter_description') }}"></textarea>
+                        <span class="text-danger small d-none" id="description_error">{{ __('user_messages.please_enter_description') }}</span>
                     </div>
 
                     <div class="sub-form mt-3">
                         <div class="label-flex">
-                            <label>Upload attachment (if any)</label>
+                            <label>{{ __('user_messages.upload_attachment_if_any') }}</label>
                         </div>
                         <div class="upload-image w-100 mt-2">
                             <label class="uploadLabel" style="cursor:pointer;text-align:center;">
                                 <img src="{{ asset('user/assets/images/upload-icon.svg') }}">
-                                <div class="text-color-upload">Upload image</div>
+                                <div class="text-color-upload">{{ __('user_messages.upload_image') }}</div>
                                 <input type="file" accept="image/*" name="file" hidden onchange="showPreview(event)">
                             </label>
                             <div class="imgshow">
@@ -236,7 +246,7 @@
                     </div>
 
                     <div class="cmn-btn mt-3">
-                        <button type="button" id="submitTicket" class="customBtn customBtn5 mt-3">Submit</button>
+                        <button type="button" id="submitTicket" class="customBtn customBtn5 mt-3">{{ __('user_messages.submit') }}</button>
                     </div>
                 </div>
             </form>
