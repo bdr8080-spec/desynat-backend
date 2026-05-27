@@ -144,7 +144,7 @@ width: fit-content;
                                     <span class="text-danger" id="city_error"></span>
                                 </div>
 
-                                <div class="mt-3 position-relative">
+                                <div class="mt-3 position-relative rtlpnl-1">
                                     <label>{{ __('admin_messages.password') }}</label>
                                     <input type="password" id="password" class="form-control" name="password" placeholder="{{ __('admin_messages.enter_password') }}" value="{{ $step1Data['password'] ?? '' }}" style="font-size: 17px;" />
                                     <i class="fas fa-eye toggle-password position-absolute" toggle="#password"
@@ -213,7 +213,7 @@ width: fit-content;
                                     <span class="text-danger" id="state_error"></span>
                                 </div>
 
-                                <div class="mt-3 position-relative">
+                                <div class="mt-3 position-relative rtlpnl-1">
                                     <label>{{ __('admin_messages.confirm_password') }}</label>
                                     <input type="password" id="confirmPassword" class="form-control" name="confirm_password"
                                         placeholder="{{ __('admin_messages.enter_confirm_password') }}" value="{{ $step1Data['password'] ?? '' }}"  style="font-size: 17px;"/>

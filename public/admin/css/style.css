@@ -2849,3 +2849,11 @@ a.text {
     right: inherit !important;
 }
 
+[dir="rtl"] .rtlpnl span {
+    left: 10px !important;
+    right: inherit !important;
+}
+
+[dir="rtl"] .rtlpnl-1 input {
+    padding-left: 50px;
+}

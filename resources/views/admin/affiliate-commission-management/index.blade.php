@@ -109,7 +109,7 @@
                 <div class="row">
                     <input type="hidden" id="editCommissionId" name="commission_id">
                     <div class="col-lg-12">
-                        <div class="form-group w-100 m-auto">
+                        <div class="form-group w-100 m-auto rtlpnl">
                             <label for="from" class="form-label">{{ __('admin_messages.set_commission') }}</label>
                             <input type="text" name="commission" id="commission" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+(\d)/,'$1').replace(/^0(\.|$)/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1');if(parseFloat(this.value)>100)this.value='100';" class="w-100" placeholder="{{ __('admin_messages.enter_commission') }}" class="form-control"
                                 aria-describedby="passwordHelpInline" />
