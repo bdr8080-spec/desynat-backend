@@ -231,14 +231,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group position-relative">
+                                    <div class="form-group position-relative rtlpnl-1">
                                         <label for="password">{{ __('affiliate_messages.create_password') }}</label>
                                         <input type="password" class="form-control notapplyspace" id="password"
                                             placeholder="{{ __('affiliate_messages.enter_password') }}" name="password" value="">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
                                     </div>
                                     <p class="text-danger" id="error-password"></p>
-                                    <div class="form-group position-relative">
+                                    <div class="form-group position-relative rtlpnl-1">
                                         <label for="password">{{ __('affiliate_messages.confirm_password') }}</label>
                                         <input type="password" class="form-control notapplyspace" id="confirm_password"
                                             placeholder="{{ __('affiliate_messages.enter_confirm_password') }}" name="confirm_password" value="">

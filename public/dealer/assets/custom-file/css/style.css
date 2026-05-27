@@ -2129,3 +2129,16 @@ label {
 [dir="rtl"] .cmn-header .bi-chevron-left::before {
   content: "\f285";
 }
+
+[dir="rtl"] .rtlpnl-1 .form-control {
+  padding-left: 50px;
+}
+
+[dir="rtl"] .mob-change {
+  right: inherit;
+  left: 10px;
+}
+[dir="rtl"] .gpsmap {
+  right: initial;
+  left: 10px;
+}

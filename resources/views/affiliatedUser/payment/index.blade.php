@@ -22,7 +22,7 @@
                     name="search"
                     class="form-control py-3"
                     placeholder="{{ __('affiliate_messages.search') }}"
-                    value="{{ request('search') }}">
+                    value="{{ request('search') }}" oninput="this.value = this.value.replace(/^\s+/, '')">
             </div>
 
             <button type="submit" class="btn btn-success searchlin">

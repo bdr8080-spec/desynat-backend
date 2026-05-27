@@ -411,7 +411,7 @@
 
           <div class="sub-form mb-2">
             <label>{{ __('affiliate_messages.bank_name') }}</label>
-            <input type="text" id="bank_name" class="form-control" placeholder="{{ __('affiliate_messages.enter_bank_name') }}">
+            <input type="text" id="bank_name" class="form-control" placeholder="{{ __('affiliate_messages.enter_bank_name') }}" >
             <small class="text-danger" id="error_bank_name"></small>
           </div>
 

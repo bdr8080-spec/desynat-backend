@@ -74,7 +74,7 @@
                 <input type="hidden" name="id" value="{{request()->temp_user_id}}">
                 <div>
                     <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> {{ __('affiliate_messages.reset_password') }}</h3>
-                    <div class="form-group position-relative password_icon mt-3">
+                    <div class="form-group position-relative password_icon mt-3 rtlpnl-1">
                         <label for="createPassword">{{ __('affiliate_messages.create_new_password') }}</label>
                         <input type="password" id="createPassword" class="form-control custom-password notapplyspace"
                             placeholder="{{ __('affiliate_messages.create_new_password') }}" style="padding-right: 40px;" name="password" />
@@ -83,7 +83,7 @@
                     <span class="text-danger" id="error-password"></span>
 
 
-                    <div class="form-group position-relative password_icon mt-3">
+                    <div class="form-group position-relative password_icon mt-3 rtlpnl-1">
                         <label for="confirmPassword">{{ __('affiliate_messages.confirm_password') }}</label>
                         <input type="password" id="confirmPassword" class="form-control custom-password notapplyspace"
                             placeholder="{{ __('affiliate_messages.enter_confirm_password') }}" style="padding-right: 40px;" name="confirm_password" />

@@ -245,7 +245,7 @@
     color: #6E4527;
 }
 .btn-close {
-    font-size: 40px;
+    font-size: 20px;
     opacity: 1;
 }
 .kd-icon {
@@ -344,6 +344,9 @@
     font-size: 16px;
 }
 
+input[type="date"]{
+    position: relative;
+}
 
 @media(max-width:641px){
     .sub-grid figure {
