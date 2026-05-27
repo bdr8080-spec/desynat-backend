@@ -6,8 +6,6 @@ td img {
     height: 65px !important;
     border-radius: 50%;
     object-fit: fill;
-    "
-
 }
 
 td {
@@ -47,7 +45,7 @@ table#table1 {
                 <div class="from-group position-relative">
                     <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
                     <input type="search" class="dt-input tableSearch form-control" id="customTableSearch"
-                        placeholder="{{ __('seller_messages.Search') }}" aria-controls="table1">
+                        placeholder="{{ __('seller_messages.Search') }}" aria-controls="table1" >
                 </div>
             </div>
 

@@ -179,10 +179,10 @@
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
 
-                                        <div class="form-group position-relative">
+                                        <div class="form-group position-relative rtlpnl-1">
                                             <label for="password"> {{ __('seller_messages.password') }}</label>
                                             <input type="password" class="form-control notapplyspace" id="password"
-                                                placeholder="{{ __('seller_messages.enter_password') }}" name="password">
+                                                placeholder="{{ __('seller_messages.enter_password') }}" name="password" style="padding-right:40px;">
                                             <i class="toggle-password  bi bi-eye-slash "></i>
                                         </div>
                                         @error('password')

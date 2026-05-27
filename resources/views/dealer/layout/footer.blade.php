@@ -807,6 +807,13 @@ $(document).ready(function () {
         }
     });
 
+    // Search panel
+
+    $(document).on('input', '.tableSearch input', function () {
+        this.value = this.value.replace(/^\s+/, '');
+    });
+
+
 });
 </script>
 

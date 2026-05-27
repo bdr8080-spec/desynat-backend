@@ -47,7 +47,7 @@ button.deleteStoryBtn {
             </div>
             <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr" style="display:none;">
             <video id="bannerUploadedVideo" class="img-fluid uploadbnr" controls
-                style="display:none;"></video
+                style="display:none;"></video>
         </label>
         <input type="file"
                id="banner_image_upload"
