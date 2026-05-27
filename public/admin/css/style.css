@@ -2859,3 +2859,6 @@ a.text {
     padding-left: 50px;
 }
 
+[dir="ltr"] .rtlpnl-2 input{
+    padding-right: 50px;
+}
