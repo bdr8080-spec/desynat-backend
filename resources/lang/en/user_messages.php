@@ -11,6 +11,11 @@ return [
     'arabic' => 'Arabic',
     'english' => 'English',
 
+    'showing' => 'Showing',
+    'to' => 'to',
+    'of' => 'of',
+    'results' => 'results',
+
     
     'please_select_a_color' => 'Please select a color.',
     'please_select_a_size' => 'Please select a size.',
@@ -695,6 +700,31 @@ return [
     'sort_by' => 'Sort By',
     'apply' => 'Apply',
     'clear' => 'Clear',
+
+    //support
+    'support' => 'Support',
+    'support_email_address' => 'Support Email Address',
+    'support_contact_number' => 'Support Contact Number',
+    'ticket_type' => 'Ticket Type',
+    'ticket_id' => 'Ticket ID',
+    'raised_on' => 'Raised On',
+    'status' => 'Status',
+    'pending' => 'Pending',
+    'in_progress' => 'In Progress',
+    'resolved' => 'Resolved',
+    'closed' => 'Closed',
+    'ticket_details' => 'Ticket Details',
+    'select_ticket_type' => 'Select Ticket Type',
+    'title' => 'Title',
+    'enter_title' => 'Enter Title',
+    'description' => 'Description',
+    'enter_description' => 'Enter Description',
+    'upload_attachment_if_any' => 'Upload Attachment (If Any)',
+    'upload_image' => 'Upload Image',
+    'submit' => 'Submit',
+    'please_select_ticket_type' => 'Please Select Ticket Type',
+    'please_enter_title' => 'Please Enter Title',
+    'please_enter_description' => 'Please Enter Description',
     
 
     
