@@ -2737,6 +2737,7 @@ i.bi.icons {
     border: 1px solid #ac875e;
     border-radius: 10px;
     overflow: hidden;
+    padding: 0px;
 }
 
 .tabs-panel .nav-link {
@@ -3589,4 +3590,13 @@ img.img-fluid.circle-image {
 [dir="rtl"]  .phonefield{
     direction: rtl;
     padding-right: 100px !important;
+}
+[dir="rtl"] .giftcontrol {
+    height: 60px;
+    padding-right: 40px;
+}
+[dir="rtl"] .giftsearch .searchicon {
+    left: inherit;
+    right: 0;
+    padding: 25px 14px;
 }
