@@ -156,7 +156,7 @@
                     </div>
                 </div>
                 <span class="text-danger" id="error-mobileOrEmail"></span>
-                <div class="form-group position-relative password_icon mt-lg-3 mt-md-2 mt-1">
+                <div class="form-group position-relative password_icon mt-lg-3 mt-md-2 mt-1 password-pnl">
                     <label for="">{{ __('user_messages.password') }}</label>
                     <input type="password" name="password"  id="login-password" class="form-control custom-password notapplyspace"
                         placeholder="{{ __('user_messages.please_enter_password') }}" style="padding-right: 40px;"/>

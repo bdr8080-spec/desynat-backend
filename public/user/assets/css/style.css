@@ -875,7 +875,7 @@ h3.mid-headng {
 }
 
 .customNavbar .dropdown-menu.sell_clothes {
-    padding: 10px 0;
+    padding: 5px 0;
 }
 
 .sell_clothes:hover .scroll-btn {
@@ -3493,6 +3493,7 @@ img.img-fluid.circle-image {
     --bs-dropdown-link-active-bg: #f3f0ec !important;
 }
 
+
 [dir="rtl"] .header_nav_button_dropdown .dropdown-menu.show{
     width:max-content;
     direction:rtl;
@@ -3502,12 +3503,26 @@ img.img-fluid.circle-image {
     margin-right: auto;
     margin-left: inherit;
 }
-[dir="rtl"] .toggle-passwordone, .toggle-password, .toggle-passwordtwo {
+[dir="rtl"] .toggle-passwordone {
     left: 10px;
     right: inherit;
+    padding: 0px 15px 0px 0px;
 }
+[dir="rtl"] .toggle-password  {
+    left: 10px;
+    right: inherit;
+    padding: 0px 15px 0px 0px;
+}
+[dir="rtl"] .toggle-passwordtwo {
+    left: 10px;
+    right: inherit;
+    padding: 0px 15px 0px 0px;
+}
+
+
 [dir="rtl"] .custom-password {
     padding-right: 10px !important;
+    padding-left: 40px !important;
 }
 [dir="rtl"] .fa-chevron-left:before {
     content: "\f054";
@@ -3568,6 +3583,10 @@ img.img-fluid.circle-image {
 }
 
 [dir="rtl"] .iti--allow-dropdown .iti__flag-container, .iti--separate-dial-code .iti__flag-container {
-    right: 0;
+    right: auto;
     left: initial;
+}
+[dir="rtl"]  .phonefield{
+    direction: rtl;
+    padding-right: 100px !important;
 }

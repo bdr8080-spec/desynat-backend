@@ -468,36 +468,25 @@
                                                         aria-label="scroll left">
                                                         <i class="fa-solid fa-chevron-left"></i>
                                                     </button>
-                                                    <div
-                                                        class="scroll-content row justify-content-between flex-lg-nowrap">
-                                                        @foreach ($item->subCategories as $value)
-                                                        <div class="col-lg-3 col-md-4 col-12">
-                                                            <div class="clothes_content">
-                                                                <a href="{{ route('user.category_wise_store', $value->category_id) }}">
-                                                                <!-- <p>{{$value->name_english}}</p> -->
-                                                                 <p>
-                                                                     @if(app()->getLocale() == 'ar')
-                                                                        {{ $value->name_arabic }}
-                                                                    @else
-                                                                        {{ $value->name_english }}
-                                                                    @endif
-                                                                 </p>
-                                                                </a>
-                                                                <!-- <ul class="list-unstyled">
-                                                                    <li>
-                                                                        <a href="">Shirt</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="">Shirt</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="">Shirt</a>
-                                                                    </li>
-                                                                </ul> -->
+                                                    <div class="scroll-content  justify-content-around flex-lg-nowrap">
+                                                            @foreach ($item->subCategories as $value)
+                                                            <div class="menu-sub">
+                                                                <div class="clothes_content">
+                                                                    <a href="{{ route('user.category_wise_store', $value->category_id) }}">
+                                                                    <!-- <p>{{$value->name_english}}</p> -->
+                                                                    <p>
+                                                                        @if(app()->getLocale() == 'ar')
+                                                                            {{ $value->name_arabic }}
+                                                                        @else
+                                                                            {{ $value->name_english }}
+                                                                        @endif
+                                                                    </p>
+                                                                    </a>
+                                                                
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        @endforeach
-
+                                                            @endforeach
+                                                        
                                                     </div>
                                                     <button class="scroll-arrow scroll-btn scroll-right" type="button"
                                                         aria-label="scroll right">
