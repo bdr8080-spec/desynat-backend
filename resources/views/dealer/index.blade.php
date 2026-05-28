@@ -87,7 +87,14 @@ $can_action=$menu_permission['can_action'];
             <div class="bg-header d-flex justify-content-between mt-3 align-items-center">
                 <div class="title24">{{ __('seller_messages.Store_availability') }}</div>
                 <div class="d-flex gap-3">
-                    <div class="buy">{{ __('seller_messages.Busy/On') }}</div>
+                    <div class="buy">
+                        @if(@$seller_details->store_info->Store_Availability == 1)
+                        {{ __('seller_messages.open') }}
+                        @else
+                        {{ __('seller_messages.busy') }}
+                        @endif
+
+                    </div>
 
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault"
@@ -423,10 +430,12 @@ function store_availbilityfunction(checkbox) {
 
             if (data.data.Store_Availability == 1) {
                 toastr.success(data.message);
+                location.reload();
             }
 
             if (data.data.Store_Availability == 0) {
                 toastr.error(data.message);
+                location.reload();
             }
 
 

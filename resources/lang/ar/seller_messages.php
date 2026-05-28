@@ -18,6 +18,8 @@ return [
 "Submit" => "إرسال",
 'percent_off' => '٪ خصم',
 'kd_off' => 'دينار خصم',
+'open' => 'فتح',
+'busy' => 'مشغول',
 
 
 // Seller Dashboard language code 
