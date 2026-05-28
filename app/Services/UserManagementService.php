@@ -1724,6 +1724,8 @@ public function addtoCart_Increment_decrement($request)
             }
         }
 
+        
+
         $product_amount = $variant->final_price;
         $total_amount = $product_amount * $request->quantity;
 

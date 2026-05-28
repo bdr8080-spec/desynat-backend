@@ -78,6 +78,12 @@ $currency = session('currencyAr', 'دينار كويتي');
     padding: 12px;
     border-radius: 8px;
 }
+
+.disabled-btn {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
 </style>
 <div class="customContainer">
     <div class="row">
@@ -220,7 +226,13 @@ $currency = session('currencyAr', 'دينار كويتي');
                 <p class="text-muted mb-1">{{$data->description_en}}</p> --}}
                 <div id="optionError" style="color:red; font-size:14px; display:none;"></div>
                 @if ($data->customized_product==1)
-                <button class="customBtn2" id="customOrder">{{ __('user_messages.custom_order') }}</button>
+                  <button 
+                    class="customBtn2 {{ $data->store->Store_Availability == 0 ? 'disabled-btn' : '' }}" 
+                    id="customOrder"
+                    {{ $data->store->Store_Availability == 0 ? 'disabled' : '' }}
+                >
+                    {{ __('user_messages.custom_order') }}
+                </button>
                 @endif
 
                 @endif
@@ -242,7 +254,13 @@ $currency = session('currencyAr', 'دينار كويتي');
                         <div class="left-action w-50">
 
                             <!-- ADD TO BAG -->
-                            <button class="customBtn2 w-100 addToBagBtnRemove" id="addToBagBtn">{{ __('user_messages.add_to_bag') }}</button>
+                            <button 
+                                class="customBtn2 w-100 addToBagBtnRemove {{ $data->store->Store_Availability == 0 ? 'disabled-btn' : '' }}" 
+                                id="addToBagBtn"
+                                {{ $data->store->Store_Availability == 0 ? 'disabled' : '' }}
+                            >
+                                {{ __('user_messages.add_to_bag') }}
+                            </button>
 
                             <!-- QUANTITY BOX -->
                             <div class="quantity-box">
@@ -256,7 +274,13 @@ $currency = session('currencyAr', 'دينار كويتي');
                         </div>
 
                         <!-- BUY NOW BUTTON -->
-                        <button class="customBtn w-50" id="buyNowBtn">{{ __('user_messages.buy_now') }}</button>
+                        <button 
+                            class="customBtn w-50 {{ $data->store->Store_Availability == 0 ? 'disabled-btn' : '' }}" 
+                            id="buyNowBtn"
+                            {{ $data->store->Store_Availability == 0 ? 'disabled' : '' }}
+                        >
+                            {{ __('user_messages.buy_now') }}
+                        </button>
 
                         @else
 
