@@ -3626,3 +3626,6 @@ img.img-fluid.circle-image {
     margin-left: inherit !important;
     margin-right: auto !important;
 }
+a {
+    text-decoration: none !important;
+}
