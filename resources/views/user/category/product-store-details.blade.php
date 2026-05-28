@@ -472,7 +472,9 @@ $currency = session('currencyAr', 'دينار كويتي');
                 <div class="d-flex gap-3 mt-3">
                     <!-- Render Product Images (if any) -->
                     @php
-                    $productImages = json_decode($review->product_image);
+
+                    // $productImages = json_decode($review->product_image);
+                    $productImages = $review->product_image;
                     @endphp
 
                     @if($productImages && is_array($productImages))
