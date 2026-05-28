@@ -32,6 +32,15 @@
         </a>
     </li>
     @endif
+    @if(in_array(22, $permissions) || $admin->type == 1)
+    <li class="nav-item {{ Request::routeIs('admin.productManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.productManagement') }}">
+            <span><img src="{{ asset('admin/image/list.svg') }}" alt="Product Management" /></span>
+            {{ __('admin_messages.product_management') }}
+        </a>
+    </li>
+    @endif
+    
     @if(in_array(4, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('sellerManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('sellerManagement') }}">
@@ -50,7 +59,6 @@
     </li>
     @endif
 
-   
     @if(in_array(7, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.userManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.userManagement') }}">
@@ -59,7 +67,6 @@
         </a>
     </li>
     @endif
-   
    
     @if(in_array(9, $permissions) || $admin->type == 1)
     <li
@@ -221,16 +228,7 @@
         </a>
     </li>
     @endif
-    
-    @if(in_array(22, $permissions) || $admin->type == 1)
-    <li class="nav-item {{ Request::routeIs('admin.productManagement') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.productManagement') }}">
-            <span><img src="{{ asset('admin/image/list.svg') }}" alt="Product Management" /></span>
-            {{ __('admin_messages.product_management') }}
-        </a>
-    </li>
-    @endif
-    
+
     @if(in_array(26, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.ticketManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.ticketManagement') }}">
