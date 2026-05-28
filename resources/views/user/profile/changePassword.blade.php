@@ -3,7 +3,7 @@
 @section('content')
 
   <!-- //change password -->
-    <div class="my-profile customContainer">
+    <div class="my-profile customContainer mb-5">
         <div class="d-lg-flex d-md-flex d-block align-items-center mt-3 justify-content-between">
             <div class="my-profie-nav">
                 <a class="text-black" href="{{route('userProfile')}}"><i class="fa-solid fa-chevron-left"></i></a>{{ __('user_messages.change_password') }}</div>
@@ -12,7 +12,7 @@
             @csrf
         <div class="row mt-5">
             <div class="col-lg-6">
-                <div class="form-group position-relative">
+                <div class="form-group position-relative rtlspace">
                 <label for="">{{ __('user_messages.old_password') }}</label>
                 <input type="password" class="form-control notapplyspace" placeholder="{{ __('user_messages.enter_password') }}" name="old_password" />
                 <i class="fa-solid fa-eye toggle-password" data-target="old_password"></i>
@@ -21,7 +21,7 @@
             </div>
 
             <div class="col-lg-6">
-                <div class="form-group position-relative">
+                <div class="form-group position-relative rtlspace">
                 <label for="">{{ __('user_messages.new_password') }}</label>
                 <input type="password" class="form-control notapplyspace" placeholder="{{ __('user_messages.enter_new_password') }}" name="new_password" />
                 <i class="fa-solid fa-eye toggle-password" data-target="new_password"></i>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="col-lg-6 mt-3">
-                <div class="form-group position-relative">
+                <div class="form-group position-relative rtlspace">
                 <label for="">{{ __('user_messages.confirm_password') }}</label>
                 <input type="password" class="form-control notapplyspace" placeholder="{{ __('user_messages.re_enter_new_password') }}" name="confirm_password" />
                 <i class="fa-solid fa-eye toggle-password" data-target="confirm_password"></i>

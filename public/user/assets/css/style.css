@@ -3600,3 +3600,32 @@ img.img-fluid.circle-image {
     right: 0;
     padding: 25px 14px;
 }
+
+[dir="rtl"] .mobile .change {
+    right: inherit;
+    left: 10px;
+}
+[dir="rtl"] .mobile .tag {
+    left: inherit;
+    right: 8px;
+}
+[dir="rtl"] .mobile .number {
+    padding-left: inherit;
+    padding-right: 115px !important;
+}
+
+[dir="rtl"] .rtlspace .form-control{
+    padding-left: 45px !important;
+}
+
+[dir="ltr"] .rtlspace .form-control{
+    padding-right: 45px !important;
+}
+
+[dir="rtl"] .offcanvas-header .btn-close {
+    margin-left: inherit !important;
+    margin-right: auto !important;
+}
+a {
+    text-decoration: none !important;
+}
