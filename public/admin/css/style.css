@@ -119,6 +119,9 @@ li.nav-item.active .nav-link{
     justify-content: start;
     margin: 3px 0px;
 }
+.sidebar .nav-item .nav-link span img {
+    width: 24px;
+}
 .sorting_1 {
     font-weight: normal !important;
 }
