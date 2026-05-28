@@ -38,27 +38,34 @@ SellerMenus_table::insert([
         'order_by' => 2,
         'status' => 1
     ],
-
     [
-        'title' => 'Inventory Management',
-        'title_ar' => 'إدارة المخزون',
-        'route' => 'seller.Inventory_Management',
-        'icon' => 'dealer/assets/img/all-icons/inventory.svg',
-        'active_patterns' => json_encode(['seller/inventory-Management','seller/view-inventory/*']),
+        'title' => 'Order Management',
+        'title_ar' => 'إدارة الطلبات',
+        'route' => 'seller.order_management',
+        'icon' => 'dealer/assets/img/all-icons/order.svg',
+        'active_patterns' => json_encode(['seller/order-management',"seller/single-order-view/*"]),
         'order_by' => 3,
         'status' => 1
     ],
 
     [
-        'title' => 'Affiliated Commission',
-        'title_ar' => 'العمولة التابعة',
-        'route' => 'seller.update_commison',
-        'icon' => 'dealer/assets/img/all-icons/affiliated.svg',
-        'active_patterns' => json_encode(['seller/update-commison']),
+        'title' => 'Staff Management',
+        'title_ar' => 'إدارة الموظفين',
+        'route' => 'dealer.staff-management',
+        'icon' => 'dealer/assets/img/all-icons/staff.svg',
+        'active_patterns' => json_encode(['seller/staff-management']),
         'order_by' => 4,
         'status' => 1
     ],
-
+    [
+        'title' => 'Subscription Plans',
+        'title_ar' => 'خطط الاشتراك',
+        'route' => 'seller.subscriptionPlan',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/subscription-plans']),
+        'order_by' => 5,
+        'status' => 1
+    ],
     [
         'title' => 'Banner Management',
         'title_ar' => 'إدارة البنرات',
@@ -68,20 +75,27 @@ SellerMenus_table::insert([
             'seller/show-banner',
             'seller/add-banner'    
         ]),
-        'order_by' => 5,
-        'status' => 1
-    ],
-
-    [
-        'title' => 'Order Management',
-        'title_ar' => 'إدارة الطلبات',
-        'route' => 'seller.order_management',
-        'icon' => 'dealer/assets/img/all-icons/order.svg',
-        'active_patterns' => json_encode(['seller/order-management',"seller/single-order-view/*"]),
         'order_by' => 6,
         'status' => 1
     ],
-
+    [
+        'title' => 'Live Coverage Requests',
+        'title_ar' => 'طلبات التغطية المباشرة',
+        'route' => 'seller.liveRequests',
+        'icon' => 'dealer/assets/img/all-icons/live-send.svg',
+        'active_patterns' => json_encode(['seller/live-request']),
+        'order_by' => 7,
+        'status' => 1
+    ],
+    [
+        'title' => 'Live',
+        'title_ar' => 'مباشر',
+        'route' => 'sellerLiveRequest',
+        'icon' => 'dealer/assets/img/all-icons/live.svg',
+        'active_patterns' => json_encode(['seller/seller-live']),
+        'order_by' => 8,
+        'status' => 1
+    ],
     [
         'title' => 'Deal Management',
         'title_ar' => 'إدارة العروض',
@@ -92,57 +106,7 @@ SellerMenus_table::insert([
             'seller/View-single-deal-management/*',
             'seller/add-single-deal-management/*'
         ]),
-        'order_by' => 7,
-        'status' => 1
-    ],
-
-    [
-        'title' => 'Live',
-        'title_ar' => 'مباشر',
-        'route' => 'sellerLiveRequest',
-        'icon' => 'dealer/assets/img/all-icons/live.svg',
-        'active_patterns' => json_encode(['seller/seller-live']),
-        'order_by' => 8,
-        'status' => 1
-    ],
-
-    [
-        'title' => 'Live Coverage Requests',
-        'title_ar' => 'طلبات التغطية المباشرة',
-        'route' => 'seller.liveRequests',
-        'icon' => 'dealer/assets/img/all-icons/live-send.svg',
-        'active_patterns' => json_encode(['seller/live-request']),
         'order_by' => 9,
-        'status' => 1
-    ],
-
-    [
-        'title' => 'Subscription Plans',
-        'title_ar' => 'خطط الاشتراك',
-        'route' => 'seller.subscriptionPlan',
-        'icon' => 'dealer/assets/img/all-icons/plan.svg',
-        'active_patterns' => json_encode(['seller/subscription-plans']),
-        'order_by' => 10,
-        'status' => 1
-    ],
-
-    [
-        'title' => 'Ticket Management',
-        'title_ar' => 'إدارة التذاكر',
-        'route' => 'seller.ticket_management',
-        'icon' => 'dealer/assets/img/all-icons/plan.svg',
-        'active_patterns' => json_encode(['seller/ticket-management']),
-        'order_by' => 11,
-        'status' => 1
-    ],
-
-    [
-        'title' => 'Staff Management',
-        'title_ar' => 'إدارة الموظفين',
-        'route' => 'dealer.staff-management',
-        'icon' => 'dealer/assets/img/all-icons/staff.svg',
-        'active_patterns' => json_encode(['seller/staff-management']),
-        'order_by' => 12,
         'status' => 1
     ],
 
@@ -152,27 +116,62 @@ SellerMenus_table::insert([
         'route' => 'seller.refundManagement',
         'icon' => 'dealer/assets/img/all-icons/refund.svg',
         'active_patterns' => json_encode(['seller/refund-management']),
-        'order_by' => 19,
+        'order_by' => 10,
         'status' => 1
     ],
-
+    [
+        'title' => 'Inventory Management',
+        'title_ar' => 'إدارة المخزون',
+        'route' => 'seller.Inventory_Management',
+        'icon' => 'dealer/assets/img/all-icons/inventory.svg',
+        'active_patterns' => json_encode(['seller/inventory-Management','seller/view-inventory/*']),
+        'order_by' => 11,
+        'status' => 1
+    ],
+    [
+        'title' => 'Affiliated Commission',
+        'title_ar' => 'العمولة التابعة',
+        'route' => 'seller.update_commison',
+        'icon' => 'dealer/assets/img/all-icons/affiliated.svg',
+        'active_patterns' => json_encode(['seller/update-commison']),
+        'order_by' => 12,
+        'status' => 1
+    ],
+    
+    [
+        'title' => 'Ticket Management',
+        'title_ar' => 'إدارة التذاكر',
+        'route' => 'seller.ticket_management',
+        'icon' => 'dealer/assets/img/all-icons/plan.svg',
+        'active_patterns' => json_encode(['seller/ticket-management']),
+        'order_by' => 13,
+        'status' => 1
+    ],
     [
         'title' => 'Terms & Condition',
         'title_ar' => 'الشروط والأحكام',
         'route' => 'seller.termCondition',
         'icon' => 'dealer/assets/img/all-icons/terms.svg',
         'active_patterns' => json_encode(['seller/terms-conditions']),
-        'order_by' => 13,
+        'order_by' => 14,
         'status' => 1
     ],
-
+    [
+        'title' => 'Return Policy',
+        'title_ar' => 'سياسة الإرجاع',
+        'route' => 'seller.returnPolicy',
+        'icon' => 'dealer/assets/img/all-icons/return.svg',
+        'active_patterns' => json_encode(['seller/return-policy']),
+        'order_by' => 15,
+        'status' => 1
+    ],
     [
         'title' => 'About Us',
         'title_ar' => 'معلومات عنا',
         'route' => 'seller.aboutUs',
         'icon' => 'dealer/assets/img/m3-icon/about.svg',
         'active_patterns' => json_encode(['seller/about-us']),
-        'order_by' => 14,
+        'order_by' => 16,
         'status' => 1
     ],
 
@@ -182,30 +181,9 @@ SellerMenus_table::insert([
         'route' => 'seller.faq',
         'icon' => 'dealer/assets/img/all-icons/faqs.svg',
         'active_patterns' => json_encode(['seller/faq']),
-        'order_by' => 15,
-        'status' => 1
-    ],
-
-    [
-        'title' => 'Return Policy',
-        'title_ar' => 'سياسة الإرجاع',
-        'route' => 'seller.returnPolicy',
-        'icon' => 'dealer/assets/img/all-icons/return.svg',
-        'active_patterns' => json_encode(['seller/return-policy']),
-        'order_by' => 16,
-        'status' => 1
-    ],
-
-    [
-        'title' => 'Exchange Policy',
-        'title_ar' => 'سياسة الاستبدال',
-        'route' => 'seller.exchangePolicy',
-        'icon' => 'dealer/assets/img/all-icons/exchange.svg',
-        'active_patterns' => json_encode(['seller/exchange-policy']),
         'order_by' => 17,
         'status' => 1
     ],
-
     [
         'title' => 'Cancellation Policy',
         'title_ar' => 'سياسة الإلغاء',
@@ -213,6 +191,15 @@ SellerMenus_table::insert([
         'icon' => 'dealer/assets/img/all-icons/terms.svg',
         'active_patterns' => json_encode(['seller/cancellation-policy']),
         'order_by' => 18,
+        'status' => 1
+    ],
+    [
+        'title' => 'Exchange Policy',
+        'title_ar' => 'سياسة الاستبدال',
+        'route' => 'seller.exchangePolicy',
+        'icon' => 'dealer/assets/img/all-icons/exchange.svg',
+        'active_patterns' => json_encode(['seller/exchange-policy']),
+        'order_by' => 19,
         'status' => 1
     ],
 
