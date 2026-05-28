@@ -35,6 +35,21 @@
     gtag('config', 'G-LT6YZ5ZYF1');
   </script>
 
+  <style>
+    .disabled-category {
+    pointer-events: none;
+}
+
+.disabled-link {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
+
+.disabled-category:hover .dropdown-menu {
+    display: none !important;
+}
+  </style>
+
 
     <style>
     .pac-container {
@@ -94,7 +109,7 @@
     $userLocation = UserCurrentLocation::where('user_id', $user->id)->first();
     }
 
-    $data = Category::with('subCategories')->where('status',1)->get();
+    $data = Category::with('subCategories')->get();
 
     $adminStories = Story::where('type','1')->where('status','1')->get();
 
@@ -452,10 +467,13 @@
 
                                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 w-100 justify-content-end flex-wrap">
                                         @foreach ($data as $index =>$item)
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle position-relative {{ $index == 0 ? 'active' : '' }}"
-                                                href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                                onclick="handleSubCategory({{$item->id}})">
+                                        <li class="nav-item dropdown {{ $item->status == 0 ? 'disabled-category' : '' }}">
+                                            <a class="nav-link dropdown-toggle position-relative {{ $index == 0 ? 'active' : '' }} {{ $item->status == 0 ? 'disabled-link' : '' }}"
+                                                href="{{ $item->status == 0 ? 'javascript:void(0)' : '#' }}" role="button" @if($item->status != 0)
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                    onclick="handleSubCategory({{ $item->id }})"
+                                                @endif>
                                                 @if(app()->getLocale() == 'ar')
                                                     {{ $item->name_ar }}
                                                 @else

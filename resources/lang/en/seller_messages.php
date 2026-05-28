@@ -19,6 +19,8 @@ return [
 "Submit" => "Submit",
 'percent_off' => '% off',
 'kd_off' => 'KD off',
+'open' => 'Open',
+'busy' => 'Busy',
 
 
 
