@@ -147,6 +147,15 @@ class MyFatoorahController extends Controller {
                 
         $subcription_order=SellerSubcriptionPlanBuy::with('seller_details')->where('transaction_id',$id)->first();
 
+        SellerSubcriptionPlanBuy::where('seller_id', $subcription_order->seller_id)
+                    ->where('status', '1')
+                    ->where('payment_status', '1')
+                    ->where('is_expired', '0')
+                    ->update([
+                        'status' => '0',
+                        'is_expired' => '1'
+                    ]);
+
         
             //For example: pmid=0 for MyFatoorah invoice or pmid=1 for Knet in test mode
             $paymentId = request('pmid') ?: 0;
