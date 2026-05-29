@@ -39,11 +39,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-4 col-4 text-end qr-box">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&amp;data=https://example.com">
-                    <div class="mt-1 small"> Share <i class="bi bi-share-fill"></i></div>
-                </div>
             </div>
 
             <div class="mt-4">
@@ -54,6 +49,60 @@
                 <div class="mt-2 mb-0"> Bdbdbd </div>
             </div>
         </div>
+
+        <div class="py-2">
+            <h5 class="h2">Total Orders(0)</h5>
+        </div>
+        <div class="order-total">
+            <div class="row mt-0">
+                <div class="col-lg-6 col-md-6">
+                    <div class="profile-card pnl-flex mb-3">
+                        <div class="dash-content">
+                            <h5>Completed  </h5>
+                            <div class="title30">0</div>
+                        </div>
+                        <div class="dash-circle">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="profile-card pnl-flex mb-3">
+                        <div class="dash-content">
+                            <h5>Cancelled  </h5>
+                            <div class="title30">0</div>
+                        </div>
+                        <div class="dash-circle">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="profile-card pnl-flex">
+                        <div class="dash-content">
+                            <h5>My Earnings  </h5>
+                            <div class="title30">0 KD</div>
+                        </div>
+                        <div class="dash-circle">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="profile-card pnl-flex">
+                        <div class="dash-content">
+                            <h5>Commission  </h5>
+                            <div class="title30">0</div>
+                        </div>
+                        <div class="dash-circle">
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
 
         <div class="py-3">
             <h5 class="h2">Heighlights</h5>
@@ -74,7 +123,7 @@
 
         <div class="reels-wrapper mt-4 pb-5">
             <div class="py-3">
-                <h5 class="h2">All Reel</h5>
+                <h5 class="h2">Reel</h5>
             </div>
 
             <div class="row">
