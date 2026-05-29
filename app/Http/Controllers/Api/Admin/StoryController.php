@@ -141,6 +141,90 @@ class StoryController extends Controller
         }
     }
 
+    public function delete_seller_story(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'story_id' => 'required|exists:stories,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $request_data=(object )[
+            'story_id'=>$request->story_id,
+        ];
+
+        try {
+            $result = $this->StoryManagementService->deleteSellerStory($request_data);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function delete_seller_reel(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'reel_id' => 'required|exists:reels,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $request_data=(object )[
+            'reel_id'=>$request->reel_id,
+        ];
+
+        try {
+            $result = $this->StoryManagementService->deleteSellerReel($request_data);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function delete_seller_highlight(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'highlight_id' => 'required|exists:highlights,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $request_data=(object )[
+            'highlight_id'=>$request->highlight_id,
+        ];
+
+        try {
+            $result = $this->StoryManagementService->deleteSellerHighlight($request_data);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 
