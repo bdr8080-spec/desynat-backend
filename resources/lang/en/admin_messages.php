@@ -248,6 +248,8 @@ return [
     'reject_seller' => 'Reject Seller',
     'seller_rejected_successfully' => 'Seller rejected successfully',
     'seller_approved_successfully' => 'Seller approved successfully',
+    'seller_details' => 'Seller Details',
+    'seller_view' => 'View',
 
     //country,city zone management
     'manage_city' => 'Manage Cities',

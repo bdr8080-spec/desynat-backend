@@ -9,8 +9,8 @@
         ->toArray();
 @endphp
 
-<div id="content-wrapper" class="d-flex flex-column position-relative">
-    <div id="content" class="">
+<div id="content-wrapper" class="d-flex flex-column position-relative mb-1">
+    <div id="content" class="mb-4">
 
 
         <div class="inner-content management">
@@ -40,6 +40,7 @@
                     </li>
                 </ul>
             </div>
+
             <div class="userManagecontent">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab"
@@ -124,6 +125,7 @@
                                         @if(in_array(4, $permissions) || $admin->type == 1)
                                         <th scope="col">{{ __('admin_messages.action') }}</th>
                                         @endif
+                                        <th scope="col">{{ __('admin_messages.seller_details') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -222,6 +224,11 @@
                                             </div>
                                         </td>
                                         @endif
+                                        <td>
+                                            <a href="#" class="btn btn-dark customBtn mt-2">
+                                                <span>{{ __('admin_messages.seller_view') }}</span>
+                                            </a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -321,6 +328,8 @@
                                         @if(in_array(4, $permissions) || $admin->type == 1)
                                         <th scope="col">{{ __('admin_messages.block') }}/{{ __('admin_messages.unblock') }}</th>
                                         @endif
+
+                                        <th scope="col">{{ __('admin_messages.seller_details') }}</th>
 
                                     </tr>
                                 </thead>
@@ -443,6 +452,12 @@
                                             </div>
                                         </td>
                                         @endif
+
+                                        <td>
+                                            <a href="#" class="btn btn-dark customBtn mt-2">
+                                                <span>{{ __('admin_messages.seller_view') }}</span>
+                                            </a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -534,6 +549,7 @@
                                         <th scope="col">{{ __('admin_messages.bank_account_details') }}</th>
                                         <th scope="col">{{ __('admin_messages.uploaded_account_proof') }}</th>
                                         <th scope="col">{{ __('admin_messages.rejection_reason') }}</th>
+                                        <th scope="col">{{ __('admin_messages.seller_details') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -619,6 +635,11 @@
                                             @endif
                                         </td>
                                         <td>{{ $seller['reject_reason'] ?? 'N/A' }}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-dark customBtn mt-2">
+                                                <span>{{ __('admin_messages.seller_view') }}</span>
+                                            </a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

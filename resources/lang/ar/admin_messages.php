@@ -245,6 +245,8 @@ return [
     'reject_seller' => 'رفض البائع',
     'seller_rejected_successfully' => 'تم رفض البائع بنجاح',
     'seller_approved_successfully' => 'تمت الموافقة على البائع بنجاح',
+    'seller_details' => 'تفاصيل البائع',
+    'seller_view' => 'عرض',
 
     //country,city zone management
     'manage_city' => 'إدارة المدن',
