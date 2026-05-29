@@ -801,27 +801,27 @@ class SellerAuthService
               ->first();
 
 
-          if ($activePlan && $activePlan->plan_end_date >= $currentDateTime) {
+          // if ($activePlan && $activePlan->plan_end_date >= $currentDateTime) {
 
-              // Current active plan details
-              $currentPlan = Plan::find($activePlan->plan_id);
+          //     // Current active plan details
+          //     $currentPlan = Plan::find($activePlan->plan_id);
 
-              if ($currentPlan) {
+          //     if ($currentPlan) {
 
-                  if ($plan_data->price <= $currentPlan->price) {
+          //         if ($plan_data->price <= $currentPlan->price) {
 
-                      return [
-                          'status' => 'error',
-                          'message' => __('Service_messages.upgrade_only_higher_plan'),
-                          'data' => (object)[]
-                      ];
-                  }
-              }
+          //             return [
+          //                 'status' => 'error',
+          //                 'message' => __('Service_messages.upgrade_only_higher_plan'),
+          //                 'data' => (object)[]
+          //             ];
+          //         }
+          //     }
 
-              $activePlan->update([
-                  'is_expired' => '1'
-              ]);
-          }
+          //     $activePlan->update([
+          //         'is_expired' => '1'
+          //     ]);
+          // }
 
           if ($plan_data->duration_type == '1') {
 
