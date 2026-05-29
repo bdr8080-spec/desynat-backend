@@ -199,6 +199,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_seller_stories',[StoryController::class,'get_seller_stories']);
      Route::get('/get_admin_stories',[StoryController::class,'get_admin_stories']);
      Route::post('/delete_story',[StoryController::class,'delete_story']);
+     Route::post('/delete_seller_story',[StoryController::class,'delete_seller_story']);
      Route::post('/add_story_comment',[StoryController::class,'add_story_comment']);
 
      //live request & timeslot Management

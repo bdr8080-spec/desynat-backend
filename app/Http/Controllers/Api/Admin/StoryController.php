@@ -141,6 +141,30 @@ class StoryController extends Controller
         }
     }
 
+    public function delete_seller_story(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'story_id' => 'required|exists:stories,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->StoryManagementService->deleteSellerStory($request->story_id);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 

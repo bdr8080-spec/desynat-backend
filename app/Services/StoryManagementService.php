@@ -652,10 +652,10 @@ class StoryManagementService
         }
     }
 
-     public function deleteSellerStory($data)
+     public function deleteSellerStory($story_id)
     {
         try {
-            $story = Story::find($data->story_id);
+            $story = Story::find($story_id);
 
             if (!$story) {
                 return [
