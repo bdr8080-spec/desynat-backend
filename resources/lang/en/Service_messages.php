@@ -3,6 +3,7 @@
 return [
 
   'no_data_found' => 'No data found',
+  'upgrade_only_higher_plan' => 'You can only upgrade to a higher plan while your current plan is active.',
 
   //admin auth service
   'otp_verified_successfully' => 'OTP Verified Successfully',

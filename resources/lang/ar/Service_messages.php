@@ -3,6 +3,7 @@
 return [
 
   'no_data_found' => 'لا توجد بيانات',
+  'upgrade_only_higher_plan' => 'يمكنك الترقية فقط إلى خطة أعلى أثناء تفعيل خطتك الحالية.',
   
   //admin auth service
   'otp_verified_successfully' => 'تم التحقق من رمز التحقق بنجاح',

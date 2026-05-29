@@ -506,9 +506,9 @@ class SellerAuthService
 
                 $check_plan= SellerSubcriptionPlanBuy::where('seller_id',$request->seller_id)->where('status','1')->where('payment_status','1')->where('is_expired','0')->first(); // check seller Plan
 
-                if($check_plan){
-                 return ['status'=>'error','message' => __('Service_messages.seller_already_has_active_plan'),'data'=>(object)[]]; 
-                }
+                // if($check_plan){
+                //  return ['status'=>'error','message' => __('Service_messages.seller_already_has_active_plan'),'data'=>(object)[]]; 
+                // }
 
                 if ($plan_data->duration_type == '1') {
                     // Monthly
@@ -546,7 +546,7 @@ class SellerAuthService
                   ];
 
 
-                  dd($array_data);
+                  //dd($array_data);
 
                 $data= SellerSubcriptionPlanBuy::create($array_data);
   
@@ -677,10 +677,112 @@ class SellerAuthService
               
                   }
 
+  // public function renew_Subscription_Order($request)
+  // {
+  //     try {
+  //         $plan_data = Plan::where('id', $request->plan_id)->first();
+  //         if (!$plan_data) {
+  //             return [
+  //                 'status' => 'error',
+  //                 'message' => __('Service_messages.plan_not_found'),
+  //                 'data' => (object)[]
+  //             ];
+  //         }
+
+  //         $currentDateTime = Carbon::now();
+
+  //         // Calculate new end date based on duration type
+  //         if ($plan_data->duration_type == '1') { // month
+  //             $newEndDate = $currentDateTime->copy()->addMonths($plan_data->duration);
+  //         } else { // year
+  //             $newEndDate = $currentDateTime->copy()->addYears($plan_data->duration);
+  //         }
+
+  //         // Check existing active plan
+  //         $activePlan = SellerSubcriptionPlanBuy::where('seller_id', $request->seller_id)
+  //             ->where('status', '1')
+  //             ->where('payment_status', '1')
+  //             ->orderBy('id', 'desc')
+  //             ->first();
+
+  //         if ($activePlan && $activePlan->plan_end_date >= $currentDateTime) {
+  //             return [
+  //                 'status' => 'error',
+  //                 'message' => __('Service_messages.active_plan_not_expired_yet'),
+  //                 'data' => (object)[]
+  //             ];
+  //         }
+
+  //         // Mark previous plan as expired if exists
+  //         if ($activePlan) {
+  //             $activePlan->update(['is_expired' => '1']);
+  //         }
+
+  //             if ($plan_data->duration_type == '1') {
+  //                   // Monthly
+  //                   $amount = $plan_data->price * $plan_data->duration;
+  //               } else {
+  //                   // Yearly
+  //                   if (!empty($plan_data->no_of_free_months) && $plan_data->no_of_free_months > 0) {
+  //                       $paidMonths = 12 - $plan_data->no_of_free_months;
+  //                       $amount = $paidMonths * $plan_data->price;
+  //                   } else {
+  //                       $amount = 12 * $plan_data->price;
+  //                   }
+  //               }
+
+  //               $amount = round($amount, 2);
+
+  //         // Prepare new subscription record
+  //         $array_data = [
+  //             'transaction_id' => $request->transaction_id,
+  //             'seller_id'      => $request->seller_id,
+  //             'plan_id'        => $request->plan_id,
+  //             'status'         => '0', 
+  //             'payment_status' => $request->payment_status,
+  //             'plan_start_date'=> $currentDateTime,
+  //             'plan_end_date'  => $newEndDate,
+  //             'payment_method' => $request->payment_method,
+  //             'amount'         => $amount,
+  //             'product_type'       => $plan_data->product_type,
+  //             'no_of_products'     => $plan_data->no_of_products,
+  //             'no_of_highlights'   => $plan_data->no_of_highlights,
+  //             'no_of_employee'     => $plan_data->no_of_employee,
+  //             'no_of_videos'       => $plan_data->no_of_videos,
+  //             'stories'       => $plan_data->stories,
+  //         ];
+
+  //         $newSubscription = SellerSubcriptionPlanBuy::create($array_data);
+
+  //         if ($newSubscription) {
+  //             return [
+  //                 'status' => 'success',
+  //                 'message' => __('Service_messages.renew_subscription_order_created_successfully'),
+  //                 'data' => $newSubscription
+  //             ];
+  //         } else {
+  //             return [
+  //                 'status' => 'error',
+  //                 'message' => 'Failed to create subscription',
+  //                 'data' => (object)[]
+  //             ];
+  //         }
+
+  //     } catch (\Exception $e) {
+  //         return [
+  //             'status' => 'error',
+  //             'message' => 'Something went wrong: ' . $e->getMessage(),
+  //             'data' => (object)[]
+  //         ];
+  //     }
+  // }
+
   public function renew_Subscription_Order($request)
   {
       try {
+
           $plan_data = Plan::where('id', $request->plan_id)->first();
+
           if (!$plan_data) {
               return [
                   'status' => 'error',
@@ -691,84 +793,105 @@ class SellerAuthService
 
           $currentDateTime = Carbon::now();
 
-          // Calculate new end date based on duration type
-          if ($plan_data->duration_type == '1') { // month
-              $newEndDate = $currentDateTime->copy()->addMonths($plan_data->duration);
-          } else { // year
-              $newEndDate = $currentDateTime->copy()->addYears($plan_data->duration);
-          }
-
-          // Check existing active plan
           $activePlan = SellerSubcriptionPlanBuy::where('seller_id', $request->seller_id)
               ->where('status', '1')
               ->where('payment_status', '1')
+              ->where('is_expired', '0')
               ->orderBy('id', 'desc')
               ->first();
 
+
           if ($activePlan && $activePlan->plan_end_date >= $currentDateTime) {
-              return [
-                  'status' => 'error',
-                  'message' => __('Service_messages.active_plan_not_expired_yet'),
-                  'data' => (object)[]
-              ];
+
+              // Current active plan details
+              $currentPlan = Plan::find($activePlan->plan_id);
+
+              if ($currentPlan) {
+
+                  if ($plan_data->price <= $currentPlan->price) {
+
+                      return [
+                          'status' => 'error',
+                          'message' => __('Service_messages.upgrade_only_higher_plan'),
+                          'data' => (object)[]
+                      ];
+                  }
+              }
+
+              $activePlan->update([
+                  'is_expired' => '1'
+              ]);
           }
 
-          // Mark previous plan as expired if exists
-          if ($activePlan) {
-              $activePlan->update(['is_expired' => '1']);
+          if ($plan_data->duration_type == '1') {
+
+              // Monthly
+              $newEndDate = $currentDateTime->copy()->addMonths($plan_data->duration);
+
+          } else {
+
+              // Yearly
+              $newEndDate = $currentDateTime->copy()->addYears($plan_data->duration);
           }
 
-              if ($plan_data->duration_type == '1') {
-                    // Monthly
-                    $amount = $plan_data->price * $plan_data->duration;
-                } else {
-                    // Yearly
-                    if (!empty($plan_data->no_of_free_months) && $plan_data->no_of_free_months > 0) {
-                        $paidMonths = 12 - $plan_data->no_of_free_months;
-                        $amount = $paidMonths * $plan_data->price;
-                    } else {
-                        $amount = 12 * $plan_data->price;
-                    }
-                }
+          if ($plan_data->duration_type == '1') {
 
-                $amount = round($amount, 2);
+              // Monthly
+              $amount = $plan_data->price * $plan_data->duration;
 
-          // Prepare new subscription record
+          } else {
+
+              // Yearly
+              if (!empty($plan_data->no_of_free_months) && $plan_data->no_of_free_months > 0) {
+
+                  $paidMonths = 12 - $plan_data->no_of_free_months;
+                  $amount = $paidMonths * $plan_data->price;
+
+              } else {
+
+                  $amount = 12 * $plan_data->price;
+              }
+          }
+
+          $amount = round($amount, 2);
+
           $array_data = [
-              'transaction_id' => $request->transaction_id,
-              'seller_id'      => $request->seller_id,
-              'plan_id'        => $request->plan_id,
-              'status'         => '0', 
-              'payment_status' => $request->payment_status,
-              'plan_start_date'=> $currentDateTime,
-              'plan_end_date'  => $newEndDate,
-              'payment_method' => $request->payment_method,
-              'amount'         => $amount,
+              'transaction_id'     => $request->transaction_id,
+              'seller_id'          => $request->seller_id,
+              'plan_id'            => $request->plan_id,
+              'status'             => '0',
+              'payment_status'     => $request->payment_status,
+              'plan_start_date'    => $currentDateTime,
+              'plan_end_date'      => $newEndDate,
+              'payment_method'     => $request->payment_method,
+              'amount'             => $amount,
               'product_type'       => $plan_data->product_type,
               'no_of_products'     => $plan_data->no_of_products,
               'no_of_highlights'   => $plan_data->no_of_highlights,
               'no_of_employee'     => $plan_data->no_of_employee,
               'no_of_videos'       => $plan_data->no_of_videos,
-              'stories'       => $plan_data->stories,
+              'stories'            => $plan_data->stories,
           ];
 
           $newSubscription = SellerSubcriptionPlanBuy::create($array_data);
 
           if ($newSubscription) {
+
               return [
                   'status' => 'success',
                   'message' => __('Service_messages.renew_subscription_order_created_successfully'),
                   'data' => $newSubscription
               ];
-          } else {
-              return [
-                  'status' => 'error',
-                  'message' => 'Failed to create subscription',
-                  'data' => (object)[]
-              ];
           }
 
+          return [
+              'status' => 'error',
+              'message' => 'Failed to create subscription',
+              'data' => (object)[]
+          ];
+
       } catch (\Exception $e) {
+
           return [
               'status' => 'error',
               'message' => 'Something went wrong: ' . $e->getMessage(),
