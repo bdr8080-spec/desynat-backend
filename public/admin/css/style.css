@@ -101,11 +101,15 @@ th {
 li.nav-item.active {
     background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
     border-radius: 5px;
-    margin-top: 0px;
+    margin: 0px 10px;
 }
+li.nav-item.active .nav-link{
+    padding: 6px 7px;
+}
+
 .sidebar-dark .nav-item .nav-link {
     color: #000 !important;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 19px;
     padding: 6px 17px;
     width: 100%;
@@ -113,6 +117,13 @@ li.nav-item.active {
     display: flex;
     align-items: center;
     justify-content: start;
+    margin: 3px 0px;
+}
+.sidebar .nav-item .nav-link span img {
+    width: 24px;
+}
+.sorting_1 {
+    font-weight: normal !important;
 }
 
 .toggle.sidebar-dark .nav-item .nav-link {
@@ -344,7 +355,7 @@ h1 {
 .customSidebar {
     height: calc(100vh - 5px);
     overflow-y: auto !important;
-    width: 244px;
+    width: 300px;
     transition: all 0.3s;
     overflow: hidden;
     background: rgba(255, 247, 234, 1);
@@ -891,7 +902,7 @@ table thead tr:nth-child(even) {
 } */
 
 .inner-content {
-    margin-left: 279px;
+    margin-left: 330px;
     width: auto;
     height: 100vh;
     padding-bottom: 7% !important;
@@ -2791,7 +2802,7 @@ a.text {
 }
 
 [dir="rtl"] .inner-content {
-    margin-right: 279px !important;
+    margin-right: 325px !important;
     padding-top: 98px;
     margin-left: 40px;
     margin-bottom: 20px;
