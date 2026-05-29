@@ -319,6 +319,11 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
+Route::match(['get', 'post'], '/seller-info', function () {
+    return view('admin.seller-management.seller-info');
+
+})->name('admin.seller-info');
+
 
 
 
