@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class SellerSubcriptionPlanBuy extends Model
 {
 
+protected $table = 'seller_subcription_plan_buys';
+
  protected $guarded=[];
 
 

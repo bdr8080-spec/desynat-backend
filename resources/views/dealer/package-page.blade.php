@@ -307,6 +307,10 @@
         @if (session('success1'))
             var successModal = new bootstrap.Modal(document.getElementById('successModal'));
             successModal.show();
+            setTimeout(function () {
+                window.location.href = "{{ route('seller.subscriptionPlan') }}";
+            }, 1500);
+            
         @endif
     });
 </script>
