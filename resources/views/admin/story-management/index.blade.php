@@ -136,6 +136,9 @@
                                 <th scope="col">{{ __('admin_messages.country') }}</th>
                                 <th scope="col">{{ __('admin_messages.posted_image_video') }}</th>
                                 <th scope="col">{{ __('admin_messages.posted_on') }}</th>
+                                @if(in_array(19, $permissions) || $admin->type == 1)
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
+                                @endif
 
 
                             </tr>
@@ -182,10 +185,24 @@
                                 </td>
 
                                 <td>
-                                    {{ \Carbon\Carbon::parse($story->created_at)
-                                        ->timezone('Asia/Kolkata')
-                                        ->format('jS F Y | h:i A') }}
+                                    
+                                        {{formatDateTimeByLocale($story->created_at)}}
                                 </td>
+
+                                @if(in_array(19, $permissions) || $admin->type == 1)
+                                <td>
+
+                                    <div class="d-flex  justify-content-center">
+
+
+                                        <a href="javascript:void(0);" class="table-button text-danger deleteStory mb-1 mt-1"
+                                            data-id="{{ $story['id'] }}">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </a>
+
+                                    </div>
+                                </td>
+                                @endif
 
                             </tr>
                             @empty
@@ -278,11 +295,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($story['created_at'])
-                                        ->timezone('Asia/Kolkata')
-                                        ->format('jS F Y | h:i A') }}
+                                    {{formatDateTimeByLocale($story['created_at'])}}
                                 </td>
-                                <td>{{ $story['status'] == 1 ? 'Active' : 'Inactive' }}</td>
+                                <td>{{ $story['status'] == 1 ? __('admin_messages.active') : __('admin_messages.inactive') }}</td>
                                 @if(in_array(19, $permissions) || $admin->type == 1)
                                 <td>
 
