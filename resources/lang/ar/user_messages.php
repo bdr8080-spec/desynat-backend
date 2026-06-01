@@ -456,7 +456,7 @@ return [
     'expected_delivery_time' => 'وقت التوصيل المتوقع',
     'delivery_managed_by' => 'التوصيل بواسطة',
     'return_&_exchange_policy' => 'سياسة الإرجاع والاستبدال',
-    'exchange_&_return_within_7_days_from_delivery_date' => 'يمكن الاستبدال والإرجاع خلال 7 أيام من تاريخ التوصيل',
+    'exchange_&_return_within_14_days_from_delivery_date' => 'يمكن الاستبدال والإرجاع خلال 14 أيام من تاريخ التوصيل',
     'non_refundable_unless_defective' => 'غير قابل للاسترداد إلا في حالة وجود عيب',
     'item_must_be_unused_and_in_original_packaging' => 'يجب أن يكون المنتج غير مستخدم وفي عبوته الأصلية',
     'delivery_fee_is_non_refundable' => 'رسوم التوصيل غير قابلة للاسترداد',

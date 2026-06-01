@@ -457,7 +457,7 @@ return [
     'expected_delivery_time' => 'Expected Delivery Time',
     'delivery_managed_by' => 'Delivery Managed By',
     'return_&_exchange_policy' => 'Return & Exchange Policy',
-    'exchange_&_return_within_7_days_from_delivery_date' => 'Exchange & return within 7 days from delivery date',
+    'exchange_&_return_within_14_days_from_delivery_date' => 'Exchange & return within 14 days from delivery date',
     'non_refundable_unless_defective' => 'Non refundable unless defective',
     'item_must_be_unused_and_in_original_packaging' => 'Item must be unused and in original packaging',
     'delivery_fee_is_non_refundable' => 'Delivery fee is non refundable',

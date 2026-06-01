@@ -152,7 +152,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
       <p style="margin: 5px auto">
         {{ __('user_messages.customer_support') }}: support@desynat.com<br />
-                {{ __('user_messages.phone') }} / {{ __('user_messages.whatsapp') }}: +965 XXXXXXX
+                <!-- {{ __('user_messages.phone') }} / {{ __('user_messages.whatsapp') }}: +965 XXXXXXX -->
       </p>
       <p><b>{{ __('user_messages.invoice_number') }}:</b> #{{$checkOrder->order_id}}</p>
       <p><b>{{ __('user_messages.order_date') }}:</b> {{$checkOrder->created_at->format('Y-m-d') }}</p>
@@ -366,7 +366,7 @@ $currency = session('currencyAr', 'دينار كويتي');
       <thead>
         <tr>
           <td>
-              <div>{{ __('user_messages.exchange_&_return_within_7_days_from_delivery_date') }}.</div>
+              <div>{{ __('user_messages.exchange_&_return_within_14_days_from_delivery_date') }}.</div>
               <div>{{ __('user_messages.non_refundable_unless_defective') }}.</div>
               <div>{{ __('user_messages.item_must_be_unused_and_in_original_packaging') }}.</div>
               <div>{{ __('user_messages.delivery_fee_is_non_refundable') }}.</div>
