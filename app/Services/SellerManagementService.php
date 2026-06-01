@@ -443,7 +443,17 @@ class SellerManagementService
                 : null;
 
             $data['stories'] = $seller->stories && !$seller->stories->isEmpty()
-                ? $seller->stories->toArray()
+                ? $seller->stories->map(function ($story) {
+
+                    $type = 2;
+
+                    $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                        ->where('user_id', auth()->id())
+                        ->where('type', $type)
+                        ->exists() ? 1 : 0;
+
+                    return $story;
+                })->toArray()
                 : null;
 
             $data['total_completed_orders'] = orderdetail::whereIn(
