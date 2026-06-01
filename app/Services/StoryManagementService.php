@@ -6,6 +6,7 @@ use App\Models\Reel;
 use App\Models\Highlight;
 use App\Models\WhislistReel;
 use App\Models\StoriesComment;
+use App\Models\StorySeenHistory;
 use App\Models\SellerSubcriptionPlanBuy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
@@ -24,7 +25,6 @@ class StoryManagementService
             $query = Story::with([
                 'seller_details',
                 'seller_details.store_info.country_info',
-                'comment_details'
             ]);
 
             if ($request->filled('search')) {
@@ -48,6 +48,19 @@ class StoryManagementService
             $query->orderBy('id', 'desc');
 
             $story_details = $query->paginate($limit);
+           // dd(auth()->id());
+
+            $story_details->getCollection()->transform(function ($story) {
+
+                $type = 3;
+
+                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                    ->where('user_id', auth()->id())
+                    ->where('type', $type)
+                    ->exists() ? 1 : 0;
+
+                return $story;
+            });
 
             if ($story_details->isEmpty()) {
                 return [
@@ -89,6 +102,18 @@ class StoryManagementService
             $query->orderBy('id', 'desc');
 
             $story_details = $query->paginate($limit);
+
+            $story_details->getCollection()->transform(function ($story) {
+
+                $type = 3;
+
+                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                    ->where('user_id', auth()->id())
+                    ->where('type', $type)
+                    ->exists() ? 1 : 0;
+
+                return $story;
+            });
 
             if ($story_details->isEmpty()) {
                 return [
@@ -194,6 +219,18 @@ class StoryManagementService
 
             $story_details = $query->get();
 
+            $story_details->getCollection()->transform(function ($story) {
+
+                $type = 1;
+
+                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                    ->where('user_id', auth()->id())
+                    ->where('type', $type)
+                    ->exists() ? 1 : 0;
+
+                return $story;
+            });
+
             if ($story_details->isEmpty()) {
                 return [
                     'status' => 'success',
@@ -232,6 +269,18 @@ class StoryManagementService
             // $query->orderBy('id', 'asc');
 
             $story_details = $query->get();
+
+            $story_details->getCollection()->transform(function ($story) {
+
+                $type = 1;
+
+                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                    ->where('user_id', auth()->id())
+                    ->where('type', $type)
+                    ->exists() ? 1 : 0;
+
+                return $story;
+            });
 
             if ($story_details->isEmpty()) {
                 return [
@@ -272,6 +321,18 @@ class StoryManagementService
             $query->orderBy('id', 'asc');
 
             $story_details = $query->get();
+
+            $story_details->getCollection()->transform(function ($story) {
+
+                $type = 2;
+
+                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                    ->where('user_id', auth()->id())
+                    ->where('type', $type)
+                    ->exists() ? 1 : 0;
+
+                return $story;
+            });
 
             if ($story_details->isEmpty()) {
                 return [
@@ -827,6 +888,17 @@ class StoryManagementService
             } else {
                 $stories = $query->get();
             }
+            $stories->getCollection()->transform(function ($story) {
+
+            $type =  1;
+
+                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                    ->where('user_id', auth()->id())
+                    ->where('type', $type)
+                    ->exists() ? 1 : 0;
+
+                return $story;
+            });
 
             if ($stories->isEmpty()) {
                 return [
@@ -1159,6 +1231,43 @@ class StoryManagementService
     //         ];
     //     }
     // }
+
+    public function seeStory($request_data)
+    {
+        try {
+
+            $story = Story::where('id', $request_data->story_id)
+                ->first();
+
+            if (!$story) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Story not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $story = StorySeenHistory::create([
+                'story_id' => $request_data->story_id,
+                'type' => $request_data->type,
+                'user_id' => $request_data->user_id,
+            ]);
+
+
+            return [
+                'status' => 'success',
+                'message' => 'seen successfully',
+                'data' => $story
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to see story',
+                'data' => $e->getMessage()
+            ];
+        }
+    }
 
 
 

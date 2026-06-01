@@ -419,5 +419,6 @@ Route::get('faqs',[CommonController::class, 'faqs']);
 Route::post('sendPushNotificationApp',[CommonController::class, 'sendPushNotificationApp']);
 
 Route::post('CaptureSellerStoreVisitor',[CommonController::class, 'CaptureSellerStoreVisitor']);
+Route::post('/see_story',[CommonController::class,'see_story']);
 
 });

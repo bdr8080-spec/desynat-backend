@@ -22,12 +22,19 @@ use App\Models\TicketType;
 use App\Models\Content;
 use App\Models\Faq;
 use App\Models\SellerStoreVisitor;
+use App\Services\StoryManagementService;
 
 
 
 
 class CommonController extends Controller
 {
+
+    public function __construct(StoryManagementService $StoryManagementService){
+
+        $this->StoryManagementService=$StoryManagementService;
+
+    }
     
 
     public function upload(Request $request)
@@ -749,6 +756,38 @@ class CommonController extends Controller
         
         return ApiResponse::generateResponse('success', 'All Country Details fetch Successfully', $all_country, 200);
         
+    }
+
+    public function see_story(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'story_id' => 'required|exists:stories,id',
+            'type' => 'required|integer|in:1,2,3',
+            'user_id' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $request_data=(object )[
+            'story_id'=>$request->story_id,
+            'type'=>$request->type,
+            'user_id'=>$request->user_id,
+        ];
+
+        try {
+            $result = $this->StoryManagementService->seeStory($request_data);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
     }
 
 

@@ -21,4 +21,5 @@ class Story extends Model
     {
         return $this->hasMany(StoriesComment::class, 'story_id');
     }
+
 }
