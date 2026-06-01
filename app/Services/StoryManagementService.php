@@ -221,7 +221,7 @@ class StoryManagementService
 
                 $story_details = $story_details->map(function ($story) {
 
-                $type = 1;
+                $type = 2;
 
                 $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
                     ->where('user_id', auth()->id())
