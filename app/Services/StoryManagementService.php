@@ -270,7 +270,7 @@ class StoryManagementService
 
             $story_details = $query->get();
 
-            $story_details->getCollection()->transform(function ($story) {
+                $story_details = $story_details->map(function ($story) {
 
                 $type = 1;
 
@@ -322,7 +322,7 @@ class StoryManagementService
 
             $story_details = $query->get();
 
-            $story_details->getCollection()->transform(function ($story) {
+            $story_details = $story_details->map(function ($story) {
 
                 $type = 2;
 
