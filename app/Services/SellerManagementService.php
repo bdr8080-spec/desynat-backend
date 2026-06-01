@@ -445,7 +445,7 @@ class SellerManagementService
             $data['stories'] = $seller->stories && !$seller->stories->isEmpty()
                 ? $seller->stories->map(function ($story) {
 
-                    $type = 2;
+                    $type = 3;
 
                     $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
                         ->where('user_id', auth()->id())
