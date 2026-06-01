@@ -2992,3 +2992,11 @@ a.text {
     font-size: 19px;
     margin-bottom: 0px;
 }
+.add-caption {
+    background: #00000078;
+    padding: 9px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
+}
