@@ -225,7 +225,7 @@
                                         </td>
                                         @endif
                                         <td>
-                                            <a href="#" class="btn btn-dark customBtn mt-2">
+                                            <a href="{{ route('admin.sellerInfo', ['id' => $seller['id']]) }}" class="btn btn-dark customBtn mt-2">
                                                 <span>{{ __('admin_messages.seller_view') }}</span>
                                             </a>
                                         </td>
@@ -454,7 +454,7 @@
                                         @endif
 
                                         <td>
-                                            <a href="#" class="btn btn-dark customBtn mt-2">
+                                            <a href="{{ route('admin.sellerInfo', ['id' => $seller['id']]) }}" class="btn btn-dark customBtn mt-2">
                                                 <span>{{ __('admin_messages.seller_view') }}</span>
                                             </a>
                                         </td>
@@ -636,7 +636,7 @@
                                         </td>
                                         <td>{{ $seller['reject_reason'] ?? 'N/A' }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-dark customBtn mt-2">
+                                            <a href="{{ route('admin.sellerInfo', ['id' => $seller['id']]) }}" class="btn btn-dark customBtn mt-2">
                                                 <span>{{ __('admin_messages.seller_view') }}</span>
                                             </a>
                                         </td>

@@ -90,6 +90,9 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/blockUnblockSeller/{id}', [SellerController::class, 'blockUnblockSeller'])->name('admin.blockUnblockSeller');
         Route::post('/acceptSeller/{id}', [SellerController::class, 'acceptSeller'])->name('admin.acceptSeller');
         Route::post('/rejectSeller/{id}', [SellerController::class, 'rejectSeller'])->name('admin.rejectSeller');
+        Route::get('/seller-info/{id}', [SellerController::class, 'sellerInfo'])->name('admin.sellerInfo');
+        Route::post('/deleteReel/{id}', [SellerController::class, 'deleteReel'])->name('admin.deleteReel');
+        Route::post('/deleteStory/{id}', [SellerController::class, 'deleteStory'])->name('admin.deleteStory');
 
         //subscription plan management
         Route::get('/plan-management', [PlanController::class, 'planManagement'])->name('planManagement');
@@ -319,10 +322,6 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
-Route::match(['get', 'post'], '/seller-info', function () {
-    return view('admin.seller-management.seller-info');
-
-})->name('admin.seller-info');
 
 
 

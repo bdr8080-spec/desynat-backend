@@ -10,13 +10,15 @@ use Validator;
 use App\Http\Controllers\CommonController;
 use App\Services\SellerManagementService;
 use App\Services\CountryService;
+use App\Services\StoryManagementService;
  
 class SellerController extends Controller
 {
-    public function __construct(SellerManagementService $SellerManagementService, CountryService $CountryService)
+    public function __construct(SellerManagementService $SellerManagementService, CountryService $CountryService, StoryManagementService $StoryManagementService)
     {
         $this->SellerManagementService = $SellerManagementService;
         $this->CountryService = $CountryService;
+        $this->StoryManagementService = $StoryManagementService;
     }
 
     public function sellerManagement(Request $request){
@@ -27,6 +29,12 @@ class SellerController extends Controller
         $rejectedSellers = $this->SellerManagementService->getRejectedSellers($request)['data'];
         //dd($newSellers);
         return view('admin.seller-management.index',compact('newSellers','countries','approvedSellers','rejectedSellers'));
+    }
+
+    public function sellerInfo(Request $request,$id){
+        $data = $this->SellerManagementService->getSellerDetailsById($id)['data'];
+       // dd($data);
+        return view('admin.seller-management.seller-info',compact('data'));
     }
 
     public function blockUnblockSeller($sellerId)
@@ -511,6 +519,50 @@ class SellerController extends Controller
             fclose($file);
 
         }, 200, $headers);
+    }
+
+    public function deleteReel(Request $request,$id)
+    {
+
+        $request_data=(object )[
+            'reel_id'=>$id,
+        ];
+
+            $result = $this->StoryManagementService->deleteSellerReel($request_data);
+
+           if ($result['status'] === 'error') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $result['message']
+                ], 400);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $result['message']
+            ], 200);
+    }
+
+    public function deleteStory(Request $request,$id)
+    {
+
+        $request_data=(object )[
+            'story_id'=>$id,
+        ];
+
+            $result = $this->StoryManagementService->deleteSellerStory($request_data);
+
+           if ($result['status'] === 'error') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $result['message']
+                ], 400);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $result['message']
+            ], 200);
     }
 
 

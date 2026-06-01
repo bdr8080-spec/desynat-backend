@@ -461,6 +461,12 @@ class SellerManagementService
                         ->where('payment_status', '2')
                         ->count();
 
+                    $data['total_orders'] = orderdetail::whereIn(
+                            'product_id',
+                            product::where('seller_id', $seller->id)->pluck('id')
+                        )
+                        ->count();
+
                     $data['total_earning'] = orderdetail::whereIn(
                             'product_id',
                             product::where('seller_id', $seller->id)->pluck('id')

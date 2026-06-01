@@ -14,6 +14,12 @@ return [
     'ar' => 'ع',
     'en' => 'إ',
     'km' => 'كم',
+    'total_orders'   => 'إجمالي الطلبات',
+    'total_earnings' => 'إجمالي الأرباح',
+    'highlights'     => 'الهايلايت',
+    'reels'          => 'الريلز',
+    'delete' => 'حذف',
+    'story' => 'القصة',
 
     //common
     'to' => 'إلى',

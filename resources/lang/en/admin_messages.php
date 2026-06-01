@@ -14,6 +14,12 @@ return [
     'ar' => 'AR',
     'en' => 'EN',
     'km' => 'km',
+    'total_orders'   => 'Total Orders',
+    'total_earnings' => 'Total Earnings',
+    'highlights'     => 'Highlights',
+    'reels'          => 'Reels',
+    'delete' => 'Delete',
+    'story' => 'Story',
 
     //common
     'to' => 'To',
