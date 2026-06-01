@@ -2957,3 +2957,31 @@ a.text {
     border-radius: 50%;
     object-fit: cover;
 }
+
+.status-viewer {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.logostatus {
+    width: 33%;
+    background: #eee;
+    margin: auto;
+    position: relative;
+}
+.logostatus .status-img {
+    height: 70vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logostatus .status-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
