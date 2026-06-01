@@ -219,7 +219,7 @@ class StoryManagementService
 
             $story_details = $query->get();
 
-            $story_details->getCollection()->transform(function ($story) {
+                $story_details = $story_details->map(function ($story) {
 
                 $type = 1;
 
@@ -879,26 +879,40 @@ class StoryManagementService
     {
         try {
             $query = Story::where('seller_id', $request_data->seller_id)
-                        ->where('type', '2')
+                        ->where('type', 2)
                         ->orderBy('id', 'asc');
 
             // Paginate if limit provided, else fetch all
             if (!empty($request_data->limit)) {
                 $stories = $query->paginate((int)$request_data->limit);
+
+                $stories->getCollection()->transform(function ($story) {
+
+                    $type = 1;
+
+                    $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                        ->where('user_id', auth()->id())
+                        ->where('type', $type)
+                        ->exists() ? 1 : 0;
+
+                    return $story;
+                });
+
             } else {
                 $stories = $query->get();
+
+                $stories = $stories->map(function ($story) {
+
+                    $type = 1;
+
+                    $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                        ->where('user_id', auth()->id())
+                        ->where('type', $type)
+                        ->exists() ? 1 : 0;
+
+                    return $story;
+                });
             }
-            $stories->getCollection()->transform(function ($story) {
-
-            $type =  1;
-
-                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
-                    ->where('user_id', auth()->id())
-                    ->where('type', $type)
-                    ->exists() ? 1 : 0;
-
-                return $story;
-            });
 
             if ($stories->isEmpty()) {
                 return [
