@@ -254,7 +254,7 @@ class StoryManagementService
         }
     }
 
-    public function getSellerStoryOnUserNew($request)
+    public function getSellerStoryOnUserNew($request_data)
     {
         try {
             $query = Story::query();
@@ -265,7 +265,7 @@ class StoryManagementService
 
             // Existing conditions
             $query->where('type', '2');
-            $query->where('seller_id', $request->seller_id);
+            $query->where('seller_id', $request_data->seller_id);
             $query->where('status', '1');
             $query->orderBy('id', 'asc');
 
@@ -276,7 +276,7 @@ class StoryManagementService
                 $type = 1;
 
                 $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
-                    ->where('user_id', $request->user_id)
+                    ->where('user_id', $request_data->user_id)
                     ->where('type', $type)
                     ->exists() ? 1 : 0;
 
