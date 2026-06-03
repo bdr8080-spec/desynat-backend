@@ -267,6 +267,7 @@ public function get_seller_stories(Request $request){
 
     $validate = Validator::make($request->all(), [
         'seller_id' => 'required|integer| exists:sellers,id',
+        'user_id' => 'required|integer| exists:users,id',
         ]);
     
     if($validate->fails()){
@@ -276,6 +277,7 @@ public function get_seller_stories(Request $request){
 
     $request_data=(object)[
     'seller_id'=>$request->seller_id,
+    'user_id'=>$request->user_id ?? null,
     ];
 
     $data=$this->StoryManagementService->getSellerStoryOnUserNew($request_data);
@@ -291,7 +293,20 @@ public function get_seller_stories(Request $request){
 
 public function get_admin_stories(Request $request){
 
-    $data=$this->StoryManagementService->getAdminStoryOnUser($request);
+    $validate = Validator::make($request->all(), [
+        'user_id' => 'required|integer| exists:users,id',
+        ]);
+    
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+
+    $request_data=(object)[
+    'user_id'=>$request->user_id ?? null,
+    ];
+
+    $data=$this->StoryManagementService->getAdminStoryOnUser($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],(object)[],422);

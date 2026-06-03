@@ -276,7 +276,7 @@ class StoryManagementService
                 $type = 1;
 
                 $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
-                    ->where('user_id', auth()->id())
+                    ->where('user_id', $request->user_id)
                     ->where('type', $type)
                     ->exists() ? 1 : 0;
 
@@ -327,7 +327,7 @@ class StoryManagementService
                 $type = 1;
 
                 $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
-                    ->where('user_id', auth()->id())
+                    ->where('user_id', $request->user_id)
                     ->where('type', $type)
                     ->exists() ? 1 : 0;
 
