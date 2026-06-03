@@ -3,7 +3,7 @@
 
 <style>
 .deleteReelBtn {
-    background: linear-gradient(135deg, #ff4d4d, #cc0000);
+    background: var(--bg-color) !important;
     color: #fff;
     border: none;
     padding: 6px 12px;

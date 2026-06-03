@@ -168,41 +168,6 @@
         </a>
     </li>
     @endif
-
-    @if(in_array(6, $permissions) || $admin->type == 1)
-    <li class="nav-item {{ Request::routeIs('planManagement') || Request::routeIs('managePlans') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('planManagement') }}">
-            <span><img src="{{ asset('admin/image/subscription.svg') }}" alt="Plan Management" /></span>
-            {{ __('admin_messages.subscription_plan_management') }}
-        </a>
-    </li>
-    @endif
-    @if(in_array(31, $permissions) || $admin->type == 1)
-    <li class="nav-item {{ Request::routeIs('admin.subAdminManagement') || Request::routeIs('admin.add_subadmin') || Request::routeIs('admin.edit_subadmin') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.subAdminManagement') }}">
-            <span><img src="{{ asset('admin/image/icon-05.svg') }}" alt="icon" /></span>
-            {{ __('admin_messages.sub_admin_management') }}
-        </a>
-    </li>
-    @endif
-    @if(in_array(19, $permissions) || $admin->type == 1)
-    <li class="nav-item {{ Request::routeIs('admin.storyManagement') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.storyManagement') }}">
-            <span><img src="{{ asset('admin/image/Frame-3.svg') }}" alt="Story Management" /></span>
-            {{ __('admin_messages.story_management') }}
-        </a>
-    </li>
-    @endif
-
-    @if(in_array(32, $permissions) || $admin->type == 1)
-    <li class="nav-item {{ Request::routeIs('admin.refundManagement') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.refundManagement') }}">
-            <span><img src="{{ asset('admin/image/icon-06.svg') }}" alt="icon" /></span>
-            {{ __('admin_messages.refund_management') }}
-        </a>
-    </li>
-    @endif
-    
     @if(in_array(18, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.liveRequestManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.liveRequestManagement') }}">
@@ -219,7 +184,14 @@
         </a>
     </li>
     @endif
-    
+    @if(in_array(19, $permissions) || $admin->type == 1)
+    <li class="nav-item {{ Request::routeIs('admin.storyManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.storyManagement') }}">
+            <span><img src="{{ asset('admin/image/Frame-3.svg') }}" alt="Story Management" /></span>
+            {{ __('admin_messages.story_management') }}
+        </a>
+    </li>
+    @endif
     @if(in_array(20, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.dealManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.dealManagement') }}">
@@ -228,7 +200,31 @@
         </a>
     </li>
     @endif
-
+    @if(in_array(31, $permissions) || $admin->type == 1)
+    <li class="nav-item {{ Request::routeIs('admin.subAdminManagement') || Request::routeIs('admin.add_subadmin') || Request::routeIs('admin.edit_subadmin') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.subAdminManagement') }}">
+            <span><img src="{{ asset('admin/image/icon-05.svg') }}" alt="icon" /></span>
+            {{ __('admin_messages.sub_admin_management') }}
+        </a>
+    </li>
+    @endif
+    @if(in_array(32, $permissions) || $admin->type == 1)
+    <li class="nav-item {{ Request::routeIs('admin.refundManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.refundManagement') }}">
+            <span><img src="{{ asset('admin/image/icon-06.svg') }}" alt="icon" /></span>
+            {{ __('admin_messages.refund_management') }}
+        </a>
+    </li>
+    @endif
+    @if(in_array(25, $permissions) || $admin->type == 1)
+    <li
+        class="nav-item {{ Request::routeIs('admin.notificationManagement') || Request::routeIs('admin.sendNotification') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.notificationManagement') }}">
+            <span><img src="{{ asset('admin/image/icon-1.svg') }}" alt="icon" /></span>
+            {{ __('admin_messages.notification_management') }}
+        </a>
+    </li>
+    @endif
     @if(in_array(26, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.ticketManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.ticketManagement') }}">
@@ -240,12 +236,22 @@
     @if(in_array(27, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.paymentManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.paymentManagement') }}">
-            <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
+            <span><img src="{{ asset('admin/image/credit-card-down.svg') }}" alt="icon" /></span>
             {{ __('admin_messages.payment_management') }}
         </a>
     </li>
     @endif
-    
+
+    @if(in_array(6, $permissions) || $admin->type == 1)
+    <li class="nav-item {{ Request::routeIs('planManagement') || Request::routeIs('managePlans') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('planManagement') }}">
+            <span><img src="{{ asset('admin/image/subscription.svg') }}" alt="Plan Management" /></span>
+            {{ __('admin_messages.subscription_plan_management') }}
+        </a>
+    </li>
+    @endif
+   
+   
     @if(in_array(29, $permissions) || $admin->type == 1)
     <!-- <li class="nav-item">
         <a class="nav-link" href="/support">
@@ -262,15 +268,7 @@
         </a>
     </li>
     @endif
-    @if(in_array(25, $permissions) || $admin->type == 1)
-    <li
-        class="nav-item {{ Request::routeIs('admin.notificationManagement') || Request::routeIs('admin.sendNotification') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.notificationManagement') }}">
-            <span><img src="{{ asset('admin/image/icon-1.svg') }}" alt="icon" /></span>
-            {{ __('admin_messages.notification_management') }}
-        </a>
-    </li>
-    @endif
+   
 
     @if(in_array(30, $permissions) || $admin->type == 1)
     <li class="nav-item {{ Request::routeIs('admin.accountSetting') ? 'active' : '' }}">
