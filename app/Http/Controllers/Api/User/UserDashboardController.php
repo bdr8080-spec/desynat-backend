@@ -267,7 +267,6 @@ public function get_seller_stories(Request $request){
 
     $validate = Validator::make($request->all(), [
         'seller_id' => 'required|integer| exists:sellers,id',
-        'user_id' => 'required|integer| exists:users,id',
         ]);
     
     if($validate->fails()){
@@ -293,13 +292,6 @@ public function get_seller_stories(Request $request){
 
 public function get_admin_stories(Request $request){
 
-    $validate = Validator::make($request->all(), [
-        'user_id' => 'required|integer| exists:users,id',
-        ]);
-    
-    if($validate->fails()){
-    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
-    }
 
 
     $request_data=(object)[
