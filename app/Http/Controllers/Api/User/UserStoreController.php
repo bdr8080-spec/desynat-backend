@@ -40,6 +40,7 @@ class UserStoreController extends Controller
         "search"=>$request->search,
         "rating"=>$request->rating,
         "availbility"=>$request->availbility,
+        "user_id"=>$request->user_id ?? null,
        ];
 
 
