@@ -278,7 +278,7 @@ public function get_seller_stories(Request $request){
     'seller_id'=>$request->seller_id,
     ];
 
-    $data=$this->StoryManagementService->getSellerStoryOnUser($request_data);
+    $data=$this->StoryManagementService->getSellerStoryOnUserNew($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
