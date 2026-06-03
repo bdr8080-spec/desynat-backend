@@ -106,13 +106,13 @@
 
                                         <span id="selected-flag">
                                             <!-- {{ old('country_flag', $country[0]->flag1) }} -->
-                                            <img src="{{ old('country_flag', $country[0]->flag) }}" width="20" height="14">
+                                            <img src="{{ old('country_flag', $country[88]->flag) }}" width="20" height="14">
                                             
 
                                         </span>
 
                                         <span id="selected-code" class="ms-2">
-                                            {{ old('country_code', $country[0]->dial_code) }}
+                                            {{ old('country_code', $country[88]->dial_code) }}
                                         </span>
                                     </button>
 
@@ -128,7 +128,7 @@
                                                         data-flag="{{ $item->flag }}"
                                                         data-name="{{ App::getLocale() == 'en' ? $item->name : $item->name_ar }}"
                                                         class="country-radio"
-                                                        {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                        {{ old('country_code', $country[88]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                                         hidden>
 
                                                     <!-- <img src="{{ $item->flag1 }}"
