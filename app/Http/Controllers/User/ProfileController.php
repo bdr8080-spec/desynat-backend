@@ -395,7 +395,7 @@ class ProfileController extends Controller
     
     public function updateNewNumber(Request $request){
                if($request->isMethod('get')){
-                  $country =   all_countrie::all();
+                  $country =   all_countrie::where('status',1)->get();
                     return view('user.profile.profileChangeNumber', compact('country'));
         }
     }

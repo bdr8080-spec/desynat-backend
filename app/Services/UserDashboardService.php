@@ -463,7 +463,7 @@ $user_id=$request->user_id;
 
 $user_details=  User::where('id', $user_id)->first();
 
-$country_code=all_countrie::where('dial_code', $user_details->country_code)->first();
+$country_code=all_countrie::where('status',1)->where('dial_code', $user_details->country_code)->first();
 
 $all_Banners = FullBanner::whereDate('start_date', '<=', date('Y-m-d'))
     ->whereDate('end_date', '>=', date('Y-m-d'))

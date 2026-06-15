@@ -468,7 +468,7 @@ class CountryService
     public function getUserAllCountries()
     {
         try {
-            $countries = all_countrie::orderBy('name', 'asc')->get();
+            $countries = all_countrie::where('status',1)->orderBy('name', 'asc')->get();
 
             if ($countries->isEmpty()) {
                 return [

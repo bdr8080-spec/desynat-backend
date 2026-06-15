@@ -144,7 +144,7 @@ class CommonController extends Controller
 
     public function all_country(Request $request){
         
-        $all_country=all_countrie::get()->toArray();
+        $all_country=all_countrie::where('status',1)->get()->toArray();
    
        return ApiResponse::generateResponse('success', 'All Country Details fetch Successfully',$all_country, 200);
        
@@ -747,7 +747,9 @@ class CommonController extends Controller
 
     public function all_country_unique_currency(Request $request){
         
-        $all_country = all_countrie::whereIn('id', function($query) {
+        $all_country = all_countrie::
+        where('status',1)
+        ->whereIn('id', function($query) {
             $query->selectRaw('MIN(id)')
                 ->from('all_countries')
                 ->where('status',1)

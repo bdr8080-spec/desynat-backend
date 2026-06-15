@@ -252,14 +252,14 @@ class SellerAuthService
 
         // $get_user_details=  seller::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
 
-        if($request->type=='0'){
+        if($request->type=='0'){  // normal seller
           $get_user_details=  seller::with(['subcription_plan','Role_Action.sellermenu',
            'Role_Action' => function ($q) {
             $q->orderBy('menu_id', 'asc');
         }
           
           ])->where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();  
-        }else{
+        }else{ //1  Staff member seller
           $get_user_details=  seller::with(['subcription_plan','Role_Action.sellermenu',
            'Role_Action' => function ($q) {
             $q->orderBy('menu_id', 'asc');

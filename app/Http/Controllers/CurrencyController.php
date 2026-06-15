@@ -20,7 +20,7 @@ $filterCurrency="KWD";
 
 // Seller country table  Code 
 
-$all_currency = all_countrie::pluck('currency_code')
+$all_currency = all_countrie::where('status',1)->pluck('currency_code')
     ->filter()                 // remove null/empty values
     ->unique()                 // remove duplicates
     ->implode(','); 
@@ -58,7 +58,7 @@ foreach($get_currency as $key =>$val){
 $new_value = str_replace($filterCurrency, '', $key);
 
   country::where('currency_code',$new_value)->Update(['exchange_rate_to_kwd'=>$val]);
-  all_countrie::where('currency_code',$new_value)->Update(['exchange_rate_to_kwd'=>$val]);
+  all_countrie::where('status',1)->where('currency_code',$new_value)->Update(['exchange_rate_to_kwd'=>$val]);
 
 }
 

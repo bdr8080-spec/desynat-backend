@@ -71,7 +71,7 @@ public function setCountryInUser(Request $request){
 
     $user_detail = Auth::guard('web')->user();
 
-    $selectCountry=all_countrie::where('id',$request->country_id)->first();
+    $selectCountry=all_countrie::where('status',1)->where('id',$request->country_id)->first();
 
       if($selectCountry){
         
@@ -102,9 +102,9 @@ public function setCurrencyInUser(Request $request){
     $user_detail = Auth::guard('web')->user();
 
     if(App::getLocale()=='en'){
-    $selectCountry=all_countrie::where('currency_code',$request->currency)->first();
+    $selectCountry=all_countrie::where('status',1)->where('currency_code',$request->currency)->first();
     }else{
-     $selectCountry=all_countrie::where('currency_code_ar',$request->currency)->first();
+     $selectCountry=all_countrie::where('status',1)->where('currency_code_ar',$request->currency)->first();
     }
 
     if($user_detail){
