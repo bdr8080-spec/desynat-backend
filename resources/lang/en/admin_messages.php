@@ -568,6 +568,8 @@ return [
     'please_enter_commission' => 'Please enter commission',
 
     //banner request management
+    "banner"=>"Banners",
+
     'request_id' => 'Request ID',
     'seller_country' => 'Seller Country',
     'request_on' => 'Request On',

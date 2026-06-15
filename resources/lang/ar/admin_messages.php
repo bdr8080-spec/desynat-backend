@@ -565,6 +565,9 @@ return [
     'please_enter_commission' => 'يرجى إدخال العمولة',
 
      //banner request management
+
+     "banner"=>"لافتة",
+
      'request_id' => 'رقم الطلب',
     'seller_country' => 'بلد البائع',
     'request_on' => 'تاريخ الطلب',
