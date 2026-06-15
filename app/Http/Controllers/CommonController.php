@@ -39,6 +39,9 @@ class CommonController extends Controller
 
     public function upload(Request $request)
     {
+
+        dd($request);
+
         // Validate the request
         $request->validate([
             // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',

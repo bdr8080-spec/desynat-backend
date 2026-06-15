@@ -78,15 +78,18 @@ class GiftCardController extends Controller
         $giftCard->name_arabic = $request->name_arabic;
 
         if($request->hasFile('image')){
-            $commonController = new CommonController();
-            $uploadResult = $commonController->upload($request);
-            $uploadResultArray = $uploadResult->getData(true); 
+            // $commonController = new CommonController();
+            // $uploadResult = $commonController->upload($request);
+            // $uploadResultArray = $uploadResult->getData(true); 
 
-            if ($uploadResultArray['status'] === 'error') {
-                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
-            }
+            // if ($uploadResultArray['status'] === 'error') {
+            //     return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            // }
 
-            $imageUrl = $uploadResultArray['data']['url'];
+            // $imageUrl = $uploadResultArray['data']['url'];
+
+            $imageUrl=image_upload($request->image,'giftcard/');
+    
             $giftCard->image = $imageUrl; 
         }
 
@@ -113,15 +116,16 @@ class GiftCardController extends Controller
         $giftCard->name_arabic = $request->name_arabic;
 
         if ($request->hasFile('image')) {
-            $commonController = new CommonController();
-            $uploadResult = $commonController->upload($request);
-            $uploadResultArray = $uploadResult->getData(true);
 
-            if ($uploadResultArray['status'] === 'error') {
-                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
-            }
+            $imageUrl=image_upload($request->image,'giftcard/');
+        // $commonController = new CommonController();
+            // $uploadResult = $commonController->upload($request->image);
+            // $uploadResultArray = $uploadResult->getData(true);
+            // if ($uploadResultArray['status'] === 'error') {
+            //     return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            // }
 
-            $imageUrl = $uploadResultArray['data']['url'];
+            // $imageUrl = $uploadResultArray['data']['url'];
             $giftCard->image = $imageUrl;
         }
 

@@ -320,7 +320,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             <div class="dropdown-center mobileLang">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1 " type="button"
                                     data-bs-toggle="dropdown" {{ !$isHome ? 'disabled' : '' }}>
-                                    <img id="selectedFlag" src="{{$GetsellerCountry[0]->flag}}" class="img-fluid" />
+                                    <img id="selectedFlag" src="{{@$GetsellerCountry[0]->flag}}" class="img-fluid" />
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu">
@@ -353,7 +353,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     {{ !$isHome ? 'disabled' : '' }}>
                                     <span id="selectedCurrency">
                                         
-                                    @if(App::getlocale()=='en'){{ session('currency', $GetsellerCountry[0]->currency_code) }} @else {{ session('currency', $GetsellerCountry[0]->currency_code_ar) }} @endif 
+                                    @if(App::getlocale()=='en'){{ session('currency',@$GetsellerCountry[0]->currency_code) }} @else {{ session('currency', @$GetsellerCountry[0]->currency_code_ar) }} @endif 
 
                                     </span>
                                 </button>
