@@ -487,13 +487,15 @@ $(document).ready(function() {
             hasError = true;
         }
 
-        if (receiver_email === "" || !emailRegex.test(receiver_email)) {
-            $("input[name='receiver_email']")
-                .siblings(".error-text")
-                .text("{{ __('user_messages.please_enter_valid_email_id') }}");
+/*
+    if (receiver_email === "" || !emailRegex.test(receiver_email)) {
+        $("input[name='receiver_email']")
+            .siblings(".error-text")
+            .text("{{ __('user_messages.please_enter_valid_email_id') }}");
 
-            hasError = true;
-        }
+        hasError = true;
+    }
+*/          
 
         if (sender_name === "") {
             $("input[name='sender_name']")

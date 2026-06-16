@@ -40,6 +40,27 @@ class UserGiftCardController extends Controller
 
         Session::flash('message', $msg);
         Session::flash('status', $status);
+
+        // send Gift card notification 
+
+          CreateNotification([
+                'sender_id' => 1,
+                'sender_type' => 1,
+                
+                'receiver_id' => $user->id,
+                'receiver_type' => 2,
+
+                'title_english' => 'GiftCard',
+                'title_arabic' => 'بطاقة هدية',
+
+                'description_english' => "GiftCard added successfully",
+                'description_arabic' => "تم إضافة بطاقة الهدية بنجاح",
+                
+                'notification_type' => 'giftcard_added'
+            ]);
+
+        // send Gift card notification  end Here
+
          return redirect()->route('user.gift_cards');
 
         }elseif($request->payment=='no'){
@@ -119,7 +140,7 @@ class UserGiftCardController extends Controller
             'gift_card_id' => 'required|exists:gift_cards,id',
             'amount'          => 'required',
             'receiver_name'          => 'required',
-            'receiver_email'         => 'required',
+            // 'receiver_email'         => 'required',
             'sender_name'           => 'required',
             'sender_email'          => 'required',
             'wish_message'          => 'required',
@@ -141,7 +162,7 @@ class UserGiftCardController extends Controller
                 'amount' => $amount,
                 "gift_card_id"=>$request->gift_card_id,
                 "receiver_name"=>$request->receiver_name,
-                "receiver_email"=>$request->receiver_email,
+                "receiver_email"=>$request->receiver_email??null,
                 "sender_name"=>$request->sender_name,
                 "sender_email"=>$request->sender_email,
                 "wish_message"=>$request->wish_message,
@@ -150,12 +171,11 @@ class UserGiftCardController extends Controller
                 "notes"=>$request->notes,
             ];
 
-           // dd($request_data);
+        // dd($request_data);
 
+        $data = $this->UserGiftCardService->AddgiftCard($request_data);
 
-            $data = $this->UserGiftCardService->AddgiftCard($request_data);
-            
-            $message = $data['message'];
+        $message = $data['message'];
 
             return response()->json([
                 'status' => 'success',

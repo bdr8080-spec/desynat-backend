@@ -71,21 +71,22 @@ class UserGiftCardService
             //dd($data);
 
             $AddGiftCard = UserGiftCards::Create($data);
-            CreateNotification([
-                'sender_id' => 1,
-                'sender_type' => 1,
 
-                'receiver_id' => $request->user_id,
-                'receiver_type' => 2,
+            // CreateNotification([
+            //     'sender_id' => 1,
+            //     'sender_type' => 1,
 
-                'title_english' => 'GiftCard',
-                'title_arabic' => 'بطاقة هدية',
+            //     'receiver_id' => $request->user_id,
+            //     'receiver_type' => 2,
 
-                'description_english' => "GiftCard added successfully",
-                'description_arabic' => "تم إضافة بطاقة الهدية بنجاح",
+            //     'title_english' => 'GiftCard',
+            //     'title_arabic' => 'بطاقة هدية',
 
-                'notification_type' => 'giftcard_added'
-            ]);
+            //     'description_english' => "GiftCard added successfully",
+            //     'description_arabic' => "تم إضافة بطاقة الهدية بنجاح",
+
+            //     'notification_type' => 'giftcard_added'
+            // ]);
 
                 // send whatsapp msg
                 // dd(
