@@ -42,11 +42,10 @@ class UserGiftCardController extends Controller
         Session::flash('status', $status);
 
         // send Gift card notification 
-
           CreateNotification([
                 'sender_id' => 1,
                 'sender_type' => 1,
-                
+
                 'receiver_id' => $user->id,
                 'receiver_type' => 2,
 
@@ -70,6 +69,27 @@ class UserGiftCardController extends Controller
 
         Session::flash('message', $msg);
         Session::flash('status', $status);
+
+        // if the payment is failed Then send Notification 
+
+                CreateNotification([
+                    'sender_id' => 1,
+                    'sender_type' => 1,
+
+                    'receiver_id' => $user->id,
+                    'receiver_type' => 2,
+
+                    'title_english' => 'GiftCard',
+                    'title_arabic' => 'بطاقة هدية',
+
+                    'description_english' => "GiftCard payment failed",
+                    'description_arabic' => "فشل دفع بطاقة الهدية",
+
+                    'notification_type' => 'giftcard_payment_failed'
+                ]);
+
+        // send notification fauled code end here 
+
          return redirect()->route('user.gift_cards');
 
         }
