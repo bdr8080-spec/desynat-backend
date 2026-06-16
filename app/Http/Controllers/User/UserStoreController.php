@@ -59,7 +59,7 @@ class UserStoreController extends Controller
                      'subcategory'=>$request->subcategory,
                 ];
 
-            $catBanners= $this->UserDashboardService->HomeScreenBanner($request_data1);
+        $catBanners= $this->UserDashboardService->HomeScreenBanner($request_data1);
     
        return view('user.category.store',compact('store_data','catBanners'));
 

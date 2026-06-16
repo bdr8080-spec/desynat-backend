@@ -510,6 +510,11 @@ if($request->type=='3'){
     $homeScreenBanner=$homeScreenBanner->where('category',$request->category);
 }
 
+if($request->type=='3' && !isset($request->subcategory)){
+    $homeScreenBanner=$homeScreenBanner->whereNull('subcatgory');
+
+}
+
 if($request->type=='3' && isset($request->subcategory)){
     $homeScreenBanner=$homeScreenBanner->where('subcatgory',$request->subcategory);
 
