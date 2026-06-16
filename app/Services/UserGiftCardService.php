@@ -206,16 +206,12 @@ class UserGiftCardService
                 CreateNotification([
                     'sender_id' => 1,
                     'sender_type' => 1,
-
                     'receiver_id' => $request->user_id,
                     'receiver_type' => 2,
-
                     'title_english' => 'GiftCard',
                     'title_arabic' => 'بطاقة هدية',
-
                     'description_english' => "GiftCard payment failed",
                     'description_arabic' => "فشل دفع بطاقة الهدية",
-
                     'notification_type' => 'giftcard_payment_failed'
                 ]);
 
