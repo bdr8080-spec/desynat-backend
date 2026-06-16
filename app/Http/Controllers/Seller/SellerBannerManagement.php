@@ -181,7 +181,7 @@ public function seller_banner_price(Request $request){
         //  }
         if ($request->hasFile('upload_banner')) {
 
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $newRequest = new \Illuminate\Http\Request();
 
             $newRequest->files->set(
