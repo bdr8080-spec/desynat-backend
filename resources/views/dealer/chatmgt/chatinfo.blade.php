@@ -938,6 +938,7 @@ function loadChatMessages() {
                  const locale = appLocale === 'ar' ? 'ar-EG' : 'en-US';
 
                 const newTime = new Date(msg.times).toLocaleTimeString(locale, {
+                timeZone: 'Asia/Kuwait',
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: true

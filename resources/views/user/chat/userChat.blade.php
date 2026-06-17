@@ -482,9 +482,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // content = HTML, side = 'right-msg' or 'left-msg'
     function appendMessage(content, side = 'right-msg') {
-        const time = new Date().toLocaleTimeString([], {
+        const locale = appLocale === 'ar' ? 'ar-EG' : 'en-US';
+
+        const time = new Date().toLocaleTimeString(locale, {
+            timeZone: 'Asia/Kuwait',
             hour: '2-digit',
-            minute: '2-digit'
+            minute: '2-digit',
+            hour12: true
         });
 
         chatBox.insertAdjacentHTML('beforeend', `
@@ -515,30 +519,45 @@ document.addEventListener("DOMContentLoaded", function() {
     const chatBox = document.querySelector('.msger-chat');
     const uniqueId = document.querySelector('input[name="unique_id"]').value;
 
+    // function formatISOTime(isoString) {
+    //     if (!isoString) return '';
+
+    //     const date = new Date(isoString);
+    //     if (isNaN(date.getTime())) return isoString; // fallback if invalid
+
+    //     // Date part
+    //     const day = String(date.getDate()).padStart(2, '0');
+    //     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    //         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    //     ];
+    //     const month = monthNames[date.getMonth()];
+    //     const year = date.getFullYear();
+
+    //     // Time part
+    //     let hours = date.getHours();
+    //     const minutes = String(date.getMinutes()).padStart(2, '0');
+    //     const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    //     hours = hours % 12;
+    //     hours = hours ? hours : 12;
+    //     const strHours = String(hours).padStart(2, '0');
+
+    //     return `${day} ${month} ${year}, ${strHours}:${minutes} ${ampm}`;
+    // }
     function formatISOTime(isoString) {
         if (!isoString) return '';
 
-        const date = new Date(isoString);
-        if (isNaN(date.getTime())) return isoString; // fallback if invalid
+        const locale = "{{ app()->getLocale() }}" === 'ar' ? 'ar-EG' : 'en-US';
 
-        // Date part
-        const day = String(date.getDate()).padStart(2, '0');
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-        ];
-        const month = monthNames[date.getMonth()];
-        const year = date.getFullYear();
-
-        // Time part
-        let hours = date.getHours();
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        const strHours = String(hours).padStart(2, '0');
-
-        return `${day} ${month} ${year}, ${strHours}:${minutes} ${ampm}`;
+        return new Intl.DateTimeFormat(locale, {
+            timeZone: 'Asia/Kuwait',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        }).format(new Date(isoString));
     }
 
 
@@ -813,9 +832,18 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function appendMessage(content) {
-        const time = new Date().toLocaleTimeString([], {
+        // const time = new Date().toLocaleTimeString([], {
+        //     hour: '2-digit',
+        //     minute: '2-digit'
+        // });
+
+        const locale = appLocale === 'ar' ? 'ar-EG' : 'en-US';
+
+        const time = new Date().toLocaleTimeString(locale, {
+            timeZone: 'Asia/Kuwait',
             hour: '2-digit',
-            minute: '2-digit'
+            minute: '2-digit',
+            hour12: true
         });
 
         chatBox.insertAdjacentHTML('beforeend', `
@@ -851,30 +879,46 @@ document.addEventListener("DOMContentLoaded", function() {
     const uniqueId = document.querySelector('input[name="unique_id"]').value;
 
     // Format ISO8601 date string to "hh:mm AM/PM"
+    // function formatISOTime(isoString) {
+    //     if (!isoString) return '';
+
+    //     const date = new Date(isoString);
+    //     if (isNaN(date.getTime())) return isoString; // fallback if invalid
+
+    //     // Date part
+    //     const day = String(date.getDate()).padStart(2, '0');
+    //     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    //         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    //     ];
+    //     const month = monthNames[date.getMonth()];
+    //     const year = date.getFullYear();
+
+    //     // Time part
+    //     let hours = date.getHours();
+    //     const minutes = String(date.getMinutes()).padStart(2, '0');
+    //     const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    //     hours = hours % 12;
+    //     hours = hours ? hours : 12;
+    //     const strHours = String(hours).padStart(2, '0');
+
+    //     return `${day} ${month} ${year}, ${strHours}:${minutes} ${ampm}`;
+    // }
+
     function formatISOTime(isoString) {
         if (!isoString) return '';
 
-        const date = new Date(isoString);
-        if (isNaN(date.getTime())) return isoString; // fallback if invalid
+        const locale = "{{ app()->getLocale() }}" === 'ar' ? 'ar-EG' : 'en-US';
 
-        // Date part
-        const day = String(date.getDate()).padStart(2, '0');
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-        ];
-        const month = monthNames[date.getMonth()];
-        const year = date.getFullYear();
-
-        // Time part
-        let hours = date.getHours();
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        const strHours = String(hours).padStart(2, '0');
-
-        return `${day} ${month} ${year}, ${strHours}:${minutes} ${ampm}`;
+        return new Intl.DateTimeFormat(locale, {
+            timeZone: 'Asia/Kuwait',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        }).format(new Date(isoString));
     }
 
 
