@@ -110,7 +110,7 @@ class FullScreenBannerController extends Controller
     //     $banner->type = $request->type;
 
     //     if($request->hasFile('image')){
-    //         $commonController = new CommonController();
+    //         $commonController = app(CommonController::class);
     //         $uploadResult = $commonController->upload($request);
     //         $uploadResultArray = $uploadResult->getData(true); 
 
@@ -184,7 +184,7 @@ class FullScreenBannerController extends Controller
 
         if ($request->hasFile('image')) {
 
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->upload($request);
             $uploadResultArray = $uploadResult->getData(true);
 
@@ -260,7 +260,7 @@ class FullScreenBannerController extends Controller
     //     $banner->type = $request->type;
 
     //     if ($request->hasFile('image')) {
-    //         $commonController = new CommonController();
+    //         $commonController = app(CommonController::class);
     //         $uploadResult = $commonController->upload($request);
     //         $uploadResultArray = $uploadResult->getData(true);
 
@@ -332,7 +332,7 @@ class FullScreenBannerController extends Controller
 
         if ($request->hasFile('image')) {
 
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->upload($request);
             $uploadResultArray = $uploadResult->getData(true);
 
@@ -412,7 +412,7 @@ class FullScreenBannerController extends Controller
         $banner->payment_status = '1';
 
         if($request->hasFile('image')){
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->uploadWithResolutionPromotional($request);
             $uploadResultArray = $uploadResult->getData(true); 
 
@@ -514,7 +514,7 @@ class FullScreenBannerController extends Controller
         $banner->total_days = $start->diffInDays($end) + 1;
 
         if ($request->hasFile('image')) {
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->uploadWithResolutionPromotional($request);
             $uploadData = $uploadResult->getData(true);
             $banner->upload_banner = $uploadData['data']['url'];

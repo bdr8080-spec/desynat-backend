@@ -1200,7 +1200,7 @@ public function ticket_management(REQUEST $request){
 
         $tickets =  $this->TicketService->getTickets($request_data)['data'];
         //dd($tickets);
-        $commonController = new CommonController();
+        $commonController = app(CommonController::class);
         $ticketTypesResponse = $commonController->ticket_types($request);
         $ticketTypes = $ticketTypesResponse->original['data'];
         //dd($ticketTypes);
@@ -1228,7 +1228,7 @@ public function ticket_management(REQUEST $request){
         $user = $affilatedUser->id;
 
         if($request->hasFile('file')){
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->uploadFile($request);
             $uploadResultArray = $uploadResult->getData(true); 
 

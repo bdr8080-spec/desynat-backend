@@ -40,7 +40,7 @@ class CommonController extends Controller
     public function upload(Request $request)
     {
 
-        dd($request);
+        //dd($request);
 
         // Validate the request
         $request->validate([
@@ -81,50 +81,6 @@ class CommonController extends Controller
                 Log::error('Exception Trace: ' . $e->getTraceAsString());
                 return ApiResponse::generateResponse('error', 'Failed to upload file.', null, 500);
             }
-
-//     try {
-//     $file = $request->file('file');
-
-//     if (!$file) {
-//         return ApiResponse::generateResponse('error', 'No file provided.', null, 400);
-//     }
-
-//     // Get original extension & mime type
-//     $extension = $file->getClientOriginalExtension();
-//     $mimeType = $file->getMimeType();
-
-//     // Generate unique filename
-//     $filename = 'uploads/' . Str::random(20) . '.' . $extension;
-
-//     // S3 client
-//     $client = Storage::disk('s3')->getClient();
-
-//     // Create command
-//     $cmd = $client->getCommand('PutObject', [
-//         'Bucket' => env('AWS_BUCKET'),
-//         'Key' => $filename,
-//         'ContentType' => $mimeType, // dynamic type
-//     ]);
-
-//     // Generate pre-signed URL (10 minutes)
-//     $requestUrl = $client->createPresignedRequest($cmd, '+10 minutes');
-
-//     $presignedUrl = (string) $requestUrl->getUri();
-
-//     // CloudFront URL
-//     $cloudfrontBase = env('CLOUDFRONT_URL', 'https://d79swovq1y56s.cloudfront.net');
-//     $fileUrl = $cloudfrontBase . '/' . $filename;
-
-//     return ApiResponse::generateResponse('success', 'Upload URL generated.', [
-//         'upload_url' => $presignedUrl,
-//         'file_url' => $fileUrl,
-//         'type' => $mimeType
-//     ], 200);
-
-// } catch (\Exception $e) {
-//     Log::error('Upload URL error: ' . $e->getMessage());
-//     return ApiResponse::generateResponse('error', 'Failed to generate upload URL.', null, 500);
-// }
 
         }
 

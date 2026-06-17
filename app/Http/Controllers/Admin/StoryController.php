@@ -61,7 +61,7 @@ class StoryController extends Controller
 
     //     if($request->hasFile('file')){
     //         //dd('123');
-    //         $commonController = new CommonController();
+    //         $commonController = app(CommonController::class);
     //         $uploadResult = $commonController->uploadFile($request);
     //         $uploadResultArray = $uploadResult->getData(true); 
 
@@ -117,7 +117,7 @@ class StoryController extends Controller
 
         $story = new Story();
 
-        $commonController = new CommonController();
+        $commonController = app(CommonController::class);
         $uploadResult = $commonController->uploadFile($request);
         $uploadResultArray = $uploadResult->getData(true);
 

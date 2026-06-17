@@ -78,7 +78,7 @@ class GiftCardController extends Controller
         $giftCard->name_arabic = $request->name_arabic;
 
         if($request->hasFile('image')){
-            // $commonController = new CommonController();
+            // $commonController = app(CommonController::class);
             // $uploadResult = $commonController->upload($request);
             // $uploadResultArray = $uploadResult->getData(true); 
 
@@ -118,7 +118,7 @@ class GiftCardController extends Controller
         if ($request->hasFile('image')) {
 
             $imageUrl=image_upload($request->image,'giftcard/');
-        // $commonController = new CommonController();
+        // $commonController = app(CommonController::class);
             // $uploadResult = $commonController->upload($request->image);
             // $uploadResultArray = $uploadResult->getData(true);
             // if ($uploadResultArray['status'] === 'error') {

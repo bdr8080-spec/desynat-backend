@@ -47,7 +47,7 @@ class TicketController extends Controller
 
         $resolvedTickets=$this->TicketService->getResolvedTicketsOnAdmin($request_data2);
 
-        $commonController = new CommonController();
+        $commonController = app(CommonController::class);
         $ticketTypesResponse = $commonController->ticket_types($request);
         $ticketTypes = $ticketTypesResponse->original['data'];
         //dd($ticketTypes);

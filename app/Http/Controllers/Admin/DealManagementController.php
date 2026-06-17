@@ -107,7 +107,7 @@ class DealManagementController extends Controller
     //     $deal->to = $request->to;
 
     //     if($request->hasFile('image')){
-    //         $commonController = new CommonController();
+    //         $commonController = app(CommonController::class);
     //         $uploadResult = $commonController->upload($request);
     //         $uploadResultArray = $uploadResult->getData(true); 
 
@@ -156,7 +156,7 @@ class DealManagementController extends Controller
         $deal->to = $request->to;
 
         if ($request->hasFile('image')) {
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->upload($request);
             $uploadResultArray = $uploadResult->getData(true);
 
@@ -202,7 +202,7 @@ class DealManagementController extends Controller
         $deal->to = $request->to;
 
         if ($request->hasFile('image')) {
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->upload($request);
             $uploadResultArray = $uploadResult->getData(true);
 

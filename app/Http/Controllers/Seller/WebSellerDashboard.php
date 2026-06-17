@@ -791,7 +791,7 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
         //dd($seller_id);
 
         if($request->hasFile('file')){
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->uploadFile($request);
             $uploadResultArray = $uploadResult->getData(true); 
 
@@ -870,7 +870,7 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
         //dd($seller_id);
 
         if($request->hasFile('file')){
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->uploadFile($request);
             $uploadResultArray = $uploadResult->getData(true); 
 
@@ -954,7 +954,7 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
         //dd($seller_id);
 
         if($request->hasFile('file')){
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->uploadFile($request);
             $uploadResultArray = $uploadResult->getData(true); 
 
@@ -1020,7 +1020,7 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
         $imageUrl = null;
 
         if ($request->hasFile('file')) {
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->uploadFile($request);
             $uploadResultArray = $uploadResult->getData(true);
 
@@ -1181,7 +1181,7 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
 
         $tickets =  $this->TicketService->getTickets($request_data)['data'];
         //dd($tickets);
-        $commonController = new CommonController();
+        $commonController = app(CommonController::class);
         $ticketTypesResponse = $commonController->ticket_types($request);
         $ticketTypes = $ticketTypesResponse->original['data'];
         //dd($ticketTypes);
@@ -1208,7 +1208,7 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
         //dd($seller_id);
 
         if($request->hasFile('file')){
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->uploadFile($request);
             $uploadResultArray = $uploadResult->getData(true); 
 

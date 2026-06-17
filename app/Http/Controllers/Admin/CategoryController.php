@@ -88,7 +88,7 @@ class CategoryController extends Controller
         $scat->name_arabic = $request->name_arabic;
 
         if($request->hasFile('image')){
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->upload($request);
             $uploadResultArray = $uploadResult->getData(true); 
 
@@ -125,7 +125,7 @@ class CategoryController extends Controller
         $scat->name_arabic = $request->name_arabic;
 
         if ($request->hasFile('image')) {
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->upload($request);
             $uploadResultArray = $uploadResult->getData(true);
 

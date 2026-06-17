@@ -139,7 +139,7 @@ class AuthController extends Controller
             //     }
 
                 if ($request->hasFile('image')) {
-                    $commonController = new CommonController();
+                    $commonController = app(CommonController::class);
                     $uploadResult = $commonController->upload($request);
                     $uploadResultArray = $uploadResult->getData(true);
 

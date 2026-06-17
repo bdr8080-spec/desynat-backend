@@ -118,7 +118,7 @@ class ChatController extends Controller
 
             if ($type === 1) {
 
-                $commonController = new CommonController();
+                $commonController = app(CommonController::class);
                 $uploadResult = $commonController->upload($request);
                 $uploadResultArray = $uploadResult->getData(true);
 

@@ -73,7 +73,7 @@ class BrandController extends Controller
         $brand->name_arabic = $request->name_arabic;
 
         if($request->hasFile('image')){
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->upload($request);
             $uploadResultArray = $uploadResult->getData(true); 
 
@@ -109,7 +109,7 @@ class BrandController extends Controller
         $brand->name_arabic = $request->name_arabic;
 
         if ($request->hasFile('image')) {
-            $commonController = new CommonController();
+            $commonController = app(CommonController::class);
             $uploadResult = $commonController->upload($request);
             $uploadResultArray = $uploadResult->getData(true);
 
