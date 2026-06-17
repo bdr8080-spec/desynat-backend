@@ -100,7 +100,7 @@
                                                     <div class="chat-user-light"> {{$chat['last_chat']}}</div>
                                                     @endif
                                                     @if(!empty($chat['last_chat_time']))
-                                                    <div class="chat-user-light"> {{$chat['last_chat_time']}}</div>
+                                                    <div class="chat-user-light"> {{ formatDateTimeByLocale($chat['last_chat_time']) }}</div>
                                                     @endif                                            
                                                 </div>
                                                 @else
@@ -110,7 +110,7 @@
                                                     <div class="chat-user-light"> {{$chat['last_chat_ar']}}</div>
                                                     @endif
                                                     @if(!empty($chat['last_chat_time']))
-                                                    <div class="chat-user-light"> {{$chat['last_chat_time']}}</div>
+                                                    <div class="chat-user-light">{{ formatDateTimeByLocale($chat['last_chat_time']) }}</div>
                                                     @endif                                            
                                                 </div>
                                                 @endif

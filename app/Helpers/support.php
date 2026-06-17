@@ -596,10 +596,107 @@ function getUserIdWithToken($request){
     }
 
 
-if (!function_exists('formatDateTimeByLocale')) {
+// if (!function_exists('formatDateTimeByLocale')) {
 
-    // This function supports multiple date formats
-    // and converts them based on locale (EN / AR)
+//     // This function supports multiple date formats
+//     // and converts them based on locale (EN / AR)
+
+//     function formatDateTimeByLocale($datetime)
+//     {
+//         if (empty($datetime)) {
+//             return '';
+//         }
+
+//         try {
+
+//             // Parse any valid date format
+//             $date = \Carbon\Carbon::parse($datetime);
+
+//             // Detect original format
+//             $original = trim($datetime);
+
+//             if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $original)) {
+
+//                 // 2026-04-17
+//                 $formattedDate = $date->format('Y-m-d');
+
+//             } elseif (preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/', $original)) {
+
+//                 // 2026-04-17 21:49:39
+//                 $formattedDate = $date->format('Y-m-d H:i:s');
+
+//             } elseif (preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\s(AM|PM)$/i', $original)) {
+
+//                 // 2026-05-19 07:32:05 PM
+//                 $formattedDate = $date->format('Y-m-d h:i:s A');
+
+//             } elseif (preg_match('/^\d{1,2}\s[A-Za-z]{3}\s\d{4},\s\d{2}:\d{2}\s(AM|PM)$/i', $original)) {
+
+//                 // 27 Apr 2026, 01:48 PM
+//                 $formattedDate = $date->format('d M Y, h:i A');
+
+//             } else {
+
+//                 // Default fallback
+//                 $formattedDate = $date->format('Y-m-d h:i:s A');
+//             }
+
+//             // English locale
+//             if (App::getLocale() == 'en') {
+//                 return $formattedDate;
+//             }
+
+//             // Arabic locale
+//             if (App::getLocale() == 'ar') {
+
+//                 $englishNumbers = ['0','1','2','3','4','5','6','7','8','9'];
+//                 $arabicNumbers  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+
+//                 // Arabic month names
+//                 $englishMonths = [
+//                     'Jan','Feb','Mar','Apr','May','Jun',
+//                     'Jul','Aug','Sep','Oct','Nov','Dec'
+//                 ];
+
+//                 $arabicMonths = [
+//                     'يناير','فبراير','مارس','أبريل','مايو','يونيو',
+//                     'يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'
+//                 ];
+
+//                 // Convert AM/PM
+//                 $formattedDate = str_replace(
+//                     ['AM', 'PM'],
+//                     ['ص', 'م'],
+//                     $formattedDate
+//                 );
+
+//                 // Convert month names
+//                 $formattedDate = str_replace(
+//                     $englishMonths,
+//                     $arabicMonths,
+//                     $formattedDate
+//                 );
+
+//                 // Convert numbers
+//                 $formattedDate = str_replace(
+//                     $englishNumbers,
+//                     $arabicNumbers,
+//                     $formattedDate
+//                 );
+
+//                 return $formattedDate;
+//             }
+
+//             return $formattedDate;
+
+//         } catch (\Exception $e) {
+
+//             return $datetime;
+//         }
+//     }
+// }
+
+if (!function_exists('formatDateTimeByLocale')) {
 
     function formatDateTimeByLocale($datetime)
     {
@@ -609,36 +706,45 @@ if (!function_exists('formatDateTimeByLocale')) {
 
         try {
 
-            // Parse any valid date format
-            $date = \Carbon\Carbon::parse($datetime);
+            // Firebase timestamp (UTC)
+            if (
+                is_string($datetime) &&
+                str_contains($datetime, 'T') &&
+                str_ends_with($datetime, 'Z')
+            ) {
+
+                $date = \Carbon\Carbon::parse($datetime, 'UTC')
+                    ->setTimezone('Asia/Kuwait');
+
+            } else {
+
+                // Database timestamp (stored in India timezone)
+                $date = \Carbon\Carbon::parse($datetime, 'Asia/Kolkata')
+                    ->setTimezone('Asia/Kuwait');
+            }
 
             // Detect original format
             $original = trim($datetime);
 
             if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $original)) {
 
-                // 2026-04-17
                 $formattedDate = $date->format('Y-m-d');
 
             } elseif (preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/', $original)) {
 
-                // 2026-04-17 21:49:39
                 $formattedDate = $date->format('Y-m-d H:i:s');
 
             } elseif (preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\s(AM|PM)$/i', $original)) {
 
-                // 2026-05-19 07:32:05 PM
                 $formattedDate = $date->format('Y-m-d h:i:s A');
 
             } elseif (preg_match('/^\d{1,2}\s[A-Za-z]{3}\s\d{4},\s\d{2}:\d{2}\s(AM|PM)$/i', $original)) {
 
-                // 27 Apr 2026, 01:48 PM
                 $formattedDate = $date->format('d M Y, h:i A');
 
             } else {
 
-                // Default fallback
-                $formattedDate = $date->format('Y-m-d h:i:s A');
+                $formattedDate = $date->format('d M Y, h:i A');
             }
 
             // English locale
@@ -652,7 +758,6 @@ if (!function_exists('formatDateTimeByLocale')) {
                 $englishNumbers = ['0','1','2','3','4','5','6','7','8','9'];
                 $arabicNumbers  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
 
-                // Arabic month names
                 $englishMonths = [
                     'Jan','Feb','Mar','Apr','May','Jun',
                     'Jul','Aug','Sep','Oct','Nov','Dec'
@@ -663,21 +768,18 @@ if (!function_exists('formatDateTimeByLocale')) {
                     'يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'
                 ];
 
-                // Convert AM/PM
                 $formattedDate = str_replace(
                     ['AM', 'PM'],
                     ['ص', 'م'],
                     $formattedDate
                 );
 
-                // Convert month names
                 $formattedDate = str_replace(
                     $englishMonths,
                     $arabicMonths,
                     $formattedDate
                 );
 
-                // Convert numbers
                 $formattedDate = str_replace(
                     $englishNumbers,
                     $arabicNumbers,
