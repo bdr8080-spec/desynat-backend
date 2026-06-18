@@ -498,6 +498,13 @@ return [
     'reset_confirm_password_required' => 'يرجى تأكيد كلمة المرور.',
     'reset_confirm_password_same' => 'كلمات المرور غير متطابقة.',
 
+    'upload_product_video_required' => 'تحميل فيديو المنتج مطلوب.',
+    'product_video' => 'فيديو المنتج',
+    'upload_product_video' => 'تحميل فيديو المنتج',
+
+    'upload_product_video_required' => 'تحميل فيديو المنتج مطلوب.',
+'old_upload_product_video_required' => 'يرجى تحميل فيديو المنتج أو الاحتفاظ بالفيديو الحالي.',
+
     // web-SellerBannerManagement
     
 

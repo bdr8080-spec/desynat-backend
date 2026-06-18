@@ -911,6 +911,14 @@ return [
     'upload_size_chart_required' => 'Size chart upload is required.',
     'old_upload_size_chart_required' => 'Old size chart is required.',
 
+    'upload_product_video_required' => 'Product Video upload is required.',
+    'product_video' => 'Product Video',
+    'upload_product_video' => 'Upload Product Video',
+
+    'upload_product_video_required' => 'Product Video upload is required.',
+'old_upload_product_video_required' => 'Please upload or keep the existing product video.',
+
+
     'bust_required' => 'Bust measurement is required.',
     'bust_numeric' => 'Bust must be numeric.',
 

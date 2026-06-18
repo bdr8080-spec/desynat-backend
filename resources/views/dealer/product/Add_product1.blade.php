@@ -792,6 +792,27 @@
 
         </div>
 
+        <div class="title24">{{ __('seller_messages.product_video') }}</div>
+        <div class="product-pnls mt-4">
+            <div class="upload-image" style="height:170px;width: 270px;">
+                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
+                    <img id="placeholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
+                        style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
+
+                    <img id="uploadedProductVideo" src=""
+                        style="width:100px; display:none; object-fit:cover; border-radius:6px;object-fit:cover; height: 110px;">
+
+                    <div class="py-2" style="color:#875C3A">{{ __('seller_messages.upload_product_video') }}</div>
+                    <input type="file" accept="video/*" id="edit_productVideo" style="opacity:0;"
+                        name="upload_product_video">
+                    <p class="text-danger" id="error-upload_product_video"></p>
+                </label>
+
+                <div class="product-multiple d-flex flex-wrap gap-2" id="edit_productVideo_preview"></div>
+            </div>
+
+        </div>
+
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
                 onclick="location.href='{{ route('seller.products') }}'">{{ __('seller_messages.cancel') }}</button>
@@ -905,6 +926,40 @@ $('#edit_uploadChart').on('change', e => {
 });
 
 // Upload Chart Image in footer side
+
+$('#edit_productVideo').on('change', function(e) {
+
+    let file = e.target.files[0];
+
+    $('#edit_productVideo_preview').empty();
+    $('#error-upload_product_video').empty();
+
+    if (!file) {
+        return;
+    }
+
+    let url = URL.createObjectURL(file);
+
+    let videoBox = $(`
+        <div class="position-relative">
+            <video width="200" height="120" controls class="rounded">
+                <source src="${url}" type="${file.type}">
+                Your browser does not support the video tag.
+            </video>
+            <span class="remove-ic"
+                  style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">
+                &times;
+            </span>
+        </div>
+    `);
+
+    videoBox.find('.remove-ic').click(function() {
+        $('#edit_productVideo').val('');
+        $('#edit_productVideo_preview').empty();
+    });
+
+    $('#edit_productVideo_preview').append(videoBox);
+});
 </script>
 
 <script>
