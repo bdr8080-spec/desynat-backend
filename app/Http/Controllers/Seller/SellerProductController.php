@@ -1227,7 +1227,6 @@ public function Add_product_code1(Request $request){
           'ready_to_ship'=>'required|in:0,1', // // 0 not 1 yes
           'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
           'upload_size_chart'=>'required',
-          'upload_product_video'=>'required',
 
       // Body Measurements arrays (required only for category 2)
     'bust'          => $categoryId == 2 ? 'required|array' : 'nullable|array',
@@ -1369,7 +1368,6 @@ public function Add_product_code1(Request $request){
     'cash_on_delivery.in' => __('seller_messages.cod_invalid'),
 
     'upload_size_chart.required' => __('seller_messages.size_chart_required'),
-    'upload_product_video.required' => __('seller_messages.upload_product_video_required'),
 
     // Body measurement
     'bust.*.*.required' => __('seller_messages.bust_required'),
@@ -1491,10 +1489,6 @@ public function Add_product_code1(Request $request){
      
     }
 
-    if($request->upload_product_video){ 
-     $upload_product_video=doc_upload($request->upload_product_video,$dir);  // chart Image
-     
-    }
 
 
 
@@ -1556,7 +1550,6 @@ $request_data=(object) [
 'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
 'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
 'upload_size_chart'=> $upload_size_chart,
-'upload_product_video'=> $upload_product_video
 
      ];
 
@@ -1689,9 +1682,6 @@ public function edit_product_code1(Request $request, $id){
         
            'upload_size_chart' => 'required_without:old_upload_size_chart',
            'old_upload_size_chart' => 'required_without:upload_size_chart',
-
-           'upload_product_video' => 'required_without:old_upload_product_video',
-           'old_upload_product_video' => 'required_without:upload_product_video',
 
        // Body Measurements arrays (required only for category 2)
        
@@ -1839,9 +1829,6 @@ public function edit_product_code1(Request $request, $id){
 
 'upload_size_chart.required_without' => __('seller_messages.upload_size_chart_required'),
 'old_upload_size_chart.required_without' => __('seller_messages.old_upload_size_chart_required'),
-
-'upload_product_video.required_without' => __('seller_messages.upload_product_video_required'),
-'upload_product_video.required_without' => __('seller_messages.old_upload_product_video_required'),
 
 'bust.*.*.required' => __('seller_messages.bust_required'),
 'bust.*.*.numeric' => __('seller_messages.bust_numeric'),
@@ -2013,14 +2000,6 @@ foreach ($request->color_id as $key => $val) {
           $upload_size_chart=$request->old_upload_size_chart;  // old Image Upload
     }
 
-    if($request->upload_product_video){ 
-     $upload_product_video=doc_upload($request->upload_product_video,$dir);  // chart Image
-     
-    }else{
-          $upload_product_video=$request->old_upload_product_video;  // old Image Upload
-    }
-
-
 $request_data=(object) [
 'product_id'=>$id,
 'seller_id'=>$seller_id,
@@ -2079,8 +2058,7 @@ $request_data=(object) [
 'customized_product'=> $request->customized_product, // // 0 not 1 yes
 'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
 'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
-'upload_size_chart'=> $upload_size_chart,
-'upload_product_video'=> $upload_product_video
+'upload_size_chart'=> $upload_size_chart
 
      ];
 

@@ -834,8 +834,7 @@ public function product_delete(Request $request){
           'customized_product'=>'required|in:0,1', // // 0 not 1 yes
           'ready_to_ship'=>'required|in:0,1', // // 0 not 1 yes
           'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
-          'upload_size_chart'=>'required',
-          'upload_product_video'=>'required'
+          'upload_size_chart'=>'required'
                        
       ],[
         
@@ -1067,8 +1066,7 @@ $request_data=(object) [
 'customized_product'=> $request->customized_product, // // 0 not 1 yes
 'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
 'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
-'upload_size_chart'=> $request->upload_size_chart,
-'upload_product_video'=> $request->upload_product_video
+'upload_size_chart'=> $request->upload_size_chart
 
      ];
 
@@ -1155,7 +1153,6 @@ $request_data=(object) [
         'ready_to_ship'=>'required|in:0,1', // // 0 not 1 yes
         'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
         'upload_size_chart'=>'required',
-        'upload_product_video'=>'required',
                      
     ],
     [
@@ -1392,7 +1389,6 @@ $request_data=(object) [
 'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
 'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
 'upload_size_chart'=> $request->upload_size_chart,
-'upload_product_video'=> $request->upload_product_video,
 
 // new keys
 "Product_data"=>$request->Products,

@@ -934,7 +934,6 @@ public function AddProduct1($request){
     'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
     'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
     'upload_size_chart'=> $request->upload_size_chart,
-    'upload_product_video'=> $request->upload_product_video,
     'product_active_status'=>1
     ];
     
@@ -1086,8 +1085,7 @@ public function edit_Product1($request){  /// for api
         'customized_product'=> $request->customized_product, // // 0 not 1 yes
         'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
         'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
-        'upload_size_chart'=> $request->upload_size_chart,
-        'upload_product_video'=> $request->upload_product_video
+        'upload_size_chart'=> $request->upload_size_chart
         ];
 
 
@@ -1524,8 +1522,7 @@ public function edit_Product_web($request){
                 'customized_product'=> $request->customized_product, // // 0 not 1 yes
                 'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
                 'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
-                'upload_size_chart'=> $request->upload_size_chart,
-                'upload_product_video'=> $request->upload_product_video
+                'upload_size_chart'=> $request->upload_size_chart
                 ];
         
             $product_data=  product::UpdateOrCreate($match,$product);     

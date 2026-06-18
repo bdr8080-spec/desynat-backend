@@ -1025,42 +1025,6 @@ $product_Variation_inside_count = 0;
             {{-- <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="edit_uploadChart_preview"></div> --}}
         </div>
 
-        <div class="title24">{{ __('seller_messages.product_video') }}</div>
-        <div class="product-pnls mt-4">
-            <div class="upload-image" style="height:170px; width: 300px;">
-                <label id="uploadLabel1" style="cursor:pointer;text-align:center;display:block;padding-top:2.7rem; ">
-                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:60px;">
-                    <div class="py-2" style="color:#875C3A">{{ __('seller_messages.upload_product_video') }}</div>
-                    <input type="file" accept="video/*"  id="edit_uploadVideo" style="opacity:0;"
-                        name="upload_product_video">
-                </label>
-
-
-                {{-- show image code --}}
-
-                <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadVideo_preview">
-                    @if (!empty($product_details->upload_product_video))
-                    <div class="multiple-img1 position-relative">
-                        <video width="100%" height="100%" controls>
-                            <source src="{{ $product_details->upload_product_video }}">
-                        </video>
-
-                        <span class="remove-ic remove-video"
-                            style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-
-                        <input type="hidden"
-                            value="{{ $product_details->upload_product_video }}"
-                            name="old_upload_product_video">
-                    </div>
-                    @endif
-                </div>
-                {{-- show image code end here --}}
-                <p class="text-danger" id="error-upload_product_video"></p>
-
-            </div>
-
-        </div>
-
         <!--
   <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px; width: 270px;">
@@ -1218,48 +1182,6 @@ $('#edit_uploadChart').on('change', e => {
 
 // Upload Chart Image in footer side
 
-// Video Preview
-$('#edit_uploadVideo').on('change', function (e) {
-
-    let file = e.target.files[0];
-
-    if (!file) {
-        return;
-    }
-
-    let videoURL = URL.createObjectURL(file);
-
-    $('#edit_uploadVideo_preview').html(`
-        <div class="multiple-img1 position-relative">
-            <video width="100%" height="150" controls>
-                <source src="${videoURL}" type="${file.type}">
-                Your browser does not support the video tag.
-            </video>
-
-            <span class="remove-ic remove-video"
-                style="position:absolute;top:0;right:5px;z-index:9999;cursor:pointer;font-size:20px;color:red;">
-                &times;
-            </span>
-        </div>
-    `);
-
-    $('#error-upload_product_video').empty();
-});
-
-// Remove Video
-$(document).on('click', '.remove-video', function (e) {
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    $(this).closest('.multiple-img1').remove();
-
-    // Clear file input
-    $('#edit_uploadVideo').val('');
-
-    // Remove old video hidden input if present
-    $('input[name="old_upload_product_video"]').remove();
-});
 </script>
 
 <script>
