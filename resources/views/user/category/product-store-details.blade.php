@@ -826,26 +826,64 @@ document.addEventListener("DOMContentLoaded", function() {
             carouselIndicators.innerHTML = "";
             carouselInner.innerHTML = "";
 
+            // images.forEach((img, idx) => {
+            //     carouselIndicators.innerHTML += `
+            //     <button type="button"
+            //         data-bs-target="#carouselExampleCaptions"
+            //         data-bs-slide-to="${idx}"
+            //         class="${idx === 0 ? 'active' : ''}">
+            //         <div class="product_slide_img">
+            //             <img src="${img}" class="img-fluid"/>
+            //         </div>
+            //     </button>
+            // `;
+
+            //     carouselInner.innerHTML += `
+            //     <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+            //         ${idx === 0 ? wishlistHTML : ''}
+            //         <div class="carousel_item_img">
+            //             <img src="${img}" class="img-fluid">
+            //         </div>
+            //     </div>
+            // `;
+            // });
             images.forEach((img, idx) => {
+
+                let isVideo = /\.(mp4|mov|avi|webm|mkv)$/i.test(img);
+
                 carouselIndicators.innerHTML += `
-                <button type="button"
-                    data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide-to="${idx}"
-                    class="${idx === 0 ? 'active' : ''}">
-                    <div class="product_slide_img">
-                        <img src="${img}" class="img-fluid"/>
-                    </div>
-                </button>
-            `;
+                    <button type="button"
+                        data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide-to="${idx}"
+                        class="${idx === 0 ? 'active' : ''}">
+                        <div class="product_slide_img">
+
+                            ${isVideo
+                                ? `<video class="img-fluid" muted autoplay loop playsinline>
+                                    <source src="${img}" type="video/mp4">
+                                </video>`
+                                : `<img src="${img}" class="img-fluid">`
+                            }
+
+                        </div>
+                    </button>
+                `;
 
                 carouselInner.innerHTML += `
-                <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                    ${idx === 0 ? wishlistHTML : ''}
-                    <div class="carousel_item_img">
-                        <img src="${img}" class="img-fluid">
+                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                        ${idx === 0 ? wishlistHTML : ''}
+                        <div class="carousel_item_img">
+
+                            ${isVideo
+                                ? `<video class="img-fluid w-100" controls>
+                                    <source src="${img}" type="video/mp4">
+                                </video>`
+                                : `<img src="${img}" class="img-fluid">`
+                            }
+
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
             });
 
             // Auto-select first size
