@@ -95,7 +95,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
             <div id="carouselExampleCaptions" class="customProduct_Carousel carousel slide">
 
-                <div class="carousel-indicators">
+                <!-- <div class="carousel-indicators">
                     @foreach ($allImages as $index => $img)
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $index }}"
                         class="{{ $index == 0 ? 'active' : '' }}" aria-current="{{ $index == 0 ? 'true' : 'false' }}">
@@ -103,6 +103,35 @@ $currency = session('currencyAr', 'دينار كويتي');
                             <img id="mainImage" src="{{ $img }}" class="img-fluid" alt="Slide {{ $index + 1 }}">
                         </div>
                     </button>
+                    @endforeach
+                </div> -->
+                <div class="carousel-indicators">
+                    @foreach ($allImages as $index => $img)
+
+                    @php
+                        $isVideo = preg_match('/\.(mp4|mov|avi|webm|mkv)$/i', $img);
+                    @endphp
+
+                    <button type="button"
+                        data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide-to="{{ $index }}"
+                        class="{{ $index == 0 ? 'active' : '' }}"
+                        aria-current="{{ $index == 0 ? 'true' : 'false' }}">
+
+                        <div class="product_slide_img">
+
+                            @if($isVideo)
+                                <video class="img-fluid" muted>
+                                    <source src="{{ $img }}">
+                                </video>
+                            @else
+                                <img src="{{ $img }}" class="img-fluid" alt="Slide {{ $index + 1 }}">
+                            @endif
+
+                        </div>
+
+                    </button>
+
                     @endforeach
                 </div>
 
@@ -127,8 +156,24 @@ $currency = session('currencyAr', 'دينار كويتي');
                     @endif
                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
 
-                        <div class="carousel_item_img">
+                        <!-- <div class="carousel_item_img">
                             <img src="{{ $img }}" class="img-fluid" alt="Slide Image">
+                        </div> -->
+                        @php
+                            $isVideo = preg_match('/\.(mp4|mov|avi|webm|mkv)$/i', $img);
+                        @endphp
+
+                        <div class="carousel_item_img">
+
+                            @if($isVideo)
+                                <video class="img-fluid w-100" controls>
+                                    <source src="{{ $img }}">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @else
+                                <img src="{{ $img }}" class="img-fluid" alt="Slide Image">
+                            @endif
+
                         </div>
                     </div>
                     @endforeach
