@@ -333,7 +333,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                           <div class="left-action w-50">
 
                             <!-- ADD TO BAG -->
-                          <a href="{{route('userLogin')}}" class="customBtn2 w-100 addToBagBtnRemove text-center" id="addToBagBtn">{{ __('user_messages.add_to_bag') }} jhj </a>
+                          <a href="{{route('userLogin')}}" class="customBtn2 w-100 addToBagBtnRemove text-center" id="addToBagBtn">{{ __('user_messages.add_to_bag') }} </a>
 
                             <!-- QUANTITY BOX -->
                             <div class="quantity-box">
