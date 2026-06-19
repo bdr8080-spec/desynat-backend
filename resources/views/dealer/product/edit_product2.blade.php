@@ -63,6 +63,13 @@ $product_Variation_inside_count = 0;
 
 
 }
+
+.multiple-img video {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
 </style>
 
 <section class="section dashboard">
@@ -366,7 +373,7 @@ $product_Variation_inside_count = 0;
                                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
                                 <div class="mt-3" style="color:#875C3A">
                                     {{ __('seller_messages.upload_product_images') }}</div>
-                                <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
+                                <input type="file" accept="image/*,video/*" multiple id="edit_imageUpload" style="opacity:0;"
                                     name="variant_image[{{ $product_Variation_count }}][]"
                                     rel="{{ $product_Variation_count }}">
                             </label>
@@ -381,7 +388,16 @@ $product_Variation_inside_count = 0;
                         @if (!empty($item->variant_image))
                         @foreach ($item->variant_image as $key0 => $chart)
                         <div class="multiple-img position-relative">
-                            <img src="{{ $chart }}" class="w-100 rounded">
+                            <!-- <img src="{{ $chart }}" class="w-100 rounded"> -->
+                             @if(preg_match('/\.(mp4|mov|avi|webm|mkv)$/i', $chart))
+                                <video class="w-100 rounded"
+                                    style="height:150px;object-fit:cover;"
+                                    controls>
+                                    <source src="{{ $chart }}">
+                                </video>
+                            @else
+                                <img src="{{ $chart }}" class="w-100 rounded">
+                            @endif
                             <span class="remove-ic remove-image"
                                 style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
 
@@ -1105,7 +1121,6 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
 
     let rel = $(this).attr('rel');
 
-    // Initialize store for this input if not exists
     if (!fileStore[rel]) {
         fileStore[rel] = new DataTransfer();
     }
@@ -1115,27 +1130,83 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
 
     [...files].forEach(f => {
 
-        // Add file to DataTransfer
         dt.items.add(f);
 
-        // Create preview
         let url = URL.createObjectURL(f);
-        let imgBox = $(`
-          <div class="multiple-img position-relative" data-name="${f.name}">
-            <img src="${url}" class="w-100 rounded">
-            <span class="remove-ic" 
-                  style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">
-                &times;
-            </span>
-          </div>
+
+        let previewContent = '';
+
+        if (f.type.startsWith('image/')) {
+
+            previewContent = `
+                <img src="${url}"
+                    class="w-100 rounded"
+                    style="height:150px;object-fit:cover;">
+            `;
+
+        } else if (f.type.startsWith('video/')) {
+
+            previewContent = `
+                <video src="${url}"
+                    class="w-100 rounded"
+                    style="height:150px;object-fit:cover;"
+                    controls>
+                </video>
+            `;
+        }
+
+        let mediaBox = $(`
+            <div class="multiple-img position-relative"
+                 data-name="${f.name}"
+                 style="width:150px;">
+                ${previewContent}
+                <span class="remove-ic"
+                      style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;z-index:999;">
+                    &times;
+                </span>
+            </div>
         `);
 
-        // Remove preview + remove file
-        imgBox.find('.remove-ic').click(() => {
+        // mediaBox.find('.remove-ic').click(function () {
 
-            let filename = imgBox.data('name');
+        //     let filename = mediaBox.data('name');
 
-            // remove from DataTransfer
+        //     for (let i = 0; i < dt.items.length; i++) {
+
+        //         if (dt.items[i].getAsFile().name === filename) {
+
+        //             dt.items.remove(i);
+        //             break;
+        //         }
+        //     }
+
+        //     document.querySelector(`input[rel="${rel}"]`).files = dt.files;
+
+        //     mediaBox.remove();
+        // });
+
+        $('#previewContainer' + rel).append(mediaBox);
+        $('#error-variant_image_' + rel).empty();
+
+    });
+
+    this.files = dt.files;
+});
+
+$(document).on('click', '.remove-ic', function () {
+
+    let mediaBox = $(this).closest('.multiple-img');
+    let filename = mediaBox.data('name');
+
+    if (filename) {
+
+        let rel = mediaBox.closest('.product-pnls')
+                          .find('input[type="file"]')
+                          .attr('rel');
+
+        let dt = fileStore[rel];
+
+        if (dt) {
             for (let i = 0; i < dt.items.length; i++) {
                 if (dt.items[i].getAsFile().name === filename) {
                     dt.items.remove(i);
@@ -1143,20 +1214,11 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
                 }
             }
 
-            // update input files
             document.querySelector(`input[rel="${rel}"]`).files = dt.files;
+        }
+    }
 
-            // remove preview
-            imgBox.remove();
-        });
-
-        $('#previewContainer' + rel).append(imgBox);
-        $('#error-variant_image_' + rel).empty();
-
-    });
-
-    // Assign new accumulated file list to input
-    this.files = dt.files;
+    mediaBox.remove();
 });
 
 // Upload Chart Image in footer side

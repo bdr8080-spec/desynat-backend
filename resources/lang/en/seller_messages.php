@@ -1087,7 +1087,7 @@ return [
     'colour' => 'Colour',
     'select_colour' => 'Select Colour',
 
-    'upload_product_images' => 'Upload Product Images',
+    'upload_product_images' => 'Upload Product Images/Videos',
 
     'add_variation' => 'Add Variation',
     'add_another_variant' => 'Add Another Variant',

@@ -282,7 +282,7 @@
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
                         <div class="mt-3" style="color:#875C3A">{{ __('seller_messages.upload_product_images') }}</div>
-                        <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
+                        <input type="file" aaccept="image/*,video/*" multiple id="edit_imageUpload" style="opacity:0;"
                             name="variant_image[0][]" rel="0">
                     </label>
 
@@ -824,11 +824,10 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
 // Store files for each variant input
 let fileStore = {};
 
-$(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+$(document).on('change', 'input[type="file"][name^="variant_image"]', function (e) {
 
     let rel = $(this).attr('rel');
 
-    // Initialize store for this input if not exists
     if (!fileStore[rel]) {
         fileStore[rel] = new DataTransfer();
     }
@@ -838,48 +837,86 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
 
     [...files].forEach(f => {
 
+        console.log('File Name:', f.name);
+        console.log('File Type:', f.type);
+
         // Add file to DataTransfer
         dt.items.add(f);
 
-        // Create preview
         let url = URL.createObjectURL(f);
-        let imgBox = $(`
-          <div class="multiple-img position-relative" data-name="${f.name}">
-            <img src="${url}" class="w-100 rounded">
-            <span class="remove-ic" 
-                  style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">
-                &times;
-            </span>
-          </div>
+
+        let previewContent = '';
+
+        // IMAGE PREVIEW
+        if (f.type.startsWith('image/')) {
+
+            previewContent = `
+                <img src="${url}"
+                     class="w-100 rounded"
+                     style="height:150px;width:150px;object-fit:cover;">
+            `;
+
+        }
+
+        // VIDEO PREVIEW
+        else if (f.type.startsWith('video/')) {
+
+            previewContent = `
+                <video controls
+                       muted
+                       preload="metadata"
+                       class="rounded"
+                       style="height:150px;width:150px;">
+                    <source src="${url}" type="${f.type}">
+                    Your browser does not support the video tag.
+                </video>
+            `;
+        }
+
+        let mediaBox = $(`
+            <div class="multiple-img position-relative"
+                 data-name="${f.name}"
+                 style="width:150px;height:150px;">
+                 
+                ${previewContent}
+
+                <span class="remove-ic"
+                      style="position:absolute;
+                             top:0;
+                             right:5px;
+                             cursor:pointer;
+                             font-size:20px;
+                             color:red;
+                             z-index:999;">
+                    &times;
+                </span>
+            </div>
         `);
 
-        // Remove preview + remove file
-        imgBox.find('.remove-ic').click(() => {
+        mediaBox.find('.remove-ic').click(function () {
 
-            let filename = imgBox.data('name');
+            let filename = mediaBox.data('name');
 
-            // remove from DataTransfer
             for (let i = 0; i < dt.items.length; i++) {
+
                 if (dt.items[i].getAsFile().name === filename) {
+
                     dt.items.remove(i);
                     break;
                 }
             }
 
-            // update input files
             document.querySelector(`input[rel="${rel}"]`).files = dt.files;
 
-            // remove preview
-            imgBox.remove();
+            mediaBox.remove();
         });
 
-        $('#previewContainer' + rel).append(imgBox);
+        $('#previewContainer' + rel).append(mediaBox);
 
         $('#error-variant_image_' + rel).empty();
 
     });
 
-    // Assign new accumulated file list to input
     this.files = dt.files;
 });
 

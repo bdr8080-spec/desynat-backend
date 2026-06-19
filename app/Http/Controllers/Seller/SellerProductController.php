@@ -1637,7 +1637,8 @@ public function edit_product_code1(Request $request, $id){
             // Each image inside each variation is required
             // 'variant_image.*.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', new MatchArrayProductVariation],
 
-             'variant_image.*.*' => ['nullable','image','mimes:jpeg,png,jpg,gif','max:2048'],
+            //  'variant_image.*.*' => ['nullable','image','mimes:jpeg,png,jpg,gif','max:2048'],
+            'variant_image.*.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi,webm,mkv|max:20480',
     
 
             'old_variant_image' => ['array'],
