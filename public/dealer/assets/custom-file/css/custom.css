@@ -1530,3 +1530,6 @@ table.dataTable td.dt-type-date {
     margin-right: 0 !important;
 }
 
+[dir="rtl"] .dashboard-button{
+    direction: ltr;
+}
