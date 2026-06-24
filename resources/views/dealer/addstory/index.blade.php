@@ -165,6 +165,16 @@ button.deleteStoryBtn {
 
 <!-- add story -->
 <script>
+    document.getElementById('bannerUploadLabel').addEventListener('click', function(e) {
+    e.preventDefault();
+
+   // console.log('Label clicked');
+
+    const fileInput = document.getElementById('banner_image_upload');
+    //console.log(fileInput);
+
+    fileInput.click();
+});
 document.getElementById('banner_image_upload').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (!file) return;
