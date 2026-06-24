@@ -21,6 +21,9 @@ return [
 'open' => 'فتح',
 'busy' => 'مشغول',
 
+'upload_atleast_one_product_image' => 'يرجى تحميل صورة منتج واحدة على الأقل',
+'upload_first_image_then_video' => 'يرجى تحميل الصورة أولاً ثم الفيديو',
+
 
 // Seller Dashboard language code 
 "Dashboard" => "لوحة التحكم",

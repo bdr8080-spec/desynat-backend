@@ -1417,18 +1417,65 @@ public function Add_product_code1(Request $request){
 
     // Image Upload Code Required Field
 
-  foreach ($request->size_id as $key => $val) {
+//   foreach ($request->size_id as $key => $val) {
+
+//     $newImages = $request->variant_image[$key] ?? [];
+//     $oldImages = $request->old_variant_image[$key] ?? [];
+
+//     // Check if both are empty
+//     if ((empty($newImages) || count($newImages) == 0) &&
+//         (empty($oldImages) || count($oldImages) == 0)) {
+
+//         $validate->errors()->add(
+//             "variant_image.$key",
+//             __('seller_messages.variation_image_required')."#".($key + 1)
+//         );
+//     }
+// }
+
+foreach ($request->size_id as $key => $val) {
 
     $newImages = $request->variant_image[$key] ?? [];
     $oldImages = $request->old_variant_image[$key] ?? [];
 
-    // Check if both are empty
+    // Must have at least one file
     if ((empty($newImages) || count($newImages) == 0) &&
         (empty($oldImages) || count($oldImages) == 0)) {
 
         $validate->errors()->add(
             "variant_image.$key",
-            __('seller_messages.variation_image_required')."#".($key + 1)
+            __('seller_messages.upload_atleast_one_product_image')
+        );
+
+        continue;
+    }
+
+    // Check first file must be image
+    $firstFileIsImage = false;
+
+    if (!empty($newImages)) {
+
+        $firstFile = reset($newImages);
+
+        if ($firstFile && str_starts_with($firstFile->getMimeType(), 'image/')) {
+            $firstFileIsImage = true;
+        }
+
+    } elseif (!empty($oldImages)) {
+
+        $firstOldFile = reset($oldImages);
+
+        $ext = strtolower(pathinfo($firstOldFile, PATHINFO_EXTENSION));
+
+        if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+            $firstFileIsImage = true;
+        }
+    }
+
+    if (!$firstFileIsImage) {
+        $validate->errors()->add(
+            "variant_image.$key",
+            __('seller_messages.upload_first_image_then_video')
         );
     }
 }
@@ -1877,21 +1924,111 @@ public function edit_product_code1(Request $request, $id){
 
 // new image and old image one must show 
 
-  foreach ($request->size_id as $key => $val) {
+//   foreach ($request->size_id as $key => $val) {
 
-        $newImages = $request->variant_image[$key] ?? [];
-        $oldImages = $request->old_variant_image[$key] ?? [];
+//         $newImages = $request->variant_image[$key] ?? [];
+//         $oldImages = $request->old_variant_image[$key] ?? [];
 
-        // Check if both are empty
-        if ((empty($newImages) || count($newImages) == 0) &&
-            (empty($oldImages) || count($oldImages) == 0)) {
+//         // Check if both are empty
+//         if ((empty($newImages) || count($newImages) == 0) &&
+//             (empty($oldImages) || count($oldImages) == 0)) {
 
-            $validate->errors()->add(
-                "variant_image.$key",
-                "At least one image is required for variation #".($key + 1)
-            );
+//             $validate->errors()->add(
+//                 "variant_image.$key",
+//                 "At least one image is required for variation #".($key + 1)
+//             );
+//         }
+//     }
+
+foreach ($request->size_id as $key => $val) {
+
+    $newImages = $request->variant_image[$key] ?? [];
+    $oldImages = $request->old_variant_image[$key] ?? [];
+
+    // At least one file required
+    if ((empty($newImages) || count($newImages) == 0) &&
+        (empty($oldImages) || count($oldImages) == 0)) {
+
+        $validate->errors()->add(
+            "variant_image.$key",
+            "Please upload at least 1 product image"
+        );
+
+        continue;
+    }
+
+    $hasImage = false;
+
+    // Check uploaded files
+    foreach ($newImages as $file) {
+
+        if (!$file) {
+            continue;
+        }
+
+        if (str_starts_with($file->getMimeType(), 'image/')) {
+            $hasImage = true;
+            break;
         }
     }
+
+    // Check old files
+    if (!$hasImage && !empty($oldImages)) {
+
+        foreach ($oldImages as $oldFile) {
+
+            $ext = strtolower(pathinfo($oldFile, PATHINFO_EXTENSION));
+
+            if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                $hasImage = true;
+                break;
+            }
+        }
+    }
+
+    if (!$hasImage) {
+
+        $validate->errors()->add(
+            "variant_image.$key",
+            __('seller_messages.upload_atleast_one_product_image')
+        );
+
+        continue;
+    }
+
+    // First file must be image
+    $firstFileIsImage = false;
+
+    // If old images exist, they come first in edit mode
+    if (!empty($oldImages)) {
+
+        $firstFile = reset($oldImages);
+
+        $ext = strtolower(pathinfo($firstFile, PATHINFO_EXTENSION));
+
+        if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+            $firstFileIsImage = true;
+        }
+
+    } elseif (!empty($newImages)) {
+
+        $firstFile = reset($newImages);
+
+        if ($firstFile &&
+            str_starts_with($firstFile->getMimeType(), 'image/')) {
+
+            $firstFileIsImage = true;
+        }
+    }
+
+    if (!$firstFileIsImage) {
+
+        $validate->errors()->add(
+            "variant_image.$key",
+            __('seller_messages.upload_first_image_then_video')
+        );
+    }
+}
 
 
 // start Color and size are not dublicate 
@@ -1922,7 +2059,7 @@ public function edit_product_code1(Request $request, $id){
            if (count($sizesForColor) !== count(array_unique($sizesForColor))) {
                $validate->errors()->add(
                    'size_id_'.$color,
-                   "For color sizes must be different."
+                   __('seller_messages.color_sizes_must_be_different')
                );
            }
        }
@@ -2178,3 +2315,4 @@ public function getcolorsizeaccordingdetails(Request $request)
     
 
 }
+

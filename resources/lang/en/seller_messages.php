@@ -22,6 +22,9 @@ return [
 'open' => 'Open',
 'busy' => 'Busy',
 
+'upload_atleast_one_product_image' => 'Please upload at least 1 product image',
+'upload_first_image_then_video' => 'Please upload first image then video',
+
 
 
 // Seller dashBoard language code 
