@@ -45,7 +45,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     gtag('config', 'G-LT6YZ5ZYF1');
   </script>
 
-  <style>
+  <!-- <style>
     .disabled-category {
     pointer-events: none;
 }
@@ -58,7 +58,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 .disabled-category:hover .dropdown-menu {
     display: none !important;
 }
-  </style>
+  </style> -->
 
 
     <style>
@@ -476,7 +476,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                 <div class="collapse navbar-collapse customNavbar" id="navbarSupportedContent">
 
                                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 w-100 justify-content-end flex-wrap">
-                                        @foreach ($data as $index =>$item)
+                                        @foreach ($data->where('status', 1) as $index =>$item)
                                         <li class="nav-item dropdown {{ $item->status == 0 ? 'disabled-category' : '' }}">
                                             <a class="nav-link dropdown-toggle position-relative {{ $index == 0 ? 'active' : '' }} {{ $item->status == 0 ? 'disabled-link' : '' }}"
                                                 href="{{ $item->status == 0 ? 'javascript:void(0)' : '#' }}" role="button" @if($item->status != 0)
