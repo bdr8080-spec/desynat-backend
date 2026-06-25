@@ -217,13 +217,33 @@ $currency = session('currencyAr', 'دينار كويتي');
                 <div class="d-flex align-items-center mb-1">
 
 
-                    <h4 class="fw-bold text-dark me-2" id="finalPrice">{{ number_format(convertPriceInUserWeb($firstVariant['final_price']), 2) }}   {{ $currency }}</h4>
+                    <!-- <h4 class="fw-bold text-dark me-2" id="finalPrice">{{ number_format(convertPriceInUserWeb($firstVariant['final_price']), 2) }}   {{ $currency }}</h4>
 
                     @if($firstVariant['discount_value']!=="0")
                     <del class="text-muted me-2" id="actualPrice">
                     {{ number_format(convertPriceInUserWeb($firstVariant['actual_price']), 2) }}  {{ $currency }} 
                     </del>
                     <span class="text-danger fw-semibold">{{$firstVariant['discount_value']}}% {{ __('user_messages.off') }}</span>
+                    @endif -->
+                    <h4 class="fw-bold text-dark me-2" id="finalPrice">
+                        {{ number_format(convertPriceInUserWeb($firstVariant['final_price']), 2) }}
+                        {{ $currency }}
+                    </h4>
+
+                    <del
+                        class="text-muted me-2"
+                        id="actualPrice"
+                        style="{{ $firstVariant['discount_value'] == '0' ? 'display:none' : '' }}"
+                    >
+                        {{ number_format(convertPriceInUserWeb($firstVariant['actual_price']), 2) }}
+                        {{ $currency }}
+                    </del>
+
+                    @if($firstVariant['discount_value'] != "0")
+                    <span class="text-danger fw-semibold">
+                        {{$firstVariant['discount_value']}}%
+                        {{ __('user_messages.off') }}
+                    </span>
                     @endif
 
                 </div>
