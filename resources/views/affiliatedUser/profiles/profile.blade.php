@@ -1020,7 +1020,7 @@ $(document).on('submit', 'form#SaveProfileForm', function(event) {
 let map, marker, circle, autocomplete;
 let mapInitialized = false;
 
-debugger;
+//debugger;
 
 // IDs of input fields
 const address1Id = "address_line1";
@@ -1035,7 +1035,7 @@ const selectedAddressId = "selectedAddress";
 const selectedAddressStore_address = "store_address";
 
 // selectedAddress
-debugger;
+//debugger;
 
 function initMap() {
     if (navigator.geolocation) {
@@ -1056,7 +1056,7 @@ function initMap() {
                 maximumAge: 0
             }
         );
-        debugger;
+        //debugger;
 
     } else {
         loadMap({

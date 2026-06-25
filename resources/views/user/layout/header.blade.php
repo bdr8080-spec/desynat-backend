@@ -621,7 +621,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     document.addEventListener("DOMContentLoaded", function() {
         
-            debugger
+            //debugger
 
         // ================= LOAD FROM LOCAL STORAGE =================
         let currency = localStorage.getItem("currency");
@@ -646,7 +646,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         if (flag) document.getElementById("selectedFlag").src = flag;
 
-            debugger
+           // debugger
         if (country_id) {
             document.querySelectorAll('[name="country_language"]').forEach(r => {
                 if (r.value === country_id) r.checked = true;
@@ -686,7 +686,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
             let selected = document.querySelector('[name="currency"]:checked');
 
-            debugger
+           // debugger
 
             if (selected) {
                 let value = selected.value;
