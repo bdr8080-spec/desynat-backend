@@ -143,25 +143,127 @@ $check_record = allproductchats::create($request_data);
 
 
 
- public function userGetAllChatsRecords($request){
+//  public function userGetAllChatsRecords($request){
 
-    $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details','order_create_status')->where('user_id',$request->user_id);
+//     $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details','order_create_status')->where('user_id',$request->user_id);
 
-    if(isset($request->filters) && $request->filters){
+//     if(isset($request->filters) && $request->filters){
 
-        if($request->filters=='2'){
-            $check_chatRecord=$check_chatRecord->where('product_request','1')->where('action','0');
-        }elseif($request->filters=='3'){
-            $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['1','2']);
-        }elseif($request->filters=='4'){
-            // $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['5']);
-            $check_chatRecord=$check_chatRecord->where('product_request','1')->where('action','5')->whereDoesntHave('order_create_status');
-        }elseif($request->filters=='5'){ // rejectced 
-            $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['4']);
+//         if($request->filters=='2'){
+//             $check_chatRecord=$check_chatRecord->where('product_request','1')->where('action','0');
+//         }elseif($request->filters=='3'){
+//             $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['1','2']);
+//         }elseif($request->filters=='4'){
+//             // $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['5']);
+//             $check_chatRecord=$check_chatRecord->where('product_request','1')->where('action','5')->whereDoesntHave('order_create_status');
+//         }elseif($request->filters=='5'){ // rejectced 
+//             $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['4']);
+//         }
+
+
+//     }
+//     if (!empty($request->search)) {
+
+//         $search = trim($request->search);
+
+//         $check_chatRecord = $check_chatRecord->whereHas('seller_details', function ($q) use ($search) {
+
+//             $q->where('first_name', 'LIKE', "%{$search}%")
+//             ->orWhere('last_name', 'LIKE', "%{$search}%")
+//             ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$search}%"]);
+//         });
+//     }
+    
+//    $check_chatRecord=$check_chatRecord->orderBy('id','desc')->get();
+
+//    if($check_chatRecord->isNotEmpty()){
+
+// foreach ($check_chatRecord as $key => $val) {
+
+//     $firbase_chat = $this->getMessages($val->unique_id);
+//     $unreadCount = 0;
+
+//     if (!empty($firbase_chat)) {
+//         // Ensure array order
+//         $lastMessage = end($firbase_chat);
+
+//         // $val->message_type = $lastMessage['type'] ?? null;
+//          $val->message_type = StrVal($lastMessage['type']) ?? null;
+
+//         $val->last_chat = $lastMessage['message'] ?? null;
+//         $val->last_chat_ar = $lastMessage['messageAr'] ?? null;
+//         // $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
+//         $val->last_chat_time = $lastMessage['times']
+//                     ? \Carbon\Carbon::parse($lastMessage['times'])
+//                         ->setTimezone('Asia/Kolkata')
+//                         ->format('d M Y, h:i A')
+//                     : null;
+//         $val->last_chat_by = $lastMessage['by'] ?? null;
+//             foreach ($firbase_chat as $msg) {
+
+//                 if (
+//                     isset($msg['user_id']) &&
+//                     $msg['user_id'] != $request->user_id &&   // not my message
+//                     (empty($msg['read']) || $msg['read'] == 0)
+//                 ) {
+//                     $unreadCount++;
+//                 }
+//             }
+        
+//     } else {
+//         $val->message_type=null;
+//         $val->last_chat = null;
+//         $val->last_chat_ar = null;
+//         $val->last_chat_time = null;
+//         $val->last_chat_by = null;
+//     }
+//     $val->unread_count = $unreadCount;
+// }
+
+     
+//     return [
+//         'status'  => 'success',
+//         'message' => 'All Chat records fetch Successfully',
+//         'data'    => $check_chatRecord
+//     ];
+//         }else{
+
+//     return [
+//         'status'  => 'success',
+//         'message' => 'All Chat records fetch Successfully',
+//         'data'    => []
+//     ];
+
+// }
+//     }
+
+public function userGetAllChatsRecords($request)
+{
+    $check_chatRecord = allproductchats::with(
+        'product_variation.product_details',
+        'user_details',
+        'seller_details',
+        'order_create_status'
+    )->where('user_id', $request->user_id);
+
+    if (isset($request->filters) && $request->filters) {
+
+        if ($request->filters == '2') {
+            $check_chatRecord = $check_chatRecord->where('product_request', '1')
+                ->where('action', '0');
+        } elseif ($request->filters == '3') {
+            $check_chatRecord = $check_chatRecord->where('product_request', '1')
+                ->whereIn('action', ['1', '2']);
+        } elseif ($request->filters == '4') {
+            $check_chatRecord = $check_chatRecord->where('product_request', '1')
+                ->where('action', '5')
+                ->whereDoesntHave('order_create_status');
+        } elseif ($request->filters == '5') {
+            $check_chatRecord = $check_chatRecord->where('product_request', '1')
+                ->whereIn('action', ['4']);
         }
-
-
     }
+
     if (!empty($request->search)) {
 
         $search = trim($request->search);
@@ -169,73 +271,112 @@ $check_record = allproductchats::create($request_data);
         $check_chatRecord = $check_chatRecord->whereHas('seller_details', function ($q) use ($search) {
 
             $q->where('first_name', 'LIKE', "%{$search}%")
-            ->orWhere('last_name', 'LIKE', "%{$search}%")
-            ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$search}%"]);
+                ->orWhere('last_name', 'LIKE', "%{$search}%")
+                ->orWhereRaw(
+                    "CONCAT(first_name, ' ', last_name) LIKE ?",
+                    ["%{$search}%"]
+                );
         });
     }
-    
-   $check_chatRecord=$check_chatRecord->orderBy('id','desc')->get();
 
-   if($check_chatRecord->isNotEmpty()){
+    $check_chatRecord = $check_chatRecord->orderBy('id', 'desc')->get();
 
-foreach ($check_chatRecord as $key => $val) {
+    if ($check_chatRecord->isNotEmpty()) {
 
-    $firbase_chat = $this->getMessages($val->unique_id);
-    $unreadCount = 0;
+        foreach ($check_chatRecord as $key => $val) {
 
-    if (!empty($firbase_chat)) {
-        // Ensure array order
-        $lastMessage = end($firbase_chat);
+            $firbase_chat = $this->getMessages($val->unique_id);
+            $unreadCount = 0;
 
-        // $val->message_type = $lastMessage['type'] ?? null;
-         $val->message_type = StrVal($lastMessage['type']) ?? null;
+            if (!empty($firbase_chat)) {
 
-        $val->last_chat = $lastMessage['message'] ?? null;
-        $val->last_chat_ar = $lastMessage['messageAr'] ?? null;
-        // $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
-        $val->last_chat_time = $lastMessage['times']
+                $lastMessage = end($firbase_chat);
+
+                $val->message_type = isset($lastMessage['type'])
+                    ? strval($lastMessage['type'])
+                    : null;
+
+                $val->last_chat = $lastMessage['message'] ?? null;
+                $val->last_chat_ar = $lastMessage['messageAr'] ?? null;
+
+                // Raw timestamp used for sorting
+                $val->last_chat_time = $lastMessage['times'] ?? null;
+
+                // Formatted timestamp for response
+                $val->formatted_last_chat_time = !empty($lastMessage['times'])
                     ? \Carbon\Carbon::parse($lastMessage['times'])
                         ->setTimezone('Asia/Kolkata')
                         ->format('d M Y, h:i A')
                     : null;
-        $val->last_chat_by = $lastMessage['by'] ?? null;
-            foreach ($firbase_chat as $msg) {
 
-                if (
-                    isset($msg['user_id']) &&
-                    $msg['user_id'] != $request->user_id &&   // not my message
-                    (empty($msg['read']) || $msg['read'] == 0)
-                ) {
-                    $unreadCount++;
+                $val->last_chat_by = $lastMessage['by'] ?? null;
+
+                foreach ($firbase_chat as $msg) {
+
+                    if (
+                        isset($msg['user_id']) &&
+                        $msg['user_id'] != $request->user_id &&
+                        (empty($msg['read']) || $msg['read'] == 0)
+                    ) {
+                        $unreadCount++;
+                    }
                 }
+            } else {
+
+                $val->message_type = null;
+                $val->last_chat = null;
+                $val->last_chat_ar = null;
+                $val->last_chat_time = null;
+                $val->formatted_last_chat_time = null;
+                $val->last_chat_by = null;
             }
-        
+
+            $val->unread_count = $unreadCount;
+        }
+
+        // Sort:
+        // 1. Records having last_chat or last_chat_ar => latest chat first
+        // 2. Records without chats => id DESC
+        $check_chatRecord = $check_chatRecord->sort(function ($a, $b) {
+
+            $aHasChat = !empty($a->last_chat) || !empty($a->last_chat_ar);
+            $bHasChat = !empty($b->last_chat) || !empty($b->last_chat_ar);
+
+            if ($aHasChat && $bHasChat) {
+                return strtotime($b->last_chat_time) <=> strtotime($a->last_chat_time);
+            }
+
+            if ($aHasChat && !$bHasChat) {
+                return -1;
+            }
+
+            if (!$aHasChat && $bHasChat) {
+                return 1;
+            }
+
+            return $b->id <=> $a->id;
+        })->values();
+
+        // Replace raw timestamp with formatted timestamp in response
+        foreach ($check_chatRecord as $val) {
+            $val->last_chat_time = $val->formatted_last_chat_time;
+            unset($val->formatted_last_chat_time);
+        }
+
+        return [
+            'status'  => 'success',
+            'message' => 'All Chat records fetch Successfully',
+            'data'    => $check_chatRecord
+        ];
     } else {
-        $val->message_type=null;
-        $val->last_chat = null;
-        $val->last_chat_ar = null;
-        $val->last_chat_time = null;
-        $val->last_chat_by = null;
+
+        return [
+            'status'  => 'success',
+            'message' => 'All Chat records fetch Successfully',
+            'data'    => []
+        ];
     }
-    $val->unread_count = $unreadCount;
 }
-
-     
-    return [
-        'status'  => 'success',
-        'message' => 'All Chat records fetch Successfully',
-        'data'    => $check_chatRecord
-    ];
-        }else{
-
-    return [
-        'status'  => 'success',
-        'message' => 'All Chat records fetch Successfully',
-        'data'    => []
-    ];
-
-}
-    }
 
 
 
