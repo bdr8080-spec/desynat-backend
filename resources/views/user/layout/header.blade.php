@@ -497,7 +497,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                                         <i class="fa-solid fa-chevron-left"></i>
                                                     </button>
                                                     <div class="scroll-content  justify-content-around flex-lg-nowrap">
-                                                            @foreach ($item->subCategories as $value)
+                                                            @foreach ($item->subCategories->where('status', 1) as $value)
                                                             <div class="menu-sub">
                                                                 <div class="clothes_content">
                                                                     <a href="{{ route('user.category_wise_store', $value->category_id) }}">
