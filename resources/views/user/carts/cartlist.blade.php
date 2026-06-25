@@ -158,9 +158,9 @@ $currency = session('currencyAr', 'دينار كويتي');
                                         @endif
                                         <span class="discount ms-2">
                                             @if($item->product_variants->discount_type == 1)
-                                             {{ number_format(convertPriceInUserWeb( $item->product_variants->discount_value ), 2) }}% Off
+                                             {{ number_format(convertPriceInUserWeb( $item->product_variants->discount_value ), 2) }}% {{ __('user_messages.off') }}
                                             @elseif($item->product_variants->discount_type == 2)
-                                            {{ number_format(convertPriceInUserWeb( $item->product_variants->discount_value ), 2) }} {{ $currency }} Off
+                                            {{ number_format(convertPriceInUserWeb( $item->product_variants->discount_value ), 2) }} {{ $currency }} {{ __('user_messages.off') }}
                                             @endif
                                         </span>
 

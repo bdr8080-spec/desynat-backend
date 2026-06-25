@@ -223,118 +223,234 @@ class UserStoreController extends Controller
 
 
 
-    public function productDetails(Request $request,string $id){
+//     public function productDetails(Request $request,string $id){
 
-        $affiliate_id = $request->query('ref'); // get affiliate id from URL
-        $product_id = $id;
+//         $affiliate_id = $request->query('ref'); // get affiliate id from URL
+//         $product_id = $id;
 
-        if ($affiliate_id) {
-            $request_data1=(object)[
-            'user_id' => $request->user()->id ?? null,
-                'product_id' => $product_id,
-                'affiliate_id' => $affiliate_id,
-                'reference_link' => $request->fullUrl()
-            ];
+//         if ($affiliate_id) {
+//             $request_data1=(object)[
+//             'user_id' => $request->user()->id ?? null,
+//                 'product_id' => $product_id,
+//                 'affiliate_id' => $affiliate_id,
+//                 'reference_link' => $request->fullUrl()
+//             ];
 
-            $result = $this->UserManagementService->recordAffiliateClick($request_data1);
+//             $result = $this->UserManagementService->recordAffiliateClick($request_data1);
 
-        }
+//         }
 
-        $request_data=(object)[
-            'product_id'=>$id,
-            'user_id'=> $request->user()->id ?? null
-                   ];
-        $result = $this->UserManagementService->singleproductView($request_data);
+//         $request_data=(object)[
+//             'product_id'=>$id,
+//             'user_id'=> $request->user()->id ?? null
+//                    ];
+//         $result = $this->UserManagementService->singleproductView($request_data);
     
-        $data = $result['data'];
-        //dd($data);
+//         $data = $result['data'];
+//         //dd($data);
 
 
 
-        $product_variants = [];
+//         $product_variants = [];
 
- foreach ($data->product_variants as $key=>$item) {
+//  foreach ($data->product_variants as $key=>$item) {
 
-    $colorKey = $item->color->name;
-    $colorHex = $item->color->hex_code;
+//     $colorKey = $item->color->name;
+//     $colorHex = $item->color->hex_code;
 
-    if (isset($product_variants[$colorHex])) {  // <-- FIXED HERE
+//     if (isset($product_variants[$colorHex])) {  // <-- FIXED HERE
            
-        if($key==0){
+//         if($key==0){
     
-        if (is_array($item->variant_image)) {      
-            $product_variants[$colorHex]['variant_image'] =
-             array_merge(
-                $product_variants[$colorHex]['variant_image'],
-                $item->variant_image
-            );
+//         if (is_array($item->variant_image)) {      
+//             $product_variants[$colorHex]['variant_image'] =
+//              array_merge(
+//                 $product_variants[$colorHex]['variant_image'],
+//                 $item->variant_image
+//             );
+//         }
+//     }
+
+//         if (!in_array($item->size->name, $product_variants[$colorHex]['sizes'])) {
+//             $product_variants[$colorHex]['sizes'][] = $item->size->name;
+//         }
+
+//     } else {
+
+//         $product_variants[$colorHex] = [
+//             'variant_id' => $item->id,
+//             'product_id' => $item->product_id,
+//             'color_hex'      => $colorHex,
+//             'variant_image'  => is_array($item->variant_image) ? $item->variant_image : [],
+//             'sizes'          => [$item->size->name],
+//             'actual_price'   => $item->actual_price,
+//             'final_price'    => $item->final_price,
+//             'discount_value' => $item->discount_value,
+//             'discount_type'  => $item->discount_type,
+//             'total_stock'  => $item->total_stock
+//         ];
+//     }
+// }
+
+
+
+// $productVariantsById = [];
+// foreach ($data->product_variants as $item) {
+//     $productVariantsById[$item->id] = [
+//         'variant_id' => $item->id,
+//         'product_id' => $item->product_id,
+//         'color_hex' => $item->color->hex_code,
+//         'size' => $item->size->name,
+//         'actual_price' => $item->actual_price,
+//         'final_price' => $item->final_price,
+//         'discount_value' => $item->discount_value,
+//         'discount_type' => $item->discount_type,
+//         'variant_image' => is_array($item->variant_image) ? $item->variant_image : [],
+//         'total_stock' => $item->total_stock,
+//     ];
+// }
+
+
+//     //dd($product_variants);
+//     if (!$request->user()) {
+//     $cartCount = 0;
+//     } else {
+//         $cartCount = Addtocart::where('user_id', $request->user()->id)
+//             //->where('product_id', $id)
+//             ->count();
+//     }
+
+//     if (!$request->user()) {
+//     $cartData = [];
+//     } else {
+//         $cartData = Addtocart::where('user_id', $request->user()->id)
+//             //->where('product_id', $id)
+//             ->get() 
+//             ->keyBy('variants_id');
+//     }
+
+
+//     //dd($product_variants);
+
+  
+//         return view('user.category.product-store-details', compact('data','product_variants','cartCount','cartData','productVariantsById'));
+//     }
+
+public function productDetails(Request $request, string $id)
+{
+    $affiliate_id = $request->query('ref'); // get affiliate id from URL
+    $product_id = $id;
+
+    if ($affiliate_id) {
+        $request_data1 = (object)[
+            'user_id' => $request->user()->id ?? null,
+            'product_id' => $product_id,
+            'affiliate_id' => $affiliate_id,
+            'reference_link' => $request->fullUrl()
+        ];
+
+        $result = $this->UserManagementService->recordAffiliateClick($request_data1);
+    }
+
+    $request_data = (object)[
+        'product_id' => $id,
+        'user_id' => $request->user()->id ?? null
+    ];
+
+    $result = $this->UserManagementService->singleproductView($request_data);
+
+    $data = $result['data'];
+
+    $product_variants = [];
+
+    foreach ($data->product_variants as $key => $item) {
+
+        $colorKey = $item->color->name;
+        $colorHex = $item->color->hex_code;
+
+        $sizeName = app()->getLocale() == 'ar'
+            ? $item->size->name_ar
+            : $item->size->name;
+
+        if (isset($product_variants[$colorHex])) {
+
+            if ($key == 0) {
+
+                if (is_array($item->variant_image)) {
+                    $product_variants[$colorHex]['variant_image'] = array_merge(
+                        $product_variants[$colorHex]['variant_image'],
+                        $item->variant_image
+                    );
+                }
+            }
+
+            if (!in_array($sizeName, $product_variants[$colorHex]['sizes'])) {
+                $product_variants[$colorHex]['sizes'][] = $sizeName;
+            }
+
+        } else {
+
+            $product_variants[$colorHex] = [
+                'variant_id'     => $item->id,
+                'product_id'     => $item->product_id,
+                'color_hex'      => $colorHex,
+                'variant_image'  => is_array($item->variant_image) ? $item->variant_image : [],
+                'sizes'          => [$sizeName],
+                'actual_price'   => $item->actual_price,
+                'final_price'    => $item->final_price,
+                'discount_value' => $item->discount_value,
+                'discount_type'  => $item->discount_type,
+                'total_stock'    => $item->total_stock
+            ];
         }
     }
 
-        if (!in_array($item->size->name, $product_variants[$colorHex]['sizes'])) {
-            $product_variants[$colorHex]['sizes'][] = $item->size->name;
-        }
+    $productVariantsById = [];
 
-    } else {
+    foreach ($data->product_variants as $item) {
 
-        $product_variants[$colorHex] = [
-            'variant_id' => $item->id,
-            'product_id' => $item->product_id,
-            'color_hex'      => $colorHex,
-            'variant_image'  => is_array($item->variant_image) ? $item->variant_image : [],
-            'sizes'          => [$item->size->name],
+        $productVariantsById[$item->id] = [
+            'variant_id'     => $item->id,
+            'product_id'     => $item->product_id,
+            'color_hex'      => $item->color->hex_code,
+            'size'           => app()->getLocale() == 'ar'
+                                ? $item->size->name_ar
+                                : $item->size->name,
             'actual_price'   => $item->actual_price,
             'final_price'    => $item->final_price,
             'discount_value' => $item->discount_value,
             'discount_type'  => $item->discount_type,
-            'total_stock'  => $item->total_stock
+            'variant_image'  => is_array($item->variant_image) ? $item->variant_image : [],
+            'total_stock'    => $item->total_stock,
         ];
     }
-}
 
-
-
-$productVariantsById = [];
-foreach ($data->product_variants as $item) {
-    $productVariantsById[$item->id] = [
-        'variant_id' => $item->id,
-        'product_id' => $item->product_id,
-        'color_hex' => $item->color->hex_code,
-        'size' => $item->size->name,
-        'actual_price' => $item->actual_price,
-        'final_price' => $item->final_price,
-        'discount_value' => $item->discount_value,
-        'discount_type' => $item->discount_type,
-        'variant_image' => is_array($item->variant_image) ? $item->variant_image : [],
-        'total_stock' => $item->total_stock,
-    ];
-}
-
-
-    //dd($product_variants);
     if (!$request->user()) {
-    $cartCount = 0;
+        $cartCount = 0;
     } else {
         $cartCount = Addtocart::where('user_id', $request->user()->id)
-            //->where('product_id', $id)
             ->count();
     }
 
     if (!$request->user()) {
-    $cartData = [];
+        $cartData = [];
     } else {
         $cartData = Addtocart::where('user_id', $request->user()->id)
-            //->where('product_id', $id)
-            ->get() 
+            ->get()
             ->keyBy('variants_id');
     }
 
-
-
-
-  
-        return view('user.category.product-store-details', compact('data','product_variants','cartCount','cartData','productVariantsById'));
-    }
+    return view(
+        'user.category.product-store-details',
+        compact(
+            'data',
+            'product_variants',
+            'cartCount',
+            'cartData',
+            'productVariantsById'
+        )
+    );
+}
 
 
 
