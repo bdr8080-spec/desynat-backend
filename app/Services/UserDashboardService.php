@@ -525,6 +525,7 @@ $homeScreenBanner=sellerBanner::with('seller_details.store_info','category_detai
 ->where('Admin_verify','1')
 ->where('status','1');
 
+
 if($request->type=='3'){
     $homeScreenBanner=$homeScreenBanner->where('category',$request->category);
 }
