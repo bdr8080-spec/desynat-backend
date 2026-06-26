@@ -15,20 +15,35 @@ public function HomePageSearch($data)
     {
         // dd($data->search);
         try {
+           // dd($data->search);
 
-    if($data->search){
+    // if($data->search){
+    //     //dd($data->search);
 
-        $search=[
-            'user_id'=>$data->user_id,
-            'name'=>$data->search
-        ];
-        // Store Search Data 
-        RecentSearch::UpdateOrCreate($search);
+    //     $search=[
+    //         'user_id'=>$data->user_id,
+    //         'name'=>$data->search
+    //     ];
+    //     //dd($search);
+    //     // Store Search Data 
+    //     RecentSearch::UpdateOrCreate($search);
+    // }
+
+    if (!empty($data->user_id) && !empty($data->search)) {
+        RecentSearch::updateOrCreate(
+            [
+                'user_id' => $data->user_id,
+                'name'    => $data->search,
+            ],
+            []
+        );
     }
 
      $wishlistIds = wishlist::where('user_id', $data->user_id)
     ->pluck('product_id')
     ->toArray();
+
+    
 
 /**
  * Start product query directly
