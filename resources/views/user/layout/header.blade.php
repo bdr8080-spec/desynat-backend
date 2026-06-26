@@ -492,38 +492,41 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                             </a>
                                             <div class="dropdown-menu sell_clothes">
                                                 <div class="scroll-wrapper">
-                                                    <button class="scroll-arrow scroll-btn scroll-left" type="button"
+                                                    <!-- <button class="scroll-arrow scroll-btn scroll-left" type="button"
                                                         aria-label="scroll left">
                                                         <i class="fa-solid fa-chevron-left"></i>
-                                                    </button>
-                                                    <div class="scroll-content  justify-content-around flex-lg-nowrap">
-                                                            @foreach ($item->subCategories->where('status', 1) as $value)
-                                                            <div class="menu-sub">
-                                                                <div class="clothes_content">
-                                                                    <!-- <a href="{{ route('user.category_wise_store', $value->category_id) }}"> -->
-                                                                    <a href="{{ route('user.allproduct', [
-                                                                        'category_id[]' => $value->category_id,
-                                                                        'sub_category_id[]' => $value->id
-                                                                    ]) }}">
-                                                                    <!-- <p>{{$value->name_english}}</p> -->
-                                                                    <p>
-                                                                        @if(app()->getLocale() == 'ar')
-                                                                            {{ $value->name_arabic }}
-                                                                        @else
-                                                                            {{ $value->name_english }}
-                                                                        @endif
-                                                                    </p>
-                                                                    </a>
-                                                                
-                                                                </div>
+                                                    </button> -->
+                                                    <div class="scroll-content">
+                                                    <div class="row">
+                                                        @foreach($item->subCategories->where('status', 1)->chunk(5) as $chunk)
+                                                            <div class="col-lg-4">
+                                                                @foreach($chunk as $value)
+                                                                    <div class="menu-sub">
+                                                                        <div class="clothes_content">
+                                                                            <a href="{{ route('user.allproduct', [
+                                                                                'category_id[]' => $value->category_id,
+                                                                                'sub_category_id[]' => $value->id
+                                                                            ]) }}">
+                                                                                <p>
+                                                                                    @if(app()->getLocale() == 'ar')
+                                                                                        {{ $value->name_arabic }}
+                                                                                    @else
+                                                                                        {{ $value->name_english }}
+                                                                                    @endif
+                                                                                </p>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
                                                             </div>
-                                                            @endforeach
+                                                        @endforeach
+                                                    </div>
                                                         
                                                     </div>
-                                                    <button class="scroll-arrow scroll-btn scroll-right" type="button"
+                                                    <!-- <button class="scroll-arrow scroll-btn scroll-right" type="button"
                                                         aria-label="scroll right">
                                                         <i class="fa-solid fa-chevron-right"></i>
-                                                    </button>
+                                                    </button> -->
                                                 </div>
                                             </div>
                                         </li>
