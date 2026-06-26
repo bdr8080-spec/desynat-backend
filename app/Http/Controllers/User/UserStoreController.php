@@ -521,6 +521,7 @@ public function productDetails(Request $request, string $id)
         'sort_filter'=> $request->sort_filter,
         'brand_id'     => is_array($request->brand_id) ? $request->brand_id : [],     
         'category_id'  => is_array($request->category_id) ? $request->category_id : [],   
+        'sub_category_id'  => is_array($request->sub_category_id) ? $request->sub_category_id : [], 
         'size_id'      => is_array($request->size_id) ? $request->size_id : [],       
         'color_id'     => is_array($request->color_id) ? $request->color_id : [],      
         'price_min'    => $request->price_min ?? null,

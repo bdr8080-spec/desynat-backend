@@ -13,6 +13,7 @@ class UserDashboardService
 
 public function HomePageSearch($data)
     {
+        // dd($data->search);
         try {
 
     if($data->search){
@@ -69,7 +70,6 @@ $products = product::with([
 /**
  * Search filter
  */
-
 if (!empty($data->search)) {
     $products->where(function ($query) use ($data) {
         $query->where('product_name_en', 'LIKE', '%' . $data->search . '%')
@@ -94,6 +94,10 @@ if (!empty($data->brand_id) && is_array($data->brand_id)) {
  */
 if (!empty($data->category_id) && is_array($data->category_id)) {
     $products->whereIn('category_id', array_map('intval', $data->category_id));
+}
+
+if (!empty($data->sub_category_id) && is_array($data->sub_category_id)) {
+    $products->whereIn('subcategory_id', array_map('intval', $data->sub_category_id));
 }
 
 // if (!empty($data->search)) {
