@@ -79,7 +79,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                                 alt="{{ $store->store_name }}" />
                         </div>
                     </a>
-                    <h5>{{ $store->store_name }}</h5>
+                    <h5 class="storeName">{{ $store->store_name }}</h5>
                 </div>
             </div>
             @endforeach
