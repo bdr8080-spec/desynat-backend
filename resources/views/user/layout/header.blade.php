@@ -503,10 +503,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                                                 @foreach($chunk as $value)
                                                                     <div class="menu-sub">
                                                                         <div class="clothes_content">
-                                                                            <a href="{{ route('user.allproduct', [
+                                                                            <!-- <a href="{{ route('user.allproduct', [
                                                                                 'category_id[]' => $value->category_id,
                                                                                 'sub_category_id[]' => $value->id
-                                                                            ]) }}">
+                                                                            ]) }}"> -->
+                                                                            <a href="{{ route('user.category_wise_store', $value->category_id) }}">
                                                                                 <p>
                                                                                     @if(app()->getLocale() == 'ar')
                                                                                         {{ $value->name_arabic }}
