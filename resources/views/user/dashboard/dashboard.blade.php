@@ -41,7 +41,7 @@ $currency = session('currencyAr', 'دينار كويتي');
     <h3 class="mid-headng">{{ __('user_messages.categories') }}</h3>
     <div class="row">
         @forelse ($subCategory as $item)
-        <div class="col-lg-4 col-md-4 col-6 my-lg-3 my-2 text-center">
+        <div class="col-lg-3 col-md-3 col-6 my-lg-3 my-2 text-center">
             <a class="category_detail"
                 href="{{ route('user.category_wise_store', $item->category_id) }}?subcategory={{$item->id}} ">
                 <div class="categorie_cotent">
