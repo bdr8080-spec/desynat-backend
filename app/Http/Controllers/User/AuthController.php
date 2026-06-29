@@ -719,7 +719,30 @@ class AuthController extends Controller
    public function dashboard(Request $request)
     {
 
-        $subCategory = SubCategory::where('category_id','1')->where('status',1)->orderBy('name_english','desc')->get();
+        // $subCategory = SubCategory::where('category_id','1')->where('status',1)->orderBy('name_english','desc')->get();
+        $subCategory = SubCategory::where('category_id', 1)
+            ->where('status', 1)
+            ->whereHas('category', function ($query) {
+                $query->where('status', 1);
+            })
+            ->orderBy('name_english', 'desc')
+            ->get();
+
+        if ($subCategory->isEmpty()) {
+            $subCategory = SubCategory::where('category_id', 2)
+                ->where('status', 1)
+                ->whereHas('category', fn($q) => $q->where('status', 1))
+                ->orderBy('name_english', 'desc')
+                ->get();
+        }
+
+        if ($subCategory->isEmpty()) {
+            $subCategory = SubCategory::where('category_id', 3)
+                ->where('status', 1)
+                ->whereHas('category', fn($q) => $q->where('status', 1))
+                ->orderBy('name_english', 'desc')
+                ->get();
+        }
 
         if($request->ajax()){
             $subCategory = SubCategory::where('category_id', $request->id)->where('status',1)->orderBy('name_english','desc')->get();
