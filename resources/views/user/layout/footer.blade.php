@@ -537,12 +537,16 @@ $('.adsbannerpop2').owlCarousel({
 $('.storeCarousel').owlCarousel({
     loop: false,
     margin: 10,
-    nav: false,
+    nav: true,
     dots: true,
     autoplayHoverPause: true,
     slideTransition: 'linear',
     rtl: $('html').attr('dir') === 'rtl',
     smartSpeed: 1000, 
+    navText: [
+        '<i class="fa fa-angle-left"></i>',
+        '<i class="fa fa-angle-right"></i>'
+    ],
     responsive: {
         0: {
             items: 2

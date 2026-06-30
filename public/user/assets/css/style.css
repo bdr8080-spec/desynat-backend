@@ -3654,3 +3654,6 @@ a {
     border-radius: 50px;
     color: #fff !important;
 }
+.cat_title h3{
+    font-size: var(--heading4-font) !important;
+}

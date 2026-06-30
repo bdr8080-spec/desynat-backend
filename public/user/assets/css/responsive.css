@@ -285,9 +285,9 @@
     .product-content{
         padding: 5px !important;
     }
-    .product-img img{
+    /* .product-img img{
         height: 130px !important;
-    }
+    } */
     .navbar-brand{
         padding: 0;
     }
@@ -365,7 +365,11 @@
     .card-right {
         flex-wrap: wrap;
     }
-
+    .product-img {
+        position: relative;
+        overflow: hidden;
+        height: 135px !important;
+    }
 
 
     
