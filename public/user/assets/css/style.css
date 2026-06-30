@@ -953,8 +953,8 @@ h3.mid-headng {
 }
 
 .suggestedStore_img {
-    width: 160px;
-    height: 160px;
+    /* width: 160px;
+    height: 160px; */
     border: 1px solid transparent;
     border-radius: 50%;
     background: linear-gradient(#fff, #fff) padding-box,
@@ -1069,8 +1069,8 @@ h3.mid-headng {
 }
 
 .suggestedStore_img {
-    width: 120px;
-    height: 120px;
+    width: 110px;
+    height: 110px;
     margin: 0 auto;
 }
 
@@ -3638,4 +3638,19 @@ img.img-fluid.circle-image {
 }
 a {
     text-decoration: none !important;
+}
+
+.sliderarrow .owl-nav {
+    display: flex;
+    justify-content: space-between;
+    bottom: 50%;
+    position: absolute;
+    width: 100%;
+}
+.sliderarrow .owl-prev,.owl-next {
+    width: 32px;
+    height: 32px;
+    background: #b48f66 !important;
+    border-radius: 50px;
+    color: #fff !important;
 }

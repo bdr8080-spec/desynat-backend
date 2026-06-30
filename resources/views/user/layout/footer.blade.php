@@ -239,6 +239,7 @@
      <script async defer
         src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places&language={{ app()->getLocale() == 'ar' ? 'ar' : 'en' }}">
     </script>
+    
 
      <script>
 let map, marker, autocomplete;
@@ -538,12 +539,10 @@ $('.storeCarousel').owlCarousel({
     margin: 10,
     nav: false,
     dots: true,
-    // autoplay: true,
-    // autoplayTimeout: 2000, 
     autoplayHoverPause: true,
     slideTransition: 'linear',
     rtl: $('html').attr('dir') === 'rtl',
-    smartSpeed: 1000, // smooth transition
+    smartSpeed: 1000, 
     responsive: {
         0: {
             items: 2
@@ -561,14 +560,17 @@ $('.storeCarousel').owlCarousel({
 $('.bestSellingCarousel').owlCarousel({
     loop: true,
     margin: 10,
-    nav: false,
+    nav: true,
     dots: true,
-    // autoplay: true,
-    // autoplayTimeout: 2000, 
     autoplayHoverPause: true,
     slideTransition: 'linear',
     rtl: $('html').attr('dir') === 'rtl',
-    smartSpeed: 1000, // smooth transition
+    smartSpeed: 1000,
+    slideBy: 1,
+    navText: [
+        '<i class="fa fa-angle-left"></i>',
+        '<i class="fa fa-angle-right"></i>'
+    ],
     responsive: {
         0: {
             items: 2
@@ -580,13 +582,13 @@ $('.bestSellingCarousel').owlCarousel({
             items: 4
         }
     },
-    slideBy: 1 // slides one by one
+    
 });
 
 $('.topRatedCarousel').owlCarousel({
     loop: true,
     margin: 10,
-    nav: false,
+    nav: true,
     dots: true,
     // autoplay: true,
     // autoplayTimeout: 2000, 
@@ -594,6 +596,10 @@ $('.topRatedCarousel').owlCarousel({
     rtl: $('html').attr('dir') === 'rtl',
     slideTransition: 'linear',
     smartSpeed: 1000, // smooth transition
+    navText: [
+        '<i class="fa fa-angle-left"></i>',
+        '<i class="fa fa-angle-right"></i>'
+    ],
     responsive: {
         0: {
             items: 2
