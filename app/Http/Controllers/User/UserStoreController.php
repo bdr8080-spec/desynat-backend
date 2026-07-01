@@ -329,11 +329,18 @@ foreach ($data->product_variants as $item) {
             ->keyBy('variants_id');
     }
 
+    $similar_products=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+    ->withAvg('review as product_avg_rating', 'product_rating')
+    ->withCount('review') 
+    ->limit(12)
+    ->inRandomOrder()
+    ->get();
+
 
     //dd($product_variants);
 
   
-        return view('user.category.product-store-details', compact('data','product_variants','cartCount','cartData','productVariantsById'));
+        return view('user.category.product-store-details', compact('data','product_variants','cartCount','cartData','productVariantsById','similar_products'));
     }
 
 // public function productDetails(Request $request, string $id)

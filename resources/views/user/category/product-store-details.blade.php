@@ -571,7 +571,7 @@ $currency = session('currencyAr', 'دينار كويتي');
     <section class="bestSelling customContainer mt-3 pb-0">
         <h3>Similiar Product</h3>
         <div class="owl-carousel topRatedCarousel">
-            <div class="item">
+            <!-- <div class="item">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{ asset('user/assets/images/simliar1.png') }}" alt="Product">
@@ -593,7 +593,108 @@ $currency = session('currencyAr', 'دينار كويتي');
                         </div>
                     </div>
                 </div>
+            </div> -->
+            @foreach($similar_products as $key=>$item)
+
+        <div class="item">
+            <div class="product-card blacktitle">
+
+                <div class="product-img">
+                    <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+                        @foreach ($item->product_variants[0]->variant_image as $key => $val1)
+                        @if ($key != 0)
+                        @php break @endphp
+                        @endif
+                        <img style="z-index:-99" src="{{ $val1 }}" alt="Product">
+                        @endforeach
+                    </a>
+
+                    @if (Auth::guard('web')->user())
+                    <span class="wishlist-btn" style="cursor: pointer;"><i style="cursor: pointer;"
+                            class="wishlistProduct{{ $item->id }} fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                            onclick="addWishListFunctionproduct({{ $item->id }},`home`)"></i></span>
+                    @else
+                    <a class="wishlist-btn text-decoration-underline" style="cursor: pointer;"
+                        href="{{route('userLogin')}}">
+                        <i class="fa-regular fa-heart" style="cursor: pointer;"></i>
+                    </a>
+                    @endif
+
+                    <button class="share-btn" data-link="{{ route('user.product_details',[$item->id]) }}"><img
+                            src="{{ asset('user/assets/images/share_icon.svg') }}" /></button>
+
+                </div>
+
+                <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+                    <div class="product-content">
+                        @if(app()->getLocale() == 'en')
+                        <h5>{{ $item->product_name_en }}@if(!empty($item->store))({{$item->store->store_name}})@endif
+                        </h5>
+                        @else
+                        <h5>{{ $item->product_name_ar }}@if(!empty($item->store))({{$item->store->store_name}})@endif
+                        </h5>
+                        @endif
+                        <div class="rating">
+                            @php
+                            $rating = $item->product_avg_rating ?? 0;
+                            $fullStars = floor($rating);
+                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                            $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                            @endphp
+
+                            @if($rating > 0)
+
+                            @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
+                                @endfor
+
+                                @if($hasHalfStar)
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                                @endif
+
+                                @for($i = 0; $i < $emptyStars; $i++) <i class="fa-regular fa-star"></i>
+                                    @endfor
+
+                                    @else
+
+                                    @for($i = 0; $i < 5; $i++) <i class="fa-regular fa-star"></i>
+                                        @endfor
+
+                                        @endif
+
+                                        <span>({{ $item->review_count ?? 0 }})</span>
+                        </div>
+                        <!-- <div class="price">
+                            <strong>KD {{ $item->product_variants[0]->final_price }}</strong>
+                            <span class="old-price">KD {{ $item->product_variants[0]->actual_price }}</span>
+                            <span class="discount"> {{ $item->product_variants[0]->discount_value }}
+                                {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }}
+                            </span>
+                        </div> -->
+
+
+                        <div class="price">
+                            <strong>
+                                {{ $currency }}
+                                {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                            </strong>
+
+                            <span class="old-price">
+                                {{ $currency }}
+                                {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                            </span>
+
+                            <span class="discount">
+                                {{ $item->product_variants[0]->discount_value }}
+                                {{ $item->product_variants[0]->discount_type == '1' ? '% ' . __('user_messages.off') : __('user_messages.off') }}
+                            </span>
+                        </div>
+
+                    </div>
+                </a>
             </div>
+        </div>
+
+        @endforeach
           
         </div>
     </section>
@@ -1299,6 +1400,50 @@ document.addEventListener('click', function (e) {
             navigator.clipboard.writeText(link).then(function () {
                 toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
             }).catch(function () {
+                fallbackCopy(link);
+            });
+        } else {
+            fallbackCopy(link);
+        }
+
+        return false;
+    }
+
+}, true);
+
+function fallbackCopy(text) {
+    var temp = document.createElement("textarea");
+    temp.value = text;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+
+    toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
+}
+</script>
+
+<script>
+document.addEventListener('click', function(e) {
+
+    var shareBtn = e.target.closest('.share-btn');
+
+    if (shareBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        var link = shareBtn.getAttribute('data-link');
+
+        if (!link) {
+            console.error('Share link not found');
+            return;
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(link).then(function() {
+                toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
+            }).catch(function() {
                 fallbackCopy(link);
             });
         } else {
