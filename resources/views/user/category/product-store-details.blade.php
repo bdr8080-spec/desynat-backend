@@ -568,7 +568,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 </div>
 
  <div class="col-lg-12">
-    <section class="bestSelling customContainer mt-3 pb-0">
+    <section class="bestSelling customContainer mt-3 pb-0 sliderarrow">
         <h3>Similiar Product</h3>
         <div class="owl-carousel topRatedCarousel">
             <!-- <div class="item">
