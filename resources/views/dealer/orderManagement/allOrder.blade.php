@@ -288,8 +288,8 @@
                                                 @endif
                                             </td>
                                             <td> {{$val->quantity}}</td>
-                                            <td>{{$val->order->user_details->full_name}}</td>
-                                            <td>{{$val->order->delivery_details->address}}</td>
+                                            <td>{{$val->order->user_details->full_name ?? __('admin_messages.n/a')}}</td>
+                                            <td>{{$val->order->delivery_details->address ?? __('admin_messages.n/a')}}</td>
 
                                             @php
 
