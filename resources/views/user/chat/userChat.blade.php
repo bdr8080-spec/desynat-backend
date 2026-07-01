@@ -15,6 +15,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 @endphp
 
 
+
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('user.allChats')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
@@ -391,6 +392,11 @@ $currency = session('currencyAr', 'دينار كويتي');
     <div class="loader"></div>
 </div>
 
+<script>
+const appLocale = "{{ app()->getLocale() }}";
+
+</script>
+
 <!-- send normal chat -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -587,6 +593,8 @@ document.addEventListener("DOMContentLoaded", function() {
      * Append single message
      * LEFT = seller | RIGHT = user
      */
+
+     
     function appendMessage(msg) {
         const isUser = msg.by === 'user';
         const side = isUser ? 'right-msg' : 'left-msg';
@@ -604,7 +612,14 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         // TEXT MESSAGE
         else {
-            content = `<div class="msg-text">${msg.message ?? ''}</div>`;
+
+            if(appLocale =='ar'){
+             var msssg= msg.messageAr;
+            }else{
+                var msssg=msg.message;
+            }
+
+            content = `<div class="msg-text">${msssg ?? ''}</div>`;
         }
 
         const timeString = formatISOTime(msg.times);
