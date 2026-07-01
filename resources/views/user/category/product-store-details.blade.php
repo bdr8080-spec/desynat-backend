@@ -58,6 +58,9 @@ $currency = session('currencyAr', 'دينار كويتي');
     justify-content: space-between;
     align-items: center;
 }
+[dir="rtl"] .action-row {
+    flex-direction: row-reverse;
+}
 
 .left-action {
     display: flex;

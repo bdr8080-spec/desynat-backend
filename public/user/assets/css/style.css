@@ -3554,6 +3554,9 @@ img.img-fluid.circle-image {
 [dir="rtl"] .common-title a img {
     transform: rotate(180deg);
 }
+[dir="rtl"] .customNavbar .sell_clothes .clothes_content p {
+    text-align: right;
+}
 
 [dir="rtl"] .customNavbar .dropdown-menu.sell_clothes.show {
     position: absolute;
@@ -3638,6 +3641,10 @@ img.img-fluid.circle-image {
 }
 a {
     text-decoration: none !important;
+}
+
+[dir="rtl"] .sliderarrow .owl-nav {
+    direction: ltr;
 }
 
 .sliderarrow .owl-nav {
