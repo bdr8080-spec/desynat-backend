@@ -318,9 +318,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             <!-- Country code  -->
 
                             <div class="dropdown-center mobileLang">
+                                @php
+                                    $defaultCountry = $GetsellerCountry->firstWhere('name', 'Kuwait');
+                                @endphp
                                 <button class="btn btn-secondary dropdown-toggle customBtn1 " type="button"
                                     data-bs-toggle="dropdown" {{ !$isHome ? 'disabled' : '' }}>
-                                    <img id="selectedFlag" src="{{@$GetsellerCountry[0]->flag}}" class="img-fluid" />
+                                    <img id="selectedFlag" src="{{@$defaultCountry->flag}}" class="img-fluid" />
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu">
@@ -332,7 +335,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     <li class="dropdown-item" data-flag="{{$val->flag}}">
                                         <label class="custom-radio d-flex justify-content-between">
                                             <input type="radio" name="country_language" value="{{$val->id}}"
-                                                {{ session('country_id', $GetsellerCountry[0]->id) == $val->id ? 'checked' : '' }}>
+                                                {{ session('country_id', $defaultCountry->id) == $val->id ? 'checked' : '' }}>
                                             @if(app()->getLocale() == 'en')
                                             <span>{{$val->name}}</span>
                                             @else
@@ -348,12 +351,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             <!-- Currency code  -->
 
                             <div class="dropdown-center mobileLang">
+                                @php
+                                    $defaultCountry = $GetsellerCountry->firstWhere('name', 'Kuwait');
+                                @endphp
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
                                     data-bs-toggle="dropdown" data-bs-auto-close="outside"
                                     {{ !$isHome ? 'disabled' : '' }}>
                                     <span id="selectedCurrency">
                                         
-                                    @if(App::getlocale()=='en'){{ session('currency',@$GetsellerCountry[0]->currency_code) }} @else {{ session('currency', @$GetsellerCountry[0]->currency_code_ar) }} @endif 
+                                    @if(App::getlocale()=='en'){{ session('currency',@$defaultCountry->currency_code) }} @else {{ session('currency', @$defaultCountry->currency_code_ar) }} @endif 
 
                                     </span>
                                 </button>
@@ -367,7 +373,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     <li class="dropdown-item">
                                         <label class="custom-radio">
                                             <input type="radio" name="currency" value=" @if(App::getlocale()=='en'){{$val->currency_code}} @else {{$val->currency_code_ar}} @endif"
-                                                {{ session('currency', $GetsellerCountry[0]->currency_code) == $val->currency_code ? 'checked' : '' }} data-english="{{$val->currency_code}}" data-arabic="{{$val->currency_code_ar}}"  >
+                                                {{ session('currency', $defaultCountry->currency_code) == $val->currency_code ? 'checked' : '' }} data-english="{{$val->currency_code}}" data-arabic="{{$val->currency_code_ar}}"  >
                                             <span>  
                                            @if(App::getlocale()=='en'){{$val->currency_code}} @else {{$val->currency_code_ar}} @endif 
                                                                                
