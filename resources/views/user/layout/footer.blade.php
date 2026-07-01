@@ -20,13 +20,13 @@
          <div class="container-fluid">
              <div class="row justify-content-between">
                  <div class="col-lg-3 col-md-3 col-12">
-                     <div class="footer_logo">
+                     <div class="footer_logo mb-5">
                          <img src="{{ asset('user/assets/images/logo.svg') }}" class="img-fluid" />
 
                      </div>
-                     <span class="d-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                     <!-- <span class="d-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                          tempor
-                         incididunt ut labore et dolore magna aliqua. Ut enim ad minim </span>
+                         incididunt ut labore et dolore magna aliqua. Ut enim ad minim </span> -->
                      <button class="customBtn1 become-ln">{{ __('user_messages.become_an_affiliate') }}</button>
                  </div>
                  <div class="col-lg-5 col-md-5 col-12">
@@ -113,8 +113,7 @@
              </div>
 
              <div class="footer-copyright">
-                 <p>Lorem ipsum dolor sit odo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                     cillum dolore eu fugiat nulla pariatur. </p>
+                 <p> Copyright © 2026 Desynat. All Rights Reserved. </p>
              </div>
 
 
