@@ -629,7 +629,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <!-- chnage country and currency Code  -->
 
-    <script>
+    <!-- <script>
 
     var locale="{{App::getlocale()}}";
 
@@ -760,4 +760,193 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         });
 
     });
-    </script>
+    </script> -->
+
+    <script>
+var locale = "{{ App::getLocale() }}";
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ================= LOAD FROM LOCAL STORAGE =================
+    let currency = localStorage.getItem("currency");
+    let currencyAr = localStorage.getItem("currencyAr");
+    let flag = localStorage.getItem("flag");
+    let country_id = localStorage.getItem("country_id");
+
+    // ================= DEFAULT KUWAIT =================
+    if (!country_id) {
+
+        let kuwaitCountry = document.querySelector(
+            '[name="country_language"][data-country="Kuwait"]'
+        );
+
+        if (kuwaitCountry) {
+
+            kuwaitCountry.checked = true;
+
+            let parent = kuwaitCountry.closest(".dropdown-item");
+            let kuwaitFlag = parent.getAttribute("data-flag");
+
+            document.getElementById("selectedFlag").src = kuwaitFlag;
+
+            localStorage.setItem("country_id", kuwaitCountry.value);
+            localStorage.setItem("flag", kuwaitFlag);
+        }
+    }
+
+    if (!currency) {
+
+        let kuwaitCurrency = document.querySelector(
+            '[name="currency"][data-english="KWD"]'
+        );
+
+        if (kuwaitCurrency) {
+
+            kuwaitCurrency.checked = true;
+
+            let displayCurrency = locale === "en"
+                ? kuwaitCurrency.dataset.english
+                : kuwaitCurrency.dataset.arabic;
+
+            document.getElementById("selectedCurrency").innerText = displayCurrency;
+
+            localStorage.setItem("currency", kuwaitCurrency.dataset.english);
+            localStorage.setItem("currencyAr", kuwaitCurrency.dataset.arabic);
+        }
+    }
+
+    // ================= LOAD SAVED CURRENCY =================
+    currency = localStorage.getItem("currency");
+    currencyAr = localStorage.getItem("currencyAr");
+
+    if (currency) {
+
+        let displayCurrency = locale === "en" ? currency : currencyAr;
+
+        document.getElementById("selectedCurrency").innerText = displayCurrency;
+
+        document.querySelectorAll('[name="currency"]').forEach(r => {
+
+            if (r.dataset.english === currency) {
+                r.checked = true;
+            }
+
+        });
+    }
+
+    // ================= LOAD SAVED FLAG =================
+    flag = localStorage.getItem("flag");
+
+    if (flag) {
+        document.getElementById("selectedFlag").src = flag;
+    }
+
+    // ================= LOAD SAVED COUNTRY =================
+    country_id = localStorage.getItem("country_id");
+
+    if (country_id) {
+
+        document.querySelectorAll('[name="country_language"]').forEach(r => {
+
+            if (r.value == country_id) {
+                r.checked = true;
+            }
+
+        });
+    }
+
+    // ================= COUNTRY CHANGE =================
+    document.querySelectorAll('[name="country_language"]').forEach(radio => {
+
+        radio.addEventListener("change", function () {
+
+            let parent = this.closest(".dropdown-item");
+            let selectedFlag = parent.getAttribute("data-flag");
+
+            document.getElementById("selectedFlag").src = selectedFlag;
+
+            localStorage.setItem("country_id", this.value);
+            localStorage.setItem("flag", selectedFlag);
+
+            fetch("/set-country", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    country_id: this.value
+                })
+            });
+
+        });
+
+    });
+
+    // ================= SAVE CURRENCY =================
+    document.querySelector('.currency .customBtn5').addEventListener("click", function () {
+
+        let selected = document.querySelector('[name="currency"]:checked');
+
+        if (!selected) return;
+
+        let englishValue = selected.dataset.english;
+        let arabicValue = selected.dataset.arabic;
+
+        let displayCurrency = locale === "en"
+            ? englishValue
+            : arabicValue;
+
+        document.getElementById("selectedCurrency").innerText = displayCurrency;
+
+        localStorage.setItem("currency", englishValue);
+        localStorage.setItem("currencyAr", arabicValue);
+
+        fetch("/set-currency", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                currency: englishValue
+            })
+        })
+        .then(response => response.json())
+        .then(() => {
+
+            let dropdown = bootstrap.Dropdown.getInstance(
+                document.querySelector('.currency').previousElementSibling
+            );
+
+            if (dropdown) {
+                dropdown.hide();
+            }
+
+            window.location.reload();
+
+        });
+
+    });
+
+    // ================= CLOSE CURRENCY DROPDOWN =================
+    const closeBtn = document.querySelector('.close-dropdown');
+
+    if (closeBtn) {
+
+        closeBtn.addEventListener('click', function () {
+
+            let dropdown = bootstrap.Dropdown.getInstance(
+                document.querySelector('.currency').previousElementSibling
+            );
+
+            if (dropdown) {
+                dropdown.hide();
+            }
+
+        });
+
+    }
+
+});
+</script>
