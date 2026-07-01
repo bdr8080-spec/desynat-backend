@@ -625,9 +625,7 @@ class CommonController extends Controller
                 'receiver_id' => 'required|integer',
                 'receiver_type' => 'required|in:1,2,3,4,5',
                 'title_english' => 'required|string',
-                'title_arabic' => 'required|string',
                 'description_english' => 'required|string',
-                'description_arabic' => 'required|string',
                 'notification_type' => 'required|string',
             ]);
 
@@ -646,9 +644,7 @@ class CommonController extends Controller
                 'receiver_type' => $request->receiver_type,
 
                 'title_english' => $request->title_english,
-                'title_arabic' => $request->title_arabic,
                 'description_english' => $request->description_english,
-                'description_arabic' => $request->description_arabic,
 
                 'notification_type' => $request->notification_type
             ]);

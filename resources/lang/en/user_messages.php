@@ -240,7 +240,7 @@ return [
     'specification' => 'Specification',
     'check_delivery' => 'Check Delivery',
     'change' => 'Change',
-    'get_it_buy' => 'Get it by',
+    'get_it_buy' => 'Get it within',
     'cash_on_delivery_available' => 'Cash on Delivery Available',
     '7_days_return_&_exchange' => '7 Days Return & Exchange',
     'customer_ratings' => 'Customer Ratings',

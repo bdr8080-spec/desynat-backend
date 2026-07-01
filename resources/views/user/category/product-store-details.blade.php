@@ -411,7 +411,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                     <ul class="cd-info">
                         <li>
                             <i class="bi bi-truck"></i>
-                            {{ __('user_messages.get_it_buy') }} @if(app()->getLocale() == 'en')<strong>24/12/2024</strong>@else<strong>٢٤/١٢/٢٠٢٤</strong>@endif
+                            {{ __('user_messages.get_it_buy') }}&nbsp;<strong>{{ __('user_messages.3_5_working_days') }}</strong>
                         </li>
                         <li>
                             <i class="bi bi-cash-coin"></i>
@@ -567,7 +567,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 </div>
 </div>
 
-<!-- <div class="col-lg-12">
+ <div class="col-lg-12">
     <section class="bestSelling customContainer mt-3 pb-0">
         <h3>Similiar Product</h3>
         <div class="owl-carousel topRatedCarousel">
@@ -598,7 +598,6 @@ $currency = session('currencyAr', 'دينار كويتي');
         </div>
     </section>
 </div>
- -->
 
 </div>
 </div>
