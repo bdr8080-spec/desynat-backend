@@ -334,6 +334,8 @@ foreach ($data->product_variants as $item) {
     ->withCount('review') 
     ->limit(12)
     ->inRandomOrder()
+    ->where('category_id',$data->category_id)
+    ->where('subcategory_id',$data->subcategory_id)
     ->get();
 
 

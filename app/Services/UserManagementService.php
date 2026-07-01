@@ -782,6 +782,8 @@ class UserManagementService
             ->withCount('review') 
             ->limit(12)
             ->inRandomOrder()
+            ->where('category_id',$product_details->category_id)
+        ->where('subcategory_id',$product_details->subcategory_id)
             ->get();
 
             $product_details->similar_products = $similar_products;
