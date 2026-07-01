@@ -303,7 +303,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li>
-                                                <a class="dropdown-item text-center" href="{{route('userLogout')}}" id="logoutBtn><i
+                                                <a class="dropdown-item text-center" href="{{route('userLogout')}}" id="logoutBtn"><i
                                                         class="fa-solid fa-arrow-right-from-bracket"></i> {{ __('user_messages.logout') }}</a>
                                             </li>
                                         </ul>
@@ -373,8 +373,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     @foreach($GetsellerCountry as $key=>$val)
                                     <li class="dropdown-item">
                                         <label class="custom-radio">
-                                            <input type="radio" name="currency" value=" @if(App::getlocale()=='en'){{$val->currency_code}} @else {{$val->currency_code_ar}} @endif"
-                                                {{ session('currency', $defaultCountry->currency_code) == $val->currency_code ? 'checked' : '' }} data-english="{{$val->currency_code}}" data-arabic="{{$val->currency_code_ar}}"  >
+                                            <input type="radio" name="currency" value="{{ App::getLocale() == 'en' ? $val->currency_code : $val->currency_code_ar }}"
+                                                @php
+                                                $selectedCurrency = session('currency');
+
+                                                if (!$selectedCurrency) {
+                                                    $selectedCurrency = $defaultCountry->currency_code;
+                                                }
+                                            @endphp data-english="{{$val->currency_code}}" data-arabic="{{$val->currency_code_ar}}"  >
                                             <span>  
                                            @if(App::getlocale()=='en'){{$val->currency_code}} @else {{$val->currency_code_ar}} @endif 
                                                                                

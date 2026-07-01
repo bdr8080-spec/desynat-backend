@@ -178,7 +178,39 @@ if (!function_exists('sendPushNotificationNew')) {
                         ],
                     ],
                 ];
+               // dd($message);
             }
+
+            // iOS
+            // if ($deviceType == '1') {
+
+            //     $message['apns'] = [
+            //         'headers' => [
+            //             'apns-priority' => '10',
+            //             'apns-push-type' => 'alert',
+            //         ],
+            //         'payload' => [
+            //             'aps' => [
+            //                 'alert' => [
+            //                     'title' => $title,
+            //                     'body'  => $body,
+            //                 ],
+            //                 'badge' => (int) $badge,
+            //                 'sound' => 'default',
+            //                 'content-available' => 1,
+            //                 'mutable-content' => 1,
+            //             ],
+            //         ],
+            //     ];
+
+            //     // Optional: also send data
+            //     $message['data'] = [
+            //         'title' => $title,
+            //         'body'  => $body,
+            //         'badge' => (string) $badge,
+            //     ];
+            //     //dd($message);
+            // }
 
             //  ANDROID
             if ($deviceType == '2') {
