@@ -777,6 +777,15 @@ class UserManagementService
 
             $product_details->average_rating = $average;
 
+            $similar_products=product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+            ->withAvg('review as product_avg_rating', 'product_rating')
+            ->withCount('review') 
+            ->limit(12)
+            ->inRandomOrder()
+            ->get();
+
+            $product_details->similar_products = $similar_products;
+
 
            
             return [
