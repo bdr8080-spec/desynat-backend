@@ -44,7 +44,7 @@ $currency = session('currencyAr', 'دينار كويتي');
         <div class="col-lg-4 col-md-4 col-6 my-lg-3 my-2 text-center">
             <a class="category_detail"
                 href="{{ route('user.category_wise_store', $item->category_id) }}?subcategory={{$item->id}} ">
-                <div class="categorie_cotent">
+                <div class="categorie_cotent cat_title">
                     <div class="categorie_cotent-img">
                         <img src="{{ $item->image }}" class="img-fluid" />
                     </div>
@@ -67,8 +67,8 @@ $currency = session('currencyAr', 'دينار كويتي');
 
 <div class="customContainer suggestStore">
     <h3 class="mid-headng mb-3">{{ __('user_messages.suggested_stores') }}</h3>
-    <div class="suggestStore_contenar">
-        <div class="owl-carousel storeCarousel">
+    <div class="suggestStore_contenar sliderarrow">
+        <!-- <div class="owl-carousel storeCarousel">
             @foreach($stores as $store)
             <div class="item">
                 <div class="suggestStore_content">
@@ -83,8 +83,24 @@ $currency = session('currencyAr', 'دينار كويتي');
                 </div>
             </div>
             @endforeach
+        </div> -->
 
+        <div class="owl-carousel storeCarousel">
+            @foreach($stores->chunk(2) as $group)
+                <div class="item">
+                    @foreach($group as $store)
+                        <div class="suggestStore_content mb-3">
+                            <a href="{{ route('user.store_details', $store->id) }}" style="text-decoration:none; color:inherit;">
+                                <div class="suggestedStore_img">
+                                    <img src="{{ $store->store_image }}" class="img-fluid circle-image" alt="{{ $store->store_name }}">
+                                </div>
+                            </a>
+                            <h5 class="storeName">{{ $store->store_name }}</h5>
+                        </div>
+                    @endforeach
 
+                </div>
+            @endforeach
         </div>
 
     </div>
@@ -92,7 +108,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 </div>
 
 
-<section class="bestSelling customContainer">
+<section class="bestSelling customContainer sliderarrow" id="sellingbest">
     <h3 class="mid-headng mb-3">{{ __('user_messages.best_selling') }}</h3>
     <div class="owl-carousel bestSellingCarousel">
 
@@ -227,7 +243,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
 </div>
 
-<section class="bestSelling customContainer mt-3">
+<section class="bestSelling customContainer mt-3 sliderarrow">
     <h3 class="mid-headng mb-3">{{ __('user_messages.top_rated') }}</h3>
     <div class="owl-carousel topRatedCarousel">
 

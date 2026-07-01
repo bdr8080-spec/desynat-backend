@@ -23,6 +23,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+        
 
 
 
@@ -540,7 +541,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                         @endforeach
 
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="#">{{ __('user_messages.best_selling') }}</a>
+                                            <a class="nav-link active" aria-current="page" href="#sellingbest">{{ __('user_messages.best_selling') }}</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{route('user.getLiveSellerRecords')}}">{{ __('user_messages.live') }}</a>
