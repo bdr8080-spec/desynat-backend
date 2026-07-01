@@ -303,7 +303,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
                                             <li>
-                                                <a class="dropdown-item text-center" href="{{route('userLogout')}}"><i
+                                                <a class="dropdown-item text-center" href="{{route('userLogout')}}" id="logoutBtn><i
                                                         class="fa-solid fa-arrow-right-from-bracket"></i> {{ __('user_messages.logout') }}</a>
                                             </li>
                                         </ul>
@@ -946,6 +946,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
 
+    }
+
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            localStorage.removeItem("currency");
+            localStorage.removeItem("currencyAr");
+            localStorage.removeItem("flag");
+            localStorage.removeItem("country_id");
+
+            window.location.href = this.href;
+        });
     }
 
 });
