@@ -1736,7 +1736,30 @@ $(document).ready(function () {
 });
 </script>
 
+<script>
+$(function () {
 
+    $('#bestSellingLink').click(function (e) {
+        e.preventDefault();
+
+        $('.demo').removeClass('scrollspace');
+
+        $('html, body').animate({
+            scrollTop: $('#sellingbest').offset().top - 200
+        }, 500, function () {
+            // Scroll complete hone ke baad class add hogi
+            $('.demo').addClass('scrollspace');
+        });
+    });
+
+    $(window).on('scroll', function () {
+        if ($(window).scrollTop() < $('#sellingbest').offset().top - 100) {
+            $('.demo').removeClass('scrollspace');
+        }
+    });
+
+});
+</script>
 
 
      </body>

@@ -109,7 +109,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
 
 <section class="bestSelling customContainer sliderarrow">
-    <div id="sellingbest">
+    <div id="sellingbest" class="demo">
     <h3 class="mid-headng mb-3">{{ __('user_messages.best_selling') }}</h3>
     <div class="owl-carousel bestSellingCarousel">
 
