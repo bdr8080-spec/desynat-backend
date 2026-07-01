@@ -108,7 +108,8 @@ $currency = session('currencyAr', 'دينار كويتي');
 </div>
 
 
-<section class="bestSelling customContainer sliderarrow" id="sellingbest">
+<section class="bestSelling customContainer sliderarrow">
+    <div id="sellingbest">
     <h3 class="mid-headng mb-3">{{ __('user_messages.best_selling') }}</h3>
     <div class="owl-carousel bestSellingCarousel">
 
@@ -214,7 +215,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
         @endforeach
 
-
+</div>
     </div>
 </section>
 
@@ -509,6 +510,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 </div>
 @endif
 @endauth
+
 
 
 <script>
