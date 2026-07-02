@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <div class="variant-left">
 
                             ${createRow("{{ __('admin_messages.color') }}", locale === 'en' ? variant.color?.name : variant.color?.name_ar)}
-                            ${createRow("{{ __('admin_messages.size') }}", locale === 'en' ? variant.size?.name : variant.size?.name_ar)}
+                            ${createRow("{{ __('admin_messages.size') }}", variant.size?.name)}
                             ${createRow("{{ __('admin_messages.bust') }}", variant.bust)}
                             ${createRow("{{ __('admin_messages.waist') }}", variant.waist)}
                             ${createRow("{{ __('admin_messages.hip') }}", variant.hip)}

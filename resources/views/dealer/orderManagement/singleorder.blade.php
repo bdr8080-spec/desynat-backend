@@ -301,10 +301,11 @@
                         <div class="pay-sum">
                             <div class="summary-title-1">{{ __('seller_messages.Size') }}</div>
                             <div class="summary-value">
-                                {{ App::getLocale() == 'ar'
+                                {{$order_details->variation_details->size->name}}
+                                <!-- {{ App::getLocale() == 'ar'
                                     ? ($order_details->variation_details->size->name_ar ?? __('admin_messages.na'))
                                     : ($order_details->variation_details->size->name ?? __('admin_messages.na'))
-                                }}
+                                }} -->
                             </div>
                         </div>
                         <div class="pay-sum">
