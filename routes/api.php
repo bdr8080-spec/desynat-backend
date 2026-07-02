@@ -407,6 +407,7 @@ Route::get('all-brand',[CommonController::class, 'get_brand']);
 Route::get('all-color',[CommonController::class, 'get_color']);
 Route::get('all-size',[CommonController::class, 'get_size']);
 Route::get('ticket_types',[CommonController::class, 'ticket_types']);
+Route::get('delivery_times',[CommonController::class, 'delivery_times']);
 
 // cms
 Route::get('contact_us',[CommonController::class, 'contact_us']);

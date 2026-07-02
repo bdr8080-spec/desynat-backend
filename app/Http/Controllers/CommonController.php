@@ -19,6 +19,7 @@ use App\Models\Brand;
 use App\Models\color;
 use App\Models\size;
 use App\Models\TicketType;
+use App\Models\ExpectedDelivery;
 use App\Models\Content;
 use App\Models\Faq;
 use App\Models\SellerStoreVisitor;
@@ -427,6 +428,19 @@ class CommonController extends Controller
          }
          
         return ApiResponse::generateResponse('success', 'ticket type list fetched successfully', $data, 200);
+      
+     }
+
+     public function delivery_times(Request $request)
+     {
+
+         $data = ExpectedDelivery::all();
+ 
+         if ($data->isEmpty()) {
+             return ApiResponse::generateResponse('success', 'No data found', [], 200);
+         }
+         
+        return ApiResponse::generateResponse('success', 'delivery time list fetched successfully', $data, 200);
       
      }
 
