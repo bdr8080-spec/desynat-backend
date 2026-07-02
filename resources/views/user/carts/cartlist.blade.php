@@ -125,7 +125,8 @@ $currency = session('currencyAr', 'دينار كويتي');
                                     <h5 class="product-title">@if(app()->getLocale() == 'en'){{ $item->product->product_name_en}}@else{{ $item->product->product_name_ar}}@endif</h5>
 
                                     <div class="psize d-flex gap-4">
-                                        <span>{{ __('user_messages.size') }}: @if(app()->getLocale() == 'en'){{ $item->product_variants->size->name ?? '-' }}@else{{ $item->product_variants->size->name_ar ?? '-' }}@endif</span>
+                                        <!-- <span>{{ __('user_messages.size') }}: @if(app()->getLocale() == 'en'){{ $item->product_variants->size->name ?? '-' }}@else{{ $item->product_variants->size->name_ar ?? '-' }}@endif</span> -->
+                                         <span>{{ __('user_messages.size') }}: {{ $item->product_variants->size->name}}</span>
 
                                         <span class="d-flex align-items-center gap-2">
                                             {{ __('user_messages.color') }}:
@@ -248,7 +249,8 @@ $currency = session('currencyAr', 'دينار كويتي');
                                     <h5 class="product-title">@if(app()->getLocale() == 'en'){{ $item->product->product_name_en}}@else{{ $item->product->product_name_ar}}@endif</h5>
 
                                     <div class="psize d-flex gap-4">
-                                        <span>{{ __('user_messages.size') }}: @if(app()->getLocale() == 'en'){{ $item->product_variants->size->name ?? '-' }}@else{{ $item->product_variants->size->name_ar ?? '-' }}@endif</span>
+                                        <!-- <span>{{ __('user_messages.size') }}: @if(app()->getLocale() == 'en'){{ $item->product_variants->size->name ?? '-' }}@else{{ $item->product_variants->size->name_ar ?? '-' }}@endif</span> -->
+                                         <span>{{ __('user_messages.size') }}: {{ $item->product_variants->size->name}}</span>
 
                                         <span class="d-flex align-items-center gap-2">
                                             {{ __('user_messages.color') }}:

@@ -229,11 +229,12 @@
                 @endif
             </td>
           <td>
-            @if(app()->getLocale() == 'en')
+            <!-- @if(app()->getLocale() == 'en')
             {{$val->variation_details->size->name}}
             @else
             {{$val->variation_details->size->name_ar}}
-            @endif
+            @endif -->
+            {{$val->variation_details->size->name}}
           </td>
           <td>
             @if(app()->getLocale() == 'en')
