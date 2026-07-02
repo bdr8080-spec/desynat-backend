@@ -759,6 +759,7 @@ public function product_delete(Request $request){
           'category_id' => 'required|exists:categories,id',
           'subcategory_id' => 'required|exists:sub_categories,id',
           'brand_id' => 'required|exists:brands,id',
+          'delivery_time_id' => 'required|exists:expected_deliveries,id',
           // 'other_en' => 'required',
           // 'other_ar' => 'required',
        
@@ -848,6 +849,8 @@ public function product_delete(Request $request){
 
     'brand_id.required' => __('seller_messages.brand_required'),
     'brand_id.exists' => __('seller_messages.brand_invalid'),
+
+    'delivery_time_id.required' => __('seller_messages.delivery_required'),
 
     // Product Names
     'product_name_en.required' => __('seller_messages.product_name_en_required'),
@@ -1013,6 +1016,7 @@ $request_data=(object) [
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
 'brand_id' => $request->brand_id,
+'delivery_time_id' => $request->delivery_time_id,
 'other_en' => $request->other_en??null,
 'other_ar' => $request->other_ar??null,
 
@@ -1094,6 +1098,7 @@ $request_data=(object) [
         'category_id' => 'required|exists:categories,id',
         'subcategory_id' => 'required|exists:sub_categories,id',
         'brand_id' => 'required|exists:brands,id',
+        'delivery_time_id' => 'required|exists:expected_deliveries,id',
         // 'other_en' => 'required',
         // 'other_ar' => 'required',
      
@@ -1166,6 +1171,8 @@ $request_data=(object) [
 
     'brand_id.required' => __('seller_messages.brand_required'),
     'brand_id.exists' => __('seller_messages.brand_invalid'),
+
+    'delivery_time_id.required' => __('seller_messages.delivery_required'),
 
     'product_name_en.required' => __('seller_messages.product_name_en_required'),
     'product_name_en.unique' => __('seller_messages.product_name_en_unique'),
@@ -1339,6 +1346,7 @@ $request_data=(object) [
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
 'brand_id' => $request->brand_id,
+'delivery_time_id' => $request->delivery_time_id,
 'other_en' => $request->other_en??null,
 'other_ar' => $request->other_ar??null,
 
