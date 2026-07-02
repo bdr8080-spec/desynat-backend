@@ -15,8 +15,8 @@
     cursor: pointer;
 }
 .social_icon img {
-    height: 32px;
-    width: 47px;
+    height: 30px;
+    width: 50px;
 }
 
      </style>
@@ -112,6 +112,10 @@
                                  </li>
                                  <li>
                                      <a href="https://www.snapchat.com/add/desynat.kw?share_id=z6-sR111xxg&locale=ar-KW" target="_blank"><img src="{{ asset('user/assets/images/snapchat.png') }}"
+                                             class="img-fluid" /></a>
+                                 </li>
+                                 <li>
+                                     <a href="https://www.tiktok.com/@desynat.kw?_r=1&_t=ZS-97gES9kl7NI" target="_blank"><img src="{{ asset('user/assets/images/tiktok.png') }}"
                                              class="img-fluid" /></a>
                                  </li>
                              </ul>
