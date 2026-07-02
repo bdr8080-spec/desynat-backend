@@ -14,6 +14,10 @@
     border-left: 4px solid #0d6efd;
     cursor: pointer;
 }
+.social_icon img {
+    height: 30px;
+    width: 50px;
+}
 
      </style>
      <footer>
@@ -91,19 +95,27 @@
                              </div>
                              <ul class="list-unstyled social_icon">
                                  <li>
-                                     <a href=""><img src="{{ asset('user/assets/images/Social icon.svg') }}"
+                                     <a href="https://youtube.com/@desynatkw?si=avNOTuZ_BOi1HAbM" target="_blank"><img src="{{ asset('user/assets/images/Social_icon.svg') }}"
                                              class="img-fluid" /></a>
                                  </li>
                                  <li>
-                                     <a href=""><img src="{{ asset('user/assets/images/Instagram_logo_2016.svg') }}"
+                                     <a href="https://www.instagram.com/desynat.kw?igsh=MW93ZmdpYjlkN2Nydw==" target="_blank"><img src="{{ asset('user/assets/images/Instagram_logo_2016.svg') }}"
                                              class="img-fluid" /></a>
                                  </li>
                                  <li>
-                                     <a href=""><img src="{{ asset('user/assets/images/social_facebook.svg') }}"
+                                     <a href="https://www.facebook.com/share/1BFzrGmXVk/" target="_blank"><img src="{{ asset('user/assets/images/social_facebook.svg') }}"
                                              class="img-fluid" /></a>
                                  </li>
                                  <li>
-                                     <a href=""><img src="{{ asset('user/assets/images/social_x_circle 1.svg') }}"
+                                     <a href="https://x.com/Desynatkw" target="_blank"><img src="{{ asset('user/assets/images/social_x_circle 1.svg') }}"
+                                             class="img-fluid" /></a>
+                                 </li>
+                                 <li>
+                                     <a href="https://www.snapchat.com/add/desynat.kw?share_id=z6-sR111xxg&locale=ar-KW" target="_blank"><img src="{{ asset('user/assets/images/snapchat.png') }}"
+                                             class="img-fluid" /></a>
+                                 </li>
+                                 <li>
+                                     <a href="https://www.tiktok.com/@desynat.kw?_r=1&_t=ZS-97gES9kl7NI" target="_blank"><img src="{{ asset('user/assets/images/tiktok.png') }}"
                                              class="img-fluid" /></a>
                                  </li>
                              </ul>
@@ -1737,28 +1749,28 @@ $(document).ready(function () {
 </script>
 
 <script>
-$(function () {
+    $(function () {
 
-    $('#bestSellingLink').click(function (e) {
-        e.preventDefault();
+        $('#bestSellingLink').click(function (e) {
+            e.preventDefault();
 
-        $('.demo').removeClass('scrollspace');
-
-        $('html, body').animate({
-            scrollTop: $('#sellingbest').offset().top - 200
-        }, 500, function () {
-            // Scroll complete hone ke baad class add hogi
-            $('.demo').addClass('scrollspace');
-        });
-    });
-
-    $(window).on('scroll', function () {
-        if ($(window).scrollTop() < $('#sellingbest').offset().top - 100) {
             $('.demo').removeClass('scrollspace');
-        }
-    });
 
-});
+            $('html, body').animate({
+                scrollTop: $('#sellingbest').offset().top - 200
+            }, 500, function () {
+                // Scroll complete hone ke baad class add hogi
+                $('.demo').addClass('scrollspace');
+            });
+        });
+
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() < $('#sellingbest').offset().top - 100) {
+                $('.demo').removeClass('scrollspace');
+            }
+        });
+
+    });
 </script>
 
 
