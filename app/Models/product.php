@@ -40,6 +40,10 @@ class product extends Model
     return $this->hasMany(productRatings::class, 'product_id', 'id');
 }
 
+public function delivery_time(){
+        return $this->hasOne(ExpectedDelivery::class,'id','delivery_time_id');
+    }
+
 
    
 

@@ -226,6 +226,25 @@ $product_Variation_inside_count = 0;
 
             </div>
 
+            <div class="sub-form">
+                <div class="label-flex">
+                    <label>{{ __('seller_messages.select_delivery_time') }}</label>
+                </div>
+
+                <select class="form-select form-control" name="delivery_time_id" id="delivery_time_id">
+                    <option value="">{{ __('seller_messages.select_delivery_time') }}</option>
+
+                    @foreach($delivery_time as $item)
+                        <option value="{{ $item->id }}"
+                            {{ old('delivery_time_id', $product_details->delivery_time_id) == $item->id ? 'selected' : '' }}>
+                            {{ app()->getLocale() == 'ar' ? $item->name_ar : $item->name }}
+                        </option>
+                    @endforeach
+                </select>
+
+                <p class="text-danger" id="error-delivery_time_id"></p>
+            </div>
+
         </div>
 
         <div class="mt-3 d-flex justify-content-between py-3">

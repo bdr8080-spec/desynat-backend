@@ -1251,6 +1251,7 @@ public function AddProduct_web($request){
     'category_id' => $request->category_id,
     'subcategory_id' => $request->subcategory_id,
     'brand_id' => $request->brand_id,
+    'delivery_time_id' => $request->delivery_time_id,
     'other_en' => $request->other_en,
     'other_ar' => $request->other_ar,
     
@@ -1498,6 +1499,7 @@ public function edit_Product_web($request){
                 'category_id' => $request->category_id,
                 'subcategory_id' => $request->subcategory_id,
                 'brand_id' => $request->brand_id,
+                'delivery_time_id' => $request->delivery_time_id,
                 'other_en' => $request->other_en,
                 'other_ar' => $request->other_ar,
         

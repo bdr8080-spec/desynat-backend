@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\ExpectedDelivery;
 
 use App\Models\{ Brand,color,size};
 
@@ -1141,8 +1142,9 @@ public function Add_product1(){
     $brand = Brand::all();
     $color = color::all();
     $size = size::all();
+    $delivery_time = ExpectedDelivery::all();
 
-    return view('dealer.product.Add_product1',compact('category','brand','color','size'));
+    return view('dealer.product.Add_product1',compact('category','brand','color','size','delivery_time'));
 }
 
 
@@ -1160,6 +1162,7 @@ public function Add_product_code1(Request $request){
           'category_id' => 'required|exists:categories,id',
           'subcategory_id' => 'required|exists:sub_categories,id',
           'brand_id' => 'required|exists:brands,id',
+          'delivery_time_id' => 'required|exists:expected_deliveries,id',
           'other_en' => 'nullable',
           'other_ar' => 'nullable',
        
@@ -1267,6 +1270,8 @@ public function Add_product_code1(Request $request){
 
     'brand_id.required' => __('seller_messages.brand_required'),
     'brand_id.exists' => __('seller_messages.brand_invalid'),
+
+    'delivery_time_id.required' => __('seller_messages.delivery_required'),
 
     // Product Names
     'product_name_en.required' => __('seller_messages.product_name_en_required'),
@@ -1467,7 +1472,7 @@ foreach ($request->size_id as $key => $val) {
 
         $ext = strtolower(pathinfo($firstOldFile, PATHINFO_EXTENSION));
 
-        if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+        if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'jfif',])) {
             $firstFileIsImage = true;
         }
     }
@@ -1545,6 +1550,7 @@ $request_data=(object) [
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
 'brand_id' => $request->brand_id,
+'delivery_time_id' => $request->delivery_time_id,
 'other_en' => $request->other_en??null,
 'other_ar' => $request->other_ar??null,
 
@@ -1623,6 +1629,7 @@ public function edit_product1($id){
     $brand = Brand::all();
     $color = color::all();
     $size = size::all();
+    $delivery_time = ExpectedDelivery::all();
         
         $request_data=(object) [
             'product_id'=>$id,    
@@ -1635,7 +1642,7 @@ public function edit_product1($id){
     // dump($product_details);
     
 
-    return view('dealer.product.edit_product2',compact('category','brand','color','size','product_details'));
+    return view('dealer.product.edit_product2',compact('category','brand','color','size','product_details','delivery_time'));
        
 }
 
@@ -1654,6 +1661,7 @@ public function edit_product_code1(Request $request, $id){
           'category_id' => 'required|exists:categories,id',
           'subcategory_id' => 'required|exists:sub_categories,id',
           'brand_id' => 'required|exists:brands,id',
+          'delivery_time_id' => 'required|exists:expected_deliveries,id',
           'other_en' => 'nullable',
           'other_ar' => 'nullable',
        
@@ -1770,6 +1778,8 @@ public function edit_product_code1(Request $request, $id){
 
     'brand_id.required' => __('seller_messages.brand_required'),
     'brand_id.exists' => __('seller_messages.brand_invalid'),
+
+    'delivery_time_id.required' => __('seller_messages.delivery_required'),
 
     'product_name_en.required' => __('seller_messages.product_name_en_required'),
     'product_name_en.unique' => __('seller_messages.product_name_en_unique'),
@@ -1979,7 +1989,7 @@ foreach ($request->size_id as $key => $val) {
 
             $ext = strtolower(pathinfo($oldFile, PATHINFO_EXTENSION));
 
-            if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+            if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'jfif',])) {
                 $hasImage = true;
                 break;
             }
@@ -2144,6 +2154,7 @@ $request_data=(object) [
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
 'brand_id' => $request->brand_id,
+'delivery_time_id' => $request->delivery_time_id,
 'other_en' => $request->other_en??null,
 'other_ar' => $request->other_ar??null,
 

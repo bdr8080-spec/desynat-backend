@@ -25,6 +25,9 @@ return [
 'upload_atleast_one_product_image' => 'Please upload at least 1 product image',
 'upload_first_image_then_video' => 'Please upload first image then video',
 
+'delivery_required' => 'Please select delivery time',
+'select_delivery_time' => 'Select Delivery Time',
+
 
 
 // Seller dashBoard language code 

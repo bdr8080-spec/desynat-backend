@@ -24,6 +24,9 @@ return [
 'upload_atleast_one_product_image' => 'يرجى تحميل صورة منتج واحدة على الأقل',
 'upload_first_image_then_video' => 'يرجى تحميل الصورة أولاً ثم الفيديو',
 
+'delivery_required' => 'يرجى اختيار مدة التوصيل',
+'select_delivery_time' => 'اختر مدة التوصيل',
+
 
 // Seller Dashboard language code 
 "Dashboard" => "لوحة التحكم",
