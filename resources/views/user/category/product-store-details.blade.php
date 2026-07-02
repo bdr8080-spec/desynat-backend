@@ -411,7 +411,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                     <ul class="cd-info">
                         <li>
                             <i class="bi bi-truck"></i>
-                            {{ __('user_messages.get_it_buy') }}&nbsp;<strong>{{ __('user_messages.3_5_working_days') }}</strong>
+                            {{ __('user_messages.get_it_buy') }}&nbsp;<strong>@if(app()->getLocale() == 'en'){{$data->delivery_time->name}}@else{{$data->delivery_time->name_ar}}@endif</strong>
                         </li>
                         <li>
                             <i class="bi bi-cash-coin"></i>

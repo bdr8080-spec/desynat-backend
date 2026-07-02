@@ -707,7 +707,7 @@ class UserManagementService
     
             // Step 1: Find store
             
-            $product_details = product::with(['category','subcategory','store','brand','product_specifications','product_variants.color','product_variants.size','review','review.user_details'])
+            $product_details = product::with(['category','subcategory','store','brand','delivery_time','product_specifications','product_variants.color','product_variants.size','review','review.user_details'])
             ->where('id', $request->product_id)->first();
 
            

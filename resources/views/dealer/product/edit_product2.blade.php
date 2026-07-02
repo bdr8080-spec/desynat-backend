@@ -424,7 +424,7 @@ $product_Variation_inside_count = 0;
                                 name="old_variant_image[{{ $product_Variation_count }}][{{ $key0 }}]"
                                 value="{{ $chart }}" rel="{{ $product_Variation_count }}">
 
-                        </div>
+                         </div>
                         @endforeach
                         @endif
                         {{-- database image code end Here --}}
