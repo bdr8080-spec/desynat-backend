@@ -201,7 +201,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
                         <div class="d-flex justify-content-between">
                             <p class="delivery-label mb-2">{{ __('user_messages.delivery_by') }}</p>
-                            <p class="delivery-date mb-2">{{ __('user_messages.3_5_working_days') }}</p>
+                            <p class="delivery-date mb-2"> {{ app()->getLocale() == 'en' ? $item->product->delivery_time->name : $item->product->delivery_time->name_ar }}</p>
                         </div>
 
                         <div class="d-flex justify-content-between">
