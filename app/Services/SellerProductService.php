@@ -787,7 +787,7 @@ $inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('pr
 public function single_product_details_fetch($request){
         
     $product_data=  product::with(
-        'seller_details.store_info','brand','category','subcategory','product_specifications','product_variants.color','product_variants.size','review.user_details')
+        'seller_details.store_info','brand','category','subcategory','delivery_time','product_specifications','product_variants.color','product_variants.size','review.user_details')
         ->withAvg('review as product_rating', 'product_rating')
     
         ->where('id',$request->product_id)->first();
