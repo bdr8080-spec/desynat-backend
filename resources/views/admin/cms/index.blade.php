@@ -21,6 +21,24 @@
 #tabContentContainer.active-shown {
     visibility: visible;
 }
+
+html[dir="rtl"] .tab-content .row {
+    direction: ltr;
+}
+
+html[dir="rtl"] .tab-content .row h6 {
+    text-align: right;
+    width: 100%;
+}
+
+html[dir="rtl"] .tab-content .row .text-start{
+    text-align: right !important;
+}
+
+html[dir="rtl"] .tab-content .flex-grow-1 {
+    flex-grow: initial !important;
+}
+
 </style>
 
 @php

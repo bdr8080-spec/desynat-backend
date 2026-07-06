@@ -159,7 +159,7 @@ return [
     'current_live_seller' => 'إدارة البائعين المباشرين حاليًا',
     'account_setting' => 'إدارة إعدادات الحساب',
     'sub_admin_management' => 'إدارة المشرفين الفرعيين',
-    'refund_management' => 'إدارة الاسترجاعات',
+    'refund_management' => 'إدارة الاسترجاع',
 
     //dashboard
     'welcome_to_dashboard' => 'مرحبًا بك في لوحة التحكم',
