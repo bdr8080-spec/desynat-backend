@@ -104,7 +104,7 @@ class CommonController extends Controller
 
     public function all_country(Request $request){
         
-        $all_country=all_countrie::where('status',1)->get()->toArray();
+        $all_country=all_countrie::where('status',1)->orderBy('orderBy','asc')->get()->toArray();
    
        return ApiResponse::generateResponse('success', 'All Country Details fetch Successfully',$all_country, 200);
        
