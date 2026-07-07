@@ -10,14 +10,14 @@
 @endphp
 
 <style>
-    .custom-topbar {
+    /* .custom-topbar {
       background: linear-gradient(90deg, #c08f53, #a36a2a) !important;
       height: 74px;
       border-radius: 6px;
       padding: 0 25px;
       display: flex;
       align-items: center;
-    }
+    } */
 
     .header-logo {
       width: 110px;
