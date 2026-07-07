@@ -19,9 +19,19 @@ class AdminOtpMail extends Mailable
         $this->otp = $otp;
     }
 
+    // public function build()
+    // {
+    //     return $this->subject('Your OTP for Password Reset')
+    //                 ->view('emails.admin_otp');
+    // }
+
     public function build()
     {
-        return $this->subject('Your OTP for Password Reset')
+        return $this->from(
+                        env('MAIL_NOREPLY_FROM_ADDRESS'),
+                        env('MAIL_NOREPLY_FROM_NAME')
+                    )
+                    ->subject('Your OTP for Password Reset')
                     ->view('emails.admin_otp');
     }
 }

@@ -66,7 +66,7 @@ class UserAuthService
                         //\Log::warning('Twilio SMS skipped: ' . $e->getMessage());
                     }
                 }
-        // Mail::to($check->email)->send(new UserOtpMail($check, $otp));
+        Mail::to($check->email)->send(new UserOtpMail($check, $otp));
 
         if($check){
             return ['status'=>'success','message' => __('user_messages.otp_sent_success'),'data'=>$check];            

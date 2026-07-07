@@ -22,9 +22,19 @@ class StaffCredentialsMail extends Mailable
 
     }
 
-    public function build()
+    // public function build()
+    // {
+    //     return $this->subject('Your Staff Login Credentials')
+    //                 ->view('emails.Emailstaff_credentials');
+    // }
+
+     public function build()
     {
-        return $this->subject('Your Staff Login Credentials')
+        return $this->from(
+                        env('MAIL_NOREPLY_FROM_ADDRESS'),
+                        env('MAIL_NOREPLY_FROM_NAME')
+                    )
+                    ->subject('Your Staff Login Credentials')
                     ->view('emails.Emailstaff_credentials');
     }
 }

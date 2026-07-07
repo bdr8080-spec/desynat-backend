@@ -17,9 +17,19 @@ class SubAdminWelcomeMail extends Mailable
         $this->admin = $admin;
     }
 
+    // public function build()
+    // {
+    //     return $this->subject('Welcome to Sub Admin Panel')
+    //                 ->view('emails.subadmin_welcome');
+    // }
+
     public function build()
     {
-        return $this->subject('Welcome to Sub Admin Panel')
+        return $this->from(
+                        env('MAIL_NOREPLY_FROM_ADDRESS'),
+                        env('MAIL_NOREPLY_FROM_NAME')
+                    )
+                    ->subject('Welcome to Sub Admin Panel')
                     ->view('emails.subadmin_welcome');
     }
 }

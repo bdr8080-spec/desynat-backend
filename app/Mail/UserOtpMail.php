@@ -19,9 +19,19 @@ class UserOtpMail extends Mailable
         $this->otp = $otp;
     }
 
+    // public function build()
+    // {
+    //     return $this->subject('Your OTP for Verification')
+    //                 ->view('emails.user_otp');
+    // }
+
     public function build()
     {
-        return $this->subject('Your OTP for Verification')
+        return $this->from(
+                        env('MAIL_NOREPLY_FROM_ADDRESS'),
+                        env('MAIL_NOREPLY_FROM_NAME')
+                    )
+                    ->subject('Your OTP for Verification')
                     ->view('emails.user_otp');
     }
 }
