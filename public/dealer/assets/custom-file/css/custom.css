@@ -1545,16 +1545,17 @@ table.dataTable td.dt-type-date {
     justify-content: end;
     display: flex;
     top: 48px;
+    visibility: hidden;
 }
 .arrowclick.rotated {
     transform: rotate(180deg);
 }
 
 @media (max-width: 767px) {
-    .sidebar-nav > .nav-item:nth-child(n + 12) {
+    .sidebar-nav > .nav-item:nth-child(n + 6) {
         display: none;
     }
-    .sidebar-nav.show-all > .nav-item:nth-child(n + 12) {
+    .sidebar-nav.show-all > .nav-item:nth-child(n + 6) {
         display: block;
     }
    
@@ -1564,4 +1565,15 @@ table.dataTable td.dt-type-date {
     .margin-20 {
         margin: 0px 30px 0px 10px;
     }
+    .arrowclick {
+        visibility: visible;
+    }
+    .abc {
+        height: 300px;
+        overflow-y: auto;
+        transition: height 0.3s ease;
+    }
+   
+
+
 }

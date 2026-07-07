@@ -179,10 +179,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script>
     $(document).ready(function () {
+        $(window).on("load", function () {
+            $(".sidebar").addClass("abc");
+        });
+
         $(".arrowclick").on("click", function () {
             $("#sidebar-nav").toggleClass("show-all");
             $(this).toggleClass("rotated");
+            $(".sidebar").removeClass("abc");
         });
+
         let resizeTimer;
         $(window).on("resize", function () {
             clearTimeout(resizeTimer);
@@ -190,6 +196,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 if ($(window).width() > 767) {
                     $("#sidebar-nav").removeClass("show-all");
                     $(".arrowclick").removeClass("rotated");
+                   
                 }
             }, 150);
         });
