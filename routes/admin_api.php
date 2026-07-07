@@ -57,6 +57,7 @@ Route::group(['prefix' => 'admin'], function () {
       Route::post('/add_subcategory',[CategoryController::class,'add_subcategory']);
       Route::post('/update_subcategory',[CategoryController::class,'update_subcategory']);
       Route::post('/delete_subcategory',[CategoryController::class,'delete_subcategory']);
+       Route::post('/update_category',[CategoryController::class,'update_category']);
 
       //Brand
       Route::get('/get_brand',[BrandController::class,'get_brand']);

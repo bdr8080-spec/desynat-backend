@@ -233,6 +233,39 @@ class CategoryService
         }
     }
 
+    public function updateCategory(Request $request, $CategoryId)
+    {
+        $category = Category::find($CategoryId);
+
+        if (!$category) {
+            return [
+                'status' => 'error',
+                'message' => __('Service_messages.category_not_found'),
+                'data' => []
+            ];
+        }
+
+        try {
+            $category->update([
+                'image' => $request->image,  
+            ]);
+
+            return [
+                'status' => 'success',
+                // 'message' => 'Sub Category updated successfully',
+                'message' => __('admin_messages.category_updated_successfully'),
+                'data' => $category
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update category',
+                'data' => []
+            ];
+        }
+    }
+
 
 
 
