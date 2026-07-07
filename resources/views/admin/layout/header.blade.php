@@ -2,10 +2,12 @@
 <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top">
     <div class="left-section d-flex align-items-center">
         <img src="{{ asset('admin/image/logo.svg') }}" class="img-fluid" alt="Logo" />
+        <div class="toggle-sidebar-btn">
+            <i class="bi bi-list menu"></i>
+        </div>
     </div>
 
     <div class="header-divider"></div>
-
     <div class="right-section">
         @php
                 $user = auth('admin')->user();

@@ -344,12 +344,19 @@ h1 {
     line-height: 20px;
 } */
 
+.toggle-sidebar-btn .menu {
+    color: #000;
+    font-size: 30px;
+    opacity: 1;
+    margin: 0px 0px 0px 20px;
+}
+
 .toggle {
-    width: 50px !important;
+    width: 0px !important;
 }
 
 .toggle .sidebar-brand-text img {
-    width: 50px !important;
+    width: 0px !important;
 }
 
 .customSidebar {
@@ -914,7 +921,7 @@ table thead tr:nth-child(even) {
 }
 
 .inner-content.toggle {
-    margin-left: 107px;
+    margin-left: 30px;
     width: auto !important;
     scroll-behavior: smooth;
 }
@@ -3000,3 +3007,6 @@ a.text {
     width: 100%;
     color: #fff;
 }
+
+
+/* Mobile */

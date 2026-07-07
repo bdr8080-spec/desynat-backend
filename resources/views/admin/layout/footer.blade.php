@@ -17,14 +17,34 @@
 
 
     <script>
-    $(document).ready(function() {
-        $(".inner-content").removeClass("innerToggle");
-        $(".menu").click(function() {
+    $(document).ready(function () {
+
+        // Initial State
+        if ($(window).width() <= 991) {
+            $(".customSidebar").removeClass("toggle");
+            $(".inner-content").removeClass("toggle");
+        }
+
+        // Menu Click
+        $(".menu").on("click", function () {
             $(".customSidebar").toggleClass("toggle");
             $(".inner-content").toggleClass("toggle");
         });
+
+        // Window Resize
+        $(window).on("resize", function () {
+            if ($(window).width() <= 991) {
+                $(".customSidebar").removeClass("toggle");
+                $(".inner-content").removeClass("toggle");
+            }
+        });
+
+    
+ 
+
     });
     </script>
+
     <!-- Data Table -->
     <script>
     $(document).ready(function() {

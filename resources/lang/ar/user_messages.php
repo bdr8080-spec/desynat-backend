@@ -465,7 +465,7 @@ return [
     'item_must_be_unused_and_in_original_packaging' => 'يجب أن يكون المنتج غير مستخدم وفي عبوته الأصلية',
     'delivery_fee_is_non_refundable' => 'رسوم التوصيل غير قابلة للاسترداد',
     'this_invoice_is_generated_electronically_by' => 'تم إصدار هذه الفاتورة إلكترونيًا بواسطة',
-    'desynat' => 'ديزينات',
+    'desynat' => 'Desynat',
     'and_does_not_require_a_signature' => 'ولا تتطلب توقيعًا',
     'normal' => 'عادي',
     'custom' => 'مخصص',
