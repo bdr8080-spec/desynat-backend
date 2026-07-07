@@ -585,6 +585,9 @@ table thead tr:nth-child(even) {
     .navbar-expand-sm .navbar-toggler {
         display: none;
     }
+
+    
+
 }
 
 @media (max-width: 767.98px) {
@@ -596,6 +599,14 @@ table thead tr:nth-child(even) {
     .navbar-expand-md > .container-xl {
         padding-right: 0;
         padding-left: 0;
+    }
+    .left-section {
+        padding: 0px 0px 0px 10px !important;
+    }
+    .dataTables_filter {
+        position: relative !important;
+        right: 10px;
+        margin-bottom: 10px !important;
     }
 }
 
@@ -3009,4 +3020,4 @@ a.text {
 }
 
 
-/* Mobile */
+
