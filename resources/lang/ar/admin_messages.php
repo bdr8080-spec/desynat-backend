@@ -159,7 +159,7 @@ return [
     'current_live_seller' => 'إدارة البائعين المباشرين حاليًا',
     'account_setting' => 'إدارة إعدادات الحساب',
     'sub_admin_management' => 'إدارة المشرفين الفرعيين',
-    'refund_management' => 'إدارة الاسترجاعات',
+    'refund_management' => 'إدارة الاسترجاع',
 
     //dashboard
     'welcome_to_dashboard' => 'مرحبًا بك في لوحة التحكم',
@@ -862,10 +862,10 @@ return [
     'resolved' => 'تم الحل',
 
     //payment management
-    'by_order' => 'حسب الطلب',
-    'by_subscription_plan' => 'حسب خطة الاشتراك',
-    'by_gift_card' => 'حسب بطاقة الهدايا',
-    'by_banner' => 'حسب البانر',
+    'by_order' => 'الطلبات',
+    'by_subscription_plan' => 'خطة الاشتراك',
+    'by_gift_card' => 'خطة بطاقة الهديا',
+    'by_banner' => 'البنر',
     'total_revenue' => 'إجمالي الإيرادات',
     'transaction_id' => 'رقم المعاملة',
     'order_date_time' => 'تاريخ ووقت الطلب',

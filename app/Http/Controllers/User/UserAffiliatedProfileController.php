@@ -937,7 +937,7 @@ public function add_to_my_products(Request $request){
 
     public function updateNewNumber(Request $request){
                if($request->isMethod('get')){
-                  $country =   all_countrie::where('status',1)->get();
+                  $country =   all_countrie::where('status',1)->orderBy('orderBy','asc')->get();
                     return view('affiliatedUser.profiles.setting.profileChangeNumber', compact('country'));
         }
     }

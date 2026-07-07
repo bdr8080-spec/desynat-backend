@@ -34,7 +34,7 @@ class AddressController extends Controller
 
     public function saveAddress(Request $request){
         if($request->isMethod('get')){
-            $country =   all_countrie::where('status',1)->get();
+            $country =   all_countrie::where('status',1)->orderBy('orderBy','asc')->get();
             return view('user.profile.add-new-address', compact('country'));
         }else{
 
@@ -133,7 +133,7 @@ class AddressController extends Controller
      public function updateAddress(string $id){
 
        $address = userAddress::where('id', $id)->first();
-        $country =   all_countrie::where('status',1)->get();
+        $country =   all_countrie::where('status',1)->orderBy('orderBy','asc')->get();
         return view('user.profile.add-new-address', compact('address','country'));
      }
 

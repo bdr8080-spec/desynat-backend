@@ -862,10 +862,10 @@ return [
     'resolved' => 'Resolved',
 
     //payment management
-    'by_order' => 'By Order',
-    'by_subscription_plan' => 'By Subscription Plan',
-    'by_gift_card' => 'By Gift Card',
-    'by_banner' => 'By Banner',
+    'by_order' => 'Order',
+    'by_subscription_plan' => 'Subscription Plan',
+    'by_gift_card' => 'Gift Card',
+    'by_banner' => 'Banner',
     'total_revenue' => 'Total Revenue',
     'transaction_id' => 'Transaction ID',
     'order_date_time' => 'Order Date & Time',
