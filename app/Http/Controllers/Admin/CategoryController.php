@@ -141,4 +141,36 @@ class CategoryController extends Controller
 
         return response()->json(['success' => true, 'message' => __('admin_messages.sub_category_updated_successfully')]);
     }
+
+    public function updateCategory(Request $request, $id)
+    {
+        $scat = Category::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $scat->id = $request->category_id;
+
+        if ($request->hasFile('image')) {
+            $commonController = app(CommonController::class);
+            $uploadResult = $commonController->upload($request);
+            $uploadResultArray = $uploadResult->getData(true);
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+            $scat->image = $imageUrl;
+        }
+
+        $scat->save();
+
+        return response()->json(['success' => true, 'message' => __('admin_messages.category_updated_successfully')]);
+    }
 }

@@ -188,6 +188,31 @@ class CategoryController extends Controller
         }
     }
 
+    public function update_category(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'required', 
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->CategoryService->updateCategory($request, $request->category_id);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 

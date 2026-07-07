@@ -545,19 +545,52 @@ $('.adsbannerpop2').owlCarousel({
 </script>
 
      <script>
+// $('.storeCarousel').owlCarousel({
+//     loop: false,
+//     margin: 10,
+//     nav: true,
+//     dots: true,
+//     autoplayHoverPause: true,
+//     slideTransition: 'linear',
+//     rtl: $('html').attr('dir') === 'rtl',
+//     smartSpeed: 1000, 
+//     navText: [
+//         '<i class="fa fa-angle-left"></i>',
+//         '<i class="fa fa-angle-right"></i>'
+//     ],
+//     responsive: {
+//         0: {
+//             items: 2
+//         },
+//         600: {
+//             items: 4
+//         },
+//         1000: {
+//             items: 8
+//         }
+//     },
+//     slideBy: 1 // slides one by one
+// });
+
 $('.storeCarousel').owlCarousel({
-    loop: false,
+    loop: true,                     // Repeat from beginning
     margin: 10,
     nav: true,
     dots: true,
+
+    autoplay: true,                 // Enable autoplay
+    autoplayTimeout: 3000,          // 3 seconds
     autoplayHoverPause: true,
-    slideTransition: 'linear',
+
     rtl: $('html').attr('dir') === 'rtl',
-    smartSpeed: 1000, 
+    smartSpeed: 1000,
+    slideTransition: 'linear',
+
     navText: [
         '<i class="fa fa-angle-left"></i>',
         '<i class="fa fa-angle-right"></i>'
     ],
+
     responsive: {
         0: {
             items: 2
@@ -569,7 +602,8 @@ $('.storeCarousel').owlCarousel({
             items: 8
         }
     },
-    slideBy: 1 // slides one by one
+
+    slideBy: 1
 });
 
 $('.bestSellingCarousel').owlCarousel({

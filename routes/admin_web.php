@@ -65,6 +65,7 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/updateSubCategoryStatus/{id}', [CategoryController::class, 'updateSubCategoryStatus'])->name('updateSubCategoryStatus');
         Route::post('/addSubCategory', [CategoryController::class, 'addSubCategory'])->name('addSubCategory');
         Route::post('/updateSubCategory/{id}', [CategoryController::class, 'updateSubCategory'])->name('updateSubCategory');
+         Route::post('/updateCategory/{id}', [CategoryController::class, 'updateCategory'])->name('updateCategory');
 
         //brand management
         Route::get('/brand-management', [BrandController::class, 'brandManagement'])->name('brandManagement');

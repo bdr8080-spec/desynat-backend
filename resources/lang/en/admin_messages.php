@@ -224,6 +224,9 @@ return [
     'category_has_been_deactivated_successfully' => 'Category has been deactivated successfully',
     'sub_category_has_been_activated_successfully' => 'Sub category has been activated successfully',
     'sub_category_has_been_deactivated_successfully' => 'Sub category has been deactivated successfully',
+    'edit_category' => 'Edit Category',
+    'category_updated_successfully' => 'Category updated successfully',
+
 
     //seller management
     'store_name' => 'Store Name',

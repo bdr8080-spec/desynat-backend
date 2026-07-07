@@ -221,6 +221,8 @@ return [
     'category_has_been_deactivated_successfully' => 'تم إلغاء تفعيل الفئة بنجاح',
     'sub_category_has_been_activated_successfully' => 'تم تفعيل الفئة الفرعية بنجاح',
     'sub_category_has_been_deactivated_successfully' => 'تم إلغاء تفعيل الفئة الفرعية بنجاح',
+    'edit_category' => 'تعديل الفئة',
+    'category_updated_successfully' => 'تم تحديث الفئة بنجاح',
 
     //seller management
     'store_name' => 'اسم المتجر',
