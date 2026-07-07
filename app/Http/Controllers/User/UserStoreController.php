@@ -151,6 +151,7 @@ class UserStoreController extends Controller
             'sort_filter'    => $request->sort_filter ?? null,
             'brand_id'       => $request->brand_id ?? null,
             'category_id'    => $request->category_id ?? null,
+            'subcategory_id' => $request->subcategory_id ?? null,
             'size_id'        => $request->size_id ?? null,
             'color_id'       => $request->color_id ?? null,
             'price_min'      => isset($request->price_min) ? intval($request->price_min) : null,

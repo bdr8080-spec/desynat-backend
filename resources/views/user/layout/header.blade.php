@@ -520,7 +520,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                                                                 'category_id[]' => $value->category_id,
                                                                                 'sub_category_id[]' => $value->id
                                                                             ]) }}"> -->
-                                                                            <a href="{{ route('user.category_wise_store', $value->category_id) }}">
+                                                                            <!-- <a href="{{ route('user.category_wise_store', $value->category_id) }}"> -->
+                                                                            <a href="{{ route('user.category_wise_store', [
+                                                                                    'category_id' => $value->category_id,
+                                                                                    'subcategory_id' => $value->id
+                                                                                ]) }}">
                                                                                 <p>
                                                                                     @if(app()->getLocale() == 'ar')
                                                                                         {{ $value->name_arabic }}

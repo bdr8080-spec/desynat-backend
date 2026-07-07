@@ -493,6 +493,10 @@ class UserManagementService
                 $products->whereIn('category_id', $data->category_id);
             }
 
+            if (!empty($data->subcategory_id)) {
+                $products->where('subcategory_id', $data->subcategory_id);
+            }
+
             if (!empty($data->brand_id) && is_array($data->brand_id)) {
 
                 $products->whereIn('brand_id', $data->brand_id);
