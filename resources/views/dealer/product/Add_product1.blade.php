@@ -1453,8 +1453,9 @@ function catgoryFunction(val) {
 
                 var subcatgory_record = data.data;
 
-                var htmlcontent = " <option value="
-                ">{{ __('seller_messages.Select_Sub_Category') }}</option>";
+                // var htmlcontent = " <option value="
+                // ">{{ __('seller_messages.Select_Sub_Category') }}</option>";
+                var htmlcontent = `<option value="">{{ __('seller_messages.select_sub_category') }}</option>`;
 
                 subcatgory_record.forEach(function(item, val) {
                     htmlcontent +=
@@ -1470,8 +1471,11 @@ function catgoryFunction(val) {
                         </option>`;
                 })
 
+                console.log(htmlcontent);
+
                 $('#getSubcategry').empty();
                 $('#getSubcategry').append(htmlcontent);
+                console.log($('#getSubcategry').html());
 
 
             } else {

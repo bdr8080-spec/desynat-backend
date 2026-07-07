@@ -16,6 +16,10 @@ return [
     'of' => 'of',
     'results' => 'results',
 
+    'days_return' => 'Days Return',
+    'days_exchange' => 'Days Exchange',
+    'and' => 'and',
+
     
     'please_select_a_color' => 'Please select a color.',
     'please_select_a_size' => 'Please select a size.',
