@@ -139,7 +139,7 @@ class UserGiftCardController extends Controller
 
 
 
-        $country =   all_countrie::where('status',1)->orderBy('orderBy','asc')->get();
+        $country =   all_countrie::where('status',1)->orderBy('id','asc')->get();
 
        // dd($giftCardCategory);
         return view('user.giftcard.add_giftcard', compact('sessionId','giftCardCategory','baseUrl','walletBalance','country'));

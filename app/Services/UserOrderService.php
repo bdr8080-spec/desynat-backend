@@ -13,6 +13,8 @@ use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,
 use DB;
 use App\Models\WithdrawRequest;
 use App\Models\sellerStoreInformation;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InvoiceMail;
 
 class UserOrderService
 {
@@ -581,6 +583,11 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     }
     
     DB::commit();
+
+    $invoiceUrl = url('/Invoice/' . $checkOrder->order_id);
+
+    Mail::to($checkOrder->user_details->email)
+        ->send(new InvoiceMail($checkOrder, $invoiceUrl));
 
 
     return ['status'=>'success','message'=>$msg,'data'=>$checkOrder];

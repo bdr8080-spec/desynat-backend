@@ -20,7 +20,7 @@ $filterCurrency="KWD";
 
 // Seller country table  Code 
 
-$all_currency = all_countrie::where('status',1)->orderBy('orderBy','asc')->pluck('currency_code')
+$all_currency = all_countrie::where('status',1)->orderBy('id','asc')->pluck('currency_code')
     ->filter()                 // remove null/empty values
     ->unique()                 // remove duplicates
     ->implode(','); 
