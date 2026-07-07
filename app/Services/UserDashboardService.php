@@ -668,7 +668,10 @@ public function UsersuggestStore()
     {
         try {
 
-  $stores = sellerStoreInformation::orderBy('store_name', 'desc')->limit(10)->get();
+//   $stores = sellerStoreInformation::orderBy('store_name', 'desc')->limit(10)->get();
+    $stores = sellerStoreInformation::inRandomOrder()
+                        ->limit(10)
+                        ->get();
 
 return [
     'status'  => 'success',
