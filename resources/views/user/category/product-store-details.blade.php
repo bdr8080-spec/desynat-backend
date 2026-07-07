@@ -417,9 +417,24 @@ $currency = session('currencyAr', 'دينار كويتي');
                             <i class="bi bi-cash-coin"></i>
                             {{ __('user_messages.cash_on_delivery_available') }}
                         </li>
-                        <li>
+                        <!-- <li>
                             <i class="bi bi-arrow-repeat"></i>
                             {{ __('user_messages.7_days_return_&_exchange') }}
+                        </li> -->
+                        <li>
+                            <i class="bi bi-arrow-repeat"></i>
+
+                            @if(!empty($data->return_days) && !empty($data->exchangable_days))
+                                {{ $data->return_days }} {{ __('user_messages.days_return') }}
+                                {{ __('user_messages.and') }}
+                                {{ $data->exchangable_days }} {{ __('user_messages.days_exchange') }}
+
+                            @elseif(!empty($data->return_days))
+                                {{ $data->return_days }} {{ __('user_messages.days_return') }}
+
+                            @elseif(!empty($data->exchangable_days))
+                                {{ $data->exchangable_days }} {{ __('user_messages.days_exchange') }}
+                            @endif
                         </li>
                     </ul>
                 </div>

@@ -1149,7 +1149,7 @@ public function Add_product1(){
 
 
 public function Add_product_code1(Request $request){
-
+ //dd($request->all());
 
     $categoryId = $request->category_id;
     

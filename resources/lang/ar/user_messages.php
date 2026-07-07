@@ -16,6 +16,10 @@ return [
     'of' => 'من',
     'results' => 'نتيجة',
 
+    'days_return' => 'يوم إرجاع',
+    'days_exchange' => 'يوم استبدال',
+    'and' => 'و',
+
     
     'please_select_a_color' => 'يرجى اختيار لون.',
     'please_select_a_size' => 'يرجى اختيار المقاس.',
