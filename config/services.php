@@ -69,4 +69,12 @@ return [
     'redirect' => env('FACEBOOK_REDIRECT_URI'),
 ],
 
+'myfatoorah' => [
+
+    'api_key' => env('MY_FATOORAH_KEY'),
+
+    'test_mode' => env('MY_FATOORAH_TESTMODE', true),
+
+],
+
 ];

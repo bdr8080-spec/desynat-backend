@@ -177,6 +177,52 @@ class OrderManagementController extends Controller
         }
     }
 
+    public function refundOrder(Request $request)
+{
+    $validate = Validator::make($request->all(), [
+        'orderdetail_id' => 'required|exists:orderdetails,id',
+    ]);
+
+    if ($validate->fails()) {
+        return ApiResponse::generateResponse(
+            'error',
+            'Validation error',
+            $validate->errors()->first(),
+            422
+        );
+    }
+
+    try {
+
+        $data = $this->OrderManagementService->sendRefund($request);
+
+        if ($data['status'] == 'error') {
+            return ApiResponse::generateResponse(
+                'error',
+                $data['message'],
+                $data['data'],
+                400
+            );
+        }
+
+        return ApiResponse::generateResponse(
+            'success',
+            $data['message'],
+            $data['data'],
+            200
+        );
+
+    } catch (\Exception $e) {
+
+        return ApiResponse::generateResponse(
+            'error',
+            $e->getMessage(),
+            [],
+            500
+        );
+    }
+}
+
 
 
 }

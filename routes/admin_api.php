@@ -309,6 +309,8 @@ Route::group(['prefix' => 'admin'], function () {
     //m14
     Route::get('/dashboard_data', [DashboardController::class,'dashboard_data']);
 
+    Route::post('refund-order', [OrderManagementController::class, 'refundOrder']);
+
 
 
 

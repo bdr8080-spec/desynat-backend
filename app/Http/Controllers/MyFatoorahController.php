@@ -321,7 +321,7 @@ class MyFatoorahController extends Controller {
             if($checkOrderStatus){
 
                 if($data->InvoiceStatus=='Paid'){
-                    $checkOrderStatus->update(['payment_status'=>'1','transaction_id'=>$onlineReturnTransaction_id]);
+                    $checkOrderStatus->update(['payment_status'=>'1','transaction_id'=>$onlineReturnTransaction_id,'payment_id'=> $paymentId]);
                     $msg="Order Payment Paid Successfully";
                     $url="user/order-details/$transaction_id?payment=yes";
 
@@ -334,7 +334,7 @@ class MyFatoorahController extends Controller {
 
                 }else{
                     
-                    $checkOrderStatus->update(['payment_status'=>'2','transaction_id'=>$onlineReturnTransaction_id]);
+                    $checkOrderStatus->update(['payment_status'=>'2','transaction_id'=>$onlineReturnTransaction_id,'payment_id'=> $paymentId]);
                     $msg="Order Payment Cancelled Successfully";
                     if ($checkOrderStatus->type == '1') {
                         $url = "user/view-cart?payment=no";
