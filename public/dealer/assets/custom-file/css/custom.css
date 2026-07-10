@@ -1533,3 +1533,47 @@ table.dataTable td.dt-type-date {
 [dir="rtl"] .dashboard-button{
     direction: ltr;
 }
+
+
+.arrowclick {
+    cursor: pointer;
+    transition: transform 0.25s ease;
+    position: absolute;
+    right: 5px;
+    font-size: 20px;
+    z-index: 999;
+    justify-content: end;
+    display: flex;
+    top: 48px;
+    visibility: hidden;
+}
+.arrowclick.rotated {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 767px) {
+    .sidebar-nav > .nav-item:nth-child(n + 6) {
+        display: none;
+    }
+    .sidebar-nav.show-all > .nav-item:nth-child(n + 6) {
+        display: block;
+    }
+   
+    .sidebar-nav > .nav-item {
+        transition: opacity 0.2s ease;
+    }
+    .margin-20 {
+        margin: 0px 30px 0px 10px;
+    }
+    .arrowclick {
+        visibility: visible;
+    }
+    .abc {
+        height: 300px;
+        overflow-y: auto;
+        transition: height 0.3s ease;
+    }
+   
+
+
+}

@@ -114,6 +114,8 @@
 @endphp
 
 <aside id="sidebar" class="sidebar">
+    <div class="arrowclick"><i class="bi bi-arrow-left-square"></i></div>
+
     <ul class="sidebar-nav" id="sidebar-nav">
 
         @foreach($menus as $menu)

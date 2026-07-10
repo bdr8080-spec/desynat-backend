@@ -177,6 +177,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $(window).on("load", function () {
+            $(".sidebar").addClass("abc");
+        });
+
+        $(".arrowclick").on("click", function () {
+            $("#sidebar-nav").toggleClass("show-all");
+            $(this).toggleClass("rotated");
+            $(".sidebar").removeClass("abc");
+        });
+
+        let resizeTimer;
+        $(window).on("resize", function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                if ($(window).width() > 767) {
+                    $("#sidebar-nav").removeClass("show-all");
+                    $(".arrowclick").removeClass("rotated");
+                   
+                }
+            }, 150);
+        });
+
+    });
+</script>
 
 <script>
 var stories = null;   
@@ -821,6 +847,7 @@ $(document).ready(function () {
 
 });
 </script>
+
 
 
  <!-- date and language english and Arbic Code chnage  Start here  -->
