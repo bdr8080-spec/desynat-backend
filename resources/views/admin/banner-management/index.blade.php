@@ -82,6 +82,13 @@
                     {{ __('admin_messages.sub_category') }}
                 </button>
             </li>
+             <li class="nav-item m-1" role="presentation">
+                <button class="nav-link customBtn2 m-0" id="pills-story-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-story" type="button" role="tab" aria-controls="pills-story"
+                    aria-selected="false">
+                 Story Charges
+                </button>
+            </li>
         </ul>
     </div>
     <div class="userManagecontent mb-4">
@@ -260,6 +267,75 @@
 
                         </tbody>
                     </table>
+                </div>
+            </div>
+              <div class="tab-pane fade" id="pills-story" role="tabpanel" aria-labelledby="pills-story-tab"
+                tabindex="0">
+                <div class="row">
+                    <div class="align-items-end d-flex">
+                    </div>
+                </div>
+
+                <div class="table-responsive w-100">
+                   <table id="myTable2" class="table w-100">
+    <thead>
+        <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Country</th>
+            <th scope="col">Per Day Charges</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>India</td>
+            <td>15.00 KD</td>
+            <td>
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="javascript:void(0);" 
+                       class="table-button edit-banner-btn" 
+                       data-bs-toggle="modal"
+                       data-bs-target="#editBannerModal">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">2</th>
+            <td>Kuwait</td>
+            <td>25.50 KD</td>
+            <td>
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="javascript:void(0);" 
+                       class="table-button edit-banner-btn" 
+                       data-bs-toggle="modal"
+                       data-bs-target="#editBannerModal">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">3</th>
+            <td>United Arab Emirates</td>
+            <td>20.00 KD</td>
+            <td>
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="javascript:void(0);" 
+                       class="table-button edit-banner-btn" 
+                       data-bs-toggle="modal"
+                       data-bs-target="#editBannerModal">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
                 </div>
             </div>
         </div>
