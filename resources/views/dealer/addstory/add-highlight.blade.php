@@ -81,10 +81,14 @@ button.deleteHighlightBtn {
     </div>
 </div>
 
+
 <select id="previousHighlights" class="form-select mb-3">
-    <option value="">  {{ __('seller_messages.Select_Highlight') }}</option>
+    <option value="">{{ __('seller_messages.Select_Highlight') }}</option>
+
     @foreach($highlights as $highlight)
-        <option value="{{ $highlight->title }}">{{ $highlight->title }}</option>
+        <option value="{{ $highlight['title'] }}">
+            {{ $highlight['title'] }}
+        </option>
     @endforeach
 </select>
 
@@ -97,7 +101,7 @@ button.deleteHighlightBtn {
     <div class="title24">  {{ __('seller_messages.Select_From_Gallery') }}</div>
     <div class="reels-wrapper mt-4">
         <div class="row">
-            @foreach($highlights as $index => $highlight)
+            @foreach($singlehighlights as $index => $highlight)
                 <div class="col-lg-3 col-md-3">
                     <div class="reels-grid" onclick="addHighlight({{ $index }})">
                         <div class="reel-card">
@@ -130,7 +134,7 @@ button.deleteHighlightBtn {
 <div class="status-viewer bgwhite" id="Addstory">
     <div class="container">
         <div class="story-header d-flex justify-content-between py-4">
-            <h3>T-shirt </h3>
+            <h3 id="highlightTitle"></h3>
             <button type="button" class="btn btn-light" onclick="closeStatus1()"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="logostatus">
@@ -164,7 +168,7 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 </script> -->
 
 <script>
-    var highlights = @json($highlights);
+    var highlights = @json($singlehighlights);
 </script>
 
 <script>
@@ -183,6 +187,7 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 
         var img = document.getElementById("highlightImg");
         var video = document.getElementById("highlightVideo");
+        document.getElementById("highlightTitle").textContent = highlight.title;
 
         // Reset
         img.style.display = "none";

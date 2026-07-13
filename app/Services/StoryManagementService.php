@@ -1028,7 +1028,7 @@ class StoryManagementService
     }
 
 
-    public function getSellerHighlights($request_data)
+    public function getSellerHighlightsSingle($request_data)
     {
         try {
             $query = Highlight::where('seller_id', $request_data->seller_id)
@@ -1061,6 +1061,75 @@ class StoryManagementService
 
 
 
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Seller highlights fetched successfully',
+                'data' => $stories
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch highlights: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function getSellerHighlights($request_data)
+    {
+        try {
+            $query = Highlight::where('seller_id', $request_data->seller_id)
+                ->where('type', '2')
+                ->orderBy('id', 'desc');
+
+            if (!empty($request_data->limit)) {
+
+                $stories = $query->paginate((int) $request_data->limit);
+
+                if ($stories->getCollection()->isEmpty()) {
+                    return [
+                        'status' => 'success',
+                        'message' => __('Service_messages.no_highlights_found'),
+                        'data' => (object) []
+                    ];
+                }
+
+                // Group highlights by title
+                $stories->setCollection(
+                    $stories->getCollection()
+                        ->groupBy('title')
+                        ->map(function ($items, $title) {
+                            return [
+                                'title' => $title,
+                                'highlights' => $items->values()
+                            ];
+                        })
+                        ->values()
+                );
+
+            } else {
+
+                $stories = $query->get();
+
+                if ($stories->isEmpty()) {
+                    return [
+                        'status' => 'success',
+                        'message' => __('Service_messages.no_highlights_found'),
+                        'data' => []
+                    ];
+                }
+
+                $stories = $stories->groupBy('title')
+                    ->map(function ($items, $title) {
+                        return [
+                            'title' => $title,
+                            'highlights' => $items->values()
+                        ];
+                    })
+                    ->values();
             }
 
             return [

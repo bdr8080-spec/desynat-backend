@@ -293,6 +293,7 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
       $reels=  $this->StoryManagementService->getSellerReels($request_data)['data'];
       //sdd($reels);
       $highlights=  $this->StoryManagementService->getSellerHighlights($request_data)['data'];
+      //dd($highlights);
 
       $stories=  $this->StoryManagementService->getSellerStoryOnUser($request_data)['data'];
      // dd($stories);
@@ -771,8 +772,9 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
         ];
 
         $highlights=  $this->StoryManagementService->getSellerHighlights($request_data)['data'];
+        $singlehighlights=  $this->StoryManagementService->getSellerHighlightsSingle($request_data)['data'];
 
-        return view('dealer.addstory.add-highlight',compact('highlights'));
+        return view('dealer.addstory.add-highlight',compact('highlights','singlehighlights'));
     }
 
     public function upload_story(REQUEST $request){

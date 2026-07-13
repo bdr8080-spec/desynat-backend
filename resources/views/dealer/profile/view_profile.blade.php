@@ -91,6 +91,28 @@
     pointer-events: none;
 }
 
+//new
+
+.progress-container {
+    display: flex;
+    gap: 4px;
+    padding: 10px 0;
+}
+
+.story-progress {
+    flex: 1;
+    height: 4px;
+    background: #ddd;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.story-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #007bff;
+}
+
 </style>
 
 
@@ -184,22 +206,26 @@
                     </a>
                 </div>
                 @foreach($highlights as $index => $highlight)
+
+                    @php
+                        $firstHighlight = $highlight['highlights']->first();
+                        $extension = pathinfo($firstHighlight->file, PATHINFO_EXTENSION);
+                    @endphp
+
                     <div class="product-item" onclick='openSellerHighlightViewer(@json($highlight))'>
-                        @php
-                            $extension = pathinfo($highlight->file, PATHINFO_EXTENSION);
-                        @endphp
 
                         @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
                             <video class="product-circle" autoplay muted loop playsinline>
-                                <source src="{{ $highlight->file }}" type="video/{{ $extension }}">
-                                Your browser does not support the video tag.
+                                <source src="{{ $firstHighlight->file }}" type="video/{{ $extension }}">
                             </video>
                         @else
-                            <img src="{{ $highlight->file }}" class="product-circle">
+                            <img src="{{ $firstHighlight->file }}" class="product-circle">
                         @endif
 
-                        <small>{{ $highlight->title ?? '' }}</small>
+                        <small>{{ $highlight['title'] }}</small>
+
                     </div>
+
                 @endforeach
 
             </div>
@@ -209,7 +235,7 @@
 
 
 <!-- Seller Highlight Viewer Modal -->
-<div class="status-viewer bgwhite" id="sellerHighlightViewer" style="display:none;">
+<!-- <div class="status-viewer bgwhite" id="sellerHighlightViewer" style="display:none;">
     <div class="container highlightStatus">
         <div class="story-header d-flex justify-content-between">
             <div></div>
@@ -230,6 +256,43 @@
                 </video>
             </div>
         </div>    
+    </div>
+</div> -->
+
+<div class="status-viewer bgwhite" id="sellerHighlightViewer" style="display:none;">
+    <div class="container highlightStatus">
+
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+
+            <button type="button" class="btn btn-light" onclick="closeSellerHighlightViewer()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+
+        <div class="logostatus">
+
+            <div id="sellerProgressContainer" class="progress-container"></div>
+
+            <div class="status-img">
+
+                <img id="sellerHighlightImage"
+                     class="img-fluid"
+                     style="display:none;" />
+
+
+                <video id="sellerHighlightVideo"
+                       style="width:100%; height:100%; object-fit:contain; display:none;"
+                       muted
+                       autoplay
+                       playsinline>
+                </video>
+
+            </div>
+
+        </div>
+
     </div>
 </div>
 
@@ -1187,90 +1250,373 @@ document.body.addEventListener('change', function(e) {
 
 <!-- highlight viewer -->
 <script>
-let sellerHighlightTimer = null;
-let sellerHighlightDuration = 3000; // default duration for images
+// let sellerHighlightTimer = null;
+// let sellerHighlightDuration = 3000; // default duration for images
 
-function openSellerHighlightViewer(highlight) {
+// function openSellerHighlightViewer(highlight) {
+//     clearTimeout(sellerHighlightTimer);
+
+//     const imageEl = document.getElementById("sellerHighlightImage");
+//     const videoEl = document.getElementById("sellerHighlightVideo");
+//     const progressContainer = document.getElementById("sellerProgressContainer");
+
+//     // Hide previous media
+//     imageEl.style.display = "none";
+//     videoEl.style.display = "none";
+//     videoEl.pause();
+//     videoEl.src = "";
+
+//     // Reset progress bar
+//     progressContainer.innerHTML = `
+//         <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
+//             <div class="progress-fill" id="sellerHighlightProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
+//         </div>
+//     `;
+//     const progressFill = document.getElementById("sellerHighlightProgressFill");
+
+//     const file = highlight.file;
+//     const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+//     if (isVideo) {
+//         videoEl.src = file;
+//         videoEl.style.display = "block";
+
+//         videoEl.onloadedmetadata = function() {
+//             sellerHighlightDuration = videoEl.duration * 1000;
+//             startSellerHighlightProgress(progressFill, sellerHighlightDuration, closeSellerHighlightViewer);
+//         };
+
+//         videoEl.onended = function() {
+//             closeSellerHighlightViewer();
+//         };
+//     } else {
+//         imageEl.src = file;
+//         imageEl.style.display = "block";
+//         sellerHighlightDuration = 3000; // 3 seconds for images
+//         startSellerHighlightProgress(progressFill, sellerHighlightDuration, closeSellerHighlightViewer);
+//     }
+
+//     document.getElementById("sellerHighlightViewer").style.display = "block";
+// }
+
+// function startSellerHighlightProgress(progressEl, duration, callback) {
+//     clearTimeout(sellerHighlightTimer);
+
+//     // Reset progress
+//     progressEl.style.transition = "none";
+//     progressEl.style.width = "0%";
+
+//     // Trigger animation
+//     setTimeout(() => {
+//         progressEl.style.transition = `width ${duration}ms linear`;
+//         progressEl.style.width = "100%";
+//     }, 50);
+
+//     sellerHighlightTimer = setTimeout(callback, duration);
+// }
+
+// function closeSellerHighlightViewer() {
+//     clearTimeout(sellerHighlightTimer);
+
+//     const imageEl = document.getElementById("sellerHighlightImage");
+//     const videoEl = document.getElementById("sellerHighlightVideo");
+//     const progressFill = document.getElementById("sellerHighlightProgressFill");
+
+//     document.getElementById("sellerHighlightViewer").style.display = "none";
+
+//     imageEl.style.display = "none";
+//     videoEl.pause();
+//     videoEl.style.display = "none";
+
+//     if (progressFill) {
+//         progressFill.style.transition = "none";
+//         progressFill.style.width = "0%";
+//     }
+// }
+
+
+let sellerHighlights = [];
+let sellerHighlightIndex = 0;
+let sellerHighlightTimer = null;
+let sellerHighlightDuration = 3000;
+
+
+// OPEN SELLER HIGHLIGHT VIEWER
+function openSellerHighlightViewer(highlightGroup) {
+
     clearTimeout(sellerHighlightTimer);
+
+    // your grouped array
+    sellerHighlights = highlightGroup.highlights;
+
+    sellerHighlightIndex = 0;
+
+    document.getElementById("sellerHighlightViewer").style.display = "block";
+
+    renderSellerProgressBars();
+
+    showSellerHighlight(sellerHighlightIndex);
+}
+
+
+// CREATE ALL PROGRESS BARS
+function renderSellerProgressBars() {
+
+    const container = document.getElementById("sellerProgressContainer");
+
+    container.innerHTML = '';
+
+    sellerHighlights.forEach((_, i) => {
+
+        container.innerHTML += `
+            <div style="flex:1; margin:2px; background:#ddd; height:4px;">
+                <div id="sellerProgress_${i}"
+                     style="width:0%; height:100%; background:#007bff;">
+                </div>
+            </div>
+        `;
+
+    });
+}
+
+
+
+// SHOW HIGHLIGHT
+function showSellerHighlight(index) {
+
+    clearTimeout(sellerHighlightTimer);
+
+
+    if (index >= sellerHighlights.length) {
+
+        closeSellerHighlightViewer();
+        return;
+    }
+
+
+    const highlight = sellerHighlights[index];
+
 
     const imageEl = document.getElementById("sellerHighlightImage");
     const videoEl = document.getElementById("sellerHighlightVideo");
-    const progressContainer = document.getElementById("sellerProgressContainer");
 
-    // Hide previous media
+
+    // RESET MEDIA
+
     imageEl.style.display = "none";
-    videoEl.style.display = "none";
+    imageEl.src = "";
+
+
     videoEl.pause();
+    videoEl.style.display = "none";
     videoEl.src = "";
 
-    // Reset progress bar
-    progressContainer.innerHTML = `
-        <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
-            <div class="progress-fill" id="sellerHighlightProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
-        </div>
-    `;
-    const progressFill = document.getElementById("sellerHighlightProgressFill");
+
+
+    // UPDATE ALL PROGRESS BARS
+
+    sellerHighlights.forEach((_, i)=>{
+
+        const bar = document.getElementById(`sellerProgress_${i}`);
+
+        if(!bar) return;
+
+
+        if(i < index){
+
+            bar.style.width = "100%";
+
+        }else{
+
+            bar.style.width = "0%";
+
+        }
+
+    });
+
+
+
+    const currentBar = document.getElementById(
+        `sellerProgress_${index}`
+    );
+
+
 
     const file = highlight.file;
+
+
     const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
 
-    if (isVideo) {
+
+
+    if(isVideo){
+
+
         videoEl.src = file;
+
+        videoEl.muted = true;
+        videoEl.autoplay = true;
+        videoEl.playsInline = true;
+
+
         videoEl.style.display = "block";
 
-        videoEl.onloadedmetadata = function() {
-            sellerHighlightDuration = videoEl.duration * 1000;
-            startSellerHighlightProgress(progressFill, sellerHighlightDuration, closeSellerHighlightViewer);
+
+
+        videoEl.onloadedmetadata = function(){
+
+
+            videoEl.play();
+
+
+            sellerHighlightDuration =
+                videoEl.duration * 1000;
+
+
+            animateSellerProgress(
+                currentBar,
+                sellerHighlightDuration
+            );
+
         };
 
-        videoEl.onended = function() {
-            closeSellerHighlightViewer();
+
+
+        videoEl.onended = function(){
+
+            nextSellerHighlight();
+
         };
-    } else {
+
+
+
+    }else{
+
+
         imageEl.src = file;
+
         imageEl.style.display = "block";
-        sellerHighlightDuration = 3000; // 3 seconds for images
-        startSellerHighlightProgress(progressFill, sellerHighlightDuration, closeSellerHighlightViewer);
+
+
+        sellerHighlightDuration = 3000;
+
+
+        animateSellerProgress(
+            currentBar,
+            sellerHighlightDuration
+        );
+
     }
 
-    document.getElementById("sellerHighlightViewer").style.display = "block";
 }
 
-function startSellerHighlightProgress(progressEl, duration, callback) {
+
+
+
+// PROGRESS ANIMATION
+
+function animateSellerProgress(progressEl, duration){
+
     clearTimeout(sellerHighlightTimer);
 
-    // Reset progress
+
     progressEl.style.transition = "none";
     progressEl.style.width = "0%";
 
-    // Trigger animation
-    setTimeout(() => {
-        progressEl.style.transition = `width ${duration}ms linear`;
-        progressEl.style.width = "100%";
-    }, 50);
 
-    sellerHighlightTimer = setTimeout(callback, duration);
+
+    setTimeout(()=>{
+
+
+        progressEl.style.transition =
+            `width ${duration}ms linear`;
+
+
+        progressEl.style.width = "100%";
+
+
+    },50);
+
+
+
+    sellerHighlightTimer = setTimeout(()=>{
+
+
+        nextSellerHighlight();
+
+
+    },duration);
+
 }
 
-function closeSellerHighlightViewer() {
+
+
+// NEXT HIGHLIGHT
+
+function nextSellerHighlight(){
+
+
+    sellerHighlightIndex++;
+
+
+    if(sellerHighlightIndex >= sellerHighlights.length){
+
+        closeSellerHighlightViewer();
+
+    }else{
+
+        showSellerHighlight(
+            sellerHighlightIndex
+        );
+
+    }
+
+}
+
+
+
+// CLOSE VIEWER
+
+function closeSellerHighlightViewer(){
+
     clearTimeout(sellerHighlightTimer);
 
-    const imageEl = document.getElementById("sellerHighlightImage");
-    const videoEl = document.getElementById("sellerHighlightVideo");
-    const progressFill = document.getElementById("sellerHighlightProgressFill");
 
-    document.getElementById("sellerHighlightViewer").style.display = "none";
+    const imageEl =
+        document.getElementById("sellerHighlightImage");
+
+
+    const videoEl =
+        document.getElementById("sellerHighlightVideo");
+
+
+
+    document.getElementById(
+        "sellerHighlightViewer"
+    ).style.display = "none";
+
+
 
     imageEl.style.display = "none";
+
     videoEl.pause();
+
     videoEl.style.display = "none";
 
-    if (progressFill) {
-        progressFill.style.transition = "none";
-        progressFill.style.width = "0%";
-    }
+    videoEl.src = "";
+
+
+
+    sellerHighlights = [];
+
+    sellerHighlightIndex = 0;
+
 }
 </script>
+
+
+
+
 
 <script>
 let sellerStories = [];
