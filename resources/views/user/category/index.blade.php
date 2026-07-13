@@ -30,6 +30,26 @@ $currency = session('currencyAr', 'دينار كويتي');
     justify-content: center;
     z-index: 15;
 }
+
+.progress-container {
+    display: flex;
+    gap: 4px;
+    padding: 10px 0;
+}
+
+.story-progress {
+    flex: 1;
+    height: 4px;
+    background: #ddd;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.story-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #007bff;
+}
 </style>
 <div class="customContainer">
     <div>
@@ -144,31 +164,49 @@ $currency = session('currencyAr', 'دينار كويتي');
         <div class="col-lg-12">
             <div class="suggestStore_contenar">
                 <div class="owl-carousel storeCarousel">
-                    <!-- <div class="item">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
-                            </div>
-                            <p>Kurtas</p>
-                        </div>
-                    </div> -->
+
                     @forelse($seller_highlights as $highlight)
+
+                        @php
+                            $firstHighlight = $highlight['highlights'][0];
+                            $extension = pathinfo($firstHighlight['file'], PATHINFO_EXTENSION);
+                        @endphp
+
                         <div class="item">
+
                             <div class="suggestStore_content"
                                 onclick='openHighlightViewer(@json($highlight))'>
 
                                 <div class="suggestedStore_img">
-                                    <img src="{{ $highlight->file }}" class="img-fluid" />
+
+                                    @if(in_array(strtolower($extension), ['mp4','webm','ogg']))
+
+                                        <video class="img-fluid" autoplay muted loop playsinline>
+                                            <source src="{{ $firstHighlight['file'] }}" type="video/{{ $extension }}">
+                                        </video>
+
+                                    @else
+
+                                        <img src="{{ $firstHighlight['file'] }}" class="img-fluid" />
+
+                                    @endif
+
                                 </div>
 
-                                <p>{{ $highlight->title ?? 'Highlight' }}</p>
+                                <p>{{ $highlight['title'] ?? 'Highlight' }}</p>
+
                             </div>
+
                         </div>
+
                     @empty
+
                         <div class="item text-center">
                             <p>{{ __('user_messages.no_highlights') }}</p>
                         </div>
+
                     @endforelse
+
                 </div>
 
             </div>
@@ -1174,88 +1212,346 @@ function closeSellerStatus() {
 
  <!-- highlight -->
 <script>
-let highlightTimer = null;
-let highlightDuration = 3000; // default for images
+// let highlightTimer = null;
+// let highlightDuration = 3000; // default for images
 
-function openHighlightViewer(highlight) {
+// function openHighlightViewer(highlight) {
+//     clearTimeout(highlightTimer);
+
+//     const imageEl = document.getElementById("highlightImage");
+//     const videoEl = document.getElementById("highlightVideo");
+//     const progressContainer = document.getElementById("progressContainerHighlight");
+
+//     // Hide previous media
+//     imageEl.style.display = "none";
+//     videoEl.style.display = "none";
+//     videoEl.pause();
+//     videoEl.src = "";
+
+//     // Reset progress bar
+//     progressContainer.innerHTML = `
+//         <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
+//             <div class="progress-fill" id="highlightProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
+//         </div>
+//     `;
+//     const progressFill = document.getElementById("highlightProgressFill");
+
+//     const file = highlight.file;
+//     const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+//     if (isVideo) {
+//         videoEl.src = file;
+//         videoEl.style.display = "block";
+
+//         videoEl.onloadedmetadata = function() {
+//             highlightDuration = videoEl.duration * 1000;
+//             startHighlightProgress(progressFill, highlightDuration, closeHighlightViewer);
+//         };
+
+//         videoEl.onended = function() {
+//             closeHighlightViewer();
+//         };
+//     } else {
+//         imageEl.src = file;
+//         imageEl.style.display = "block";
+//         highlightDuration = 3000;
+//         startHighlightProgress(progressFill, highlightDuration, closeHighlightViewer);
+//     }
+
+//     document.getElementById("highlightViewer").style.display = "block";
+// }
+
+// function startHighlightProgress(progressEl, duration, callback) {
+//     clearTimeout(highlightTimer);
+
+//     // Reset progress
+//     progressEl.style.transition = "none";
+//     progressEl.style.width = "0%";
+
+//     // Trigger animation
+//     setTimeout(() => {
+//         progressEl.style.transition = `width ${duration}ms linear`;
+//         progressEl.style.width = "100%";
+//     }, 50);
+
+//     highlightTimer = setTimeout(callback, duration);
+// }
+
+// function closeHighlightViewer() {
+//     clearTimeout(highlightTimer);
+
+//     const imageEl = document.getElementById("highlightImage");
+//     const videoEl = document.getElementById("highlightVideo");
+//     const progressFill = document.getElementById("highlightProgressFill");
+
+//     document.getElementById("highlightViewer").style.display = "none";
+
+//     imageEl.style.display = "none";
+//     videoEl.pause();
+//     videoEl.style.display = "none";
+
+//     if (progressFill) {
+//         progressFill.style.transition = "none";
+//         progressFill.style.width = "0%";
+//     }
+// }
+
+let highlightStories = [];
+let highlightIndex = 0;
+let highlightTimer = null;
+
+
+// OPEN VIEWER
+function openHighlightViewer(highlightGroup) {
+
     clearTimeout(highlightTimer);
 
-    const imageEl = document.getElementById("highlightImage");
-    const videoEl = document.getElementById("highlightVideo");
-    const progressContainer = document.getElementById("progressContainerHighlight");
+    highlightStories = highlightGroup.highlights;
+    highlightIndex = 0;
 
-    // Hide previous media
-    imageEl.style.display = "none";
-    videoEl.style.display = "none";
-    videoEl.pause();
-    videoEl.src = "";
-
-    // Reset progress bar
-    progressContainer.innerHTML = `
-        <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
-            <div class="progress-fill" id="highlightProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
-        </div>
-    `;
-    const progressFill = document.getElementById("highlightProgressFill");
-
-    const file = highlight.file;
-    const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
-
-    if (isVideo) {
-        videoEl.src = file;
-        videoEl.style.display = "block";
-
-        videoEl.onloadedmetadata = function() {
-            highlightDuration = videoEl.duration * 1000;
-            startHighlightProgress(progressFill, highlightDuration, closeHighlightViewer);
-        };
-
-        videoEl.onended = function() {
-            closeHighlightViewer();
-        };
-    } else {
-        imageEl.src = file;
-        imageEl.style.display = "block";
-        highlightDuration = 3000;
-        startHighlightProgress(progressFill, highlightDuration, closeHighlightViewer);
-    }
 
     document.getElementById("highlightViewer").style.display = "block";
+
+
+    renderHighlightProgress();
+
+
+    showHighlight();
+
 }
 
-function startHighlightProgress(progressEl, duration, callback) {
-    clearTimeout(highlightTimer);
 
-    // Reset progress
-    progressEl.style.transition = "none";
-    progressEl.style.width = "0%";
 
-    // Trigger animation
-    setTimeout(() => {
-        progressEl.style.transition = `width ${duration}ms linear`;
-        progressEl.style.width = "100%";
-    }, 50);
+// CREATE ALL PROGRESS BARS
+function renderHighlightProgress() {
 
-    highlightTimer = setTimeout(callback, duration);
+    const container = document.getElementById("progressContainerHighlight");
+
+    container.innerHTML = "";
+
+
+    highlightStories.forEach((item,index)=>{
+
+        container.innerHTML += `
+            <div style="flex:1;margin:2px;background:#ddd;height:4px;">
+                <div id="highlightProgress_${index}"
+                     style="width:0%;height:100%;background:#007bff;">
+                </div>
+            </div>
+        `;
+
+    });
+
 }
 
-function closeHighlightViewer() {
+
+
+// SHOW CURRENT HIGHLIGHT
+function showHighlight(){
+
     clearTimeout(highlightTimer);
+
+
+    if(highlightIndex >= highlightStories.length){
+
+        closeHighlightViewer();
+        return;
+
+    }
+
+
+    const highlight = highlightStories[highlightIndex];
+
 
     const imageEl = document.getElementById("highlightImage");
     const videoEl = document.getElementById("highlightVideo");
-    const progressFill = document.getElementById("highlightProgressFill");
 
-    document.getElementById("highlightViewer").style.display = "none";
+
+    // Reset media
 
     imageEl.style.display = "none";
+    imageEl.src = "";
+
+
     videoEl.pause();
+    videoEl.src = "";
     videoEl.style.display = "none";
 
-    if (progressFill) {
-        progressFill.style.transition = "none";
-        progressFill.style.width = "0%";
+
+
+    // Update progress bars
+
+    highlightStories.forEach((item,index)=>{
+
+        let bar = document.getElementById(
+            `highlightProgress_${index}`
+        );
+
+
+        if(!bar) return;
+
+
+        if(index < highlightIndex){
+
+            bar.style.width = "100%";
+
+        }else{
+
+            bar.style.width = "0%";
+
+        }
+
+    });
+
+
+
+    let currentBar = document.getElementById(
+        `highlightProgress_${highlightIndex}`
+    );
+
+
+
+    let file = highlight.file;
+
+
+    let isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+
+
+    if(isVideo){
+
+
+        videoEl.src = file;
+
+        videoEl.muted = true;
+        videoEl.autoplay = true;
+        videoEl.playsInline = true;
+
+        videoEl.style.display = "block";
+
+
+
+        videoEl.onloadedmetadata = function(){
+
+            videoEl.play();
+
+
+            startHighlightProgress(
+                currentBar,
+                videoEl.duration * 1000
+            );
+
+        };
+
+
+
+        videoEl.onended = function(){
+
+            nextHighlight();
+
+        };
+
+
+    }else{
+
+
+        imageEl.src = file;
+
+        imageEl.style.display = "block";
+
+
+        startHighlightProgress(
+            currentBar,
+            3000
+        );
+
     }
+
+}
+
+
+
+// PROGRESS ANIMATION
+function startHighlightProgress(progressEl,duration){
+
+    clearTimeout(highlightTimer);
+
+
+    progressEl.style.transition="none";
+    progressEl.style.width="0%";
+
+
+    setTimeout(()=>{
+
+        progressEl.style.transition =
+            `width ${duration}ms linear`;
+
+        progressEl.style.width="100%";
+
+
+    },50);
+
+
+
+    highlightTimer=setTimeout(()=>{
+
+        nextHighlight();
+
+    },duration);
+
+}
+
+
+
+// NEXT
+function nextHighlight(){
+
+    highlightIndex++;
+
+
+    if(highlightIndex >= highlightStories.length){
+
+        closeHighlightViewer();
+
+    }else{
+
+        showHighlight();
+
+    }
+
+}
+
+
+
+// CLOSE
+function closeHighlightViewer(){
+
+    clearTimeout(highlightTimer);
+
+
+    document.getElementById("highlightViewer").style.display="none";
+
+
+    const imageEl=document.getElementById("highlightImage");
+    const videoEl=document.getElementById("highlightVideo");
+
+
+    imageEl.style.display="none";
+
+
+    videoEl.pause();
+    videoEl.src="";
+    videoEl.style.display="none";
+
+
+    highlightStories=[];
+    highlightIndex=0;
+
+
+    document.getElementById(
+        "progressContainerHighlight"
+    ).innerHTML="";
+
 }
 </script>
 
@@ -1503,6 +1799,7 @@ function fallbackCopy(text) {
     toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
 }
 </script>
+
 
 
 

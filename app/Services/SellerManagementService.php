@@ -460,8 +460,23 @@ class SellerManagementService
                 ? $seller->reels->toArray()
                 : null;
 
+            // $data['highlights'] = $seller->highlights && !$seller->highlights->isEmpty()
+            //     ? $seller->highlights->toArray()
+            //     : null;
+
             $data['highlights'] = $seller->highlights && !$seller->highlights->isEmpty()
-                ? $seller->highlights->toArray()
+                ? $seller->highlights
+                    ->groupBy('title')
+                    ->map(function ($highlights, $title) {
+
+                        return [
+                            'title' => $title,
+                            'highlights' => $highlights->values()
+                        ];
+
+                    })
+                    ->values()
+                    ->toArray()
                 : null;
 
             $data['stories'] = $seller->stories && !$seller->stories->isEmpty()

@@ -11,6 +11,26 @@
     border-radius: 6px;
     cursor: pointer;
 }
+
+.progress-container {
+    display: flex;
+    gap: 4px;
+    padding: 10px 0;
+}
+
+.story-progress {
+    flex: 1;
+    height: 4px;
+    background: #ddd;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.story-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #007bff;
+}
 </style>
 
 <div class="inner-content management">
@@ -140,32 +160,50 @@
             <h5 class="h2">{{ __('admin_messages.highlights') }}</h5>
         </div>
 
+
         <div class="product-row d-flex align-items-center gap-2 profile-card">
+
             @if(!empty($data['highlights']) && count($data['highlights']) > 0)
+
                 @foreach($data['highlights'] as $index => $highlight)
+
+                    @php
+                        $firstHighlight = $highlight['highlights'][0];
+                        $extension = pathinfo($firstHighlight['file'], PATHINFO_EXTENSION);
+                    @endphp
+
+
                     <div class="product-item" onclick='openSellerHighlightViewer(@json($highlight))'>
-                        @php
-                            $extension = pathinfo($highlight['file'], PATHINFO_EXTENSION);
-                        @endphp
+
 
                         @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
+
                             <video class="product-circle" autoplay muted loop playsinline>
-                                <source src="{{ $highlight['file'] }}" type="video/{{ $extension }}">
+                                <source src="{{ $firstHighlight['file'] }}" type="video/{{ $extension }}">
                                 Your browser does not support the video tag.
                             </video>
+
                         @else
-                            <img src="{{ $highlight['file'] }}" class="product-circle">
+
+                            <img src="{{ $firstHighlight['file'] }}" class="product-circle">
+
                         @endif
 
+
                         <small>{{ $highlight['title'] ?? '' }}</small>
+
+
                     </div>
+
                 @endforeach
+
             @else
+
                 <div class="col-12 text-center">
                     <p>{{ __('admin_messages.no_data_found') }}</p>
                 </div>
-            @endif
 
+            @endif
 
         </div>
 
@@ -602,87 +640,389 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- highlight viewer -->
 <script>
-let sellerHighlightTimer = null;
-let sellerHighlightDuration = 3000; // default duration for images
+// let sellerHighlightTimer = null;
+// let sellerHighlightDuration = 3000; // default duration for images
 
-function openSellerHighlightViewer(highlight) {
+// function openSellerHighlightViewer(highlight) {
+//     clearTimeout(sellerHighlightTimer);
+
+//     const imageEl = document.getElementById("sellerHighlightImage");
+//     const videoEl = document.getElementById("sellerHighlightVideo");
+//     const progressContainer = document.getElementById("sellerProgressContainer");
+
+//     // Hide previous media
+//     imageEl.style.display = "none";
+//     videoEl.style.display = "none";
+//     videoEl.pause();
+//     videoEl.src = "";
+
+//     // Reset progress bar
+//     progressContainer.innerHTML = `
+//         <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
+//             <div class="progress-fill" id="sellerHighlightProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
+//         </div>
+//     `;
+//     const progressFill = document.getElementById("sellerHighlightProgressFill");
+
+//     const file = highlight.file;
+//     const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+//     if (isVideo) {
+//         videoEl.src = file;
+//         videoEl.style.display = "block";
+
+//         videoEl.onloadedmetadata = function() {
+//             sellerHighlightDuration = videoEl.duration * 1000;
+//             startSellerHighlightProgress(progressFill, sellerHighlightDuration, closeSellerHighlightViewer);
+//         };
+
+//         videoEl.onended = function() {
+//             closeSellerHighlightViewer();
+//         };
+//     } else {
+//         imageEl.src = file;
+//         imageEl.style.display = "block";
+//         sellerHighlightDuration = 3000; // 3 seconds for images
+//         startSellerHighlightProgress(progressFill, sellerHighlightDuration, closeSellerHighlightViewer);
+//     }
+
+//     document.getElementById("sellerHighlightViewer").style.display = "block";
+// }
+
+// function startSellerHighlightProgress(progressEl, duration, callback) {
+//     clearTimeout(sellerHighlightTimer);
+
+//     // Reset progress
+//     progressEl.style.transition = "none";
+//     progressEl.style.width = "0%";
+
+//     // Trigger animation
+//     setTimeout(() => {
+//         progressEl.style.transition = `width ${duration}ms linear`;
+//         progressEl.style.width = "100%";
+//     }, 50);
+
+//     sellerHighlightTimer = setTimeout(callback, duration);
+// }
+
+// function closeSellerHighlightViewer() {
+//     clearTimeout(sellerHighlightTimer);
+
+//     const imageEl = document.getElementById("sellerHighlightImage");
+//     const videoEl = document.getElementById("sellerHighlightVideo");
+//     const progressFill = document.getElementById("sellerHighlightProgressFill");
+
+//     document.getElementById("sellerHighlightViewer").style.display = "none";
+
+//     imageEl.style.display = "none";
+//     videoEl.pause();
+//     videoEl.style.display = "none";
+
+//     if (progressFill) {
+//         progressFill.style.transition = "none";
+//         progressFill.style.width = "0%";
+//     }
+// }
+
+let sellerHighlights = [];
+let sellerHighlightIndex = 0;
+let sellerHighlightTimer = null;
+let sellerHighlightDuration = 3000;
+
+
+// OPEN VIEWER
+function openSellerHighlightViewer(highlightGroup) {
+
     clearTimeout(sellerHighlightTimer);
 
-    const imageEl = document.getElementById("sellerHighlightImage");
-    const videoEl = document.getElementById("sellerHighlightVideo");
-    const progressContainer = document.getElementById("sellerProgressContainer");
-
-    // Hide previous media
-    imageEl.style.display = "none";
-    videoEl.style.display = "none";
-    videoEl.pause();
-    videoEl.src = "";
-
-    // Reset progress bar
-    progressContainer.innerHTML = `
-        <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
-            <div class="progress-fill" id="sellerHighlightProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
-        </div>
-    `;
-    const progressFill = document.getElementById("sellerHighlightProgressFill");
-
-    const file = highlight.file;
-    const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
-
-    if (isVideo) {
-        videoEl.src = file;
-        videoEl.style.display = "block";
-
-        videoEl.onloadedmetadata = function() {
-            sellerHighlightDuration = videoEl.duration * 1000;
-            startSellerHighlightProgress(progressFill, sellerHighlightDuration, closeSellerHighlightViewer);
-        };
-
-        videoEl.onended = function() {
-            closeSellerHighlightViewer();
-        };
-    } else {
-        imageEl.src = file;
-        imageEl.style.display = "block";
-        sellerHighlightDuration = 3000; // 3 seconds for images
-        startSellerHighlightProgress(progressFill, sellerHighlightDuration, closeSellerHighlightViewer);
-    }
+    sellerHighlights = highlightGroup.highlights;
+    sellerHighlightIndex = 0;
 
     document.getElementById("sellerHighlightViewer").style.display = "block";
+
+    renderSellerProgressBars();
+
+    showSellerHighlight();
 }
 
-function startSellerHighlightProgress(progressEl, duration, callback) {
-    clearTimeout(sellerHighlightTimer);
 
-    // Reset progress
-    progressEl.style.transition = "none";
-    progressEl.style.width = "0%";
+// CREATE ALL PROGRESS BARS ONCE
+function renderSellerProgressBars() {
 
-    // Trigger animation
-    setTimeout(() => {
-        progressEl.style.transition = `width ${duration}ms linear`;
-        progressEl.style.width = "100%";
-    }, 50);
+    const container = document.getElementById("sellerProgressContainer");
 
-    sellerHighlightTimer = setTimeout(callback, duration);
+    container.innerHTML = '';
+
+    sellerHighlights.forEach((item, index) => {
+
+        container.innerHTML += `
+            <div style="flex:1;margin:2px;background:#ddd;height:4px;border-radius:5px;overflow:hidden;">
+                <div id="sellerProgress_${index}"
+                     style="width:0%;height:100%;background:#007bff;">
+                </div>
+            </div>
+        `;
+
+    });
 }
 
-function closeSellerHighlightViewer() {
+
+
+// SHOW CURRENT HIGHLIGHT
+function showSellerHighlight() {
+
     clearTimeout(sellerHighlightTimer);
+
+
+    if (sellerHighlightIndex >= sellerHighlights.length) {
+
+        closeSellerHighlightViewer();
+        return;
+
+    }
+
+
+    const highlight = sellerHighlights[sellerHighlightIndex];
+
 
     const imageEl = document.getElementById("sellerHighlightImage");
     const videoEl = document.getElementById("sellerHighlightVideo");
-    const progressFill = document.getElementById("sellerHighlightProgressFill");
 
-    document.getElementById("sellerHighlightViewer").style.display = "none";
+
+    // RESET MEDIA
 
     imageEl.style.display = "none";
+    imageEl.src = "";
+
+
     videoEl.pause();
+    videoEl.removeAttribute("src");
+    videoEl.load();
     videoEl.style.display = "none";
 
-    if (progressFill) {
-        progressFill.style.transition = "none";
-        progressFill.style.width = "0%";
+
+
+    // UPDATE BARS
+
+    sellerHighlights.forEach((item, index)=>{
+
+
+        let bar = document.getElementById(
+            `sellerProgress_${index}`
+        );
+
+
+        if(!bar) return;
+
+
+        if(index < sellerHighlightIndex){
+
+            // completed
+            bar.style.transition = "none";
+            bar.style.width = "100%";
+
+
+        } else if(index > sellerHighlightIndex){
+
+            // upcoming
+            bar.style.transition = "none";
+            bar.style.width = "0%";
+
+
+        } else {
+
+            // current
+            bar.style.transition = "none";
+            bar.style.width = "0%";
+
+        }
+
+    });
+
+
+
+    let currentBar = document.getElementById(
+        `sellerProgress_${sellerHighlightIndex}`
+    );
+
+
+
+    let file = highlight.file;
+
+
+    let isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+
+
+    if(isVideo){
+
+
+        videoEl.src = file;
+
+        videoEl.muted = true;
+        videoEl.autoplay = true;
+        videoEl.playsInline = true;
+
+        videoEl.style.display = "block";
+
+
+
+        videoEl.onloadedmetadata = function(){
+
+
+            videoEl.play().catch(function(error){
+                console.log(error);
+            });
+
+
+            sellerHighlightDuration =
+                videoEl.duration * 1000;
+
+
+            animateSellerProgress(
+                currentBar,
+                sellerHighlightDuration
+            );
+
+        };
+
+
+
+        videoEl.onended = function(){
+
+            nextSellerHighlight();
+
+        };
+
+
+
+    } else {
+
+
+        imageEl.src = file;
+
+        imageEl.style.display = "block";
+
+
+        sellerHighlightDuration = 3000;
+
+
+        animateSellerProgress(
+            currentBar,
+            sellerHighlightDuration
+        );
+
     }
+
+}
+
+
+
+
+// ANIMATE CURRENT BAR
+
+function animateSellerProgress(progressEl, duration) {
+
+
+    clearTimeout(sellerHighlightTimer);
+
+
+    if(!progressEl) return;
+
+
+    setTimeout(()=>{
+
+
+        progressEl.style.transition =
+            `width ${duration}ms linear`;
+
+
+        progressEl.style.width = "100%";
+
+
+    },50);
+
+
+
+    sellerHighlightTimer = setTimeout(()=>{
+
+        nextSellerHighlight();
+
+    },duration);
+
+}
+
+
+
+
+// NEXT STORY
+
+function nextSellerHighlight(){
+
+
+    clearTimeout(sellerHighlightTimer);
+
+
+    sellerHighlightIndex++;
+
+
+    if(sellerHighlightIndex >= sellerHighlights.length){
+
+        closeSellerHighlightViewer();
+
+    }else{
+
+        showSellerHighlight();
+
+    }
+
+}
+
+
+
+
+// CLOSE VIEWER
+
+function closeSellerHighlightViewer(){
+
+
+    clearTimeout(sellerHighlightTimer);
+
+
+    const imageEl =
+        document.getElementById("sellerHighlightImage");
+
+
+    const videoEl =
+        document.getElementById("sellerHighlightVideo");
+
+
+
+    document.getElementById(
+        "sellerHighlightViewer"
+    ).style.display = "none";
+
+
+
+    imageEl.style.display = "none";
+    imageEl.src = "";
+
+
+
+    videoEl.pause();
+    videoEl.removeAttribute("src");
+    videoEl.load();
+    videoEl.style.display = "none";
+
+
+
+    sellerHighlights = [];
+    sellerHighlightIndex = 0;
+
+
+    document.getElementById(
+        "sellerProgressContainer"
+    ).innerHTML = "";
+
 }
 </script>

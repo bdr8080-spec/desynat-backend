@@ -534,6 +534,18 @@ class StoryManagementService
                 ];
             }
 
+            $story_details = $story_details
+                ->groupBy('title')
+                ->map(function ($highlights, $title) {
+
+                    return [
+                        'title' => $title,
+                        'highlights' => $highlights->values()
+                    ];
+
+                })
+                ->values();
+
             return [
                 'status' => 'success',
                 'message' => 'Seller Highlights fetched successfully',

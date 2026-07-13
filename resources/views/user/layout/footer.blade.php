@@ -573,7 +573,7 @@ $('.adsbannerpop2').owlCarousel({
 // });
 
 $('.storeCarousel').owlCarousel({
-    loop: true,                     // Repeat from beginning
+    loop: false,                     // Repeat from beginning
     margin: 10,
     nav: true,
     dots: true,
