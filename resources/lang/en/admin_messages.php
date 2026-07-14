@@ -6,6 +6,7 @@ return [
     'info' => 'Showing page _PAGE_ of _PAGES_',
     'info_empty' => 'No records available',
     'info_filtered' => '(filtered from _MAX_ total records)',
+    'story_charges' => 'Story Charges',
 
 
     'arabic' => 'Arabic',
