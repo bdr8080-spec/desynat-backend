@@ -10,6 +10,7 @@ use App\Models\{UserGiftCards,GiftCard,UserWallet};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
 use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart};
+use App\Models\UserWalletHistory;
 
 use DB;
 use Illuminate\Http\Request;
@@ -1228,212 +1229,14 @@ class OrderManagementService
     }
 
 
-
-
-
-// public function sendRefund($request)
-// {
-//     try {
-
-//         // Get order detail
-//         $orderDetail = orderdetail::find($request->orderdetail_id);
-
-//         if (!$orderDetail) {
-//             return [
-//                 'status' => 'error',
-//                 'message' => 'Order detail not found.',
-//                 'data' => []
-//             ];
-//         }
-
-
-//         // Get parent order
-//         $order = Order::find($orderDetail->order_id);
-
-//         if (!$order) {
-//             return [
-//                 'status' => 'error',
-//                 'message' => 'Order not found.',
-//                 'data' => []
-//             ];
-//         }
-
-
-//         // Check payment id
-//         if (empty($order->payment_id)) {
-//             return [
-//                 'status' => 'error',
-//                 'message' => 'Payment ID not found.',
-//                 'data' => []
-//             ];
-//         }
-
-
-//         // Check refund already done
-//         if ($orderDetail->refund_status == 1) {
-//             return [
-//                 'status' => 'error',
-//                 'message' => 'Refund already processed.',
-//                 'data' => []
-//             ];
-//         }
-        
-
-
-//         // Refund amount
-//         $refundAmount = $orderDetail->amount;
-
-
-//         if (!$refundAmount || $refundAmount <= 0) {
-//             return [
-//                 'status' => 'error',
-//                 'message' => 'Invalid refund amount.',
-//                 'data' => []
-//             ];
-//         }
-
-
-
-//         // MyFatoorah URL
-//         $url = config('services.myfatoorah.test_mode')
-//             ? 'https://apitest.myfatoorah.com/v2/MakeRefund'
-//             : 'https://api.myfatoorah.com/v2/MakeRefund';
-
-
-
-//         // Request data
-//         $refundRequest = [
-
-//             "KeyType" => "PaymentId",
-
-//             "Key" => $order->payment_id,
-
-//             "RefundChargeOnCustomer" => false,
-
-//             "ServiceChargeOnCustomer" => false,
-
-//             "Amount" => (float)$refundAmount,
-
-//             "Comment" => "Order cancelled by customer"
-
-//         ];
-
-
-
-//         // API Call
-//         $response = Http::withHeaders([
-
-//             'Authorization' => 'Bearer '.config('services.myfatoorah.api_key'),
-
-//             'Content-Type' => 'application/json'
-
-//         ])->post($url, $refundRequest);
-
-
-
-//         $result = $response->json();
-
-
-
-//         // Return complete debug response
-//         if (!$response->successful() ||
-//             (isset($result['IsSuccess']) && $result['IsSuccess'] == false)
-//         ) {
-
-//             return [
-//                 'status' => 'error',
-
-//                 'message' => 'MyFatoorah Refund Failed',
-
-//                 'data' => [
-
-//                     'environment' => config('services.myfatoorah.test_mode')
-//                         ? 'TEST'
-//                         : 'LIVE',
-
-//                     'url' => $url,
-
-//                     'payment_id_sent' => $order->payment_id,
-
-//                     'amount_sent' => $refundAmount,
-
-//                     'api_key_exists' => !empty(config('services.myfatoorah.api_key')),
-
-//                     'http_status' => $response->status(),
-
-//                     'raw_response' => $response->body(),
-
-//                     'json_response' => $result,
-
-//                     'request_sent' => $refundRequest
-
-//                 ]
-//             ];
-
-//         }
-
-
-
-//         // Success
-//         DB::beginTransaction();
-
-
-//         $orderDetail->refund_status = 1;
-
-//         $orderDetail->save();
-
-
-//         DB::commit();
-
-
-
-//         return [
-
-//             'status' => 'success',
-
-//             'message' => 'Refund processed successfully.',
-
-//             'data' => $result
-
-//         ];
-
-
-
-//     } catch(\Exception $e) {
-
-
-//         if(DB::transactionLevel() > 0){
-//             DB::rollBack();
-//         }
-
-
-//         return [
-
-//             'status' => 'error',
-
-//             'message' => $e->getMessage(),
-
-//             'data' => [
-
-//                 'file' => $e->getFile(),
-
-//                 'line' => $e->getLine()
-
-//             ]
-
-//         ];
-
-//     }
-// }
-
 public function sendRefund($request)
 {
     try {
 
-        // 1. Get order detail
-        $orderDetail = orderdetail::find($request->orderdetail_id);
+        $orderDetail = OrderDetail::find($request->orderdetail_id);
 
         if (!$orderDetail) {
+
             return [
                 'status' => 'error',
                 'message' => 'Order detail not found.',
@@ -1441,11 +1244,10 @@ public function sendRefund($request)
             ];
         }
 
-
-        // 2. Get parent order
         $order = Order::find($orderDetail->order_id);
 
         if (!$order) {
+
             return [
                 'status' => 'error',
                 'message' => 'Order not found.',
@@ -1453,19 +1255,8 @@ public function sendRefund($request)
             ];
         }
 
-
-        // 3. Check payment id
-        if (empty($order->payment_id)) {
-            return [
-                'status' => 'error',
-                'message' => 'Payment ID not found.',
-                'data' => []
-            ];
-        }
-
-
-        // 4. Check already refunded
         if ($orderDetail->refund_status == 1) {
+
             return [
                 'status' => 'error',
                 'message' => 'Refund already processed.',
@@ -1473,52 +1264,94 @@ public function sendRefund($request)
             ];
         }
 
-
-
-        // 5. MyFatoorah config
-        $mfConfig = [
-            'apiKey'      => config('myfatoorah.api_key'),
-            'isTest'      => config('myfatoorah.test_mode'),
-            'countryCode' => config('myfatoorah.country_iso'),
-        ];
-
-
-
-        // 6. Verify payment status
-        $mfObj = new \MyFatoorah\Library\API\Payment\MyFatoorahPaymentStatus($mfConfig);
-
-
-        $paymentData = $mfObj->getPaymentStatus(
-            $order->payment_id,
-            'PaymentId'
-        );
-
-        //dd($paymentData);
-
-        // dd([
-        //     'stored_payment_id'=>$order->payment_id,
-        //     'myfatoorah_payment_id'=>$paymentData->InvoiceTransactions[0]->PaymentId,
-        //     'amount'=>$paymentData->InvoiceValue
-        // ]);
-
-
-        \Log::info("MyFatoorah Payment Check",[
-            'order_id'=>$order->order_id,
-            'payment_id'=>$order->payment_id,
-            'invoice_status'=>$paymentData->InvoiceStatus ?? null,
-            'invoice_id'=>$paymentData->InvoiceId ?? null,
-            'invoice_value'=>$paymentData->InvoiceValue ?? null,
-        ]);
-
-
-
-        if(($paymentData->InvoiceStatus ?? '') != 'Paid'){
+        $refundAmount = round((float)$orderDetail->amount, 3);
+        if ($refundAmount <= 0) {
 
             return [
-                'status'=>'error',
-                'message'=>'Payment is not paid.',
+                'status' => 'error',
+                'message' => 'Invalid refund amount.',
+                'data' => []
+            ];
+        }
+
+        if (in_array($order->payment_method, [2,3])) {
+
+            DB::beginTransaction();
+
+            $wallet = UserWallet::where(
+                'user_id',
+                $order->user_id
+            )->first();
+
+            if (!$wallet) {
+
+                $wallet = new UserWallet();
+
+                $wallet->user_id = $order->user_id;
+
+                $wallet->amount = 0;
+
+                $wallet->save();
+
+            }
+
+            $wallet->amount =
+                $wallet->amount + $refundAmount;
+
+            $wallet->save();
+
+            $walletHistory = new UserWalletHistory();
+
+            $walletHistory->unique_id =
+                'Wal' . random_int(100000,999999);
+
+            $walletHistory->user_id =
+                $order->user_id;
+
+            $walletHistory->type = 1;
+
+            $walletHistory->transaction_id =
+                random_int(10000000,99999999);
+
+            $walletHistory->amount =
+                $refundAmount;
+
+            $walletHistory->addedBy = 1;
+
+            $walletHistory->payment_status = 1;
+
+
+            $walletHistory->order_id =
+                $orderDetail->id;
+
+            $walletHistory->save();
+
+
+            $orderDetail->refund_status = 1;
+
+            $orderDetail->refund_amount = $refundAmount;
+
+            $orderDetail->refund_response =
+                json_encode([
+                    'type'=>'wallet',
+                    'amount'=>$refundAmount
+                ]);
+
+            $orderDetail->refunded_at = now();
+
+            $orderDetail->refund_id =
+                random_int(10000000,99999999);
+
+            $orderDetail->save();
+
+            DB::commit();
+
+            return [
+                'status'=>'success',
+                'message'=>'Amount refunded to wallet successfully.',
                 'data'=>[
-                    'invoice_status'=>$paymentData->InvoiceStatus ?? null
+                    'wallet_balance'=>$wallet->amount,
+                    'amount'=>$refundAmount
                 ]
             ];
 
@@ -1526,100 +1359,177 @@ public function sendRefund($request)
 
 
 
+        if ($order->payment_method != 1) {
 
-        // 7. Refund amount
-        $refundAmount = (float)$orderDetail->amount;
-
-
-        if($refundAmount <= 0){
 
             return [
                 'status'=>'error',
-                'message'=>'Invalid refund amount.',
+                'message'=>'Invalid payment method.',
                 'data'=>[]
             ];
 
         }
 
 
+        if (empty($order->payment_id)) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Payment ID not found.',
+                'data'=>[]
+            ];
+
+        }
 
 
-        // 8. Refund URL
+        $mfConfig = [
 
-        $url = config('myfatoorah.test_mode')
-            ? 'https://apitest.myfatoorah.com/v2/MakeRefund'
-            : 'https://api.myfatoorah.com/v2/MakeRefund';
+            'apiKey'      => config('myfatoorah.api_key'),
 
+            'isTest'      => config('myfatoorah.test_mode'),
 
-
-        // 9. Refund request
-
-        $refundRequest = [
-
-            "KeyType" => "PaymentId",
-
-            "Key" => $order->payment_id,
-
-            "RefundChargeOnCustomer" => false,
-
-            "ServiceChargeOnCustomer" => false,
-
-            "Amount" => $refundAmount,
-
-            "Comment" => "Order cancelled by customer"
+            'countryCode' => config('myfatoorah.country_iso'),
 
         ];
 
 
 
+        $paymentStatus =
+            new \MyFatoorah\Library\API\Payment\MyFatoorahPaymentStatus(
+                $mfConfig
+            );
 
-        // 10. Call refund API
+
+        $paymentData = $paymentStatus->getPaymentStatus(
+            $order->payment_id,
+            'PaymentId'
+        );
+
+
+        if (($paymentData->InvoiceStatus ?? '') != 'Paid') {
+
+
+            return [
+
+                'status'=>'error',
+
+                'message'=>'Payment is not paid.',
+
+                'data'=>[
+
+                    'invoice_status'=>
+                        $paymentData->InvoiceStatus ?? null
+
+                ]
+
+            ];
+
+        }
+
+
+        if ($refundAmount > (float)$paymentData->InvoiceValue) {
+
+
+            return [
+
+                'status'=>'error',
+
+                'message'=>'Refund amount exceeds invoice amount.',
+
+                'data'=>[
+
+                    'invoice_amount'=>
+                        $paymentData->InvoiceValue,
+
+
+                    'refund_amount'=>
+                        $refundAmount
+
+                ]
+
+            ];
+
+        }
+
+
+        $url = config('myfatoorah.test_mode')
+
+            ? 'https://apitest.myfatoorah.com/v2/MakeRefund'
+
+            : 'https://api.myfatoorah.com/v2/MakeRefund';
+
+
+
+        $refundRequest = [
+
+
+            "KeyType" => "PaymentId",
+            "Key" => $order->payment_id,
+            "RefundChargeOnCustomer" => false,
+            "ServiceChargeOnCustomer" => false,
+            "Amount" => $refundAmount,
+            "Comment" => "Order cancelled by customer",
+            "ExternalIdentifier" =>
+                (string)$orderDetail->id
+
+        ];
 
         $response = Http::withHeaders([
 
-            'Authorization'=>'Bearer '.config('myfatoorah.api_key'),
 
-            'Content-Type'=>'application/json'
-
-        ])->post($url,$refundRequest);
+            'Authorization'=>
+                'Bearer '.config('myfatoorah.api_key'),
 
 
+            'Content-Type'=>
+                'application/json'
+
+
+        ])->post(
+
+            $url,
+
+            $refundRequest
+
+        );
 
         $result = $response->json();
 
 
+        if (
 
-
-        // 11. Debug response
-
-        \Log::info("MyFatoorah Refund Response",[
-            'request'=>$refundRequest,
-            'http_status'=>$response->status(),
-            'response'=>$result
-        ]);
-
-
-
-
-        // 12. Refund failed
-
-        if(
             !$response->successful()
+
             ||
-            (isset($result['IsSuccess']) && $result['IsSuccess']==false)
-        ){
+
+            (
+                isset($result['IsSuccess'])
+
+                &&
+
+                $result['IsSuccess']==false
+
+            )
+
+        ) {
+
 
             return [
+
                 'status'=>'error',
-                'message'=>'MyFatoorah Refund Failed',
+
+                'message'=>'MyFatoorah Refund Failed.',
+
                 'data'=>[
-                    'url'=>$url,
-                    'payment_id'=>$order->payment_id,
-                    'amount'=>$refundAmount,
-                    'http_status'=>$response->status(),
+
                     'response'=>$result,
+
+                    'http_status'=>$response->status(),
+
                     'raw'=>$response->body()
+
                 ]
+
             ];
 
         }
@@ -1627,48 +1537,111 @@ public function sendRefund($request)
 
 
 
-
-        // 13. Update database
-
         DB::beginTransaction();
 
 
+
         $orderDetail->refund_status = 1;
+
+
+        // MyFatoorah Refund ID
+        $orderDetail->refund_id =
+            $result['Data']['RefundId'] ?? null;
+
+
+
+        // Refund Amount
+        $orderDetail->refund_amount =
+            $refundAmount;
+
+
+
+        // Full Refund Response
+        $orderDetail->refund_response =
+            json_encode($result);
+
+
+
+        // Refund Date
+        $orderDetail->refunded_at =
+            now();
+
+
 
         $orderDetail->save();
 
 
         DB::commit();
 
-
-
         return [
+
+
             'status'=>'success',
+
+
             'message'=>'Refund processed successfully.',
-            'data'=>$result
+
+
+            'data'=>[
+
+
+                'refund_id'=>
+                    $result['Data']['RefundId'] ?? null,
+
+
+                'refund_amount'=>
+                    $refundAmount,
+
+
+                'response'=>
+                    $result
+
+
+            ]
+
+
         ];
 
 
 
-    } catch(\Exception $e){
+
+    } catch(\Exception $e) {
 
 
-        if(DB::transactionLevel()>0){
+
+        if(DB::transactionLevel() > 0) {
+
             DB::rollBack();
+
         }
 
 
         return [
+
+
             'status'=>'error',
+
+
             'message'=>$e->getMessage(),
+
+
             'data'=>[
+
+
                 'line'=>$e->getLine(),
+
                 'file'=>$e->getFile()
+
+
             ]
+
         ];
 
+
     }
+
 }
+
 
 
 
