@@ -154,6 +154,7 @@ Route::group(['prefix'=>'admin'], function(){
         //banner per day price management
         Route::get('/banner-management', [BannerController::class, 'bannerManagement'])->name('admin.bannerManagement');
         Route::post('/update_banner', [BannerController::class, 'update_banner'])->name('admin.update_banner');
+        Route::post('/update_story_per_day_price', [BannerController::class, 'update_story_per_day_price'])->name('admin.update_story_per_day_price');
 
         //promocode management
         Route::get('/promocode-management', [PromoCodeController::class, 'promoCodeManagement'])->name('admin.promoCodeManagement');

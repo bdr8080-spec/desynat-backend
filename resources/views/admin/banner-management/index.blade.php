@@ -86,7 +86,7 @@
                 <button class="nav-link customBtn2 m-0" id="pills-story-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-story" type="button" role="tab" aria-controls="pills-story"
                     aria-selected="false">
-                 Story Charges
+                 {{ __('admin_messages.story_charges') }}
                 </button>
             </li>
         </ul>
@@ -277,65 +277,53 @@
                 </div>
 
                 <div class="table-responsive w-100">
-                   <table id="myTable2" class="table w-100">
-    <thead>
-        <tr>
-            <th scope="col">S.No</th>
-            <th scope="col">Country</th>
-            <th scope="col">Per Day Charges</th>
-            <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>India</td>
-            <td>15.00 KD</td>
-            <td>
-                <div class="d-flex gap-3 justify-content-center">
-                    <a href="javascript:void(0);" 
-                       class="table-button edit-banner-btn" 
-                       data-bs-toggle="modal"
-                       data-bs-target="#editBannerModal">
-                        <i class="bi bi-pencil-square"></i>
-                    </a>
-                </div>
-            </td>
-        </tr>
+                   <table id="myTable3" class="table w-100">
+                        <thead>
+                            <tr>
+                                <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.country') }}</th>
+                                <th scope="col">{{ __('admin_messages.per_day_charges') }}</th>
+                                @if(in_array(13, $permissions) || $admin->type == 1)
+                                <th scope="col">{{ __('admin_messages.action') }}</th>
+                                @endif
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($storyPerDayPrice as $index => $story)
+                            <tr>
+                                <th scope="row">{{ $index + 1 }}</th>
+                                <td>
+                                    @if(app()->getLocale() == 'en')
+                                    {{ $story['country_info']['name'] }}
+                                    @else
+                                    {{ $story['country_info']['name_ar'] }}
+                                    @endif
+                                </td>
+                                <td>{{ $story['per_day_price'] }} {{ __('admin_messages.kd') }}</td>
+                                @if(in_array(13, $permissions) || $admin->type == 1)
+                                <td>
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <a href="javascript:void(0);" 
+                                            class="table-button edit-story-btn" 
+                                            data-id="{{ $story['id'] }}" 
+                                            data-country-id="{{ $story['country_id'] }}" 
+                                            data-per-day-price="{{ $story['per_day_price'] }}"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editStoryModal">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                @endif
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="text-center">{{ __('admin_messages.no_data_found') }}</td>
+                            </tr>
+                        @endforelse
 
-        <tr>
-            <th scope="row">2</th>
-            <td>Kuwait</td>
-            <td>25.50 KD</td>
-            <td>
-                <div class="d-flex gap-3 justify-content-center">
-                    <a href="javascript:void(0);" 
-                       class="table-button edit-banner-btn" 
-                       data-bs-toggle="modal"
-                       data-bs-target="#editBannerModal">
-                        <i class="bi bi-pencil-square"></i>
-                    </a>
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <th scope="row">3</th>
-            <td>United Arab Emirates</td>
-            <td>20.00 KD</td>
-            <td>
-                <div class="d-flex gap-3 justify-content-center">
-                    <a href="javascript:void(0);" 
-                       class="table-button edit-banner-btn" 
-                       data-bs-toggle="modal"
-                       data-bs-target="#editBannerModal">
-                        <i class="bi bi-pencil-square"></i>
-                    </a>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -380,6 +368,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="editStoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
+                <h2 class="h2">{{ __('admin_messages.per_day_charges') }}</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editStoryForm">
+                <div class="modal-body m-auto mb-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="hidden" id="editStoryId" name="story_id">
+                            <div class="form-group w-50 m-auto">
+                                <label for="from" class="form-label"> {{ __('admin_messages.per_day_price_in_kd') }}</label>
+                                <input type="text" class="w-100" id="perDayPriceStory" name="per_day_price" placeholder="{{ __('admin_messages.enter_per_day_charge') }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" class="form-control"
+                                    aria-describedby="passwordHelpInline" />
+                                <div id="editPerDayPriceStoryError" class="text-danger small" style="display:none;"></div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                                <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
+                                    style="margin-top: 30px">
+                                    <button type="submit" class="btn btn-dark customBtn">
+                                        {{ __('admin_messages.save') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const editButtons = document.querySelectorAll(".edit-banner-btn");
@@ -391,6 +414,7 @@ document.addEventListener("DOMContentLoaded", function() {
     editButtons.forEach(btn => {
         btn.addEventListener("click", function() {
             const id = this.getAttribute("data-id");
+            const country_id = this.getAttribute("data-id");
             const english = this.getAttribute("data-english");
             const perDayPrice = this.getAttribute("data-per-day-price");
 
@@ -468,6 +492,76 @@ document.addEventListener("DOMContentLoaded", function() {
     tabButtons.forEach((button) => {
         button.addEventListener("shown.bs.tab", function() {
             localStorage.setItem("activeTab", this.id);
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const editButtons = document.querySelectorAll(".edit-story-btn");
+    const editReasonForm = document.getElementById("editStoryForm");
+    const editBannerIdInput = document.getElementById("editStoryId");
+    const editPerDayPriceInput = document.getElementById("perDayPriceStory");
+    const editPerDayPriceError = document.getElementById("editPerDayPriceStoryError");
+
+    editButtons.forEach(btn => {
+        btn.addEventListener("click", function() {
+            const country_id = this.getAttribute("data-country-id");
+            const perDayPrice = this.getAttribute("data-per-day-price");
+
+            editBannerIdInput.value = country_id;
+            editPerDayPriceInput.value = perDayPrice;
+
+            editPerDayPriceError.style.display = "none";
+        });
+    });
+
+    editPerDayPriceInput.addEventListener("input", () => {
+        editPerDayPriceError.style.display = "none";
+    });
+
+    editStoryForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const per_day_price = editPerDayPriceInput.value.trim();
+        const country_id = editBannerIdInput.value;
+        let hasError = false;
+
+        if (!per_day_price) {
+            editPerDayPriceError.innerText = "{{ __('admin_messages.please_enter_per_day_charge') }}";
+            editPerDayPriceError.style.display = "block";
+            hasError = true;
+        }
+        if (hasError) return;
+
+        fetch(`/admin/update_story_per_day_price`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                per_day_price: per_day_price,
+                country_id: country_id
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+                toastr.success(data.message);
+                const modal = bootstrap.Modal.getInstance(document.getElementById("editStoryModal"));
+                modal.hide();
+                editBannerForm.reset();
+                setTimeout(() => location.reload(), 2000);
+            } else {
+                toastr.error(data.message || "Failed to update banner per day charge.");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            toastr.error("Something went wrong.");
         });
     });
 });

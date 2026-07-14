@@ -6,6 +6,7 @@ return [
     'info' => 'عرض الصفحة _PAGE_ من _PAGES_',
     'info_empty' => 'لا توجد سجلات متاحة',
     'info_filtered' => '(تمت التصفية من إجمالي _MAX_ سجل)',
+    'story_charges' => 'رسوم القصة',
 
 
     'arabic' => 'عربي',
