@@ -14,7 +14,7 @@
         "google/apiclient": "*",
         "google/cloud-translate": "^2.0",
         "kreait/firebase-php": "^7.24",
-        "laravel/framework": "^11.31",
+        "laravel/framework": "^11.55",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.27",
         "laravel/tinker": "^2.9",
@@ -85,6 +85,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
