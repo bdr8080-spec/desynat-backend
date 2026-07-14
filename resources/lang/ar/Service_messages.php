@@ -4,6 +4,7 @@ return [
 
   'no_data_found' => 'لا توجد بيانات',
   'upgrade_only_higher_plan' => 'يمكنك الترقية فقط إلى خطة أعلى أثناء تفعيل خطتك الحالية.',
+  'story_price_updated_successfully' => 'تم تحديث سعر القصة بنجاح',
   
   //admin auth service
   'otp_verified_successfully' => 'تم التحقق من رمز التحقق بنجاح',

@@ -5,6 +5,7 @@ use App\Models\Banner;
 use App\Models\sellerBanner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
+use App\Models\SellerStoryPrice;
 
 
 class BannerService
@@ -347,6 +348,64 @@ class BannerService
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch banner: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function getSellerStoryPrice($request)
+    {
+        try {
+
+            $data = SellerStoryPrice::with('country_info')
+                    ->get();
+
+
+            if ($data->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => __('Service_messages.no_banner_found'),
+                    'data' =>  []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Story Price fetched successfully',
+                'data' => $data
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch banner: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function addUpdateSellerStoryPrice(Request $request)
+    {
+        try {
+            $data = SellerStoryPrice::updateOrCreate(
+                [
+                    'country_id' => $request->country_id,
+                ],
+                [
+                    'per_day_price' => $request->per_day_price,
+                ]
+            );
+
+            return [
+                'status' => 'success',
+                'message' => __('Service_messages.story_price_updated_successfully'),
+                'data' => $data
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update banner',
                 'data' => []
             ];
         }

@@ -149,6 +149,8 @@ Route::group(['prefix' => 'admin'], function () {
      //banner per day price management
      Route::post('/add_update_banner',[BannerController::class,'add_update_banner']);
      Route::get('/get_banners',[BannerController::class,'get_banners']);
+     Route::post('/add_update_seller_story_price',[BannerController::class,'add_update_seller_story_price']);
+     Route::get('/get_seller_story_price',[BannerController::class,'get_seller_story_price']);
 
      //promocode management
      Route::post('/add_promocode',[PromocodeController::class,'add_promocode']);

@@ -164,6 +164,47 @@ class BannerController extends Controller
         }
     }
 
+    public function get_seller_story_price(Request $req)
+    {
+
+        try {
+            $data = $this->BannerService->getSellerStoryPrice($req);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+    
+    public function add_update_seller_story_price(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'country_id' => 'required|exists:countries,id',
+            'per_day_price' => 'required|integer',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->BannerService->addUpdateSellerStoryPrice($request);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 200);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 
