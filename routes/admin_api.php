@@ -200,7 +200,7 @@ Route::group(['prefix' => 'admin'], function () {
      //story Management
      Route::post('/add_story',[StoryController::class,'add_story']);
      Route::get('/get_seller_stories',[StoryController::class,'get_seller_stories']);
-     Route::get('/get_seller_promotional_stories',[StoryController::class,'get_seller_promotional_stories']);
+     Route::post('/get_seller_promotional_stories',[StoryController::class,'get_seller_promotional_stories']);
      Route::get('/get_admin_stories',[StoryController::class,'get_admin_stories']);
      Route::post('/delete_story',[StoryController::class,'delete_story']);
      Route::post('/delete_seller_story',[StoryController::class,'delete_seller_story']);
