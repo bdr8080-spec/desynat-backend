@@ -808,6 +808,7 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
         $request_data=(object) [
         'seller_id'=>$seller_id,
         'file'=>$imageUrl,
+        'is_promotional'=>0
         ];
 
         $data=  $this->StoryManagementService->addSellerStory($request_data);
