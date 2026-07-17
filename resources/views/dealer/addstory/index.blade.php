@@ -28,7 +28,7 @@ button.deleteStoryBtn {
         <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
             <div class="title24">
                 <a href="{{route('seller.view_profile')}}" style="color:rgb(57, 55, 55)">
-                    <i class="bi bi-chevron-left"></i>  {{ __('seller_messages.Add_Story') }}
+                    <i class="bi bi-chevron-left"></i> {{ __('seller_messages.Add_Story') }}
                 </a>
             </div>
         </div>
@@ -46,14 +46,9 @@ button.deleteStoryBtn {
                 </div>
             </div>
             <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr" style="display:none;">
-            <video id="bannerUploadedVideo" class="img-fluid uploadbnr" controls
-                style="display:none;"></video>
+            <video id="bannerUploadedVideo" class="img-fluid uploadbnr" controls style="display:none;"></video>
         </label>
-        <input type="file"
-               id="banner_image_upload"
-               name="file"
-               accept="image/*,video/*"
-               style="display:none;">
+        <input type="file" id="banner_image_upload" name="file" accept="image/*,video/*" style="display:none;">
     </div>
 </div>
 
@@ -63,27 +58,27 @@ button.deleteStoryBtn {
     <div class="reels-wrapper mt-4">
         <div class="row">
             @foreach($sellerStories as $index => $story)
-                <div class="col-lg-3 col-md-3">
-                    <div class="reels-grid" onclick="addSeller({{ $index }})">
-                        <div class="reel-card">
-                            @php
-                                $extension = pathinfo($story->file, PATHINFO_EXTENSION);
-                            @endphp
+            <div class="col-lg-3 col-md-3">
+                <div class="reels-grid" onclick="addSeller({{ $index }})">
+                    <div class="reel-card">
+                        @php
+                        $extension = pathinfo($story->file, PATHINFO_EXTENSION);
+                        @endphp
 
-                            @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
-                                <video class="img-fluid" muted loop playsinline preload="metadata">
-                                    <source src="{{ $story->file }}" type="video/{{ $extension }}">
-                                   {{ __('seller_messages.Browser_Not_Support_Video') }}
-                                </video>
-                            @else
-                                <img src="{{ $story->file }}" alt="image" class="img-fluid">
-                            @endif
-                        </div>
+                        @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
+                        <video class="img-fluid" muted loop playsinline preload="metadata">
+                            <source src="{{ $story->file }}" type="video/{{ $extension }}">
+                            {{ __('seller_messages.Browser_Not_Support_Video') }}
+                        </video>
+                        @else
+                        <img src="{{ $story->file }}" alt="image" class="img-fluid">
+                        @endif
                     </div>
-                    <button class="deleteStoryBtn" data-id="{{ $story->id }}">
-                         {{ __('seller_messages.Delete') }}
-                    </button>
                 </div>
+                <button class="deleteStoryBtn" data-id="{{ $story->id }}">
+                    {{ __('seller_messages.Delete') }}
+                </button>
+            </div>
             @endforeach
         </div>
 
@@ -94,7 +89,7 @@ button.deleteStoryBtn {
 <div class="status-viewer bgwhite" id="Addstory12">
     <div class="container">
         <div class="story-header d-flex justify-content-between py-4">
-           <h3>{{ __('seller_messages.Add_Story') }}</h3>
+            <h3>{{ __('seller_messages.Add_Story') }}</h3>
             <button type="button" class="btn btn-light" onclick="closeStatus1()"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="logostatus">
@@ -102,73 +97,205 @@ button.deleteStoryBtn {
                 <img id="storyimg12" class="img-fluid" alt="status" />
                 <video id="storyvideo12" class="img-fluid" controls style="display:none;"></video>
             </div>
-        </div>   
+        </div>
 
         <div class="dashboard-button mt-4 logostatus bgwhite">
-            <button type="button" class="btn add-fillbtn w-100">  {{ __('seller_messages.Upload') }}</button>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#showModule" class="btn add-fillbtn w-100">
+                {{ __('seller_messages.Upload') }}</button>
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="showModule" tabindex="-1" aria-hidden="true">
 
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 20px;">
+           
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title w-100 text-center fw-bold" id="showModuleLabel" style="color: #333;">Promote
+                    Story</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
 
+      
+            <div class="modal-body px-4" id="moduleData">
+
+                <div class="card p-3 mb-3 option-card" id="cardProfile"
+                    style="border: 1px solid #e0e0e0; border-radius: 12px; cursor: pointer;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <input class="form-check-input me-3 option-checkbox" type="checkbox" id="checkProfile"
+                                checked style="width: 22px; height: 22px; accent-color: #a48464;">
+                            <div>
+                                <strong class="d-block" style="color: #222;">Profile Story</strong>
+                                <small class="text-muted">Visible on your profile</small>
+                            </div>
+                        </div>
+                        <span class="fw-bold" style="color: #222;">Free</span>
+                    </div>
+                </div>
+
+                <div class="card p-3 mb-3 option-card" id="cardFeatured"
+                    style="border: 1px solid #e0e0e0; border-radius: 12px; cursor: pointer;">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <input class="form-check-input me-3 option-checkbox" type="checkbox" id="checkFeatured"
+                                style="width: 22px; height: 22px; accent-color: #a48464;">
+                            <div>
+                                <strong class="d-block" style="color: #222;">Featured on Desyat Home</strong>
+                                <small class="text-muted">Reach more users</small>
+                            </div>
+                        </div>
+                        <span class="fw-bold text-success">Paid</span>
+                    </div>
+                </div>
+
+                <div id="paidFields" style="display: none;">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted mb-1">Select Date</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="21/09/2025"
+                                style="border-radius: 8px; border: 1px solid #dcdcdc; height: 45px;">
+                            <span class="input-group-text bg-white"
+                                style="border-radius: 8px; border: 1px solid #dcdcdc; border-left: none;">
+                                <i class="bi bi-calendar3"></i> 
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Total Price -->
+                    <div class="d-flex justify-content-between align-items-center p-3 mb-4"
+                        style="background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; height: 45px;">
+                        <span class="fw-bold text-muted small">Total Price</span>
+                        <span class="fw-bold" style="color: #222;">499 KD</span>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button type="button" id="submitBtn" class="btn w-100 text-white fw-bold py-2 mt-2"
+                    style="background: linear-gradient(to right, #bca085, #8a6d51); border-radius: 10px; height: 48px;">
+                    Post on Profile
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-    var sellerStories = @json($sellerStories);
-    //console.log(stories);
-</script>
+document.addEventListener("DOMContentLoaded", function() {
+    const checkProfile = document.getElementById("checkProfile");
+    const checkFeatured = document.getElementById("checkFeatured");
 
-<script>
-    var currentIndex = 0;
+    const cardProfile = document.getElementById("cardProfile");
+    const cardFeatured = document.getElementById("cardFeatured");
 
-    function addSeller(index) {
-        currentIndex = index;
+    const paidFields = document.getElementById("paidFields");
+    const submitBtn = document.getElementById("submitBtn");
 
-        document.getElementById("Addstory12").style.display = "block";
-        loadStory();
-    }
+  
+    const activeBorder = "1px solid #a48464";
+    const normalBorder = "1px solid #e0e0e0";
 
-    function loadStory() {
-        var story = sellerStories[currentIndex];
-        var file = story.file;
+    function updateUI() {
+        cardProfile.style.border = checkProfile.checked ? activeBorder : normalBorder;
+        cardFeatured.style.border = checkFeatured.checked ? activeBorder : normalBorder;
 
-        var img = document.getElementById("storyimg12");
-        var video = document.getElementById("storyvideo12");
-
-        // Reset both
-        img.style.display = "none";
-        video.style.display = "none";
-        video.pause();
-        video.src = "";
-
-        // Check file type
-        if (file.match(/\.(mp4|webm|ogg)$/i)) {
-            video.src = file;
-            video.style.display = "block";
-            video.play();
+        if (checkFeatured.checked) {
+            paidFields.style.display = "block";
+            submitBtn.innerText = "Send Request";
         } else {
-            img.src = file;
-            img.style.display = "block";
+            paidFields.style.display = "none";
+            submitBtn.innerText = "Post on Profile";
         }
     }
 
+    checkProfile.addEventListener("change", function() {
+        if (checkProfile.checked) checkFeatured.checked = false;
+        updateUI();
+    });
 
-    function closeStatus1() {
-        document.getElementById("Addstory12").style.display = "none";
+    checkFeatured.addEventListener("change", function() {
+        if (checkFeatured.checked) checkProfile.checked = false;
+        updateUI();
+    });
 
-        // Stop video on close
-        var video = document.getElementById("storyvideo12");
-        video.pause();
-        video.src = "";
+    cardProfile.addEventListener("click", function(e) {
+        if (e.target !== checkProfile) {
+            checkProfile.checked = !checkProfile.checked;
+            if (checkProfile.checked) checkFeatured.checked = false;
+            updateUI();
+        }
+    });
+
+    cardFeatured.addEventListener("click", function(e) {
+        if (e.target !== checkFeatured) {
+            checkFeatured.checked = !checkFeatured.checked;
+            if (checkFeatured.checked) checkProfile.checked = false;
+            updateUI();
+        }
+    });
+
+    updateUI();
+});
+</script>
+
+<script>
+var sellerStories = @json($sellerStories);
+//console.log(stories);
+</script>
+
+<script>
+var currentIndex = 0;
+
+function addSeller(index) {
+    currentIndex = index;
+
+    document.getElementById("Addstory12").style.display = "block";
+    loadStory();
+}
+
+function loadStory() {
+    var story = sellerStories[currentIndex];
+    var file = story.file;
+
+    var img = document.getElementById("storyimg12");
+    var video = document.getElementById("storyvideo12");
+
+    // Reset both
+    img.style.display = "none";
+    video.style.display = "none";
+    video.pause();
+    video.src = "";
+
+    // Check file type
+    if (file.match(/\.(mp4|webm|ogg)$/i)) {
+        video.src = file;
+        video.style.display = "block";
+        video.play();
+    } else {
+        img.src = file;
+        img.style.display = "block";
     }
+}
+
+
+function closeStatus1() {
+    document.getElementById("Addstory12").style.display = "none";
+
+    // Stop video on close
+    var video = document.getElementById("storyvideo12");
+    video.pause();
+    video.src = "";
+}
 </script>
 
 
 <!-- add story -->
 <script>
-    document.getElementById('bannerUploadLabel').addEventListener('click', function(e) {
+document.getElementById('bannerUploadLabel').addEventListener('click', function(e) {
     e.preventDefault();
 
-   // console.log('Label clicked');
+    // console.log('Label clicked');
 
     const fileInput = document.getElementById('banner_image_upload');
     //console.log(fileInput);
@@ -214,60 +341,66 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 
     //  AJAX upload
     fetch("{{ route('seller.upload_story') }}", {
-        method: "POST",
-        headers: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        },
-        body: formData
-    })
-    .then(async res => {
-        let data;
-        try {
-            data = await res.json();
-        } catch (e) {
-            throw new Error("Invalid JSON response");
-        }
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+        .then(async res => {
+            let data;
+            try {
+                data = await res.json();
+            } catch (e) {
+                throw new Error("Invalid JSON response");
+            }
 
-        return { statusCode: res.status, body: data };
-    })
-    .then(({ statusCode, body }) => {
-        if (loader) loader.style.display = 'none';
+            return {
+                statusCode: res.status,
+                body: data
+            };
+        })
+        .then(({
+            statusCode,
+            body
+        }) => {
+            if (loader) loader.style.display = 'none';
 
-        //  Handle Laravel validation (422)
-        if (statusCode === 422) {
-            toastr.error(body.message || 'Validation error');
-            return;
-        }
+            //  Handle Laravel validation (422)
+            if (statusCode === 422) {
+                toastr.error(body.message || 'Validation error');
+                return;
+            }
 
-        //  Handle API response
-        if (body.status === 'success') {
-            toastr.success(body.message || 'Uploaded successfully');
+            //  Handle API response
+            if (body.status === 'success') {
+                toastr.success(body.message || 'Uploaded successfully');
 
-            setTimeout(() => {
-                location.reload();
-            }, 1500);
-        } else if (body.status === 'failed') {
-            toastr.error(body.message || 'Upload failed');
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            } else if (body.status === 'failed') {
+                toastr.error(body.message || 'Upload failed');
 
-            setTimeout(() => {
-                window.location.href = "{{ route('seller.all_plans') }}";
-            }, 1500);
+                setTimeout(() => {
+                    window.location.href = "{{ route('seller.all_plans') }}";
+                }, 1500);
 
-        } else {
-            toastr.error(body.message || 'Something went wrong');
-        }
-    })
-    .catch(error => {
-        if (loader) loader.style.display = 'none';
-        toastr.error('Something went wrong');
-        console.error(error);
-    });
+            } else {
+                toastr.error(body.message || 'Something went wrong');
+            }
+        })
+        .catch(error => {
+            if (loader) loader.style.display = 'none';
+            toastr.error('Something went wrong');
+            console.error(error);
+        });
 });
 </script>
 
 <!-- upload from gallery -->
 <script>
-document.querySelector('.add-fillbtn').addEventListener('click', async function () {
+document.querySelector('.add-fillbtn').addEventListener('click', async function() {
     const img = document.getElementById('storyimg12');
     const video = document.getElementById('storyvideo12');
     const loader = document.getElementById('loader');
@@ -340,39 +473,39 @@ document.body.addEventListener('click', function(e) {
         const storyId = deleteBtn.getAttribute('data-id');
         if (!storyId) return;
 
-       // if (!confirm("Are you sure you want to delete this highlight?")) return;
+        // if (!confirm("Are you sure you want to delete this highlight?")) return;
 
         const originalHTML = deleteBtn.innerHTML;
-       // deleteBtn.innerHTML = "Deleting...";
+        // deleteBtn.innerHTML = "Deleting...";
         deleteBtn.style.pointerEvents = "none";
 
         fetch(`/seller/delete_story/${storyId}`, {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Accept": "application/json"
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            deleteBtn.innerHTML = originalHTML;
-            deleteBtn.style.pointerEvents = "auto";
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Accept": "application/json"
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                deleteBtn.innerHTML = originalHTML;
+                deleteBtn.style.pointerEvents = "auto";
 
-            if (data.status === "success") {
-                toastr.success(data.message || "Highlight deleted");
-                setTimeout(() => location.reload(), 1000);
-            } else {
-                toastr.error(data.message || "Failed to delete highlight");
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            deleteBtn.innerHTML = originalHTML;
-            deleteBtn.style.pointerEvents = "auto";
-            toastr.error("Something went wrong");
-        });
+                if (data.status === "success") {
+                    toastr.success(data.message || "Highlight deleted");
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    toastr.error(data.message || "Failed to delete highlight");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                deleteBtn.innerHTML = originalHTML;
+                deleteBtn.style.pointerEvents = "auto";
+                toastr.error("Something went wrong");
+            });
 
-        return; 
+        return;
     }
 
 

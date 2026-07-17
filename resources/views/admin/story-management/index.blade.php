@@ -347,7 +347,6 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
     <div class="userManagecontent">
         <div class="tab-content" id="pills-tabContent">
 
-            <!-- ==================== MAIN TAB 1: SELLER STORIES ==================== -->
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
 
                 <!-- SELLER STORIES INNER SUB-TABS (Free / Promotional) WITH MAIN TAB CLASSES AND CENTERED -->
@@ -559,26 +558,6 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
 
-                <div class="row align-items-center mb-4">
-                    <div class="col-lg-6 col-md-6 col-12 d-flex gap-2">
-                        <div class="search-box position-relative" style="width: 200px;">
-                            <i class="bi bi-search"
-                                style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #888;"></i>
-                            <input type="text" class="form-control" placeholder="search"
-                                style="padding-left: 35px; border-radius: 20px;" />
-                        </div>
-                        <select class="form-select w-auto" style="border-radius: 20px;">
-                            <option>Country 1</option>
-                        </select>
-                    </div>
-                    @if(in_array(19, $permissions) || $admin->type == 1)
-                    <div class="col-lg-6 col-md-6 col-12 text-end">
-                        <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModalphoto">
-                            <span>{{ __('admin_messages.add') }}</span>
-                        </a>
-                    </div>
-                    @endif
-                </div>
 
                 <div class="d-flex justify-content-center">
                     <ul class="nav nav-pills mb-3 tabs-pnl custom" id="admin-sub-tabs" role="tablist">
@@ -604,6 +583,24 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                     <div class="tab-pane fade show active" id="live-new" role="tabpanel" aria-labelledby="live-new-tab"
                         tabindex="0">
+                        
+                            <div class="row align-items-center mb-4">
+                                <div class="col-lg-3 col-md-12 col-12">
+                                    <div class="form-group  w-100">
+                                        <select name="country_name" id="country_name" class="form-select form-select-lg">
+                                            <option value="">Select Country</option>
+                                            <option value="India">India</option>
+                                            <option value="United States">United States</option>
+                                            <option value="United Kingdom">United Kingdom</option>
+                                            <option value="Canada">Canada</option>
+                                            <option value="Australia">Australia</option>
+                                            <option value="UAE">UAE</option>
+                                            <option value="Saudi Arabia">Saudi Arabia</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
                         <div class="table-responsive w-100">
                             <table class="table table-bordered w-100 align-middle">
                                 <thead class="table-light">
@@ -625,16 +622,18 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                         <td>Lorem</td>
                                         <td>UAE</td>
                                         <td>2nd September 2025 | 11 Am</td>
-                                        <td><i class="bi bi-image" style="font-size: 20px;"></i></td>
+                                        <td><img src="/admin/image/profile.jpg" alt="Story Image" class="img-fluid"
+                                                style="max-width: 50px; height: auto;"></td>
                                         <td>10th September 2025</td>
                                         <td>
-                                            <div class="d-flex gap-2 justify-content-center">
-                                                <button class="btn btn-sm btn-primary rounded-circle"
-                                                    style="width:28px; height:28px; padding:0;"><i
-                                                        class="bi bi-check-lg"></i></button>
-                                                <button class="btn btn-sm btn-danger rounded-circle"
-                                                    style="width:28px; height:28px; padding:0;"><i
-                                                        class="bi bi-x-lg"></i></button>
+                                            <div class="d-flex gap-3 justify-content-center">
+                                                <a class="table-button approveLiveRequest">
+                                                    <i class="bi bi-check-circle-fill"></i>
+                                                </a>
+                                                <a class="table-button rejectBtn" data-bs-toggle="modal"
+                                                    data-bs-target="#sentModal2">
+                                                    <i class="bi bi-x-circle-fill"></i>
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -646,6 +645,23 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                     <div class="tab-pane fade" id="live-approved" role="tabpanel" aria-labelledby="live-approved-tab"
                         tabindex="0">
+                        <div class="row align-items-center mb-4">
+                    <div class="col-lg-3 col-md-12 col-12">
+                        <div class="form-group  w-100">
+                            <select name="country_name" id="country_name" class="form-select form-select-lg">
+                                <option value="">Select Country</option>
+                                <option value="India">India</option>
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Australia">Australia</option>
+                                <option value="UAE">UAE</option>
+                                <option value="Saudi Arabia">Saudi Arabia</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
                         <div class="table-responsive w-100">
                             <table class="table table-bordered w-100 align-middle">
                                 <thead class="table-light">
@@ -679,6 +695,23 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                     <div class="tab-pane fade" id="live-rejected" role="tabpanel" aria-labelledby="live-rejected-tab"
                         tabindex="0">
+                        <div class="row align-items-center mb-4">
+                    <div class="col-lg-3 col-md-12 col-12">
+                        <div class="form-group  w-100">
+                            <select name="country_name" id="country_name" class="form-select form-select-lg">
+                                <option value="">Select Country</option>
+                                <option value="India">India</option>
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Australia">Australia</option>
+                                <option value="UAE">UAE</option>
+                                <option value="Saudi Arabia">Saudi Arabia</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
                         <div class="table-responsive w-100">
                             <table class="table table-bordered w-100 align-middle">
                                 <thead class="table-light">
