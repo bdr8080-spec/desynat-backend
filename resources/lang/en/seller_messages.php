@@ -1716,7 +1716,35 @@ return [
 
     // Success Message
     'Plan_Purchased_Successfully' => 'Plan Purchased Successfully!',
-    "Myfatoorah"=>"Myfatoorah"
+    "Myfatoorah"=>"Myfatoorah",
+
+    'no_of_days_required' => 'No of days is required',
+    'country_required' => 'country id is required',
+
+
+    'file_required' => 'File is required.',
+
+    'is_promotional_required' => 'Please specify whether the story is promotional.',
+    'is_promotional_invalid' => 'The promotional status must be either 0 or 1.',
+
+    'start_date_required' => 'Start date is required for promotional stories.',
+    'start_date_invalid' => 'Please provide a valid start date.',
+
+    'end_date_required' => 'End date is required for promotional stories.',
+    'end_date_invalid' => 'Please provide a valid end date.',
+    'end_date_after_start_date' => 'The end date must be the same as or later than the start date.',
+
+    'total_days_required' => 'Total days is required for promotional stories.',
+    'total_days_invalid' => 'Total days must be a valid integer.',
+
+    'amount_required' => 'Amount is required for promotional stories.',
+    'amount_invalid' => 'Amount must be a valid number.',
+
+    'story_id_required' => 'Story ID is required.',
+'story_id_integer' => 'Story ID must be a valid integer.',
+'story_not_found' => 'The selected story does not exist.',
+
+'transaction_id_required' => 'Transaction ID is required.',
 
 
 ];

@@ -5,6 +5,16 @@ return [
   'no_data_found' => 'لا توجد بيانات',
   'upgrade_only_higher_plan' => 'يمكنك الترقية فقط إلى خطة أعلى أثناء تفعيل خطتك الحالية.',
   'story_price_updated_successfully' => 'تم تحديث سعر القصة بنجاح',
+
+  'story_not_found' => 'القصة غير موجودة.',
+'story_not_promotional' => 'هذه القصة ليست ترويجية.',
+'story_not_approved_by_admin' => 'لم تتم الموافقة على هذه القصة من قبل الإدارة بعد.',
+'story_rejected_by_admin' => 'تم رفض هذه القصة من قبل الإدارة.',
+'story_payment_completed' => 'تم إتمام دفع رسوم القصة بنجاح.',
+'story_payment_already_completed' => 'تم دفع رسوم هذه القصة بالفعل.',
+'story_rejected_successfully' => 'تم رفض القصة بنجاح.',
+'story_not_found' => 'القصة غير موجودة.',
+'story_approved_successfully' => 'تمت الموافقة على القصة بنجاح.',
   
   //admin auth service
   'otp_verified_successfully' => 'تم التحقق من رمز التحقق بنجاح',

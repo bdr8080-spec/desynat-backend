@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Story;
+use App\Models\SellerStoryPrice;
 use App\Models\Reel;
 use App\Models\Highlight;
 use App\Models\WhislistReel;
@@ -45,6 +46,7 @@ class StoryManagementService
             }
             
             $query->where('type', '2');
+            $query->where('is_promotional', '0');
             $query->orderBy('id', 'desc');
 
             $story_details = $query->paginate($limit);
@@ -563,9 +565,57 @@ class StoryManagementService
     
     //seller
 
+    // public function addSellerStory($request_data)
+    // {
+
+    //     try {
+
+    //         $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request_data->seller_id)
+    //             ->where('payment_status', '1')
+    //             ->where('status', '1')
+    //             ->whereDate('plan_end_date', '>=', Carbon::today())
+    //             ->first();
+
+    //         if (!$subscription) {
+    //             return [
+    //                 'status' => 'failed',
+    //                 'message' => __('Service_messages.no_active_plan'),
+    //                 'data' => []
+    //             ];
+    //         }
+
+    //         if ($subscription->stories !== '1') {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => __('Service_messages.story_limit_reached_for_plan'),
+    //                 'data' => []
+    //             ];
+    //         }
+
+    //         $story = Story::create([
+    //             'file' => $request_data->file,
+    //             'type' => 2,
+    //             'seller_id' => $request_data->seller_id,
+    //             'thumbnail' => $request_data->thumbnail??null,
+    //         ]);
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => __('Service_messages.story_added_successfully'),
+    //             'data' => $story
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to add story',
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
     public function addSellerStory($request_data)
     {
-
         try {
 
             $subscription = SellerSubcriptionPlanBuy::where('seller_id', $request_data->seller_id)
@@ -590,12 +640,23 @@ class StoryManagementService
                 ];
             }
 
-            $story = Story::create([
-                'file' => $request_data->file,
-                'type' => 2,
-                'seller_id' => $request_data->seller_id,
-                'thumbnail' => $request_data->thumbnail??null,
-            ]);
+            $storyData = [
+                'seller_id'        => $request_data->seller_id,
+                'file'             => $request_data->file,
+                'thumbnail'        => $request_data->thumbnail ?? null,
+                'type'             => 2,
+                'is_promotional'   => $request_data->is_promotional,
+            ];
+
+            // Add promotional details only when story is promotional
+            if ($request_data->is_promotional == 1) {
+                $storyData['start_date'] = $request_data->start_date;
+                $storyData['end_date']   = $request_data->end_date;
+                $storyData['total_days'] = $request_data->total_days;
+                $storyData['amount']     = $request_data->amount;
+            }
+
+            $story = Story::create($storyData);
 
             return [
                 'status' => 'success',
@@ -604,9 +665,10 @@ class StoryManagementService
             ];
 
         } catch (\Exception $e) {
+
             return [
                 'status' => 'error',
-                'message' => 'Failed to add story',
+                'message' => 'Failed to add story. ' . $e->getMessage(),
                 'data' => []
             ];
         }
@@ -1413,6 +1475,253 @@ class StoryManagementService
                 'status' => 'error',
                 'message' => 'Failed to see story',
                 'data' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function getSellerStoryPrice($request)
+    {
+        try {
+
+            $data = SellerStoryPrice::with('country_info')
+                ->where('country_id', $request->country_id)
+                ->first();
+
+            if (!$data) {
+                return [
+                    'status' => 'success',
+                    'message' => __('Service_messages.no_banner_found'),
+                    'data' => (object)[]
+                ];
+            }
+
+            $data->total_amount = $data->per_day_price * $request->no_of_days;
+
+            return [
+                'status' => 'success',
+                'message' => 'Story Price fetched successfully',
+                'data' => $data
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch story price: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function completeStoryPayment($request_data)
+{
+    try {
+
+        $story = Story::where('id', $request_data->story_id)
+            ->where('seller_id', $request_data->seller_id)
+            ->first();
+
+        if (!$story) {
+            return [
+                'status' => 'error',
+                'message' => __('Service_messages.story_not_found'),
+                'data' => []
+            ];
+        }
+
+        // Check promotional story
+        if ($story->is_promotional != '1') {
+            return [
+                'status' => 'error',
+                'message' => __('Service_messages.story_not_promotional'),
+                'data' => []
+            ];
+        }
+
+        // Check if payment is already completed
+        if ($story->payment_status == '1') {
+            return [
+                'status' => 'error',
+                'message' => __('Service_messages.story_payment_already_completed'),
+                'data' => []
+            ];
+        }
+
+        // Admin has not approved yet
+        if ($story->admin_verify == '0') {
+            return [
+                'status' => 'error',
+                'message' => __('Service_messages.story_not_approved_by_admin'),
+                'data' => []
+            ];
+        }
+
+        // Story rejected
+        if ($story->admin_verify == '2') {
+            return [
+                'status' => 'error',
+                'message' => __('Service_messages.story_rejected_by_admin'),
+                'data' => []
+            ];
+        }
+
+        // Approved
+        $story->update([
+            'transaction_id' => $request_data->transaction_id,
+            'payment_status' => 1,
+        ]);
+
+        return [
+            'status' => 'success',
+            'message' => __('Service_messages.story_payment_completed'),
+            'data' => $story->fresh()
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status' => 'error',
+            'message' => 'Failed to complete payment. ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+}
+
+    public function approveStory($request_data)
+{
+    try {
+
+        $story = Story::find($request_data->story_id);
+
+        if (!$story) {
+            return [
+                'status' => 'error',
+                'message' => __('Service_messages.story_not_found'),
+                'data' => []
+            ];
+        }
+
+        $story->update([
+            'admin_verify' => 1
+        ]);
+
+        return [
+            'status' => 'success',
+            'message' => __('Service_messages.story_approved_successfully'),
+            'data' => $story
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status' => 'error',
+            'message' => 'Failed to approve story',
+            'data' => []
+        ];
+    }
+}
+
+    public function rejectStory($request_data)
+{
+    try {
+
+        $story = Story::find($request_data->story_id);
+
+        if (!$story) {
+            return [
+                'status' => 'error',
+                'message' => __('Service_messages.story_not_found'),
+                'data' => []
+            ];
+        }
+
+        $story->update([
+            'admin_verify' => 2,
+            'reject_reason' => $request_data->reason,
+        ]);
+
+        return [
+            'status' => 'success',
+            'message' => __('Service_messages.story_rejected_successfully'),
+            'data' => $story
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status' => 'error',
+            'message' => 'Failed to reject story',
+            'data' => []
+        ];
+    }
+}
+
+    public function getSellerPromotionalStory($request)
+    {
+        try {
+            $limit = $request->input('limit');
+            $limit = (int)$limit;
+
+            $query = Story::with([
+                'seller_details',
+                'seller_details.store_info.country_info',
+            ]);
+
+            if ($request->filled('search')) {
+                $search = $request->input('search');
+
+                $query->whereHas('seller_details', function ($q) use ($search) {
+                    $q->where('first_name', 'like', '%' . $search . '%')
+                    ->orWhere('last_name', 'like', '%' . $search . '%');
+                });
+            }
+
+            if ($request->filled('country')) {
+                $country = $request->input('country');
+
+                $query->whereHas('seller_details.store_info.country_info', function ($q) use ($country) {
+                    $q->where('name', 'like', '%' . $country . '%');
+                });
+            }
+            
+            $query->where('type', '2');
+            $query->where('is_promotional', '1');
+            $query->where('Admin_verify', $request->type);
+            $query->orderBy('id', 'desc');
+
+            $story_details = $query->paginate($limit);
+           // dd(auth()->id());
+
+            $story_details->getCollection()->transform(function ($story) {
+
+                $type = 3;
+
+                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                    ->where('user_id', auth()->id())
+                    ->where('type', $type)
+                    ->exists() ? 1 : 0;
+
+                return $story;
+            });
+
+            if ($story_details->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => __('Service_messages.no_story_found'),
+                    'data' =>  (object)[]
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Seller Stories fetched successfully',
+                'data' => $story_details
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch story: ' . $e->getMessage(),
+                'data' => []
             ];
         }
     }

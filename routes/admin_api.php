@@ -200,12 +200,15 @@ Route::group(['prefix' => 'admin'], function () {
      //story Management
      Route::post('/add_story',[StoryController::class,'add_story']);
      Route::get('/get_seller_stories',[StoryController::class,'get_seller_stories']);
+     Route::get('/get_seller_promotional_stories',[StoryController::class,'get_seller_promotional_stories']);
      Route::get('/get_admin_stories',[StoryController::class,'get_admin_stories']);
      Route::post('/delete_story',[StoryController::class,'delete_story']);
      Route::post('/delete_seller_story',[StoryController::class,'delete_seller_story']);
      Route::post('/delete_seller_reel',[StoryController::class,'delete_seller_reel']);
      Route::post('/delete_seller_highlight',[StoryController::class,'delete_seller_highlight']);
      Route::post('/add_story_comment',[StoryController::class,'add_story_comment']);
+     Route::post('/approve_story',[StoryController::class,'approve_story']);
+     Route::post('/reject_story',[StoryController::class,'reject_story']);
 
      //live request & timeslot Management
      Route::post('/add_timeslot',[LiveRequestController::class,'add_timeslot']);

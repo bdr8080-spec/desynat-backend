@@ -322,12 +322,31 @@ class SellerDashboardController extends Controller
     public function add_story(Request $request){
 
       $validate = Validator::make($request->all(), [
-        'file' => 'required',
-        ],[
-            'file.required' => __('seller_messages.file_required') ,
-            // 'file.mimes' => __('seller_messages.file_invalid_format') ,
-            // 'file.max' => __('seller_messages.file_size_exceed') ,
-            
+            'file' => 'required',
+            'is_promotional' => 'required|in:0,1',
+
+            'start_date' => 'required_if:is_promotional,1|date',
+            'end_date' => 'required_if:is_promotional,1|date|after_or_equal:start_date',
+            'total_days' => 'required_if:is_promotional,1|integer|min:1',
+            'amount' => 'required_if:is_promotional,1|numeric|min:0',
+        ], [
+            'file.required' => __('seller_messages.file_required'),
+
+            'is_promotional.required' => __('seller_messages.is_promotional_required'),
+            'is_promotional.in' => __('seller_messages.is_promotional_invalid'),
+
+            'start_date.required_if' => __('seller_messages.start_date_required'),
+            'start_date.date' => __('seller_messages.start_date_invalid'),
+
+            'end_date.required_if' => __('seller_messages.end_date_required'),
+            'end_date.date' => __('seller_messages.end_date_invalid'),
+            'end_date.after_or_equal' => __('seller_messages.end_date_after_start_date'),
+
+            'total_days.required_if' => __('seller_messages.total_days_required'),
+            'total_days.integer' => __('seller_messages.total_days_invalid'),
+
+            'amount.required_if' => __('seller_messages.amount_required'),
+            'amount.numeric' => __('seller_messages.amount_invalid'),
         ]);
     
         if($validate->fails()){
@@ -336,10 +355,16 @@ class SellerDashboardController extends Controller
 
         $user_details=$request->user();
    
-        $request_data=(object )[
-            'seller_id'=>$user_details->id,
-            'file'=>$request->file,
-            'thumbnail' => $request->thumbnail??null,
+        $request_data = (object)[
+            'seller_id'        => $user_details->id,
+            'file'             => $request->file,
+            'thumbnail'        => $request->thumbnail ?? null,
+
+            'is_promotional'   => $request->is_promotional,
+            'start_date'       => $request->start_date ?? null,
+            'end_date'         => $request->end_date ?? null,
+            'total_days'       => $request->total_days ?? null,
+            'amount'           => $request->amount ?? null,
         ];
 
         $data= $this->StoryManagementService->addSellerStory($request_data);
@@ -795,6 +820,73 @@ public function get_raised_tickets(Request $request){
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
 }
+
+    public function get_seller_story_price(Request $request)
+    {
+
+        $validate = Validator::make($request->all(), [
+        'country_id' => 'required|integer|exists:countries,id',
+        'no_of_days' => 'required',
+        ],[
+            'country_id.required' => __('seller_messages.country_required') ,
+            'no_of_days.required' => __('seller_messages.no_of_days_required') ,
+
+        ]);
+    
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+
+        $request_data = (object)[
+            'country_id' => $request->country_id,
+            'no_of_days' => $request->no_of_days,
+        ];
+
+        $data = $this->StoryManagementService->getSellerStoryPrice($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
+
+    public function complete_story_payment(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'story_id' => 'required|integer|exists:stories,id',
+            'transaction_id' => 'required',
+        ], [
+            'story_id.required' => __('seller_messages.story_id_required'),
+            'story_id.exists' => __('seller_messages.story_not_found'),
+            'transaction_id.required' => __('seller_messages.transaction_id_required'),
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse(
+                'error',
+                $validate->errors()->first(),
+                $validate->errors()->first(),
+                422
+            );
+        }
+
+        $user = $request->user();
+
+        $request_data = (object)[
+            'seller_id' => $user->id,
+            'story_id' => $request->story_id,
+            'transaction_id' => $request->transaction_id,
+        ];
+
+        $data = $this->StoryManagementService->completeStoryPayment($request_data);
+
+        if ($data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
 
     
 

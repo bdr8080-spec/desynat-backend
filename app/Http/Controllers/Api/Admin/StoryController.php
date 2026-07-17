@@ -36,6 +36,29 @@ class StoryController extends Controller
         }
     }
 
+    public function get_seller_promotional_stories(Request $req)
+    {
+
+        $validate = Validator::make($req->all(), [
+            'type' => 'required|in:0,1,2',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 400);
+        }
+        try {
+            $data = $this->StoryManagementService->getSellerPromotionalStory($req);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
     public function get_admin_stories(Request $req)
     {
         try {
@@ -213,6 +236,64 @@ class StoryController extends Controller
 
         try {
             $result = $this->StoryManagementService->deleteSellerHighlight($request_data);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function approve_story(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'story_id' => 'required|exists:stories,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+         $request_data=(object )[
+            'story_id'=>$request->story_id,
+        ];
+
+        try {
+            $result = $this->StoryManagementService->approveStory($request_data);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function reject_story(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'story_id' => 'required|exists:stories,id',
+            'reason' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $request_data=(object )[
+            'story_id'=>$request->story_id,
+            'reason'=>$request->reason,
+        ];
+
+        try {
+            $result = $this->StoryManagementService->rejectStory($request_data);
 
             if ($result['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $result['message'], [], 400);

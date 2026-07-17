@@ -1727,6 +1727,33 @@ return [
 
     // Success Message
     'Plan_Purchased_Successfully' => 'تم شراء الخطة بنجاح!',
-     "Myfatoorah"=>"ميفاتورة"
+     "Myfatoorah"=>"ميفاتورة",
+
+     'no_of_days_required' => 'عدد الأيام مطلوب',
+'country_required' => 'معرّف الدولة مطلوب',
+
+'file_required' => 'الملف مطلوب.',
+
+    'is_promotional_required' => 'يرجى تحديد ما إذا كانت القصة ترويجية.',
+    'is_promotional_invalid' => 'يجب أن تكون قيمة الحالة الترويجية 0 أو 1.',
+
+    'start_date_required' => 'تاريخ البداية مطلوب للقصص الترويجية.',
+    'start_date_invalid' => 'يرجى إدخال تاريخ بداية صحيح.',
+
+    'end_date_required' => 'تاريخ النهاية مطلوب للقصص الترويجية.',
+    'end_date_invalid' => 'يرجى إدخال تاريخ نهاية صحيح.',
+    'end_date_after_start_date' => 'يجب أن يكون تاريخ النهاية مساويًا لتاريخ البداية أو بعده.',
+
+    'total_days_required' => 'إجمالي عدد الأيام مطلوب للقصص الترويجية.',
+    'total_days_invalid' => 'يجب أن يكون إجمالي عدد الأيام رقمًا صحيحًا.',
+
+    'amount_required' => 'المبلغ مطلوب للقصص الترويجية.',
+    'amount_invalid' => 'يجب أن يكون المبلغ رقمًا صالحًا.',
+
+    'story_id_required' => 'معرف القصة مطلوب.',
+'story_id_integer' => 'يجب أن يكون معرف القصة رقمًا صحيحًا.',
+'story_not_found' => 'القصة المحددة غير موجودة.',
+
+'transaction_id_required' => 'معرف المعاملة مطلوب.',
      
 ];

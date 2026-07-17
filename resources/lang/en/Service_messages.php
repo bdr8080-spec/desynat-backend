@@ -5,6 +5,15 @@ return [
   'no_data_found' => 'No data found',
   'upgrade_only_higher_plan' => 'You can only upgrade to a higher plan while your current plan is active.',
   'story_price_updated_successfully' => 'Story price updated successfully',
+  'story_not_found' => 'Story not found.',
+'story_not_promotional' => 'This story is not promotional.',
+'story_not_approved_by_admin' => 'This story is not yet approved by the admin.',
+'story_rejected_by_admin' => 'This story has been rejected by the admin.',
+'story_payment_completed' => 'Story payment completed successfully.',
+'story_payment_already_completed' => 'Payment for this story has already been completed.',
+'story_rejected_successfully' => 'Story rejected successfully.',
+'story_not_found' => 'Story not found.',
+'story_approved_successfully' => 'Story approved successfully.',
 
   //admin auth service
   'otp_verified_successfully' => 'OTP Verified Successfully',
