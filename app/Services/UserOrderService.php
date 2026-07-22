@@ -516,14 +516,9 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     }elseif($checkOrder->payment_method=='1'){
         $transactionId = $request->transaction_id;
-
-        $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2','transaction_id' => $transactionId]);
         $paymentId = $request->payment_id ?? null;
-        orderdetail::where('order_id', $checkOrder->id)
-        ->update([
-            'payment_id' => $paymentId
-        ]);
-
+        $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2','transaction_id' => $transactionId,'payment_id' => $paymentId]);
+        
         if($request->payment_status=='1'){
         $msg = __('Service_messages.order_payment_paid_successfully');
         $msgAr = "تم دفع الطلب بنجاح";
