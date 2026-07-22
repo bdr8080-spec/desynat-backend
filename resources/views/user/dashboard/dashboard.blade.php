@@ -47,7 +47,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                 <a class="category_detail"
                     href="{{ route('user.category_wise_store', $item->category_id) }}?subcategory={{ $item->id }}">
 
-                    <div class="categorie_cotent cat_title">
+                    <div class="categorie_cotent cat_title text-center">
                         <div class="categorie_cotent-img">
                             <img src="{{ $item->image }}" class="img-fluid" alt="Category">
                         </div>

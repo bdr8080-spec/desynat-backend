@@ -106,7 +106,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         color: #9e7750;
         font-weight: 700;
     } 
-
+    .owl-prev.disabled {
+    visibility: hidden;
+}
 
     </style>
 

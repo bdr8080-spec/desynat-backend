@@ -692,8 +692,13 @@ owl.owlCarousel({
             items: 4
         }
     },
+
+    onInitialized: function () {
+        $(this).find('.owl-prev').hide();
+    }
     
 });
+
 
      </script>
 
