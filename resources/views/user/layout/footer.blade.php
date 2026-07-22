@@ -494,9 +494,9 @@ $('.bannerpop').owlCarousel({
     }
 })
 
-
-$('.storeBanner').owlCarousel({
-    loop: true,
+var owl = $('.storeBanner');
+owl.owlCarousel({
+    loop:false,
     margin: 10,
     nav: false,
     dots: true,
@@ -572,12 +572,12 @@ $('.adsbannerpop2').owlCarousel({
 //     slideBy: 1 // slides one by one
 // });
 
-$('.storeCarousel').owlCarousel({
+var owl = $('.storeCarousel');
+owl.owlCarousel({
     loop: false,                     // Repeat from beginning
     margin: 10,
     nav: true,
     dots: true,
-
     autoplay: true,                 // Enable autoplay
     autoplayTimeout: 3000,          // 3 seconds
     autoplayHoverPause: true,
@@ -606,9 +606,10 @@ $('.storeCarousel').owlCarousel({
     slideBy: 1
 });
 
-$('.bestSellingCarousel').owlCarousel({
-    loop: true,
-    margin: 10,
+var owl = $('.bestSellingCarousel');
+owl.owlCarousel({
+    loop: false,
+    margin: 20,
     nav: true,
     dots: true,
     autoplayHoverPause: true,
@@ -634,9 +635,11 @@ $('.bestSellingCarousel').owlCarousel({
     
 });
 
-$('.topRatedCarousel').owlCarousel({
-    loop: true,
-    margin: 10,
+
+var owl = $('.topRatedCarousel');
+owl.owlCarousel({
+    loop: false,
+    margin: 20,
     nav: true,
     dots: true,
     // autoplay: true,
@@ -662,6 +665,41 @@ $('.topRatedCarousel').owlCarousel({
     },
     slideBy: 1 // slides one by one
 });
+
+var owl = $('.categoryProducts');
+owl.owlCarousel({
+    loop: false,
+    margin: 20,
+    nav: true,
+    dots: true,
+    autoplayHoverPause: true,
+    slideTransition: 'linear',
+    rtl: $('html').attr('dir') === 'rtl',
+    smartSpeed: 1000,
+    slideBy: 1,
+    navText: [
+        '<i class="fa fa-angle-left"></i>',
+        '<i class="fa fa-angle-right"></i>'
+    ],
+    responsive: {
+        0: {
+            items: 2
+        },
+        600: {
+            items: 3
+        },
+        1000: {
+            items: 4
+        }
+    },
+
+    onInitialized: function () {
+        $(this).find('.owl-prev').hide();
+    }
+    
+});
+
+
      </script>
 
      <script>

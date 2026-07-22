@@ -37,9 +37,41 @@ $currency = session('currencyAr', 'دينار كويتي');
     </div>
 </div>
 
-<section class="customContainer categorie_contenar" id="subCategorySection">
-    <h3 class="mid-headng">{{ __('user_messages.categories') }}</h3>
-    <div class="row">
+<section class="customContainer categorie_contenar sliderarrow" id="subCategorySection">
+    <h3 class="mid-headng">{{ __('user_messages.categories') }} </h3>
+
+    <div class="owl-carousel categoryProducts">
+
+        @forelse ($subCategory as $item)
+            <div class="item">
+                <a class="category_detail"
+                    href="{{ route('user.category_wise_store', $item->category_id) }}?subcategory={{ $item->id }}">
+
+                    <div class="categorie_cotent cat_title text-center">
+                        <div class="categorie_cotent-img">
+                            <img src="{{ $item->image }}" class="img-fluid" alt="Category">
+                        </div>
+
+                        @if(app()->getLocale() == 'en')
+                            <h3 class="mt-3">{{ $item->name_english }}</h3>
+                        @else
+                            <h3 class="mt-3">{{ $item->name_arabic }}</h3>
+                        @endif
+                    </div>
+                </a>
+            </div>
+
+        @empty
+            <div class="item">
+                <div class="my-3 text-center categorie_cotent">
+                    <h3>{{ __('user_messages.no_category_found') }}</h3>
+                </div>
+            </div>
+        @endforelse
+
+    </div>
+
+    <!-- <div class="row">
         @forelse ($subCategory as $item)
         <div class="col-lg-4 col-md-4 col-6 my-lg-3 my-2 text-center">
             <a class="category_detail"
@@ -62,7 +94,7 @@ $currency = session('currencyAr', 'دينار كويتي');
             <h3>{{ __('user_messages.no_category_found') }}</h3>
         </div>
         @endforelse
-    </div>
+    </div> -->
 </section>
 
 <div class="customContainer suggestStore">
