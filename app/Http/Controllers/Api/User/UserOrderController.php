@@ -251,7 +251,8 @@ class UserOrderController extends Controller
             'user_id'=>$user_id,
             'order_id'=>$request->order_id,
             'payment_status'=>$request->payment_status,
-            'transaction_id'=>$request->transaction_id
+            'transaction_id'=>$request->transaction_id,
+            'payment_id'=>$request->payment_id ?? null,
             ];
     
             $data=$this->UserOrderService->productOrderComplete($request_data);

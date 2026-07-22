@@ -274,6 +274,7 @@ Route::group(['prefix'=>'admin'], function(){
      Route::post('/deleteSubAdmin/{id}', [AuthController::class, 'deleteSubAdmin'])->name('admin.deleteSubAdmin');
      Route::post('/updateSubAdminStatus/{id}', [AuthController::class, 'updateSubAdminStatus'])->name('admin.updateSubAdminStatus');
      Route::get('/refund-managemnet', [AuthController::class, 'refundManagement'])->name('admin.refundManagement');
+     Route::post('/sendRefund', [AuthController::class, 'sendRefund'])->name('admin.sendRefund');
 
      //m14
      //dashboard export

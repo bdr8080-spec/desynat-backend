@@ -589,6 +589,28 @@ class AuthController extends Controller
       return view('admin.refund-management.index',compact('refundData','countries'));
     }
 
+    public function sendRefund(Request $request)
+    {
+
+        $request_data = (object)[
+            'orderdetail_id' => $request->orderdetail_id,
+        ];
+
+        $data = $this->OrderManagementService->sendRefund($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message']
+        ], 200);
+    }
+
     public function sendCredentials(Request $request)
     {
 

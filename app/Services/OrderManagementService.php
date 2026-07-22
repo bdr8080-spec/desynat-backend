@@ -1233,7 +1233,7 @@ public function sendRefund($request)
 {
     try {
 
-        $orderDetail = OrderDetail::find($request->orderdetail_id);
+        $orderDetail = orderdetail::find($request->orderdetail_id);
 
         if (!$orderDetail) {
 
