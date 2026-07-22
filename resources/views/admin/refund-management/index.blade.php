@@ -143,7 +143,7 @@
                                 <a class="btn btn-dark customBtn sendRefundButton"
                                     href="javascript:void(0)"
                                     data-orderdetail-id="{{ $data['id'] }}">
-                                        <span>Process Refund</span>
+                                        <span>{{ __('admin_messages.process_refund') }}</span>
                                     </a>
                             @endif
                            </td>
