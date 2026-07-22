@@ -46,8 +46,16 @@ class StoryController extends Controller
         if ($validate->fails()) {
             return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 400);
         }
+
+        $request_data = (object)[
+            'limit' => $request->limit??null,
+            'search' => $request->search??null,
+            'from_date' => $request->from_date??null,
+            'to_date' => $request->to_date??null,
+            'country_id' => $request->country_id??null,
+        ];
         try {
-            $data = $this->StoryManagementService->getSellerPromotionalStory($req);
+            $data = $this->StoryManagementService->getSellerPromotionalStory($request_data);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
