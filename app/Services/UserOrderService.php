@@ -519,7 +519,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
         $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2','transaction_id' => $transactionId]);
         $paymentId = $request->payment_id ?? null;
-        OrderDetail::where('order_id', $checkOrder->id)
+        orderdetail::where('order_id', $checkOrder->id)
         ->update([
             'payment_id' => $paymentId
         ]);
