@@ -365,7 +365,7 @@ public function getAdminStoryOnUser($request)
 {
     try {
 
-        $query = Story::query();
+        $query = Story::with('seller_details.store_info');
 
         $query->where(function ($q) {
 
