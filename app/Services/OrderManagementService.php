@@ -1343,6 +1343,22 @@ public function sendRefund($request)
                 random_int(10000000,99999999);
 
             $orderDetail->save();
+         CreateNotification([
+            'sender_id' => 1,
+            'sender_type' => 1,
+
+            'receiver_id' => $orderDetail->user_id,
+            'receiver_type' => 2,
+
+            'title_english' => 'Refund Initiated',
+            'title_arabic' => 'تم بدء عملية الاسترداد',
+
+            'description_english' => 'Refund of amount '.$refundAmount.' has been credited to your wallet for Order ID '.$order->order_id.'.',
+
+            'description_arabic' => 'تم إضافة مبلغ '.$refundAmount.' إلى محفظتك للطلب رقم '.$order->order_id.'.',
+
+            'notification_type' => 'refund_initiated'
+        ]);
 
             DB::commit();
 
@@ -1569,6 +1585,22 @@ public function sendRefund($request)
 
 
         $orderDetail->save();
+        CreateNotification([
+            'sender_id' => 1,
+            'sender_type' => 1,
+
+            'receiver_id' => $orderDetail->user_id,
+            'receiver_type' => 2,
+
+            'title_english' => 'Refund Initiated',
+            'title_arabic' => 'تم بدء عملية الاسترداد',
+
+            'description_english' => 'Refund initiated for Order ID '.$order->order_id.' of amount '.$refundAmount.'. It will be credited to your account within 5-7 working days.',
+
+            'description_arabic' => 'تم بدء عملية استرداد الطلب رقم '.$order->order_id.' بمبلغ '.$refundAmount.'. سيتم إيداع المبلغ في حسابك خلال 5-7 أيام عمل.',
+
+            'notification_type' => 'refund_initiated'
+        ]);
 
 
         DB::commit();
