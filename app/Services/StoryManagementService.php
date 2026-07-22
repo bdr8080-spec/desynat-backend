@@ -1726,24 +1726,90 @@ class StoryManagementService
         }
     }
 
-    public function getSellerStoriesRequests($request_data)
+
+
+public function getSellerStoriesRequests($request_data)
 {
     try {
-        $query = Story::where('seller_id', $request_data->seller_id)
-                    ->where('type', 2)
-                    ->where('is_promotional', 1)
-                    ->orderBy('id', 'asc');
 
-        // Paginate if limit provided, else fetch all
-        if (!empty($request_data->limit)) {
-            $stories = $query->paginate((int)$request_data->limit);
-        } else {
-            $stories = $query->get();
+        $today = Carbon::today()->toDateString();
+
+        $query = Story::where('seller_id', $request_data->seller_id)
+            ->where('type', 2)
+            ->where('is_promotional', 1);
+
+        if (!empty($request_data->search)) {
+            $query->where('id', 'LIKE', '%' . $request_data->search . '%');
         }
 
-        // Check if no stories found
-        if ((method_exists($stories, 'isEmpty') && $stories->isEmpty()) ||
-            (method_exists($stories, 'total') && $stories->total() == 0)) {
+        if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
+
+            $query->whereBetween('created_at', [
+                $request_data->from_date . ' 00:00:00',
+                $request_data->to_date . ' 23:59:59'
+            ]);
+
+        } elseif (!empty($request_data->from_date)) {
+
+            $query->whereDate('created_at', '>=', $request_data->from_date);
+
+        } elseif (!empty($request_data->to_date)) {
+
+            $query->whereDate('created_at', '<=', $request_data->to_date);
+
+        }
+
+        if (!empty($request_data->filter)) {
+
+            switch ($request_data->filter) {
+
+                // Active
+                case 1:
+                    $query->where('admin_verify', 1)
+                        ->where('payment_status', 1)
+                        ->whereDate('start_date', '<=', $today)
+                        ->whereDate('end_date', '>=', $today);
+                    break;
+
+                // Confirmed
+                case 2:
+                    $query->where('admin_verify', 1);
+                    break;
+
+                // Pending
+                case 3:
+                    $query->where('admin_verify', 0);
+                    break;
+
+                // Expired
+                case 4:
+                    $query->whereDate('end_date', '<', $today);
+                    break;
+
+                // Rejected
+                case 5:
+                    $query->where('admin_verify', 2);
+                    break;
+            }
+        }
+
+        $query->orderBy('id', 'desc');
+
+
+        if (!empty($request_data->limit)) {
+
+            $stories = $query->paginate((int) $request_data->limit);
+
+        } else {
+
+            $stories = $query->get();
+
+        }
+
+        if (
+            (method_exists($stories, 'isEmpty') && $stories->isEmpty()) ||
+            (method_exists($stories, 'total') && $stories->total() == 0)
+        ) {
             return [
                 'status' => 'success',
                 'message' => __('Service_messages.no_story_found'),
@@ -1758,11 +1824,13 @@ class StoryManagementService
         ];
 
     } catch (\Exception $e) {
+
         return [
             'status' => 'error',
             'message' => 'Failed to fetch stories: ' . $e->getMessage(),
             'data' => []
         ];
+
     }
 }
 

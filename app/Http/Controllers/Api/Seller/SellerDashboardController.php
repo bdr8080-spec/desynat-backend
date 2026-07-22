@@ -896,6 +896,10 @@ public function get_raised_tickets(Request $request){
         $request_data = (object)[
             'seller_id' => $user_details->id,
             'limit' => $request->limit??null,
+            'search' => $request->search??null,
+            'from_date' => $request->from_date??null,
+            'to_date' => $request->to_date??null,
+            'filter' => $request->filter??null,
         ];
 
         $data = $this->StoryManagementService->getSellerStoriesRequests($request_data);
