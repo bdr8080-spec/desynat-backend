@@ -360,17 +360,17 @@ class StoryManagementService
     //     }
     // }\
 
-    public function getAdminStoryOnUser($request)
+
+public function getAdminStoryOnUser($request)
 {
     try {
+
         $query = Story::query();
 
         $query->where(function ($q) {
 
-            // Admin Stories
             $q->where('type', 1)
 
-            // Promotional Stories
             ->orWhere(function ($subQuery) {
                 $subQuery->where('type', 2)
                     ->where('is_promotional', 1)
@@ -378,23 +378,24 @@ class StoryManagementService
                     ->where('payment_status', 1)
                     ->whereDate('end_date', '>=', Carbon::today());
             });
+
         });
 
-        // Only stories from last 24 hours
+        // 24 hour stories
         $query->where('created_at', '>=', Carbon::now()->subDay());
 
         $query->where('status', 1);
 
-        // Optional
-         $query->orderBy('id', 'desc');
+        $query->orderByRaw('CASE WHEN type = 1 THEN 0 ELSE 1 END')
+              ->orderBy('id', 'desc');
 
         $story_details = $query->get();
 
         $story_details = $story_details->map(function ($story) use ($request) {
 
-            $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+            $story->is_seen = StorySeenHistory::where('story_id', $story->id)
                 ->where('user_id', $request->user_id)
-                ->where('type', $story->type) // Use actual story type
+                ->where('type', $story->type)
                 ->exists() ? 1 : 0;
 
             return $story;
@@ -402,27 +403,28 @@ class StoryManagementService
 
         if ($story_details->isEmpty()) {
             return [
-                'status' => 'success',
+                'status'  => 'success',
                 'message' => __('Service_messages.no_story_found'),
-                'data' => []
+                'data'    => []
             ];
         }
 
         return [
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Stories fetched successfully',
-            'data' => $story_details
+            'data'    => $story_details
         ];
 
     } catch (\Exception $e) {
+
         return [
-            'status' => 'error',
+            'status'  => 'error',
             'message' => 'Failed to fetch story: ' . $e->getMessage(),
-            'data' => []
+            'data'    => []
         ];
+
     }
 }
-
 
 
     public function getAdminStoryOnSeller($request)
