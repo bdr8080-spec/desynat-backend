@@ -1726,6 +1726,46 @@ class StoryManagementService
         }
     }
 
+    public function getSellerStoriesRequests($request_data)
+{
+    try {
+        $query = Story::where('seller_id', $request_data->seller_id)
+                    ->where('type', 2)
+                    ->where('is_promotional', 1)
+                    ->orderBy('id', 'asc');
+
+        // Paginate if limit provided, else fetch all
+        if (!empty($request_data->limit)) {
+            $stories = $query->paginate((int)$request_data->limit);
+        } else {
+            $stories = $query->get();
+        }
+
+        // Check if no stories found
+        if ((method_exists($stories, 'isEmpty') && $stories->isEmpty()) ||
+            (method_exists($stories, 'total') && $stories->total() == 0)) {
+            return [
+                'status' => 'success',
+                'message' => __('Service_messages.no_story_found'),
+                'data' => (object)[]
+            ];
+        }
+
+        return [
+            'status' => 'success',
+            'message' => 'Seller stories fetched successfully',
+            'data' => $stories
+        ];
+
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to fetch stories: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+}
+
 
 
 
