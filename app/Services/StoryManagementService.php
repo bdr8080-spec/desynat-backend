@@ -1656,93 +1656,97 @@ class StoryManagementService
 }
 
     public function getSellerPromotionalStory($request)
-    {
-        try {
-            $limit = $request->input('limit');
-            $limit = (int)$limit;
+{
+    try {
 
-            $query = Story::with([
-                'seller_details',
-                'seller_details.store_info.country_info',
-            ]);
+        $limit = !empty($request->limit) ? (int) $request->limit : 10;
 
-            if ($request->filled('search')) {
-                $search = $request->input('search');
+        $query = Story::with([
+            'seller_details',
+            'seller_details.store_info.country_info',
+        ]);
 
-                $query->whereHas('seller_details', function ($q) use ($search) {
-                    $q->where('first_name', 'like', '%' . $search . '%')
+        if (!empty($request->search)) {
+
+            $search = $request->search;
+
+            $query->whereHas('seller_details', function ($q) use ($search) {
+                $q->where('first_name', 'like', '%' . $search . '%')
                     ->orWhere('last_name', 'like', '%' . $search . '%');
-                });
-            }
-
-            // Created Date Filter
-            if ($request->filled('from_date') && $request->filled('to_date')) {
-
-                $query->whereBetween('created_at', [
-                    $request->from_date . ' 00:00:00',
-                    $request->to_date . ' 23:59:59'
-                ]);
-
-            } elseif ($request->filled('from_date')) {
-
-                $query->whereDate('created_at', '>=', $request->from_date);
-
-            } elseif ($request->filled('to_date')) {
-
-                $query->whereDate('created_at', '<=', $request->to_date);
-
-            }
-
-            if ($request->filled('country_id')) {
-                $country = $request->input('country_id');
-
-                $query->whereHas('seller_details.store_info.country_info', function ($q) use ($country) {
-                    $q->where('id', 'like', '%' . $country . '%');
-                });
-            }
-            
-            $query->where('type', '2');
-            $query->where('is_promotional', '1');
-            $query->where('Admin_verify', $request->type);
-            $query->orderBy('id', 'desc');
-
-            $story_details = $query->paginate($limit);
-           // dd(auth()->id());
-
-            $story_details->getCollection()->transform(function ($story) {
-
-                $type = 3;
-
-                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
-                    ->where('user_id', auth()->id())
-                    ->where('type', $type)
-                    ->exists() ? 1 : 0;
-
-                return $story;
             });
 
-            if ($story_details->isEmpty()) {
-                return [
-                    'status' => 'success',
-                    'message' => __('Service_messages.no_story_found'),
-                    'data' =>  (object)[]
-                ];
-            }
+        }
+
+        if (!empty($request->country)) {
+
+            $country = $request->country;
+
+            $query->whereHas('seller_details.store_info.country_info', function ($q) use ($country) {
+                $q->where('name', 'like', '%' . $country . '%');
+            });
+
+        }
+
+        if (!empty($request->from_date) && !empty($request->to_date)) {
+
+            $query->whereBetween('created_at', [
+                $request->from_date . ' 00:00:00',
+                $request->to_date . ' 23:59:59'
+            ]);
+
+        } elseif (!empty($request->from_date)) {
+
+            $query->whereDate('created_at', '>=', $request->from_date);
+
+        } elseif (!empty($request->to_date)) {
+
+            $query->whereDate('created_at', '<=', $request->to_date);
+
+        }
+
+        $query->where('type', 2)
+            ->where('is_promotional', 1)
+            ->where('Admin_verify', $request->type)
+            ->orderBy('id', 'desc');
+
+        $story_details = $query->paginate($limit);
+
+        $story_details->getCollection()->transform(function ($story) {
+
+            $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                ->where('user_id', auth()->id())
+                ->where('type', 3)
+                ->exists() ? 1 : 0;
+
+            return $story;
+        });
+
+        if ($story_details->total() == 0) {
 
             return [
                 'status' => 'success',
-                'message' => 'Seller Stories fetched successfully',
-                'data' => $story_details
+                'message' => __('Service_messages.no_story_found'),
+                'data' => (object)[]
             ];
 
-        } catch (\Exception $e) {
-            return [
-                'status' => 'error',
-                'message' => 'Failed to fetch story: ' . $e->getMessage(),
-                'data' => []
-            ];
         }
+
+        return [
+            'status' => 'success',
+            'message' => 'Seller Stories fetched successfully',
+            'data' => $story_details
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status' => 'error',
+            'message' => 'Failed to fetch story: ' . $e->getMessage(),
+            'data' => []
+        ];
+
     }
+}
 
 
 
