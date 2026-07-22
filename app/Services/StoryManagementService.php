@@ -310,55 +310,118 @@ class StoryManagementService
     }
 
 
-    public function getAdminStoryOnUser($request)
-    {
-        try {
-            $query = Story::query();
+    // public function getAdminStoryOnUser($request)
+    // {
+    //     try {
+    //         $query = Story::query();
 
-            $query->where('type', '1');
+    //         $query->where('type', '1');
 
-            //  Only last 24 hours stories
-            $query->where('created_at', '>=', Carbon::now()->subDay());
-            $query->where('status', '1');
+    //         //  Only last 24 hours stories
+    //         $query->where('created_at', '>=', Carbon::now()->subDay());
+    //         $query->where('status', '1');
             
-            // $query->orderBy('id', 'asc');
+    //         // $query->orderBy('id', 'asc');
 
-            $story_details = $query->get();
+    //         $story_details = $query->get();
 
-                $story_details = $story_details->map(function ($story) use ($request) {
+    //             $story_details = $story_details->map(function ($story) use ($request) {
 
-                $type = 1;
+    //             $type = 1;
 
-                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
-                    ->where('user_id', $request->user_id)
-                    ->where('type', $type)
-                    ->exists() ? 1 : 0;
+    //             $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+    //                 ->where('user_id', $request->user_id)
+    //                 ->where('type', $type)
+    //                 ->exists() ? 1 : 0;
 
-                return $story;
+    //             return $story;
+    //         });
+
+    //         if ($story_details->isEmpty()) {
+    //             return [
+    //                 'status' => 'success',
+    //                 'message' => __('Service_messages.no_story_found'),
+    //                 'data' => []
+    //             ];
+    //         }
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Admin Stories fetched successfully',
+    //             'data' => $story_details
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to fetch story: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }\
+
+    public function getAdminStoryOnUser($request)
+{
+    try {
+        $query = Story::query();
+
+        $query->where(function ($q) {
+
+            // Admin Stories
+            $q->where('type', 1)
+
+            // Promotional Stories
+            ->orWhere(function ($subQuery) {
+                $subQuery->where('type', 2)
+                    ->where('is_promotional', 1)
+                    ->where('admin_verify', 1)
+                    ->where('payment_status', 1)
+                    ->whereDate('end_date', '>=', Carbon::today());
             });
+        });
 
-            if ($story_details->isEmpty()) {
-                return [
-                    'status' => 'success',
-                    'message' => __('Service_messages.no_story_found'),
-                    'data' => []
-                ];
-            }
+        // Only stories from last 24 hours
+        $query->where('created_at', '>=', Carbon::now()->subDay());
 
+        $query->where('status', 1);
+
+        // Optional
+         $query->orderBy('id', 'desc');
+
+        $story_details = $query->get();
+
+        $story_details = $story_details->map(function ($story) use ($request) {
+
+            $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                ->where('user_id', $request->user_id)
+                ->where('type', $story->type) // Use actual story type
+                ->exists() ? 1 : 0;
+
+            return $story;
+        });
+
+        if ($story_details->isEmpty()) {
             return [
                 'status' => 'success',
-                'message' => 'Admin Stories fetched successfully',
-                'data' => $story_details
-            ];
-
-        } catch (\Exception $e) {
-            return [
-                'status' => 'error',
-                'message' => 'Failed to fetch story: ' . $e->getMessage(),
+                'message' => __('Service_messages.no_story_found'),
                 'data' => []
             ];
         }
+
+        return [
+            'status' => 'success',
+            'message' => 'Stories fetched successfully',
+            'data' => $story_details
+        ];
+
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to fetch story: ' . $e->getMessage(),
+            'data' => []
+        ];
     }
+}
 
 
 
