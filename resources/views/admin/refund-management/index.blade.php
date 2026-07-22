@@ -96,6 +96,7 @@
                             <th scope="col">{{ __('admin_messages.reason') }}</th>
                             <th scope="col">{{ __('admin_messages.amount') }}</th>
                             <th scope="col">{{ __('admin_messages.status') }}</th>
+                            <th scope="col">{{ __('admin_messages.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -128,7 +129,24 @@
                                 @endif
                             </td>
                             <td>{{$data->amount}} {{__('admin_messages.kd')}}</td>
-                            <td>{{__('admin_messages.pending')}}</td>
+                            <td>
+                                @if($data->refund_status == 0)
+                                    {{ __('admin_messages.pending') }}
+                                @elseif($data->refund_status == 1)
+                                    {{ __('admin_messages.completed') }}
+                                @else
+                                    {{ __('admin_messages.failed') }}
+                                @endif
+                            </td>
+                           <td>
+                            @if($data->refund_status ==0)
+                                <a class="btn btn-dark customBtn sendRefundButton"
+                                    href="javascript:void(0)"
+                                    data-orderdetail-id="{{ $data['id'] }}">
+                                        <span>Process Refund</span>
+                                    </a>
+                            @endif
+                           </td>
                         </tr>
                          @empty
 
@@ -183,6 +201,55 @@ document.addEventListener("DOMContentLoaded", function () {
             reasonContainer.innerHTML = `<p style="font-size: 16px; line-height: 1.5;font-weight: 500;">${reason}</p>`;
         });
     });
+});
+</script>
+
+<script>
+document.querySelectorAll('.sendRefundButton').forEach(function(button) {
+
+    button.addEventListener('click', function () {
+
+        const orderdetailId = this.dataset.orderdetailId;
+
+        fetch(`{{ route('admin.sendRefund') }}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                orderdetail_id: orderdetailId
+            })
+        })
+        .then(async response => {
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw data;
+            }
+
+            return data;
+        })
+        .then(response => {
+
+            // Success (Green Toastr)
+            toastr.success(response.message);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+
+        })
+        .catch(error => {
+
+            // Error (Red Toastr)
+            toastr.error(error.message || 'Something went wrong');
+
+        });
+
+    });
+
 });
 </script>
 
