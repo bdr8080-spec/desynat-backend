@@ -369,23 +369,26 @@ public function getAdminStoryOnUser($request)
 
         $query->where(function ($q) {
 
-            $q->where('type', 1)
+            $q->where(function ($type1) {
+                $type1->where('type', 1)
+                    ->where('created_at', '>=', Carbon::now()->subDay());
+            })
 
-            ->orWhere(function ($subQuery) {
-                $subQuery->where('type', 2)
+            ->orWhere(function ($type2) {
+                $type2->where('type', 2)
                     ->where('is_promotional', 1)
                     ->where('admin_verify', 1)
                     ->where('payment_status', 1)
-                    ->whereDate('end_date', '>=', Carbon::today());
+                    ->whereDate('start_date', Carbon::today());
+                    // ->whereDate('end_date', '>=', Carbon::today());
             });
 
         });
 
-        // 24 hour stories
-        $query->where('created_at', '>=', Carbon::now()->subDay());
-
+        // Common condition
         $query->where('status', 1);
 
+        // Show type 1 stories first, then type 2
         $query->orderByRaw('CASE WHEN type = 1 THEN 0 ELSE 1 END')
               ->orderBy('id', 'desc');
 
@@ -1854,8 +1857,7 @@ public function getSellerStoriesRequests($request_data)
                 case 1:
                     $query->where('admin_verify', 1)
                         ->where('payment_status', 1)
-                        ->whereDate('start_date', '<=', $today)
-                        ->whereDate('end_date', '>=', $today);
+                        ->whereDate('start_date', $today);
                     break;
 
                 // Confirmed
@@ -1870,7 +1872,7 @@ public function getSellerStoriesRequests($request_data)
 
                 // Expired
                 case 4:
-                    $query->whereDate('end_date', '<', $today);
+                    $query->whereDate('start_date', '<', $today);
                     break;
 
                 // Rejected
