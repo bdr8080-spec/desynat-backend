@@ -195,11 +195,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
                                 <a href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialogUser"
                                     class="position-relative">
-                                    <span>
+                                    <span class="bell-icon">
                                         @if($notificationCount > 0)
                                         <span class="badge text-bg-danger badge-number">{{ $notificationCount }}</span>
                                         @endif
-                                        <img src="{{ asset('user/assets/images/noti.svg') }}" class="img-fluid" />
+                                        <!-- <img src="{{ asset('user/assets/images/noti.svg') }}" class="img-fluid" /> -->
+                                        <i class="bi bi-bell-fill"></i>
                                     </span>
                                 </a>
                             </div>

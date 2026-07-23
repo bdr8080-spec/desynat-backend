@@ -578,6 +578,9 @@ owl.owlCarousel({
     margin: 10,
     nav: true,
     dots: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
     autoplay: true,                 // Enable autoplay
     autoplayTimeout: 3000,          // 3 seconds
     autoplayHoverPause: true,
@@ -612,6 +615,9 @@ owl.owlCarousel({
     margin: 20,
     nav: true,
     dots: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
     autoplayHoverPause: true,
     slideTransition: 'linear',
     rtl: $('html').attr('dir') === 'rtl',
@@ -642,6 +648,9 @@ owl.owlCarousel({
     margin: 20,
     nav: true,
     dots: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
     // autoplay: true,
     // autoplayTimeout: 2000, 
     autoplayHoverPause: true,
@@ -672,6 +681,9 @@ owl.owlCarousel({
     margin: 20,
     nav: true,
     dots: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
     autoplayHoverPause: true,
     slideTransition: 'linear',
     rtl: $('html').attr('dir') === 'rtl',
@@ -689,7 +701,7 @@ owl.owlCarousel({
             items: 3
         },
         1000: {
-            items: 4
+            items: 3
         }
     },
 
