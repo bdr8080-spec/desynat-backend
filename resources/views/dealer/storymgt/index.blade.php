@@ -12,118 +12,93 @@ $can_action=$menu_permission['can_action'];
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24"> Story Management </div>
+
+        <a href="/Add-story"><img src="{{ asset('user') }}/assets/images/add-icon.svg" alt="add icon" style="width:40px;"></a>
     </div>
 
-    <form method="GET">
-        <div class="search-field d-flex align-items-center py-4 gap-3">
-            <div class="search-field d-flex align-items-center w-100">
-                <div class="from-group position-relative w-100">
-                    <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon2">
-                    <input type="search" name="search" class="form-control py-3"
-                        placeholder="{{ __('seller_messages.Search') }}">
-                </div>
-                <button type="submit" class="btn btn-success searchlin"> {{ __('seller_messages.Search') }} </button>
-            </div>
-
-            <a href="#"><img src="{{ asset('user') }}/assets/images/add-icon.svg" alt="add icon"
-                    class="add_ticket-btn"></a>
-
-        </div>
-    </form>
 
 
     <div class="ticket-pnl mt-0 storypnl">
-        <div class="filtericon">
-            <i class="bi bi-funnel" data-bs-toggle="modal" data-bs-target="#storyfilter"></i>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-4 col-md-4">
-                <div class="card mb-4 w-100">
-                    <div class="story-figure">
-                        <img src="{{ asset('dealer') }}/assets/img/reel-5.jpeg" alt="image" class="img-fluid">
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Request ID </p>
-                            <p class="fst-500">#7677678</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Total Amount </p>
-                            <p class="fst-500">400 KD</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Requested on </p>
-                            <p class="fst-500">21/07/2026 at 10:15 AM</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Status </p>
-                            <p class="fst-500">Pending</p>
-                        </div>
-
-                        <div class="pt-3 text-center">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#storyGrid"
-                                class="btn btn-success w-100">Pay Now</a>
-                        </div>
+    
+        <div class="datatable-wapper mt-5">
+            <div class="table-header mb-2">
+                <!-- Search -->
+                <div class="search-field">
+                    <div class="from-group position-relative">
+                        <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
+                        <input type="search" class="dt-input tableSearch form-control" id="customTableSearch"
+                            placeholder="{{ __('seller_messages.Search') }}" aria-controls="datatable_search">
                     </div>
                 </div>
+
+                <!-- Filters -->
+                <form method="GET" action="">
+                    <div class="search-filter">
+
+                        <!-- Date Filter -->
+                        <div class="from-group">
+                            <div class="show-date d-flex gap-2 flex-wrap">
+                                <div class="date-form-pnl">
+                                    <input type="date" class="form-control datepicker" name="from" id="fromDate"
+                                        value="{{ request()->from }}">
+                                    <p class="text-danger" id="error-start_date"></p>
+                                </div>
+
+                                <div class="date-form-pnl">
+                                    <input type="date" class="form-control datepicker" name="to" id="toDate"
+                                        value="{{ request()->to }}">
+                                    <p class="text-danger" id="error-end_date"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status Filter -->
+                        <div class="from-group">
+                            <select name="status_filter" class="form-select form-control width-50">
+                                <option selected>Filter </option>
+
+                                <option value="1">Active </option>
+                                <option value="2">Pending </option>
+                                <option value="3">Complete </option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
             </div>
 
-            <div class="col-lg-4 col-md-4">
-                <div class="card mb-4 w-100">
-                    <div class="story-figure">
-                        <img src="{{ asset('dealer') }}/assets/img/reel-5.jpeg" alt="image" class="img-fluid">
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Request ID </p>
-                            <p class="fst-500">#7677678</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Total Amount </p>
-                            <p class="fst-500">400 KD</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Requested on </p>
-                            <p class="fst-500">21/07/2026 at 10:15 AM</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Status </p>
-                            <p class="fst-500">Pending</p>
-                        </div>
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered datatable tablesearch" id="datatable_search">
+                    <thead>
+                        <tr>
+                            <th class="no-sort">S.No</th>
+                            <th class="no-sort">Images</th>
+                            <th class="no-sort">Request ID</th>
+                            <th class="no-sort">Requested on</th>
+                            <th class="no-sort">Total Amount</th>
+                            <th class="no-sort">Details</th>
+                            <th class="no-sort">Status</th>
+                            <th class="no-sort">Action</th>
+                        </tr>
+                    </thead>
 
-                        <div class="pt-3 text-center">
-                            <a href="#" class="btn btn-success w-100">Pay Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4">
-                <div class="card mb-4 w-100">
-                    <div class="story-figure">
-                        <img src="{{ asset('dealer') }}/assets/img/reel-5.jpeg" alt="image" class="img-fluid">
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Request ID </p>
-                            <p class="fst-500">#7677678</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Total Amount </p>
-                            <p class="fst-500">400 KD</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Requested on </p>
-                            <p class="fst-500">21/07/2026 at 10:15 AM</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Status </p>
-                            <p class="fst-500">Pending</p>
-                        </div>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <img src="{{ asset('dealer') }}/assets/img/reel-5.jpeg" class="img-fluid pro-image" alt="image"
+                                    style="width:105px;height:65px;border-radius:5%;object-fit:cover;">
+                            </td>
 
-
-                    </div>
-                </div>
+                            <td>#876868</td>
+                            <td>21/07/2026 at 10:15 AM</td>
+                            <td>400 KD</td>
+                            <td><a href="#" class="eyebtn" data-bs-toggle="modal" data-bs-target="#storyGrid"><i class="bi bi-eye"></i></a></td>
+                            <td>Pending</td>
+                            <td> <button type="button" class="btn add-fillbtn lh-25">Pay Now</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -173,11 +148,6 @@ $can_action=$menu_permission['can_action'];
                     <p class="text-muted mb-1"> Total Amount </p>
                     <p class="fst-500">400 KD</p>
                 </div>
-
-
-                <div class="cmn-btn mt-4">
-                    <button type="button" class="btn add-fillbtn w-100">Pay Now</button>
-                </div>
             </div>
 
         </div>
@@ -185,40 +155,6 @@ $can_action=$menu_permission['can_action'];
 </div>
 
 
-<!-- story filter Modal -->
-<div class="modal fade" id="storyfilter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5"> Filter </h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <div class="form-check">
-                    <input class="form-check-input action-checkbox" type="checkbox">
-                    <label class="form-check-label">Active</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input action-checkbox" type="checkbox">
-                    <label class="form-check-label">Pending</label>
-                </div>
-
-                <p class="text-muted mb-1 mt-3"> Filter By Date </p>
-                <div class="d-flex justify-between gap-3">
-                    <input type="date" class="form-control">
-                    <input type="date" class="form-control">
-                </div>
-
-                <div class="cmn-btn mt-4 d-flex justify-between gap-3">
-                    <button type="button" class="btn add-fillbtn w-100">Clear</button>
-                    <button type="button" class="btn add-fillbtn w-100">Apply</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 
 

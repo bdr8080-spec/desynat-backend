@@ -91,7 +91,7 @@
     pointer-events: none;
 }
 
-//new
+
 
 .progress-container {
     display: flex;

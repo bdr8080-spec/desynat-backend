@@ -1561,18 +1561,9 @@ table.dataTable td.dt-type-date {
     width: 100%;
     object-fit: cover;
 }
-.storypnl .col-lg-4{
-    display: flex;
-    justify-content: stretch;
+.lh-25 {
+    line-height: 25px;
 }
-.filtericon i {
-    font-size: 23px;
-    color: #9d7752;
-    display: flex;
-    justify-content: end;
-    margin-bottom: 20px;
-}
-
 
 
 

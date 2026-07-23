@@ -280,6 +280,11 @@ Route::match(['get', 'post'], '/storymgt', function () {
 
 })->name('dealer.storymgt');
 
+Route::match(['get', 'post'], '/Add-story', function () {
+    return view('dealer.storymgt.addStory');
+
+})->name('dealer.Add-story');
+
 // Route::match(['get', 'post'], '/chats', function () {
 //     return view('dealer.chatmgt.chatlist');
 

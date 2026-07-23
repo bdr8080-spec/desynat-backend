@@ -145,7 +145,7 @@ return [
     'reason_management' => 'Reason Management',
     'delivery_charges_tax_management' => 'Delivery Charges & Tax Management',
     'gift_card_category_management' => 'Gift Card Category Management',
-    'banner_per_day_price_management' => 'Banner Per Day Price Management',
+    'banner_per_day_price_management' => 'Banner & Story Per Day Price',
     'promo_code_management' => 'Promo Code Management',
     'order_management' => 'Order Management',
     'affiliate_commission_management' => 'Affiliate Commission Management',
@@ -475,7 +475,7 @@ return [
     'gift_card_category_updated_successfully' => 'Gift Card Category Updated Successfully!',
 
     //banner per day price management
-    'banner_per_day_charges_for_sellers' => 'Banner Per Day Charges for Sellers',
+    'banner_per_day_charges_for_sellers' => 'Banner & Story Per day Price',
     'home_top' => 'Home Top',
     'home_bottom' => 'Home Bottom',
     'sub_category' => 'Sub Category',
