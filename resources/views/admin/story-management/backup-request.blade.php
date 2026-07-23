@@ -583,24 +583,24 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                     <div class="tab-pane fade show active" id="live-new" role="tabpanel" aria-labelledby="live-new-tab"
                         tabindex="0">
-                        
-                            <div class="row align-items-center mb-4">
-                                <div class="col-lg-3 col-md-12 col-12">
-                                    <div class="form-group  w-100">
-                                        <select name="country_name" id="country_name" class="form-select form-select-lg">
-                                            <option value="">Select Country</option>
-                                            <option value="India">India</option>
-                                            <option value="United States">United States</option>
-                                            <option value="United Kingdom">United Kingdom</option>
-                                            <option value="Canada">Canada</option>
-                                            <option value="Australia">Australia</option>
-                                            <option value="UAE">UAE</option>
-                                            <option value="Saudi Arabia">Saudi Arabia</option>
-                                        </select>
-                                    </div>
-                                </div>
 
+                        <div class="row align-items-center mb-4">
+                            <div class="col-lg-3 col-md-12 col-12">
+                                <div class="form-group  w-100">
+                                    <select name="country_name" id="country_name" class="form-select form-select-lg">
+                                        <option value="">Select Country</option>
+                                        <option value="India">India</option>
+                                        <option value="United States">United States</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Australia">Australia</option>
+                                        <option value="UAE">UAE</option>
+                                        <option value="Saudi Arabia">Saudi Arabia</option>
+                                    </select>
+                                </div>
                             </div>
+
+                        </div>
                         <div class="table-responsive w-100">
                             <table class="table table-bordered w-100 align-middle">
                                 <thead class="table-light">
@@ -646,22 +646,22 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     <div class="tab-pane fade" id="live-approved" role="tabpanel" aria-labelledby="live-approved-tab"
                         tabindex="0">
                         <div class="row align-items-center mb-4">
-                    <div class="col-lg-3 col-md-12 col-12">
-                        <div class="form-group  w-100">
-                            <select name="country_name" id="country_name" class="form-select form-select-lg">
-                                <option value="">Select Country</option>
-                                <option value="India">India</option>
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Canada">Canada</option>
-                                <option value="Australia">Australia</option>
-                                <option value="UAE">UAE</option>
-                                <option value="Saudi Arabia">Saudi Arabia</option>
-                            </select>
-                        </div>
-                    </div>
+                            <div class="col-lg-3 col-md-12 col-12">
+                                <div class="form-group  w-100">
+                                    <select name="country_name" id="country_name" class="form-select form-select-lg">
+                                        <option value="">Select Country</option>
+                                        <option value="India">India</option>
+                                        <option value="United States">United States</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Australia">Australia</option>
+                                        <option value="UAE">UAE</option>
+                                        <option value="Saudi Arabia">Saudi Arabia</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                </div>
+                        </div>
                         <div class="table-responsive w-100">
                             <table class="table table-bordered w-100 align-middle">
                                 <thead class="table-light">
@@ -696,22 +696,22 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     <div class="tab-pane fade" id="live-rejected" role="tabpanel" aria-labelledby="live-rejected-tab"
                         tabindex="0">
                         <div class="row align-items-center mb-4">
-                    <div class="col-lg-3 col-md-12 col-12">
-                        <div class="form-group  w-100">
-                            <select name="country_name" id="country_name" class="form-select form-select-lg">
-                                <option value="">Select Country</option>
-                                <option value="India">India</option>
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Canada">Canada</option>
-                                <option value="Australia">Australia</option>
-                                <option value="UAE">UAE</option>
-                                <option value="Saudi Arabia">Saudi Arabia</option>
-                            </select>
-                        </div>
-                    </div>
+                            <div class="col-lg-3 col-md-12 col-12">
+                                <div class="form-group  w-100">
+                                    <select name="country_name" id="country_name" class="form-select form-select-lg">
+                                        <option value="">Select Country</option>
+                                        <option value="India">India</option>
+                                        <option value="United States">United States</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Australia">Australia</option>
+                                        <option value="UAE">UAE</option>
+                                        <option value="Saudi Arabia">Saudi Arabia</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                </div>
+                        </div>
                         <div class="table-responsive w-100">
                             <table class="table table-bordered w-100 align-middle">
                                 <thead class="table-light">
