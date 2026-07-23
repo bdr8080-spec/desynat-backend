@@ -25,6 +25,7 @@ use App\Services\UserAuthService;
 use App\Services\TwilioService;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserOtpMail;
+use Carbon\Carbon;
 
 
 use Laravel\Socialite\Facades\Socialite;
@@ -749,7 +750,16 @@ class AuthController extends Controller
             return view('user.dashboard.subCategory', compact('subCategory'))->render();
         }
 
-        $stores = sellerStoreInformation::orderBy('store_name', 'desc')->get();
+        // $stores = sellerStoreInformation::orderBy('store_name', 'desc')->get();
+        $stores = sellerStoreInformation::whereHas('seller_information.subcription_plan', function ($query) {
+            $query->where('is_expired', 0)
+                ->whereDate('plan_end_date', '>=', Carbon::today())
+                ->whereHas('plan_info', function ($plan) {
+                    $plan->where('is_recommended_store', 1);
+                });
+        })
+        ->orderBy('store_name', 'desc')
+        ->get();
 
         // Fetch banners only if user is logged in
        $banners = collect(); // default empty collection
