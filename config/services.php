@@ -54,8 +54,8 @@ return [
         'from' => env('TWILIO_PHONE'),
     ],
 
-    "defaultShippingFees"=>20,
-    "defaultTaxFees"=>10,
+    "defaultShippingFees"=>0,
+    "defaultTaxFees"=>0,
     
     'google' => [
     'client_id' => env('GOOGLE_CLIENT_ID'),
