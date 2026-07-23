@@ -32,7 +32,7 @@ class seller extends Authenticatable
     }
 
     public function seller_store_info(){
-        return $this->hasOne(sellerStoreInformation::class,'id','parent_id');
+        return $this->hasOne(sellerStoreInformation::class,'seller_id','parent_id');
     }
 
 
