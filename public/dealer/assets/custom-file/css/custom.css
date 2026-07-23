@@ -1565,6 +1565,47 @@ table.dataTable td.dt-type-date {
     line-height: 25px;
 }
 
+.verification-card {
+    padding: 30px 22px;
+    text-align: center;
+}
+
+.icon img {
+    width: 72px;
+    margin-bottom: 20px;
+}
+
+.verification-card h3 {
+    font-size: 17px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+.verification-card p {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.thank-pnl {
+    margin-top: 25px;
+}
+
+.thank-pnl p {
+    color: #b98952;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.thank-pnl strong {
+    color: #8b5e3c;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
 
 
 @media (max-width: 767px) {
