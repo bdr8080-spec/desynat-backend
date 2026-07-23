@@ -31,6 +31,10 @@ class seller extends Authenticatable
         return $this->hasOne(sellerStoreInformation::class,'seller_id','id');
     }
 
+    public function seller_store_info(){
+        return $this->hasOne(sellerStoreInformation::class,'seller_id','parent_id');
+    }
+
 
     public function owner_document(){
         return $this->hasMany(sellerDocument::class,'seller_id','id')->where('status','1')->where('document_type','1');
