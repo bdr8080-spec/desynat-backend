@@ -669,9 +669,21 @@ public function UsersuggestStore()
         try {
 
 //   $stores = sellerStoreInformation::orderBy('store_name', 'desc')->limit(10)->get();
-    $stores = sellerStoreInformation::inRandomOrder()
-                        ->limit(10)
-                        ->get();
+    // $stores = sellerStoreInformation::inRandomOrder()
+    //                     ->limit(10)
+    //                     ->get();
+    
+
+    $stores = sellerStoreInformation::whereHas('seller_information.subcription_plan', function ($query) {
+        $query->where('is_expired', 0)
+            ->whereDate('plan_end_date', '>=', Carbon::today())
+            ->whereHas('plan_info', function ($plan) {
+                $plan->where('is_recommended_store', 1);
+            });
+    })
+    ->inRandomOrder()
+    ->limit(10)
+    ->get();
 
 return [
     'status'  => 'success',
