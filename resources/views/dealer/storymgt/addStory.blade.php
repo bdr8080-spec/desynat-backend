@@ -59,7 +59,7 @@ $can_action=$menu_permission['can_action'];
             </div>
 
             <div class="cmn-btn mt-4">
-                <button type="button" class="btn add-fillbtn w-100">Send Request</button>
+                <button type="button" class="btn add-fillbtn w-100" data-bs-toggle="modal" data-bs-target="#sendStory">Send Request</button>
             </div>
         </div>
 
@@ -69,20 +69,32 @@ $can_action=$menu_permission['can_action'];
 
 
 <!-- Pay now story Modal -->
-<div class="modal fade" id="storyGrid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="sendStory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5"> Details </h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
             <div class="modal-body">
+                <div class="verification-card">
+                    <div class="icon">
+                        <img src="{{ asset('/dealer') }}/assets/img/watch.png" alt="Verification" class="img-fluid">
+                    </div>
 
+                    <h3>Your Story request has been successfully submitted for verification !</h3>
 
+                    <p>
+                        Our team is currently reviewing your details please allow
+                        3–4 hour for the verification process to be completed.
+                    </p>
 
-                <!-- <div class="cmn-btn mt-4">
-                    <button type="button" class="btn add-fillbtn w-100">Pay Now</button>
-                </div> -->
+                    <p>
+                        you will be notified once your Story is approved on the desynat
+                        platform.
+                    </p>
+
+                    <div class="thank-pnl">
+                        <p>Thank you for your patience</p>
+                        <strong>TEAM DESNYAT</strong>
+                    </div>
+                </div>
             </div>
 
         </div>
