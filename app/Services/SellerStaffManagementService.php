@@ -430,7 +430,7 @@ if($type=='api'){
    $All_staff = seller::with([
         'seller_category',
         'country_details',
-        'store_info',
+        'seller_store_info',
 
         // 🔥 Order Role_Action
         'Role_Action' => function ($q) {
