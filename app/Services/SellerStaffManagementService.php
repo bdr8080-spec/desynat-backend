@@ -446,11 +446,6 @@ if($type=='api'){
     ->whereHas('Role_Action')
 
     ->first();
-    dd([
-    'seller_id' => $All_staff->id,
-    'relation' => $All_staff->seller_store_info,
-    'direct_query' => sellerStoreInformation::where('seller_id', $All_staff->id)->first(),
-]);
     
 
     return [
