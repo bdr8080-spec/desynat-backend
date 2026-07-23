@@ -928,6 +928,7 @@ return [
     'user_country' => 'بلد المستخدم',
     'process_refund' => 'معالجة الاسترداد',
     'recommended_store' => 'المتجر الموصى به',
+    'seller_story_request_management' => 'إدارة طلبات قصص البائعين',
 
     //login
     'desynat_admin' => 'ديسينات أدمن',

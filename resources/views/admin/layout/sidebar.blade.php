@@ -268,6 +268,15 @@
         </a>
     </li>
     @endif
+
+    @if(in_array(32, $permissions) || $admin->type == 1)
+    <li class="nav-item {{ Request::routeIs('admin.sellerStoryReqestManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.sellerStoryReqestManagement') }}">
+            <span><img src="{{ asset('admin/image/Icon.svg') }}" alt="icon" /></span>
+            {{ __('admin_messages.seller_story_request_management') }}
+        </a>
+    </li>
+    @endif
    
 
     @if(in_array(30, $permissions) || $admin->type == 1)
