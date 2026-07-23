@@ -1551,6 +1551,31 @@ table.dataTable td.dt-type-date {
     transform: rotate(180deg);
 }
 
+.story-figure{
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+}
+.story-figure img{
+    height:100%;
+    width: 100%;
+    object-fit: cover;
+}
+.storypnl .col-lg-4{
+    display: flex;
+    justify-content: stretch;
+}
+.filtericon i {
+    font-size: 23px;
+    color: #9d7752;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 20px;
+}
+
+
+
+
 @media (max-width: 767px) {
     .sidebar-nav > .nav-item:nth-child(n + 6) {
         display: none;
