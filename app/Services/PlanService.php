@@ -67,6 +67,7 @@ class PlanService
 
                 'is_free_months' => $request->is_free_months,
                 'no_of_free_months' => $request->is_free_months == 1 ? $request->no_of_free_months : null,
+                'is_recommended_store' => $request->is_recommended_store,
             ]);
 
             return [
@@ -165,6 +166,7 @@ class PlanService
                 'commission_percentage' => $request->commission_percentage ?? null,
                 'is_free_months' => $request->is_free_months,
                 'no_of_free_months' => $request->is_free_months == 1 ? $request->no_of_free_months : null,
+                'is_recommended_store' => $request->is_recommended_store,
             ]);
 
             return [

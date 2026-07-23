@@ -138,17 +138,20 @@ class PlanController extends Controller
 
             'is_free_months' => 'required|in:0,1',
             'no_of_free_months' => 'required_if:is_free_months,1|nullable|numeric|max:11',
+            'is_recommended_store' => 'required|in:yes,no',
         ]);
 
         try {
             $request->merge([
                 'stories' => $request->stories === 'yes' ? 1 : 0,
                 'commission' => $request->commission === 'yes' ? 1 : 0,
+                'is_recommended_store' => $request->is_recommended_store === 'yes' ? 1 : 0,
 
                 'no_of_products' => $request->product_type == 1 ? null : $request->no_of_products,
 
                 'no_of_free_months' => $request->is_free_months == 1 ? $request->no_of_free_months : null,
             ]);
+
 
             $plan = $this->PlanService->addPlan($request);
 
@@ -236,6 +239,7 @@ class PlanController extends Controller
             'commission_percentage' => 'required_if:commission,yes|nullable|numeric',
             'is_free_months' => 'required|in:0,1',
             'no_of_free_months' => 'required_if:is_free_months,1|nullable|numeric|max:11',
+            'is_recommended_store' => 'required|in:yes,no',
         ]);
 
         try {
@@ -243,6 +247,7 @@ class PlanController extends Controller
             $request->merge([
                 'stories' => $request->stories === 'yes' ? 1 : 0,
                 'commission' => $request->commission === 'yes' ? 1 : 0,
+                'is_recommended_store' => $request->is_recommended_store === 'yes' ? 1 : 0,
                 'no_of_products' => $request->product_type == 1 ? null : $request->no_of_products,
                 'no_of_free_months' => $request->is_free_months == 1 ? $request->no_of_free_months : null,
             ]);

@@ -124,6 +124,7 @@ class PlanController extends Controller
                 'commission' => 'required|in:0,1',
                 'commission_percentage' => 'required_if:commission,1|nullable|numeric|min:0',
                 'is_free_months' => 'required|in:0,1',
+                'is_recommended_store' => 'required|in:0,1',
 
                 'no_of_free_months' => [
                     'nullable',
@@ -192,6 +193,7 @@ class PlanController extends Controller
                 'commission_percentage' => 'required_if:commission,1|nullable|numeric|min:0',
                 'is_free_months' => 'required|in:0,1',
                 'no_of_free_months' => 'required_if:is_free_months,1|nullable|integer|min:1|max:11',
+                'is_recommended_store' => 'required|in:0,1',
             ],
             [
                 'duration.max' => 'Duration must not be greater than 11 months.',

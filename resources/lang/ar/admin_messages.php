@@ -927,6 +927,7 @@ return [
     'cancellation_date_&_time' => 'تاريخ ووقت الإلغاء',
     'user_country' => 'بلد المستخدم',
     'process_refund' => 'معالجة الاسترداد',
+    'recommended_store' => 'المتجر الموصى به',
 
     //login
     'desynat_admin' => 'ديسينات أدمن',

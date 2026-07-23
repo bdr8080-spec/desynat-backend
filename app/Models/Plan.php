@@ -29,7 +29,8 @@ class Plan extends Model
         'status',
         'product_type',
         'is_free_months',
-        'no_of_free_months'
+        'no_of_free_months',
+        'is_recommended_store'
     ];
 
     protected $casts = [

@@ -928,6 +928,8 @@ return [
     'cancellation_date_&_time' => 'Cancellation Date & Time',
     'user_country' => 'User Country',
     'process_refund' => 'Process Refund',
+    'recommended_store' => 'Recommended Store',
+
 
     //login
     'desynat_admin' => 'Desynat Admin',

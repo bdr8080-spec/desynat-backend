@@ -134,6 +134,7 @@
                                                 data-price="{{ $plan->price }}"
                                                 data-discounted-price="{{ $plan->discounted_price }}"
                                                 data-stories="{{ $plan->stories }}"
+                                                data-is-recommended-store="{{ $plan->is_recommended_store }}"
                                                 data-commission="{{ $plan->commission }}"
                                                 data-commission-percentage="{{ $plan->commission_percentage }}"
                                                 data-product-type="{{ $plan->product_type }}"
@@ -314,6 +315,26 @@
                                         </div>
                                     </div>
                                     <span class="text-danger error-text stories_err"></span>
+                                </div>
+                            </div>
+
+                            <!-- recommended store -->
+                            <div class="col-lg-12">
+                                <div class="form-group mb-3">
+                                    <label>{{ __('admin_messages.recommended_store') }}</label>
+                                    <div class="row">
+                                        <div class="col-lg-4 d-flex align-items-center">
+                                            <input type="radio" id="storeYes" name="is_recommended_store" value="yes"
+                                                class="form-check-input me-2" checked>
+                                            <label for="storiesYes" class="form-check-label">{{ __('admin_messages.yes') }}</label>
+                                        </div>
+                                        <div class="col-lg-6 d-flex align-items-center">
+                                            <input type="radio" id="storeNo" name="is_recommended_store" value="no"
+                                                class="form-check-input me-2">
+                                            <label for="storiesNo" class="form-check-label">{{ __('admin_messages.no') }}</label>
+                                        </div>
+                                    </div>
+                                    <span class="text-danger error-text is_recommended_store_err"></span>
                                 </div>
                             </div>
 
@@ -764,6 +785,20 @@
                                 <span class="text-danger error-text stories_err"></span>
                             </div>
 
+                            <!-- recommended store -->
+                            <div class="col-lg-12">
+                                <label>{{ __('admin_messages.recommended_store') }}</label>
+                                <div class="row">
+                                    <div class="col-lg-4 d-flex align-items-center">
+                                        <input type="radio" name="is_recommended_store" value="yes" style="margin:7px;"> {{ __('admin_messages.yes') }}
+                                    </div>
+                                    <div class="col-lg-6 d-flex align-items-center">
+                                        <input type="radio" name="is_recommended_store" value="no" style="margin:7px;"> {{ __('admin_messages.no') }}
+                                    </div>
+                                </div>
+                                <span class="text-danger error-text is_recommended_store_err"></span>
+                            </div>
+
                             <!-- Commission -->
                             <div class="col-lg-12">
                                 <label>{{ __('admin_messages.commission(%)') }}</label>
@@ -1000,6 +1035,7 @@ $(document).ready(function() {
         let commission = $('input[name="commission"]:checked').val();
         let commission_percentage = $('input[name="commission_percentage"]').val().trim();
         let country_id = $('input[name="country_id"]').val().trim();
+        let is_recommended_store = $('input[name="is_recommended_store"]:checked').val();
 
         // Free months
         let free_months_option = $('input[name="free_months_option"]:checked').val();
@@ -1107,6 +1143,7 @@ $(document).ready(function() {
             commission: commission,
             commission_percentage: commission_percentage,
             country_id: country_id,
+            is_recommended_store: is_recommended_store,
 
             // Free months
             is_free_months: free_months_option,
@@ -1116,6 +1153,8 @@ $(document).ready(function() {
         if (product_type == '0') {
             formData.no_of_products = no_of_products;
         }
+
+        console.log(formData);
 
         $.ajax({
             url: "{{ route('admin.add_plan') }}",
@@ -1400,6 +1439,7 @@ $(document).ready(function() {
         var product_type = button.data('product-type'); // 0 = defined, 1 = unlimited
         var free_months_option = button.data('free-months-option'); // 0 = no, 1 = yes
         var free_months = button.data('free-months');
+        var is_recommended_store = button.data('is-recommended-store');
 
         // --- Set basic inputs ---
         modal.find('input[name="plan_id"]').val(plan_id);
@@ -1419,6 +1459,9 @@ $(document).ready(function() {
         // --- Stories ---
         modal.find('input[name="stories"]').prop('checked', false);
         modal.find('input[name="stories"][value="' + (stories == 1 ? 'yes' : 'no') + '"]').prop('checked', true);
+
+        modal.find('input[name="is_recommended_store"]').prop('checked', false);
+        modal.find('input[name="is_recommended_store"][value="' + (is_recommended_store == 1 ? 'yes' : 'no') + '"]').prop('checked', true);
 
         // --- Commission ---
         modal.find('input[name="commission"]').prop('checked', false);
