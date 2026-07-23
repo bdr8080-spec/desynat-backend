@@ -275,15 +275,7 @@ Route::get('seller/faq', [WebSellerDashboard::class, 'faq'])->name('seller.faq')
 
 });
 
-Route::match(['get', 'post'], '/storymgt', function () {
-    return view('dealer.storymgt.index');
 
-})->name('dealer.storymgt');
-
-Route::match(['get', 'post'], '/Add-story', function () {
-    return view('dealer.storymgt.addStory');
-
-})->name('dealer.Add-story');
 
 // Route::match(['get', 'post'], '/chats', function () {
 //     return view('dealer.chatmgt.chatlist');
