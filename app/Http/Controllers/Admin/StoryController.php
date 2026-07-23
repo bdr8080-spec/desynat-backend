@@ -28,6 +28,14 @@ class StoryController extends Controller
         return view('admin.story-management.index',compact('sellerStory','adminStory','countries'));
     }
 
+    public function sellerStoryReqestManagement(Request $request){
+        $sellerStory = $this->StoryManagementService->getSelletStory($request)['data'];
+        //dd($sellerStory);
+        $adminStory = $this->StoryManagementService->getAdminStory($request)['data'];
+        $countries = $this->CountryService->getCountries()['data'];
+        return view('admin.story-management.request',compact('sellerStory','adminStory','countries'));
+    }
+
     public function deleteStory($id)
     {
         $result = $this->StoryManagementService->deleteStory($id);

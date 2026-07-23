@@ -929,6 +929,7 @@ return [
     'user_country' => 'User Country',
     'process_refund' => 'Process Refund',
     'recommended_store' => 'Recommended Store',
+    'seller_story_request_management' => 'Seller Story Request Management',
 
 
     //login
