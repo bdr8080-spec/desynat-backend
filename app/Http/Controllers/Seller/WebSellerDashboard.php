@@ -760,6 +760,12 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
         return view('dealer.addstory.index',compact('sellerStories'));
     }
 
+    public function storyRequestManagement(REQUEST $request){
+
+
+        return view('dealer.addstory.request');
+    }
+
     public function add_highlight(REQUEST $request){
 
         // $seller_id=Auth::guard('seller')->user()->id;
