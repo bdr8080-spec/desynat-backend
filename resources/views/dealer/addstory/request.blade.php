@@ -116,10 +116,24 @@
                             <td>{{ $key + 1 }}</td>
 
                             <td>
-                                <img src="{{ $story->file }}"
-                                    class="img-fluid pro-image"
-                                    alt="Story"
-                                    style="width:105px;height:65px;border-radius:5%;object-fit:cover;">
+                                @php
+                                    $extension = pathinfo($story->file, PATHINFO_EXTENSION);
+                                    $videoExtensions = ['mp4', 'mov', 'avi', 'webm', 'mkv'];
+                                @endphp
+
+                                @if(in_array(strtolower($extension), $videoExtensions))
+                                    <video 
+                                        src="{{ $story->file }}"
+                                        class="img-fluid pro-image"
+                                        style="width:105px;height:65px;border-radius:5%;object-fit:cover;"
+                                        controls>
+                                    </video>
+                                @else
+                                    <img src="{{ $story->file }}"
+                                        class="img-fluid pro-image"
+                                        alt="Story"
+                                        style="width:105px;height:65px;border-radius:5%;object-fit:cover;">
+                                @endif
                             </td>
 
                             <td>#{{ $story->id }}</td>
@@ -310,7 +324,13 @@
             <div class="modal-body">
                 <div class="card mb-4 w-100">
                     <div class="story-figure">
-                        <img id="modalStoryImage" src="" alt="image" class="img-fluid">
+                        <img id="modalStoryImage" src="" alt="image" class="img-fluid"
+                            style="display:none;">
+
+                        <video id="modalStoryVideo" class="img-fluid"
+                            controls style="display:none;">
+                        </video>
+
                     </div>
                     <div class="card-body p-2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -676,8 +696,39 @@ $(document).on('click', '.viewStoryBtn', function () {
     let paymentStatus = $(this).data('payment-status');
 
 
-    // Image
-    $("#modalStoryImage").attr("src", image);
+    // Image / Video Preview
+    let extension = image.split('.').pop().toLowerCase();
+
+    let videoExtensions = [
+        'mp4',
+        'mov',
+        'avi',
+        'mkv'
+    ];
+
+    if(videoExtensions.includes(extension)) {
+
+        // Show Video
+        $("#modalStoryImage")
+            .hide()
+            .attr("src", "");
+
+        $("#modalStoryVideo")
+            .attr("src", image)
+            .show();
+
+    } else {
+
+        // Show Image
+        $("#modalStoryVideo")
+            .hide()
+            .attr("src", "");
+
+        $("#modalStoryImage")
+            .attr("src", image)
+            .show();
+
+    }
 
 
     // Currency

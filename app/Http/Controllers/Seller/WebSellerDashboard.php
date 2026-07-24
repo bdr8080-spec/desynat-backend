@@ -1645,20 +1645,34 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
     }
 
     public function add_promotional_story(Request $request){
-
+    // dd($request->all());
 
         $seller_id = sellerAndStaffId();
 
         if($request->hasFile('image')){
+
+            $file = $request->file('image');
+
+            // Create new request instance for upload service
+            $uploadRequest = new \Illuminate\Http\Request();
+
+            $uploadRequest->files->set('file', $file);
+
             $commonController = app(CommonController::class);
-            $uploadResult = $commonController->upload($request);
-            $uploadResultArray = $uploadResult->getData(true); 
+
+            $uploadResult = $commonController->uploadFile($uploadRequest);
+
+            $uploadResultArray = $uploadResult->getData(true);
 
             if ($uploadResultArray['status'] === 'error') {
-                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+                return response()->json([
+                    'success' => false,
+                    'message' => $uploadResultArray['message']
+                ]);
             }
 
             $imageUrl = $uploadResultArray['data']['url'];
+
         }
    
         $request_data = (object)[
@@ -1672,6 +1686,8 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
             'total_days'       => $request->total_days ?? null,
             'amount'           => $request->amount ?? null,
         ];
+
+        //dd($request_data);
 
         $data= $this->StoryManagementService->addSellerStory($request_data);
       
