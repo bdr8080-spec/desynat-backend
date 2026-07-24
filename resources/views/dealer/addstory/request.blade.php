@@ -695,7 +695,7 @@ $(document).on('click', '.viewStoryBtn', function () {
     } else if (
         adminVerify == 1 &&
         paymentStatus == 1 &&
-        storyStartDate.getTime() === today.getTime()
+        startDate === today
     ) {
 
         status = "{{ __('seller_messages.Active') }}";
@@ -703,7 +703,7 @@ $(document).on('click', '.viewStoryBtn', function () {
 
     } else if (
         adminVerify == 1 &&
-        today > storyStartDate
+        today > startDate
     ) {
 
         status = "{{ __('seller_messages.Expired') }}";
