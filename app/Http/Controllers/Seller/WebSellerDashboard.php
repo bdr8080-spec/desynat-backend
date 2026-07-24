@@ -761,9 +761,24 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
     }
 
     public function storyRequestManagement(REQUEST $request){
+        $seller_id=sellerAndStaffId();
+        $storeInfo = sellerStoreInformation::where('seller_id', $seller_id)->first();
+        $country_id = $storeInfo?->country; 
+       // dd($country_id);
 
+       $request_data = (object)[
+            'seller_id' => $seller_id,
+            'limit' => $request->limit??null,
+            'search' => $request->search??null,
+            'from_date' => $request->from??null,
+            'to_date' => $request->to??null,
+            'filter' => $request->filter??null,
+        ];
 
-        return view('dealer.addstory.request');
+        $data = $this->StoryManagementService->getSellerStoriesRequests($request_data);
+        //dd($data);
+
+        return view('dealer.addstory.request',compact('country_id','data'));
     }
 
     public function add_highlight(REQUEST $request){
@@ -1598,6 +1613,81 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
             'message' => $data['message']
         ], 200);
     }
+
+    public function getSellerStoryPrice(Request $request)
+    {
+
+        // $validate = Validator::make($request->all(), [
+        // 'country_id' => 'required|integer|exists:countries,id',
+        // 'no_of_days' => 'required',
+        // ],[
+        //     'country_id.required' => __('seller_messages.country_required') ,
+        //     'no_of_days.required' => __('seller_messages.no_of_days_required') ,
+
+        // ]);
+    
+        // if($validate->fails()){
+        // return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        // }
+
+        $request_data = (object)[
+            'country_id' => $request->country_id,
+            'no_of_days' => $request->no_of_days,
+        ];
+
+        $data = $this->StoryManagementService->getSellerStoryPrice($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
+
+    public function add_promotional_story(Request $request){
+
+
+        $seller_id = sellerAndStaffId();
+
+        if($request->hasFile('image')){
+            $commonController = app(CommonController::class);
+            $uploadResult = $commonController->upload($request);
+            $uploadResultArray = $uploadResult->getData(true); 
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+        }
+   
+        $request_data = (object)[
+            'seller_id'        => $seller_id,
+            'file'             => $imageUrl,
+            'thumbnail'        => $imageUrl ?? null,
+
+            'is_promotional'   => 1,
+            'start_date'       => $request->start_date ?? null,
+            'end_date'         => $request->end_date ?? null,
+            'total_days'       => $request->total_days ?? null,
+            'amount'           => $request->amount ?? null,
+        ];
+
+        $data= $this->StoryManagementService->addSellerStory($request_data);
+      
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        if(isset($data['status']) && $data['status']=='failed' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],499);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+    }
+
       
 
       

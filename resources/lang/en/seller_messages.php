@@ -1746,5 +1746,14 @@ return [
 
 'transaction_id_required' => 'Transaction ID is required.',
 
+'story_req_managemnt' => 'Story Request management',
+'add_promotional_story' => 'Add Promotional Story',
+'upload_image_video' => 'Upload Image/Video',
+'select_date' => 'Select Date',
+'total_price' => 'Total Price',
+'send_request' => 'Send Request',
+'please_select_an_image_or_video' => 'Please select an image or video.',
+'please_select_a_date' => 'Please select a date.',
+'Price_not_found' => 'Price not found.',
 
 ];

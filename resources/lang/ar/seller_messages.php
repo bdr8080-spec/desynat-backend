@@ -1755,5 +1755,16 @@ return [
 'story_not_found' => 'القصة المحددة غير موجودة.',
 
 'transaction_id_required' => 'معرف المعاملة مطلوب.',
+
+
+'story_req_managemnt' => 'إدارة طلبات القصص',
+'add_promotional_story' => 'إضافة قصة ترويجية',
+'upload_image_video' => 'رفع صورة/فيديو',
+'select_date' => 'اختر التاريخ',
+'total_price' => 'السعر الإجمالي',
+'send_request' => 'إرسال الطلب',
+'please_select_an_image_or_video' => 'يرجى اختيار صورة أو فيديو.',
+'please_select_a_date' => 'يرجى اختيار تاريخ.',
+'Price_not_found' => 'السعر غير موجود.',
      
 ];

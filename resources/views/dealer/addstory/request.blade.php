@@ -3,7 +3,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24"> Story Management </div>
+        <div class="title24"> {{ __('seller_messages.story_req_managemnt') }} </div>
 
         <a href="#" data-bs-toggle="modal" data-bs-target="#storyAdd"><img
                 src="{{ asset('user') }}/assets/images/add-icon.svg" alt="add icon" style="width:40px;"></a>
@@ -30,16 +30,16 @@
 
                         <!-- Date Filter -->
                         <div class="from-group">
-                            <div class="show-date d-flex gap-2 flex-wrap">
+                            <div class="show-date d-flex gap-2  flex-wrap">
                                 <div class="date-form-pnl">
                                     <input type="date" class="form-control datepicker" name="from" id="fromDate"
-                                        value="{{ request()->from }}">
+                                        value="{{request()->from }}">
                                     <p class="text-danger" id="error-start_date"></p>
                                 </div>
-
                                 <div class="date-form-pnl">
                                     <input type="date" class="form-control datepicker" name="to" id="toDate"
-                                        value="{{ request()->to }}">
+                                        value="{{request()->to }}">
+
                                     <p class="text-danger" id="error-end_date"></p>
                                 </div>
                             </div>
@@ -47,12 +47,33 @@
 
                         <!-- Status Filter -->
                         <div class="from-group">
-                            <select name="status_filter" class="form-select form-control width-50">
-                                <option selected>Filter </option>
+                            <select class="form-select form-control width-50" aria-label="Default select example"
+                                name="filter" onchange="this.form.submit()">
+                            
+                                <option value="">
+                                    {{ __('seller_messages.Filter_By_Status') }}
+                                </option>
 
-                                <option value="1">Active </option>
-                                <option value="2">Pending </option>
-                                <option value="3">Complete </option>
+                                <option value="1" @if(request()->filter==1) selected @endif>
+                                    {{ __('seller_messages.Active') }}
+                                </option>
+
+                                <option value="2" @if(request()->filter==2) selected @endif>
+                                    {{ __('seller_messages.Confirmed') }}
+                                </option>
+
+                                <option value="3" @if(request()->filter==3) selected @endif>
+                                    {{ __('seller_messages.Pending') }}
+                                </option>
+
+                                <option value="4" @if(request()->filter==4) selected @endif>
+                                    {{ __('seller_messages.Expired') }}
+                                </option>
+
+                                <option value="5" @if(request()->filter==5) selected @endif>
+                                    {{ __('seller_messages.Rejected') }}
+                                </option>
+
                             </select>
                         </div>
                     </div>
@@ -61,36 +82,88 @@
 
             <!-- Table -->
             <div class="table-responsive">
-                <table class="table table-bordered datatable tablesearch" id="datatable_search">
+                <table class="table table-bordered datatable tablesearch" id="table1">
                     <thead>
                         <tr>
-                            <th class="no-sort">S.No</th>
-                            <th class="no-sort">Images</th>
-                            <th class="no-sort">Request ID</th>
-                            <th class="no-sort">Requested on</th>
-                            <th class="no-sort">Total Amount</th>
-                            <th class="no-sort">Details</th>
-                            <th class="no-sort">Status</th>
-                            <th class="no-sort">Action</th>
+                            <th class="no-sort">{{ __('seller_messages.S_No') }}</th>
+                            <th class="no-sort">{{ __('seller_messages.Image') }}</th>
+                            <th class="no-sort">{{ __('seller_messages.Request_ID') }}</th>
+                            <th class="no-sort">{{ __('seller_messages.Requested_On') }}</th>
+                            <th class="no-sort">{{ __('seller_messages.Total_Amount') }}</th>
+                            <th class="no-sort">{{ __('seller_messages.View_More_Details') }}</th>
+                            <th class="no-sort">{{ __('seller_messages.Status') }}</th>
+                            <th class="no-sort">{{ __('seller_messages.Action') }}</th>
                         </tr>
                     </thead>
 
                     <tbody>
+                        @foreach($data['data'] as $key => $story)
                         <tr>
-                            <td>1</td>
+                            <td>{{ $key + 1 }}</td>
+
                             <td>
-                                <img src="{{ asset('dealer') }}/assets/img/reel-5.jpeg" class="img-fluid pro-image"
-                                    alt="image" style="width:105px;height:65px;border-radius:5%;object-fit:cover;">
+                                <img src="{{ $story->file }}"
+                                    class="img-fluid pro-image"
+                                    alt="Story"
+                                    style="width:105px;height:65px;border-radius:5%;object-fit:cover;">
                             </td>
 
-                            <td>#876868</td>
-                            <td>21/07/2026 at 10:15 AM</td>
-                            <td>400 KD</td>
-                            <td><a href="#" class="eyebtn" data-bs-toggle="modal" data-bs-target="#storyGrid"><i
-                                        class="bi bi-eye"></i></a></td>
-                            <td>Pending</td>
-                            <td> <button type="button" class="btn add-fillbtn lh-25">Pay Now</button></td>
+                            <td>#{{ $story->id }}</td>
+
+                            <td>{{ formatDateTimeByLocale($story->created_at) }}</td>
+
+                            <td>{{ $story->amount }} {{ __('seller_messages.KD') }}</td>
+
+                            <td>
+                                <a href="#" class="eyebtn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#storyGrid"
+                                data-id="{{ $story->id }}">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+
+                            <td>
+                            @php
+                                $today = \Carbon\Carbon::today();
+                                $startDate = \Carbon\Carbon::parse($story->start_date);
+                            @endphp
+
+                            @if($story->Admin_verify == 0)
+                                <span class="badge bg-warning">{{ __('seller_messages.Pending') }}</span>
+
+                            @elseif($story->Admin_verify == 2)
+                                <span class="badge bg-danger">{{ __('seller_messages.Rejected') }}</span>
+
+                            @elseif($story->Admin_verify == 1 && $story->payment_status == 1 && $startDate->isToday())
+                                <span class="badge bg-success">{{ __('seller_messages.Active') }}</span>
+
+                            @elseif($story->Admin_verify == 1 && $today->gt($startDate))
+                                <span class="badge bg-secondary">{{ __('seller_messages.Expired') }}</span>
+
+                            @elseif($story->Admin_verify == 1)
+                                <span class="badge bg-info">{{ __('seller_messages.Confirmed') }}</span>
+                            @endif
+                        </td>
+
+                            @php
+                                $today = \Carbon\Carbon::today()->toDateString();
+                            @endphp
+
+                            <td>
+                                @if(
+                                    $story->payment_status == 0 &&
+                                    $story->Admin_verify == 1 &&
+                                    $story->start_date >= $today
+                                )
+                                    <button class="btn add-fillbtn lh-25">
+                                        {{ __('seller_messages.Pay_Now') }}
+                                    </button>
+                                @endif
+                            </td>
                         </tr>
+                    @endforeach
+                    
                     </tbody>
                 </table>
             </div>
@@ -103,7 +176,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5"> Add Story </h1>
+                <h1 class="modal-title fs-5"> {{ __('seller_messages.add_promotional_story') }} </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -114,7 +187,7 @@
                                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                                     style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
                                 <div class="py-2" style="color:#875C3A">
-                                    Upload Image/Video
+                                    {{ __('seller_messages.upload_image_video') }}
                                 </div>
                             </div>
                             <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr"
@@ -125,25 +198,36 @@
                         <input type="file" id="banner_image_upload" name="file" accept="image/*,video/*"
                             style="display:none;">
                     </div>
+                    <small class="text-danger" id="file_error"></small>
+                </div>
+
+                <input type="hidden" id="country_id" value="{{ $country_id }}">
+
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>{{ __('seller_messages.select_date') }}</label>
+                    </div>
+
+                    <input type="date" class="form-control datepicker" id="story_date">
+
+                    <small class="text-danger" id="date_error"></small>
                 </div>
 
                 <div class="sub-form">
                     <div class="label-flex">
-                        <label>Select Date</label>
+                        <label>{{ __('seller_messages.total_price') }}</label>
                     </div>
-                    <input type="date" class="form-control">
+
+                    <input type="text" class="form-control" id="story_price" readonly>
+
+                    <small class="text-danger" id="price_error"></small>
                 </div>
 
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Total Price</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter amount">
-                </div>
 
                 <div class="cmn-btn mt-4">
-                    <button type="button" class="btn add-fillbtn w-100" data-bs-toggle="modal"
-                        data-bs-target="#sendStory">Send Request</button>
+                    <button type="button" class="btn add-fillbtn w-100" id="submitStory">
+                        {{ __('seller_messages.send_request') }}
+                    </button>
                 </div>
 
 
@@ -234,6 +318,7 @@
 
 
 
+@include('dealer.layout.custom_code');
 @include('dealer.layout.footer');
 
 <script>
@@ -244,6 +329,7 @@ $(document).ready(function() {
 
     // Preview Image/Video
     $("#banner_image_upload").on("change", function(e) {
+        $("#file_error").text(""); 
         const file = e.target.files[0];
         if (!file) return;
 
@@ -278,3 +364,272 @@ $(document).ready(function() {
 
 });
 </script>
+
+<script>
+$(document).ready(function () {
+
+    const storyPriceRoute = "{{ route('seller.getSellerStoryPrice') }}";
+    const addStoryRoute = "{{ route('seller.add_promotional_story') }}";
+
+    // Disable previous dates
+    const today = new Date().toISOString().split("T")[0];
+    $("#story_date").attr("min", today);
+
+    //==============================
+    // Get Story Price
+    //==============================
+    $("#story_date").change(function () {
+
+        $("#date_error").text("");
+        $("#price_error").text("");
+
+        let date = $(this).val();
+
+        if (date == "") {
+            $("#date_error").text("Please select a date");
+            return;
+        }
+
+        $.ajax({
+            url: storyPriceRoute,
+            type: "POST",
+            data: {
+                country_id: $("#country_id").val(),
+                no_of_days: 1,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function (response) {
+
+                if (response.status == "success") {
+                    $("#story_price").val(response.data.total_amount);
+                } else {
+                    toastr.error(response.message);
+                }
+
+            },
+            error: function (xhr) {
+
+                toastr.error(xhr.responseJSON.message);
+
+            }
+
+        });
+
+    });
+
+
+    //==========================================
+    // Submit Story
+    //==========================================
+    $("#submitStory").click(function () {
+
+        $("#file_error").text("");
+        $("#date_error").text("");
+        $("#price_error").text("");
+
+        let file = $("#banner_image_upload")[0].files[0];
+        let date = $("#story_date").val();
+        let price = $("#story_price").val();
+
+        let valid = true;
+
+        if (!file) {
+            $("#file_error").text("Please select an image or video");
+            valid = false;
+        }
+
+        if (date == "") {
+            $("#date_error").text("Please select a date");
+            valid = false;
+        }
+
+        if (price == "") {
+            $("#price_error").text("Price not found");
+            valid = false;
+        }
+
+        if (!valid) {
+            return;
+        }
+
+        let formData = new FormData();
+
+        formData.append("image", file);
+        formData.append("start_date", date);
+        formData.append("end_date", date);
+        formData.append("total_days", 1);
+        formData.append("amount", price);
+
+        $.ajax({
+
+            url: addStoryRoute,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+
+            beforeSend: function () {
+                $("#submitStory").prop("disabled", true);
+            },
+
+            success: function (response) {
+
+                $("#submitStory").prop("disabled", false);
+
+                // Close Add Story modal
+                $("#storyAdd").modal("hide");
+
+                // Reset form
+                $("#banner_image_upload").val('');
+                $("#story_date").val('');
+                $("#story_price").val('');
+
+                $("#file_error").text("");
+                $("#date_error").text("");
+                $("#price_error").text("");
+
+                $("#bannerUploadedImg").hide().attr("src", "");
+                $("#bannerUploadedVideo").hide().attr("src", "");
+
+                $("#bannerPlaceholderImg").show();
+
+                // Wait until first modal is completely closed
+                $('#storyAdd').one('hidden.bs.modal', function () {
+
+                    // Show success modal
+                    $("#sendStory").modal("show");
+
+                    // Hide after 5 seconds
+                    setTimeout(function () {
+
+                        $("#sendStory").modal("hide");
+
+                        // Reload after modal is fully hidden
+                        $('#sendStory').one('hidden.bs.modal', function () {
+                            location.reload();
+                        });
+
+                    }, 5000);
+
+                });
+
+            },
+
+            error: function (xhr) {
+
+                $("#submitStory").prop("disabled", false);
+
+                if (xhr.status == 422) {
+
+                    let errors = xhr.responseJSON.errors;
+
+                    $.each(errors, function (key, value) {
+
+                        if ($("#" + key + "_error").length) {
+                            $("#" + key + "_error").text(value[0]);
+                        }
+
+                    });
+
+                } else {
+
+                    toastr.error(xhr.responseJSON.message);
+
+                }
+
+            }
+
+        });
+
+    });
+
+});
+</script>
+
+
+
+<script>
+$(document).ready(function() {
+    $('#customTableSearch').on('keyup search', function() {
+        let value = $(this).val().toLowerCase().trim();
+
+        $('.tablesearch tbody tr').each(function() {
+            let rowText = $(this).text().toLowerCase();
+
+            if (value === "") {
+                // input empty → show all rows
+                $(this).show();
+            } else {
+                // match text
+                $(this).toggle(rowText.indexOf(value) > -1);
+            }
+        });
+    });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const fromDate = document.getElementById('fromDate');
+    const toDate = document.getElementById('toDate');
+    const form = fromDate.form;
+
+    const today = new Date().toISOString().split('T')[0];
+
+    fromDate.min = today;
+    toDate.min = today;
+
+    function canSubmit() {
+        return (
+            fromDate.value &&
+            toDate.value &&
+            fromDate.value >= today &&
+            toDate.value >= fromDate.value
+        );
+    }
+
+    // From date change
+    fromDate.addEventListener('change', function() {
+        if (this.value < today) {
+            this.value = '';
+            // document.getElementById('error-start_date').innerText =
+            // 'Start date cannot be earlier than today';
+            return;
+        }
+
+        document.getElementById('error-start_date').innerText = '';
+        toDate.min = this.value;
+
+        if (toDate.value && toDate.value < this.value) {
+            toDate.value = '';
+        }
+
+        if (canSubmit()) {
+            form.submit();
+        }
+    });
+
+    // To date change
+    toDate.addEventListener('change', function() {
+        if (fromDate.value && this.value < fromDate.value) {
+            this.value = '';
+            // document.getElementById('error-end_date').innerText =
+            // 'End date cannot be earlier than start date';
+            return;
+        }
+
+        document.getElementById('error-end_date').innerText = '';
+
+        if (canSubmit()) {
+            form.submit();
+        }
+    });
+
+});
+</script>
+
+@include('dealer.layout.languagetableCode');

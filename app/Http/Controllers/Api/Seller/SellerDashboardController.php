@@ -326,7 +326,6 @@ class SellerDashboardController extends Controller
             'is_promotional' => 'required|in:0,1',
 
             'start_date' => 'required_if:is_promotional,1|date',
-            'end_date' => 'required_if:is_promotional,1|date|after_or_equal:start_date',
             'total_days' => 'required_if:is_promotional,1|integer|min:1',
             'amount' => 'required_if:is_promotional,1|numeric|min:0',
         ], [
@@ -338,9 +337,6 @@ class SellerDashboardController extends Controller
             'start_date.required_if' => __('seller_messages.start_date_required'),
             'start_date.date' => __('seller_messages.start_date_invalid'),
 
-            'end_date.required_if' => __('seller_messages.end_date_required'),
-            'end_date.date' => __('seller_messages.end_date_invalid'),
-            'end_date.after_or_equal' => __('seller_messages.end_date_after_start_date'),
 
             'total_days.required_if' => __('seller_messages.total_days_required'),
             'total_days.integer' => __('seller_messages.total_days_invalid'),
