@@ -247,21 +247,20 @@
                         <img src="{{ asset('/dealer') }}/assets/img/watch.png" alt="Verification" class="img-fluid">
                     </div>
 
-                    <h3>Your Story request has been successfully submitted for verification !</h3>
+                    <h3>{{ __('seller_messages.story_request_submitted_successfully') }}</h3>
 
                     <p>
-                        Our team is currently reviewing your details please allow
-                        3–4 hour for the verification process to be completed.
+                        {{ __('seller_messages.story_request_review_message_1') }}
+                        {{ __('seller_messages.story_request_review_message_2') }}
                     </p>
 
                     <p>
-                        you will be notified once your Story is approved on the desynat
-                        platform.
+                        {{ __('seller_messages.story_request_notification_message') }}
                     </p>
 
                     <div class="thank-pnl">
-                        <p>Thank you for your patience</p>
-                        <strong>TEAM DESNYAT</strong>
+                        <p>{{ __('seller_messages.thank_you_for_your_patience') }}</p>
+                        <strong>{{ __('seller_messages.team_desynat') }}</strong>
                     </div>
                 </div>
             </div>
@@ -276,7 +275,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5"> Details </h1>
+                <h1 class="modal-title fs-5"> {{ __('seller_messages.details') }} </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -286,28 +285,28 @@
                     </div>
                     <div class="card-body p-2">
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Request ID </p>
+                            <p class="text-muted mb-1"> {{ __('seller_messages.Request_ID') }} </p>
                             <p class="fst-500">#7677678</p>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Requested on </p>
+                            <p class="text-muted mb-1"> {{ __('seller_messages.Requested_On') }} </p>
                             <p class="fst-500">21/07/2026 at 10:15 AM</p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-muted mb-1"> Status </p>
+                            <p class="text-muted mb-1"> {{ __('seller_messages.Status') }} </p>
                             <p class="fst-500">Pending</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <p class="text-muted mb-1"> Date Selected </p>
+                    <p class="text-muted mb-1">{{ __('seller_messages.date_selected') }} </p>
                     <p class="fst-500">21/07/2026</p>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <p class="text-muted mb-1"> Total Amount </p>
-                    <p class="fst-500">400 KD</p>
+                    <p class="text-muted mb-1"> {{ __('seller_messages.Status') }} </p>
+                    <p class="fst-500">400 {{ __('seller_messages.KD') }}</p>
                 </div>
             </div>
 
@@ -386,7 +385,7 @@ $(document).ready(function () {
         let date = $(this).val();
 
         if (date == "") {
-            $("#date_error").text("Please select a date");
+            $("#date_error").text("{{ __('seller_messages.please_select_a_date') }}");
             return;
         }
 
@@ -434,17 +433,17 @@ $(document).ready(function () {
         let valid = true;
 
         if (!file) {
-            $("#file_error").text("Please select an image or video");
+            $("#file_error").text("{{ __('seller_messages.please_select_an_image_or_video') }}");
             valid = false;
         }
 
         if (date == "") {
-            $("#date_error").text("Please select a date");
+            $("#date_error").text("{{ __('seller_messages.please_select_a_date') }}");
             valid = false;
         }
 
         if (price == "") {
-            $("#price_error").text("Price not found");
+            $("#price_error").text("{{ __('seller_messages.Price_not_found') }}");
             valid = false;
         }
 

@@ -1756,4 +1756,15 @@ return [
 'please_select_a_date' => 'Please select a date.',
 'Price_not_found' => 'Price not found.',
 
+'story_request_submitted_successfully' => 'Your story request has been successfully submitted for verification!',
+'story_request_review_message_1' => 'Our team is currently reviewing your details. Please allow',
+'story_request_review_message_2' => '3–4 hours for the verification process to be completed.',
+'story_request_notification_message' => 'You will be notified once your story has been approved on the Desynat platform.',
+'thank_you_for_your_patience' => 'Thank you for your patience.',
+'team_desynat' => 'Team Desynat',
+
+
+'details' => 'Details',
+'date_selected' => 'Date Selected',
+
 ];

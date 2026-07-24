@@ -1766,5 +1766,16 @@ return [
 'please_select_an_image_or_video' => 'يرجى اختيار صورة أو فيديو.',
 'please_select_a_date' => 'يرجى اختيار تاريخ.',
 'Price_not_found' => 'السعر غير موجود.',
+
+'story_request_submitted_successfully' => 'تم إرسال طلب قصتك بنجاح للمراجعة!',
+'story_request_review_message_1' => 'يقوم فريقنا حالياً بمراجعة بياناتك. يُرجى الانتظار',
+'story_request_review_message_2' => 'من 3 إلى 4 ساعات حتى تكتمل عملية التحقق.',
+'story_request_notification_message' => 'سيتم إشعارك بمجرد الموافقة على قصتك على منصة ديسينات.',
+'thank_you_for_your_patience' => 'شكراً لصبرك.',
+'team_desynat' => 'فريق ديسينات',
+
+// Arabic
+'details' => 'التفاصيل',
+'date_selected' => 'التاريخ المحدد',
      
 ];
