@@ -115,10 +115,18 @@
                             <td>{{ $story->amount }} {{ __('seller_messages.KD') }}</td>
 
                             <td>
-                                <a href="#" class="eyebtn"
+                                <a href="#"
+                                class="eyebtn viewStoryBtn"
                                 data-bs-toggle="modal"
                                 data-bs-target="#storyGrid"
-                                data-id="{{ $story->id }}">
+                                data-id="{{ $story->id }}"
+                                data-image="{{ $story->file }}"
+                                data-request="{{ $story->id }}"
+                                data-date="{{ formatDateTimeByLocale($story->created_at) }}"
+                                data-start-date="{{ formatDateTimeByLocale($story->start_date) }}"
+                                data-amount="{{ $story->amount }}"
+                                data-admin-verify="{{ $story->Admin_verify }}"
+                                data-payment-status="{{ $story->payment_status }}">
                                     <i class="bi bi-eye"></i>
                                 </a>
                             </td>
@@ -144,7 +152,7 @@
                             @elseif($story->Admin_verify == 1)
                                 <span class="badge bg-info">{{ __('seller_messages.Confirmed') }}</span>
                             @endif
-                        </td>
+                            </td>
 
                             @php
                                 $today = \Carbon\Carbon::today()->toDateString();
@@ -281,32 +289,32 @@
             <div class="modal-body">
                 <div class="card mb-4 w-100">
                     <div class="story-figure">
-                        <img src="{{ asset('dealer') }}/assets/img/reel-5.jpeg" alt="image" class="img-fluid">
+                        <img id="modalStoryImage" src="" alt="image" class="img-fluid">
                     </div>
                     <div class="card-body p-2">
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="text-muted mb-1"> {{ __('seller_messages.Request_ID') }} </p>
-                            <p class="fst-500">#7677678</p>
+                            <p class="fst-500" id="modalRequestId"></p>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="text-muted mb-1"> {{ __('seller_messages.Requested_On') }} </p>
-                            <p class="fst-500">21/07/2026 at 10:15 AM</p>
+                            <p class="fst-500" id="modalRequestedOn"></p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <p class="text-muted mb-1"> {{ __('seller_messages.Status') }} </p>
-                            <p class="fst-500">Pending</p>
+                            <p class="fst-500" id="modalStatus"></p>
                         </div>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
                     <p class="text-muted mb-1">{{ __('seller_messages.date_selected') }} </p>
-                    <p class="fst-500">21/07/2026</p>
+                    <p class="fst-500" id="modalStartDate"></p>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <p class="text-muted mb-1"> {{ __('seller_messages.Status') }} </p>
-                    <p class="fst-500">400 {{ __('seller_messages.KD') }}</p>
+                    <p class="text-muted mb-1"> {{ __('seller_messages.total_price') }} </p>
+                    <p class="fst-500" id="modalAmount"> {{ __('seller_messages.KD') }}</p>
                 </div>
             </div>
 
@@ -627,6 +635,88 @@ document.addEventListener('DOMContentLoaded', function() {
             form.submit();
         }
     });
+
+});
+</script>
+
+
+<script>
+$(document).on('click', '.viewStoryBtn', function () {
+
+    let image = $(this).data('image');
+    let requestId = $(this).data('request');
+    let requestedOn = $(this).data('date');
+    let startDate = $(this).data('start-date');
+    let amount = $(this).data('amount');
+
+    let adminVerify = $(this).data('admin-verify');
+    let paymentStatus = $(this).data('payment-status');
+
+
+    // Image
+    $("#modalStoryImage").attr("src", image);
+
+
+    // Currency
+    const currencyKD = "{{ __('seller_messages.KD') }}";
+
+
+    // Details
+    $("#modalRequestId").text("#" + requestId);
+    $("#modalRequestedOn").text(requestedOn);
+    $("#modalStartDate").text(startDate);
+    $("#modalAmount").text(amount + " " + currencyKD);
+
+
+
+    // Status calculation same as Blade
+
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+
+    let storyStartDate = new Date(startDate);
+    storyStartDate.setHours(0, 0, 0, 0);
+
+
+    let status = "";
+
+
+    if (adminVerify == 0) {
+
+        status = "{{ __('seller_messages.Pending') }}";
+
+
+    } else if (adminVerify == 2) {
+
+        status = "{{ __('seller_messages.Rejected') }}";
+
+
+    } else if (
+        adminVerify == 1 &&
+        paymentStatus == 1 &&
+        storyStartDate.getTime() === today.getTime()
+    ) {
+
+        status = "{{ __('seller_messages.Active') }}";
+
+
+    } else if (
+        adminVerify == 1 &&
+        today > storyStartDate
+    ) {
+
+        status = "{{ __('seller_messages.Expired') }}";
+
+
+    } else if (adminVerify == 1) {
+
+        status = "{{ __('seller_messages.Confirmed') }}";
+
+    }
+
+
+    $("#modalStatus").text(status);
 
 });
 </script>
