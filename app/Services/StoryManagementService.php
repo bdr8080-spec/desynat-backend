@@ -1967,7 +1967,8 @@ public function getSellerStoriesRequests($request_data)
 
                 // Confirmed
                 case 2:
-                    $query->where('Admin_verify', 1);
+                    $query->where('Admin_verify', 1)
+                    ->where('payment_status', 0);
                     break;
 
                 // Pending
@@ -1984,6 +1985,12 @@ public function getSellerStoriesRequests($request_data)
                 // Rejected
                 case 5:
                     $query->where('Admin_verify', 2);
+                    break;
+
+                case 6:
+                    $query->where('Admin_verify', 1)
+                    ->where('payment_status', 1)
+                    ->whereDate('start_date', '>', $today);
                     break;
             }
         }

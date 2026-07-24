@@ -84,6 +84,9 @@
                                 <option value="5" @if(request()->filter==5) selected @endif>
                                     {{ __('seller_messages.Rejected') }}
                                 </option>
+                                <option value="6" @if(request()->filter==6) selected @endif>
+                                    {{ __('seller_messages.Paid') }}
+                                </option>
 
                             </select>
                         </div>
