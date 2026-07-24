@@ -160,8 +160,11 @@
                             @elseif($story->Admin_verify == 1 && $today->gt($startDate))
                                 <span class="badge bg-secondary">{{ __('seller_messages.Expired') }}</span>
 
-                            @elseif($story->Admin_verify == 1)
+                            @elseif($story->Admin_verify == 1 && $story->payment_status == 0)
                                 <span class="badge bg-info">{{ __('seller_messages.Confirmed') }}</span>
+
+                            @elseif($story->Admin_verify == 1 && $story->payment_status == 1 && $today->lt($startDate))
+                                <span class="badge bg-success">{{ __('seller_messages.Paid') }}</span>
                             @endif
                             </td>
 
