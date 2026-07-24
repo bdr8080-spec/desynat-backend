@@ -826,6 +826,7 @@ public function getAdminStoryOnUser($request)
                 $storyData['end_date']   = $request_data->end_date;
                 $storyData['total_days'] = $request_data->total_days;
                 $storyData['amount']     = $request_data->amount;
+                 $storyData['order_id'] = mt_rand(100000000, 999999999);
             }
 
             $story = Story::create($storyData);

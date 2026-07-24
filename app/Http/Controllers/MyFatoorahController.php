@@ -18,6 +18,7 @@ use Validator;
 use App\Models\{seller,UserGiftCards,Order,Addtocart,sellerBanner,UserWalletHistory};
 use Illuminate\Support\Facades\Cache;
 use App\Models\SellerSubcriptionPlanBuy;
+use App\Models\Story;
 
 
 class MyFatoorahController extends Controller {
@@ -86,6 +87,29 @@ class MyFatoorahController extends Controller {
                 'amount'=>$checkOrder->price,
                 'CustomerName'       => $checkOrder->seller_details->first_name. $checkOrder->seller_details->last_name ,
                 'InvoiceValue'       => $checkOrder->price,
+                'CustomerEmail'      => $checkOrder->seller_details->email,
+                'MobileCountryCode'  => $checkOrder->seller_details->country_code,
+                'CustomerMobile'     => $checkOrder->seller_details->mobile,
+                'Language'           => 'en',
+                'CustomerReference'  => $orderId,
+            ];
+            
+        }
+
+        if($request->type=='storyBuy'){
+            //dd(123);
+         $checkOrder=Story::with('seller_details')->where('order_id', $id)->first();
+         
+
+            //For example: pmid=0 for MyFatoorah invoice or pmid=1 for Knet in test mode
+            $paymentId = request('pmid') ?: 0;
+            $sessionId = request('sid') ?: null;
+            $orderId  = $id ?: 147;
+
+            $order_array=[
+                'amount'=>$checkOrder->amount,
+                'CustomerName'       => $checkOrder->seller_details->first_name. $checkOrder->seller_details->last_name ,
+                'InvoiceValue'       => $checkOrder->amount,
                 'CustomerEmail'      => $checkOrder->seller_details->email,
                 'MobileCountryCode'  => $checkOrder->seller_details->country_code,
                 'CustomerMobile'     => $checkOrder->seller_details->mobile,
@@ -378,14 +402,47 @@ class MyFatoorahController extends Controller {
                     $msg="Banner Payment Cancelled Successfully";
                     $url="/Seller/show-banner?payment=no";
                 }
-                
-                // return  redirect()->to($url);
+            
+            }
+            // Buy Story Online 
+            
+            $checkStoryOrderStatus = Story::with('seller_details')
+                ->where('order_id', $transaction_id)
+                ->first();
+                //dd($checkStoryOrderStatus);
 
-                return redirect()->to($url)->with([
-                'message' => $msg,
-                'status' => $data->InvoiceStatus == 'Paid' ? 'success' : 'error'
-                ]);
-                
+            if ($checkStoryOrderStatus) {
+
+                if($data->InvoiceStatus == 'Paid') {
+
+                    $checkStoryOrderStatus->update([
+                        'payment_status' => '1',
+                        'transaction_id' => $onlineReturnTransaction_id
+                    ]);
+
+                    $msg = "Story Payment Paid Successfully";
+
+                } else {
+
+                    $checkStoryOrderStatus->update([
+                        'payment_status' => '2',
+                        'transaction_id' => $onlineReturnTransaction_id
+                    ]);
+
+                    $msg = "Story Payment Cancelled Successfully";
+                }
+
+                // return redirect()
+                // ->route('seller.storyRequestManagement')
+                // ->with([
+                //     'message' => $msg,
+                //     'status' => $data->InvoiceStatus == 'Paid' ? 'success' : 'error'
+                // ]);
+
+                session()->flash('message', $msg);
+                session()->flash('status', $data->InvoiceStatus == 'Paid' ? 'success' : 'error');
+
+                return redirect()->route('seller.storyRequestManagement');
             }
 
             // Wallet Add to Money Code 
@@ -418,7 +475,7 @@ class MyFatoorahController extends Controller {
 
 
 
-
+            
             
 
         } catch (Exception $ex) {

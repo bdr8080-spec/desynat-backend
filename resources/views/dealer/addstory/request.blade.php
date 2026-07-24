@@ -9,7 +9,18 @@
                 src="{{ asset('user') }}/assets/images/add-icon.svg" alt="add icon" style="width:40px;"></a>
     </div>
 
-
+@if (session('status') == 'success')
+    <div class="alert alert-success">
+        <!-- <script>
+        $('#payModalSuccess').modal('show');
+        </script> -->
+        {{ session('message') }}
+    </div>
+    @elseif (session('status') == 'error')
+    <div class="alert alert-danger">
+        {{ session('message') }}
+    </div>
+    @endif
 
     <div class="ticket-pnl mt-0 storypnl">
 
@@ -158,18 +169,22 @@
                                 $today = \Carbon\Carbon::today()->toDateString();
                             @endphp
 
-                            <td>
+                           <td>
                                 @if(
                                     $story->payment_status == 0 &&
                                     $story->Admin_verify == 1 &&
                                     $story->start_date >= $today
                                 )
-                                    <button class="btn add-fillbtn lh-25">
+                                    <button
+                                        type="button"
+                                        class="btn add-fillbtn lh-25 payNowBtn"
+                                        data-story-id="{{ $story->id }}"
+                                        data-order-id="{{ $story->order_id }}"
+                                        data-amount="{{ $story->amount }}">
                                         {{ __('seller_messages.Pay_Now') }}
                                     </button>
                                 @endif
                             </td>
-                        </tr>
                     @endforeach
                     
                     </tbody>
@@ -321,6 +336,8 @@
         </div>
     </div>
 </div>
+
+<input type="hidden" name="payment" id="onlinePayment" value="1">
 
 
 
@@ -717,6 +734,46 @@ $(document).on('click', '.viewStoryBtn', function () {
 
 
     $("#modalStatus").text(status);
+
+});
+</script>
+
+<script>
+$(document).on("click", ".payNowBtn", function (e) {
+
+    e.preventDefault();
+
+    let button = $(this);
+
+    // Prevent multiple clicks
+    button.prop("disabled", true);
+
+    let orderId = button.data("order-id");
+
+    // Redirect to MyFatoorah
+    window.location.href = "{{ url('myfatoorah') }}/" + orderId + "?type=storyBuy";
+
+});
+</script>
+
+<script>
+$(document).ready(function () {
+
+    @if(session()->has('message'))
+
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "timeOut": 3000
+        };
+
+        @if(session('status') == 'success')
+            toastr.success(@json(session('message')));
+        @else
+            toastr.error(@json(session('message')));
+        @endif
+
+    @endif
 
 });
 </script>
