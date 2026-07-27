@@ -15,7 +15,6 @@
                     <div class="Bannerstores">
                         <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
                     </div>
-                    <div class="adsTitle"> {{ app()->getLocale() == 'ar' ? 'إعلان' : 'Ad' }}</div>
                 </div>
                 @else
                     @foreach($catBanners['data'] as $banner)

@@ -21,7 +21,6 @@ $currency = session('currencyAr', 'دينار كويتي');
             <div class="Bannerstores">
                 <img src="{{ asset('user/assets/images/active-banner.png') }}" alt="banner" class="img-fluid" />
             </div>
-            <div class="adsTitle">Ad</div>
         </div>
         @else
         @foreach($topBanners['data'] as $banner)
