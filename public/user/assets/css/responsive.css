@@ -402,3 +402,12 @@
     align-items: center;
     padding: 0px;
 }
+.adsTitle {
+    position: absolute;
+    right: 6px;
+    bottom: 8px;
+    background: #e4c496;
+    padding: 2px 10px;
+    color: #000;
+    font-size: 15px;
+}

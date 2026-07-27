@@ -14,12 +14,14 @@ $currency = session('currencyAr', 'دينار كويتي');
 
 
 <div class="customContainer">
+
     <div class="owl-carousel owl-theme customOwlcarousel2 storeBanner">
         @if(empty($topBanners['data']) || count($topBanners['data']) == 0)
         <div class="item">
             <div class="Bannerstores">
                 <img src="{{ asset('user/assets/images/active-banner.png') }}" alt="banner" class="img-fluid" />
             </div>
+            <div class="adsTitle">Ad</div>
         </div>
         @else
         @foreach($topBanners['data'] as $banner)
@@ -29,6 +31,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                     <img src="{{ $banner->upload_banner }}" alt="banner" class="img-fluid" />
                 </a>
             </div>
+            <div class="adsTitle">Ad</div>
         </div>
         @endforeach
         @endif
