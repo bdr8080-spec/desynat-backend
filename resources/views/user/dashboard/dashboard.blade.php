@@ -21,7 +21,7 @@ $currency = session('currencyAr', 'دينار كويتي');
             <div class="Bannerstores">
                 <img src="{{ asset('user/assets/images/active-banner.png') }}" alt="banner" class="img-fluid" />
             </div>
-            <div class="adsTitle">Ads</div>
+            <div class="adsTitle">Ad</div>
         </div>
         @else
         @foreach($topBanners['data'] as $banner)
@@ -31,7 +31,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                     <img src="{{ $banner->upload_banner }}" alt="banner" class="img-fluid" />
                 </a>
             </div>
-            <div class="adsTitle">Ads</div>
+            <div class="adsTitle">Ad</div>
         </div>
         @endforeach
         @endif
