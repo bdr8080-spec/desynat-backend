@@ -1855,7 +1855,7 @@ public function getAdminStoryOnUser($request)
             $country = $request->country;
 
             $query->whereHas('seller_details.store_info.country_info', function ($q) use ($country) {
-                $q->where('name', 'like', '%' . $country . '%');
+                $q->where('id', 'like', '%' . $country . '%');
             });
 
         }

@@ -195,6 +195,8 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/deleteStory/{id}', [StoryController::class, 'deleteStory'])->name('admin.deleteStory');
         Route::post('/addStory', [StoryController::class, 'addStory'])->name('admin.addStory');
         Route::get('/sellerStoryReqestManagement', [StoryController::class, 'sellerStoryReqestManagement'])->name('admin.sellerStoryReqestManagement');
+        Route::post('/approveSellerStoryRequest', [StoryController::class, 'approveSellerStoryRequest'])->name('admin.approveSellerStoryRequest');
+        Route::post('/rejectSellerStoryRequest', [StoryController::class, 'rejectSellerStoryRequest'])->name('admin.rejectSellerStoryRequest');
 
         //deal management
         Route::get('/deal-management', [DealManagementController::class, 'dealManagement'])->name('admin.dealManagement');

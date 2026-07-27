@@ -33,7 +33,22 @@ class StoryController extends Controller
         //dd($sellerStory);
         $adminStory = $this->StoryManagementService->getAdminStory($request)['data'];
         $countries = $this->CountryService->getCountries()['data'];
-        return view('admin.story-management.request',compact('sellerStory','adminStory','countries'));
+        $request_data=(object )[
+            'type'=>0,
+            'country'=>$request->country1
+        ];
+        $sellerPromotionalStoryNew = $this->StoryManagementService->getSellerPromotionalStory($request_data)['data'];
+        $request_data1=(object )[
+            'type'=>1,
+            'country'=>$request->country2
+        ];
+        $sellerPromotionalStoryApproved = $this->StoryManagementService->getSellerPromotionalStory($request_data1)['data'];
+        $request_data2=(object )[
+            'type'=>2,
+            'country'=>$request->country3
+        ];
+        $sellerPromotionalStoryRejected = $this->StoryManagementService->getSellerPromotionalStory($request_data2)['data'];
+        return view('admin.story-management.request',compact('sellerStory','adminStory','countries','sellerPromotionalStoryNew','sellerPromotionalStoryApproved','sellerPromotionalStoryRejected'));
     }
 
     public function deleteStory($id)
@@ -143,6 +158,41 @@ class StoryController extends Controller
             'success' => true,
             'message' => __('admin_messages.story_added_successfully'),
         ]);
+    }
+
+     public function approveSellerStoryRequest(Request $request)
+    {
+        
+        $result = $this->StoryManagementService->approveStory($request);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function rejectSellerStoryRequest(Request $request)
+    {
+        $result = $this->StoryManagementService->rejectStory($request);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
     }
 
 

@@ -83,7 +83,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
             <div class="tab-pane fade show active pb-5" id="seller-free" role="tabpanel"
                 aria-labelledby="seller-free-tab" tabindex="0">
 
-                <form method="GET" action="{{ route('admin.storyManagement') }}" id="filterForm">
+                <form method="GET" action="{{ route('admin.sellerStoryReqestManagement') }}" id="filterForm">
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-12">
                             <div class="form-group mb-3">
@@ -161,7 +161,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <td>
                                     {{ formatDateTimeByLocale($story->created_at) }}
                                 </td>
-                                @if(in_array(19, $permissions) || $admin->type == 1)
+                                @if(in_array(33, $permissions) || $admin->type == 1)
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <a href="javascript:void(0);"
@@ -193,17 +193,17 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link active customBtn2 m-0" id="live-new-tab" data-bs-toggle="pill"
                                 data-bs-target="#live-new" type="button" role="tab" aria-controls="live-new"
-                                aria-selected="true">New</button>
+                                aria-selected="true">{{ __('admin_messages.new') }}</button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="live-approved-tab" data-bs-toggle="pill"
                                 data-bs-target="#live-approved" type="button" role="tab" aria-controls="live-approved"
-                                aria-selected="false">Approved</button>
+                                aria-selected="false">{{ __('admin_messages.approved') }}</button>
                         </li>
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 m-0" id="live-rejected-tab" data-bs-toggle="pill"
                                 data-bs-target="#live-rejected" type="button" role="tab" aria-controls="live-rejected"
-                                aria-selected="false">Rejected</button>
+                                aria-selected="false">{{ __('admin_messages.rejected') }}</button>
                         </li>
                     </ul>
                 </div>
@@ -213,60 +213,104 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                     <div class="tab-pane fade show active" id="live-new" role="tabpanel" aria-labelledby="live-new-tab"
                         tabindex="0">
 
-                        <div class="row align-items-center mb-4">
-                            <div class="col-lg-3 col-md-12 col-12">
-                                <div class="form-group  w-100">
-                                    <select name="country_name" id="country_name" class="form-select form-select-lg">
-                                        <option value="">Select Country</option>
-                                        <option value="India">India</option>
-                                        <option value="United States">United States</option>
-                                        <option value="United Kingdom">United Kingdom</option>
-                                        <option value="Canada">Canada</option>
-                                        <option value="Australia">Australia</option>
-                                        <option value="UAE">UAE</option>
-                                        <option value="Saudi Arabia">Saudi Arabia</option>
-                                    </select>
+                        <form method="GET" action="{{ route('admin.sellerStoryReqestManagement') }}" id="filterForm1">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="form-group mb-3">
+                                        <select name="country1" class="form-select form-select-lg w-50"
+                                            onchange="document.getElementById('filterForm1').submit();">
+                                            <option value="">{{ __('admin_messages.select_country') }}</option>
+                                            @foreach($countries as $country)
+                                            <option value="{{ $country['id'] }}"
+                                                {{ request('country1') == $country['id'] ? 'selected' : '' }}>
+                                                @if(app()->getLocale() == 'en')
+                                                {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
+                        </form>
 
                         <div class="table-responsive w-100">
-                            <table class="table table-bordered w-100 align-middle mt-2">
+                            <table id="myTable1" class="table table-bordered w-100 align-middle mt-2">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>S.R No</th>
-                                        <th>Request ID</th>
-                                        <th>Seller Name</th>
-                                        <th>Seller Country</th>
-                                        <th>Request On</th>
-                                        <th>Story Image/Content</th>
-                                        <th>Date</th>
-                                        <th class="text-center">Action</th>
+                                        <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                        <th scope="col">{{ __('admin_messages.request_id') }}</th>
+                                        <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.country') }}</th>
+                                        <th scope="col">{{ __('admin_messages.request_on') }}</th>
+                                        <th scope="col">{{ __('admin_messages.posted_image_video') }}</th>
+                                        <th scope="col">{{ __('admin_messages.date') }}</th>
+                                        @if(in_array(33, $permissions) || $admin->type == 1)
+                                        <th scope="col">{{ __('admin_messages.action') }}</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($sellerPromotionalStoryNew as $index => $story)
                                     <tr>
-                                        <td>1</td>
-                                        <td>#22222</td>
-                                        <td>Lorem</td>
-                                        <td>UAE</td>
-                                        <td>2nd September 2025 | 11 Am</td>
-                                        <td><img src="/admin/image/profile.jpg" alt="Story Image" class="img-fluid"
-                                                style="max-width: 50px; height: auto;"></td>
-                                        <td>10th September 2025</td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>#{{ $story->id }}</td>
+                                        <td>
+                                            {{ $story->seller_details?->first_name ?? __('admin_messages.na') }}
+                                            {{ $story->seller_details?->last_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if(app()->getLocale() == 'en')
+                                            {{ $story->seller_details?->store_info?->country_info?->name ?? __('admin_messages.posted_on') }}
+                                            @else
+                                            {{ $story->seller_details?->store_info?->country_info?->name_ar ?? __('admin_messages.posted_on') }}
+                                            @endif
+                                        </td>
+                                        <td>{{ formatDateTimeByLocale($story->start_date) }}</td>
+                                        <td>
+                                            @php
+                                            $ext = strtolower(pathinfo($story->file, PATHINFO_EXTENSION));
+                                            $imageExtensions = ['jpg','jpeg','png','gif','svg'];
+                                            $videoExtensions = ['mp4','mov','avi','mkv'];
+                                            @endphp
+
+                                            @if(in_array($ext, $imageExtensions))
+                                            <a href="{{ $story->file }}" target="_blank">
+                                                <img src="{{ $story->file }}" alt="Story" width="40" height="40"
+                                                    class="square" />
+                                            </a>
+                                            @elseif(in_array($ext, $videoExtensions))
+                                            <a href="{{ $story->file }}" target="_blank">
+                                                <video width="40" height="40" class="square" muted playsinline loop>
+                                                    <source src="{{ $story->file }}" type="video/{{ $ext }}">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </a>
+                                            @else
+                                            <span>File not supported</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ formatDateTimeByLocale($story->created_at) }}</td>
                                         <td>
                                             <div class="d-flex gap-3 justify-content-center">
-                                                <a class="table-button approveLiveRequest">
-                                                    <i class="bi bi-check-circle-fill"></i>
+                                                <a class="table-button approveBtn"
+                                                            href="javascript:void(0)"
+                                                            data-id="{{ $story['id'] }}">
+                                                                <i class="bi bi-check-circle-fill"></i>
                                                 </a>
-                                                <a class="table-button rejectBtn" data-bs-toggle="modal"
+                                                <a class="table-button rejectBtn"
+                                                    href="javascript:void(0)"
+                                                    data-id="{{ $story['id'] }}"
+                                                    data-bs-toggle="modal"
                                                     data-bs-target="#sentModal2">
-                                                    <i class="bi bi-x-circle-fill"></i>
+                                                        <i class="bi bi-x-circle-fill"></i>
                                                 </a>
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -275,48 +319,88 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                     <div class="tab-pane fade" id="live-approved" role="tabpanel" aria-labelledby="live-approved-tab"
                         tabindex="0">
-                        <div class="row align-items-center mb-4">
-                            <div class="col-lg-3 col-md-12 col-12">
-                                <div class="form-group  w-100">
-                                    <select name="country_name" id="country_name" class="form-select form-select-lg">
-                                        <option value="">Select Country</option>
-                                        <option value="India">India</option>
-                                        <option value="United States">United States</option>
-                                        <option value="United Kingdom">United Kingdom</option>
-                                        <option value="Canada">Canada</option>
-                                        <option value="Australia">Australia</option>
-                                        <option value="UAE">UAE</option>
-                                        <option value="Saudi Arabia">Saudi Arabia</option>
-                                    </select>
+                        <form method="GET" action="{{ route('admin.sellerStoryReqestManagement') }}" id="filterForm2">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="form-group mb-3">
+                                        <select name="country2" class="form-select form-select-lg w-50"
+                                            onchange="document.getElementById('filterForm2').submit();">
+                                            <option value="">{{ __('admin_messages.select_country') }}</option>
+                                            @foreach($countries as $country)
+                                            <option value="{{ $country['id'] }}"
+                                                {{ request('country2') == $country['id'] ? 'selected' : '' }}>
+                                                @if(app()->getLocale() == 'en')
+                                                {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
+                        </form>
                         <div class="table-responsive w-100">
-                            <table class="table table-bordered w-100 align-middle mt-2">
+                            <table id="myTable2" class="table table-bordered w-100 align-middle mt-2">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>S.R No</th>
-                                        <th>Request ID</th>
-                                        <th>Seller Name</th>
-                                        <th>Seller Country</th>
-                                        <th>Request On</th>
-                                        <th>Story Image/Content</th>
-                                        <th>Date</th>
-                                        <th>Paid Amount</th>
+                                        <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                        <th scope="col">{{ __('admin_messages.request_id') }}</th>
+                                        <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.country') }}</th>
+                                        <th scope="col">{{ __('admin_messages.request_on') }}</th>
+                                        <th scope="col">{{ __('admin_messages.posted_image_video') }}</th>
+                                        <th scope="col">{{ __('admin_messages.date') }}</th>
+                                        <th scope="col">{{ __('admin_messages.amount') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($sellerPromotionalStoryApproved as $index => $story)
                                     <tr>
-                                        <td>1</td>
-                                        <td>#22222</td>
-                                        <td>Lorem</td>
-                                        <td>UAE</td>
-                                        <td>2nd September 2025 | 11 Am</td>
-                                        <td><i class="bi bi-image" style="font-size: 20px;"></i></td>
-                                        <td>10th September 2025</td>
-                                        <td>KD 40</td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>#{{ $story->id }}</td>
+                                        <td>
+                                            {{ $story->seller_details?->first_name ?? __('admin_messages.na') }}
+                                            {{ $story->seller_details?->last_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if(app()->getLocale() == 'en')
+                                            {{ $story->seller_details?->store_info?->country_info?->name ?? __('admin_messages.posted_on') }}
+                                            @else
+                                            {{ $story->seller_details?->store_info?->country_info?->name_ar ?? __('admin_messages.posted_on') }}
+                                            @endif
+                                        </td>
+                                        <td>{{ formatDateTimeByLocale($story->start_date) }}</td>
+                                        <td>
+                                            @php
+                                            $ext = strtolower(pathinfo($story->file, PATHINFO_EXTENSION));
+                                            $imageExtensions = ['jpg','jpeg','png','gif','svg'];
+                                            $videoExtensions = ['mp4','mov','avi','mkv'];
+                                            @endphp
+
+                                            @if(in_array($ext, $imageExtensions))
+                                            <a href="{{ $story->file }}" target="_blank">
+                                                <img src="{{ $story->file }}" alt="Story" width="40" height="40"
+                                                    class="square" />
+                                            </a>
+                                            @elseif(in_array($ext, $videoExtensions))
+                                            <a href="{{ $story->file }}" target="_blank">
+                                                <video width="40" height="40" class="square" muted playsinline loop>
+                                                    <source src="{{ $story->file }}" type="video/{{ $ext }}">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </a>
+                                            @else
+                                            <span>File not supported</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ formatDateTimeByLocale($story->created_at) }}</td>
+                                        <td>
+                                            {{$story->amount}} {{ __('admin_messages.kd') }}
+                                        </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -325,48 +409,88 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
                     <div class="tab-pane fade" id="live-rejected" role="tabpanel" aria-labelledby="live-rejected-tab"
                         tabindex="0">
-                        <div class="row align-items-center mb-4">
-                            <div class="col-lg-3 col-md-12 col-12">
-                                <div class="form-group  w-100">
-                                    <select name="country_name" id="country_name" class="form-select form-select-lg">
-                                        <option value="">Select Country</option>
-                                        <option value="India">India</option>
-                                        <option value="United States">United States</option>
-                                        <option value="United Kingdom">United Kingdom</option>
-                                        <option value="Canada">Canada</option>
-                                        <option value="Australia">Australia</option>
-                                        <option value="UAE">UAE</option>
-                                        <option value="Saudi Arabia">Saudi Arabia</option>
-                                    </select>
+                        <form method="GET" action="{{ route('admin.sellerStoryReqestManagement') }}" id="filterForm3">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="form-group mb-3">
+                                        <select name="country2" class="form-select form-select-lg w-50"
+                                            onchange="document.getElementById('filterForm3').submit();">
+                                            <option value="">{{ __('admin_messages.select_country') }}</option>
+                                            @foreach($countries as $country)
+                                            <option value="{{ $country['id'] }}"
+                                                {{ request('country3') == $country['id'] ? 'selected' : '' }}>
+                                                @if(app()->getLocale() == 'en')
+                                                {{ $country['name'] }}
+                                                @else
+                                                {{ $country['name_ar'] }}
+                                                @endif
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
+                        </form>
                         <div class="table-responsive w-100">
-                            <table class="table table-bordered w-100 align-middle mt-2">
+                            <table id="myTable3" class="table table-bordered w-100 align-middle mt-2">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>S.R No</th>
-                                        <th>Request ID</th>
-                                        <th>Seller Name</th>
-                                        <th>Seller Country</th>
-                                        <th>Request On</th>
-                                        <th>Story Image/Content</th>
-                                        <th>Date</th>
-                                        <th>Reason</th>
+                                        <th scope="col">{{ __('admin_messages.s_no') }}</th>
+                                        <th scope="col">{{ __('admin_messages.request_id') }}</th>
+                                        <th scope="col">{{ __('admin_messages.seller_name') }}</th>
+                                        <th scope="col">{{ __('admin_messages.country') }}</th>
+                                        <th scope="col">{{ __('admin_messages.request_on') }}</th>
+                                        <th scope="col">{{ __('admin_messages.posted_image_video') }}</th>
+                                        <th scope="col">{{ __('admin_messages.date') }}</th>
+                                        <th scope="col">{{ __('admin_messages.reason') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($sellerPromotionalStoryRejected as $index => $story)
                                     <tr>
-                                        <td>1</td>
-                                        <td>#22222</td>
-                                        <td>Lorem</td>
-                                        <td>UAE</td>
-                                        <td>2nd September 2025 | 11 Am</td>
-                                        <td><i class="bi bi-image" style="font-size: 20px;"></i></td>
-                                        <td>10th September 2025</td>
-                                        <td>Lorem Lorem</td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>#{{ $story->id }}</td>
+                                        <td>
+                                            {{ $story->seller_details?->first_name ?? __('admin_messages.na') }}
+                                            {{ $story->seller_details?->last_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if(app()->getLocale() == 'en')
+                                            {{ $story->seller_details?->store_info?->country_info?->name ?? __('admin_messages.posted_on') }}
+                                            @else
+                                            {{ $story->seller_details?->store_info?->country_info?->name_ar ?? __('admin_messages.posted_on') }}
+                                            @endif
+                                        </td>
+                                        <td>{{ formatDateTimeByLocale($story->start_date) }}</td>
+                                        <td>
+                                            @php
+                                            $ext = strtolower(pathinfo($story->file, PATHINFO_EXTENSION));
+                                            $imageExtensions = ['jpg','jpeg','png','gif','svg'];
+                                            $videoExtensions = ['mp4','mov','avi','mkv'];
+                                            @endphp
+
+                                            @if(in_array($ext, $imageExtensions))
+                                            <a href="{{ $story->file }}" target="_blank">
+                                                <img src="{{ $story->file }}" alt="Story" width="40" height="40"
+                                                    class="square" />
+                                            </a>
+                                            @elseif(in_array($ext, $videoExtensions))
+                                            <a href="{{ $story->file }}" target="_blank">
+                                                <video width="40" height="40" class="square" muted playsinline loop>
+                                                    <source src="{{ $story->file }}" type="video/{{ $ext }}">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </a>
+                                            @else
+                                            <span>File not supported</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ formatDateTimeByLocale($story->created_at) }}</td>
+                                        <td>
+                                            {{$story->reject_reason}} 
+                                        </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -464,6 +588,39 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
 
 
     <!-- End of Content Wrapper -->
+</div>
+
+<div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">{{ __('admin_messages.reason') }}</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1" class="form-label">{{ __('admin_messages.reason_for_rejection') }}
+                                    </label>
+                                    <textarea class="form-control" id="rejectReason" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                            <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
+                                style="margin-top: 30px">
+                                <a class="btn btn-dark customBtn" href=""> {{ __('admin_messages.submit') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -626,6 +783,126 @@ document.addEventListener('DOMContentLoaded', function() {
     modal.addEventListener('hidden.bs.modal', function() {
         location.reload();
     });
+});
+</script>
+
+<!-- accept request -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.addEventListener('click', function(e){
+        const btn = e.target.closest('.approveBtn');
+        if(!btn) return;
+
+        e.preventDefault();
+
+        const id = btn.getAttribute('data-id');
+
+        fetch("{{ route('admin.approveSellerStoryRequest') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ story_id: id })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.status === 'success'){
+                toastr.success(res.message);
+                setTimeout(() => {
+                    location.reload();
+                }, 2000); 
+            } else {
+                toastr.error(res.message || 'Failed to approve request');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            toastr.error('Something went wrong');
+        });
+    });
+
+});
+</script>
+
+<!-- reject request -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let rejectId = null;
+    const modalEl = document.getElementById('sentModal2');
+    const reasonInput = document.getElementById('rejectReason');
+
+    // When reject modal opens
+    modalEl.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        rejectId = button.getAttribute('data-id');
+
+        // Reset textarea & errors
+        reasonInput.value = '';
+        removeError();
+    });
+
+    // Remove error while typing
+    reasonInput.addEventListener('input', function () {
+        removeError();
+    });
+
+    function showError(message){
+        removeError();
+        const error = document.createElement('small');
+        error.classList.add('error-msg');
+        error.style.color = 'red';
+        error.innerText = message;
+        reasonInput.parentNode.appendChild(error);
+    }
+
+    function removeError(){
+        const error = reasonInput.parentNode.querySelector('.error-msg');
+        if(error) error.remove();
+    }
+
+    // Submit reject
+    document.querySelector('#sentModal2 .customBtn').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const reason = reasonInput.value.trim();
+
+        if(!reason){
+            showError("{{ __('admin_messages.please_enter_reject_reason') }}");
+            return;
+        }
+
+        fetch("{{ route('admin.rejectSellerStoryRequest') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                story_id: rejectId,
+                reason: reason
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.status === 'success'){
+                toastr.success(res.message);
+
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            } else {
+                toastr.error(res.message || 'Failed to reject request');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            toastr.error('Something went wrong');
+        });
+    });
+
 });
 </script>
 
