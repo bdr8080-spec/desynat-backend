@@ -782,6 +782,7 @@ class AuthController extends Controller
                 ];
 
             $topBanners= $this->UserDashboardService->HomeScreenBanner($request_data);
+           // dd($topBanners);
             
 
             $request_data1 = (object)[

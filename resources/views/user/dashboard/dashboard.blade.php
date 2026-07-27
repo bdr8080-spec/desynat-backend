@@ -31,7 +31,9 @@ $currency = session('currencyAr', 'دينار كويتي');
                     <img src="{{ $banner->upload_banner }}" alt="banner" class="img-fluid" />
                 </a>
             </div>
-            <div class="adsTitle">Ad</div>
+            @if($banner->payment_status == 1 && $banner->added_by == 0)
+            <div class="adsTitle"> {{ app()->getLocale() == 'ar' ? 'إعلان' : 'Ad' }}</div>
+            @endif
         </div>
         @endforeach
         @endif
@@ -263,6 +265,7 @@ $currency = session('currencyAr', 'دينار كويتي');
             <div class="premiumImg">
                 <img src="{{ asset('user/assets/images/active-banner.png') }}" class="img-fluid" />
             </div>
+            <div class="adsTitle"> {{ app()->getLocale() == 'ar' ? 'إعلان' : 'Ad' }}</div>
         </div>
         @else
         @foreach($bottomBanners['data'] as $banner)
@@ -272,6 +275,9 @@ $currency = session('currencyAr', 'دينار كويتي');
                     <img src="{{ $banner->upload_banner }}" class="img-fluid" />
                 </a>
             </div>
+            @if($banner->payment_status == 1 && $banner->added_by == 0)
+            <div class="adsTitle"> {{ app()->getLocale() == 'ar' ? 'إعلان' : 'Ad' }}</div>
+            @endif
         </div>
         @endforeach
         @endif

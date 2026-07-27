@@ -15,6 +15,7 @@
                     <div class="Bannerstores">
                         <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
                     </div>
+                    <div class="adsTitle"> {{ app()->getLocale() == 'ar' ? 'إعلان' : 'Ad' }}</div>
                 </div>
                 @else
                     @foreach($catBanners['data'] as $banner)
@@ -22,6 +23,9 @@
                             <a href="{{ url('user/store-details/' . ($banner->seller_details->store_info->id ?? '')) }}">
                                 <img src="{{ $banner->upload_banner }}" class="img-fluid" />
                             </a>
+                            @if($banner->payment_status == 1 && $banner->added_by == 0)
+                            <div class="adsTitle"> {{ app()->getLocale() == 'ar' ? 'إعلان' : 'Ad' }}</div>
+                            @endif
                         </div>
                     @endforeach
             @endif
