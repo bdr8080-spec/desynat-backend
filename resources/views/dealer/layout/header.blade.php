@@ -23,6 +23,7 @@
     <link href="{{ asset('dealer') }}/assets/custom-file/css/style.css" rel="stylesheet">
     <link href="{{ asset('dealer') }}/assets/custom-file/css/custom.css" rel="stylesheet">
     <link href="{{ asset('dealer') }}/assets/custom-file/table-lib/table-style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 

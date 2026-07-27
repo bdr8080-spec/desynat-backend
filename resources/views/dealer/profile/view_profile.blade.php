@@ -136,6 +136,7 @@
             <img src="{{ $seller_details->store_info?->store_image ?? asset('images/default-store.png') }}"
                 alt="Profile">
         </div>
+        
 
         <div class="profile_wapper">
             <div class="profile-card">
@@ -157,14 +158,78 @@
                                     {{ $seller_details->mobile }}</small><br>
                                 <small class="text-muted">{{ $seller_details->email }}</small>
 
-                                <div class="star-rating mt-1">
+                                <!-- <div class="star-rating mt-1">
                                     <i class="bi bi-star-fill"></i>
                                     <i class="bi bi-star-fill"></i>
                                     <i class="bi bi-star-fill"></i>
                                     <i class="bi bi-star-fill"></i>
                                     <i class="bi bi-star-half"></i>
                                     <span class="text-black">(123K)</span>
-                                </div>
+                                </div> -->
+                               @php
+
+                                $storeInfo = $seller_details->store_info ?? null;
+
+                                $totalReviews = 0;
+
+
+                                if ($storeInfo && $storeInfo->store_review) {
+
+                                    $totalReviews = $storeInfo->store_review->count();
+
+                                }
+
+                                $averageRating = 0;
+
+
+                                if ($storeInfo) {
+
+                                    $averageRating = $storeInfo->getAttribute('store_rating') ?? 0;
+
+                                }
+
+                                $rating = round((float)$averageRating * 2) / 2;
+
+
+                                $fullStars = floor($rating);
+
+                                $hasHalfStar = (($rating - $fullStars) == 0.5);
+
+                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+
+
+                            @endphp
+
+
+                            <div class="rating">
+
+                                @if($rating > 0)
+
+                                    @for($i = 0; $i < $fullStars; $i++)
+                                        <i class="bi bi-star-fill"></i>
+                                    @endfor
+
+                                    @if($hasHalfStar)
+                                        <i class="bi bi-star-half"></i>
+                                    @endif
+
+                                    @for($i = 0; $i < $emptyStars; $i++)
+                                        <i class="bi bi-star"></i>
+                                    @endfor
+
+                                @else
+
+                                    @for($i = 0; $i < 5; $i++)
+                                        <i class="bi bi-star"></i>
+                                    @endfor
+
+                                @endif
+
+                                <span class="totalstart">
+                                    ({{ $totalReviews }})
+                                </span>
+
+                            </div>
                             </div>
                         </div>
                     </div>
