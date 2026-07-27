@@ -370,7 +370,44 @@ class UserStoreController extends Controller
         } catch (\Exception $e) {
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
-    }      
+    }   
+    
+    public function bestSellingProduct(Request $request){
+
+
+       $user_id=$request->user->id??null;
+
+      
+       $request_data=(object)[
+        'user_id'=>$user_id,
+        'store_id'=>$request->store_id,
+        'search' =>$request->search,
+        'sort_filter'=> $request->sort_filter,
+        'brand_id'     => is_array($request->brand_id) ? $request->brand_id : [],     
+        'category_id'  => is_array($request->category_id) ? $request->category_id : [],  
+        'subcategory_id' => $request->subcategory_id ?? null, 
+        'size_id'      => is_array($request->size_id) ? $request->size_id : [],       
+        'color_id'     => is_array($request->color_id) ? $request->color_id : [],      
+        'price_min'    => $request->price_min ?? null,
+        'price_max'    => $request->price_max ?? null,
+        'discount'    => $request->discount ?? null,
+        'rating'    => $request->rating ?? null,
+        'delivery_time'    => $request->delivery_time ?? null,
+        'delivery_option'    => $request->delivery_option ?? null,
+        'limit'    => $request->limit ?? null,
+       ];
+
+       $data=$this->UserManagementService->bestSellingList($request_data);
+
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
 
     
 }

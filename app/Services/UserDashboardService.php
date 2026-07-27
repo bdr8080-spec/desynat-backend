@@ -859,5 +859,509 @@ return [
     }
 
 
+    public function singleStoreWiseAllproduct($data)
+    {
+        try {
+    
+            // Step 1: Find store
+            $store_information = sellerStoreInformation::with('seller_information')->find($data->store_id);
+            // seller profile generate Qr Code 
+            Generate_SellerQrCode($store_information->seller_id,$data->store_id);
+            
+            // If store not found
+            if (!$store_information) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Store Found',
+                    'data'   => []
+                ];
+            }
+
+            $wishlistIds = wishlist::where('user_id', $data->user_id)
+                       ->pluck('product_id')
+                       ->toArray();
+
+                    // Step 2: Product query
+            $products = $store_information->All_product()
+                ->with([
+                    'brand',
+                    'category',
+                    'subcategory',
+                    'product_specifications',
+                    'product_variants.color',
+                    'product_variants.size',
+                    'review',
+                    'review.user_details'
+                ]);
+    
+            // Step 3: Search
+            if (!empty($data->search)) {
+                $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
+            }
+
+            if (!empty($data->category_id) && is_array($data->category_id)) {
+
+                $products->whereIn('category_id', $data->category_id);
+            }
+
+            if (!empty($data->subcategory_id)) {
+                $products->where('subcategory_id', $data->subcategory_id);
+            }
+
+            if (!empty($data->brand_id) && is_array($data->brand_id)) {
+
+                $products->whereIn('brand_id', $data->brand_id);
+            }
+
+            //price filter
+
+            if (!empty($data->price_min) || !empty($data->price_max)) {
+
+                $products->whereHas('product_variants', function ($query) use ($data) {
+
+                    // minimum price
+                    if (!empty($data->price_min)) {
+                        $query->where('final_price', '>=', $data->price_min);
+                    }
+
+                    // maximum price
+                    if (!empty($data->price_max)) {
+                        $query->where('final_price', '<=', $data->price_max);
+                    }
+                });
+            }
+
+            //dicount
+            if (!empty($data->discount)) {
+
+                $products->whereHas('product_variants', function ($query) use ($data) {
+
+                    $query->where('discount_value', '<=', $data->discount);
+                });
+            }
+
+            //size filter
+            if (!empty($data->size_id) && is_array($data->size_id)) {
+
+                $products->whereHas('product_variants', function ($query) use ($data) {
+
+                    $query->whereIn('size_id', $data->size_id);
+                });
+            }
+
+            if (!empty($data->rating)) {
+
+                $products->where(function ($q) use ($data) {
+
+                    $q->whereHas('review', function ($query) use ($data) {
+
+                        $query->where('product_rating', '<=', $data->rating);
+
+                    })
+                    ->orWhereDoesntHave('review');
+                });
+            }
+
+            //delivery time
+            if (!empty($data->delivery_time)) {
+
+                $products->reorder()->inRandomOrder();
+            }
+
+            //delivery option
+            if (!empty($data->delivery_option)) {
+                $deliveryOptions = (array) $data->delivery_option;
+
+                if (in_array('2', $deliveryOptions)) {
+
+                    $products = $products->select('products.*')
+                        ->addSelect([
+                            'total_sales' => orderdetail::selectRaw('COUNT(*)')
+                                ->whereColumn('orderdetails.product_id', 'products.id')
+                                ->where('payment_status', '1')
+                                ->where('delivery_status', '3')
+                        ])
+                        ->orderByDesc('total_sales');
+                }
+
+                elseif (in_array('1', $deliveryOptions)) {
+
+                    $products->reorder()->inRandomOrder();
+                }
+
+            }
+
+            
+
+            // Step 4: Pagination (convert stdClass to array)
+            $products = $products->paginate()
+            ->through(function ($product) use ($wishlistIds) {
+                $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+                $reviews = $product->review ?? [];
+                if (count($reviews) > 0) {
+
+                    $totalRating = 0;
+                    $count = 0;
+
+                    foreach ($reviews as $review) {
+                        if (!empty($review->product_rating)) {
+                            $totalRating += (float) $review->product_rating;
+                            $count++;
+                        }
+                    }
+
+                    $product->average_rating = $count > 0 ? round($totalRating / $count, 1) : 0;
+
+                } else {
+                    $product->average_rating = 0;
+                }
+                return $product;
+            })
+            ->appends((array) $data);
+
+            $allProducts = $store_information->All_product()->with('review')->get();
+
+                $totalStoreRating = 0;
+                $storeRatingCount = 0;
+                $reviewCount = 0;
+
+                foreach ($allProducts as $product) {
+                    foreach ($product->review as $review) {
+                        if (!empty($review->store_rating)) {
+                            $totalStoreRating += (float)$review->store_rating;
+                            $storeRatingCount++;
+                        }
+                        $reviewCount++;
+                    }
+                }
+
+                $store_information->average_store_rating = $storeRatingCount > 0
+                    ? round($totalStoreRating / $storeRatingCount, 1)
+                    : 0;
+
+                $store_information->total_review_count = $reviewCount;
+
+
+            // Step 5: Response
+            $response = [
+                'store'       => $store_information,
+                'All_Product' => $products,
+            ];
+    
+            return [
+                'status'  => 'success',
+                'message' => "single Store Information fetch Successfully",
+                'data'    => $response
+            ];
+    
+        } catch (\Exception $e) {
+    
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+public function TopRatingList($data)
+{
+    try {
+
+        $wishlistIds = wishlist::where('user_id', $data->user_id)
+            ->pluck('product_id')
+            ->toArray();
+
+
+        $topRated = productRatings::pluck('product_id')
+            ->unique()
+            ->values();
+
+
+        $products = product::with([
+            'brand',
+            'category',
+            'subcategory',
+            'product_specifications',
+            'product_variants.color',
+            'product_variants.size',
+            'review',
+            'review.user_details',
+            'store.seller_information'
+        ])
+        ->whereIn('id', $topRated)
+        ->withAvg('review as product_avg_rating', 'product_rating')
+        ->withCount('review')
+        ->orderByDesc('product_avg_rating');
+
+
+
+        // Search
+        if (!empty($data->search)) {
+
+            $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
+
+        }
+
+
+
+        // Category
+        if (!empty($data->category_id) && is_array($data->category_id)) {
+
+            $products->whereIn('category_id', $data->category_id);
+
+        }
+
+
+
+        // Sub Category
+        if (!empty($data->subcategory_id)) {
+
+            $products->where('subcategory_id', $data->subcategory_id);
+
+        }
+
+
+
+        // Brand
+        if (!empty($data->brand_id) && is_array($data->brand_id)) {
+
+            $products->whereIn('brand_id', $data->brand_id);
+
+        }
+
+
+
+        // Price
+        if (!empty($data->price_min) || !empty($data->price_max)) {
+
+            $products->whereHas('product_variants', function ($query) use ($data) {
+
+
+                if (!empty($data->price_min)) {
+
+                    $query->where('final_price', '>=', $data->price_min);
+
+                }
+
+
+                if (!empty($data->price_max)) {
+
+                    $query->where('final_price', '<=', $data->price_max);
+
+                }
+
+
+            });
+
+        }
+
+
+
+
+        // Discount
+        if (!empty($data->discount)) {
+
+            $products->whereHas('product_variants', function ($query) use ($data) {
+
+                $query->where('discount_value', '<=', $data->discount);
+
+            });
+
+        }
+
+
+
+
+        // Size
+        if (!empty($data->size_id) && is_array($data->size_id)) {
+
+            $products->whereHas('product_variants', function ($query) use ($data) {
+
+                $query->whereIn('size_id', $data->size_id);
+
+            });
+
+        }
+
+
+
+
+        // Rating Filter
+        if (!empty($data->rating)) {
+
+            $products->where(function ($q) use ($data) {
+
+
+                $q->whereHas('review', function ($query) use ($data) {
+
+
+                    $query->where('product_rating', '>=', $data->rating);
+
+
+                })
+                ->orWhereDoesntHave('review');
+
+
+            });
+
+        }
+
+
+
+
+        // Delivery Time
+        if (!empty($data->delivery_time)) {
+
+            $products->inRandomOrder();
+
+        }
+
+
+
+
+
+        // Delivery Option
+        if (!empty($data->delivery_option)) {
+
+
+            $deliveryOptions = (array)$data->delivery_option;
+
+
+            if (in_array('2', $deliveryOptions)) {
+
+
+                // keep highest rated order
+
+                $products->orderByDesc('product_avg_rating');
+
+
+            } 
+            elseif (in_array('1', $deliveryOptions)) {
+
+
+                $products->inRandomOrder();
+
+
+            }
+
+
+        }
+
+
+
+
+
+        // Pagination
+        $products = !empty($data->limit)
+            ? $products->paginate($data->limit)
+            : $products->paginate();
+
+
+
+
+
+        // Wishlist + Average Rating
+        $products->through(function ($product) use ($wishlistIds) {
+
+
+            $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+
+
+
+            $reviews = $product->review ?? [];
+
+
+
+            if (count($reviews) > 0) {
+
+
+                $totalRating = 0;
+                $count = 0;
+
+
+
+                foreach ($reviews as $review) {
+
+
+                    if (!empty($review->product_rating)) {
+
+
+                        $totalRating += (float)$review->product_rating;
+                        $count++;
+
+
+                    }
+
+
+                }
+
+
+
+                $product->average_rating = $count > 0
+                    ? round($totalRating / $count, 1)
+                    : 0;
+
+
+
+            } else {
+
+
+                $product->average_rating = 0;
+
+
+            }
+
+
+
+            return $product;
+
+
+        });
+
+
+
+
+        $products->appends((array)$data);
+
+
+
+
+        return [
+
+            'status' => 'success',
+
+            'message' => 'Top Rating Products fetched Successfully',
+
+            'data' => [
+
+                'All_Product' => $products
+
+            ]
+
+        ];
+
+
+
+    } catch (\Exception $e) {
+
+
+        return [
+
+            'status' => 'error',
+
+            'message' => 'Failed: ' . $e->getMessage(),
+
+            'data' => (object)[]
+
+        ];
+
+    }
+}
+
+
 
 }
+
+
+
