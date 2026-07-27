@@ -138,7 +138,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                 <td>
                                     @php
                                     $ext = strtolower(pathinfo($story->file, PATHINFO_EXTENSION));
-                                    $imageExtensions = ['jpg','jpeg','png','gif','svg'];
+                                    $imageExtensions = ['jpg','jpeg','png','gif','svg','jfif'];
                                     $videoExtensions = ['mp4','mov','avi','mkv'];
                                     @endphp
 
@@ -272,7 +272,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                         <td>
                                             @php
                                             $ext = strtolower(pathinfo($story->file, PATHINFO_EXTENSION));
-                                            $imageExtensions = ['jpg','jpeg','png','gif','svg'];
+                                            $imageExtensions = ['jpg','jpeg','png','gif','svg','jfif'];
                                             $videoExtensions = ['mp4','mov','avi','mkv'];
                                             @endphp
 
@@ -375,7 +375,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                         <td>
                                             @php
                                             $ext = strtolower(pathinfo($story->file, PATHINFO_EXTENSION));
-                                            $imageExtensions = ['jpg','jpeg','png','gif','svg'];
+                                            $imageExtensions = ['jpg','jpeg','png','gif','svg','jfif'];
                                             $videoExtensions = ['mp4','mov','avi','mkv'];
                                             @endphp
 
@@ -465,7 +465,7 @@ $permissions = \App\Models\AdminPermission::where('admin_id', $admin->id)
                                         <td>
                                             @php
                                             $ext = strtolower(pathinfo($story->file, PATHINFO_EXTENSION));
-                                            $imageExtensions = ['jpg','jpeg','png','gif','svg'];
+                                            $imageExtensions = ['jpg','jpeg','png','gif','svg','jfif'];
                                             $videoExtensions = ['mp4','mov','avi','mkv'];
                                             @endphp
 
