@@ -279,7 +279,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::get('user/best-selling-product', [UserDashboardController::class,'bestSellingProduct']); // m12 Api 
   Route::get('user/top-rating-product', [UserDashboardController::class,'TopRatingProduct']); // m12 Api 
 Route::get('user/newest-product', [UserDashboardController::class,'newestProduct']); // m12 Api 
-Route::get('user/best-selling-products-list', [UserDashboardController::class,'bestSellingProduct']);
+Route::get('user/best-selling-products-list', [UserDashboardController::class,'BestSellingProductList']);
 Route::get('user/top-rating-products-list', [UserDashboardController::class,'TopRatingProductList']);
 
    
