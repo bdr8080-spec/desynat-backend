@@ -953,259 +953,663 @@ var sellerStories = null;
 var sellerIndex = 0;
 var sellerTimer = null;
 var sellerDuration = 3000;
-var sellerLoading = false;    // prevent multiple API calls
+var sellerLoading = false;
 
-// ================= CLICK HANDLER =================
-function openSellerGallery(index = 0) {
-    console.log("[SELLER] Clicked");
 
-    // Prevent multiple clicks while loading
-    if (sellerLoading) {
-        //console.log("[SELLER] Already loading...");
+// ================= PAGE LOAD CHECK STORY =================
+$(document).ready(function () {
+
+    loadSellerStoriesOnPageLoad();
+
+});
+
+
+
+// ================= LOAD STORY ON PAGE LOAD =================
+function loadSellerStoriesOnPageLoad() {
+
+
+    var sellerInput = document.getElementById("seller_id");
+
+
+    if (!sellerInput) {
+
         return;
+
     }
 
-    // If not loaded → fetch from API
-    if (sellerStories === null) {
-        loadSellerStories(index);
-    } 
-    // If already loaded and has stories → open gallery
-    else if (sellerStories.length > 0) {
-        showSellerGallery(index);
-    } 
-    // If loaded but empty → do nothing
-    else {
-        //console.log("[SELLER] No stories → do nothing");
-    }
+
+    var seller_id = sellerInput.value;
+
+
+
+    $.ajax({
+
+        url: "{{ route('user.get_seller_story') }}",
+
+        type: "GET",
+
+        dataType: "json",
+
+
+        data: {
+
+            seller_id: seller_id
+
+        },
+
+
+        success: function(res) {
+
+
+            if (res.status === "success" && Array.isArray(res.data.data)) {
+
+
+                sellerStories = res.data.data;
+
+
+            } else {
+
+
+                sellerStories = [];
+
+
+            }
+
+
+
+            var profileDiv = document.querySelector('.storeClient_profile_img');
+
+
+
+            if (sellerStories.length > 0) {
+
+
+                if(profileDiv){
+
+                    profileDiv.classList.add('story-active');
+
+                }
+
+
+            } else {
+
+
+                if(profileDiv){
+
+                    profileDiv.classList.remove('story-active');
+
+                }
+
+
+            }
+
+
+        },
+
+
+        error: function(err) {
+
+
+            console.error("[SELLER] Initial story load error:", err);
+
+
+            sellerStories = [];
+
+
+        }
+
+
+    });
+
+
 }
 
+
+
+
+
+// ================= CLICK HANDLER =================
+
+function openSellerGallery(index = 0) {
+
+
+    console.log("[SELLER] Clicked");
+
+
+    if (sellerLoading) {
+
+        return;
+
+    }
+
+
+
+    if (sellerStories === null) {
+
+
+        loadSellerStories(index);
+
+
+    } 
+
+    else if (sellerStories.length > 0) {
+
+
+        showSellerGallery(index);
+
+
+    } 
+
+    else {
+
+
+        return;
+
+    }
+
+}
+
+
+
+
+
 // ================= LOAD STORIES FROM API =================
+
 function loadSellerStories(openIndex = 0) {
+
 
     sellerLoading = true;
 
-    // Get seller_id from hidden input
+
     var sellerInput = document.getElementById("seller_id");
 
+
+
     if (!sellerInput) {
-        //console.error("[SELLER] seller_id input not found!");
+
+
         sellerLoading = false;
+
         return;
+
+
     }
 
+
+
     var seller_id = sellerInput.value;
-    //console.log("[SELLER] seller_id:", seller_id);
+
+
 
     $.ajax({
+
+
         url: "{{ route('user.get_seller_story') }}",
+
         type: "GET",
+
         dataType: "json",
 
+
         data: {
+
+
             seller_id: seller_id
+
+
         },
+
 
         success: function(res) {
+
+
             sellerLoading = false;
 
-           // console.log("[SELLER] API RESPONSE:", res);
+
 
             if (res.status === "success" && Array.isArray(res.data.data)) {
+
+
                 sellerStories = res.data.data;
+
+
             } else {
+
+
                 sellerStories = [];
+
+
             }
+
+
+
+
             var profileDiv = document.querySelector('.storeClient_profile_img');
 
+
+
             if (sellerStories.length > 0) {
+
+
                 if(profileDiv){
+
+
                     profileDiv.classList.add('story-active');
+
+
                 }
+
+
             } else {
+
+
                 if(profileDiv){
+
+
                     profileDiv.classList.remove('story-active');
+
+
                 }
+
+
             }
 
-            // If stories exist → open gallery
+
+
+
             if (sellerStories.length > 0) {
+
+
                 showSellerGallery(openIndex);
-            } else {
-                //console.log("[SELLER] No stories found → do nothing");
+
+
             }
+
+
         },
 
+
         error: function(err) {
+
+
             sellerLoading = false;
+
             console.error("[SELLER] AJAX ERROR:", err);
+
             sellerStories = [];
+
+
         }
+
+
     });
+
+
 }
 
+
+
+
+
+
 function showSellerGallery(index) {
-    //console.log('123');
+
 
     sellerIndex = index;
 
+
     var container = document.getElementById("statusSeller");
+
+
     if (!container) {
-        console.error("[SELLER] statusSeller not found");
+
+
         return;
+
+
     }
+
 
     container.style.display = "block";
 
+
     generateSellerProgressBars();
+
     showSellerStory();
+
+
 }
+
+
+
+
 
 
 function generateSellerProgressBars() {
 
+
     var container = document.getElementById("progressContainerSeller");
 
+
     if (!container) {
-       // console.error("[SELLER] progressContainerSeller not found");
+
+
         return;
+
+
     }
+
 
     container.innerHTML = "";
 
+
+
     sellerStories.forEach((s, i) => {
+
+
         container.innerHTML += `
+
             <div class="progress-bar">
+
                 <div class="progress-fill" id="sellerBar${i}"></div>
+
             </div>
+
         `;
+
+
     });
+
+
 }
+
+
+
+
+
 
 function showSellerStory() {
 
+
     var story = sellerStories[sellerIndex];
 
-    //console.log("[SELLER] showStory index:", sellerIndex, story);
+
 
     if (!story) {
+
+
         closeSellerStatus();
+
         return;
+
+
     }
+
+
 
     var img = document.getElementById("statusImageSeller");
+
     var video = document.getElementById("statusVideoSeller");
 
+
+
     if (!img || !video) {
-        //console.error("[SELLER] Image or Video element missing");
+
+
         return;
+
+
     }
 
-    // Reset
+
+
     img.style.display = "none";
+
     video.style.display = "none";
+
+
     video.pause();
+
     video.currentTime = 0;
+
+
+
 
     var file = story.file;
 
+
+
     if (!file) {
-        //console.warn("[SELLER] Empty file → skipping");
+
+
         showNextSeller();
+
         return;
+
+
     }
 
-    //console.log("[SELLER] FILE:", file);
+
+
 
     if (file.match(/\.(mp4|webm|ogg)$/i)) {
 
+
+
         video.src = file;
+
         video.style.display = "block";
+
         video.controls = true;
 
+
+
         video.onloadedmetadata = function () {
+
+
             sellerDuration = (video.duration * 1000) || 3000;
+
+
             startSellerProgress();
-            video.play().catch(e => console.warn("[SELLER] Play blocked:", e));
+
+
+            video.play().catch(e => console.warn(e));
+
+
         };
+
+
 
         video.onerror = function () {
-            console.error("[SELLER] Video failed → skipping");
+
+
             showNextSeller();
+
+
         };
 
+
+
     } 
+
     else {
 
+
+
         img.src = file;
+
         img.style.display = "block";
 
+
         sellerDuration = 3000;
+
+
         startSellerProgress();
+
+
     }
+
+
 }
+
+
+
+
 
 
 function startSellerProgress() {
 
+
     clearTimeout(sellerTimer);
+
+
 
     document.querySelectorAll("#progressContainerSeller .progress-fill")
-        .forEach(bar => {
-            bar.style.width = "0%";
-            bar.style.transition = "none";
-        });
+
+    .forEach(bar => {
+
+
+        bar.style.width = "0%";
+
+        bar.style.transition = "none";
+
+
+    });
+
+
+
+
 
     setTimeout(() => {
+
+
         var bar = document.getElementById("sellerBar" + sellerIndex);
 
-        if (bar) {
+
+
+        if(bar){
+
+
             bar.style.transition = sellerDuration + "ms linear";
+
             bar.style.width = "100%";
+
+
         }
-    }, 10);
+
+
+    },10);
+
+
+
+
 
     sellerTimer = setTimeout(() => {
+
+
         showNextSeller();
+
+
     }, sellerDuration);
+
+
+
 }
 
 
-function showNextSeller() {
 
-    if (sellerIndex < sellerStories.length - 1) {
+
+
+
+
+function showNextSeller(){
+
+
+    if(sellerIndex < sellerStories.length - 1){
+
+
         sellerIndex++;
+
         showSellerStory();
+
+
     } else {
+
+
         closeSellerStatus();
+
+
     }
+
+
 }
 
 
-function showPrevSeller() {
 
-    if (sellerIndex > 0) {
+
+
+
+function showPrevSeller(){
+
+
+    if(sellerIndex > 0){
+
+
         sellerIndex--;
+
         showSellerStory();
+
+
     }
+
+
 }
 
-function closeSellerStatus() {
+
+
+
+
+
+function closeSellerStatus(){
+
 
     clearTimeout(sellerTimer);
+
+
 
     var video = document.getElementById("statusVideoSeller");
 
-    if (video) {
+
+
+    if(video){
+
+
         video.pause();
+
         video.currentTime = 0;
+
+
     }
+
+
+
 
     var container = document.getElementById("statusSeller");
 
-    if (container) {
+
+
+    if(container){
+
+
         container.style.display = "none";
+
+
     }
+
+
 }
+
 
 </script>
 
