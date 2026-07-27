@@ -41,7 +41,7 @@
     </div>
 
     <div class="brand-banner">
-        <img src="https://d79swovq1y56s.cloudfront.net/uploads/lAHVxEhGIV.png" alt="Profile" class="img-fluid">
+        <img src="{{ $data['store_info']['store_image'] }}" alt="Profile" class="img-fluid">
     </div>
 
     <div class="mb-5 viewSeller">
@@ -51,7 +51,7 @@
                     <div class="user_view">
                         <div class="position-relative">
                             <div class="addprofile">
-                                <img src="https://d79swovq1y56s.cloudfront.net/profile/1777366604.jpg"
+                                <img src="{{ $data['profile_pic'] ?? '' }}"
                                     class="img-fluid">
                             </div>
                         </div>
