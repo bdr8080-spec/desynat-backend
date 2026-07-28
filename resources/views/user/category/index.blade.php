@@ -735,6 +735,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                        style="width:100%; height:100%; object-fit:contain; display:none;"
                        controls autoplay muted>
                 </video>
+                <div id="adsTitle" class="adsTitle"></div>
             </div>
         </div>    
     </div>
@@ -1351,6 +1352,18 @@ function showSellerStory() {
     var img = document.getElementById("statusImageSeller");
 
     var video = document.getElementById("statusVideoSeller");
+
+    const adsTitle = document.getElementById("adsTitle");
+
+    if (adsTitle) {
+        if (story.payment_status == "1") {
+            adsTitle.textContent = "{{ app()->getLocale() == 'ar' ? 'إعلان' : 'Ad' }}";
+            adsTitle.style.display = "block";
+        } else {
+            adsTitle.textContent = "";
+            adsTitle.style.display = "none";
+        }
+    }
 
 
 

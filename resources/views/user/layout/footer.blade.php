@@ -19,6 +19,7 @@
     width: 50px;
 }
 
+
      </style>
      <footer>
          <div class="container-fluid">
@@ -146,7 +147,9 @@
             <div class="status-img">
                 <img id="statusImage" class="img-fluid" alt="status" />
                 <video id="statusVideo" style="max-width: 100%; max-height: 400px; display: none;" controls></video>
+                <div id="adsTitle" class="adsTitle"></div>
             </div>
+            
         </div>    
     </div>
 </div>
@@ -1513,8 +1516,21 @@ function showStory() {
         return;
     }
 
+    //console.log(story);
+
     let img = document.getElementById("statusImage");
     let video = document.getElementById("statusVideo");
+    const adsTitle = document.getElementById("adsTitle");
+
+    if (adsTitle) {
+        if (story.payment_status == "1") {
+            adsTitle.textContent = "{{ app()->getLocale() == 'ar' ? 'إعلان' : 'Ad' }}";
+            adsTitle.style.display = "block";
+        } else {
+            adsTitle.textContent = "";
+            adsTitle.style.display = "none";
+        }
+    }
 
     if (!img || !video) {
        // console.error("[ERROR] #statusImage or #statusVideo not found!");

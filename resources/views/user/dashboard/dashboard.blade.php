@@ -264,7 +264,6 @@ $currency = session('currencyAr', 'دينار كويتي');
             <div class="premiumImg">
                 <img src="{{ asset('user/assets/images/active-banner.png') }}" class="img-fluid" />
             </div>
-            <div class="adsTitle"> {{ app()->getLocale() == 'ar' ? 'إعلان' : 'Ad' }}</div>
         </div>
         @else
         @foreach($bottomBanners['data'] as $banner)
