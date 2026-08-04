@@ -413,9 +413,12 @@
 }
 
 
-html[dir="rtl"]
-.grid-layout.widget-position-right {
-    position: absolute;
-    inset: 0px auto 0px 0px;
-    inset-inline-start: initial;
+/* LTR */
+html[dir="ltr"] .grid-layout {
+    inset: 0 auto 0 0 !important;
+}
+
+/* RTL */
+html[dir="rtl"] .grid-layout {
+    inset: 0 0 0 auto !important;
 }
