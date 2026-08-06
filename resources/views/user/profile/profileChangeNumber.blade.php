@@ -44,8 +44,8 @@
                                                             class="country-radio"
                                                             {{ $index === 0 ? 'checked' : '' }} hidden>
                                                         <!-- <img src="{{ $item->flag }}" alt="Flag of {{ $item->name }}" width="25" height="16"> -->
-                                                        {{ $item->flag1 }}
-                                                        <span>{{ $item->dial_code }} ({{ App::getLocale() == 'en' ? $item->name : $item->name_ar }})</span>
+                                                       
+                                                        <span> {{ $item->flag1 }} {{ $item->dial_code }} ({{ App::getLocale() == 'en' ? $item->name : $item->name_ar }})</span>
                                                     </label>
                                                 </li>
                                             @endforeach
