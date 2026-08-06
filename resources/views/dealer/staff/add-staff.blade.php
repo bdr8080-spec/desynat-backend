@@ -97,8 +97,8 @@
                             type="button" id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
 
                             <span id="selected-flag">
-                                <img src="{{$all_country[0]->flag1}}" alt="flag" width="25" height="16">
-                                {{$all_country[0]->dial_code}}
+                                <!-- <img src="{{$all_country[0]->flag}}" alt="flag" width="25" height="16"> -->
+                                {{$all_country[0]->flag}} {{$all_country[0]->dial_code}}
                             </span>
 
                             <span id="selected-code" class="ms-2">

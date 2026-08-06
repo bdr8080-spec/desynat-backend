@@ -143,9 +143,9 @@
                                                         type="button" id="countryDropdown" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
 
-                                                        <span id="selected-flag">
-                                                            <img src="{{ old('country_flag', $country[0]->flag1) }}"
-                                                                alt="flag" width="25" height="16">
+                                                        <span id="selected-flag"> {{ old('country_flag', $country[0]->flag) }}
+                                                            <!-- <img src="{{ old('country_flag', $country[0]->flag1) }}"
+                                                                alt="flag" width="25" height="16"> -->
 
                                                         </span>
 
@@ -170,7 +170,9 @@
                                                                         hidden>
                                                                   
                                                                     <div width="25" height="16">
-                                                                            <span><img src="{{ $item->flag1 }}" width="25" height="16"> {{ $item->dial_code }}
+                                                                            <span>
+                                                                                <!-- <img src="{{ $item->flag1 }}" width="25" height="16">  -->
+                                                                                {{ $item->flag }} {{ $item->dial_code }}
                                                                                 (@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif )
                                                                             </span>
                                                                         </div>
@@ -301,14 +303,24 @@
                 const selectedFlag = document.getElementById('selected-flag');
                 const selectedCode = document.getElementById('selected-code');
 
+                // radios.forEach(radio => {
+                //     radio.addEventListener('change', function () {
+                //         const parent = this.closest('label');
+                //         const flagImg = parent.querySelector('img').src;
+                //         const dialCode = this.value;
+
+                //         selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
+                //         selectedCode.textContent = dialCode;
+                //     });
+                // });
+
                 radios.forEach(radio => {
                     radio.addEventListener('change', function () {
                         const parent = this.closest('label');
-                        const flagImg = parent.querySelector('img').src;
-                        const dialCode = this.value;
-
-                        selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
-                        selectedCode.textContent = dialCode;
+                        const text = parent.querySelector('span').innerText.trim();
+                        const flag = text.split(' ')[0];
+                        selectedFlag.textContent = flag;
+                        selectedCode.textContent = this.value;
                     });
                 });
             });
