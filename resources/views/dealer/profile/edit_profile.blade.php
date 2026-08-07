@@ -179,9 +179,9 @@
                                                 type="button" id="countryDropdown1" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
                                                 <div>
-                                                    <span id="selected-flag1">
-                                                        <img src="{{$seller_details->store_info->country_info->flag1}}"
-                                                            alt="flag" width="25" height="16">
+                                                    <span id="selected-flag1">{{$seller_details->store_info->country_info->flag}}
+                                                        <!-- <img src="{{$seller_details->store_info->country_info->flag}}"
+                                                            alt="flag" width="25" height="16"> -->
                                                         @if(App::getlocale()=='en') {{$seller_details->store_info->country_info->name }} @else  {{$seller_details->store_info->country_info->name_ar }} @endif 
                                                     </span>
 
@@ -197,12 +197,14 @@
                                                         class="dropdown-item d-flex align-items-center gap-3 country-option1"
                                                         style="cursor: pointer;">
                                                         <input type="radio" name="country" value="{{ $item->id }}"
-                                                            data-flag="{{ $item->flag1 }}"  data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif"
+                                                            data-flag="{{ $item->flag }}"  data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif"
                                                             class="country-radio1"
                                                             {{ $seller_details->store_info->country == $item->id ? 'checked' : '' }}
                                                             hidden>
                                                         <div width="25" height="16">
-                                                            <span><img src="{{ $item->flag1 }}" width="25" height="16"> @if(App::getlocale()=='en')  {{$item->name }} @else  {{$item->name_ar }} @endif 
+                                                            <span>
+                                                                <!-- <img src="{{ $item->flag1 }}" width="25" height="16"> -->
+                                                                {{ $item->flag }} @if(App::getlocale()=='en')  {{$item->name }} @else  {{$item->name_ar }} @endif 
                                                             </span>
                                                         </div>
                                                     </label>
@@ -288,8 +290,9 @@
                                                 aria-expanded="false">
 
                                                 <span id="selected-flag">
-                                                    <img src="{{$seller_details->store_info->dialer_info->flag1}}"
-                                                        alt="flag" width="25" height="16">
+                                                    <!-- <img src="{{$seller_details->store_info->dialer_info->flag1}}"
+                                                        alt="flag" width="25" height="16"> -->
+                                                        {{$seller_details->store_info->dialer_info->flag}}
                                                     {{$seller_details->store_info->country_code}}
                                                 </span>
 
@@ -303,13 +306,14 @@
                                                         class="dropdown-item d-flex align-items-center gap-2 country-option"
                                                         style="cursor: pointer;">
                                                         <input type="radio" name="country_code"
-                                                            value="{{ $item->dial_code }}" data-flag="{{ $item->flag1 }}"
+                                                            value="{{ $item->dial_code }}" data-flag="{{ $item->flag }}"
                                                              data-name="@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif" class="country-radio"
                                                             {{ $seller_details->store_info->country_code == $item->dial_code ? 'checked' : '' }}
                                                             hidden>
 
                                                         <div width="25" height="16">
-                                                            <span><img src="{{ $item->flag1 }}" width="25" height="16">
+                                                            <span>
+                                                                <!-- <img src="{{ $item->flag1 }}" width="25" height="16"> --> {{ $item->flag }}
                                                                 {{ $item->dial_code }} (@if(App::getlocale()=='en'){{ $item->name }} @else {{ $item->name_ar }} @endif )
                                                             </span>
                                                         </div>

@@ -411,3 +411,14 @@
     color: #000;
     font-size: 15px;
 }
+
+
+/* LTR */
+html[dir="ltr"] .grid-layout {
+    inset: 0 auto 0 0 !important;
+}
+
+/* RTL */
+html[dir="rtl"] .grid-layout {
+    inset: 0 0 0 auto !important;
+}

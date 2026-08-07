@@ -327,7 +327,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                 @endphp
                                 <button class="btn btn-secondary dropdown-toggle customBtn1 " type="button"
                                     data-bs-toggle="dropdown" {{ !$isHome ? 'disabled' : '' }}>
-                                    <img id="selectedFlag" src="{{@$defaultCountry->flag}}" class="img-fluid" />
+                                    <!-- <img id="selectedFlag" src="{{@$defaultCountry->flag1}}" class="img-fluid" />
+                                     -->
+                                    <span id="selectedFlag" style="font-size:20px">{{@$defaultCountry->flag1}}</span>
+
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu">
@@ -336,7 +339,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     </li>
 
                                     @foreach($GetsellerCountry as $key=>$val)
-                                    <li class="dropdown-item" data-flag="{{$val->flag}}">
+                                    <li class="dropdown-item" data-flag="{{$val->flag1}}">
                                         <label class="custom-radio d-flex justify-content-between">
                                             <input type="radio" name="country_language" value="{{$val->id}}"
                                                 {{ session('country_id', $defaultCountry->id) == $val->id ? 'checked' : '' }}>
@@ -345,7 +348,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                             @else
                                             <span>{{$val->name_ar}}</span>
                                             @endif
-                                            <img src="{{$val->flag}}" width="20">
+                                            <!-- <img src="{{$val->flag1}}" width="20"> -->
+                                            <span style="font-size:20px">{{ $val->flag1 }}</span>
+
+                                            <!-- <div width="20">{{$val->flag1}} </div> -->
+                                            
                                         </label>
                                     </li>
                                     @endforeach
@@ -800,7 +807,10 @@ document.addEventListener("DOMContentLoaded", function () {
             let parent = kuwaitCountry.closest(".dropdown-item");
             let kuwaitFlag = parent.getAttribute("data-flag");
 
-            document.getElementById("selectedFlag").src = kuwaitFlag;
+            // document.getElementById("selectedFlag").src = kuwaitFlag;
+
+            document.getElementById("selectedFlag").textContent = kuwaitFlag;
+            
 
             localStorage.setItem("country_id", kuwaitCountry.value);
             localStorage.setItem("flag", kuwaitFlag);
@@ -876,7 +886,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let parent = this.closest(".dropdown-item");
             let selectedFlag = parent.getAttribute("data-flag");
 
-            document.getElementById("selectedFlag").src = selectedFlag;
+            document.getElementById("selectedFlag").textContent = selectedFlag;
 
             localStorage.setItem("country_id", this.value);
             localStorage.setItem("flag", selectedFlag);

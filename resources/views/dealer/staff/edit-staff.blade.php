@@ -111,8 +111,8 @@
                             class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
                             type="button" id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
 
-                            <span id="selected-flag">
-                                <img src="{{@$view_staff->country_details->flag1}}" alt="flag" width="25" height="16">
+                            <span id="selected-flag"> {{@$view_staff->country_details->flag}}
+                                <!-- <img src="{{@$view_staff->country_details->flag1}}" alt="flag" width="25" height="16"> -->
                                 {{$view_staff->country_code}}
                             </span>
 

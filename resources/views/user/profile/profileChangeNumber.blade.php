@@ -28,8 +28,8 @@
                                     <div class="dropdown">
                                         <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
                                                 id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span id="selected-flag">
-                                                <img src="{{ $country[0]->flag }}" alt="flag" width="25" height="16">
+                                            <span id="selected-flag"> {{ $country[0]->flag1 }}
+                                                <!-- <img src="{{ $country[0]->flag }}" alt="flag" width="25" height="16"> -->
                                             </span>
                                             <span id="selected-code" class="ms-2">{{ $country[0]->dial_code }}</span>
                                         </button>
@@ -40,11 +40,12 @@
                                                     <label class="dropdown-item d-flex align-items-center gap-2 country-option" style="cursor: pointer;">
                                                         <input type="radio" name="country_code"
                                                             value="{{ $item->dial_code }}"
-                                                            data-flag="{{ $item->flag }}"
+                                                            data-flag="{{ $item->flag1 }}"
                                                             class="country-radio"
                                                             {{ $index === 0 ? 'checked' : '' }} hidden>
-                                                        <img src="{{ $item->flag }}" alt="Flag of {{ $item->name }}" width="25" height="16">
-                                                        <span>{{ $item->dial_code }} ({{ App::getLocale() == 'en' ? $item->name : $item->name_ar }})</span>
+                                                        <!-- <img src="{{ $item->flag }}" alt="Flag of {{ $item->name }}" width="25" height="16"> -->
+                                                       
+                                                        <span> {{ $item->flag1 }} {{ $item->dial_code }} ({{ App::getLocale() == 'en' ? $item->name : $item->name_ar }})</span>
                                                     </label>
                                                 </li>
                                             @endforeach
@@ -80,16 +81,27 @@
                 const selectedFlag = document.getElementById('selected-flag');
                 const selectedCode = document.getElementById('selected-code');
 
+                // radios.forEach(radio => {
+                //     radio.addEventListener('change', function () {
+                //         const parent = this.closest('label');
+                //         const flagImg = parent.querySelector('img').src;
+                //         const dialCode = this.value;
+
+                //         selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
+                //         selectedCode.textContent = dialCode;
+                //     });
+                // });
+
                 radios.forEach(radio => {
                     radio.addEventListener('change', function () {
                         const parent = this.closest('label');
-                        const flagImg = parent.querySelector('img').src;
-                        const dialCode = this.value;
-
-                        selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
-                        selectedCode.textContent = dialCode;
+                        const text = parent.querySelector('span').innerText.trim();
+                        const flag = text.split(' ')[0];
+                        selectedFlag.textContent = flag;
+                        selectedCode.textContent = this.value;
                     });
                 });
+
             });
 
  
