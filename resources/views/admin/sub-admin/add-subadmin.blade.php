@@ -201,8 +201,8 @@
                                 type="button" data-bs-toggle="dropdown" aria-expanded="false"
                                 style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
 
-                                <span id="selected-flag">
-                                    <img src="{{ old('country_flag', $country[0]->flag1) }}" width="25" height="16">
+                                <span id="selected-flag"> {{ old('country_flag', $country[0]->flag) }}
+                                    <!-- <img src="{{ old('country_flag', $country[0]->flag) }}" width="25" height="16"> -->
                                 </span>
 
                                 <span id="selected-code" class="ms-2">
@@ -219,7 +219,7 @@
                                         style="cursor: pointer;">
 
                                         <input type="radio" name="country_code" value="{{ $item->dial_code }}"
-                                            data-flag="{{ $item->flag1 }}" data-name="{{ $item->name }}"
+                                            data-flag="{{ $item->flag }}" data-name="{{ $item->name }}"
                                             class="country-radio"
                                             {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                             hidden>
@@ -466,11 +466,13 @@ document.addEventListener('DOMContentLoaded', function() {
             let codeEl = document.getElementById('selected-code');
 
             if (flagEl) {
-                flagEl.innerHTML = `<img src="${this.dataset.flag}" width="25" height="16">`;
+                // flagEl.innerHTML = `<img src="${this.dataset.flag}" width="25" height="16">`;
+                flagEl.textContent = this.dataset.flag || '';
             }
 
             if (codeEl) {
-                codeEl.innerText = this.value;
+                // codeEl.innerText = this.value;
+                codeEl.textContent = this.value;
             }
 
             clearError('country_code');
@@ -484,11 +486,13 @@ document.addEventListener('DOMContentLoaded', function() {
         let codeEl = document.getElementById('selected-code');
 
         if (flagEl) {
-            flagEl.innerHTML = `<img src="${selectedCountry.dataset.flag}" width="25" height="16">`;
+            // flagEl.innerHTML = `<img src="${selectedCountry.dataset.flag}" width="25" height="16">`;
+            flagEl.textContent = selectedCountry.dataset.flag || '';
         }
 
         if (codeEl) {
-            codeEl.innerText = selectedCountry.value;
+            // codeEl.innerText = selectedCountry.value;
+            codeEl.textContent = selectedCountry.value;
         }
     }
 
