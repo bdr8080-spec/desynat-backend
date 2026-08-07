@@ -365,10 +365,33 @@ class UserManagementService
             $store->average_store_rating = $count > 0 ? round($totalRating / $count, 1) : 0;
             $store->total_review_count = $reviewCount;
 
-            $stories = Story::where('seller_id', $store->seller_id)
-                ->where('type', '2')
-                ->where('created_at', '>=', Carbon::now()->subHours(24))
-                ->get();
+            // $stories = Story::where('seller_id', $store->seller_id)
+            //     ->where('type', '2')
+            //     ->where('created_at', '>=', Carbon::now()->subHours(24))
+            //     ->get();
+
+            $today = Carbon::today()->toDateString();
+
+        $stories = Story::where('seller_id', $store->seller_id)
+            ->where('type', '2')
+            ->where('status', '1')
+            ->where(function ($q) use ($today) {
+
+                $q->where(function ($normal) {
+                    $normal->where('is_promotional', 0)
+                        ->where('created_at', '>=', Carbon::now()->subDay());
+                })
+
+                ->orWhere(function ($promo) use ($today) {
+                    $promo->where('is_promotional', 1)
+                        ->where('payment_status', 1)
+                        ->where('Admin_verify', 1)
+                        ->whereDate('start_date', $today);
+                });
+
+            })
+            ->orderBy('id', 'asc')
+            ->get();
 
             $stories->map(function ($story) use ($userId) {
 
