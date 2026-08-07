@@ -21,6 +21,23 @@ button.deleteStoryBtn {
     margin-left: 90px;
     margin-bottom: 50px;
 }
+.profile-option {
+    width: 100%;
+    max-width: 100%;
+    min-height: 64px;
+    padding: 12px 14px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom:10px;
+}
+.left-content h4{
+    font-size:17px;
+}
+
+
 </style>
 
 <div class="onepage-2">
@@ -50,6 +67,10 @@ button.deleteStoryBtn {
         </label>
         <input type="file" id="banner_image_upload" name="file" accept="image/*,video/*" style="display:none;">
     </div>
+</div>
+
+<div class="text-center">
+    <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#showPaid">Post On Profile</a>
 </div>
 
 
@@ -181,6 +202,74 @@ button.deleteStoryBtn {
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="showPaid" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 20px;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title w-100 text-center fw-bold" id="showModuleLabel" style="color: #333;">Promote Story</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-4" id="moduleData">
+                <div class="postpanle">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="profile-option active">
+                                <div class="left-content d-flex gap-3">
+                                    <label class="radio-group">
+                                        <input class="form-check-input" type="radio" name="filter" checked>
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                    <div>
+                                        <h4 class="mb-0">Profile Story</h4>
+                                        <p class="mb-0">Visible on your profile</p>
+                                    </div>
+                                </div>
+                                <span class="status-text free">Free</span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="profile-option">
+                                <div class="left-content d-flex gap-3">
+                                    <label class="radio-group">
+                                        <input class="form-check-input" type="radio" name="filter">
+                                        <span class="custom-radio"></span>
+                                    </label>
+                                    <div>
+                                        <h4 class="mb-0">Featured on Desynat Home</h4>
+                                        <p class="mb-2">Reach more users</p>
+                                    </div>
+                                </div>
+
+                                <span class="status-text paid">Paid</span>
+                            </div>
+
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Select Date</label>
+                                </div>
+                                <input type="date" class="form-control datepicker">
+                            </div>
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Add Price</label>
+                                </div>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="#" class="btn btn-success">Post On Profile</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const checkProfile = document.getElementById("checkProfile");
