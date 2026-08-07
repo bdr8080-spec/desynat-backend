@@ -377,7 +377,8 @@ class StoryManagementService
 {
     try {
 
-        $query = Story::query();
+        // $query = Story::query();
+        $query = Story::with('seller_details');
 
         // Common conditions
         $query->where('type', '2');

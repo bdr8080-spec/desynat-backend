@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 
 class WithdrawRequestManagementService
@@ -249,323 +250,392 @@ class WithdrawRequestManagementService
     }
 
 
-
-    // public function transferWithdrawRequest($request_data)
-    // {
-    //     try {
-
-    //         $withdraw = WithdrawRequest::with('bank_details','affiliate__details.country_details')
-    //             ->where('id',$request_data->withdraw_request_id)
-    //             ->where('admin_verify',0)
-    //             ->first();
-
-    //         if(!$withdraw){
-    //             return [
-    //                 'status'=>'error',
-    //                 'message'=>'Withdraw request not found'
-    //             ];
-    //         }
-
-    //         $bank = $withdraw->bank_details;
-
-    //         if(!$bank || empty($bank->iban)){
-    //             return [
-    //                 'status'=>'error',
-    //                 'message'=>'Bank IBAN not available'
-    //             ];
-    //         }
-
-    //         $payload = [
-
-    //             "NotificationOption"=>"LNK",
-
-    //             "CustomerName"=>$bank->account_holder_name,
-
-    //             "DisplayCurrencyIso"=>$withdraw->affiliate__details->country_details->currency_code ?? "KWD",
-
-    //             "MobileCountryCode"=>$withdraw->affiliate__details->country_code ?? "+965",
-
-    //             "CustomerMobile"=>$withdraw->affiliate__details->mobile ?? "0000000000",
-
-    //             "CustomerEmail"=>$withdraw->affiliate__details->email,
-
-    //             "InvoiceValue"=>$withdraw->amount,
-
-    //             "CallBackUrl"=>route('admin.payment.success'),
-
-    //             "ErrorUrl"=>route('admin.payment.error'),
-
-    //             "CustomerReference"=>$withdraw->request_id,
-
-    //             "Language"=>"en"
-    //         ];
-
-    //         $base_url = config('myfatoorah.test_mode')
-    //             ? 'https://apitest.myfatoorah.com'
-    //             : 'https://api.myfatoorah.com';
-
-    //         $response = Http::withHeaders([
-    //             'Authorization'=>'Bearer '.config('myfatoorah.api_key'),
-    //             'Content-Type'=>'application/json'
-    //         ])->post($base_url.'/v2/SendPayment',$payload);
-
-    //         $result = $response->json();
-
-    //         Log::info('MyFatoorah SendPayment',$result);
-
-    //         if(!$response->successful() || $result['IsSuccess']==false){
-    //             return [
-    //                 'status'=>'error',
-    //                 'message'=>$result['Message'] ?? 'Payment failed'
-    //             ];
-    //         }
-
-    //         return [
-    //             'status' => 'success',
-    //             'message' => 'Redirecting to payment gateway',
-    //             'payment_url' => $result['Data']['InvoiceURL']
-    //         ];
-
-    //     }catch(\Exception $e){
-
-    //         Log::error('Withdraw Transfer Error',$e->getMessage());
-
-    //         return [
-    //             'status'=>'error',
-    //             'message'=>$e->getMessage()
-    //         ];
-    //     }
-    // }
-
-    // public function verifyWithdrawPayment($key,$keyType='PaymentId')
-    // {
-    //     try{
-
-    //         $base_url = config('myfatoorah.test_mode')
-    //             ? 'https://apitest.myfatoorah.com'
-    //             : 'https://api.myfatoorah.com';
-
-    //         $response = Http::withHeaders([
-    //             'Authorization'=>'Bearer '.config('myfatoorah.api_key'),
-    //             'Content-Type'=>'application/json'
-    //         ])->post($base_url.'/v2/GetPaymentStatus',[
-    //             'Key'=>$key,
-    //             'KeyType'=>$keyType
-    //         ]);
-
-    //         $result = $response->json();
-
-    //         if(!$response->successful() || !isset($result['Data'])){
-    //             return [
-    //                 'status'=>'error',
-    //                 'message'=>'Payment verification failed'
-    //             ];
-    //         }
-
-    //         $customerReference = $result['Data']['CustomerReference'] ?? null;
-
-    //         $transaction = $result['Data']['InvoiceTransactions'][0] ?? null;
-
-    //         $transactionId = $transaction['TransactionId'] ?? null;
-    //         $transactionStatus = $transaction['TransactionStatus'] ?? null;
-
-    //         if(!$customerReference){
-    //             return [
-    //                 'status'=>'error',
-    //                 'message'=>'Invalid payment response'
-    //             ];
-    //         }
-
-    //         //  PAYMENT SUCCESS
-    //         if($transactionStatus == 'Succss' || $transactionStatus == 'Success'){
-
-    //             WithdrawRequest::where('request_id',$customerReference)
-    //                 ->update([
-    //                     'transaction_id'=>$transactionId,
-    //                     'payment_status'=>1,
-    //                     'admin_verify'=>1
-    //                 ]);
-
-    //             return [
-    //                 'status'=>'success',
-    //                 'message'=>'Payment completed successfully'
-    //             ];
-    //         }
-
-    //         //  PAYMENT FAILED
-    //         WithdrawRequest::where('request_id',$customerReference)
-    //             ->update([
-    //                 'transaction_id'=>$transactionId,
-    //                 'payment_status'=>2,
-    //                 'admin_verify'=>1
-    //             ]);
-
-    //         return [
-    //             'status'=>'error',
-    //             'message'=>'Payment failed'
-    //         ];
-
-    //     }catch(\Exception $e){
-
-    //         return [
-    //             'status'=>'error',
-    //             'message'=>$e->getMessage()
-    //         ];
-    //     }
-    // }
-
     
-    public function transferWithdrawRequest($request_data)
-    {
-        try {
+    public function transferWithdrawRequest($request)
+{
+    try {
 
-            $withdraw = WithdrawRequest::with(
-                'bank_details',
-                'affiliate__details.country_details'
-            )
-            ->where('id',$request_data->withdraw_request_id)
-           // ->where('admin_verify','0')
-            ->first();
+        $withdraw = WithdrawRequest::with([
+            'bank_details',
+            'affiliate__details.country_details'
+        ])
+        ->find($request->withdraw_request_id);
 
-            // if(!$withdraw){
-            //     return [
-            //         'status'=>'error',
-            //         'message'=>'Withdraw request not found'
-            //     ];
-            // }
-            if ($withdraw->admin_verify == '1') {
-                return [
-                    'status' => 'error',
-                    'message' => 'Withdraw request already paid'
-                ];
-            }
 
-            if ($withdraw->admin_verify == '2') {
-                return [
-                    'status' => 'error',
-                    'message' => 'Withdraw request was already rejected'
-                ];
-            }
-
-            $bank = $withdraw->bank_details;
-
-            if(!$bank || empty($bank->iban)){
-                return [
-                    'status'=>'error',
-                    'message'=>'Bank IBAN not available'
-                ];
-            }
-
-            $affiliate = $withdraw->affiliate__details;
-
-            $supplierCode = "AFF_" . $affiliate->id;
-
-            /* STEP 1 : CREATE SUPPLIER */
-            $this->createSupplier($affiliate,$bank,$supplierCode);
-
-            /* STEP 2 : SEND PAYMENT */
-            return $this->sendSupplierPayment($withdraw,$supplierCode);
-
-        }
-        catch(\Exception $e){
-
-            Log::error("Withdraw payout error : ".$e->getMessage());
+        if (!$withdraw) {
 
             return [
                 'status'=>'error',
-                'message'=>$e->getMessage()
+                'message'=>'Withdraw request not found.'
             ];
         }
-    }
 
-    private function createSupplier($affiliate,$bank,$supplierCode)
-    {
 
-        $base_url = config('myfatoorah.test_mode')
-            ? 'https://apitest.myfatoorah.com'
-            : 'https://api.myfatoorah.com';
-
-        $payload = [
-
-            "SupplierName" => $bank->account_holder_name,
-
-            "SupplierCode" => $supplierCode,
-
-            "Email" => $affiliate->email,
-
-            "MobileCountryCode" => $affiliate->country_code ?? "+965",
-
-            "Mobile" => $affiliate->mobile,
-
-            "BankAccount" => $bank->iban
-
-        ];
-
-        $response = Http::withHeaders([
-            'Authorization'=>'Bearer '.config('myfatoorah.api_key'),
-            'Content-Type'=>'application/json'
-        ])->post($base_url.'/v2/InitiateSupplier',$payload);
-
-        $result = $response->json();
-
-        Log::info('MyFatoorah Supplier Create',$result);
-    }
-
-    private function sendSupplierPayment($withdraw,$supplierCode)
-    {
-
-        $base_url = config('myfatoorah.test_mode')
-            ? 'https://apitest.myfatoorah.com'
-            : 'https://api.myfatoorah.com';
-
-        $currency = $withdraw->affiliate__details
-            ->country_details
-            ->currency_code ?? "KWD";
-
-        $payload = [
-
-            "SupplierCode" => $supplierCode,
-
-            "Amount" => $withdraw->amount,
-
-            "CurrencyIso" => $currency,
-
-            "Description" => "Affiliate Withdraw ".$withdraw->request_id
-
-        ];
-
-        $response = Http::withHeaders([
-            'Authorization'=>'Bearer '.config('myfatoorah.api_key'),
-            'Content-Type'=>'application/json'
-        ])->post($base_url.'/v2/SendSupplierPayment',$payload);
-
-        $result = $response->json();
-
-        Log::info('MyFatoorah Supplier Payment',$result);
-
-        if(!$response->successful() || ($result['IsSuccess'] ?? false) == false){
+        if ($withdraw->admin_verify == 0) {
 
             return [
                 'status'=>'error',
-                'message'=>$result['Message'] ?? 'Payment failed'
+                'message'=>'Withdraw request not approved by admin.'
             ];
         }
 
-        $transactionId = $result['Data']['TransactionId'] ?? null;
 
-        WithdrawRequest::where('id',$withdraw->id)
-        ->update([
-            'transaction_id'=>$transactionId,
-            'payment_status'=>1,
-            'admin_verify'=>1
+        if ($withdraw->admin_verify == 2) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Withdraw request rejected.'
+            ];
+        }
+
+
+        if ($withdraw->amount <= 0) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Invalid withdrawal amount.'
+            ];
+        }
+
+
+        $bank = $withdraw->bank_details;
+
+
+        if (!$bank || empty($bank->iban)) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Affiliate bank IBAN not available.'
+            ];
+        }
+
+
+        $affiliate = $withdraw->affiliate__details;
+
+
+        if (!$affiliate) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Affiliate not found.'
+            ];
+        }
+
+
+        if (empty($affiliate->supplier_code)) {
+
+
+            $supplierResponse = $this->createSupplier(
+                $affiliate,
+                $bank
+            );
+
+
+            if ($supplierResponse['status'] == 'error') {
+
+                return $supplierResponse;
+
+            }
+
+
+            $affiliate->update([
+                'supplier_code' => (int)$supplierResponse['supplier_code']
+            ]);
+
+            $affiliate->refresh();
+
+
+            Log::info('Supplier Code Saved', [
+                'affiliate_id' => $affiliate->id,
+                'supplier_code' => $affiliate->supplier_code
+            ]);
+
+        }
+
+
+
+        if (empty($affiliate->supplier_code)) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Supplier code not available.'
+            ];
+
+        }
+
+
+        DB::beginTransaction();
+
+
+
+        $affiliate->refresh();
+
+        Log::info('Supplier Code Before Transfer', [
+            'supplier_code' => $affiliate->supplier_code
         ]);
 
+
+
+        $paymentResponse = $this->sendSupplierPayment(
+            $withdraw,
+            $affiliate->supplier_code
+        );
+
+
+
+        if ($paymentResponse['status']=='error') {
+
+            DB::rollBack();
+
+            return $paymentResponse;
+
+        }
+
+
+
+        $withdraw->admin_verify = 1;
+
+        $withdraw->payment_status = 1;
+
+        $withdraw->transaction_id =
+            $paymentResponse['transaction_id'] ?? null;
+
+
+        // $withdraw->payment_response =
+        //     json_encode($paymentResponse);
+
+
+        $withdraw->save();
+
+
+
+        DB::commit();
+
+
+
         return [
+
             'status'=>'success',
-            'message'=>'Withdraw paid successfully',
-            'transaction_id'=>$transactionId
+
+            'message'=>'Withdraw transferred successfully.',
+
+            'data'=>[
+
+                'transaction_id'=>$withdraw->transaction_id
+
+            ]
+
         ];
+
+
+
+    } catch(\Exception $e) {
+
+
+        if (DB::transactionLevel() > 0) {
+
+            DB::rollBack();
+
+        }
+
+
+        Log::error('Affiliate withdraw error', [
+
+            'message'=>$e->getMessage(),
+
+            'line'=>$e->getLine(),
+
+            'file'=>$e->getFile()
+
+        ]);
+
+
+        return [
+
+            'status'=>'error',
+
+            'message'=>$e->getMessage()
+
+        ];
+
     }
+}
+
+    private function createSupplier($affiliate,$bank)
+{
+    $baseUrl = config('myfatoorah.test_mode')
+        ? 'https://apitest.myfatoorah.com'
+        : 'https://api.myfatoorah.com';
+
+
+    $payload = [
+
+        'SupplierName' =>
+            $bank->account_holder_name,
+
+        'Email' =>
+            $affiliate->email,
+
+        'Mobile' =>
+            $affiliate->mobile,
+
+        'MobileCountryCode' =>
+            $affiliate->country_code ?? '+965',
+
+        'IBAN' =>
+            $bank->iban
+
+    ];
+
+
+    Log::info('MyFatoorah Create Supplier Request', [
+        'url'=>$baseUrl.'/v2/CreateSupplier',
+        'payload'=>$payload
+    ]);
+
+
+    $response = Http::timeout(60)
+        ->withHeaders([
+
+            'Authorization'=>
+                'Bearer '.config('myfatoorah.api_key'),
+
+            'Content-Type'=>
+                'application/json'
+
+        ])
+        ->post(
+            $baseUrl.'/v2/CreateSupplier',
+            $payload
+        );
+
+
+    $result = $response->json();
+
+
+    Log::info('MyFatoorah Create Supplier Response', [
+        'status'=>$response->status(),
+        'response'=>$result
+    ]);
+
+
+
+    if(
+        !$response->successful()
+        ||
+        ($result['IsSuccess'] ?? false) == false
+    ){
+
+        return [
+
+            'status'=>'error',
+
+            'message'=>
+                $result['Message']
+                ??
+                'Supplier creation failed.',
+
+            'response'=>$result
+
+        ];
+
+    }
+
+
+    return [
+        'status'=>'success',
+        'supplier_code'=>(int)$result['Data']['SupplierCode'],
+        'response'=>$result
+    ];
+}
+
+    private function sendSupplierPayment($withdraw, $supplierCode)
+{
+    Log::info('MyFatoorah Environment', [
+        'test_mode' => config('myfatoorah.test_mode'),
+        'base_url' => config('myfatoorah.test_mode')
+            ? 'https://apitest.myfatoorah.com'
+            : 'https://api.myfatoorah.com',
+    ]);
+    $baseUrl = config('myfatoorah.test_mode')
+        ? 'https://apitest.myfatoorah.com'
+        : 'https://api.myfatoorah.com';
+
+
+    $payload = [
+
+        "SupplierCode" => (int)$supplierCode,
+
+        "TransferAmount" => (float)$withdraw->amount,
+
+        "TransferType" => "push",
+
+        "InternalNotes" => "Affiliate Withdraw ".$withdraw->request_id
+
+    ];
+
+
+    Log::info('MyFatoorah Transfer Request', [
+        'url'=>$baseUrl.'/v2/TransferBalance',
+        'payload'=>$payload
+    ]);
+
+
+    $response = Http::withOptions([
+        'curl' => [
+            CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
+        ],
+    ])
+    ->timeout(60)
+    ->connectTimeout(30)
+    ->withHeaders([
+        'Authorization' => 'Bearer '.config('myfatoorah.api_key'),
+        'Content-Type' => 'application/json'
+    ])
+    ->post(
+        $baseUrl.'/v2/TransferBalance',
+        $payload
+    );
+
+
+    $result = $response->json();
+
+
+    Log::info('MyFatoorah Transfer Response', [
+        'status'=>$response->status(),
+        'response'=>$result
+    ]);
+
+
+    if(
+        !$response->successful()
+        ||
+        ($result['IsSuccess'] ?? false) == false
+    ){
+
+        return [
+
+            'status'=>'error',
+
+            'message'=>$result['Message'] ?? 'Transfer failed',
+
+            'response'=>$result
+
+        ];
+
+    }
+
+
+    return [
+
+        'status'=>'success',
+
+        'transaction_id'=>$result['Data']['InvoiceId'] ?? null,
+
+        'response'=>$result
+
+    ];
+}
 
 
 
