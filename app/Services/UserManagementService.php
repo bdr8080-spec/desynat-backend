@@ -372,7 +372,7 @@ class UserManagementService
 
             $today = Carbon::today()->toDateString();
 
-        $stories = Story::where('seller_id', $store->seller_id)
+        $stories = Story::with('seller_details.store_info')->where('seller_id', $store->seller_id)
             ->where('type', '2')
             ->where('status', '1')
             ->where(function ($q) use ($today) {
