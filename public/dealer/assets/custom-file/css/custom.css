@@ -1318,7 +1318,7 @@ table.dataTable td.dt-type-date {
 }
 .progress-container {
     position: absolute;
-    top: 15px;
+    top: -10px;
     left: 10px;
     right: 10px;
     display: flex;
