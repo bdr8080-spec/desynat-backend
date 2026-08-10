@@ -168,6 +168,7 @@ return [
     'today' => 'اليوم',
     'this_week' => 'هذا الأسبوع',
     'this_month' => 'هذا الشهر',
+    'this_year' => 'هذا العام',
     'total_user_registered' => 'إجمالي المستخدمين المسجلين',
     'total_number_of_affiliate_users' => 'إجمالي عدد المستخدمين التابعين',
     'total_number_of_delivery_partners' => 'إجمالي عدد شركاء التوصيل',

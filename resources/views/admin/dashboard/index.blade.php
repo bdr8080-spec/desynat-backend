@@ -50,6 +50,15 @@
                                     onchange="document.getElementById('filterForm').submit();">
                                 <label class="form-check-label">{{ __('admin_messages.this_month') }}</label>
                             </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input"
+                                    type="radio"
+                                    name="filter"
+                                    value="4"
+                                    {{ request()->filter == 4 ? 'checked' : '' }}
+                                    onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label">{{ __('admin_messages.this_year') }}</label>
+                            </div>
                         </div>
                     </div>
                 </div>
