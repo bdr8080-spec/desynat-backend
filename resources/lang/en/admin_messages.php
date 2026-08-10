@@ -171,6 +171,7 @@ return [
     'today' => 'Today',
     'this_week' => 'This Week',
     'this_month' => 'This Month',
+    'this_year' => 'This Year',
     'total_user_registered' => 'Total Users Registered',
     'total_number_of_affiliate_users' => 'Total Number of Affiliate Users',
     'total_number_of_delivery_partners' => 'Total Number of Delivery Partners',
