@@ -79,11 +79,11 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center">
-            <a href="#" class="logo">
+            <a href="javascript:void(0)" class="logo">
                 <img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image" class="img-fluid"
                     onclick="openGallery(0)">
             </a>
-            <i class="bi bi-list toggle-sidebar-btn"></i>
+            <i class="bi bi-chevron-left toggle-sidebar-btn"></i>
         </div>
 
         <nav class="header-nav ms-auto">
