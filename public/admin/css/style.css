@@ -117,7 +117,7 @@ li.nav-item.active .nav-link{
     display: flex;
     align-items: center;
     justify-content: start;
-    margin: 3px 0px;
+    margin: 7px 0px;
 }
 .sidebar .nav-item .nav-link span img {
     width: 24px;
@@ -352,7 +352,7 @@ h1 {
 }
 
 .toggle {
-    width: 0px !important;
+    width: 80px !important;
 }
 
 .toggle .sidebar-brand-text img {
@@ -932,7 +932,7 @@ table thead tr:nth-child(even) {
 }
 
 .inner-content.toggle {
-    margin-left: 30px;
+    margin-left: 100px;
     width: auto !important;
     scroll-behavior: smooth;
 }
@@ -1984,6 +1984,12 @@ input[type="text"] {
 .sidebar-dark .nav-item.active .nav-link {
     color: #fff !important;
 }
+
+.sidebar-dark .toggle .nav-item.active .nav-link span {
+    padding: 0px 2px;
+}
+
+
 .input-with-percent {
     display: flex;
     align-items: center;
@@ -3019,5 +3025,25 @@ a.text {
     color: #fff;
 }
 
+.toggle .active span {
+    padding: 2px !important;
+}
 
+[dir="rtl"] .inner-content.toggle {
+    margin-right: 100px !important;
+    padding-top: 98px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+    height: 100%;
+}
 
+/* [dir="rtl"] .toggle .active span img{
+    padding: 2px !important;
+} */
+
+[dir="rtl"] .toggle .nav-link img {
+    margin-right: 10px;
+}
+[dir="rtl"] .toggle .active .nav-link img {
+    margin-right: 0px;
+}

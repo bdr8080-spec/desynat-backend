@@ -17,33 +17,67 @@
 
 
     <script>
+    // $(document).ready(function () {
+
+    //     // Initial State
+    //     if ($(window).width() <= 991) {
+    //         $(".customSidebar").removeClass("toggle");
+    //         $(".inner-content").removeClass("toggle");
+    //         $(".asideTitle").show();
+
+    //     }
+    //     // Menu Click
+    //     $(".menu").on("click", function () {
+    //         $(".customSidebar").toggleClass("toggle");
+    //         $(".inner-content").toggleClass("toggle");
+    //         $(".asideTitle").toggle();
+    //     });
+
+    //     // Window Resize
+    //     $(window).on("resize", function () {
+    //         if ($(window).width() <= 991) {
+    //             $(".customSidebar").removeClass("toggle");
+    //             $(".inner-content").removeClass("toggle");
+    //             $(".asideTitle").show();
+    //         }
+    //     });
+
+    // });
+
     $(document).ready(function () {
 
-        // Initial State
+    const isRTL = $('html').attr('dir') === 'rtl';
+
+    // Direction class
+    if (isRTL) {
+        $('body').addClass('rtl-layout');
+    } else {
+        $('body').addClass('ltr-layout');
+    }
+
+    function resetSidebar() {
         if ($(window).width() <= 991) {
             $(".customSidebar").removeClass("toggle");
             $(".inner-content").removeClass("toggle");
+            $(".asideTitle").show();
         }
+    }
 
-        // Menu Click
-        $(".menu").on("click", function () {
-            $(".customSidebar").toggleClass("toggle");
-            $(".inner-content").toggleClass("toggle");
-        });
-
-        // Window Resize
-        $(window).on("resize", function () {
-            if ($(window).width() <= 991) {
-                $(".customSidebar").removeClass("toggle");
-                $(".inner-content").removeClass("toggle");
-            }
-        });
-
-       
-    
-
+    // Initial State
+    resetSidebar();
+    // Menu Click
+    $(".menu").on("click", function () {
+        $(".customSidebar").toggleClass("toggle");
+        $(".inner-content").toggleClass("toggle");
+        $(".asideTitle").toggle();
+    });
+    // Window Resize
+    $(window).on("resize", function () {
+        resetSidebar();
+    });
 
     });
+    
     </script>
 
     <!-- Data Table -->
