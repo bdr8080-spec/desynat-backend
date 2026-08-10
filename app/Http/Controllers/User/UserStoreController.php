@@ -35,35 +35,64 @@ class UserStoreController extends Controller
     }
 
 
-    public function category_wise_store(Request $request,$id=null){
+    // public function category_wise_store(Request $request,$id=null){
 
-       $request_data=(object)[
-        'category_id'=>$id,
-        'subcategory'=>$request->subcategory,
-        'search'=>$request->search,
-        'rating'=>$request->rating,
-        'availbility'=>$request->availability,
-        'sort'=>$request->sort,
-       ];
+    //    $request_data=(object)[
+    //     'category_id'=>$id,
+    //     'subcategory'=>$request->subcategory,
+    //     'search'=>$request->search,
+    //     'rating'=>$request->rating,
+    //     'availbility'=>$request->availability,
+    //     'sort'=>$request->sort,
+    //    ];
 
               
 
-       $store_data=$this->UserManagementService->getStoreWithCatgory($request_data);
+    //    $store_data=$this->UserManagementService->getStoreWithCatgory($request_data);
        
-       $store_data=$store_data['data'];
+    //    $store_data=$store_data['data'];
 
-       //dd($store_data);
-            $request_data1 = (object)[
-                    'type'        => '3',
-                    'category'    => $id,
-                     'subcategory'=>$request->subcategory,
-                ];
+    //    //dd($store_data);
+    //         $request_data1 = (object)[
+    //                 'type'        => '3',
+    //                 'category'    => $id,
+    //                  'subcategory'=>$request->subcategory,
+    //             ];
 
-        $catBanners= $this->UserDashboardService->HomeScreenBanner($request_data1);
+    //     $catBanners= $this->UserDashboardService->HomeScreenBanner($request_data1);
     
-       return view('user.category.store',compact('store_data','catBanners'));
+    //    return view('user.category.store',compact('store_data','catBanners'));
 
-    }
+    // }
+
+    public function category_wise_store(Request $request, $id = null)
+{
+    $categoryId = $id ?? $request->category_id;
+    $subcategoryId = $request->subcategory_id;
+
+    $request_data = (object) [
+        'category_id' => $categoryId,
+        'subcategory' => $subcategoryId,
+        'search' => $request->search,
+        'rating' => $request->rating,
+        'availbility' => $request->availability,
+        'sort' => $request->sort,
+    ];
+
+    $store_data = $this->UserManagementService->getStoreWithCatgory($request_data);
+
+    $store_data = $store_data['data'];
+
+    $request_data1 = (object) [
+        'type' => '3',
+        'category' => $categoryId,
+        'subcategory' => $subcategoryId,
+    ];
+
+    $catBanners = $this->UserDashboardService->HomeScreenBanner($request_data1);
+
+    return view('user.category.store', compact('store_data', 'catBanners'));
+}
 
 
     // public function store_details(Request $request ,$id){
