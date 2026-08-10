@@ -18,6 +18,18 @@
     height: 30px;
     width: 50px;
 }
+.box-story{
+    height: 40px;
+    width: 40px;
+    border-radius:50px;
+    border:1px solid #fff;
+}
+.box-story img {
+    height: 100%;
+    width: 100%;
+    object-fit:cover;
+}
+
 
 
      </style>
@@ -143,6 +155,12 @@
 
         <div class="logostatus">
             <div id="progressContainer" class="progress-container"></div>
+            <div class="story-pnl-progress d-flex gap-3">
+                <div class="box-story">
+                    <img src="" alt="image" class="img-fluid">
+                </div>
+                <div class="storyTime">11:00</div>
+            </div>
             
             <div class="status-img">
                 <img id="statusImage" class="img-fluid" alt="status" />
