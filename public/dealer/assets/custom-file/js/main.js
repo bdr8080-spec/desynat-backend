@@ -35,11 +35,72 @@
   /**
    * Sidebar toggle
    */
+
+  // if (select('.toggle-sidebar-btn')) {
+  //   on('click', '.toggle-sidebar-btn', function(e) {
+  //     select('body').classList.toggle('toggle-sidebar')
+  //   })
+  // }
+
   if (select('.toggle-sidebar-btn')) {
+
     on('click', '.toggle-sidebar-btn', function(e) {
-      select('body').classList.toggle('toggle-sidebar')
-    })
-  }
+
+        const sidebarNav = document.querySelector('#sidebar-nav');
+        const sidebar = document.querySelector('.sidebar');
+        const main = document.querySelector('#main');
+        const toggleIcon = document.querySelector('.toggle-sidebar-btn');
+
+        const firstSpan = sidebarNav.querySelector('.nav-link span');
+        const isHidden = firstSpan.classList.contains('d-none');
+
+        const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+
+        // Title toggle
+        sidebarNav.querySelectorAll('.nav-link span').forEach(function(span) {
+            span.classList.toggle('d-none');
+        });
+
+        if (isHidden) {
+            // Sidebar OPEN
+            sidebar.style.width = '300px';
+            // Icon LEFT
+            toggleIcon.classList.remove('bi-chevron-right');
+            toggleIcon.classList.add('bi-chevron-left');
+
+            if (main) {
+                if (isRTL) {
+                    main.style.marginRight = '300px';
+                    main.style.marginLeft = '0';
+                } else {
+                    main.style.marginLeft = '300px';
+                    main.style.marginRight = '0';
+                }
+            }
+
+        } else {
+
+            // Sidebar CLOSE
+            sidebar.style.width = '90px';
+            // Icon RIGHT
+            toggleIcon.classList.remove('bi-chevron-left');
+            toggleIcon.classList.add('bi-chevron-right');
+            if (main) {
+                if (isRTL) {
+                    main.style.marginRight = '100px';
+                    main.style.marginLeft = '0';
+                } else {
+                    main.style.marginLeft = '100px';
+                    main.style.marginRight = '0';
+                }
+            }
+        }
+
+    });
+
+}
+
+
 
   /**
    * Search bar toggle

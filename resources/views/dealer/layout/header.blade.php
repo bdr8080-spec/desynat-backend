@@ -104,7 +104,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <area shape="rect" coords="60,0,200,50" href="{{ route('seller.dashboard') }}">
             </map>
 
-            <i class="bi bi-list toggle-sidebar-btn"></i>
+            <i class="bi bi-chevron-left toggle-sidebar-btn mt-1"></i>
         </div>
 
         <nav class="header-nav ms-auto">

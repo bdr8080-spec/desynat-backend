@@ -737,10 +737,10 @@ label {
 }
 
 .header .toggle-sidebar-btn {
-  font-size: 32px;
+  font-size: 28px;
   padding-left: 10px;
   cursor: pointer;
-  color: #fff;
+  color: #000;
 }
 
 .header .search-bar {
