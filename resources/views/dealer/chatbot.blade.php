@@ -11,7 +11,7 @@
             background: #ffffff;
             font-family: Arial, sans-serif;
         }
-        /* .chat-page {
+        .chat-page {
             height: 100%;
             display: flex;
             align-items: center;
@@ -43,35 +43,6 @@
         }
         .tidio-chat-iframe__container {
             display: none !important;
-        } */
-
-        #tidio-chat {
-            position: fixed !important;
-            top: 50% !important;
-            width: 400px !important;
-            height: 600px !important;
-            transform: translateY(-50%) !important;
-            z-index: 999999 !important;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        /* English / LTR */
-        html[dir="ltr"] #tidio-chat {
-            right: 30px !important;
-            left: auto !important;
-        }
-
-        /* Arabic / RTL */
-        html[dir="rtl"] #tidio-chat {
-            left: 30px !important;
-            right: auto !important;
-        }
-
-        iframe#tidio-chat-iframe {
-            width: 100% !important;
-            height: 100% !important;
-            border-radius: 12px !important;
         }
 
     </style>
