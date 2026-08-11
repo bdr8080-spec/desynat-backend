@@ -35,7 +35,7 @@
 
     <div class="categoryDetail customContainer">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="category_filter">
                     <div class="d-flex align-items-center justify-content-between">
                         <h3>{{ __('user_messages.filter') }}</h3>
@@ -106,7 +106,7 @@
                     </form>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-9">
                 <div class="categoryDetail_content">
                     <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
                         <div class="seArch">
@@ -121,7 +121,7 @@
                     <div class="row">
 
                         @forelse ($store_data as $item)
-                            <div class="col-lg-4 col-md-4 col-6 my-3">
+                            <div class="col-lg-3 col-md-4 col-6 my-3">
                                 <!-- <a  href="{{route('user.store_details',[$item->id])}}" style="text-decoration:none;"> -->
                                     <a href="{{ route('user.store_details', [
                                         'id' => $item->id,
