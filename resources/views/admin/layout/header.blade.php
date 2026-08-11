@@ -4,7 +4,7 @@
         <img src="{{ asset('admin/image/logo.svg') }}" class="img-fluid" alt="Logo" />
        
         <div class="toggle-sidebar-btn">
-            <i class="bi bi-list menu"></i>
+            <i class="bi bi-chevron-left menu"></i>
         </div>
         
     </div>
