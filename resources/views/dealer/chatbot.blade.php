@@ -48,6 +48,7 @@
         html[dir="rtl"] .grid-layout.widget-position-right {
             position: absolute;
             inset: 0px auto 0px 0px !important;
+            left:0px;
         }
         
 
