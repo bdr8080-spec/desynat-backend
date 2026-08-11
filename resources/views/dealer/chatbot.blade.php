@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <title>Live Chat</title>
 
@@ -10,16 +11,12 @@
             background: #ffffff;
             font-family: Arial, sans-serif;
         }
-
-        /* Center container */
-        .chat-page {
+        /* .chat-page {
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
-        /* Dark overlay */
         body::before {
             content: "";
             position: fixed;
@@ -27,8 +24,6 @@
             background: rgba(0,0,0,0.7);
             z-index: 1;
         }
-
-        /* Centered chat box */
         #tidio-chat {
             position: fixed !important;
             top: 50% !important;
@@ -46,10 +41,37 @@
             height: 100% !important;
             border-radius: 12px !important;
         }
-
-        /* Hide default launcher */
         .tidio-chat-iframe__container {
             display: none !important;
+        } */
+
+        #tidio-chat {
+            position: fixed !important;
+            top: 50% !important;
+            width: 400px !important;
+            height: 600px !important;
+            transform: translateY(-50%) !important;
+            z-index: 999999 !important;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        /* English / LTR */
+        html[dir="ltr"] #tidio-chat {
+            right: 30px !important;
+            left: auto !important;
+        }
+
+        /* Arabic / RTL */
+        html[dir="rtl"] #tidio-chat {
+            left: 30px !important;
+            right: auto !important;
+        }
+
+        iframe#tidio-chat-iframe {
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 12px !important;
         }
 
     </style>
