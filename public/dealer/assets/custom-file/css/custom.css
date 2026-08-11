@@ -1606,6 +1606,9 @@ table.dataTable td.dt-type-date {
     font-size: 14px;
     letter-spacing: 1px;
 }
+[dir="rtl"] .sidebar-nav .nav-link {
+    padding: 10px 5px;
+}
 
 
 @media (max-width: 767px) {
