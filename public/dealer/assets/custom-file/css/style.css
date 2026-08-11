@@ -994,7 +994,7 @@ label {
 
 @media (max-width: 1199px) {
   .sidebar {
-    left: -300px;
+    left: 0px;
   }
 }
 
