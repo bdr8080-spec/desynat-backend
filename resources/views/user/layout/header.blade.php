@@ -147,7 +147,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     class="container-fluid d-flex align-items-center justify-content-between flex-wrap mobileResponsive">
                     <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont w-100">
                         <a class="navbar-brand">
-                            <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" usemap="#logoMap" />
+                            <!-- <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" usemap="#logoMap" /> -->
+                            <img src="{{ asset(app()->getLocale() == 'ar' ? 'user/assets/images/arabic-logo.svg' : 'user/assets/images/logo.svg') }}"
+                            class="img-fluid" usemap="#logoMap" alt="Logo">
                         </a>
                         <map name="logoMap">
                             <area shape="rect" coords="0,0,50,50" href="javascript:void(0)"

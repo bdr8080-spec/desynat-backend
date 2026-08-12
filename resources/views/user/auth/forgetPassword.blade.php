@@ -5,7 +5,9 @@
 
     <div class="login_contenar">
         <header class="inner-header">
-            <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
+            <a href="{{route('dashboard')}}">
+            <img src="{{ asset(app()->getLocale() == 'ar' ? 'user/assets/images/arabic-logo.svg' : 'user/assets/images/logo.svg') }}" class="img-fluid" alt="Logo">
+            </a>
             <div class="d-flex align-items-center becomSeller">
                 <div class="dropdown-center mobileLang">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
