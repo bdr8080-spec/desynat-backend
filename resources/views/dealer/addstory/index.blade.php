@@ -656,7 +656,7 @@ $(document).ready(function () {
     // Change this route name if your actual add-story route has another name
     const addStoryRoute = "{{ route('seller.add_story') }}";
 
-    const storyPriceRoute = "{{ route('seller.story_price') }}";
+    const storyPriceRoute = "{{ route('seller.getSellerStoryPrice') }}";
 
 
     /*
