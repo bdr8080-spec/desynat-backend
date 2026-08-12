@@ -278,7 +278,7 @@ button.deleteStoryBtn {
         </div>
 
     </div>
-    <input type="text" id="country_id" value="{{ $country_id }}">
+    <input type="hidden" id="country_id" value="{{ $country_id }}">
 </div>
 
 <div class="product_reels customContainer mt-4">
