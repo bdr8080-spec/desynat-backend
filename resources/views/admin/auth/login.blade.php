@@ -47,7 +47,10 @@
 
         <div class="login-header">
             <div class="des-logo">
-                <a href="#"><img src="{{asset('admin/image/logo.svg')}}" class="img-fluid" /> </a>
+                <a href="#">
+                    <!-- <img src="{{asset('admin/image/logo.svg')}}" class="img-fluid" /> -->
+                    <img src="{{ asset(app()->getLocale() == 'ar' ? 'admin/image/arabic-logo.svg' : 'admin/image/logo.svg') }}" class="img-fluid" alt="Logo">
+                </a>
             </div>
             <div class="des-language">
             <div class="dropdown">

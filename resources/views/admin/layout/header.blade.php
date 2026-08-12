@@ -1,7 +1,8 @@
 <!-- resources/views/layouts/header.blade.php -->
 <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top">
     <div class="left-section d-flex align-items-center">
-        <img src="{{ asset('admin/image/logo.svg') }}" class="img-fluid" alt="Logo" />
+        <!-- <img src="{{ asset('admin/image/logo.svg') }}" class="img-fluid" alt="Logo" /> -->
+        <img src="{{ asset(app()->getLocale() == 'ar' ? 'admin/image/arabic-logo.svg' : 'admin/image/logo.svg') }}" class="img-fluid" alt="Logo">
        
         <div class="toggle-sidebar-btn">
             <i class="bi bi-chevron-left menu"></i>
