@@ -155,11 +155,14 @@
 
         <div class="logostatus">
             <div id="progressContainer" class="progress-container"></div>
-            <div class="story-pnl-progress d-flex gap-3">
+            <div class="story-pnl-progress d-flex gap-3 p-3 align-item-center">
                 <div class="box-story">
                     <img src="" alt="image" class="img-fluid">
                 </div>
-                <div class="storyTime">11:00</div>
+                <div>
+                    <div class="storyTime">Store Name </div>
+                    <div class="storyTime">6 sec ago</div>
+                </div>
             </div>
             
             <div class="status-img">

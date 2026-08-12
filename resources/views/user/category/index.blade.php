@@ -756,6 +756,11 @@ $currency = session('currencyAr', 'دينار كويتي');
         <div class="logostatus">
             <div id="progressContainerHighlight" class="progress-container"></div>
             
+            <div class="p-2">
+                <div class="storyTime">Highlight Name </div>
+                <div class="storyTime">6 sec ago</div>
+            </div>
+            
             <div class="status-img">
                 <img id="highlightImage" class="img-fluid" style="display:none;" />
                 
