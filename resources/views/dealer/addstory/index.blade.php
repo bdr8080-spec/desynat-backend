@@ -21,6 +21,7 @@ button.deleteStoryBtn {
     margin-left: 90px;
     margin-bottom: 50px;
 }
+
 .profile-option {
     width: 100%;
     max-width: 100%;
@@ -31,13 +32,12 @@ button.deleteStoryBtn {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom:10px;
-}
-.left-content h4{
-    font-size:17px;
+    margin-bottom: 10px;
 }
 
-
+.left-content h4 {
+    font-size: 17px;
+}
 </style>
 
 <div class="onepage-2">
@@ -52,27 +52,89 @@ button.deleteStoryBtn {
     </div>
 </div>
 
-<div class="product-pnls2 mt-3 mb-3">
-    <div class="upload-image" style="height:250px;">
-        <label id="bannerUploadLabel" style="cursor:pointer;text-align:center;display:block;">
-            <div id="bannerPlaceholderImg">
-                <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
-                    style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
-                <div class="py-2" style="color:#875C3A">
-                    {{ __('seller_messages.Upload_Image_Video') }}
+<div class="row">
+    <div class="col-lg-6">
+
+        <div class="product-pnls2 mt-3 mb-3">
+            <div class="upload-image" style="height:250px;">
+                <label id="bannerUploadLabel" style="cursor:pointer;text-align:center;display:block;">
+                    <div id="bannerPlaceholderImg">
+                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
+                            style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
+                        <div class="py-2" style="color:#875C3A">
+                            {{ __('seller_messages.Upload_Image_Video') }}
+                        </div>
+                    </div>
+                    <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr" style="display:none;">
+                    <video id="bannerUploadedVideo" class="img-fluid uploadbnr" controls style="display:none;"></video>
+                </label>
+                <input type="file" id="banner_image_upload" name="file" accept="image/*,video/*" style="display:none;">
+            </div>
+        </div>
+
+        <div class="postpanle">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="profile-option active">
+                        <div class="left-content d-flex gap-3">
+                            <label class="radio-group">
+                                <input class="form-check-input profile-radio" type="radio" name="filter" value="free"
+                                    checked>
+                                <span class="custom-radio"></span>
+                            </label>
+
+                            <div>
+                                <h4 class="mb-0">Profile Story</h4>
+                                <p class="mb-0">Visible on your profile</p>
+                            </div>
+                        </div>
+
+                        <span class="status-text free">Free</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="profile-option">
+                        <div class="left-content d-flex gap-3">
+                            <label class="radio-group">
+                                <input class="form-check-input profile-radio" type="radio" name="filter" value="paid">
+                                <span class="custom-radio"></span>
+                            </label>
+
+                            <div>
+                                <h4 class="mb-0">Featured on Desynat Home</h4>
+                                <p class="mb-2">Reach more users</p>
+                            </div>
+                        </div>
+
+                        <span class="status-text paid">Paid</span>
+                    </div>
+
+                    <div class="paidPnl" style="display: none;">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Select Date</label>
+                            </div>
+                            <input type="date" class="form-control datepicker">
+                        </div>
+
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Add Price</label>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr" style="display:none;">
-            <video id="bannerUploadedVideo" class="img-fluid uploadbnr" controls style="display:none;"></video>
-        </label>
-        <input type="file" id="banner_image_upload" name="file" accept="image/*,video/*" style="display:none;">
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="#" class="btn btn-success">Post On Profile</a>
+        </div>
+
     </div>
 </div>
-
-<div class="text-center">
-    <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#showPaid">Post On Profile</a>
-</div>
-
 
 <div class="product_reels customContainer mt-4">
     <div class="title24">{{ __('seller_messages.Select_From_Gallery') }}</div>
@@ -131,14 +193,14 @@ button.deleteStoryBtn {
 
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 20px;">
-           
+
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title w-100 text-center fw-bold" id="showModuleLabel" style="color: #333;">Promote
                     Story</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-      
+
             <div class="modal-body px-4" id="moduleData">
 
                 <div class="card p-3 mb-3 option-card" id="cardProfile"
@@ -179,7 +241,7 @@ button.deleteStoryBtn {
                                 style="border-radius: 8px; border: 1px solid #dcdcdc; height: 45px;">
                             <span class="input-group-text bg-white"
                                 style="border-radius: 8px; border: 1px solid #dcdcdc; border-left: none;">
-                                <i class="bi bi-calendar3"></i> 
+                                <i class="bi bi-calendar3"></i>
                             </span>
                         </div>
                     </div>
@@ -203,72 +265,21 @@ button.deleteStoryBtn {
     </div>
 </div>
 
+<script>
+document.querySelectorAll('.profile-radio').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+        const paidPanel = document.querySelector('.paidPnl');
 
-<div class="modal fade" id="showPaid" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 20px;">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title w-100 text-center fw-bold" id="showModuleLabel" style="color: #333;">Promote Story</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body px-4" id="moduleData">
-                <div class="postpanle">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="profile-option active">
-                                <div class="left-content d-flex gap-3">
-                                    <label class="radio-group">
-                                        <input class="form-check-input" type="radio" name="filter" checked>
-                                        <span class="custom-radio"></span>
-                                    </label>
-                                    <div>
-                                        <h4 class="mb-0">Profile Story</h4>
-                                        <p class="mb-0">Visible on your profile</p>
-                                    </div>
-                                </div>
-                                <span class="status-text free">Free</span>
-                            </div>
-                        </div>
+        if (this.value === 'paid') {
+            paidPanel.style.display = 'block';
+        } else {
+            paidPanel.style.display = 'none';
+        }
 
-                        <div class="col-lg-12">
-                            <div class="profile-option">
-                                <div class="left-content d-flex gap-3">
-                                    <label class="radio-group">
-                                        <input class="form-check-input" type="radio" name="filter">
-                                        <span class="custom-radio"></span>
-                                    </label>
-                                    <div>
-                                        <h4 class="mb-0">Featured on Desynat Home</h4>
-                                        <p class="mb-2">Reach more users</p>
-                                    </div>
-                                </div>
+    });
 
-                                <span class="status-text paid">Paid</span>
-                            </div>
-
-                            <div class="sub-form">
-                                <div class="label-flex">
-                                    <label>Select Date</label>
-                                </div>
-                                <input type="date" class="form-control datepicker">
-                            </div>
-                            <div class="sub-form">
-                                <div class="label-flex">
-                                    <label>Add Price</label>
-                                </div>
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-3">
-                    <a href="#" class="btn btn-success">Post On Profile</a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
+});
+</script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -281,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const paidFields = document.getElementById("paidFields");
     const submitBtn = document.getElementById("submitBtn");
 
-  
+
     const activeBorder = "1px solid #a48464";
     const normalBorder = "1px solid #e0e0e0";
 
