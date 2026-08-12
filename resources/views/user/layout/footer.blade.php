@@ -30,7 +30,7 @@
     width: 100%;
     object-fit:cover;
 }
-.hightop{
+.hightop-2{
     font-size: 13px;
     color:#fff;
 }
@@ -167,7 +167,7 @@
                 <div class="box-story">
                     <img id="storyProfileImage"  src="{{asset('user/assets/images/desynat_fav_ic.svg')}}" alt="image" class="img-fluid">
                 </div>
-                <div class="hightop">
+                <div class="hightop-2">
                     <div id="storyStoreName" class="storyTime">Desynat</div>
                     <div id="storyCreatedTime" class="storyTime">6 sec ago</div>
                 </div>
