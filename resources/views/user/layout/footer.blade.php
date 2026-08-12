@@ -33,6 +33,7 @@
     position: absolute;
     top: 14px;
     font-size: 13px;
+    color:#fff;
 }
 
 

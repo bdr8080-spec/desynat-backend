@@ -54,6 +54,7 @@ $currency = session('currencyAr', 'دينار كويتي');
     position: absolute;
     top: 14px;
     font-size: 13px;
+    color:#fff;
 }
 
 </style>
