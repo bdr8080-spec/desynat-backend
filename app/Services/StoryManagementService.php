@@ -889,7 +889,7 @@ public function getAdminStoryOnUser($request)
             // Add promotional details only when story is promotional
             if ($request_data->is_promotional == 1) {
                 $storyData['start_date'] = $request_data->start_date;
-                $storyData['end_date']   = $request_data->end_date;
+                $storyData['end_date']   = $request_data->end_date ?? null;
                 $storyData['total_days'] = $request_data->total_days;
                 $storyData['amount']     = $request_data->amount;
                  $storyData['order_id'] = mt_rand(100000000, 999999999);
