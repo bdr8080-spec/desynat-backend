@@ -59,8 +59,9 @@
 
     <div class="login-header">
         <div class="des-logo">
-            <a href="#"><img src="{{ asset('/dealer') }}/assets/img/desynat-logo.svg" alt="image"
-                    class="img-fluid logo-login"> </a>
+            <a href="#">
+            <img src="{{ asset(app()->getLocale() == 'ar' ? 'dealer/assets/img/arabic-logo.svg' : 'dealer/assets/img/desynat-logo.svg') }}" class="img-fluid login" alt="Logo">
+            </a>
         </div>
          <div class="des-language">
             <div class="dropdown">

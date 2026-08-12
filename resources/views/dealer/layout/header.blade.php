@@ -97,7 +97,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <div class="d-flex align-items-center">
             <a class="logo">
-                <img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image" class="img-fluid" usemap="#logoMap">
+                <!-- <img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image" class="img-fluid" usemap="#logoMap"> -->
+                <img src="{{ asset(app()->getLocale() == 'ar' ? 'dealer/assets/img/arabic-logo.svg' : 'dealer/assets/img/desynat-logo.svg') }}" class="img-fluid login" alt="Logo" usemap="#logoMap">
             </a>
             <map name="logoMap">
                 <area shape="rect" id="adminStoryArea" coords="0,0,50,50" href="javascript:void(0)" onclick="onAdminIconClick(0)">
