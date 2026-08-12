@@ -52,7 +52,7 @@ button.deleteStoryBtn {
     </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-lg-6">
 
         <div class="product-pnls2 mt-3 mb-3">
@@ -134,6 +134,151 @@ button.deleteStoryBtn {
         </div>
 
     </div>
+</div> -->
+<div class="row">
+    <div class="col-lg-6">
+
+        <div class="product-pnls2 mt-3 mb-3">
+            <div class="upload-image" style="height:250px;">
+
+                <label id="bannerUploadLabel"
+                       style="cursor:pointer;text-align:center;display:block;">
+
+                    <div id="bannerPlaceholderImg">
+                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
+                             style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
+
+                        <div class="py-2" style="color:#875C3A">
+                            {{ __('seller_messages.Upload_Image_Video') }}
+                        </div>
+                    </div>
+
+                    <img id="bannerUploadedImg"
+                         src=""
+                         alt="image"
+                         class="img-fluid uploadbnr"
+                         style="display:none;">
+
+                    <video id="bannerUploadedVideo"
+                           class="img-fluid uploadbnr"
+                           controls
+                           style="display:none;">
+                    </video>
+
+                </label>
+
+                <input type="file"
+                       id="banner_image_upload"
+                       name="file"
+                       accept="image/*,video/*"
+                       style="display:none;">
+            </div>
+        </div>
+
+
+        <div class="postpanle">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="profile-option active">
+
+                        <div class="left-content d-flex gap-3">
+
+                            <label class="radio-group">
+                                <input class="form-check-input profile-radio"
+                                       type="radio"
+                                       name="filter"
+                                       value="free"
+                                       checked>
+
+                                <span class="custom-radio"></span>
+                            </label>
+
+                            <div>
+                                <h4 class="mb-0">Profile Story</h4>
+                                <p class="mb-0">Visible on your profile</p>
+                            </div>
+
+                        </div>
+
+                        <span class="status-text free">Free</span>
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-12">
+
+                    <div class="profile-option">
+
+                        <div class="left-content d-flex gap-3">
+
+                            <label class="radio-group">
+                                <input class="form-check-input profile-radio"
+                                       type="radio"
+                                       name="filter"
+                                       value="paid">
+
+                                <span class="custom-radio"></span>
+                            </label>
+
+                            <div>
+                                <h4 class="mb-0">Featured on Desynat Home</h4>
+                                <p class="mb-2">Reach more users</p>
+                            </div>
+
+                        </div>
+
+                        <span class="status-text paid">Paid</span>
+
+                    </div>
+
+
+                    <div class="paidPnl" style="display:none;">
+
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Select Date</label>
+                            </div>
+
+                            <input type="date"
+                                   id="story_start_date"
+                                   class="form-control datepicker"
+                                   min="{{ date('Y-m-d') }}">
+                        </div>
+
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Add Price</label>
+                            </div>
+
+                            <input type="text"
+                                   id="story_price"
+                                   class="form-control"
+                                   readonly>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+
+            <a href="javascript:void(0);"
+               id="postStoryBtn"
+               class="btn btn-success">
+
+                Post On Profile
+
+            </a>
+
+        </div>
+
+    </div>
+    <input type="text" id="country_id" value="{{ $country_id }}">
 </div>
 
 <div class="product_reels customContainer mt-4">
@@ -189,7 +334,7 @@ button.deleteStoryBtn {
     </div>
 </div>
 
-<div class="modal fade" id="showModule" tabindex="-1" aria-hidden="true">
+<!-- <div class="modal fade" id="showModule" tabindex="-1" aria-hidden="true">
 
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 20px;">
@@ -246,7 +391,7 @@ button.deleteStoryBtn {
                         </div>
                     </div>
 
-                    <!-- Total Price -->
+                    
                     <div class="d-flex justify-content-between align-items-center p-3 mb-4"
                         style="background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; height: 45px;">
                         <span class="fw-bold text-muted small">Total Price</span>
@@ -254,7 +399,7 @@ button.deleteStoryBtn {
                     </div>
                 </div>
 
-                <!-- Action Button -->
+            
                 <button type="button" id="submitBtn" class="btn w-100 text-white fw-bold py-2 mt-2"
                     style="background: linear-gradient(to right, #bca085, #8a6d51); border-radius: 10px; height: 48px;">
                     Post on Profile
@@ -263,7 +408,7 @@ button.deleteStoryBtn {
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <script>
 document.querySelectorAll('.profile-radio').forEach(function(radio) {
@@ -391,7 +536,7 @@ function closeStatus1() {
 
 
 <!-- add story -->
-<script>
+<!-- <script>
 document.getElementById('bannerUploadLabel').addEventListener('click', function(e) {
     e.preventDefault();
 
@@ -496,6 +641,467 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
             console.error(error);
         });
 });
+</script> -->
+
+<script>
+
+$(document).ready(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Routes
+    |--------------------------------------------------------------------------
+    */
+
+    // Change this route name if your actual add-story route has another name
+    const addStoryRoute = "{{ route('seller.add_story') }}";
+
+    const storyPriceRoute = "{{ route('seller.story_price') }}";
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Upload Label Click
+    |--------------------------------------------------------------------------
+    */
+
+    $("#bannerUploadLabel").on("click", function (e) {
+
+        e.preventDefault();
+
+        $("#banner_image_upload").click();
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | File Selection - ONLY PREVIEW
+    |--------------------------------------------------------------------------
+    */
+
+    $("#banner_image_upload").on("change", function (event) {
+
+        const file = event.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        const img = $("#bannerUploadedImg");
+        const video = $("#bannerUploadedVideo");
+        const placeholder = $("#bannerPlaceholderImg");
+
+        // Hide everything first
+        img.hide();
+        video.hide();
+        placeholder.hide();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Video Preview
+        |--------------------------------------------------------------------------
+        */
+
+        if (file.type.startsWith("video/")) {
+
+            const videoURL = URL.createObjectURL(file);
+
+            video.attr("src", videoURL);
+            video.show();
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Image Preview
+        |--------------------------------------------------------------------------
+        */
+
+        else if (file.type.startsWith("image/")) {
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                img.attr("src", e.target.result);
+                img.show();
+
+            };
+
+            reader.readAsDataURL(file);
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Invalid File
+        |--------------------------------------------------------------------------
+        */
+
+        else {
+
+            toastr.error("Please select a valid image or video.");
+
+            $("#banner_image_upload").val("");
+
+            placeholder.show();
+
+        }
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Free / Paid Selection
+    |--------------------------------------------------------------------------
+    */
+
+    $(".profile-radio").on("change", function () {
+
+        const selectedType = $(this).val();
+
+        if (selectedType === "paid") {
+
+            $(".paidPnl").slideDown();
+
+        } else {
+
+            $(".paidPnl").slideUp();
+
+            // Clear paid fields
+            $("#story_start_date").val("");
+            $("#story_price").val("");
+
+        }
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Paid Date Change - Fetch Price
+    |--------------------------------------------------------------------------
+    */
+
+    $("#story_start_date").on("change", function () {
+
+        const selectedDate = $(this).val();
+
+        if (!selectedDate) {
+            return;
+        }
+
+
+        const countryId = $("#country_id").val();
+
+        if (!countryId) {
+
+            toastr.error("Country is required.");
+
+            return;
+        }
+
+
+        // Clear old price while fetching
+        $("#story_price").val("");
+
+
+        $.ajax({
+
+            url: storyPriceRoute,
+
+            type: "POST",
+
+            data: {
+
+                country_id: countryId,
+
+                no_of_days: 1,
+
+                _token: "{{ csrf_token() }}"
+
+            },
+
+            beforeSend: function () {
+
+                $("#story_price").val("Loading...");
+
+            },
+
+            success: function (response) {
+
+                if (response.status == "success") {
+
+                    $("#story_price").val(response.data.total_amount);
+
+                } else {
+
+                    $("#story_price").val("");
+
+                    toastr.error(
+                        response.message || "Unable to fetch story price."
+                    );
+
+                }
+
+            },
+
+            error: function (xhr) {
+
+                $("#story_price").val("");
+
+                let message = "Something went wrong.";
+
+                if (
+                    xhr.responseJSON &&
+                    xhr.responseJSON.message
+                ) {
+                    message = xhr.responseJSON.message;
+                }
+
+                toastr.error(message);
+
+            }
+
+        });
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Post Story
+    |--------------------------------------------------------------------------
+    */
+
+    $("#postStoryBtn").on("click", function () {
+
+        const fileInput = $("#banner_image_upload")[0];
+
+        const file = fileInput.files[0];
+
+        const selectedType = $('input[name="filter"]:checked').val();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate File
+        |--------------------------------------------------------------------------
+        */
+
+        if (!file) {
+
+            toastr.error("Please select an image or video.");
+
+            return;
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate Type
+        |--------------------------------------------------------------------------
+        */
+
+        if (!selectedType) {
+
+            toastr.error("Please select story type.");
+
+            return;
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Prepare FormData
+        |--------------------------------------------------------------------------
+        */
+
+        let formData = new FormData();
+
+        formData.append("file", file);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | FREE STORY
+        |--------------------------------------------------------------------------
+        */
+
+        if (selectedType === "free") {
+
+            formData.append("is_promotional", "0");
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | PAID STORY
+        |--------------------------------------------------------------------------
+        */
+
+        if (selectedType === "paid") {
+
+            const startDate = $("#story_start_date").val();
+
+            const amount = $("#story_price").val();
+
+
+            // Date validation
+            if (!startDate) {
+
+                toastr.error("Please select a date.");
+
+                return;
+
+            }
+
+
+            // Price validation
+            if (!amount || amount === "Loading...") {
+
+                toastr.error("Please wait until the price is fetched.");
+
+                return;
+
+            }
+
+
+            formData.append("is_promotional", "1");
+
+            formData.append("start_date", startDate);
+
+            formData.append("amount", amount);
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | AJAX - ADD STORY
+        |--------------------------------------------------------------------------
+        */
+
+        $.ajax({
+
+            url: addStoryRoute,
+
+            type: "POST",
+
+            data: formData,
+
+            processData: false,
+
+            contentType: false,
+
+            headers: {
+
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+
+            },
+
+            beforeSend: function () {
+
+                $("#postStoryBtn")
+                    .prop("disabled", true)
+                    .text("Posting...");
+
+            },
+
+            success: function (response) {
+
+                if (response.status === "success") {
+
+                    toastr.success(
+                        response.message || "Story posted successfully."
+                    );
+
+
+                    setTimeout(function () {
+
+                        location.reload();
+
+                    }, 1500);
+
+                } else {
+
+                    toastr.error(
+                        response.message || "Unable to post story."
+                    );
+
+                }
+
+            },
+
+            error: function (xhr) {
+
+                let message = "Something went wrong.";
+
+                if (
+                    xhr.responseJSON &&
+                    xhr.responseJSON.message
+                ) {
+                    message = xhr.responseJSON.message;
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Laravel Validation Errors
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    xhr.status === 422 &&
+                    xhr.responseJSON &&
+                    xhr.responseJSON.errors
+                ) {
+
+                    let errors = xhr.responseJSON.errors;
+
+                    $.each(errors, function (key, value) {
+
+                        if (Array.isArray(value)) {
+
+                            toastr.error(value[0]);
+
+                        } else {
+
+                            toastr.error(value);
+
+                        }
+
+                    });
+
+                } else {
+
+                    toastr.error(message);
+
+                }
+
+            },
+
+            complete: function () {
+
+                $("#postStoryBtn")
+                    .prop("disabled", false)
+                    .text("Post On Profile");
+
+            }
+
+        });
+
+    });
+
+});
+
 </script>
 
 <!-- upload from gallery -->

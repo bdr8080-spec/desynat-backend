@@ -747,6 +747,8 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
 
         // $seller_id=Auth::guard('seller')->user()->id;
         $seller_id=sellerAndStaffId();
+        $storeInfo = sellerStoreInformation::where('seller_id', $seller_id)->first();
+        $country_id = $storeInfo?->country;
 
         //dd($seller_id);
 
@@ -757,7 +759,7 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
         $sellerStories=  $this->StoryManagementService->getSellerStories($request_data)['data'];
         //dd($stories);
 
-        return view('dealer.addstory.index',compact('sellerStories'));
+        return view('dealer.addstory.index',compact('sellerStories','country_id'));
     }
 
     public function storyRequestManagement(REQUEST $request){

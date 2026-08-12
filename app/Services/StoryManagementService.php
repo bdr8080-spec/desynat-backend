@@ -320,163 +320,164 @@ class StoryManagementService
     }
 }
 
-    // public function getSellerStoryOnUserNew($request)
-    // {
-    //     try {
-    //         $query = Story::query();
-
-
-    //         // Only last 24 hours stories
-    //         $query->where('created_at', '>=', Carbon::now()->subDay());
-
-    //         // Existing conditions
-    //         $query->where('type', '2');
-    //         $query->where('seller_id', $request->seller_id);
-    //         $query->where('status', '1');
-    //         $query->orderBy('id', 'asc');
-
-    //         $story_details = $query->get();
-
-    //             $story_details = $story_details->map(function ($story) use ($request) {
-
-    //             $type = 1;
-    //            // dd(123);
-
-    //             $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
-    //                 ->where('user_id', $request->user_id)
-    //                 ->where('type', $type)
-    //                 ->exists() ? 1 : 0;
-
-    //             return $story;
-    //         });
-
-    //         if ($story_details->isEmpty()) {
-    //             return [
-    //                 'status' => 'success',
-    //                 'message' => __('Service_messages.no_story_found'),
-    //                 'data' => []
-    //             ];
-    //         }
-
-    //         return [
-    //             'status' => 'success',
-    //             'message' => 'Seller Stories fetched successfully',
-    //             'data' => $story_details
-    //         ];
-
-    //     } catch (\Exception $e) {
-    //         return [
-    //             'status' => 'error',
-    //             'message' => 'Failed to fetch story: ' . $e->getMessage(),
-    //             'data' => []
-    //         ];
-    //     }
-    // }
-
     public function getSellerStoryOnUserNew($request)
-{
-    try {
-
-        // $query = Story::query();
-        $query = Story::with('seller_details.store_info');
-
-        // Common conditions
-        $query->where('type', '2');
-        $query->where('seller_id', $request->seller_id);
-        $query->where('status', '1');
+    {
+        try {
+            $query = Story::query();
 
 
-        $today = Carbon::today()->toDateString();
+            // Only last 24 hours stories
+            $query->where('created_at', '>=', Carbon::now()->subDay());
 
+            // Existing conditions
+            $query->where('type', '2');
+            $query->where('seller_id', $request->seller_id);
+            $query->where('status', '1');
+            $query->where('is_promotional', '0');
+            $query->orderBy('id', 'asc');
 
-        // Conditions based on is_promotional
-        $query->where(function ($q) use ($today) {
+            $story_details = $query->get();
 
-            $q->where(function ($normal) {
+                $story_details = $story_details->map(function ($story) use ($request) {
 
-                $normal->where('is_promotional', 0)
-                       ->where('created_at', '>=', Carbon::now()->subDay());
+                $type = 1;
+               // dd(123);
 
-            })
+                $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+                    ->where('user_id', $request->user_id)
+                    ->where('type', $type)
+                    ->exists() ? 1 : 0;
 
-
-            ->orWhere(function ($promo) use ($today) {
-
-                $promo->where('is_promotional', 1)
-                      ->where('payment_status', 1)
-                      ->where('Admin_verify', 1)
-                      ->whereDate('start_date', $today);
-
+                return $story;
             });
 
-
-        });
-
-
-        // Latest first
-        $query->orderBy('id', 'asc');
-
-
-        // Fetch stories
-        $story_details = $query->get();
-
-
-
-        // Check seen history
-        $story_details = $story_details->map(function ($story) use ($request) {
-
-
-            $type = 1;
-
-
-            $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
-                ->where('user_id', $request->user_id)
-                ->where('type', $type)
-                ->exists()
-                ? 1
-                : 0;
-
-
-            return $story;
-
-        });
-
-
-
-        // No stories found
-        if ($story_details->isEmpty()) {
+            if ($story_details->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => __('Service_messages.no_story_found'),
+                    'data' => []
+                ];
+            }
 
             return [
                 'status' => 'success',
-                'message' => __('Service_messages.no_story_found'),
-                'data' => []
+                'message' => 'Seller Stories fetched successfully',
+                'data' => $story_details
             ];
 
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch story: ' . $e->getMessage(),
+                'data' => []
+            ];
         }
-
-
-
-        // Success response
-        return [
-            'status' => 'success',
-            'message' => 'Seller Stories fetched successfully',
-            'data' => $story_details
-        ];
-
-
-
-    } catch (\Exception $e) {
-
-
-        return [
-            'status' => 'error',
-            'message' => 'Failed to fetch story: ' . $e->getMessage(),
-            'data' => []
-        ];
-
-
     }
-}
+
+//     public function getSellerStoryOnUserNew($request)
+// {
+//     try {
+
+//         // $query = Story::query();
+//         $query = Story::with('seller_details.store_info');
+
+//         // Common conditions
+//         $query->where('type', '2');
+//         $query->where('seller_id', $request->seller_id);
+//         $query->where('status', '1');
+
+
+//         $today = Carbon::today()->toDateString();
+
+
+//         // Conditions based on is_promotional
+//         $query->where(function ($q) use ($today) {
+
+//             $q->where(function ($normal) {
+
+//                 $normal->where('is_promotional', 0)
+//                        ->where('created_at', '>=', Carbon::now()->subDay());
+
+//             })
+
+
+//             ->orWhere(function ($promo) use ($today) {
+
+//                 $promo->where('is_promotional', 1)
+//                       ->where('payment_status', 1)
+//                       ->where('Admin_verify', 1)
+//                       ->whereDate('start_date', $today);
+
+//             });
+
+
+//         });
+
+
+//         // Latest first
+//         $query->orderBy('id', 'asc');
+
+
+//         // Fetch stories
+//         $story_details = $query->get();
+
+
+
+//         // Check seen history
+//         $story_details = $story_details->map(function ($story) use ($request) {
+
+
+//             $type = 1;
+
+
+//             $story->is_seen = \App\Models\StorySeenHistory::where('story_id', $story->id)
+//                 ->where('user_id', $request->user_id)
+//                 ->where('type', $type)
+//                 ->exists()
+//                 ? 1
+//                 : 0;
+
+
+//             return $story;
+
+//         });
+
+
+
+//         // No stories found
+//         if ($story_details->isEmpty()) {
+
+//             return [
+//                 'status' => 'success',
+//                 'message' => __('Service_messages.no_story_found'),
+//                 'data' => []
+//             ];
+
+//         }
+
+
+
+//         // Success response
+//         return [
+//             'status' => 'success',
+//             'message' => 'Seller Stories fetched successfully',
+//             'data' => $story_details
+//         ];
+
+
+
+//     } catch (\Exception $e) {
+
+
+//         return [
+//             'status' => 'error',
+//             'message' => 'Failed to fetch story: ' . $e->getMessage(),
+//             'data' => []
+//         ];
+
+
+//     }
+// }
 
 
     // public function getAdminStoryOnUser($request)
