@@ -1436,7 +1436,7 @@ function loadAdminStories(openIndex = 0, callback) {
         type: "GET",
         dataType: "json",
         success: function (res) {
-            //console.log("[DEBUG] API RESPONSE:", res);
+           // console.log("[DEBUG] API RESPONSE:", res);
 
             if (res.status === "success" && Array.isArray(res.data.data)) {
                 stories = res.data.data;
