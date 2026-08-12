@@ -29,7 +29,11 @@
     width: 100%;
     object-fit:cover;
 }
-
+.hightop{
+    position: absolute;
+    top: 14px;
+    font-size: 13px;
+}
 
 
      </style>
@@ -159,7 +163,7 @@
                 <div class="box-story">
                     <img src="" alt="image" class="img-fluid">
                 </div>
-                <div>
+                <div class="hightop">
                     <div class="storyTime">Store Name </div>
                     <div class="storyTime">6 sec ago</div>
                 </div>

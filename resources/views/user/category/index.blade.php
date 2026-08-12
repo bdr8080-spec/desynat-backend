@@ -50,6 +50,12 @@ $currency = session('currencyAr', 'دينار كويتي');
     height: 100%;
     background: #007bff;
 }
+.hightop{
+    position: absolute;
+    top: 14px;
+    font-size: 13px;
+}
+
 </style>
 <div class="customContainer">
     <div>
@@ -756,7 +762,7 @@ $currency = session('currencyAr', 'دينار كويتي');
         <div class="logostatus">
             <div id="progressContainerHighlight" class="progress-container"></div>
             
-            <div class="p-2">
+            <div class="p-2 hightop">
                 <div class="storyTime">Highlight Name </div>
                 <div class="storyTime">6 sec ago</div>
             </div>
