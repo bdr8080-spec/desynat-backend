@@ -183,6 +183,9 @@
                             @elseif($story->Admin_verify == 1 && $story->payment_status == 1 && $today->lt($startDate))
                                 <span class="badge bg-success">{{ __('seller_messages.Paid') }}</span>
                             @endif
+                            @elseif($story->Admin_verify == 1 && $story->payment_status == 2)
+                                <span class="badge bg-success">{{ __('seller_messages.Failed') }}</span>
+                            @endif
                             </td>
 
                             @php
