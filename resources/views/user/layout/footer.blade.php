@@ -18,24 +18,27 @@
     height: 30px;
     width: 50px;
 }
-.box-story{
+.box-story {
     height: 40px;
     width: 40px;
     border-radius:50px;
     border:1px solid #fff;
+    overflow: hidden;
 }
 .box-story img {
     height: 100%;
     width: 100%;
     object-fit:cover;
 }
-.hightop{
-    position: absolute;
-    top: 14px;
+.hightop-2{
     font-size: 13px;
     color:#fff;
 }
-
+.story-pnl-progress {
+    position: absolute;
+    width: 100%;
+    background: #04040436;
+}
 
      </style>
      <footer>
@@ -162,9 +165,9 @@
             <div id="progressContainer" class="progress-container"></div>
             <div class="story-pnl-progress d-flex gap-3 p-3 align-item-center">
                 <div class="box-story">
-                    <img id="storyProfileImage"  src="" alt="image" class="img-fluid">
+                    <img id="storyProfileImage"  src="{{asset('user/assets/images/desynat_fav_ic.svg')}}" alt="image" class="img-fluid">
                 </div>
-                <div class="hightop">
+                <div class="hightop-2">
                     <div id="storyStoreName" class="storyTime">Desynat</div>
                     <div id="storyCreatedTime" class="storyTime">6 sec ago</div>
                 </div>
