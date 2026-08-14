@@ -1689,7 +1689,7 @@ function closeSellerHighlightViewer(){
 
 
 
-<script>
+<!-- <script>
 let sellerStories = [];
 let sellerStoryIndex = 0;
 let sellerStoryTimer = null;
@@ -1906,6 +1906,389 @@ function getStoryTimeAgo(createdAt) {
     const years = Math.floor(months / 12);
 
     return years + " year" + (years > 1 ? "s" : "") + " ago";
+}
+</script> -->
+
+<script>
+let sellerStories = [];
+let sellerStoryIndex = 0;
+let sellerStoryTimer = null;
+let sellerStoryDuration = 3000;
+
+
+// OPEN VIEWER
+function openSellerStoryViewer(stories, startIndex = 0) {
+
+    clearTimeout(sellerStoryTimer);
+
+    sellerStories = stories;
+    sellerStoryIndex = startIndex;
+
+    document.getElementById("sellerStoryViewer").style.display = "block";
+
+    renderProgressBars();
+
+    showSellerStory(sellerStoryIndex);
+}
+
+
+// CREATE ALL PROGRESS BARS
+function renderProgressBars() {
+
+    const container = document.getElementById("sellerStoryProgressContainer");
+
+    container.innerHTML = '';
+
+    sellerStories.forEach((_, i) => {
+
+        container.innerHTML += `
+            <div style="flex:1; margin:2px; background:#ddd; height:4px;">
+                <div id="progress_${i}"
+                     style="width:0%; height:100%; background:#007bff;">
+                </div>
+            </div>
+        `;
+
+    });
+}
+
+
+// SHOW STORY
+function showSellerStory(index) {
+
+    clearTimeout(sellerStoryTimer);
+
+    if (index >= sellerStories.length) {
+
+        closeSellerStoryViewer();
+
+        return;
+    }
+
+
+    // GET CURRENT STORY
+    const story = sellerStories[index];
+
+
+    // UPDATE STORY HEADER
+    updateStoryHeader(story);
+
+
+    const imageEl = document.getElementById("sellerStoryImage");
+
+    const videoEl = document.getElementById("sellerStoryVideo");
+
+
+    // RESET MEDIA
+    imageEl.style.display = "none";
+
+    videoEl.style.display = "none";
+
+    videoEl.pause();
+
+    videoEl.src = "";
+
+
+    // UPDATE PROGRESS BARS
+    sellerStories.forEach((_, i) => {
+
+        const bar = document.getElementById(`progress_${i}`);
+
+        if (!bar) {
+
+            return;
+        }
+
+
+        if (i < index) {
+
+            bar.style.width = "100%";
+
+        } else {
+
+            bar.style.width = "0%";
+
+        }
+
+    });
+
+
+    // CURRENT PROGRESS BAR
+    const currentBar = document.getElementById(`progress_${index}`);
+
+
+    // STORY FILE
+    const file = story.file;
+
+
+    // CHECK VIDEO
+    const isVideo = file && file.match(/\.(mp4|webm|ogg)$/i);
+
+
+    // IF VIDEO
+    if (isVideo) {
+
+        videoEl.src = file;
+
+        videoEl.style.display = "block";
+
+
+        videoEl.onloadedmetadata = function () {
+
+            sellerStoryDuration = videoEl.duration * 1000;
+
+
+            animateProgress(
+                currentBar,
+                sellerStoryDuration
+            );
+
+        };
+
+
+        videoEl.onended = function () {
+
+            nextSellerStory();
+
+        };
+
+
+    } else {
+
+
+        // IF IMAGE
+        imageEl.src = file;
+
+        imageEl.style.display = "block";
+
+
+        // IMAGE STORY DURATION
+        sellerStoryDuration = 3000;
+
+
+        animateProgress(
+            currentBar,
+            sellerStoryDuration
+        );
+
+    }
+
+}
+
+
+// UPDATE STORY HEADER
+function updateStoryHeader(story) {
+
+    const storyCreatedTime =
+        document.getElementById("storyCreatedTime");
+
+
+    if (story && story.created_at) {
+
+        storyCreatedTime.textContent =
+            getStoryTimeAgo(story.created_at);
+
+    } else {
+
+        storyCreatedTime.textContent = "";
+
+    }
+
+}
+
+
+// GET STORY TIME AGO
+function getStoryTimeAgo(createdAt) {
+
+    const createdDate = new Date(createdAt);
+
+
+    // INVALID DATE
+    if (isNaN(createdDate.getTime())) {
+
+        return "";
+
+    }
+
+
+    const now = new Date();
+
+
+    // DIFFERENCE IN SECONDS
+    let seconds = Math.floor(
+        (now.getTime() - createdDate.getTime()) / 1000
+    );
+
+
+    // PREVENT NEGATIVE VALUE
+    if (seconds < 0) {
+
+        seconds = 0;
+
+    }
+
+
+    // SECONDS
+    if (seconds < 60) {
+
+        return seconds + " sec ago";
+
+    }
+
+
+    // MINUTES
+    const minutes = Math.floor(seconds / 60);
+
+
+    if (minutes < 60) {
+
+        return minutes + " min ago";
+
+    }
+
+
+    // HOURS
+    const hours = Math.floor(minutes / 60);
+
+
+    if (hours < 24) {
+
+        return hours +
+            " hour" +
+            (hours > 1 ? "s" : "") +
+            " ago";
+
+    }
+
+
+    // DAYS
+    const days = Math.floor(hours / 24);
+
+
+    if (days < 30) {
+
+        return days +
+            " day" +
+            (days > 1 ? "s" : "") +
+            " ago";
+
+    }
+
+
+    // MONTHS
+    const months = Math.floor(days / 30);
+
+
+    if (months < 12) {
+
+        return months +
+            " month" +
+            (months > 1 ? "s" : "") +
+            " ago";
+
+    }
+
+
+    // YEARS
+    const years = Math.floor(months / 12);
+
+
+    return years +
+        " year" +
+        (years > 1 ? "s" : "") +
+        " ago";
+
+}
+
+
+// PROGRESS ANIMATION
+function animateProgress(progressEl, duration) {
+
+    clearTimeout(sellerStoryTimer);
+
+
+    if (!progressEl) {
+
+        return;
+
+    }
+
+
+    // RESET PROGRESS
+    progressEl.style.transition = "none";
+
+    progressEl.style.width = "0%";
+
+
+    // START PROGRESS ANIMATION
+    setTimeout(() => {
+
+        progressEl.style.transition =
+            `width ${duration}ms linear`;
+
+        progressEl.style.width = "100%";
+
+    }, 50);
+
+
+    // AUTOMATICALLY GO TO NEXT STORY
+    sellerStoryTimer = setTimeout(() => {
+
+        nextSellerStory();
+
+    }, duration);
+
+}
+
+
+// NEXT STORY
+function nextSellerStory() {
+
+    sellerStoryIndex++;
+
+
+    if (sellerStoryIndex >= sellerStories.length) {
+
+        closeSellerStoryViewer();
+
+    } else {
+
+        showSellerStory(sellerStoryIndex);
+
+    }
+
+}
+
+
+// CLOSE VIEWER
+function closeSellerStoryViewer() {
+
+    clearTimeout(sellerStoryTimer);
+
+
+    const imageEl =
+        document.getElementById("sellerStoryImage");
+
+
+    const videoEl =
+        document.getElementById("sellerStoryVideo");
+
+
+    document.getElementById("sellerStoryViewer").style.display =
+        "none";
+
+
+    // HIDE IMAGE
+    imageEl.style.display = "none";
+
+
+    // STOP VIDEO
+    videoEl.pause();
+
+    videoEl.style.display = "none";
+
+    videoEl.src = "";
+
 }
 </script>
 
