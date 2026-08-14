@@ -1766,5 +1766,6 @@ return [
 
 'details' => 'Details',
 'date_selected' => 'Date Selected',
+'failed' => 'Failed',
 
 ];

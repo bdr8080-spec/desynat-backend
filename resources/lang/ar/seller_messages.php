@@ -1777,5 +1777,6 @@ return [
 // Arabic
 'details' => 'التفاصيل',
 'date_selected' => 'التاريخ المحدد',
+'failed' => 'فشل',
      
 ];
