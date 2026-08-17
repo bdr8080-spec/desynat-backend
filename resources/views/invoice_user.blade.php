@@ -1,6 +1,21 @@
+<?php
+
+if (isset(request()->lang)) {
+
+  $lang = request()->input('lang', 'en');
+
+  if (!in_array($lang, ['en', 'ar'])) {
+    $lang = 'en';
+  }
+  app()->setLocale($lang);
+
+}
+
+
+?>
+
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}"
-      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
   <meta charset="utf-8" />
@@ -9,6 +24,7 @@
     * {
       box-sizing: border-box;
     }
+
     .table-bordered td,
     .table-bordered th {
       border: 1px solid #ddd;
@@ -23,6 +39,7 @@
       padding: 0;
       font-size: 0.75rem;
     }
+
     @media print {
       @page {
         size: 80mm auto;
@@ -120,15 +137,15 @@
 </head>
 
 @php
-    
-if(App::getLocale()=='en'){
-$currency = session('currency', 'KWD');
-}else{
-$currency = session('currencyAr', 'دينار كويتي');
-}
 
-    $rate = session('rate', '1');
- 
+  if (App::getLocale() == 'en') {
+    $currency = session('currency', 'KWD');
+  } else {
+    $currency = session('currencyAr', 'دينار كويتي');
+  }
+
+  $rate = session('rate', '1');
+
 @endphp
 
 <body>
@@ -140,7 +157,7 @@ $currency = session('currencyAr', 'دينار كويتي');
           font-size: 13px;
           color: #4a4a4a;
         ">
-        <img src="{{ asset('admin/image/Desynat-logo-2.svg') }}" alt="logo" style="width:205px;">
+      <img src="{{ asset('admin/image/Desynat-logo-2.svg') }}" alt="logo" style="width:205px;">
       <p style="
             font-weight: bold;
             color: #000;
@@ -152,7 +169,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
       <p style="margin: 5px auto">
         {{ __('user_messages.customer_support') }}: support@desynat.com<br />
-                <!-- {{ __('user_messages.phone') }} / {{ __('user_messages.whatsapp') }}: +965 XXXXXXX -->
+        <!-- {{ __('user_messages.phone') }} / {{ __('user_messages.whatsapp') }}: +965 XXXXXXX -->
       </p>
       <p><b>{{ __('user_messages.invoice_number') }}:</b> #{{$checkOrder->order_id}}</p>
       <p><b>{{ __('user_messages.order_date') }}:</b> {{$checkOrder->created_at->format('Y-m-d') }}</p>
@@ -203,7 +220,8 @@ $currency = session('currencyAr', 'دينار كويتي');
       <tbody>
         <tr class="invoice-items">
           <td>{{@$checkOrder->delivery_details->address }}
-                    {{@$checkOrder->delivery_details->state }} {{@$checkOrder->delivery_details->postal_code }} </td>
+            {{@$checkOrder->delivery_details->state }} {{@$checkOrder->delivery_details->postal_code }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -223,52 +241,52 @@ $currency = session('currencyAr', 'دينار كويتي');
         </tr>
       </thead>
       <tbody>
-        @foreach($checkOrder->order_details as $key=>$val)
-        <tr class="invoice-items">
-          <td><img src="{{$val->variation_details->variant_image[0]}}" style="width: 30px; height: 30px;"></td>
-          <td>
-            @if(app()->getLocale() == 'en')
-            {{$val->product_details->product_name_en}}
-            @else
-            {{$val->product_details->product_name_ar}}
-            @endif
-          </td>
-          <td>{{$val->product_details->seller_details->store_info->store_name}}</td>
-          <td>@if($val->order_type=='1')
-                {{ __('user_messages.normal') }}
-                @elseif($val->order_type=='2')
-                {{ __('user_messages.custom') }}
-                @endif
+        @foreach($checkOrder->order_details as $key => $val)
+          <tr class="invoice-items">
+            <td><img src="{{$val->variation_details->variant_image[0]}}" style="width: 30px; height: 30px;"></td>
+            <td>
+              @if(app()->getLocale() == 'en')
+                {{$val->product_details->product_name_en}}
+              @else
+                {{$val->product_details->product_name_ar}}
+              @endif
             </td>
-          <td>
-            <!-- @if(app()->getLocale() == 'en')
-            {{$val->variation_details->size->name}}
-            @else
-            {{$val->variation_details->size->name_ar}}
-            @endif -->
-            {{$val->variation_details->size->name}}
-          </td>
-          <td>
-            @if(app()->getLocale() == 'en')
-            {{$val->variation_details->color->name}}
-            @else{{$val->variation_details->color->name_ar}}
-            @endif
-          </td>
-          <td>{{$val->quantity}}</td>
-          <td>
-           @if($val->order_type=='1')
-              {{ number_format($val->variation_details->actual_price * $rate, 2) }} {{ $currencyCode }}
-          @elseif($val->order_type=='2')
-              {{ number_format($val->amount * $rate, 2) }} {{ $currencyCode }}
-          @endif
-          </td>
-        </tr>
+            <td>{{$val->product_details->seller_details->store_info->store_name}}</td>
+            <td>@if($val->order_type == '1')
+              {{ __('user_messages.normal') }}
+            @elseif($val->order_type == '2')
+                {{ __('user_messages.custom') }}
+              @endif
+            </td>
+            <td>
+              <!-- @if(app()->getLocale() == 'en')
+                                                {{$val->variation_details->size->name}}
+                                                @else
+                                                {{$val->variation_details->size->name_ar}}
+                                                @endif -->
+              {{$val->variation_details->size->name}}
+            </td>
+            <td>
+              @if(app()->getLocale() == 'en')
+                {{$val->variation_details->color->name}}
+              @else{{$val->variation_details->color->name_ar}}
+              @endif
+            </td>
+            <td>{{$val->quantity}}</td>
+            <td>
+              @if($val->order_type == '1')
+                {{ number_format($val->variation_details->actual_price * $rate, 2) }} {{ $currencyCode }}
+              @elseif($val->order_type == '2')
+                {{ number_format($val->amount * $rate, 2) }} {{ $currencyCode }}
+              @endif
+            </td>
+          </tr>
         @endforeach
-        
+
       </tbody>
     </table>
 
-   
+
     <div style="font-weight: 600; margin-top: 15px;">{{ __('user_messages.order_summary') }} </div>
     <table style="
           width: 100%;
@@ -283,32 +301,36 @@ $currency = session('currencyAr', 'دينار كويتي');
         </tr>
         <tr>
           <td>{{ __('user_messages.discount') }}:</td>
-          <td style="text-align: right"> {{ number_format($checkOrder->discount_mrp * $rate, 2) }} {{ $currencyCode }}</td>
+          <td style="text-align: right"> {{ number_format($checkOrder->discount_mrp * $rate, 2) }} {{ $currencyCode }}
+          </td>
         </tr>
         @if($checkOrder->promocode_details)
 
-        <td>{{ __('user_messages.promo_code') }}</td>
-        <td style="text-align: right">
-          @if(app()->getLocale() == 'en')
-          {{@$checkOrder->promocode_details->name_english }}
-          @else
-          {{@$checkOrder->promocode_details->name_arabic }}
-          @endif
-        </td>
+          <td>{{ __('user_messages.promo_code') }}</td>
+          <td style="text-align: right">
+            @if(app()->getLocale() == 'en')
+              {{@$checkOrder->promocode_details->name_english }}
+            @else
+              {{@$checkOrder->promocode_details->name_arabic }}
+            @endif
+          </td>
 
         @endif
         <tr>
           <td>{{ __('user_messages.delivery_fee') }}:</td>
-          <td style="text-align: right">   {{ number_format($checkOrder->shipping_fees * $rate, 2) }} {{ $currencyCode }}</td>
+          <td style="text-align: right"> {{ number_format($checkOrder->shipping_fees * $rate, 2) }} {{ $currencyCode }}
+          </td>
         </tr>
         <tr>
           <td>{{ __('user_messages.tax_vat') }}</td>
-          <td style="text-align: right">  {{ number_format($checkOrder->tax * $rate, 2) }} {{ $currencyCode }}</td>
+          <td style="text-align: right"> {{ number_format($checkOrder->tax * $rate, 2) }} {{ $currencyCode }}</td>
         </tr>
         <tr>
-          <td style="font-weight: 600;"> {{ __('user_messages.total_amount') }}:  </td>
-          <td style="text-align: right;font-weight: 600;">   {{ number_format($checkOrder->total_amount * $rate, 2) }} {{ $currencyCode }}</td>
-      </tr>
+          <td style="font-weight: 600;"> {{ __('user_messages.total_amount') }}: </td>
+          <td style="text-align: right;font-weight: 600;"> {{ number_format($checkOrder->total_amount * $rate, 2) }}
+            {{ $currencyCode }}
+          </td>
+        </tr>
       </thead>
     </table>
 
@@ -318,27 +340,27 @@ $currency = session('currencyAr', 'دينار كويتي');
         <tr>
           <td>{{ __('user_messages.payment_method') }}:</td>
           <td style="text-align: right">
-            @if($checkOrder->payment_method==1)
-                    {{ __('user_messages.visa') }} / {{ __('user_messages.mastercard') }}
-                    @elseif($checkOrder->payment_method==2)
-                    {{ __('user_messages.wallet') }}
-                    @elseif($checkOrder->payment_method==3)
-                    {{ __('user_messages.cod') }}
-                    @endif
+            @if($checkOrder->payment_method == 1)
+              {{ __('user_messages.visa') }} / {{ __('user_messages.mastercard') }}
+            @elseif($checkOrder->payment_method == 2)
+              {{ __('user_messages.wallet') }}
+            @elseif($checkOrder->payment_method == 3)
+              {{ __('user_messages.cod') }}
+            @endif
           </td>
         </tr>
         <tr>
           <td>{{ __('user_messages.payment_status') }}:</td>
           <td style="text-align: right">
-            @if($checkOrder->payment_status==0)
-                    {{ __('user_messages.pending') }}
-                    @elseif($checkOrder->payment_status==1)
-                    {{ __('user_messages.paid') }}
-                    @elseif($checkOrder->payment_status==2)
-                    {{ __('user_messages.cancelled') }}
-                    @elseif($checkOrder->payment_status==3)
-                    {{ __('user_messages.refund') }}
-                    @endif
+            @if($checkOrder->payment_status == 0)
+              {{ __('user_messages.pending') }}
+            @elseif($checkOrder->payment_status == 1)
+              {{ __('user_messages.paid') }}
+            @elseif($checkOrder->payment_status == 2)
+              {{ __('user_messages.cancelled') }}
+            @elseif($checkOrder->payment_status == 3)
+              {{ __('user_messages.refund') }}
+            @endif
           </td>
         </tr>
       </thead>
@@ -367,18 +389,21 @@ $currency = session('currencyAr', 'دينار كويتي');
       <thead>
         <tr>
           <td>
-              <div>{{ __('user_messages.exchange_&_return_within_14_days_from_delivery_date') }}.</div>
-              <div>{{ __('user_messages.non_refundable_unless_defective') }}.</div>
-              <div>{{ __('user_messages.item_must_be_unused_and_in_original_packaging') }}.</div>
-              <div>{{ __('user_messages.delivery_fee_is_non_refundable') }}.</div>
+            <div>{{ __('user_messages.exchange_&_return_within_14_days_from_delivery_date') }}.</div>
+            <div>{{ __('user_messages.non_refundable_unless_defective') }}.</div>
+            <div>{{ __('user_messages.item_must_be_unused_and_in_original_packaging') }}.</div>
+            <div>{{ __('user_messages.delivery_fee_is_non_refundable') }}.</div>
           </td>
         </tr>
-       
+
       </thead>
     </table>
 
     <hr style="border: 1px dashed rgb(131, 131, 131); margin: 10px auto" />
-    <div style="text-align: center; font-weight: 600; font-size: 0.75rem;">{{ __('user_messages.this_invoice_is_generated_electronically_by') }} DESYNAT {{ __('user_messages.and_does_not_require_a_signature') }}.</div>
+    <div style="text-align: center; font-weight: 600; font-size: 0.75rem;">
+      {{ __('user_messages.this_invoice_is_generated_electronically_by') }} DESYNAT
+      {{ __('user_messages.and_does_not_require_a_signature') }}.
+    </div>
 
 
   </section>
