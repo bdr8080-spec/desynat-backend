@@ -292,7 +292,36 @@ try{
    if($singleOrder){
 
     $singleOrder->update(['delivery_status'=> $request->status]);
-    
+                    CreateNotification([
+                    'sender_id' => 1,
+                    'sender_type' => 1,
+
+                    'receiver_id' => $singleOrder->user_id,
+                    'receiver_type' => 2,
+
+                    'title_english' => 'Order Status',
+                    'title_arabic' => 'حالة الطلب',
+
+                    'description_english' => "Your order with order id: {$singleOrder->order_id} is shipped",
+                    'description_arabic' => "تم توصيل طلبك برقم الطلب: {$singleOrder->order_id}",
+
+                    'notification_type' => 'order_shipped_from_seller'
+                ]);
+                CreateNotification([
+                    'sender_id' => $orderDetail->user_id,
+                    'sender_type' => 2,
+
+                    'receiver_id' => 1,
+                    'receiver_type' => 1,
+
+                    'title_english' => 'Order Status',
+                    'title_arabic' => 'حالة الطلب',
+
+                    'description_english' => "Order with order id: {$order->order_id} is shipped",
+                    'description_arabic' => "تم توصيل طلبك برقم الطلب: {$order->order_id}",
+
+                    'notification_type' => 'order_shipped_from_seller'
+                ]);
      return [
             'status'  => 'success',
             'message' => __('Service_messages.status_updated_successfully'),
