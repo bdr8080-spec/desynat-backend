@@ -4,7 +4,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>{{ __('user_messages.desynat') }}</title>
     <link href="{{ asset('user/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('user/assets/css/responsive.css') }}" rel="stylesheet" />
