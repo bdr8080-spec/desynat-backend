@@ -206,6 +206,15 @@
 
         <div class="logostatus">
             <div id="progressContainerSeller" class="progress-container"></div>
+            <div class="story-pnl-progress d-flex gap-3 p-3 align-item-center">
+                <div class="box-story">
+                    <img id="storyProfileImage"  src="{{asset('user/assets/images/desynat_fav_ic.svg')}}" alt="image" class="img-fluid">
+                </div>
+                <div class="hightop-2">
+                    <div id="storyStoreName" class="storyTime">Desynat</div>
+                    <div id="storyCreatedTime" class="storyTime">6 sec ago</div>
+                </div>
+            </div>
             
             <div class="status-img">
                 <img id="statusImageSeller" class="img-fluid" style="display:none;" />
@@ -332,6 +341,8 @@ function showSellerStory() {
         return;
     }
 
+    updateStoryHeader(story);
+
     var img = document.getElementById("statusImageSeller");
     var video = document.getElementById("statusVideoSeller");
 
@@ -440,6 +451,121 @@ function closeSellerStatus() {
     if (container) {
         container.style.display = "none";
     }
+}
+
+function updateStoryHeader(story) {
+
+    const storyStoreName = document.getElementById("storyStoreName");
+    const storyCreatedTime = document.getElementById("storyCreatedTime");
+    const storyProfileImage = document.getElementById("storyProfileImage");
+
+    if (!storyStoreName || !storyCreatedTime) {
+        return;
+    }
+
+        // Seller store name
+            if (story.seller_details) {
+
+            const firstName = story.seller_details.first_name || "";
+            const lastName = story.seller_details.last_name || "";
+
+            storyStoreName.textContent =
+                (firstName + " " + lastName).trim();
+
+        } else {
+
+            storyStoreName.textContent = "";
+
+        }
+
+
+        // Seller store image
+        if (
+            story.seller_details &&
+            story.seller_details.store_info &&
+            story.seller_details.store_info.store_image
+        ) {
+
+            storyProfileImage.src =
+                story.seller_details.store_info.store_image;
+
+        }
+
+
+    if (story.created_at) {
+
+        storyCreatedTime.textContent =
+            getStoryTimeAgo(story.created_at);
+
+    }
+
+}
+
+function getStoryTimeAgo(createdAt) {
+
+    const createdDate = new Date(createdAt);
+
+    if (isNaN(createdDate.getTime())) {
+        return "";
+    }
+
+    const now = new Date();
+
+    let seconds = Math.floor(
+        (now.getTime() - createdDate.getTime()) / 1000
+    );
+
+    if (seconds < 0) {
+        seconds = 0;
+    }
+
+
+    if (seconds < 60) {
+
+        return seconds + " sec ago";
+
+    }
+
+
+    const minutes = Math.floor(seconds / 60);
+
+    if (minutes < 60) {
+
+        return minutes + " min ago";
+
+    }
+
+
+    const hours = Math.floor(minutes / 60);
+
+    if (hours < 24) {
+
+        return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+
+    }
+
+
+    const days = Math.floor(hours / 24);
+
+    if (days < 30) {
+
+        return days + " day" + (days > 1 ? "s" : "") + " ago";
+
+    }
+
+
+    const months = Math.floor(days / 30);
+
+    if (months < 12) {
+
+        return months + " month" + (months > 1 ? "s" : "") + " ago";
+
+    }
+
+
+    const years = Math.floor(months / 12);
+
+    return years + " year" + (years > 1 ? "s" : "") + " ago";
 }
 
 </script>
