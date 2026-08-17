@@ -4,6 +4,7 @@ if (isset(request()->lang)) {
 
   $lang = request()->input('lang', 'en');
 
+
   if (!in_array($lang, ['en', 'ar'])) {
     $lang = 'en';
   }
@@ -260,10 +261,10 @@ if (isset(request()->lang)) {
             </td>
             <td>
               <!-- @if(app()->getLocale() == 'en')
-                                                {{$val->variation_details->size->name}}
-                                                @else
-                                                {{$val->variation_details->size->name_ar}}
-                                                @endif -->
+                                                      {{$val->variation_details->size->name}}
+                                                      @else
+                                                      {{$val->variation_details->size->name_ar}}
+                                                      @endif -->
               {{$val->variation_details->size->name}}
             </td>
             <td>
