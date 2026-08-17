@@ -302,13 +302,13 @@ try{
                     'title_english' => 'Order Status',
                     'title_arabic' => 'حالة الطلب',
 
-                    'description_english' => "Your order with order id: {$singleOrder->order_id} is shipped",
-                    'description_arabic' => "تم توصيل طلبك برقم الطلب: {$singleOrder->order_id}",
+                    'description_english' => "Your order with order id: {$singleOrder->id} is shipped",
+                    'description_arabic' => "تم توصيل طلبك برقم الطلب: {$singleOrder->id}",
 
                     'notification_type' => 'order_shipped_from_seller'
                 ]);
                 CreateNotification([
-                    'sender_id' => $orderDetail->user_id,
+                    'sender_id' => $singleOrder->user_id,
                     'sender_type' => 2,
 
                     'receiver_id' => 1,
@@ -317,8 +317,8 @@ try{
                     'title_english' => 'Order Status',
                     'title_arabic' => 'حالة الطلب',
 
-                    'description_english' => "Order with order id: {$order->order_id} is shipped",
-                    'description_arabic' => "تم توصيل طلبك برقم الطلب: {$order->order_id}",
+                    'description_english' => "Order with order id: {$singleOrder->id} is shipped",
+                    'description_arabic' => "تم توصيل طلبك برقم الطلب: {$singleOrder->id}",
 
                     'notification_type' => 'order_shipped_from_seller'
                 ]);
