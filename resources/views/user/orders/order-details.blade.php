@@ -1816,7 +1816,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toastr.error('Please login first');
 
             setTimeout(() => {
-                window.location.href = "{{ route('login') }}";
+                window.location.href = "{{ route('userLogin') }}";
             }, 1000);
 
             return;
