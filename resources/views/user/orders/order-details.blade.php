@@ -1224,7 +1224,7 @@ $currency = session('currencyAr', 'دينار كويتي');
     </div>
 </div>
 
-<input type="text" id="user_id" value="{{ optional(Auth::guard('web')->user())->id ?? '' }}">
+<input type="hidden" id="user_id" value="{{ optional(Auth::guard('web')->user())->id ?? '' }}">
 <!-- Rating section Modal -->
 <div class="modal fade" id="ratingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
