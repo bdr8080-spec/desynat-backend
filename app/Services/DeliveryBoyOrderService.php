@@ -13,6 +13,8 @@ use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart};
 use DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderDeliveredMail;
 
 
 class DeliveryBoyOrderService
@@ -397,6 +399,26 @@ class DeliveryBoyOrderService
 
                     'notification_type' => 'order_delivered'
                 ]);
+
+                $user = User::find($orderDetail->user_id);
+
+                if ($user && $user->email) {
+
+                    $ratingUrl = url(
+                        '/user/order_details/' .
+                        $order->id .
+                        '?orderdetails_id=' .
+                        $orderDetail->id
+                    );
+
+                    Mail::to($user->email)->send(
+                        new OrderDeliveredMail(
+                            $user->full_name ?? $user->name ?? 'User',
+                            $order->order_id,
+                            $ratingUrl
+                        )
+                    );
+                }
 
                 CreateNotification([
                     'sender_id' => $orderDetail->delivery_boy_id,
