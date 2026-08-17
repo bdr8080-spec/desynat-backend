@@ -74,7 +74,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                 <div class="d-flex align-items-center">
                     <div class="img-contenar">
                         <div class="storeClient_profile_img">
-                            <img src="{{ $store_details['store']['store_image'] }}" class="img-fluid" style="cursor:pointer" onclick="openSellerGallery(0)" />
+                            <img src="{{ $store_details['store']->seller_information->profile_pic }}" class="img-fluid" style="cursor:pointer" onclick="openSellerGallery(0)" />
                         </div>
                     </div>
                     <div class="storeClient_profile_content">
