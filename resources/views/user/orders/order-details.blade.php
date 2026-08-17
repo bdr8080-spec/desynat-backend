@@ -1224,7 +1224,7 @@ $currency = session('currencyAr', 'دينار كويتي');
     </div>
 </div>
 
-
+<input type="text" id="user_id" value="{{ optional(Auth::guard('web')->user())->id ?? '' }}">
 <!-- Rating section Modal -->
 <div class="modal fade" id="ratingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -1811,6 +1811,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== SUBMIT REVIEW =====
     const submitBtn = document.querySelector('#ratingModal .customBtn');
     submitBtn.addEventListener('click', function() {
+     const userId = document.getElementById('user_id').value;
+       if (!userId) {
+            toastr.error('Please login first');
+
+            setTimeout(() => {
+                window.location.href = "{{ route('login') }}";
+            }, 1000);
+
+            return;
+        }
+
         const productTextarea = textareas[0];
         const storeTextarea = textareas[1];
 
