@@ -306,7 +306,7 @@ class UserManagementService
 
                 $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
                  ->where('category_id', $request->category_id)
-                 ->where('subcategory_id', $request->subcategory)
+                 //->where('subcategory_id', $request->subcategory)
                  
                  ->pluck('store_id');
         
