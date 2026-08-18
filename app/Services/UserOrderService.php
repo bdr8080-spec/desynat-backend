@@ -1344,7 +1344,23 @@ if($checkOrder->order_type=='2'){
 
     }
 
-    $checkOrder->update(['return_type'=>'2','exchange_reason'=> $request->exchange_reason,'exchange_new_size'=>$request->new_size]);    
+    $checkOrder->update(['return_type'=>'2','exchange_reason'=> $request->exchange_reason,'exchange_new_size'=>$request->new_size]);  
+    CreateNotification([
+        'sender_id' => 1,
+        'sender_type' => 1,
+
+        'receiver_id' => $checkOrder->user_id,
+        'receiver_type' => 1,
+
+        'title_english' => 'Exchange Product',
+        'title_arabic' => 'استبدال المنتج',
+
+        'description_english' => "Exchange Product Requested for Order ID $checkOrder->id",
+        'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $checkOrder->id",
+
+        'notification_type' => 'exchange_product'
+    ]);
+    
 
     return ['status'=>'success','message' => __('user_messages.product_exchange_request_sent_successfully'),'data'=>$checkOrder];
     
@@ -1425,6 +1441,21 @@ if($checkOrder->order_type=='2'){
     $checkOrder->update(['return_type'=>'1','return_reason'=> $request->return_reason,'return_image'=>$request->return_image]);    
 
     $msg = __('Service_messages.product_return_request_sent_successfully');
+    CreateNotification([
+        'sender_id' => 1,
+        'sender_type' => 1,
+
+        'receiver_id' => $checkOrder->user_id,
+        'receiver_type' => 1,
+
+        'title_english' => 'Reutun Product',
+        'title_arabic' => 'استبدال المنتج',
+
+        'description_english' => "Reutun Product Requested for Order ID $checkOrder->id",
+        'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $checkOrder->id",
+
+        'notification_type' => 'return_product'
+    ]);
 
 
      }
@@ -1461,6 +1492,21 @@ if($checkOrder->order_type=='2'){
     $checkOrder->update(['return_type'=>'2','exchange_reason'=> $request->exchange_reason,'exchange_new_size'=>$request->new_size]);    
 
     $msg = __('Service_messages.product_exchange_request_sent_successfully');
+    CreateNotification([
+    'sender_id' => 1,
+    'sender_type' => 1,
+
+    'receiver_id' => $checkOrder->user_id,
+    'receiver_type' => 1,
+
+    'title_english' => 'Exchange Product',
+    'title_arabic' => 'استبدال المنتج',
+
+    'description_english' => "Exchange Product Requested for Order ID $checkOrder->id",
+    'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $checkOrder->id",
+
+    'notification_type' => 'exchange_product'
+]);
 
 }
 
