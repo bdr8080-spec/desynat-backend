@@ -657,6 +657,7 @@ if ($validator->fails()) {
 
     'let'=>$request->let??null,
     'long'=>$request->long??null,
+    'lang'=>'en',
     "device_type"=>$request->device_type??null
     ];
 
