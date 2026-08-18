@@ -123,10 +123,15 @@
                         @forelse ($store_data as $item)
                             <div class="col-lg-3 col-md-4 col-6 my-3">
                                 <!-- <a  href="{{route('user.store_details',[$item->id])}}" style="text-decoration:none;"> -->
-                                    <a href="{{ route('user.store_details', [
+                                    <!-- <a href="{{ route('user.store_details', [
                                         'id' => $item->id,
                                         'category_id' => request('category_id'),
                                         'subcategory_id' => request('subcategory_id')
+                                    ]) }}"> -->
+                                    <a href="{{ route('user.store_details', [
+                                        'id' => $item->id,
+                                        'category_id' => request()->route('id'),
+                                        'subcategory_id' => request('subcategory')
                                     ]) }}">
                                     <div class="category-store">
                                         <div class="category_store_img">
