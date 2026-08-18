@@ -580,12 +580,18 @@ if ($validator->fails()) {
                     'required',
                     'email',
                 ],
-                 'password' => [
-                            'required',
-                            'string',
-                            'min:8',
-                            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/'
-                        ],
+                //  'password' => [
+                //             'required',
+                //             'string',
+                //             'min:8',
+                //             'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/'
+                //         ],
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+                ],
                 "confirm_password"=>"required|same:password",
                 "document1"=>"required",
                 "document2"=>"required",
