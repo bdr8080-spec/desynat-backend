@@ -2950,17 +2950,20 @@ img.img-fluid.circle-image {
 [dir="rtl"] .categoryDetail_content .seArch input.form-control {
     padding: 10px 70px 10px 40px;
 }
-[dir="rtl"] .dropdown-menu-end[data-bs-popper] {
+
+/* [dir="rtl"] .dropdown-menu-end[data-bs-popper] {
     right: inherit;
     left: 0px;
-}
+} */
+
 [dir="rtl"] .common-title a img {
     transform: rotate(180deg);
 }
 [dir="rtl"] .customNavbar .sell_clothes .clothes_content p {
     text-align: right;
 }
-[dir="rtl"] .customNavbar .dropdown-menu.sell_clothes.show {
+
+/* [dir="rtl"] .customNavbar .dropdown-menu.sell_clothes.show {
     position: absolute;
     left: 0px !important;
     right: 0 !important;
@@ -2970,7 +2973,8 @@ img.img-fluid.circle-image {
     background-color: #fff;
     transform: translate(17%, 0%);
     width: 100%;
-}
+} */
+
 [dir="rtl"] .giftsearch .form-group {
     position: relative;
 }
@@ -3061,4 +3065,13 @@ a {
 }
 .scrollspace {
     padding-top: 120px;
+}
+
+[dir="rtl"] .header-main {
+    direction: ltr;
+}
+
+.viewAll {
+    color: #b48f66;
+    font-size: 20px;
 }

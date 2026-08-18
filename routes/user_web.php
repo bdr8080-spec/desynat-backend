@@ -37,266 +37,269 @@ Route::get('/auth/facebook/callback', [AuthController::class, 'facebookCallback'
 
 
 
-Route::middleware(['checkLanguage'])->group(function(){
+Route::middleware(['checkLanguage'])->group(function () {
 
-Route::get('/user-change-language/{locale}', [UserLanguageController::class, 'UserChangelanguage'])->name("userLanguage");
+    Route::get('/user-change-language/{locale}', [UserLanguageController::class, 'UserChangelanguage'])->name("userLanguage");
 
-// Save User firebase Token 
-Route::get('user-save-token', [SaveFirebaseToken::class, 'saveUserToken']);
+    // Save User firebase Token 
+    Route::get('user-save-token', [SaveFirebaseToken::class, 'saveUserToken']);
 
-Route::get('/live', function () {
-    return view('agora');
-});
-
-
-Route::get('/agoraOnlyStream', function () {
-    return view('agoraOnlyStream');
-});
+    Route::get('/live', function () {
+        return view('agora');
+    });
 
 
+    Route::get('/agoraOnlyStream', function () {
+        return view('agoraOnlyStream');
+    });
 
 
-Route::match(['get', 'post'], '/agora/token', [AgoraController::class, 'generateTokenWeb']);
 
 
-// Web frontend change country and Currency Code Start
+    Route::match(['get', 'post'], '/agora/token', [AgoraController::class, 'generateTokenWeb']);
+
+
+    // Web frontend change country and Currency Code Start
 // Route::post('/set-country', function (Illuminate\Http\Request $request) {
 //     session(['country_id' => $request->country_id]);
 //     return response()->json(['status' => true]);
 // });
 
-// Route::post('/set-currency', function (Illuminate\Http\Request $request) {
+    // Route::post('/set-currency', function (Illuminate\Http\Request $request) {
 //     session(['currency' => $request->currency]);
 //     return response()->json(['status' => true]);
 // });
 
-Route::post('/set-country',[LanguageController::class,'setCountryInUser']);
-Route::post('/set-currency',[LanguageController::class,'setCurrencyInUser']);
+    Route::post('/set-country', [LanguageController::class, 'setCountryInUser']);
+    Route::post('/set-currency', [LanguageController::class, 'setCurrencyInUser']);
 
 
-// Web frontend change country and Currency Code Start
+    // Web frontend change country and Currency Code Start
 
-  
-Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
 
- Route::group(['prefix' => 'user'], function () { 
+    Route::get('/', [AuthController::class, 'dashboard'])->name('dashboard');
 
-  Route::group(['middleware' => 'guest_user'], function () {
-    Route::match(['get', 'post'], '/login', [AuthController::class, 'userLogin'])->name('userLogin');
-    Route::match(['get', 'post'], '/register', [AuthController::class, 'userRegister'])->name('userRegister');
-    Route::match(['get', 'post'], '/forgot-password', [AuthController::class, 'userForgetPassword'])->name('userForgetPassword');
-    Route::match(['get', 'post'], '/verify-otp', [AuthController::class, 'userVerifyOtp'])->name('userVerifyOtp');
-    Route::match(['get', 'post'], '/create-password', [AuthController::class, 'userCreatePassword'])->name('userCreatePassword');
-    Route::match(['get', 'post'], '/login-with-otp', [AuthController::class, 'loginWithOtp'])->name('loginWithOtp');
-    Route::match(['get','post'],'/resend-otp', [AuthController::class, 'resendOtp'])->name('userResendOtp');
-});
+    Route::group(['prefix' => 'user'], function () {
 
-   
-   Route::match(['get','post'],'/profile', [ProfileController::class, 'userProfile'])->name('userProfile');
-   Route::match(['get','post'],'/change-password', [ProfileController::class, 'changePassword'])->name('userChangePassword');
-   Route::get('/logout',[AuthController::class,'userLogout'])->name('userLogout');
-   Route::post('/updateBannerView',[AuthController::class,'updateBannerView'])->name('user.updateBannerView');
+        Route::group(['middleware' => 'guest_user'], function () {
+            Route::match(['get', 'post'], '/login', [AuthController::class, 'userLogin'])->name('userLogin');
+            Route::match(['get', 'post'], '/register', [AuthController::class, 'userRegister'])->name('userRegister');
+            Route::match(['get', 'post'], '/forgot-password', [AuthController::class, 'userForgetPassword'])->name('userForgetPassword');
+            Route::match(['get', 'post'], '/verify-otp', [AuthController::class, 'userVerifyOtp'])->name('userVerifyOtp');
+            Route::match(['get', 'post'], '/create-password', [AuthController::class, 'userCreatePassword'])->name('userCreatePassword');
+            Route::match(['get', 'post'], '/login-with-otp', [AuthController::class, 'loginWithOtp'])->name('loginWithOtp');
+            Route::match(['get', 'post'], '/resend-otp', [AuthController::class, 'resendOtp'])->name('userResendOtp');
+        });
 
-     Route::match(['get', 'post'], '/old-number-send-otp', [ProfileController::class, 'oldNumberSendOtp'])->name('userOldNumberSendOtp');
-     Route::match(['get', 'post'], '/verify-contact-otp', [ProfileController::class, 'oldNumberVerify'])->name('userOldNumberVerify');
 
-   Route::match(['get','post'], '/update-new-number', [ProfileController::class, 'updateNewNumber'])->name('userUpdateNewNumber');
-   Route::match(['get','post'],'/update-email-address',[ProfileController::class, 'updateEmailAddress'])->name('userUpdateNewEmail');
+        Route::match(['get', 'post'], '/profile', [ProfileController::class, 'userProfile'])->name('userProfile');
+        Route::match(['get', 'post'], '/change-password', [ProfileController::class, 'changePassword'])->name('userChangePassword');
+        Route::get('/logout', [AuthController::class, 'userLogout'])->name('userLogout');
+        Route::post('/updateBannerView', [AuthController::class, 'updateBannerView'])->name('user.updateBannerView');
 
-   Route::get('/update-resend-otp', [ProfileController::class, 'updateResendOtp'])->name('updateResendOtp');
+        Route::match(['get', 'post'], '/old-number-send-otp', [ProfileController::class, 'oldNumberSendOtp'])->name('userOldNumberSendOtp');
+        Route::match(['get', 'post'], '/verify-contact-otp', [ProfileController::class, 'oldNumberVerify'])->name('userOldNumberVerify');
 
-   Route::post('/save-current-location', [ProfileController::class, 'saveCurrentLocation'])->name('userSaveCurrentLocation');
-   
-   Route::match(['get','post'],'/store-details/{id}', [UserStoreController::class, 'store_details'])->name('user.store_details');
+        Route::match(['get', 'post'], '/update-new-number', [ProfileController::class, 'updateNewNumber'])->name('userUpdateNewNumber');
+        Route::match(['get', 'post'], '/update-email-address', [ProfileController::class, 'updateEmailAddress'])->name('userUpdateNewEmail');
 
-   Route::match(['get','post'],'/category-wise-store/{id?}', [UserStoreController::class, 'category_wise_store'])->name('user.category_wise_store');
+        Route::get('/update-resend-otp', [ProfileController::class, 'updateResendOtp'])->name('updateResendOtp');
 
-   Route::get('addOremovewishlist', [UserStoreController::class, 'AddOrRemove_wishlist'])->name('user.AddOrRemove_wishlist');
-   
-   Route::get('product/detail-page/{id}', [UserStoreController::class, 'productDetails'])->name('user.product_details');
-  
-   Route::get('wishlist',[UserStoreController::class, 'wishList'])->name('user.wishList');
+        Route::post('/save-current-location', [ProfileController::class, 'saveCurrentLocation'])->name('userSaveCurrentLocation');
 
-   Route::get('view-address', [AddressController::class, 'viewAddress'])->name('user.view_address');
-  
-   Route::match(['get','post'],'save-address', [AddressController::class, 'saveAddress'])->name('user.save_address');
+        Route::match(['get', 'post'], '/store-details/{id}', [UserStoreController::class, 'store_details'])->name('user.store_details');
 
-   Route::post('addToCart',[UserStoreController::class, 'addToCart'])->name('user.addToCart');
- 
+        Route::match(['get', 'post'], '/category-wise-store/{id?}', [UserStoreController::class, 'category_wise_store'])->name('user.category_wise_store');
 
-   Route::get('edit-address/{id}', [AddressController::class, 'updateAddress'])->name('user.update_address');
+        Route::get('addOremovewishlist', [UserStoreController::class, 'AddOrRemove_wishlist'])->name('user.AddOrRemove_wishlist');
 
-   Route::get('delete-address/{id}', [AddressController::class, 'deleteAddress'])->name('user.delete_address');
+        Route::get('product/detail-page/{id}', [UserStoreController::class, 'productDetails'])->name('user.product_details');
 
-   Route::get('address/set-default',[AddressController::class, 'addressSetDefault'])->name('user.address_set_default');
+        Route::get('wishlist', [UserStoreController::class, 'wishList'])->name('user.wishList');
 
+        Route::get('view-address', [AddressController::class, 'viewAddress'])->name('user.view_address');
 
-   Route::get('gift-cards',[UserGiftCardController::class, 'gift_cards'])->name('user.gift_cards');
-   Route::get('view-gift-cards/{id}',[UserGiftCardController::class, 'view_gift_card'])->name('user.view_gift_card');
-   Route::get('add-gift-cards',[UserGiftCardController::class, 'add_gift_cards'])->name('user.add_gift_cards');
-   Route::post('buyGiftCard',[UserGiftCardController::class, 'buyGiftCard'])->name('user.buyGiftCard');
+        Route::match(['get', 'post'], 'save-address', [AddressController::class, 'saveAddress'])->name('user.save_address');
 
+        Route::post('addToCart', [UserStoreController::class, 'addToCart'])->name('user.addToCart');
 
-   Route::get('view-cart',[CartController::class, 'view_cart'])->name('user.view_cart');
-   Route::post('apply_promocode',[CartController::class, 'apply_promocode'])->name('user.apply_promocode');
-   Route::post('apply_giftcard',[CartController::class, 'apply_giftcard'])->name('user.apply_giftcard');
-   Route::post('create_order',[CartController::class, 'create_order'])->name('user.create_order');
 
-   Route::post('create_order',[CartController::class, 'create_order'])->name('user.create_order');
+        Route::get('edit-address/{id}', [AddressController::class, 'updateAddress'])->name('user.update_address');
 
+        Route::get('delete-address/{id}', [AddressController::class, 'deleteAddress'])->name('user.delete_address');
 
-  Route::get('complete-order-Payment',[CartController::class, 'complete_order_Payment'])->name('user.complete_order_Payment');
+        Route::get('address/set-default', [AddressController::class, 'addressSetDefault'])->name('user.address_set_default');
 
-  Route::get('order-details/{id}',[CartController::class, 'orderDetails'])->name('user.orderDetails');
 
+        Route::get('gift-cards', [UserGiftCardController::class, 'gift_cards'])->name('user.gift_cards');
+        Route::get('view-gift-cards/{id}', [UserGiftCardController::class, 'view_gift_card'])->name('user.view_gift_card');
+        Route::get('add-gift-cards', [UserGiftCardController::class, 'add_gift_cards'])->name('user.add_gift_cards');
+        Route::post('buyGiftCard', [UserGiftCardController::class, 'buyGiftCard'])->name('user.buyGiftCard');
 
-  Route::get('/giftcard-complete-Payment', [UserGiftCardController::class,'giftcard_complete_Payment'])->name('user.giftcard_complete_Payment');
 
-  Route::get('/my-orders', [OrderController::class,'myOrders'])->name('user.myOrders');
-  Route::get('/order_details/{id}', [OrderController::class,'order_details'])->name('user.order_details');
-  Route::post('/cancel_order', [OrderController::class,'cancel_order'])->name('user.cancel_order');
-  Route::post('/exchange_order', [OrderController::class,'exchange_order'])->name('user.exchange_order');
-  Route::post('/getAvailableSize', [OrderController::class,'getAvailableSize'])->name('user.getAvailableSize');
-  Route::post('/return_order', [OrderController::class,'return_order'])->name('user.return_order');
-  Route::post('/submitRating', [OrderController::class,'submitRating'])->name('user.submitRating');
+        Route::get('view-cart', [CartController::class, 'view_cart'])->name('user.view_cart');
+        Route::post('apply_promocode', [CartController::class, 'apply_promocode'])->name('user.apply_promocode');
+        Route::post('apply_giftcard', [CartController::class, 'apply_giftcard'])->name('user.apply_giftcard');
+        Route::post('create_order', [CartController::class, 'create_order'])->name('user.create_order');
 
-  Route::get('/all-product', [UserStoreController::class,'all_product'])->name('user.allproduct');
+        Route::post('create_order', [CartController::class, 'create_order'])->name('user.create_order');
 
-  Route::get('/chat', [ChatController::class,'allChats'])->name('user.allChats');
-  Route::get('/user-chat/{id}', [ChatController::class,'userChat'])->name('user.userChat');
-  Route::get('/chat-details/{id}', [ChatController::class,'chatDetails'])->name('user.chatDetails');
-  Route::get('/get_all_messages/{id}', [ChatController::class,'get_all_messages'])->name('user.get_all_messages');
-  Route::get('/get_all_custom_messages/{id}', [ChatController::class,'get_all_custom_messages'])->name('user.get_all_custom_messages');
-  Route::post('/sendNormalMessage', [ChatController::class,'sendNormalMessage'])->name('user.sendNormalMessage');
-  Route::get('/custom-request', [ChatController::class,'customRequest'])->name('user.customRequest');
-  Route::post('/createCustomOrder', [ChatController::class,'createCustomOrder'])->name('user.createCustomOrder');
-  Route::post('/sendCustomOrderRequest', [ChatController::class,'sendCustomOrderRequest'])->name('user.sendCustomOrderRequest');
-  Route::post('/acceptRejectCustOrder', [ChatController::class,'acceptRejectCustOrder'])->name('user.acceptRejectCustOrder');
-  Route::post('/create_custom_order', [ChatController::class,'create_custom_order'])->name('user.create_custom_order');
-  Route::post('/create_normal_chat', [ChatController::class,'create_normal_chat'])->name('user.create_normal_chat');
 
+        Route::get('complete-order-Payment', [CartController::class, 'complete_order_Payment'])->name('user.complete_order_Payment');
 
+        Route::get('order-details/{id}', [CartController::class, 'orderDetails'])->name('user.orderDetails');
 
-//   M7 APis 
-Route::get('/affiliate-start-page', [UserAffilatedController::class,'affiliate_startPage'])->name('affiliate.affiliate_startPage');
 
+        Route::get('/giftcard-complete-Payment', [UserGiftCardController::class, 'giftcard_complete_Payment'])->name('user.giftcard_complete_Payment');
 
-Route::match(['get','post'],'/affiliate-login', [UserAffilatedController::class,'affiliate_login'])->name('affiliate.affiliate_login');
-Route::match(['get', 'post'], '/affiliate-login-with-otp', [UserAffilatedController::class, 'affiliate_loginWithOtp'])->name('affiliate_loginWithOtp');
+        Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('user.myOrders');
+        Route::get('/order_details/{id}', [OrderController::class, 'order_details'])->name('user.order_details');
+        Route::post('/cancel_order', [OrderController::class, 'cancel_order'])->name('user.cancel_order');
+        Route::post('/exchange_order', [OrderController::class, 'exchange_order'])->name('user.exchange_order');
+        Route::post('/getAvailableSize', [OrderController::class, 'getAvailableSize'])->name('user.getAvailableSize');
+        Route::post('/return_order', [OrderController::class, 'return_order'])->name('user.return_order');
+        Route::post('/submitRating', [OrderController::class, 'submitRating'])->name('user.submitRating');
 
-Route::match(['get','post'],'/affiliate-verify-otp', [UserAffilatedController::class,'affiliate_otpVerify'])->name('affiliate.affiliate_otpVerify');
+        Route::get('/all-product', [UserStoreController::class, 'all_product'])->name('user.allproduct');
 
-Route::match(['get', 'post'], '/affiliate-forgot-password', [UserAffilatedController::class, 'affiliate_forgotpassword'])->name('affiliate_forgotpassword');
+        Route::get('/chat', [ChatController::class, 'allChats'])->name('user.allChats');
+        Route::get('/user-chat/{id}', [ChatController::class, 'userChat'])->name('user.userChat');
+        Route::get('/chat-details/{id}', [ChatController::class, 'chatDetails'])->name('user.chatDetails');
+        Route::get('/get_all_messages/{id}', [ChatController::class, 'get_all_messages'])->name('user.get_all_messages');
+        Route::get('/get_all_custom_messages/{id}', [ChatController::class, 'get_all_custom_messages'])->name('user.get_all_custom_messages');
+        Route::post('/sendNormalMessage', [ChatController::class, 'sendNormalMessage'])->name('user.sendNormalMessage');
+        Route::get('/custom-request', [ChatController::class, 'customRequest'])->name('user.customRequest');
+        Route::post('/createCustomOrder', [ChatController::class, 'createCustomOrder'])->name('user.createCustomOrder');
+        Route::post('/sendCustomOrderRequest', [ChatController::class, 'sendCustomOrderRequest'])->name('user.sendCustomOrderRequest');
+        Route::post('/acceptRejectCustOrder', [ChatController::class, 'acceptRejectCustOrder'])->name('user.acceptRejectCustOrder');
+        Route::post('/create_custom_order', [ChatController::class, 'create_custom_order'])->name('user.create_custom_order');
+        Route::post('/create_normal_chat', [ChatController::class, 'create_normal_chat'])->name('user.create_normal_chat');
 
-Route::match(['get', 'post'], '/affiliate-create-password', [UserAffilatedController::class, 'userCreatePassword'])->name('affiliate.userCreatePassword');
-  
 
-Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::class, 'affiliate_signup'])->name('affiliate.affiliate_signup');
 
-Route::get('/my-wallet', [WalletController::class,'myWallet'])->name('user.myWallet');
-Route::match(['get','post'],'/add-wallet-money', [WalletController::class,'addWalletMoney'])->name('user.addWalletMoney');
+        //   M7 APis 
+        Route::get('/affiliate-start-page', [UserAffilatedController::class, 'affiliate_startPage'])->name('affiliate.affiliate_startPage');
 
-Route::match(['post'],'/redeem-giftCard-in-User', [WalletController::class,'redeemgiftCardinUser'])->name('user.redeemgiftCardinUser');
 
-Route::post('/mark_notification_as_read', [DashBoardController::class, 'mark_notification_as_read'])->name('user.mark_notification_as_read');
+        Route::match(['get', 'post'], '/affiliate-login', [UserAffilatedController::class, 'affiliate_login'])->name('affiliate.affiliate_login');
+        Route::match(['get', 'post'], '/affiliate-login-with-otp', [UserAffilatedController::class, 'affiliate_loginWithOtp'])->name('affiliate_loginWithOtp');
 
-//m12
-Route::get('/support', [DashBoardController::class, 'support'])->name('user.support');
-Route::post('/raise_ticket', [DashBoardController::class, 'raise_ticket'])->name('user.raise_ticket');
+        Route::match(['get', 'post'], '/affiliate-verify-otp', [UserAffilatedController::class, 'affiliate_otpVerify'])->name('affiliate.affiliate_otpVerify');
 
-//m13
-Route::get('/setting', [DashBoardController::class, 'setting'])->name('user.setting');
-Route::post('notification_on_off', [DashBoardController::class, 'notification_on_off'])->name('user.notification_on_off');
-Route::post('app_notification_on_off', [DashBoardController::class, 'app_notification_on_off'])->name('user.app_notification_on_off');
+        Route::match(['get', 'post'], '/affiliate-forgot-password', [UserAffilatedController::class, 'affiliate_forgotpassword'])->name('affiliate_forgotpassword');
 
-Route::get('/saved-cards', [ProfileController::class, 'saved_cards'])->name('user.saved_cards');
-Route::get('/add-new-card', [ProfileController::class, 'add_new_card'])->name('user.add_new_card');
-Route::post('/make_card_default', [ProfileController::class, 'make_card_default'])->name('user.make_card_default');
-Route::post('/delete_card', [ProfileController::class, 'delete_card'])->name('user.delete_card');
-Route::post('/save_new_card', [ProfileController::class, 'save_new_card'])->name('user.save_new_card');
-Route::post('/mark_all_chat_msg_as_read', [ChatController::class,'mark_all_chat_msg_as_read'])->name('user.mark_all_chat_msg_as_read');
-Route::get('/chat_unread_count', [ChatController::class,'chat_unread_count'])->name('user.chat_unread_count');
+        Route::match(['get', 'post'], '/affiliate-create-password', [UserAffilatedController::class, 'userCreatePassword'])->name('affiliate.userCreatePassword');
 
-Route::post('CaptureSellerStoreVisitorWeb',[DashBoardController::class, 'CaptureSellerStoreVisitorWeb'])->name('user.CaptureSellerStoreVisitorWeb');
-Route::post('/delete_account', [AuthController::class,'delete_account'])->name('user.delete_account');
 
+        Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::class, 'affiliate_signup'])->name('affiliate.affiliate_signup');
 
-});
+        Route::get('/my-wallet', [WalletController::class, 'myWallet'])->name('user.myWallet');
+        Route::match(['get', 'post'], '/add-wallet-money', [WalletController::class, 'addWalletMoney'])->name('user.addWalletMoney');
 
+        Route::match(['post'], '/redeem-giftCard-in-User', [WalletController::class, 'redeemgiftCardinUser'])->name('user.redeemgiftCardinUser');
 
+        Route::post('/mark_notification_as_read', [DashBoardController::class, 'mark_notification_as_read'])->name('user.mark_notification_as_read');
 
-Route::get('/get_admin_story', [DashBoardController::class, 'get_admin_story'])->name('user.get_admin_story');
-Route::get('/get_seller_story', [DashBoardController::class, 'get_seller_story'])->name('user.get_seller_story');
-Route::post('/add_remove_reel_to_whishlist', [DashBoardController::class, 'add_remove_reel_to_whishlist'])->name('user.add_remove_reel_to_whishlist');
+        //m12
+        Route::get('/support', [DashBoardController::class, 'support'])->name('user.support');
+        Route::post('/raise_ticket', [DashBoardController::class, 'raise_ticket'])->name('user.raise_ticket');
 
+        //m13
+        Route::get('/setting', [DashBoardController::class, 'setting'])->name('user.setting');
+        Route::post('notification_on_off', [DashBoardController::class, 'notification_on_off'])->name('user.notification_on_off');
+        Route::post('app_notification_on_off', [DashBoardController::class, 'app_notification_on_off'])->name('user.app_notification_on_off');
 
-// M7 Code 
+        Route::get('/saved-cards', [ProfileController::class, 'saved_cards'])->name('user.saved_cards');
+        Route::get('/add-new-card', [ProfileController::class, 'add_new_card'])->name('user.add_new_card');
+        Route::post('/make_card_default', [ProfileController::class, 'make_card_default'])->name('user.make_card_default');
+        Route::post('/delete_card', [ProfileController::class, 'delete_card'])->name('user.delete_card');
+        Route::post('/save_new_card', [ProfileController::class, 'save_new_card'])->name('user.save_new_card');
+        Route::post('/mark_all_chat_msg_as_read', [ChatController::class, 'mark_all_chat_msg_as_read'])->name('user.mark_all_chat_msg_as_read');
+        Route::get('/chat_unread_count', [ChatController::class, 'chat_unread_count'])->name('user.chat_unread_count');
 
- Route::match(['get','post'],'/affiliate-add-address', [UserAffilatedController::class,'affiliate_addaddress'])->name('affiliate.affiliate_addaddress');
+        Route::post('CaptureSellerStoreVisitorWeb', [DashBoardController::class, 'CaptureSellerStoreVisitorWeb'])->name('user.CaptureSellerStoreVisitorWeb');
+        Route::post('/delete_account', [AuthController::class, 'delete_account'])->name('user.delete_account');
 
- Route::match(['get','post'],'/affiliate-add-Bank-details', [UserAffilatedController::class,'affiliateAddBankDetails'])->name('affiliate.affiliateAddBankDetails');
- 
- Route::match(['get','post'],'/review_submit_page', [UserAffilatedController::class,'affiliatereview_submit_page'])->name('affiliate.affiliatereview_submit_page');
-   
- Route::get('/affiliate-dashboard', [UserAffilatedController::class,'affiliateDashboard'])->name('affiliate.affiliateDashboard');
 
+    });
 
 
 
-Route::get('Payment-Callback',[CartController::class, 'Payment_Callback'])->name('user.Payment_Callback');
-Route::post('/headerSearch', [DashBoardController::class, 'headerSearch'])->name('user.headerSearch');
-Route::get('/getSearchData', [DashBoardController::class, 'getSearchData'])->name('user.getSearchData');
+    Route::get('/get_admin_story', [DashBoardController::class, 'get_admin_story'])->name('user.get_admin_story');
+    Route::get('/get_seller_story', [DashBoardController::class, 'get_seller_story'])->name('user.get_seller_story');
+    Route::post('/add_remove_reel_to_whishlist', [DashBoardController::class, 'add_remove_reel_to_whishlist'])->name('user.add_remove_reel_to_whishlist');
 
-Route::get('/getRecommandedlatestSearch', [DashBoardController::class, 'getRecommandedlatestSearch'])->name('user.getRecommandedlatestSearch');
 
-Route::get('/getlatestSearch', [DashBoardController::class, 'getlatestSearch'])->name('user.getlatestSearch');
+    // M7 Code 
 
+    Route::match(['get', 'post'], '/affiliate-add-address', [UserAffilatedController::class, 'affiliate_addaddress'])->name('affiliate.affiliate_addaddress');
 
+    Route::match(['get', 'post'], '/affiliate-add-Bank-details', [UserAffilatedController::class, 'affiliateAddBankDetails'])->name('affiliate.affiliateAddBankDetails');
 
-Route::get('/translate-words', [GoogleTranslateController::class, 'translate_words'])->name('user.translate');
+    Route::match(['get', 'post'], '/review_submit_page', [UserAffilatedController::class, 'affiliatereview_submit_page'])->name('affiliate.affiliatereview_submit_page');
 
- Route::get('/user_langauge', [LanguageController::class, 'user_lang'])->name('user_lang');
+    Route::get('/affiliate-dashboard', [UserAffilatedController::class, 'affiliateDashboard'])->name('affiliate.affiliateDashboard');
 
 
-//  Cr Points 
 
-Route::get('/custom-order-add-to-card', [UserStoreController::class,'CustomorderAddToCard'])->name('custom_add_to_card');
-Route::get('/remove-custom-product-add-to-card', [UserStoreController::class,'RemoveCustomProductAddToCard'])->name('remove_custom_addtocard');
 
+    Route::get('Payment-Callback', [CartController::class, 'Payment_Callback'])->name('user.Payment_Callback');
+    Route::post('/headerSearch', [DashBoardController::class, 'headerSearch'])->name('user.headerSearch');
+    Route::get('/getSearchData', [DashBoardController::class, 'getSearchData'])->name('user.getSearchData');
 
-Route::get('user/get-live-seller-records', [DashBoardController::class, 'getLiveSellerRecords'])->name('user.getLiveSellerRecords');
-Route::get('user/View-live-seller-records', [DashBoardController::class, 'ViewLiveSellerRecords'])->name('user.ViewLiveSellerRecords');
-Route::get('check-live-join-time-status/{id}', [DashBoardController::class, 'checkLiveJoinTimeStatus']);
+    Route::get('/getRecommandedlatestSearch', [DashBoardController::class, 'getRecommandedlatestSearch'])->name('user.getRecommandedlatestSearch');
 
-//cms
-Route::get('user/about-us', [DashBoardController::class, 'aboutUs'])->name('user.aboutUs');
-Route::get('user/terms-conditions', [DashBoardController::class, 'termCondition'])->name('user.termCondition');
-Route::get('user/return-policy', [DashBoardController::class, 'returnPolicy'])->name('user.returnPolicy');
-Route::get('user/exchange-policy', [DashBoardController::class, 'exchangePolicy'])->name('user.exchangePolicy');
-Route::get('user/cancellation-policy', [DashBoardController::class, 'cancellationPolicy'])->name('user.cancellationPolicy');
-Route::get('user/faq', [DashBoardController::class, 'faq'])->name('user.faq');
+    Route::get('/getlatestSearch', [DashBoardController::class, 'getlatestSearch'])->name('user.getlatestSearch');
 
 
 
+    Route::get('/translate-words', [GoogleTranslateController::class, 'translate_words'])->name('user.translate');
 
+    Route::get('/user_langauge', [LanguageController::class, 'user_lang'])->name('user_lang');
 
 
- Route::match(['get', 'post'], '/route1', function () {
-     return view('user.category.index');
-});
-Route::match(['get', 'post'], '/route2', function () {
-     return view('user.category.store');
-});
-Route::match(['get', 'post'], '/product-store-details', function () {
-     return view('user.category.product-store-details');
-});
+    //  Cr Points 
 
+    Route::get('/custom-order-add-to-card', [UserStoreController::class, 'CustomorderAddToCard'])->name('custom_add_to_card');
+    Route::get('/remove-custom-product-add-to-card', [UserStoreController::class, 'RemoveCustomProductAddToCard'])->name('remove_custom_addtocard');
 
 
-Route::match(['get', 'post'], '/order-place', function () {
-     return view('user.carts.orderplace');
+    Route::get('user/get-live-seller-records', [DashBoardController::class, 'getLiveSellerRecords'])->name('user.getLiveSellerRecords');
+    Route::get('user/View-live-seller-records', [DashBoardController::class, 'ViewLiveSellerRecords'])->name('user.ViewLiveSellerRecords');
+    Route::get('check-live-join-time-status/{id}', [DashBoardController::class, 'checkLiveJoinTimeStatus']);
 
-})->name('user.order-place');
+    //cms
+    Route::get('user/about-us', [DashBoardController::class, 'aboutUs'])->name('user.aboutUs');
+    Route::get('user/terms-conditions', [DashBoardController::class, 'termCondition'])->name('user.termCondition');
+    Route::get('user/return-policy', [DashBoardController::class, 'returnPolicy'])->name('user.returnPolicy');
+    Route::get('user/exchange-policy', [DashBoardController::class, 'exchangePolicy'])->name('user.exchangePolicy');
+    Route::get('user/cancellation-policy', [DashBoardController::class, 'cancellationPolicy'])->name('user.cancellationPolicy');
+    Route::get('user/faq', [DashBoardController::class, 'faq'])->name('user.faq');
+
+
+
+
+    Route::match(['get', 'post'], '/all_bestsellingAndTopSelling/{id}', [UserStoreController::class, 'All_bestsellingAndTopSelling'])->name('user.All_bestsellingAndTopSelling');
+
+
+
+
+    Route::match(['get', 'post'], '/route1', function () {
+        return view('user.category.index');
+    });
+    Route::match(['get', 'post'], '/route2', function () {
+        return view('user.category.store');
+    });
+    Route::match(['get', 'post'], '/product-store-details', function () {
+        return view('user.category.product-store-details');
+    });
+
+
+
+    Route::match(['get', 'post'], '/order-place', function () {
+        return view('user.carts.orderplace');
+
+    })->name('user.order-place');
 
 
 });
