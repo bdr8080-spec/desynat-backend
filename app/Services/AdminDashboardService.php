@@ -103,7 +103,7 @@ class AdminDashboardService
                                         ->Where('payment_status', '1');
                                     })
                                 )->count();
-            $total_returned_orders = $applyFilters(orderdetail::where('delivery_status', '5'))->count();
+            $total_returned_orders = $applyFilters(orderdetail::where('return_type', '1'))->count();
             $total_cancelled_orders = $applyFilters(
                                     orderdetail::where(function ($q) {
                                         $q->where('payment_status', '2')
