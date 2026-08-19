@@ -249,6 +249,208 @@ class WithdrawRequestManagementService
         }
     }
 
+public function transferSellerCommission($request)
+{
+    try {
+
+        $withdraw = orderdetail::with([
+            'order_details',
+            'product_details',
+            'store_info'
+        ])
+        ->find($request->orderdetail_id);
+
+
+        if (!$withdraw) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Order not found.'
+            ];
+        }
+
+
+        if ($withdraw->payment_status !== 1 && $withdraw->delivery_status !== 3 ) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Withdraw request not approved by admin.'
+            ];
+        }
+
+        $amount = $withdraw->amount - $withdraw->admin_commission;
+
+        if ($withdraw->amount <= 0) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Invalid transfer amount.'
+            ];
+        }
+
+        
+        $bank = $withdraw->bank_details;
+
+
+        if (!$bank || empty($bank->iban)) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Affiliate bank IBAN not available.'
+            ];
+        }
+
+
+        $affiliate = $withdraw->affiliate__details;
+
+
+        if (!$affiliate) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Affiliate not found.'
+            ];
+        }
+
+
+        if (empty($affiliate->supplier_code)) {
+
+
+            $supplierResponse = $this->createSupplier(
+                $affiliate,
+                $bank
+            );
+
+
+            if ($supplierResponse['status'] == 'error') {
+
+                return $supplierResponse;
+
+            }
+
+
+            $affiliate->update([
+                'supplier_code' => (int)$supplierResponse['supplier_code']
+            ]);
+
+            $affiliate->refresh();
+
+
+            Log::info('Supplier Code Saved', [
+                'affiliate_id' => $affiliate->id,
+                'supplier_code' => $affiliate->supplier_code
+            ]);
+
+        }
+
+
+
+        if (empty($affiliate->supplier_code)) {
+
+            return [
+                'status'=>'error',
+                'message'=>'Supplier code not available.'
+            ];
+
+        }
+
+
+        DB::beginTransaction();
+
+
+
+        $affiliate->refresh();
+
+        Log::info('Supplier Code Before Transfer', [
+            'supplier_code' => $affiliate->supplier_code
+        ]);
+
+
+
+        $paymentResponse = $this->sendSupplierPayment(
+            $withdraw,
+            $affiliate->supplier_code
+        );
+
+
+
+        if ($paymentResponse['status']=='error') {
+
+            DB::rollBack();
+
+            return $paymentResponse;
+
+        }
+
+
+
+        $withdraw->admin_verify = 1;
+
+        $withdraw->payment_status = 1;
+
+        $withdraw->transaction_id =
+            $paymentResponse['transaction_id'] ?? null;
+
+
+        // $withdraw->payment_response =
+        //     json_encode($paymentResponse);
+
+
+        $withdraw->save();
+
+
+
+        DB::commit();
+
+
+
+        return [
+
+            'status'=>'success',
+
+            'message'=>'Withdraw transferred successfully.',
+
+            'data'=>[
+
+                'transaction_id'=>$withdraw->transaction_id
+
+            ]
+
+        ];
+
+
+
+    } catch(\Exception $e) {
+
+
+        if (DB::transactionLevel() > 0) {
+
+            DB::rollBack();
+
+        }
+
+
+        Log::error('Affiliate withdraw error', [
+
+            'message'=>$e->getMessage(),
+
+            'line'=>$e->getLine(),
+
+            'file'=>$e->getFile()
+
+        ]);
+
+
+        return [
+
+            'status'=>'error',
+
+            'message'=>$e->getMessage()
+
+        ];
+
+    }
+}
 
     
     public function transferWithdrawRequest($request)

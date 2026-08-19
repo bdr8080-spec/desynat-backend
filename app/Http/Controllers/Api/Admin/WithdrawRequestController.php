@@ -208,6 +208,60 @@ class WithdrawRequestController extends Controller
     }
 }
 
+ public function transfer_seller_commission(Request $request)
+{
+    try {
+
+        $validate = Validator::make($request->all(), [
+            'orderdetail_id' => 'required|exists:orderdetails,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse(
+                'error',
+                'Validation error',
+                $validate->errors()->first(),
+                422
+            );
+        }
+
+        $data = $this->WithdrawRequestManagementService
+            ->transferSellerCommission($request);
+
+        if (isset($data['status']) && $data['status'] === 'error') {
+            return ApiResponse::generateResponse(
+                'error',
+                $data['message'],
+                $data['data'] ?? (object)[],
+                400
+            );
+        }
+
+        return ApiResponse::generateResponse(
+            'success',
+            $data['message'],
+            $data['data'] ?? (object)[],
+            200
+        );
+
+    } catch (\Throwable $e) {
+
+        Log::error('Transfer Withdraw Request Error', [
+            'message' => $e->getMessage(),
+            'line' => $e->getLine(),
+            'file' => $e->getFile(),
+            'request' => $request->all()
+        ]);
+
+        return ApiResponse::generateResponse(
+            'error',
+            'Something went wrong: '.$e->getMessage(),
+            [],
+            500
+        );
+    }
+}
+
 
 
 

@@ -254,6 +254,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/reject_withdraw_request',[WithdrawRequestController::class,'reject_withdraw_request']);
      Route::post('/approve_withdraw_request',[WithdrawRequestController::class,'approve_withdraw_request']);
      Route::post('/transfer_withdraw_request',[WithdrawRequestController::class,'transfer_withdraw_request']);
+      Route::post('/transfer_seller_commission',[WithdrawRequestController::class,'transfer_seller_commission']);
 
      //M10 api starts
      Route::post('/create_update_terms_condition',[CMSController::class,'create_update_terms_condition']);
