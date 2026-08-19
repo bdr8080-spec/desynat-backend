@@ -364,27 +364,58 @@ try{
        if($singleOrder->return_type==2){
   
        $Createnew_data=[
-        "order_id"=>$singleOrder->order_id,
-        "r_e_type"=> $singleOrder->return_type,
-        'p_orderdetails_id'=> $singleOrder->id,
-        "user_id"=>$singleOrder->user_id,
-        "seller_id"=>$singleOrder->seller_id,
-        "product_id"=>$singleOrder->product_id,
-        "variants_id"=>$singleOrder->variants_id,
-        "quantity"=>$singleOrder->quantity,
-        "amount"=>$singleOrder->amount,
-        "tax"=> $singleOrder->tax ,
-        "shipping_fees"=>$singleOrder->shipping_fees,
-        "giftcard_id"=>$singleOrder->giftcard_id,
-        "giftcard_amount"=>$singleOrder->giftcard_amount,
-        "promocode_value"=>$singleOrder->promocode_value,
-        "exchange_new_size"=>$singleOrder->exchange_new_size,
-        "exchange_old_size"=>$singleOrder->exchange_old_size,
-        "payment_status"=>$singleOrder->payment_status,
-    ];
+            "order_id"=>$singleOrder->order_id,
+            "r_e_type"=> $singleOrder->return_type,
+            'p_orderdetails_id'=> $singleOrder->id,
+            "user_id"=>$singleOrder->user_id,
+            "seller_id"=>$singleOrder->seller_id,
+            "product_id"=>$singleOrder->product_id,
+            "variants_id"=>$singleOrder->variants_id,
+            "quantity"=>$singleOrder->quantity,
+            "amount"=>$singleOrder->amount,
+            "tax"=> $singleOrder->tax ,
+            "shipping_fees"=>$singleOrder->shipping_fees,
+            "giftcard_id"=>$singleOrder->giftcard_id,
+            "giftcard_amount"=>$singleOrder->giftcard_amount,
+            "promocode_value"=>$singleOrder->promocode_value,
+            "exchange_new_size"=>$singleOrder->exchange_new_size,
+            "exchange_old_size"=>$singleOrder->exchange_old_size,
+            "payment_status"=>$singleOrder->payment_status,
+        ];
         orderdetail::UpdateOrcreate($Createnew_data);
 
         $data['order_status']='exchange'; // when order Is exchange and create a new product 
+        CreateNotification([
+            'sender_id' => $singleOrder->user_id,
+            'sender_type' => 2,
+
+            'receiver_id' => 1,
+            'receiver_type' => 1,
+
+            'title_english' => 'Exchange Product',
+            'title_arabic' => 'استبدال المنتج',
+
+            'description_english' => "Exchange Product Requested Accepted for Order ID $singleOrder->id",
+            'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $singleOrder->id",
+
+            'notification_type' => 'exchange_product'
+        ]);
+
+        CreateNotification([
+            'sender_id' => 1,
+            'sender_type' => 1,
+
+            'receiver_id' => $singleOrder->user_id,
+            'receiver_type' => 2,
+
+            'title_english' => 'Exchange Product',
+            'title_arabic' => 'استبدال المنتج',
+
+            'description_english' => "Exchange Product Requested Accepted for Order ID $singleOrder->id",
+            'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $singleOrder->id",
+
+            'notification_type' => 'exchange_product_request'
+        ]);
 
     }else{
         
@@ -395,6 +426,36 @@ try{
         $data['delivery_status']='1';
 
         $data['order_status']='return'; // for when Order is return 
+        CreateNotification([
+            'sender_id' => 1,
+            'sender_type' => 1,
+
+            'receiver_id' => $singleOrder->user_id,
+            'receiver_type' => 2,
+
+            'title_english' => 'Exchange Product',
+            'title_arabic' => 'استبدال المنتج',
+
+            'description_english' => "Return Product Requested Accepted for Order ID $singleOrder->id",
+            'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $singleOrder->id",
+
+            'notification_type' => 'return_product_request'
+        ]);
+        CreateNotification([
+            'sender_id' => $singleOrder->user_id,
+            'sender_type' => 2,
+
+            'receiver_id' => 1,
+            'receiver_type' => 1,
+
+            'title_english' => 'Teturn Product',
+            'title_arabic' => 'استبدال المنتج',
+
+            'description_english' => "Return Product Requested Accepted for Order ID $singleOrder->id",
+            'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $singleOrder->id",
+
+            'notification_type' => 'return_product_request'
+        ]);
 
     }
     }
