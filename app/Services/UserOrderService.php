@@ -1442,11 +1442,27 @@ if($checkOrder->order_type=='2'){
 
     $msg = __('Service_messages.product_return_request_sent_successfully');
     CreateNotification([
+        'sender_id' => $checkOrder->user_id,
+        'sender_type' => 2,
+
+        'receiver_id' => 1,
+        'receiver_type' => 1,
+
+        'title_english' => 'Reutun Product',
+        'title_arabic' => 'استبدال المنتج',
+
+        'description_english' => "Reutun Product Requested for Order ID $checkOrder->id",
+        'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $checkOrder->id",
+
+        'notification_type' => 'return_product'
+    ]);
+
+    CreateNotification([
         'sender_id' => 1,
         'sender_type' => 1,
 
         'receiver_id' => $checkOrder->user_id,
-        'receiver_type' => 1,
+        'receiver_type' => 2,
 
         'title_english' => 'Reutun Product',
         'title_arabic' => 'استبدال المنتج',
