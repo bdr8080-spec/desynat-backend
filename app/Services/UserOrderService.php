@@ -1524,6 +1524,22 @@ if($checkOrder->order_type=='2'){
     'notification_type' => 'exchange_product'
 ]);
 
+CreateNotification([
+    'sender_id' => $checkOrder->user_id,
+    'sender_type' => 2,
+
+    'receiver_id' => 1,
+    'receiver_type' => 1,
+
+    'title_english' => 'Exchange Product',
+    'title_arabic' => 'استبدال المنتج',
+
+    'description_english' => "Exchange Product Requested for Order ID $checkOrder->id",
+    'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $checkOrder->id",
+
+    'notification_type' => 'exchange_product'
+]);
+
 }
 
     return ['status'=>'success','message'=>$msg,'data'=>$checkOrder];
