@@ -279,7 +279,9 @@ Route::middleware(['checkLanguage'])->group(function () {
 
 
 
-    Route::match(['get', 'post'], '/all_bestsellingAndTopSelling/{id}', [UserStoreController::class, 'All_bestsellingAndTopSelling'])->name('user.All_bestsellingAndTopSelling');
+    // Route::match(['get', 'post'], '/all_bestsellingAndTopSelling/{id}', [UserStoreController::class, 'All_bestsellingAndTopSelling'])->name('user.All_bestsellingAndTopSelling');
+    Route::get('/best-selling', [UserStoreController::class, 'bestSelling'])->name('user.bestSelling');
+    Route::get('/top-rated', [UserStoreController::class, 'topRaTed'])->name('user.topRated');
 
 
 

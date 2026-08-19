@@ -66,7 +66,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
 <div class="product_reels customContainer">
 
-    <h3 class="mid-headng py-3"> All Best Selling</h3>
+    <h3 class="mid-headng py-3"> {{ __('user_messages.best_selling') }}</h3>
 
     <div class="categoryDetail customContainer-2">
                 <div class="row">
@@ -80,9 +80,9 @@ $currency = session('currencyAr', 'دينار كويتي');
                         <div class="category_filter">
                             <div class="d-flex align-items-center justify-content-between">
                                 <h3>{{ __('user_messages.filters') }}</h3>
-                                <a href="{{route('user.store_details',[request()->id])}}">{{ __('user_messages.clear') }}</a>
+                                <a href="{{route('user.bestSelling')}}">{{ __('user_messages.clear') }}</a>
                             </div>
-                            <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
+                            <form action="{{ url('best-selling') }}" method="GET">
                                 <div class="form-group mt-4">
                                     <h5>{{ __('user_messages.category') }}</h5>
                                     @foreach ($category as $key => $item)
@@ -305,7 +305,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                         <div class="categoryDetail_content">
                             <div class="row">
 
-                                @forelse ($store_details['All_Product'] as $item)
+                                @forelse ($data['All_Product'] as $item)
                                 <div class="col-lg-3 col-md-4 col-6 my-3 cardblock">
                                     <a href="{{ route('user.product_details',[$item->id]) }}"
                                         style="text-decoration:none;">
@@ -340,7 +340,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                                                     {{ $item->product_name_ar }}
                                                     @endif
 
-                                                    ({{ "by " . $store_details['store']['store_name'] }})</h5>
+                                                    ({{ "by " . $item['store']['store_name'] }})</h5>
                                                 <!-- <div class="rating">
                                                     <i class="fa-solid fa-star"></i>
                                                     <i class="fa-solid fa-star"></i>
@@ -440,7 +440,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 </div>
 
 
-<form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
+<form action="{{ url('best-selling') }}" method="GET">
     <div class="modal fade" id="sortMOdal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -499,7 +499,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                     </div>
 
                     <div class="d-flex align-items-center gap-3 mt-3">
-                        <a href="{{route('user.store_details',[request()->id])}}" id="clearSort"
+                        <a href="{{route('user.bestSelling')}}" id="clearSort"
                             class="custom-btn6 text-center w-100 text-white"
                             style="    text-decoration: auto;">{{ __('user_messages.clear') }}</a>
                         <button type="submit" class="custom-btn6" style="padding:8px 10px; color:#fff !important;">
@@ -513,7 +513,7 @@ $currency = session('currencyAr', 'دينار كويتي');
         </div>
     </div>
 </form>
-<input type="hidden" name="seller_id" id="seller_id" value="{{ $store_details['store']['seller_id'] }}" />
+
 <a href="javascript:void(0)" class="fixedchat">
     <img src="{{ asset('user/') }}/assets/images/chat-ic.svg" alt="chat icon" class="img-fluid" />
 </a>

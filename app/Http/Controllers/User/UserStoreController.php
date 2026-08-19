@@ -654,20 +654,9 @@ class UserStoreController extends Controller
 
 
 
-    public function All_bestsellingAndTopSelling(Request $request, $id)
+    public function bestSelling(Request $request)
     {
 
-
-        // Validate store ID
-        $validate = Validator::make(['id' => $id], [
-            'id' => 'required|exists:seller_store_information,id',
-        ]);
-
-        if ($validate->fails()) {
-            return redirect()->back()
-                ->withErrors($validate)
-                ->withInput();
-        }
 
         // Get logged-in user ID
         $user_id = isset($request->user()->id) ? $request->user()->id : null;
@@ -675,7 +664,6 @@ class UserStoreController extends Controller
         // Prepare request data as an object
         $request_data = (object) [
             'user_id' => $user_id,
-            'store_id' => $id,
             'search' => $request->search ?? null,
             'sort_filter' => $request->sort_filter ?? null,
             'brand_id' => $request->brand_id ?? null,
@@ -692,9 +680,9 @@ class UserStoreController extends Controller
         ];
 
         // Call service method
-        $store_details = $this->UserManagementService->singleStoreWiseAllproduct($request_data);
-        $store_details = $store_details['data'];
-        //dd($store_details);
+        $data = $this->UserDashboardService->bestSellingList($request_data);
+        $data = $data['data'];
+        //dd($data);
 
         // Fetch filters for view
         $brand = Brand::orderBy('name_english', 'asc')->get();
@@ -702,28 +690,51 @@ class UserStoreController extends Controller
         $size = Size::orderBy('name', 'desc')->get();
         $color = Color::orderBy('name', 'asc')->get();
 
-        // Qr Create Scanner Code 
-        $qrSellerCode = url()->full();
 
-        $seller_id = $store_details['store']['seller_id'];
-        // dd($seller_id);
 
-        $request_data1 = (object) [
-            'seller_id' => $seller_id,
-        ];
+        return view('user.category.best_selling', compact('data', 'category', 'brand', 'size', 'color'));
 
-        $seller_highlights = $this->StoryManagementService->getSellerHighlightOnUser($request_data1)['data'];
-        //dd($seller_highlights);
-        $request_data2 = (object) [
-            'seller_id' => $seller_id,
+    }
+
+    public function topRated(Request $request)
+    {
+
+
+        // Get logged-in user ID
+        $user_id = isset($request->user()->id) ? $request->user()->id : null;
+
+        // Prepare request data as an object
+        $request_data = (object) [
             'user_id' => $user_id,
-            'limit' => $request->limit ?? null,
+            'search' => $request->search ?? null,
+            'sort_filter' => $request->sort_filter ?? null,
+            'brand_id' => $request->brand_id ?? null,
+            'category_id' => $request->category_id ?? null,
+            'subcategory_id' => $request->subcategory_id ?? null,
+            'size_id' => $request->size_id ?? null,
+            'color_id' => $request->color_id ?? null,
+            'price_min' => isset($request->price_min) ? intval($request->price_min) : null,
+            'price_max' => isset($request->price_max) ? intval($request->price_max) : null,
+            'discount' => isset($request->discount) ? intval($request->discount) : null,
+            'rating' => $request->rating ?? null,
+            'delivery_time' => $request->delivery_time ?? null,
+            'delivery_option' => $request->delivery_option ?? null,
         ];
-        $seller_reels = $this->StoryManagementService->getSellerReelOnUser($request_data2)['data'];
-        // dd($seller_reels);
+
+        // Call service method
+        $data = $this->UserDashboardService->TopRatingList($request_data);
+        $data = $data['data'];
+        //dd($data);
+
+        // Fetch filters for view
+        $brand = Brand::orderBy('name_english', 'asc')->get();
+        $category = Category::orderBy('id', 'desc')->get();
+        $size = Size::orderBy('name', 'desc')->get();
+        $color = Color::orderBy('name', 'asc')->get();
 
 
-        return view('user.category.All_bestsellingAndTopSelling', compact('store_details', 'category', 'brand', 'size', 'color', 'qrSellerCode', 'seller_highlights', 'seller_reels'));
+
+        return view('user.category.top_rated', compact('data', 'category', 'brand', 'size', 'color'));
 
     }
 
