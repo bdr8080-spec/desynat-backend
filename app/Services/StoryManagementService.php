@@ -325,7 +325,7 @@ class StoryManagementService
     public function getSellerStoryOnUserNew($request)
     {
         try {
-            $query = Story::query();
+            $query = Story::with('seller_details.store_info');
 
 
             // Only last 24 hours stories
