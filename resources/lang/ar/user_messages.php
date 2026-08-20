@@ -10,6 +10,7 @@ return [
 
     'arabic' => 'عربي',
     'english' => 'إنجليزي',
+    'view_all' => 'عرض الكل',
 
     'showing' => 'عرض',
     'to' => 'إلى',

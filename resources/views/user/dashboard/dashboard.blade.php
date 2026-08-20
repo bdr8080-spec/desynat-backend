@@ -150,7 +150,7 @@
         <div id="sellingbest" class="demo">
             <div class="d-flex justify-content-between w-100">
                 <h3 class="mid-headng mb-3">{{ __('user_messages.best_selling') }}</h3>
-                <a href="{{route('user.bestSelling')}}" class="viewAll">View All</a>
+                <a href="{{route('user.bestSelling')}}" class="viewAll">{{ __('user_messages.view_all') }}</a>
             </div>
             <div class="owl-carousel bestSellingCarousel">
 
@@ -291,7 +291,7 @@
     <section class="bestSelling customContainer mt-3 sliderarrow">
         <div class="d-flex justify-content-between w-100">
                 <h3 class="mid-headng mb-3">{{ __('user_messages.top_rated') }}</h3>
-                <a href="{{route('user.topRated')}}" class="viewAll">View All</a>
+                <a href="{{route('user.topRated')}}" class="viewAll">{{ __('user_messages.view_all') }}</a>
             </div>
             
         <div class="owl-carousel topRatedCarousel">

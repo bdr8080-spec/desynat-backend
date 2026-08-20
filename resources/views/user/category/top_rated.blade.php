@@ -138,18 +138,18 @@ $currency = session('currencyAr', 'دينار كويتي');
 
                                             <div class="value-bubble" id="valueBubble">100000 {{ __('user_messages.kd') }}</div>
 
-                                            <input type="range" min="99" max="100000"
-                                                value="{{ request()->price_max ?? 50000 }}" id="priceRange"
+                                            <input type="range" min="1" max="1000"
+                                                value="{{ request()->price_max ?? 500 }}" id="priceRange"
                                                 style="width:100%;">
                                             <input type="hidden" name="price_min" id="priceMin"
-                                                value="{{ request()->price_min ?? 99 }}">
+                                                value="{{ request()->price_min ?? 1 }}">
                                             <input type="hidden" name="price_max" id="priceMax"
-                                                value="{{ request()->price_max ?? 50000 }}">
+                                                value="{{ request()->price_max ?? 500 }}">
                                         </div>
 
                                         <div class="ticks">
-                                            <div class="tick text-start">99 {{ __('user_messages.kd') }}</div>
-                                            <div class="tick text-end">100000 {{ __('user_messages.kd') }}</div>
+                                            <div class="tick text-start">1 {{ __('user_messages.kd') }}</div>
+                                            <div class="tick text-end">1000 {{ __('user_messages.kd') }}</div>
                                         </div>
                                     </div>
                                 </div>
