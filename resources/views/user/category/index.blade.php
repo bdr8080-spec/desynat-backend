@@ -473,7 +473,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                             <div class="row">
 
                                 @forelse ($store_details['All_Product'] as $item)
-                                <div class="col-lg-3 col-md-4 col-6 my-3 cardblock">
+                                <div class="col-lg-4 col-md-4 col-6 my-3 cardblock">
                                     <a href="{{ route('user.product_details',[$item->id]) }}"
                                         style="text-decoration:none;">
                                         <div class="product-card">

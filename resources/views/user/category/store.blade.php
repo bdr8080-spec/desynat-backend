@@ -121,7 +121,7 @@
                     <div class="row">
 
                         @forelse ($store_data as $item)
-                            <div class="col-lg-3 col-md-4 col-6 my-3">
+                            <div class="col-lg-4 col-md-4 col-6 my-3">
                                 <!-- <a  href="{{route('user.store_details',[$item->id])}}" style="text-decoration:none;"> -->
                                     <!-- <a href="{{ route('user.store_details', [
                                         'id' => $item->id,
