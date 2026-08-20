@@ -237,7 +237,7 @@ $currency = session('currencyAr', 'دينار كويتي');
             tabindex="0">
             <div class="categoryDetail customContainer">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="category_filter pb-3 mb-3 d-flex align-items-center justify-content-between">
                             <h3 style="color: var(--secondry2-color);">{{ __('user_messages.sort_by') }}</h3>
                             <a data-bs-toggle="modal" data-bs-target="#sortMOdal">
@@ -468,12 +468,12 @@ $currency = session('currencyAr', 'دينار كويتي');
 
                         </div>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-9">
                         <div class="categoryDetail_content">
                             <div class="row">
 
                                 @forelse ($store_details['All_Product'] as $item)
-                                <div class="col-lg-4 col-md-4 col-6 my-3 cardblock">
+                                <div class="col-lg-3 col-md-4 col-6 my-3 cardblock">
                                     <a href="{{ route('user.product_details',[$item->id]) }}"
                                         style="text-decoration:none;">
                                         <div class="product-card">
