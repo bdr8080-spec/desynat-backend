@@ -9,23 +9,23 @@ use Illuminate\Support\Facades\Artisan;
 
 
 
-require __DIR__.'/seller_web.php';
-require __DIR__.'/user_web.php';
-require __DIR__.'/admin_web.php';
-require __DIR__.'/affiliate_userWeb.php';
+require __DIR__ . '/seller_web.php';
+require __DIR__ . '/user_web.php';
+require __DIR__ . '/admin_web.php';
+require __DIR__ . '/affiliate_userWeb.php';
 
-Route::get('optimize',function(){
+Route::get('optimize', function () {
     Artisan::call('optimize:clear');
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
 
     env('AGORA_APP_ID');
 
-      // Run Seeder
+    // Run Seeder
     Artisan::call('db:seed', [
         '--class' => 'SellerMenuSeeder'
     ]);
-    
+
     return 'Application optimized successfully!';
 });
 
@@ -35,25 +35,28 @@ Route::match(['get', 'post'], '/myfatoorah/{id}', [MyFatoorahController::class, 
 Route::match(['get', 'post'], '/Invoice/{id}', [OrderInvoiceController::class, 'Invoice']);
 Route::match(['get', 'post'], '/InvoiceUser/{id}', [OrderInvoiceController::class, 'InvoiceUser']);
 
+Route::get('web/web/view-data', [OrderInvoiceController::class, 'newrouteCreate']);
 
 
-  Route::get('/apple-app-site-association', function () {
+
+
+Route::get('/apple-app-site-association', function () {
     $aasa = [
         "applinks" => [
             "details" => [
                 [
                     "appID" => "6QKUQGN93F.com.app.DesynatUser",
                     // "paths" => ["/user/product/detail-page/*"]
-                    "paths" => 
-                    [
-                        "*"
-                //   "/user/product/*",
-                //   "/user/store-details/*" 
-                  ]
+                    "paths" =>
+                        [
+                            "*"
+                            //   "/user/product/*",
+                            //   "/user/store-details/*" 
+                        ]
                 ]
             ]
         ]
     ];
- 
+
     return response()->json($aasa, 200, [], JSON_UNESCAPED_SLASHES);
 });
