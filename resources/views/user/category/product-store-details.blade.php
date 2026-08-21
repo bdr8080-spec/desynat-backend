@@ -91,7 +91,6 @@
         .carousel_item_img {
             position: relative;
             width: 100%;
-            height: 650px;
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
@@ -190,34 +189,7 @@
                         </button>
                         @endforeach
                     </div> -->
-                    <div class="carousel-indicators">
-                        @foreach ($allImages as $index => $img)
-
-                            @php
-                                $isVideo = preg_match('/\.(mp4|mov|avi|webm|mkv)$/i', $img);
-                            @endphp
                     
-                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $index }}"
-                                class="{{ $index == 0 ? 'active' : '' }}" aria-current="{{ $index == 0 ? 'true' : 'false' }}">
-
-                                <div class="product_slide_img {{ $isVideo ? 'video-thumbnail' : '' }}">
-
-                                    @if($isVideo)
-                                        <video  muted class="videoheight">
-                                            <source src="{{ $img }}">
-                                        </video>
-                                        <span class="video-icon" aria-hidden="true"></span>
-                                    @else
-                                        <img src="{{ $img }}" class="img-fluid" alt="Slide {{ $index + 1 }}">
-                                    @endif
-
-                                </div>
-
-                            </button>
-
-                        @endforeach
-                    </div>
-
                     <div class="carousel-inner">
                         @foreach ($allImages as $index => $img)
                             @if($index == 0)
@@ -265,6 +237,35 @@
                             </div>
                         @endforeach
                     </div>
+                    <div class="carousel-indicators">
+                        @foreach ($allImages as $index => $img)
+
+                            @php
+                                $isVideo = preg_match('/\.(mp4|mov|avi|webm|mkv)$/i', $img);
+                            @endphp
+                    
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $index }}"
+                                class="{{ $index == 0 ? 'active' : '' }}" aria-current="{{ $index == 0 ? 'true' : 'false' }}">
+
+                                <div class="product_slide_img {{ $isVideo ? 'video-thumbnail' : '' }}">
+
+                                    @if($isVideo)
+                                        <video  muted class="videoheight">
+                                            <source src="{{ $img }}">
+                                        </video>
+                                        <span class="video-icon" aria-hidden="true"></span>
+                                    @else
+                                        <img src="{{ $img }}" class="img-fluid" alt="Slide {{ $index + 1 }}">
+                                    @endif
+
+                                </div>
+
+                            </button>
+
+                        @endforeach
+                    </div>
+
+
 
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
                         data-bs-slide="prev">
