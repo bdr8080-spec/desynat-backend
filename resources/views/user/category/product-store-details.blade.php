@@ -115,8 +115,6 @@
 
     filter: blur(25px);
     transform: scale(1.1);
-
-    opacity: .2;
     z-index: 0;
 }
 
@@ -127,6 +125,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    backdrop-filter:blur(27px);
 }
     </style>
     <div class="customContainer">
@@ -209,7 +208,7 @@
 
                                     @if($isVideo)
                                         <video class="img-fluid w-100" controls>
-                                            <source src="{{ $img }}">
+                                            <source src="{{ $img }}" >
                                             Your browser does not support the video tag.
                                         </video>
                                     @else
