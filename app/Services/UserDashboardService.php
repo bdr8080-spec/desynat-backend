@@ -200,24 +200,19 @@ class UserDashboardService
 
                     foreach ($attributes as $value) {
 
-                        $query->where(function ($q) use ($value) {
+                        $query->orWhere('product_name_en', 'LIKE', "%{$value}%");
 
-                            $q->where('product_name_en', 'LIKE', "%{$value}%")
-
-                                ->orWhereHas('brand', function ($brandQuery) use ($value) {
-                                    $brandQuery->where('name_english', 'LIKE', "%{$value}%");
-                                })
-
-                                ->orWhereHas('category', function ($categoryQuery) use ($value) {
-                                    $categoryQuery->where('name', 'LIKE', "%{$value}%");
-                                })
-
-                                ->orWhereHas('subcategory', function ($subcategoryQuery) use ($value) {
-                                    $subcategoryQuery->where('name_english', 'LIKE', "%{$value}%");
-                                });
-
+                        $query->orWhereHas('brand', function ($q) use ($value) {
+                            $q->where('name_english', 'LIKE', "%{$value}%");
                         });
 
+                        $query->orWhereHas('category', function ($q) use ($value) {
+                            $q->where('name', 'LIKE', "%{$value}%");
+                        });
+
+                        $query->orWhereHas('subcategory', function ($q) use ($value) {
+                            $q->where('name_english', 'LIKE', "%{$value}%");
+                        });
                     }
 
                 });
