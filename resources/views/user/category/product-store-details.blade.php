@@ -89,44 +89,85 @@
             pointer-events: none;
         }
         .carousel_item_img {
-    position: relative;
-    width: 100%;
-    height: 650px;
+            position: relative;
+            width: 100%;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+        .carousel_item_img::before {
+            content: "";
+            position: absolute;
+            inset: 0px;
+            background: inherit;
+            background-position: center;
+            background-size: cover;
+            filter: blur(25px);
+            transform: scale(1.1);
+            z-index: 0;
+        }
 
-    overflow: hidden;
+        .carousel_item_img img,
+        .carousel_item_img video {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            backdrop-filter:blur(27px);
+        }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        .carousel_item_img .video-blur-background {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(25px);
+            transform: scale(1.12);
+            opacity: .75;
+            pointer-events: none;
+        }
 
-.carousel_item_img::before {
-    content: "";
-    position: absolute;
-    inset: -30px;
+        .carousel_item_img .video-foreground {
+            position: relative;
+            z-index: 1;
+        }
 
-    background: inherit;
-    background-position: center;
-    background-size: cover;
+        .product_slide_img.video-thumbnail {
+            position: relative;
+        }
 
-    filter: blur(25px);
-    transform: scale(1.1);
-    z-index: 0;
-}
+        .product_slide_img .video-icon {
+            position: absolute;
+            inset: 50% auto auto 50%;
+            z-index: 2;
+            transform: translate(-50%, -50%);
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: #fff;
+            background: rgba(0, 0, 0, .65);
+            pointer-events: none;
+        }
 
-.carousel_item_img img,
-.carousel_item_img video {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    backdrop-filter:blur(27px);
-}
+        .product_slide_img .video-icon::before {
+            content: "";
+            width: 0;
+            height: 0;
+            margin-left: 3px;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            border-left: 11px solid #fff;
+        }
     </style>
     <div class="customContainer">
         <div class="row">
@@ -148,33 +189,7 @@
                         </button>
                         @endforeach
                     </div> -->
-                    <div class="carousel-indicators">
-                        @foreach ($allImages as $index => $img)
-
-                            @php
-                                $isVideo = preg_match('/\.(mp4|mov|avi|webm|mkv)$/i', $img);
-                            @endphp
-
-                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $index }}"
-                                class="{{ $index == 0 ? 'active' : '' }}" aria-current="{{ $index == 0 ? 'true' : 'false' }}">
-
-                                <div class="product_slide_img">
-
-                                    @if($isVideo)
-                                        <video class="img-fluid" muted>
-                                            <source src="{{ $img }}">
-                                        </video>
-                                    @else
-                                        <img src="{{ $img }}" class="img-fluid" alt="Slide {{ $index + 1 }}">
-                                    @endif
-
-                                </div>
-
-                            </button>
-
-                        @endforeach
-                    </div>
-
+                    
                     <div class="carousel-inner">
                         @foreach ($allImages as $index => $img)
                             @if($index == 0)
@@ -204,10 +219,13 @@
                                     $isVideo = preg_match('/\.(mp4|mov|avi|webm|mkv)$/i', $img);
                                 @endphp
 
-                                <div class="carousel_item_img" style="background-image: url('{{ asset($img) }}');">
+                                <div class="carousel_item_img" @unless($isVideo) style="background-image: url('{{ asset($img) }}');" @endunless>
 
                                     @if($isVideo)
-                                        <video class="img-fluid w-100" controls>
+                                        <video class="video-blur-background" muted playsinline aria-hidden="true">
+                                            <source src="{{ $img }}">
+                                        </video>
+                                        <video class="video-foreground w-100" controls>
                                             <source src="{{ $img }}" >
                                             Your browser does not support the video tag.
                                         </video>
@@ -219,6 +237,35 @@
                             </div>
                         @endforeach
                     </div>
+                    <div class="carousel-indicators">
+                        @foreach ($allImages as $index => $img)
+
+                            @php
+                                $isVideo = preg_match('/\.(mp4|mov|avi|webm|mkv)$/i', $img);
+                            @endphp
+                    
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $index }}"
+                                class="{{ $index == 0 ? 'active' : '' }}" aria-current="{{ $index == 0 ? 'true' : 'false' }}">
+
+                                <div class="product_slide_img {{ $isVideo ? 'video-thumbnail' : '' }}">
+
+                                    @if($isVideo)
+                                        <video  muted class="videoheight">
+                                            <source src="{{ $img }}">
+                                        </video>
+                                        <span class="video-icon" aria-hidden="true"></span>
+                                    @else
+                                        <img src="{{ $img }}" class="img-fluid" alt="Slide {{ $index + 1 }}">
+                                    @endif
+
+                                </div>
+
+                            </button>
+
+                        @endforeach
+                    </div>
+
+
 
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
                         data-bs-slide="prev">
@@ -563,7 +610,7 @@
                             <h4>{{ __('user_messages.customer_ratings') }}</h4>
                             <h6 class="cd-size">{{ __('user_messages.view_all') }}</h6>
                         </div>
-                        <div class="desc-box p-4 rounded-4">
+                        <div class="desc-box p-1 rounded-4">
                             @forelse($data->review as $review)
                                 <div class="review-box p-4 rounded-4">
                                     <div class="d-flex justify-content-between">
@@ -1033,12 +1080,13 @@
                             data-bs-target="#carouselExampleCaptions"
                             data-bs-slide-to="${idx}"
                             class="${idx === 0 ? 'active' : ''}">
-                            <div class="product_slide_img">
+                            <div class="product_slide_img ${isVideo ? 'video-thumbnail' : ''}">
 
                                 ${isVideo
-                                ? `<video class="img-fluid" muted autoplay loop playsinline>
+                                ? `<video class="videoheight" muted playsinline>
                                         <source src="${img}" type="video/mp4">
-                                    </video>`
+                                    </video>
+                                    <span class="video-icon" aria-hidden="true"></span>`
                                 : `<img src="${img}" class="img-fluid">`
                             }
 
@@ -1052,10 +1100,13 @@
 
                 <div
                     class="carousel_item_img"
-                    style="background-image: url('${img}');">
+                    ${isVideo ? '' : `style="background-image: url('${img}');"`}>
 
                     ${isVideo
-                                ? `<video class="img-fluid w-100" controls>
+                                ? `<video class="video-blur-background" muted playsinline aria-hidden="true">
+                            <source src="${img}" type="video/mp4">
+                        </video>
+                        <video class="video-foreground  w-100" controls>
                             <source src="${img}" type="video/mp4">
                         </video>`
                                 : `<img src="${img}" class="img-fluid">`
