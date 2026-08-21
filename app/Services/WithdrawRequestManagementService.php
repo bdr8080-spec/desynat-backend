@@ -274,7 +274,7 @@ public function transferSellerCommission($request)
 
             return [
                 'status'=>'error',
-                'message'=>'Withdraw request not approved by admin.'
+                'message'=>'order not paid or delivered.'
             ];
         }
 
@@ -289,19 +289,19 @@ public function transferSellerCommission($request)
         }
 
         
-        $bank = $withdraw->bank_details;
+        // $bank = $withdraw->bank_details;
 
 
-        if (!$bank || empty($bank->iban)) {
+        // if (!$bank || empty($bank->iban)) {
 
-            return [
-                'status'=>'error',
-                'message'=>'Affiliate bank IBAN not available.'
-            ];
-        }
+        //     return [
+        //         'status'=>'error',
+        //         'message'=>'Affiliate bank IBAN not available.'
+        //     ];
+        // }
 
 
-        $affiliate = $withdraw->affiliate__details;
+        $affiliate = $withdraw->product_details->seller_id;
 
 
         if (!$affiliate) {
@@ -335,11 +335,6 @@ public function transferSellerCommission($request)
 
             $affiliate->refresh();
 
-
-            Log::info('Supplier Code Saved', [
-                'affiliate_id' => $affiliate->id,
-                'supplier_code' => $affiliate->supplier_code
-            ]);
 
         }
 
@@ -384,12 +379,12 @@ public function transferSellerCommission($request)
 
 
 
-        $withdraw->admin_verify = 1;
+        // $withdraw->admin_verify = 1;
 
-        $withdraw->payment_status = 1;
+        // $withdraw->payment_status = 1;
 
-        $withdraw->transaction_id =
-            $paymentResponse['transaction_id'] ?? null;
+        // $withdraw->transaction_id =
+        //     $paymentResponse['transaction_id'] ?? null;
 
 
         // $withdraw->payment_response =
@@ -408,7 +403,7 @@ public function transferSellerCommission($request)
 
             'status'=>'success',
 
-            'message'=>'Withdraw transferred successfully.',
+            'message'=>'Amount transferred successfully.',
 
             'data'=>[
 
