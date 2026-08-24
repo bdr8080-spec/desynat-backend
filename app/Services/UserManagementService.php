@@ -424,11 +424,11 @@ class UserManagementService
 
         if (!empty($request->rating) && is_array($request->rating)) {
 
-            $maxRating = max(array_map('intval', $request->rating));
+            $minRating = min(array_map('intval', $request->rating));
 
-            $all_store_information = $all_store_information->filter(function ($store) use ($maxRating) {
+            $all_store_information = $all_store_information->filter(function ($store) use ($minRating) {
 
-                return $store->rating_count > 0 && $store->average_store_rating <= $maxRating;
+                return $store->rating_count > 0 && $store->average_store_rating >= $minRating;
 
             })->values();
         }

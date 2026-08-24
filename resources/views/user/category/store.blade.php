@@ -49,7 +49,7 @@
                                 <input class="form-check-input mb-1" type="checkbox" 
                                     value="2" id="rating2" name="rating[]"  {{ is_array(request()->rating) && in_array('2', request()->rating) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="rating2">
-                                    {{ __('user_messages.upto_2_star') }}
+                                    2 Star and above
                                 </label>
                             </div>
 
@@ -57,7 +57,7 @@
                                 <input class="form-check-input" type="checkbox" 
                                     value="3" id="rating3" name="rating[]"  {{ is_array(request()->rating) && in_array('3', request()->rating) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="rating3">
-                                    {{ __('user_messages.upto_3_star') }}
+                                    3 Star and above
                                 </label>
                             </div>
                         </div>
