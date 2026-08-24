@@ -302,22 +302,19 @@ class UserManagementService
     {
         try {
 
-            if(isset($request->subcategory) ){
+            $subcategoryId = $request->subcategory_id ?? $request->subcategory ?? null;
 
-                $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
-                 ->where('category_id', $request->category_id)
-                 //->where('subcategory_id', $request->subcategory)
-                 
-                 ->pluck('store_id');
-        
+            $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants']);
 
-            }elseif(isset($request->category_id)){
-                      $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
-                 ->where('category_id', $request->category_id)->pluck('store_id');
-            }else{
-                      $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants'])
-                        ->pluck('store_id');
+            if (!empty($request->category_id)) {
+                $productQuery->where('category_id', $request->category_id);
             }
+
+            if (!empty($subcategoryId)) {
+                $productQuery->where('subcategory_id', $subcategoryId);
+            }
+
+            $productQuery = $productQuery->distinct()->pluck('store_id');
       
 
             if($productQuery->isEmpty()){
@@ -511,18 +508,37 @@ class UserManagementService
                 $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
             }
 
-            if (!empty($data->category_id) && is_array($data->category_id)) {
-
-                $products->whereIn('category_id', $data->category_id);
+            $categoryIds = [];
+            if (!empty($data->category_id)) {
+                $categoryIds = is_array($data->category_id)
+                    ? array_map('intval', $data->category_id)
+                    : [intval($data->category_id)];
             }
 
+            if (!empty($categoryIds)) {
+                $products->whereIn('category_id', $categoryIds);
+            }
+
+            $subcategoryIds = [];
             if (!empty($data->subcategory_id)) {
-                $products->where('subcategory_id', $data->subcategory_id);
+                $subcategoryIds = is_array($data->subcategory_id)
+                    ? array_map('intval', $data->subcategory_id)
+                    : [intval($data->subcategory_id)];
             }
 
-            if (!empty($data->brand_id) && is_array($data->brand_id)) {
+            if (!empty($subcategoryIds)) {
+                $products->whereIn('subcategory_id', $subcategoryIds);
+            }
 
-                $products->whereIn('brand_id', $data->brand_id);
+            $brandIds = [];
+            if (!empty($data->brand_id)) {
+                $brandIds = is_array($data->brand_id)
+                    ? array_map('intval', $data->brand_id)
+                    : [intval($data->brand_id)];
+            }
+
+            if (!empty($brandIds)) {
+                $products->whereIn('brand_id', $brandIds);
             }
 
             //price filter
