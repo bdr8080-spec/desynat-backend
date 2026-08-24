@@ -304,29 +304,45 @@ class UserManagementService
 
             $subcategoryId = $request->subcategory_id ?? $request->subcategory ?? null;
 
-            $productQuery = product::with(['category','subcategory','brand','product_specifications','product_variants']);
-
+            $categoryIds = [];
             if (!empty($request->category_id)) {
-                $productQuery->where('category_id', $request->category_id);
+                $categoryIds = is_array($request->category_id)
+                    ? array_map('intval', $request->category_id)
+                    : [intval($request->category_id)];
             }
 
+            $subcategoryIds = [];
             if (!empty($subcategoryId)) {
-                $productQuery->where('subcategory_id', $subcategoryId);
+                $subcategoryIds = is_array($subcategoryId)
+                    ? array_map('intval', $subcategoryId)
+                    : [intval($subcategoryId)];
             }
 
-            $productQuery = $productQuery->distinct()->pluck('store_id');
-      
+            $all_store_information = sellerStoreInformation::with([
+                'seller_information',
+                'All_product' => function ($query) use ($categoryIds, $subcategoryIds) {
+                    if (!empty($categoryIds)) {
+                        $query->whereIn('category_id', $categoryIds);
+                    }
 
-            if($productQuery->isEmpty()){
-                return [
-                    'status' => 'success',
-                    'message' => 'No Store Found',
-                    'data' => []
-                ];
+                    if (!empty($subcategoryIds)) {
+                        $query->whereIn('subcategory_id', $subcategoryIds);
+                    }
+                },
+                'All_product.review.user_details',
+            ]);
+
+            if (!empty($categoryIds) || !empty($subcategoryIds)) {
+                $all_store_information->whereHas('All_product', function ($query) use ($categoryIds, $subcategoryIds) {
+                    if (!empty($categoryIds)) {
+                        $query->whereIn('category_id', $categoryIds);
+                    }
+
+                    if (!empty($subcategoryIds)) {
+                        $query->whereIn('subcategory_id', $subcategoryIds);
+                    }
+                });
             }
-
-
-         $all_store_information=sellerStoreInformation::with('seller_information','All_product.review.user_details')->whereIn('id',$productQuery);
         //  where('Store_Availability','1')->
 
         if(isset($request->search)){
