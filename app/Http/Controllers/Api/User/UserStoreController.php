@@ -39,7 +39,9 @@ class UserStoreController extends Controller
         'subcategory'=>$request->subcategory ?? $request->subcategory_id,
         'subcategory_id'=>$request->subcategory_id ?? $request->subcategory,
         "search"=>$request->search,
-        "rating"=>$request->rating,
+        "rating"=>is_array($request->rating)
+            ? $request->rating
+            : (!is_null($request->rating) ? [$request->rating] : []),
         "availbility"=>$request->availbility,
         "user_id"=>$request->user_id ?? null,
        ];

@@ -359,7 +359,7 @@ class UserManagementService
         $all_store_information=$all_store_information->get();
         $userId = $request->user_id ?? null;
 
-        $all_store_information->map(function ($store) use ($userId) {
+            $all_store_information->map(function ($store) use ($userId) {
 
             $totalRating = 0;
             $count = 0;
@@ -376,6 +376,7 @@ class UserManagementService
             }
 
             $store->average_store_rating = $count > 0 ? round($totalRating / $count, 1) : 0;
+            $store->rating_count = $count;
             $store->total_review_count = $reviewCount;
 
             // $stories = Story::where('seller_id', $store->seller_id)
@@ -427,7 +428,7 @@ class UserManagementService
 
             $all_store_information = $all_store_information->filter(function ($store) use ($maxRating) {
 
-                return $store->average_store_rating <= $maxRating;
+                return $store->rating_count > 0 && $store->average_store_rating <= $maxRating;
 
             })->values();
         }
