@@ -49,7 +49,7 @@
             @forelse ($subCategory as $item)
                 <div class="item">
                     <a class="category_detail"
-                        href="{{ route('user.category_wise_store', $item->category_id) }}?subcategory={{ $item->id }}">
+                        href="{{ route('user.category_wise_store', ['id' => $item->category_id, 'subcategory_id' => $item->id]) }}">
 
                         <div class="categorie_cotent cat_title text-center">
                             <div class="categorie_cotent-img">
@@ -79,7 +79,7 @@
                 @forelse ($subCategory as $item)
                 <div class="col-lg-4 col-md-4 col-6 my-lg-3 my-2 text-center">
                     <a class="category_detail"
-                        href="{{ route('user.category_wise_store', $item->category_id) }}?subcategory={{$item->id}} ">
+                        href="{{ route('user.category_wise_store', ['id' => $item->category_id, 'subcategory_id' => $item->id]) }}">
                         <div class="categorie_cotent cat_title">
                             <div class="categorie_cotent-img">
                                 <img src="{{ $item->image }}" class="img-fluid" />

@@ -4,7 +4,7 @@
           <h3>Categories</h3>
         @forelse ($subCategory as $item)
             <div class="col-lg-4 col-md-4 col-6 my-lg-3 my-2 text-center">
-                <a class="category_detail" href="{{ route('user.category_wise_store', $item->category_id) }}">
+                <a class="category_detail" href="{{ route('user.category_wise_store', ['id' => $item->category_id, 'subcategory_id' => $item->id]) }}">
                 <div class="categorie_cotent">
                     <div class="categorie_cotent-img">
                         <img src="{{$item->image}}" class="img-fluid" />

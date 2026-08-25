@@ -42,6 +42,7 @@
                         <a href="{{ url('user/category-wise-store/' . request()->id)}}">{{ __('user_messages.clear') }}</a>
                     </div>
                     <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
+                        <input type="hidden" name="subcategory_id" value="{{ request('subcategory_id', request('subcategory')) }}">
                         <div class="form-group mt-4">
                             <h5>{{ __('user_messages.ratings') }}</h5>
 
@@ -107,8 +108,9 @@
                 </div>
             </div>
             <div class="col-lg-9">
-                <div class="categoryDetail_content">
+                    <div class="categoryDetail_content">
                     <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
+                        <input type="hidden" name="subcategory_id" value="{{ request('subcategory_id', request('subcategory')) }}">
                         <div class="seArch">
                             <div class="form-group position-relative search">
                                 <input type="text" class="form-control" placeholder="{{ __('user_messages.search') }}" name="search" value="{{request()->search}}" />
@@ -131,7 +133,7 @@
                                     <a href="{{ route('user.store_details', [
                                         'id' => $item->id,
                                         'category_id' => request()->route('id'),
-                                        'subcategory_id' => request('subcategory')
+                                        'subcategory_id' => request('subcategory_id', request('subcategory'))
                                     ]) }}">
                                     <div class="category-store">
                                         <div class="category_store_img">

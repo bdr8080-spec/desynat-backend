@@ -69,7 +69,7 @@ class UserStoreController extends Controller
     public function category_wise_store(Request $request, $id = null)
     {
         $categoryId = $id ?? $request->category_id;
-        $subcategoryId = $request->subcategory_id;
+        $subcategoryId = $request->subcategory_id ?? $request->subcategory ?? null;
 
         $request_data = (object) [
             'category_id' => $categoryId,
