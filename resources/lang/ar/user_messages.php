@@ -61,7 +61,7 @@ return [
     'product_remove_from_wishlist' => 'تمت إزالة المنتج من قائمة الرغبات',
     'otp' => 'رمز التحقق',
     'notifications_marked_read' => 'تم تمييز الإشعارات كمقروءة بنجاح',
-    'become_a_vendor' => 'كن بائعًا',
+    'become_a_vendor' => 'كن مصممًا',
 
     //landing_page
     'best_selling' => 'الأكثر مبيعًا',

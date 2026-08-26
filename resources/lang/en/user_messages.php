@@ -61,7 +61,7 @@ return [
     'product_remove_from_wishlist' => 'Product removed from wishlist',
     'otp' => 'OTP',
     'notifications_marked_read' => 'Notifications marked as read successfully',
-    'become_a_vendor' => 'Become a Vendor',
+    'become_a_vendor' => 'Become a Designer',
 
     //landing_page
     'best_selling' => 'Best Selling',
