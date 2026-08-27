@@ -50,12 +50,14 @@ $currency = session('currencyAr', 'دينار كويتي');
     height: 100%;
     background: #007bff;
 }
-.hightop{
+
+.hightop {
     position: absolute;
     top: 14px;
     font-size: 13px;
-    color:#fff;
+    color: #fff;
 }
+
 .color-swatch {
     display: inline-block;
     width: 24px;
@@ -81,7 +83,8 @@ $currency = session('currencyAr', 'دينار كويتي');
                 <div class="d-flex align-items-center">
                     <div class="img-contenar">
                         <div class="storeClient_profile_img">
-                            <img src="{{ $store_details['store']->seller_information->profile_pic }}" class="img-fluid" style="cursor:pointer" onclick="openSellerGallery(0)" />
+                            <img src="{{ $store_details['store']->seller_information->profile_pic }}" class="img-fluid"
+                                style="cursor:pointer" onclick="openSellerGallery(0)" />
                         </div>
                     </div>
                     <div class="storeClient_profile_content">
@@ -102,46 +105,43 @@ $currency = session('currencyAr', 'دينار كويتي');
                                 {{$store_details['store']->seller_information->last_name}}</p>
 
                             @php
-                                $totalReviews = 0;
+                            $totalReviews = 0;
 
-                                foreach ($store_details['All_Product'] as $product) {
-                                    $totalReviews += $product->review->count();
-                                }
+                            foreach ($store_details['All_Product'] as $product) {
+                            $totalReviews += $product->review->count();
+                            }
 
-                                $rating = $store_details['store']->average_store_rating ?? 0;
+                            $rating = $store_details['store']->average_store_rating ?? 0;
 
-                                $fullStars = floor($rating);
-                                $hasHalfStar = ($rating - $fullStars) >= 0.5;
-                                $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                            $fullStars = floor($rating);
+                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                            $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
                             @endphp
 
                             <div class="rating">
 
                                 @if($rating > 0)
 
-                                    @for($i = 0; $i < $fullStars; $i++)
-                                        <span><i class="fa-solid fa-star"></i></span>
+                                @for($i = 0; $i < $fullStars; $i++) <span><i class="fa-solid fa-star"></i></span>
                                     @endfor
 
                                     @if($hasHalfStar)
-                                        <span><i class="fa-solid fa-star-half-stroke"></i></span>
+                                    <span><i class="fa-solid fa-star-half-stroke"></i></span>
                                     @endif
 
-                                    @for($i = 0; $i < $emptyStars; $i++)
-                                        <span><i class="fa-regular fa-star"></i></span>
-                                    @endfor
+                                    @for($i = 0; $i < $emptyStars; $i++) <span><i class="fa-regular fa-star"></i></span>
+                                        @endfor
 
-                                @else
+                                        @else
 
-                                    @for($i = 0; $i < 5; $i++)
-                                        <span><i class="fa-regular fa-star"></i></span>
-                                    @endfor
+                                        @for($i = 0; $i < 5; $i++) <span><i class="fa-regular fa-star"></i></span>
+                                            @endfor
 
-                                @endif
+                                            @endif
 
-                                <span class="totalstart">
-                                    ({{ $totalReviews }})
-                                </span>
+                                            <span class="totalstart">
+                                                ({{ $totalReviews }})
+                                            </span>
 
                             </div>
                         </div>
@@ -181,43 +181,42 @@ $currency = session('currencyAr', 'دينار كويتي');
 
                     @forelse($seller_highlights as $highlight)
 
-                        @php
-                            $firstHighlight = $highlight['highlights'][0];
-                            $extension = pathinfo($firstHighlight['file'], PATHINFO_EXTENSION);
-                        @endphp
+                    @php
+                    $firstHighlight = $highlight['highlights'][0];
+                    $extension = pathinfo($firstHighlight['file'], PATHINFO_EXTENSION);
+                    @endphp
 
-                        <div class="item">
+                    <div class="item">
 
-                            <div class="suggestStore_content"
-                                onclick='openHighlightViewer(@json($highlight))'>
+                        <div class="suggestStore_content" onclick='openHighlightViewer(@json($highlight))'>
 
-                                <div class="suggestedStore_img">
+                            <div class="suggestedStore_img">
 
-                                    @if(in_array(strtolower($extension), ['mp4','webm','ogg']))
+                                @if(in_array(strtolower($extension), ['mp4','webm','ogg']))
 
-                                        <video class="img-fluid" autoplay muted loop playsinline>
-                                            <source src="{{ $firstHighlight['file'] }}" type="video/{{ $extension }}">
-                                        </video>
+                                <video class="img-fluid" autoplay muted loop playsinline>
+                                    <source src="{{ $firstHighlight['file'] }}" type="video/{{ $extension }}">
+                                </video>
 
-                                    @else
+                                @else
 
-                                        <img src="{{ $firstHighlight['file'] }}" class="img-fluid" />
+                                <img src="{{ $firstHighlight['file'] }}" class="img-fluid" />
 
-                                    @endif
-
-                                </div>
-
-                                <p>{{ $highlight['title'] ?? 'Highlight' }}</p>
+                                @endif
 
                             </div>
 
+                            <p>{{ $highlight['title'] ?? 'Highlight' }}</p>
+
                         </div>
+
+                    </div>
 
                     @empty
 
-                        <div class="item text-center">
-                            <p>{{ __('user_messages.no_highlights') }}</p>
-                        </div>
+                    <div class="item text-center">
+                        <p>{{ __('user_messages.no_highlights') }}</p>
+                    </div>
 
                     @endforelse
 
@@ -232,7 +231,8 @@ $currency = session('currencyAr', 'دينار كويتي');
     <ul class="nav nav-tabs customNavTabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="product-tab" data-bs-toggle="tab" data-bs-target="#product-tab-pane"
-                type="button" role="tab" aria-controls="product-tab-pane" aria-selected="true">{{ __('user_messages.product') }}</button>
+                type="button" role="tab" aria-controls="product-tab-pane"
+                aria-selected="true">{{ __('user_messages.product') }}</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="reels-tab" data-bs-toggle="tab" data-bs-target="#reels-tab-pane" type="button"
@@ -254,7 +254,8 @@ $currency = session('currencyAr', 'دينار كويتي');
                         <div class="category_filter">
                             <div class="d-flex align-items-center justify-content-between">
                                 <h3>{{ __('user_messages.filters') }}</h3>
-                                <a href="{{route('user.store_details',[request()->id])}}">{{ __('user_messages.clear') }}</a>
+                                <a
+                                    href="{{route('user.store_details',[request()->id])}}">{{ __('user_messages.clear') }}</a>
                             </div>
                             <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
                                 <div class="form-group mt-4">
@@ -310,7 +311,8 @@ $currency = session('currencyAr', 'دينار كويتي');
 
                                             <div class="active-indicator" id="indicator"></div>
 
-                                            <div class="value-bubble" id="valueBubble">100000 {{ __('user_messages.kd') }}</div>
+                                            <div class="value-bubble" id="valueBubble">100000
+                                                {{ __('user_messages.kd') }}</div>
 
                                             <input type="range" min="1" max="1000"
                                                 value="{{ request()->price_max ?? 500 }}" id="priceRange"
@@ -330,36 +332,38 @@ $currency = session('currencyAr', 'دينار كويتي');
 
 
                                 {{-- Color --}}
-                              <div class="form-group mt-4">
-    <h5>{{ __('user_messages.color') }}</h5>
+                                <div class="form-group mt-4">
+                                    <h5>{{ __('user_messages.color') }}</h5>
 
-    @foreach ($color as $key => $item)
-    <div class="form-check my-4 color-item d-flex align-items-center {{ $key >= 10 ? 'd-none extra-color' : '' }}">
-        <input class="form-check-input" type="checkbox" name="color_id[]"
-            value="{{ $item->id }}" id="color{{ $item->id }}"
-            {{ is_array(request()->color_id) && in_array($item->id, request()->color_id) ? 'checked' : '' }}>
+                                    @foreach ($color as $key => $item)
+                                    <div
+                                        class="form-check my-4 color-item d-flex align-items-center {{ $key >= 10 ? 'd-none extra-color' : '' }}">
+                                        <input class="form-check-input" type="checkbox" name="color_id[]"
+                                            value="{{ $item->id }}" id="color{{ $item->id }}"
+                                            {{ is_array(request()->color_id) && in_array($item->id, request()->color_id) ? 'checked' : '' }}>
 
-        <label class="form-check-label d-flex align-items-center" for="color{{ $item->id }}">
-            <span>
-                @if(app()->getLocale() == 'en')
-                   &nbsp; {{ $item->name }}
-                @else
-                    &nbsp; {{ $item->name_ar }}
-                @endif
-            </span>
+                                        <label class="form-check-label d-flex align-items-center"
+                                            for="color{{ $item->id }}">
+                                            <span>
+                                                @if(app()->getLocale() == 'en')
+                                                &nbsp; {{ $item->name }}
+                                                @else
+                                                &nbsp; {{ $item->name_ar }}
+                                                @endif
+                                            </span>
 
-            <span class="color-swatch ms-2"
-                style="background-color: {{ $item->hex_code }};"></span>
-        </label>
-    </div>
-    @endforeach
+                                            <span class="color-swatch ms-2"
+                                                style="background-color: {{ $item->hex_code }};"></span>
+                                        </label>
+                                    </div>
+                                    @endforeach
 
-    @if(count($color) > 10)
-    <button type="button" id="toggleColors" class="btn btn-sm btn-link p-0 mt-2">
-        {{ __('user_messages.see_more') }}
-    </button>
-    @endif
-</div>
+                                    @if(count($color) > 10)
+                                    <button type="button" id="toggleColors" class="btn btn-sm btn-link p-0 mt-2">
+                                        {{ __('user_messages.see_more') }}
+                                    </button>
+                                    @endif
+                                </div>
                                 {{-- Discount Range --}}
                                 <div class="form-group mt-4">
                                     <h5>{{ __('user_messages.discount_range') }}</h5>
@@ -494,7 +498,9 @@ $currency = session('currencyAr', 'دينار كويتي');
                                                 @endif
                                                 <img src="{{ $val }}" alt="Product">
                                                 @endforeach
-                                                <span class="share-btn product" data-link="{{ route('user.product_details',[$item->id]) }}"><i class="fa-solid fa-share"></i></span>
+                                                <span class="share-btn product"
+                                                    data-link="{{ route('user.product_details',[$item->id]) }}"><i
+                                                        class="fa-solid fa-share"></i></span>
                                                 @if (Auth::guard('web')->user())
                                                 <span class="wishlist-btn" style="cursor: pointer"><i
                                                         id="wishlistProduct{{ $item->id }}"
@@ -527,35 +533,34 @@ $currency = session('currencyAr', 'دينار كويتي');
                                                 </div> -->
                                                 <div class="rating">
                                                     @php
-                                                        $rating = $item->average_rating ?? 0;
-                                                        $fullStars = floor($rating);
-                                                        $hasHalfStar = ($rating - $fullStars) >= 0.5;
-                                                        $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                                                    $rating = $item->average_rating ?? 0;
+                                                    $fullStars = floor($rating);
+                                                    $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                                    $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
                                                     @endphp
 
                                                     @if($rating > 0)
 
-                                                        @for($i = 0; $i < $fullStars; $i++)
-                                                            <i class="fa-solid fa-star"></i>
+                                                    @for($i = 0; $i < $fullStars; $i++) <i class="fa-solid fa-star"></i>
                                                         @endfor
 
                                                         @if($hasHalfStar)
-                                                            <i class="fa-solid fa-star-half-stroke"></i>
+                                                        <i class="fa-solid fa-star-half-stroke"></i>
                                                         @endif
 
-                                                        @for($i = 0; $i < $emptyStars; $i++)
-                                                            <i class="fa-regular fa-star"></i>
-                                                        @endfor
+                                                        @for($i = 0; $i < $emptyStars; $i++) <i
+                                                            class="fa-regular fa-star"></i>
+                                                            @endfor
 
-                                                    @else
+                                                            @else
 
-                                                        @for($i = 0; $i < 5; $i++)
-                                                            <i class="fa-regular fa-star"></i>
-                                                        @endfor
+                                                            @for($i = 0; $i < 5; $i++) <i class="fa-regular fa-star">
+                                                                </i>
+                                                                @endfor
 
-                                                    @endif
+                                                                @endif
 
-                                                    <span>({{ $item->review->count() ?? 0 }})</span>
+                                                                <span>({{ $item->review->count() ?? 0 }})</span>
                                                 </div>
                                                 <!-- <div class="price">
                                                     <strong>{{ $item->product_variants[0]->final_price }}
@@ -573,18 +578,20 @@ $currency = session('currencyAr', 'دينار كويتي');
                                                     </div>
                                                 </div> -->
 
-                                                 <div class="price">
+                                                <div class="price">
                                                     <strong>
-                                                    {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
+                                                        {{ $currency }}
+                                                        {{ number_format(convertPriceInUserWeb($item->product_variants[0]->final_price), 2) }}
                                                     </strong>
 
                                                     <span class="old-price">
-                                                    {{ $currency }} {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
+                                                        {{ $currency }}
+                                                        {{ number_format(convertPriceInUserWeb($item->product_variants[0]->actual_price), 2) }}
                                                     </span>
 
                                                     <span class="discount">
-                                                    {{ $item->product_variants[0]->discount_value }}
-                                                    {{ $item->product_variants[0]->discount_type == '1' 
+                                                        {{ $item->product_variants[0]->discount_value }}
+                                                        {{ $item->product_variants[0]->discount_type == '1' 
                                                         ? '% ' . __('user_messages.off') 
                                                         : __('user_messages.off') 
                                                     }}
@@ -600,9 +607,9 @@ $currency = session('currencyAr', 'دينار كويتي');
                                 </div>
                                 @empty
 
-                                    <h2>
-                                        <center>{{__('user_messages.no_data_found')}} </center>
-                                    </h2>
+                                <h2>
+                                    <center>{{__('user_messages.no_data_found')}} </center>
+                                </h2>
                                 @endforelse
 
 
@@ -618,35 +625,38 @@ $currency = session('currencyAr', 'دينار كويتي');
                 <div class="row">
 
                     @forelse($seller_reels as $reel)
-                        <div class="col-lg-3 col-md-3 col-12 my-3">
-                            <div class="product-img" data-reel='@json($reel)' style="position:relative; cursor:pointer;">
-                                
-                                @php
-                                    $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $reel->file);
-                                @endphp
+                    <div class="col-lg-3 col-md-3 col-12 my-3">
+                        <div class="product-img" data-reel='@json($reel)' style="position:relative; cursor:pointer;">
 
-                                @if($isVideo)
-                                    <video src="{{ $reel->file }}" muted autoplay loop style="width:100%; height:100%; object-fit:cover;"></video>
+                            @php
+                            $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $reel->file);
+                            @endphp
+
+                            @if($isVideo)
+                            <video src="{{ $reel->file }}" muted autoplay loop
+                                style="width:100%; height:100%; object-fit:cover;"></video>
+                            @else
+                            <img src="{{ $reel->file }}" alt="Product" class="img-fluid">
+                            @endif
+
+                            <!-- Wishlist button -->
+                            <button class="wishlist-btn reel-wishlist" data-reel-id="{{ $reel->id }}"
+                                style="position:absolute; top:10px; right:10px; z-index:10;">
+                                @if($reel->is_whishlisted==1)
+                                <img src="{{ asset('user/assets/images/reels_check.svg') }}" class="img-fluid"
+                                    alt="check" />
                                 @else
-                                    <img src="{{ $reel->file }}" alt="Product" class="img-fluid">
+                                <i class="fa-regular fa-heart"></i>
                                 @endif
-
-                                <!-- Wishlist button -->
-                                <button class="wishlist-btn reel-wishlist" data-reel-id="{{ $reel->id }}" style="position:absolute; top:10px; right:10px; z-index:10;">
-                                    @if($reel->is_whishlisted==1)
-                                        <img src="{{ asset('user/assets/images/reels_check.svg') }}" class="img-fluid" alt="check" />
-                                    @else
-                                        <i class="fa-regular fa-heart"></i>
-                                    @endif
-                                </button>
-                            </div>
+                            </button>
                         </div>
+                    </div>
                     @empty
-                        <div class="item text-center">
-                            <p>{{ __('user_messages.no_reels_found') }}</p>
-                        </div>
+                    <div class="item text-center">
+                        <p>{{ __('user_messages.no_reels_found') }}</p>
+                    </div>
                     @endforelse
- 
+
                 </div>
             </div>
         </div>
@@ -677,13 +687,15 @@ $currency = session('currencyAr', 'دينار كويتي');
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort2" value="2"
                                 {{ request('sort_filter') == 2 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort2">{{ __('user_messages.price') }}: {{ __('user_messages.low_to_high') }}</label>
+                            <label class="form-check-label" for="sort2">{{ __('user_messages.price') }}:
+                                {{ __('user_messages.low_to_high') }}</label>
                         </div>
 
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort3" value="3"
                                 {{ request('sort_filter') == 3 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort3">{{ __('user_messages.price') }}: {{ __('user_messages.high_to_low') }}</label>
+                            <label class="form-check-label" for="sort3">{{ __('user_messages.price') }}:
+                                {{ __('user_messages.high_to_low') }}</label>
                         </div>
 
                         <div class="form-check my-3">
@@ -695,7 +707,8 @@ $currency = session('currencyAr', 'دينار كويتي');
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort5" value="5"
                                 {{ request('sort_filter') == 5 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort5">{{ __('user_messages.customer_ratings') }}</label>
+                            <label class="form-check-label"
+                                for="sort5">{{ __('user_messages.customer_ratings') }}</label>
                         </div>
 
                         <div class="form-check my-3">
@@ -707,7 +720,8 @@ $currency = session('currencyAr', 'دينار كويتي');
                         <div class="form-check my-3">
                             <input class="form-check-input" type="radio" name="sort_filter" id="sort7" value="7"
                                 {{ request('sort_filter') == 7 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="sort7">{{ __('user_messages.fastest_delivery') }}</label>
+                            <label class="form-check-label"
+                                for="sort7">{{ __('user_messages.fastest_delivery') }}</label>
                         </div>
 
                     </div>
@@ -732,7 +746,7 @@ $currency = session('currencyAr', 'دينار كويتي');
     <img src="{{ asset('user/') }}/assets/images/chat-ic.svg" alt="chat icon" class="img-fluid" />
 </a>
 
-  <!-- Seller logo story section -->
+<!-- Seller logo story section -->
 <div class="status-viewer bgwhite" id="statusSeller">
     <div class="container adminstatus">
         <div class="story-header d-flex justify-content-between">
@@ -746,24 +760,24 @@ $currency = session('currencyAr', 'دينار كويتي');
             <div id="progressContainerSeller" class="progress-container"></div>
             <div class="story-pnl-progress d-flex gap-3 p-3 align-item-center">
                 <div class="box-story">
-                    <img id="storyProfileImage"  src="{{asset('user/assets/images/desynat_fav_ic.svg')}}" alt="image" class="img-fluid">
+                    <img id="storyProfileImage" src="{{asset('user/assets/images/desynat_fav_ic.svg')}}" alt="image"
+                        class="img-fluid">
                 </div>
                 <div class="hightop-2">
                     <div id="storyStoreName" class="storyTime">Desynat</div>
                     <div id="storyCreatedTime" class="storyTime">6 sec ago</div>
                 </div>
             </div>
-            
+
             <div class="status-img">
                 <img id="statusImageSeller" class="img-fluid" style="display:none;" />
-                
-                <video id="statusVideoSeller"
-                       style="width:100%; height:100%; object-fit:contain; display:none;"
-                       controls autoplay muted>
+
+                <video id="statusVideoSeller" style="width:100%; height:100%; object-fit:contain; display:none;"
+                    controls autoplay muted>
                 </video>
                 <!-- <div id="adsTitle" class="adsTitle"></div> -->
             </div>
-        </div>    
+        </div>
     </div>
 </div>
 
@@ -781,21 +795,20 @@ $currency = session('currencyAr', 'دينار كويتي');
 
         <div class="logostatus">
             <div id="progressContainerHighlight" class="progress-container"></div>
-            
+
             <div class="p-2 hightop">
                 <div class="storyTime">Highlight Name </div>
                 <div class="storyTime">6 sec ago</div>
             </div>
-            
+
             <div class="status-img">
                 <img id="highlightImage" class="img-fluid" style="display:none;" />
-                
-                <video id="highlightVideo"
-                       style="width:100%; height:100%; object-fit:contain; display:none;"
-                       controls autoplay muted>
+
+                <video id="highlightVideo" style="width:100%; height:100%; object-fit:contain; display:none;" controls
+                    autoplay muted>
                 </video>
             </div>
-        </div>    
+        </div>
     </div>
 </div>
 
@@ -815,17 +828,19 @@ $currency = session('currencyAr', 'دينار كويتي');
 
             <div class="status-img">
                 <img id="reelImage" class="img-fluid" style="display:none;" />
-                <video id="reelVideo" style="width:100%; height:100%; object-fit:contain; display:none;" controls autoplay muted></video>
+                <video id="reelVideo" style="width:100%; height:100%; object-fit:contain; display:none;" controls
+                    autoplay muted></video>
             </div>
 
             <div class="add-caption">
                 <p id="reelCaption"></p>
             </div>
             <div class="caption-share">
-                <button class="wishlist-btn reel-wishlist" id="viewerWishlistBtn" data-reel-id=""><i class="fa-regular fa-heart"></i></button>
+                <button class="wishlist-btn reel-wishlist" id="viewerWishlistBtn" data-reel-id=""><i
+                        class="fa-regular fa-heart"></i></button>
                 <button class="share-btn reply-ic" id="shareReelBtn"><i class="bi bi-reply"></i></button>
             </div>
-        </div>    
+        </div>
     </div>
 </div>
 
@@ -980,8 +995,7 @@ document.getElementById("copyLinkBtn").addEventListener("click", function() {
 </script>
 
 <script>
-
-var sellerStories = null;  
+var sellerStories = null;
 var sellerIndex = 0;
 var sellerTimer = null;
 var sellerDuration = 3000;
@@ -989,7 +1003,7 @@ var sellerLoading = false;
 
 
 // ================= PAGE LOAD CHECK STORY =================
-$(document).ready(function () {
+$(document).ready(function() {
 
     loadSellerStoriesOnPageLoad();
 
@@ -1057,7 +1071,7 @@ function loadSellerStoriesOnPageLoad() {
             if (sellerStories.length > 0) {
 
 
-                if(profileDiv){
+                if (profileDiv) {
 
                     profileDiv.classList.add('story-active');
 
@@ -1067,7 +1081,7 @@ function loadSellerStoriesOnPageLoad() {
             } else {
 
 
-                if(profileDiv){
+                if (profileDiv) {
 
                     profileDiv.classList.remove('story-active');
 
@@ -1123,17 +1137,13 @@ function openSellerGallery(index = 0) {
         loadSellerStories(index);
 
 
-    } 
-
-    else if (sellerStories.length > 0) {
+    } else if (sellerStories.length > 0) {
 
 
         showSellerGallery(index);
 
 
-    } 
-
-    else {
+    } else {
 
 
         return;
@@ -1224,7 +1234,7 @@ function loadSellerStories(openIndex = 0) {
             if (sellerStories.length > 0) {
 
 
-                if(profileDiv){
+                if (profileDiv) {
 
 
                     profileDiv.classList.add('story-active');
@@ -1236,7 +1246,7 @@ function loadSellerStories(openIndex = 0) {
             } else {
 
 
-                if(profileDiv){
+                if (profileDiv) {
 
 
                     profileDiv.classList.remove('story-active');
@@ -1450,7 +1460,7 @@ function showSellerStory() {
 
 
 
-        video.onloadedmetadata = function () {
+        video.onloadedmetadata = function() {
 
 
             sellerDuration = (video.duration * 1000) || 3000;
@@ -1466,7 +1476,7 @@ function showSellerStory() {
 
 
 
-        video.onerror = function () {
+        video.onerror = function() {
 
 
             showNextSeller();
@@ -1476,9 +1486,7 @@ function showSellerStory() {
 
 
 
-    } 
-
-    else {
+    } else {
 
 
 
@@ -1512,15 +1520,15 @@ function startSellerProgress() {
 
     document.querySelectorAll("#progressContainerSeller .progress-fill")
 
-    .forEach(bar => {
+        .forEach(bar => {
 
 
-        bar.style.width = "0%";
+            bar.style.width = "0%";
 
-        bar.style.transition = "none";
+            bar.style.transition = "none";
 
 
-    });
+        });
 
 
 
@@ -1533,7 +1541,7 @@ function startSellerProgress() {
 
 
 
-        if(bar){
+        if (bar) {
 
 
             bar.style.transition = sellerDuration + "ms linear";
@@ -1544,7 +1552,7 @@ function startSellerProgress() {
         }
 
 
-    },10);
+    }, 10);
 
 
 
@@ -1568,10 +1576,10 @@ function startSellerProgress() {
 
 
 
-function showNextSeller(){
+function showNextSeller() {
 
 
-    if(sellerIndex < sellerStories.length - 1){
+    if (sellerIndex < sellerStories.length - 1) {
 
 
         sellerIndex++;
@@ -1595,10 +1603,10 @@ function showNextSeller(){
 
 
 
-function showPrevSeller(){
+function showPrevSeller() {
 
 
-    if(sellerIndex > 0){
+    if (sellerIndex > 0) {
 
 
         sellerIndex--;
@@ -1616,7 +1624,7 @@ function showPrevSeller(){
 
 
 
-function closeSellerStatus(){
+function closeSellerStatus() {
 
 
     clearTimeout(sellerTimer);
@@ -1627,7 +1635,7 @@ function closeSellerStatus(){
 
 
 
-    if(video){
+    if (video) {
 
 
         video.pause();
@@ -1644,7 +1652,7 @@ function closeSellerStatus(){
 
 
 
-    if(container){
+    if (container) {
 
 
         container.style.display = "none";
@@ -1665,33 +1673,33 @@ function updateStoryHeader(story) {
         return;
     }
 
-        // Seller store name
-            if (story.seller_details) {
+    // Seller store name
+    if (story.seller_details) {
 
-            const firstName = story.seller_details.first_name || "";
-            const lastName = story.seller_details.last_name || "";
+        const firstName = story.seller_details.first_name || "";
+        const lastName = story.seller_details.last_name || "";
 
-            storyStoreName.textContent =
-                (firstName + " " + lastName).trim();
+        storyStoreName.textContent =
+            (firstName + " " + lastName).trim();
 
-        } else {
+    } else {
 
-            storyStoreName.textContent = "";
+        storyStoreName.textContent = "";
 
-        }
+    }
 
 
-        // Seller store image
-        if (
-            story.seller_details &&
-            story.seller_details.store_info &&
-            story.seller_details.store_info.store_image
-        ) {
+    // Seller store image
+    if (
+        story.seller_details &&
+        story.seller_details.store_info &&
+        story.seller_details.store_info.store_image
+    ) {
 
-            storyProfileImage.src =
-                story.seller_details.store_info.store_image;
+        storyProfileImage.src =
+            story.seller_details.store_info.store_image;
 
-        }
+    }
 
 
     if (story.created_at) {
@@ -1769,12 +1777,10 @@ function getStoryTimeAgo(createdAt) {
 
     return years + " year" + (years > 1 ? "s" : "") + " ago";
 }
-
-
 </script>
 
 
- <!-- highlight -->
+<!-- highlight -->
 <script>
 // let highlightTimer = null;
 // let highlightDuration = 3000; // default for images
@@ -1894,7 +1900,7 @@ function renderHighlightProgress() {
     container.innerHTML = "";
 
 
-    highlightStories.forEach((item,index)=>{
+    highlightStories.forEach((item, index) => {
 
         container.innerHTML += `
             <div style="flex:1;margin:2px;background:#ddd;height:4px;">
@@ -1911,12 +1917,12 @@ function renderHighlightProgress() {
 
 
 // SHOW CURRENT HIGHLIGHT
-function showHighlight(){
+function showHighlight() {
 
     clearTimeout(highlightTimer);
 
 
-    if(highlightIndex >= highlightStories.length){
+    if (highlightIndex >= highlightStories.length) {
 
         closeHighlightViewer();
         return;
@@ -1945,21 +1951,21 @@ function showHighlight(){
 
     // Update progress bars
 
-    highlightStories.forEach((item,index)=>{
+    highlightStories.forEach((item, index) => {
 
         let bar = document.getElementById(
             `highlightProgress_${index}`
         );
 
 
-        if(!bar) return;
+        if (!bar) return;
 
 
-        if(index < highlightIndex){
+        if (index < highlightIndex) {
 
             bar.style.width = "100%";
 
-        }else{
+        } else {
 
             bar.style.width = "0%";
 
@@ -1982,7 +1988,7 @@ function showHighlight(){
 
 
 
-    if(isVideo){
+    if (isVideo) {
 
 
         videoEl.src = file;
@@ -1995,7 +2001,7 @@ function showHighlight(){
 
 
 
-        videoEl.onloadedmetadata = function(){
+        videoEl.onloadedmetadata = function() {
 
             videoEl.play();
 
@@ -2009,14 +2015,14 @@ function showHighlight(){
 
 
 
-        videoEl.onended = function(){
+        videoEl.onended = function() {
 
             nextHighlight();
 
         };
 
 
-    }else{
+    } else {
 
 
         imageEl.src = file;
@@ -2036,48 +2042,48 @@ function showHighlight(){
 
 
 // PROGRESS ANIMATION
-function startHighlightProgress(progressEl,duration){
+function startHighlightProgress(progressEl, duration) {
 
     clearTimeout(highlightTimer);
 
 
-    progressEl.style.transition="none";
-    progressEl.style.width="0%";
+    progressEl.style.transition = "none";
+    progressEl.style.width = "0%";
 
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
         progressEl.style.transition =
             `width ${duration}ms linear`;
 
-        progressEl.style.width="100%";
+        progressEl.style.width = "100%";
 
 
-    },50);
+    }, 50);
 
 
 
-    highlightTimer=setTimeout(()=>{
+    highlightTimer = setTimeout(() => {
 
         nextHighlight();
 
-    },duration);
+    }, duration);
 
 }
 
 
 
 // NEXT
-function nextHighlight(){
+function nextHighlight() {
 
     highlightIndex++;
 
 
-    if(highlightIndex >= highlightStories.length){
+    if (highlightIndex >= highlightStories.length) {
 
         closeHighlightViewer();
 
-    }else{
+    } else {
 
         showHighlight();
 
@@ -2088,33 +2094,33 @@ function nextHighlight(){
 
 
 // CLOSE
-function closeHighlightViewer(){
+function closeHighlightViewer() {
 
     clearTimeout(highlightTimer);
 
 
-    document.getElementById("highlightViewer").style.display="none";
+    document.getElementById("highlightViewer").style.display = "none";
 
 
-    const imageEl=document.getElementById("highlightImage");
-    const videoEl=document.getElementById("highlightVideo");
+    const imageEl = document.getElementById("highlightImage");
+    const videoEl = document.getElementById("highlightVideo");
 
 
-    imageEl.style.display="none";
+    imageEl.style.display = "none";
 
 
     videoEl.pause();
-    videoEl.src="";
-    videoEl.style.display="none";
+    videoEl.src = "";
+    videoEl.style.display = "none";
 
 
-    highlightStories=[];
-    highlightIndex=0;
+    highlightStories = [];
+    highlightIndex = 0;
 
 
     document.getElementById(
         "progressContainerHighlight"
-    ).innerHTML="";
+    ).innerHTML = "";
 
 }
 </script>
@@ -2126,7 +2132,7 @@ let reelTimer = null;
 let reelDuration = 3000;
 
 // OPEN VIEWER
-function openReelViewer(reel){
+function openReelViewer(reel) {
     clearTimeout(reelTimer);
 
     const imageEl = document.getElementById("reelImage");
@@ -2149,18 +2155,18 @@ function openReelViewer(reel){
     const file = reel.file;
     const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
 
-    if(isVideo){
+    if (isVideo) {
         videoEl.src = file;
         videoEl.style.display = "block";
         videoEl.muted = true;
         videoEl.play().catch(err => console.warn("Video play error:", err));
 
-        videoEl.onloadedmetadata = function(){
+        videoEl.onloadedmetadata = function() {
             reelDuration = videoEl.duration * 1000;
             startReelProgress(progressFill, reelDuration, closeReelViewer);
         }
 
-        videoEl.onended = function(){
+        videoEl.onended = function() {
             closeReelViewer();
         }
     } else {
@@ -2177,7 +2183,7 @@ function openReelViewer(reel){
     const wishlistBtn = document.getElementById("viewerWishlistBtn");
     wishlistBtn.setAttribute("data-reel-id", reel.id);
 
-    if(reel.is_whishlisted == 1){
+    if (reel.is_whishlisted == 1) {
         wishlistBtn.innerHTML = '<img src="/user/assets/images/reels_check.svg" class="img-fluid" alt="check" />';
     } else {
         wishlistBtn.innerHTML = '<i class="fa-regular fa-heart"></i>';
@@ -2190,21 +2196,21 @@ function openReelViewer(reel){
 }
 
 // PROGRESS BAR
-function startReelProgress(progressEl, duration, callback){
+function startReelProgress(progressEl, duration, callback) {
     clearTimeout(reelTimer);
     progressEl.style.transition = "none";
     progressEl.style.width = "0%";
 
-    setTimeout(()=>{
+    setTimeout(() => {
         progressEl.style.transition = `width ${duration}ms linear`;
         progressEl.style.width = "100%";
-    },50);
+    }, 50);
 
     reelTimer = setTimeout(callback, duration);
 }
 
 // CLOSE VIEWER
-function closeReelViewer(){
+function closeReelViewer() {
     clearTimeout(reelTimer);
 
     const imageEl = document.getElementById("reelImage");
@@ -2218,24 +2224,24 @@ function closeReelViewer(){
     videoEl.pause();
     videoEl.style.display = "none";
 
-    if(progressFill){
+    if (progressFill) {
         progressFill.style.transition = "none";
         progressFill.style.width = "0%";
     }
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
 
     // CLICK ON REEL (IGNORE WISHLIST BUTTON)
-    $(document).on('click', '.product-img', function(e){
-        if($(e.target).closest('.wishlist-btn.reel').length) return;
+    $(document).on('click', '.product-img', function(e) {
+        if ($(e.target).closest('.wishlist-btn.reel').length) return;
 
         const reel = JSON.parse($(this).attr('data-reel'));
         openReelViewer(reel);
     });
 
     // WISHLIST AJAX (UNCHANGED)
-     $(document).on('click', '.reel-wishlist', function(e){
+    $(document).on('click', '.reel-wishlist', function(e) {
         e.stopPropagation();
 
         const button = $(this);
@@ -2244,25 +2250,30 @@ $(document).ready(function(){
         $.ajax({
             url: "{{ route('user.add_remove_reel_to_whishlist') }}",
             type: "POST",
-            data: { reel_id: reelId, _token: "{{ csrf_token() }}" },
-            success: function(response){
-                if(response.status === 'success'){
-                    if(button.find('i').length){
-                        button.html('<img src="{{ asset('user/assets/images/reels_check.svg') }}" class="img-fluid" alt="check" />');
+            data: {
+                reel_id: reelId,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    if (button.find('i').length) {
+                        button.html('<img src="{{ asset('
+                            user / assets / images / reels_check
+                            .svg ') }}" class="img-fluid" alt="check" />');
                     } else {
                         button.html('<i class="fa-regular fa-heart"></i>');
                     }
                     toastr.success(response.message);
-                    setTimeout(function(){
+                    setTimeout(function() {
                         location.reload();
                     }, 1000);
                 } else {
                     toastr.error(response.message || 'Something went wrong');
                 }
             },
-            error: function(xhr){
+            error: function(xhr) {
                 var msg = 'Something went wrong';
-                if(xhr.responseJSON && xhr.responseJSON.message){
+                if (xhr.responseJSON && xhr.responseJSON.message) {
                     msg = xhr.responseJSON.message;
                 }
                 toastr.error(msg);
@@ -2271,30 +2282,30 @@ $(document).ready(function(){
     });
 
     // ✅ SHARE BUTTON (COPY LINK)
-    $(document).on('click', '#shareReelBtn', function(e){
+    $(document).on('click', '#shareReelBtn', function(e) {
         e.stopPropagation();
 
         const file = $(this).attr('data-file');
 
-        if(!file){
+        if (!file) {
             toastr.error('No link found');
             return;
         }
 
         navigator.clipboard.writeText(file)
-        .then(function(){
-            toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
-        })
-        .catch(function(){
-            toastr.error('Failed to copy link');
-        });
+            .then(function() {
+                toastr.success("{{ __('user_messages.link_copied_to_clipboard') }}");
+            })
+            .catch(function() {
+                toastr.error('Failed to copy link');
+            });
     });
 
 });
 </script>
 
 <script>
-$(document).ready(function () {
+$(document).ready(function() {
 
     let seller_id = $('#seller_id').val();
 
@@ -2309,11 +2320,11 @@ $(document).ready(function () {
             store_id: store_id,
             _token: "{{ csrf_token() }}"
         },
-        success: function (response) {
-           // console.log('Visitor captured:', response);
+        success: function(response) {
+            // console.log('Visitor captured:', response);
         },
-        error: function (xhr) {
-           // console.log('Error:', xhr.responseJSON);
+        error: function(xhr) {
+            // console.log('Error:', xhr.responseJSON);
         }
     });
 
@@ -2321,7 +2332,7 @@ $(document).ready(function () {
 </script>
 
 <script>
-document.addEventListener('click', function (e) {
+document.addEventListener('click', function(e) {
 
     var shareBtn = e.target.closest('.share-btn.product');
 
@@ -2338,9 +2349,9 @@ document.addEventListener('click', function (e) {
         }
 
         if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(link).then(function () {
+            navigator.clipboard.writeText(link).then(function() {
                 toastr.success('Link copied to clipboard');
-            }).catch(function () {
+            }).catch(function() {
                 fallbackCopy(link);
             });
         } else {

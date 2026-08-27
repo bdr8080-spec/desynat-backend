@@ -399,42 +399,43 @@ const firebaseConfig = {
     const adminMarkAllReadEndpoint = "{{ route('admin.mark_all_notification_as_read') }}";
     const adminNotificationBadge = document.getElementById('adminNotificationBadge');
     const adminNotificationDialog = document.getElementById('adminNotificationDialog');
+    const adminRingtoneSrc = "https://raw.githubusercontent.com/TaterTotterson/microWakeWords/main/wakeSounds/phone-chime.wav";
 
     function playAdminNotificationSound() {
         try {
-            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            const audio = new Audio(adminRingtoneSrc);
+            audio.volume = 0.35;
+            audio.play().catch(() => {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
 
-            if (!AudioContextClass) {
-                return;
-            }
+                if (!AudioContextClass) {
+                    return;
+                }
 
-            if (!adminAudioContext) {
-                adminAudioContext = new AudioContextClass();
-            }
+                if (!adminAudioContext) {
+                    adminAudioContext = new AudioContextClass();
+                }
 
-            if (adminAudioContext.state === 'suspended') {
-                adminAudioContext.resume().catch(() => {});
-            }
+                if (adminAudioContext.state === 'suspended') {
+                    adminAudioContext.resume().catch(() => {});
+                }
 
-            if (!adminAudioUnlocked) {
-                return;
-            }
+                const oscillator = adminAudioContext.createOscillator();
+                const gain = adminAudioContext.createGain();
 
-            const oscillator = adminAudioContext.createOscillator();
-            const gain = adminAudioContext.createGain();
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(1046.5, adminAudioContext.currentTime);
 
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(1046.5, adminAudioContext.currentTime);
+                gain.gain.setValueAtTime(0.0001, adminAudioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.16, adminAudioContext.currentTime + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.0001, adminAudioContext.currentTime + 0.14);
 
-            gain.gain.setValueAtTime(0.0001, adminAudioContext.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.16, adminAudioContext.currentTime + 0.01);
-            gain.gain.exponentialRampToValueAtTime(0.0001, adminAudioContext.currentTime + 0.14);
+                oscillator.connect(gain);
+                gain.connect(adminAudioContext.destination);
 
-            oscillator.connect(gain);
-            gain.connect(adminAudioContext.destination);
-
-            oscillator.start();
-            oscillator.stop(adminAudioContext.currentTime + 0.16);
+                oscillator.start();
+                oscillator.stop(adminAudioContext.currentTime + 0.16);
+            });
         } catch (error) {
             console.log('Notification sound error:', error);
         }
@@ -606,24 +607,31 @@ onMessage(messaging, (payload) => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    setAdminBadge(adminLastNotificationCount);
-    refreshAdminNotificationCount(false);
+    document.addEventListener('DOMContentLoaded', function () {
+        setAdminBadge(adminLastNotificationCount);
+        refreshAdminNotificationCount(false);
 
-    if (adminNotificationDialog) {
-        adminNotificationDialog.addEventListener('shown.bs.offcanvas', function () {
-            markAdminNotificationsRead();
-        });
-    }
+        if (adminNotificationDialog) {
+            adminNotificationDialog.addEventListener('shown.bs.offcanvas', function () {
+                markAdminNotificationsRead();
+            });
+        }
 
-    document.addEventListener('click', unlockAdminAudio, { once: true });
-    document.addEventListener('keydown', unlockAdminAudio, { once: true });
-    document.addEventListener('touchstart', unlockAdminAudio, { once: true, passive: true });
+        document.addEventListener('click', unlockAdminAudio, { once: true });
+        document.addEventListener('keydown', unlockAdminAudio, { once: true });
+        document.addEventListener('touchstart', unlockAdminAudio, { once: true, passive: true });
 
-    setInterval(function () {
-        refreshAdminNotificationCount(true);
-    }, 10000);
-});
+        if (adminNotificationBadge) {
+            adminNotificationBadge.addEventListener('click', unlockAdminAudio);
+        }
+        if (adminNotificationDialog) {
+            adminNotificationDialog.addEventListener('click', unlockAdminAudio);
+        }
+
+        setInterval(function () {
+            refreshAdminNotificationCount(true);
+        }, 10000);
+    });
      </script>
 
 <!-- translator -->
