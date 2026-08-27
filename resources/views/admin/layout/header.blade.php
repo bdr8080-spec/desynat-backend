@@ -13,11 +13,31 @@
     <div class="header-divider"></div>
     <div class="right-section">
         @php
+                use App\Models\Notification;
+
                 $user = auth('admin')->user();
                 $profileImage = !empty($user->profile_pic) 
                     ? $user->profile_pic 
                     : asset('/admin/image/hightlights-1.svg');
+
+                $notificationCount = 0;
+                if (auth('admin')->check()) {
+                    $adminId = auth('admin')->user()->id;
+                    $notificationCount = Notification::where('receiver_id', $adminId)
+                        ->where('receiver_type', '1')
+                        ->where('is_read', '0')
+                        ->count();
+                }
             @endphp
+
+      <div class="dropdown me-3">
+         <a class="nav-link nav-icon position-relative admin-notification-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#adminNotificationDialog" aria-controls="adminNotificationDialog">
+            <i class="bi bi-bell-fill admin-bell-icon"></i>
+            <span id="adminNotificationBadge" class="badge bg-danger badge-number admin-notification-badge {{ $notificationCount > 0 ? 'is-visible' : 'is-hidden' }}">
+                {{ $notificationCount }}
+            </span>
+         </a>
+      </div>
 
       <div class="dropdown">
          <div class="profile-trigger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

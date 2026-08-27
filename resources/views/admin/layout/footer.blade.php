@@ -1,4 +1,128 @@
 <footer>
+    @php
+        use Illuminate\Support\Facades\Auth;
+        use App\Models\Notification;
+
+        $adminNotifications = [];
+        $adminNotificationCount = 0;
+
+        if (Auth::guard('admin')->check()) {
+            $adminId = Auth::guard('admin')->user()->id;
+
+            $adminNotifications = Notification::where('receiver_id', $adminId)
+                ->where('receiver_type', '1')
+                ->orderBy('id', 'desc')
+                ->limit(10)
+                ->get();
+
+            $adminNotificationCount = Notification::where('receiver_id', $adminId)
+                ->where('receiver_type', '1')
+                ->where('is_read', '0')
+                ->count();
+        }
+    @endphp
+
+    <style>
+        .admin-notification-link {
+            color: #000;
+            text-decoration: none;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .admin-bell-icon {
+            font-size: 22px;
+        }
+
+        .admin-notification-badge {
+            position: absolute;
+            top: -6px;
+            right: -10px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            font-size: 11px;
+            line-height: 18px;
+            border-radius: 999px;
+            opacity: 0;
+            transform: scale(0.85);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .admin-notification-badge.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .admin-notification-badge.is-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .admin-notification-pnl.read {
+            opacity: 0.7;
+        }
+
+        .admin-notification-pnl.not-clickable {
+            pointer-events: none;
+            cursor: default;
+        }
+
+        .admin-notification-pnl.unread {
+            background-color: #f1f7ff;
+            border-left: 4px solid #0d6efd;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="adminNotificationDialog">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Notifications</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body">
+            @forelse($adminNotifications as $notification)
+                <div class="notification-pnl admin-notification-pnl d-flex gap-3 mb-3 {{ $notification->is_read == 0 ? 'unread clickable' : 'read not-clickable' }}" data-id="{{ $notification->id }}">
+                    <div>
+                        <div class="bell-icon-1">
+                            <i class="bi bi-bell-fill"></i>
+                        </div>
+                    </div>
+
+                    <div class="noti-content w-100">
+                        <div class="noti-header d-flex justify-content-between">
+                            <div class="noti-title">
+                                @if(App::getLocale() == 'en')
+                                    {{ $notification->title_english ?? 'Notification' }}
+                                @else
+                                    {{ $notification->title_arabic ?? 'Notification' }}
+                                @endif
+                            </div>
+
+                            <div class="post-date">
+                                {{ formatDateTimeByLocale(\Carbon\Carbon::parse($notification->created_at)->format('M d, h:i A')) }}
+                            </div>
+                        </div>
+
+                        <p>
+                            @if(App::getLocale() == 'en')
+                                {{ $notification->description_english }}
+                            @else
+                                {{ $notification->description_arabic }}
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            @empty
+                <div class="text-center text-muted">
+                    No notifications found
+                </div>
+            @endforelse
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/js/bootstrap.bundle.min.js') }}"></script>
@@ -265,8 +389,152 @@ const firebaseConfig = {
 };
 
 
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
+    const app = initializeApp(firebaseConfig);
+    const messaging = getMessaging(app);
+    let adminLastNotificationCount = Number(@json($adminNotificationCount));
+    let adminAudioContext = null;
+    let adminAudioUnlocked = false;
+
+    const adminNotificationEndpoint = "{{ route('admin.get_admin_notifications_count') }}";
+    const adminMarkAllReadEndpoint = "{{ route('admin.mark_all_notification_as_read') }}";
+    const adminNotificationBadge = document.getElementById('adminNotificationBadge');
+    const adminNotificationDialog = document.getElementById('adminNotificationDialog');
+
+    function playAdminNotificationSound() {
+        try {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+
+            if (!AudioContextClass) {
+                return;
+            }
+
+            if (!adminAudioContext) {
+                adminAudioContext = new AudioContextClass();
+            }
+
+            if (adminAudioContext.state === 'suspended') {
+                adminAudioContext.resume().catch(() => {});
+            }
+
+            if (!adminAudioUnlocked) {
+                return;
+            }
+
+            const oscillator = adminAudioContext.createOscillator();
+            const gain = adminAudioContext.createGain();
+
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(1046.5, adminAudioContext.currentTime);
+
+            gain.gain.setValueAtTime(0.0001, adminAudioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.16, adminAudioContext.currentTime + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.0001, adminAudioContext.currentTime + 0.14);
+
+            oscillator.connect(gain);
+            gain.connect(adminAudioContext.destination);
+
+            oscillator.start();
+            oscillator.stop(adminAudioContext.currentTime + 0.16);
+        } catch (error) {
+            console.log('Notification sound error:', error);
+        }
+    }
+
+    function unlockAdminAudio() {
+        if (adminAudioUnlocked) {
+            return;
+        }
+
+        try {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+
+            if (!AudioContextClass) {
+                return;
+            }
+
+            if (!adminAudioContext) {
+                adminAudioContext = new AudioContextClass();
+            }
+
+            if (adminAudioContext.state === 'suspended') {
+                adminAudioContext.resume().then(() => {
+                    adminAudioUnlocked = true;
+                }).catch(() => {});
+            } else {
+                adminAudioUnlocked = true;
+            }
+        } catch (error) {
+            console.log('Failed to unlock admin audio:', error);
+        }
+    }
+
+    function setAdminBadge(count) {
+        if (!adminNotificationBadge) {
+            return;
+        }
+
+        adminNotificationBadge.textContent = count;
+
+        if (count > 0) {
+            adminNotificationBadge.classList.remove('is-hidden');
+            adminNotificationBadge.classList.add('is-visible');
+        } else {
+            adminNotificationBadge.classList.add('is-hidden');
+            adminNotificationBadge.classList.remove('is-visible', 'blink');
+        }
+    }
+
+    async function refreshAdminNotificationCount(shouldAlert = false) {
+        try {
+            const response = await fetch(adminNotificationEndpoint, {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            const payload = await response.json();
+            const count = Number(payload?.data ?? 0) || 0;
+
+            if (count !== adminLastNotificationCount) {
+                setAdminBadge(count);
+
+                if (shouldAlert && count > adminLastNotificationCount) {
+                    playAdminNotificationSound();
+                }
+
+                adminLastNotificationCount = count;
+            } else {
+                setAdminBadge(count);
+            }
+        } catch (error) {
+            console.log('Failed to refresh admin notifications:', error);
+        }
+    }
+
+    async function markAdminNotificationsRead() {
+        try {
+            await fetch(adminMarkAllReadEndpoint, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: new URLSearchParams({
+                    receiver_type: '1'
+                })
+            });
+
+            adminLastNotificationCount = 0;
+            setAdminBadge(0);
+        } catch (error) {
+            console.log('Failed to mark admin notifications read:', error);
+        }
+    }
 
 // Ask user for notification permission
 Notification.requestPermission().then((permission) => {
@@ -323,15 +591,38 @@ Notification.requestPermission().then((permission) => {
 
 onMessage(messaging, (payload) => {
     console.log('Foreground message:', payload);
-    const {
-        title,
-        body
-    } = payload.notification;
+    const notification = payload?.notification || {};
+    const title = notification.title || 'Notification';
+    const body = notification.body || '';
 
-    new Notification(title, {
-        body: body,
-        icon: '/icon.png',
-    });
+    playAdminNotificationSound();
+    refreshAdminNotificationCount(true);
+
+    if (window.Notification && Notification.permission === 'granted') {
+        new Notification(title, {
+            body: body,
+            icon: '/icon.png',
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    setAdminBadge(adminLastNotificationCount);
+    refreshAdminNotificationCount(false);
+
+    if (adminNotificationDialog) {
+        adminNotificationDialog.addEventListener('shown.bs.offcanvas', function () {
+            markAdminNotificationsRead();
+        });
+    }
+
+    document.addEventListener('click', unlockAdminAudio, { once: true });
+    document.addEventListener('keydown', unlockAdminAudio, { once: true });
+    document.addEventListener('touchstart', unlockAdminAudio, { once: true, passive: true });
+
+    setInterval(function () {
+        refreshAdminNotificationCount(true);
+    }, 10000);
 });
      </script>
 

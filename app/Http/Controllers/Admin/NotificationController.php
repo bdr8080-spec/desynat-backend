@@ -194,6 +194,27 @@ class NotificationController extends Controller
         }
     }
 
+    public function get_admin_notifications_count(Request $request)
+    {
+        try {
+            $admin = Auth::guard('admin')->user();
+
+            if (!$admin) {
+                return ApiResponse::generateResponse('error', 'Admin not authenticated', 0, 401);
+            }
+
+            $count = \App\Models\Notification::where('receiver_id', $admin->id)
+                ->where('receiver_type', '1')
+                ->where('is_read', '0')
+                ->count();
+
+            return ApiResponse::generateResponse('success', 'Notification Count fetched successfully', $count, 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Failed to fetch notifications: '.$e->getMessage(), 0, 500);
+        }
+    }
+
 
 
 

@@ -253,6 +253,8 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/notification-management', [NotificationController::class, 'notificationManagement'])->name('admin.notificationManagement');
         Route::get('/send-notification', [NotificationController::class, 'sendNotification'])->name('admin.sendNotification');
         Route::post('/send_notification', [NotificationController::class, 'send_notification'])->name('admin.send_notification');
+        Route::get('/get_admin_notifications_count', [NotificationController::class, 'get_admin_notifications_count'])->name('admin.get_admin_notifications_count');
+        Route::post('/mark_all_notification_as_read', [NotificationController::class, 'mark_all_notification_as_read'])->name('admin.mark_all_notification_as_read');
 
         //ticket management
         Route::get('/ticket-management', [TicketController::class, 'ticketManagement'])->name('admin.ticketManagement');

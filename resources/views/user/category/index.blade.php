@@ -56,7 +56,14 @@ $currency = session('currencyAr', 'دينار كويتي');
     font-size: 13px;
     color:#fff;
 }
-
+.color-swatch {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    flex-shrink: 0;
+}
 </style>
 <div class="customContainer">
     <div>
@@ -323,33 +330,36 @@ $currency = session('currencyAr', 'دينار كويتي');
 
 
                                 {{-- Color --}}
-                                <div class="form-group mt-4">
-                                    <h5>{{ __('user_messages.color') }}</h5>
+                              <div class="form-group mt-4">
+    <h5>{{ __('user_messages.color') }}</h5>
 
-                                    @foreach ($color as $key => $item)
-                                    <div
-                                        class="form-check my-4 color-item {{ $key >= 10 ? 'd-none extra-color' : '' }}">
-                                        <input class="form-check-input" type="checkbox" name="color_id[]"
-                                            value="{{ $item->id }}" id="color{{ $item->id }}"
-                                            {{ is_array(request()->color_id) && in_array($item->id, request()->color_id) ? 'checked' : '' }}>
+    @foreach ($color as $key => $item)
+    <div class="form-check my-4 color-item d-flex align-items-center {{ $key >= 10 ? 'd-none extra-color' : '' }}">
+        <input class="form-check-input" type="checkbox" name="color_id[]"
+            value="{{ $item->id }}" id="color{{ $item->id }}"
+            {{ is_array(request()->color_id) && in_array($item->id, request()->color_id) ? 'checked' : '' }}>
 
-                                        <label class="form-check-label" for="color{{ $item->id }}">
-                                            @if(app()->getLocale() == 'en')
-                                            {{ $item->name }}
-                                            @else
-                                            {{ $item->name_ar }}
-                                            @endif
-                                        </label>
-                                    </div>
-                                    @endforeach
+        <label class="form-check-label d-flex align-items-center" for="color{{ $item->id }}">
+            <span>
+                @if(app()->getLocale() == 'en')
+                   &nbsp; {{ $item->name }}
+                @else
+                    &nbsp; {{ $item->name_ar }}
+                @endif
+            </span>
 
-                                    @if(count($color) > 10)
-                                    <button type="button" id="toggleColors" class="btn btn-sm btn-link p-0 mt-2">
-                                        {{ __('user_messages.see_more') }}
-                                    </button>
-                                    @endif
-                                </div>
+            <span class="color-swatch ms-2"
+                style="background-color: {{ $item->hex_code }};"></span>
+        </label>
+    </div>
+    @endforeach
 
+    @if(count($color) > 10)
+    <button type="button" id="toggleColors" class="btn btn-sm btn-link p-0 mt-2">
+        {{ __('user_messages.see_more') }}
+    </button>
+    @endif
+</div>
                                 {{-- Discount Range --}}
                                 <div class="form-group mt-4">
                                     <h5>{{ __('user_messages.discount_range') }}</h5>
