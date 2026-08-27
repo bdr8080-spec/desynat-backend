@@ -1,6 +1,8 @@
 <?php
 namespace App\Services;
 use App\Helpers\ApiResponse;
+use App\Models\Admin;
+use App\Models\Notification;
 use App\Models\{User,sellerBanner,Banner,Order,orderdetail,OrderDeliveryAddress};
 
 use App\Models\{product,ProductVariant,allproductchats};
@@ -292,6 +294,9 @@ try{
    if($singleOrder){
 
     $singleOrder->update(['delivery_status'=> $request->status]);
+
+    $statusText = $this->resolveSellerOrderStatusText($singleOrder);
+
                     CreateNotification([
                     'sender_id' => 1,
                     'sender_type' => 1,
@@ -302,25 +307,19 @@ try{
                     'title_english' => 'Order Status',
                     'title_arabic' => 'حالة الطلب',
 
-                    'description_english' => "Your order with order id: {$singleOrder->id} is shipped",
-                    'description_arabic' => "تم توصيل طلبك برقم الطلب: {$singleOrder->id}",
+                    'description_english' => "Your order with order id: {$singleOrder->id} is {$statusText}",
+                    'description_arabic' => "تم تحديث طلبك برقم الطلب: {$singleOrder->id}",
 
                     'notification_type' => 'order_shipped_from_seller'
                 ]);
-                CreateNotification([
+                $this->notifyAllAdmins([
                     'sender_id' => $singleOrder->user_id,
                     'sender_type' => 2,
-
-                    'receiver_id' => 1,
-                    'receiver_type' => 1,
-
-                    'title_english' => 'Order Status',
-                    'title_arabic' => 'حالة الطلب',
-
-                    'description_english' => "Order with order id: {$singleOrder->id} is shipped",
-                    'description_arabic' => "تم توصيل طلبك برقم الطلب: {$singleOrder->id}",
-
-                    'notification_type' => 'order_shipped_from_seller'
+                    'title_english' => 'Seller Updated Order Status',
+                    'title_arabic' => 'قام البائع بتحديث حالة الطلب',
+                    'description_english' => "Seller updated order #{$singleOrder->id} status to {$statusText}",
+                    'description_arabic' => "قام البائع بتحديث حالة الطلب رقم {$singleOrder->id}",
+                    'notification_type' => 'seller_order_status_updated'
                 ]);
      return [
             'status'  => 'success',
@@ -386,22 +385,6 @@ try{
 
         $data['order_status']='exchange'; // when order Is exchange and create a new product 
         CreateNotification([
-            'sender_id' => $singleOrder->user_id,
-            'sender_type' => 2,
-
-            'receiver_id' => 1,
-            'receiver_type' => 1,
-
-            'title_english' => 'Exchange Product',
-            'title_arabic' => 'استبدال المنتج',
-
-            'description_english' => "Exchange Product Requested Accepted for Order ID $singleOrder->id",
-            'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $singleOrder->id",
-
-            'notification_type' => 'exchange_product'
-        ]);
-
-        CreateNotification([
             'sender_id' => 1,
             'sender_type' => 1,
 
@@ -415,6 +398,16 @@ try{
             'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $singleOrder->id",
 
             'notification_type' => 'exchange_product_request'
+        ]);
+
+        $this->notifyAllAdmins([
+            'sender_id' => $singleOrder->user_id,
+            'sender_type' => 2,
+            'title_english' => 'Exchange Product',
+            'title_arabic' => 'استبدال المنتج',
+            'description_english' => "Exchange Product Requested Accepted for Order ID $singleOrder->id",
+            'description_arabic' => "تم قبول طلب استبدال المنتج للطلب رقم $singleOrder->id",
+            'notification_type' => 'seller_exchange_return_status_updated'
         ]);
 
     }else{
@@ -441,20 +434,14 @@ try{
 
             'notification_type' => 'return_product_request'
         ]);
-        CreateNotification([
+        $this->notifyAllAdmins([
             'sender_id' => $singleOrder->user_id,
             'sender_type' => 2,
-
-            'receiver_id' => 1,
-            'receiver_type' => 1,
-
-            'title_english' => 'Teturn Product',
-            'title_arabic' => 'استبدال المنتج',
-
+            'title_english' => 'Return Product',
+            'title_arabic' => 'إرجاع المنتج',
             'description_english' => "Return Product Requested Accepted for Order ID $singleOrder->id",
-            'description_arabic' => "تم طلب استبدال المنتج للطلب رقم $singleOrder->id",
-
-            'notification_type' => 'return_product_request'
+            'description_arabic' => "تم قبول طلب إرجاع المنتج للطلب رقم $singleOrder->id",
+            'notification_type' => 'seller_exchange_return_status_updated'
         ]);
 
     }
@@ -482,6 +469,97 @@ try{
     return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
     }
    
+}
+
+private function notifyAllAdmins(array $data): void
+{
+    $admins = Admin::where('status', '1')->get();
+
+    foreach ($admins as $admin) {
+        $notification = Notification::create([
+            'sender_id' => $data['sender_id'],
+            'sender_type' => $data['sender_type'],
+            'receiver_id' => $admin->id,
+            'receiver_type' => 1,
+            'title_english' => $data['title_english'],
+            'title_arabic' => $data['title_arabic'] ?? null,
+            'description_english' => $data['description_english'],
+            'description_arabic' => $data['description_arabic'] ?? null,
+            'notification_type' => $data['notification_type'] ?? null,
+            'is_read' => 0,
+        ]);
+
+        if (!empty($admin->fcm_token)) {
+            $badgeCount = Notification::where('receiver_id', $admin->id)
+                ->where('receiver_type', 1)
+                ->where('is_read', '0')
+                ->count();
+
+            sendPushNotificationNew(
+                explode(',', $admin->fcm_token),
+                $data['title_english'],
+                $data['title_arabic'] ?? null,
+                $data['description_english'],
+                $data['description_arabic'] ?? null,
+                $admin->device_type ?? 0,
+                $badgeCount,
+                $admin->lang ?? 'en'
+            );
+        }
+    }
+}
+
+private function resolveSellerOrderStatusText(orderdetail $singleOrder): string
+{
+    if (in_array($singleOrder->payment_status, ['2', '3'], true)) {
+        return __('seller_messages.Cancelled');
+    }
+
+    if ($singleOrder->delivery_status === '2.1' && $singleOrder->return_type === '0') {
+        return __('seller_messages.Shipped');
+    }
+
+    if ($singleOrder->delivery_status === '2.2' && $singleOrder->return_type === '0') {
+        return __('seller_messages.On_The_Way');
+    }
+
+    if ($singleOrder->delivery_status === '3' && $singleOrder->return_type === '0') {
+        return __('seller_messages.Delivered');
+    }
+
+    if ($singleOrder->delivery_status === '3' && $singleOrder->return_type === '2' && $singleOrder->r_e_approve === '0') {
+        return __('seller_messages.Exchange_Request');
+    }
+
+    if ($singleOrder->delivery_status === '3' && $singleOrder->return_type === '2' && $singleOrder->r_e_approve === '1') {
+        return __('seller_messages.Exchange_Request_Accepted');
+    }
+
+    if ($singleOrder->r_e_approve === '1' && $singleOrder->return_type === '1' && $singleOrder->is_picked === '0') {
+        return __('seller_messages.Return_Request_Accepted');
+    }
+
+    if ($singleOrder->r_e_approve === '1' && $singleOrder->return_type === '1' && $singleOrder->is_picked === '1' && $singleOrder->delivery_status === '3') {
+        return __('seller_messages.Return_Complete');
+    }
+
+    if ($singleOrder->r_e_approve === '1' && $singleOrder->return_type === '1' && $singleOrder->is_picked === '1') {
+        return __('seller_messages.Return_Picked');
+    }
+
+    if ($singleOrder->r_e_approve === '2' && $singleOrder->return_type === '1') {
+        return __('seller_messages.Return_Cancelled');
+    }
+
+    if ($singleOrder->delivery_status === '3' && $singleOrder->return_type === '1') {
+        return __('seller_messages.Return_Request');
+    }
+
+    if ($singleOrder->delivery_status === '7') {
+        return __('seller_messages.On_The_Way');
+    }
+
+    return __('seller_messages.Ongoing');
 }
 
 
