@@ -157,7 +157,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
                                 {{-- Color --}}
                                 <div class="form-group mt-4">
-                                    <h5>{{ __('user_messages.color') }}</h5>
+                                    <h5>{{ __('user_messages.color') }} </h5>
 
                                     @foreach ($color as $key => $item)
                                     <div

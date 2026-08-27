@@ -57,7 +57,7 @@
                         </a>
                         <div>
                             <a href="https://desynat.com/seller/login" target="_blank">
-                                <button class="customBtn1 become-ln my-3" style="width:163px;"> {{ __('user_messages.become_a_vendor') }}</button>
+                                <button class="customBtn1 become-ln my-3" style="width:166px;"> {{ __('user_messages.become_a_vendor') }}</button>
                             </a>
                         </div>
                  </div>
