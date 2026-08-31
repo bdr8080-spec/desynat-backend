@@ -103,7 +103,7 @@
                     <div class="col-lg-6">
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
-                                <form action="{{ route('seller.register') }}" method="post">
+                                <form action="{{ route('seller.register') }}" method="post" id="sellerRegisterForm">
                                     <h1>{{ __('seller_messages.sign_up') }} <br><span class="gold-color">{{ __('seller_messages.create_your_account') }}</span></h1>
                                     <div class="step-progress py-4">
                                         <div class="progress pro-1" role="progressbar" aria-label="Basic example"
@@ -283,7 +283,7 @@
                                     @enderror
 
                                     <div class="login-btn">
-                                        <input type="submit" name="submit" class="btn btn-success w-100"
+                                        <input type="submit" name="submit" class="btn btn-success w-100 submit"
                                             value="{{ __('seller_messages.continue') }}">
                                     </div>
                                 </form>
@@ -341,6 +341,18 @@
         } else {
             input.attr("type", "password");
         }
+    });
+</script>
+
+<script>
+    $(document).on('submit', '#sellerRegisterForm', function() {
+        const submitButton = $(this).find('.submit');
+
+        if (submitButton.data('locked')) {
+            return false;
+        }
+
+        submitButton.data('locked', true).prop('disabled', true);
     });
 </script>
 

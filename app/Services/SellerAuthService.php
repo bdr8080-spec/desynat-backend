@@ -9,6 +9,7 @@ use App\Models\Plan;
 
 use App\Models\SellerSubcriptionPlanBuy;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 use Carbon\carbon;
 use App\Services\TwilioService;
@@ -50,21 +51,29 @@ class SellerAuthService
         ];
 
        $check=  seller::create($record);
-       CreateNotification([
-          'sender_id' => $check->id,
-          'sender_type' => 3,
+       $registrationNotificationKey = 'seller_registration_notification:' . md5(
+          strtolower((string) $check->email) . '|' .
+          (string) $check->country_code . '|' .
+          (string) $check->mobile
+       );
 
-          'receiver_id' => 1,
-          'receiver_type' => 1,
+       if (Cache::add($registrationNotificationKey, true, now()->addMinutes(10))) {
+           CreateNotification([
+              'sender_id' => $check->id,
+              'sender_type' => 3,
 
-          'title_english' => 'New Seller Registered',
-          'title_arabic' => 'تسجيل بائع جديد',
+              'receiver_id' => 1,
+              'receiver_type' => 1,
 
-          'description_english' => $check->first_name . ' ' . $check->last_name . ' has registered as a seller',
-          'description_arabic' => $check->first_name . ' ' . $check->last_name . ' قام بالتسجيل كبائع جديد',
+              'title_english' => 'New Seller Registered',
+              'title_arabic' => 'تسجيل بائع جديد',
 
-          'notification_type' => 'new_seller_registration'
-      ]);
+              'description_english' => $check->first_name . ' ' . $check->last_name . ' has registered as a seller',
+              'description_arabic' => $check->first_name . ' ' . $check->last_name . ' قام بالتسجيل كبائع جديد',
+
+              'notification_type' => 'new_seller_registration'
+          ]);
+       }
 
         $phone = $request->country_code . $request->mobile;
         $message = "Your verification Code Is $otp";
