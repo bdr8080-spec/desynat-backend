@@ -403,6 +403,9 @@ class DeliveryBoyOrderService
                 $user = User::find($orderDetail->user_id);
 
                 if ($user && $user->email) {
+                    $mailLocale = in_array($user->lang, ['en', 'ar'], true)
+                        ? $user->lang
+                        : config('app.locale');
 
                     $ratingUrl = url(
                         '/user/order_details/' .
@@ -415,7 +418,8 @@ class DeliveryBoyOrderService
                         new OrderDeliveredMail(
                             $user->full_name ?? $user->name ?? 'User',
                             $order->order_id,
-                            $ratingUrl
+                            $ratingUrl,
+                            $mailLocale
                         )
                     );
                 }

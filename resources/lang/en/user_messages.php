@@ -731,6 +731,11 @@ return [
     'please_select_ticket_type' => 'Please Select Ticket Type',
     'please_enter_title' => 'Please Enter Title',
     'please_enter_description' => 'Please Enter Description',
+    'order_delivered_subject' => 'Order Delivered Successfully',
+    'order_delivered_greeting' => 'Hello :name,',
+    'order_delivered_body' => 'Your order with order ID :order_id has been delivered successfully.',
+    'order_delivered_rate_prompt' => 'You can rate the product using the link below:',
+    'order_delivered_thanks' => 'Thank you for shopping with us.',
     
 
     

@@ -2,29 +2,29 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Order Delivered</title>
+    <title>{{ __('user_messages.order_delivered_subject') }}</title>
 </head>
 
 <body>
 
-    <p>Hello {{ $userName }},</p>
+    <p>{{ __('user_messages.order_delivered_greeting', ['name' => $userName]) }}</p>
 
     <p>
-        Your order with order Id : {{ $orderId }} is delivered successfully.
+        {{ __('user_messages.order_delivered_body', ['order_id' => $orderId]) }}
     </p>
 
     <p>
-        You can rate the product using the link below:
+        {{ __('user_messages.order_delivered_rate_prompt') }}
     </p>
 
     <p>
         <a href="{{ $ratingUrl }}">
-            Rate Product
+            {{ __('user_messages.rate_product') }}
         </a>
     </p>
 
     <p>
-        Thank you for shopping with us.
+        {{ __('user_messages.order_delivered_thanks') }}
     </p>
 
 </body>

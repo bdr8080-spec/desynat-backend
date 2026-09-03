@@ -13,17 +13,20 @@ class OrderDeliveredMail extends Mailable
     public $userName;
     public $orderId;
     public $ratingUrl;
+    public $locale;
 
-    public function __construct($userName, $orderId, $ratingUrl)
+    public function __construct($userName, $orderId, $ratingUrl, $locale = null)
     {
         $this->userName = $userName;
         $this->orderId = $orderId;
         $this->ratingUrl = $ratingUrl;
+        $this->locale = $locale ?: config('app.locale');
     }
 
     public function build()
     {
-        return $this->subject('Order Delivered Successfully')
+        return $this->locale($this->locale)
+                    ->subject(__('user_messages.order_delivered_subject'))
                     ->view('emails.order_delivered');
     }
 }

@@ -730,6 +730,11 @@ return [
     'please_select_ticket_type' => 'يرجى اختيار نوع التذكرة',
     'please_enter_title' => 'يرجى إدخال العنوان',
     'please_enter_description' => 'يرجى إدخال الوصف',
+    'order_delivered_subject' => 'تم تسليم الطلب بنجاح',
+    'order_delivered_greeting' => 'مرحبًا :name،',
+    'order_delivered_body' => 'تم تسليم طلبك رقم :order_id بنجاح.',
+    'order_delivered_rate_prompt' => 'يمكنك تقييم المنتج باستخدام الرابط أدناه:',
+    'order_delivered_thanks' => 'شكرًا لتسوقك معنا.',
 
 
 
