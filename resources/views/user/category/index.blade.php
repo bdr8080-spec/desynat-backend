@@ -194,7 +194,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
                                 @if(in_array(strtolower($extension), ['mp4','webm','ogg']))
 
-                                <video class="img-fluid" autoplay muted loop playsinline>
+                                <video class="img-fluid"  muted loop playsinline>
                                     <source src="{{ $firstHighlight['file'] }}" type="video/{{ $extension }}">
                                 </video>
 
