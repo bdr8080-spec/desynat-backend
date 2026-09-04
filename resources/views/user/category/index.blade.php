@@ -635,11 +635,6 @@ $currency = session('currencyAr', 'دينار كويتي');
                             @if($isVideo)
                             <video src="{{ $reel->file }}" muted  loop
                                 style="width:100%; height:100%; object-fit:cover;"></video>
-
-                                 <!-- Play / Pause Button -->
-                                <button type="button" class="reel-play-btn">
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
                             @else
                             <img src="{{ $reel->file }}" alt="Product" class="img-fluid">
                             @endif
@@ -1926,48 +1921,58 @@ function showHighlight() {
 
     clearTimeout(highlightTimer);
 
+
     if (highlightIndex >= highlightStories.length) {
+
         closeHighlightViewer();
         return;
+
     }
+
 
     const highlight = highlightStories[highlightIndex];
 
+
     const imageEl = document.getElementById("highlightImage");
     const videoEl = document.getElementById("highlightVideo");
-    const playBtn = document.getElementById("highlightPlayBtn");
 
 
     // Reset media
+
     imageEl.style.display = "none";
     imageEl.src = "";
+
 
     videoEl.pause();
     videoEl.src = "";
     videoEl.style.display = "none";
 
 
-    // Default play button hide
-    playBtn.style.display = "none";
-    playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
-
 
     // Update progress bars
+
     highlightStories.forEach((item, index) => {
 
         let bar = document.getElementById(
             `highlightProgress_${index}`
         );
 
+
         if (!bar) return;
 
+
         if (index < highlightIndex) {
+
             bar.style.width = "100%";
+
         } else {
+
             bar.style.width = "0%";
+
         }
 
     });
+
 
 
     let currentBar = document.getElementById(
@@ -1975,83 +1980,42 @@ function showHighlight() {
     );
 
 
+
     let file = highlight.file;
 
+
     let isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
 
 
     if (isVideo) {
 
         videoEl.src = file;
-
         videoEl.muted = false;
         videoEl.autoplay = false;
         videoEl.playsInline = true;
 
         videoEl.style.display = "block";
 
-        // Video hai to play button show
-        playBtn.style.display = "flex";
+        videoEl.onloadedmetadata = function() {
 
-
-        videoEl.onloadedmetadata = function () {
-
-            // Autoplay nahi hoga
-            // videoEl.play();
-
-        };
-
-
-        // Play / Pause
-        playBtn.onclick = function (e) {
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            if (videoEl.paused) {
-
-                videoEl.play();
-
-                playBtn.innerHTML =
-                    '<i class="fa-solid fa-pause"></i>';
-
-                startHighlightProgress(
-                    currentBar,
-                    videoEl.duration * 1000
-                );
-
-            } else {
-
-                videoEl.pause();
-
-                playBtn.innerHTML =
-                    '<i class="fa-solid fa-play"></i>';
-
-                // Progress bhi pause karna hai to
-                clearTimeout(highlightTimer);
-
-            }
+            videoEl.play();
+            startHighlightProgress(
+                currentBar,
+                videoEl.duration * 1000
+            );
 
         };
 
-
-        videoEl.onended = function () {
-
-            playBtn.innerHTML =
-                '<i class="fa-solid fa-play"></i>';
-
+        videoEl.onended = function() {
             nextHighlight();
-
         };
-
 
     } else {
 
-        // Image hai to play button nahi dikhana
-        playBtn.style.display = "none";
-
         imageEl.src = file;
         imageEl.style.display = "block";
+
 
         startHighlightProgress(
             currentBar,
