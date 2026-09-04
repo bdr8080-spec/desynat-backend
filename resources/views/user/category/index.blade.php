@@ -1988,48 +1988,84 @@ function showHighlight() {
 
 
 
-    if (isVideo) {
+   if (isVideo) {
+
+    videoEl.src = file;
+
+    videoEl.muted = true;
+    videoEl.autoplay = false;
+    videoEl.playsInline = true;
+
+    videoEl.style.display = "block";
 
 
-        videoEl.src = file;
+    // Play Button Create
+    const playBtn = document.createElement("button");
 
-        videoEl.muted = true;
-        videoEl.autoplay = true;
-        videoEl.playsInline = true;
-
-        videoEl.style.display = "block";
-
+    playBtn.type = "button";
+    playBtn.className = "reel-play-btn";
+    playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
 
 
-        videoEl.onloadedmetadata = function() {
+    // Parent position relative hona chahiye
+    videoEl.parentElement.style.position = "relative";
+
+    videoEl.parentElement.appendChild(playBtn);
+
+
+    videoEl.onloadedmetadata = function () {
+
+        // Auto play remove
+        // videoEl.play();
+
+        console.log("Video ready");
+
+    };
+
+
+    // Play / Pause Button Function
+    playBtn.onclick = function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (videoEl.paused) {
 
             videoEl.play();
 
+            playBtn.innerHTML =
+                '<i class="fa-solid fa-pause"></i>';
 
             startHighlightProgress(
                 currentBar,
                 videoEl.duration * 1000
             );
 
-        };
+        } else {
+
+            videoEl.pause();
+
+            playBtn.innerHTML =
+                '<i class="fa-solid fa-play"></i>';
+
+        }
+
+    };
 
 
+    videoEl.onended = function () {
 
-        videoEl.onended = function() {
+        playBtn.innerHTML =
+            '<i class="fa-solid fa-play"></i>';
 
-            nextHighlight();
+        nextHighlight();
 
-        };
+    };
 
-
-    } else {
-
+} else {
 
         imageEl.src = file;
-
         imageEl.style.display = "block";
-
-
         startHighlightProgress(
             currentBar,
             3000
