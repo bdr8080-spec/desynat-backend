@@ -194,7 +194,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
                                 @if(in_array(strtolower($extension), ['mp4','webm','ogg']))
 
-                                <video class="img-fluid" autoplay muted loop playsinline>
+                                <video class="img-fluid" muted loop playsinline>
                                     <source src="{{ $firstHighlight['file'] }}" type="video/{{ $extension }}">
                                 </video>
 
@@ -633,7 +633,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                             @endphp
 
                             @if($isVideo)
-                            <video src="{{ $reel->file }}" muted autoplay loop
+                            <video src="{{ $reel->file }}" muted  loop
                                 style="width:100%; height:100%; object-fit:cover;"></video>
                             @else
                             <img src="{{ $reel->file }}" alt="Product" class="img-fluid">
@@ -1988,84 +1988,35 @@ function showHighlight() {
 
 
 
-   if (isVideo) {
+    if (isVideo) {
 
-    videoEl.src = file;
+        videoEl.src = file;
+        videoEl.muted = false;
+        videoEl.autoplay = false;
+        videoEl.playsInline = true;
 
-    videoEl.muted = true;
-    videoEl.autoplay = false;
-    videoEl.playsInline = true;
+        videoEl.style.display = "block";
 
-    videoEl.style.display = "block";
-
-
-    // Play Button Create
-    const playBtn = document.createElement("button");
-
-    playBtn.type = "button";
-    playBtn.className = "reel-play-btn";
-    playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
-
-
-    // Parent position relative hona chahiye
-    videoEl.parentElement.style.position = "relative";
-
-    videoEl.parentElement.appendChild(playBtn);
-
-
-    videoEl.onloadedmetadata = function () {
-
-        // Auto play remove
-        // videoEl.play();
-
-        console.log("Video ready");
-
-    };
-
-
-    // Play / Pause Button Function
-    playBtn.onclick = function (e) {
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (videoEl.paused) {
+        videoEl.onloadedmetadata = function() {
 
             videoEl.play();
-
-            playBtn.innerHTML =
-                '<i class="fa-solid fa-pause"></i>';
-
             startHighlightProgress(
                 currentBar,
                 videoEl.duration * 1000
             );
 
-        } else {
+        };
 
-            videoEl.pause();
+        videoEl.onended = function() {
+            nextHighlight();
+        };
 
-            playBtn.innerHTML =
-                '<i class="fa-solid fa-play"></i>';
-
-        }
-
-    };
-
-
-    videoEl.onended = function () {
-
-        playBtn.innerHTML =
-            '<i class="fa-solid fa-play"></i>';
-
-        nextHighlight();
-
-    };
-
-} else {
+    } else {
 
         imageEl.src = file;
         imageEl.style.display = "block";
+
+
         startHighlightProgress(
             currentBar,
             3000
