@@ -194,7 +194,7 @@ $currency = session('currencyAr', 'دينار كويتي');
 
                                 @if(in_array(strtolower($extension), ['mp4','webm','ogg']))
 
-                                <video class="img-fluid" muted loop playsinline>
+                                <video class="img-fluid" autoplay muted loop playsinline>
                                     <source src="{{ $firstHighlight['file'] }}" type="video/{{ $extension }}">
                                 </video>
 
@@ -633,7 +633,7 @@ $currency = session('currencyAr', 'دينار كويتي');
                             @endphp
 
                             @if($isVideo)
-                            <video src="{{ $reel->file }}" muted  loop
+                            <video src="{{ $reel->file }}" controls loop 
                                 style="width:100%; height:100%; object-fit:cover;"></video>
                             @else
                             <img src="{{ $reel->file }}" alt="Product" class="img-fluid">
@@ -1990,16 +1990,22 @@ function showHighlight() {
 
     if (isVideo) {
 
+
         videoEl.src = file;
-        videoEl.muted = false;
-        videoEl.autoplay = false;
+
+        videoEl.muted = true;
+        videoEl.autoplay = true;
         videoEl.playsInline = true;
 
         videoEl.style.display = "block";
 
+
+
         videoEl.onloadedmetadata = function() {
 
             videoEl.play();
+
+
             startHighlightProgress(
                 currentBar,
                 videoEl.duration * 1000
@@ -2007,13 +2013,20 @@ function showHighlight() {
 
         };
 
+
+
         videoEl.onended = function() {
+
             nextHighlight();
+
         };
+
 
     } else {
 
+
         imageEl.src = file;
+
         imageEl.style.display = "block";
 
 
