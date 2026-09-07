@@ -52,11 +52,11 @@
                      <!-- <span class="d-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                          tempor
                          incididunt ut labore et dolore magna aliqua. Ut enim ad minim </span> -->
-                          <a href="https://desynat.com/user/affiliate-login" target="_blank">
+                          <a href="https://desynat.com.kw/user/affiliate-login" target="_blank">
                              <button class="customBtn1 become-ln" style="width:165px;">{{ __('user_messages.become_an_affiliate') }}</button>
                         </a>
                         <div>
-                            <a href="https://desynat.com/seller/login" target="_blank">
+                            <a href="https://desynat.com.kw/seller/login" target="_blank">
                                 <button class="customBtn1 become-ln my-3" style="width:166px;"> {{ __('user_messages.become_a_vendor') }}</button>
                             </a>
                         </div>
