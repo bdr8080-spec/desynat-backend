@@ -13,7 +13,64 @@ use Illuminate\Support\Facades\DB;
 
 class WithdrawRequestManagementService
 {
-   
+    public function getSellerPayouts($request_data)
+    {
+        try {
+            $query = WithdrawRequest::with([
+                'bank_details',
+                'seller__details.store_info',
+                'seller__details.country_details',
+            ])
+                ->where('type', '3')
+                ->where('admin_verify', $request_data->req_type);
+
+            if (!empty($request_data->seller_id)) {
+                $query->where('user_id', $request_data->seller_id);
+            }
+
+            if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
+                $query->whereBetween('created_at', [
+                    $request_data->from_date . ' 00:00:00',
+                    $request_data->to_date . ' 23:59:59',
+                ]);
+            } elseif (!empty($request_data->from_date)) {
+                $query->whereDate('created_at', '>=', $request_data->from_date);
+            } elseif (!empty($request_data->to_date)) {
+                $query->whereDate('created_at', '<=', $request_data->to_date);
+            }
+
+            if (!empty($request_data->search)) {
+                $search = $request_data->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('request_id', 'like', "%{$search}%")
+                        ->orWhereHas('seller__details', function ($sellerQuery) use ($search) {
+                            $sellerQuery->where('first_name', 'like', "%{$search}%")
+                                ->orWhere('last_name', 'like', "%{$search}%")
+                                ->orWhere('email', 'like', "%{$search}%")
+                                ->orWhere('mobile', 'like', "%{$search}%")
+                                ->orWhereHas('store_info', function ($storeQuery) use ($search) {
+                                    $storeQuery->where('store_name', 'like', "%{$search}%");
+                                });
+                        });
+                });
+            }
+
+            $requests = $query->orderByDesc('id')->paginate((int) $request_data->limit);
+
+            return [
+                'status' => 'success',
+                'message' => $requests->isEmpty() ? 'No seller withdraw requests found' : 'Seller withdraw requests fetched successfully',
+                'data' => $requests,
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch seller withdraw requests: ' . $e->getMessage(),
+                'data' => [],
+            ];
+        }
+    }
+
     public function getWithdrawRequests($request_data)
     {
         try {

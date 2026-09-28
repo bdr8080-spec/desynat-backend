@@ -54,6 +54,44 @@ class WithdrawRequestController extends Controller
     }
 
 
+    public function get_seller_payouts(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'req_type' => 'required|in:0,1,2', // 0-pending, 1-approved, 2-rejected
+            'seller_id' => 'nullable|integer|exists:sellers,id',
+            'limit' => 'nullable|integer|min:1|max:100',
+            'from_date' => 'nullable|date',
+            'to_date' => 'nullable|date|after_or_equal:from_date',
+            'search' => 'nullable|string|max:255',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $request_data = (object) [
+                'req_type' => $request->req_type,
+                'seller_id' => $request->seller_id,
+                'limit' => $request->limit ?? 20,
+                'from_date' => $request->from_date,
+                'to_date' => $request->to_date,
+                'search' => $request->search,
+            ];
+
+            $data = $this->WithdrawRequestManagementService->getSellerPayouts($request_data);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], $data['data'] ?? [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+        } catch (\Throwable $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+
     // public function accept_seller(Request $request)
     // {
     //     $validate = Validator::make($request->all(), [
