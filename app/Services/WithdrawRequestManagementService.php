@@ -21,11 +21,20 @@ class WithdrawRequestManagementService
                 'seller__details.store_info',
                 'seller__details.country_details',
             ])
-                ->where('type', '3')
-                ->where('admin_verify', $request_data->req_type);
+                ->where('type', '3');
+
+            if ($request_data->req_type !== null && $request_data->req_type !== '') {
+                $query->where('admin_verify', $request_data->req_type);
+            }
 
             if (!empty($request_data->seller_id)) {
                 $query->where('user_id', $request_data->seller_id);
+            }
+
+            if (!empty($request_data->countryId)) {
+                $query->whereHas('seller__details.store_info', function ($storeQuery) use ($request_data) {
+                    $storeQuery->where('country', $request_data->countryId);
+                });
             }
 
             if (!empty($request_data->from_date) && !empty($request_data->to_date)) {

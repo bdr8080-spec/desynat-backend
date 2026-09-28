@@ -57,8 +57,9 @@ class WithdrawRequestController extends Controller
     public function get_seller_payouts(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'req_type' => 'required|in:0,1,2', // 0-pending, 1-approved, 2-rejected
+            'req_type' => 'nullable|in:0,1,2', // 0-pending, 1-approved, 2-rejected
             'seller_id' => 'nullable|integer|exists:sellers,id',
+            'countryId' => 'nullable|integer|exists:countries,id',
             'limit' => 'nullable|integer|min:1|max:100',
             'from_date' => 'nullable|date',
             'to_date' => 'nullable|date|after_or_equal:from_date',
@@ -73,6 +74,7 @@ class WithdrawRequestController extends Controller
             $request_data = (object) [
                 'req_type' => $request->req_type,
                 'seller_id' => $request->seller_id,
+                'countryId' => $request->countryId,
                 'limit' => $request->limit ?? 20,
                 'from_date' => $request->from_date,
                 'to_date' => $request->to_date,
