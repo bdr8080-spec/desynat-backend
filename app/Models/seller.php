@@ -49,6 +49,16 @@ class seller extends Authenticatable
         return $this->hasOne(Bankdetails::class,'user_id','id')->where('type','1');
     }
 
+    public function withdraw_requests()
+    {
+        return $this->hasMany(WithdrawRequest::class, 'user_id');
+    }
+
+    public function order_details()
+    {
+        return $this->hasMany(orderdetail::class, 'seller_id');
+    }
+
 
     public function subcription_plan(){
         return $this->hasmany(SellerSubcriptionPlanBuy::class,'seller_id','id')->where('status','1')->where('payment_status',1);

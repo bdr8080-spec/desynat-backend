@@ -3,6 +3,7 @@ namespace App\Services;
 
 
 use App\Models\WithdrawRequest;
+use App\Models\seller;
 use App\Models\orderdetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
@@ -16,65 +17,144 @@ class WithdrawRequestManagementService
     public function getSellerPayouts($request_data)
     {
         try {
-            $query = WithdrawRequest::with([
-                'bank_details',
-                'seller__details.store_info',
-                'seller__details.country_details',
-            ])
-                ->where('type', '3');
+            $applyFilters = function ($query) use ($request_data) {
+                if (!empty($request_data->seller_id)) {
+                    $query->where('id', $request_data->seller_id);
+                }
 
-            if ($request_data->req_type !== null && $request_data->req_type !== '') {
-                $query->where('admin_verify', $request_data->req_type);
-            }
+                if (!empty($request_data->countryId)) {
+                    $query->whereHas('store_info', function ($storeQuery) use ($request_data) {
+                        $storeQuery->where('country', $request_data->countryId);
+                    });
+                }
 
-            if (!empty($request_data->seller_id)) {
-                $query->where('user_id', $request_data->seller_id);
-            }
+                if (!empty($request_data->search)) {
+                    $search = $request_data->search;
+                    $query->where(function ($q) use ($search) {
+                        $q->where('first_name', 'like', "%{$search}%")
+                            ->orWhere('last_name', 'like', "%{$search}%")
+                            ->orWhere('email', 'like', "%{$search}%")
+                            ->orWhere('mobile', 'like', "%{$search}%")
+                            ->orWhereHas('store_info', function ($storeQuery) use ($search) {
+                                $storeQuery->where('store_name', 'like', "%{$search}%");
+                            })
+                            ->orWhereHas('withdraw_requests', function ($withdrawQuery) use ($search) {
+                                $withdrawQuery->where('type', '3')
+                                    ->where('request_id', 'like', "%{$search}%");
+                            });
+                    });
+                }
 
-            if (!empty($request_data->countryId)) {
-                $query->whereHas('seller__details.store_info', function ($storeQuery) use ($request_data) {
-                    $storeQuery->where('country', $request_data->countryId);
+                if (($request_data->req_type !== null && $request_data->req_type !== '')
+                    || !empty($request_data->from_date)
+                    || !empty($request_data->to_date)) {
+                    $query->whereHas('withdraw_requests', function ($withdrawQuery) use ($request_data) {
+                        $withdrawQuery->where('type', '3');
+                        if ($request_data->req_type !== null && $request_data->req_type !== '') {
+                            $withdrawQuery->where('admin_verify', $request_data->req_type);
+                        }
+                        if (!empty($request_data->from_date)) {
+                            $withdrawQuery->whereDate('created_at', '>=', $request_data->from_date);
+                        }
+                        if (!empty($request_data->to_date)) {
+                            $withdrawQuery->whereDate('created_at', '<=', $request_data->to_date);
+                        }
+                    });
+                }
+
+                return $query;
+            };
+
+            $baseQuery = seller::query()
+                ->where('admin_verify', '2')
+                ->where('type', '0')
+                ->whereHas('store_info')
+                ->where(function ($query) {
+                    $query->whereHas('order_details', function ($orderQuery) {
+                        $orderQuery->where('payment_status', '1')
+                            ->where('delivery_status', '3');
+                    })->orWhereHas('withdraw_requests', function ($withdrawQuery) {
+                        $withdrawQuery->where('type', '3');
+                    });
                 });
+            $applyFilters($baseQuery);
+
+            $sellerIds = (clone $baseQuery)->pluck('id');
+            $payouts = (clone $baseQuery)
+                ->with(['store_info.country_info'])
+                ->orderByDesc('id')
+                ->paginate((int) $request_data->limit);
+
+            $earnings = collect();
+            $paidAmounts = collect();
+            $lastPayments = collect();
+            if ($sellerIds->isNotEmpty()) {
+                $earnings = orderdetail::query()
+                    ->select('seller_id')
+                    ->selectRaw('COALESCE(SUM(COALESCE(amount, 0) + COALESCE(tax, 0) + COALESCE(shipping_fees, 0)), 0) as total_earning')
+                    ->whereIn('seller_id', $sellerIds)
+                    ->where('payment_status', '1')
+                    ->where('delivery_status', '3')
+                    ->groupBy('seller_id')
+                    ->pluck('total_earning', 'seller_id');
+
+                $paidAmounts = WithdrawRequest::query()
+                    ->select('user_id')
+                    ->selectRaw('COALESCE(SUM(CAST(amount AS DECIMAL(12, 3))), 0) as total_paid')
+                    ->where('type', '3')
+                    ->where('admin_verify', '1')
+                    ->whereIn('user_id', $sellerIds)
+                    ->groupBy('user_id')
+                    ->pluck('total_paid', 'user_id');
+
+                $lastPayments = WithdrawRequest::query()
+                    ->where('type', '3')
+                    ->where('admin_verify', '1')
+                    ->whereIn('user_id', $sellerIds)
+                    ->orderByDesc('updated_at')
+                    ->orderByDesc('id')
+                    ->get()
+                    ->unique('user_id')
+                    ->keyBy('user_id');
             }
 
-            if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
-                $query->whereBetween('created_at', [
-                    $request_data->from_date . ' 00:00:00',
-                    $request_data->to_date . ' 23:59:59',
-                ]);
-            } elseif (!empty($request_data->from_date)) {
-                $query->whereDate('created_at', '>=', $request_data->from_date);
-            } elseif (!empty($request_data->to_date)) {
-                $query->whereDate('created_at', '<=', $request_data->to_date);
+            $totalPending = 0;
+            foreach ($sellerIds as $sellerId) {
+                $earned = (float) ($earnings[$sellerId] ?? 0);
+                $paid = (float) ($paidAmounts[$sellerId] ?? 0);
+                $totalPending += max(0, $earned - $paid);
             }
 
-            if (!empty($request_data->search)) {
-                $search = $request_data->search;
-                $query->where(function ($q) use ($search) {
-                    $q->where('request_id', 'like', "%{$search}%")
-                        ->orWhereHas('seller__details', function ($sellerQuery) use ($search) {
-                            $sellerQuery->where('first_name', 'like', "%{$search}%")
-                                ->orWhere('last_name', 'like', "%{$search}%")
-                                ->orWhere('email', 'like', "%{$search}%")
-                                ->orWhere('mobile', 'like', "%{$search}%")
-                                ->orWhereHas('store_info', function ($storeQuery) use ($search) {
-                                    $storeQuery->where('store_name', 'like', "%{$search}%");
-                                });
-                        });
-                });
-            }
+            $payouts->getCollection()->transform(function ($sellerDetails) use ($earnings, $paidAmounts, $lastPayments) {
+                $sellerId = $sellerDetails->id;
+                $totalEarned = (float) ($earnings[$sellerId] ?? 0);
+                $totalPaid = (float) ($paidAmounts[$sellerId] ?? 0);
+                $lastPayment = $lastPayments->get($sellerId);
 
-            $requests = $query->orderByDesc('id')->paginate((int) $request_data->limit);
+                $sellerDetails->seller_name = trim($sellerDetails->first_name . ' ' . $sellerDetails->last_name);
+                $sellerDetails->country_name = optional(optional($sellerDetails->store_info)->country_info)->name;
+                $sellerDetails->currency_code = optional(optional($sellerDetails->store_info)->country_info)->currency_code;
+                $sellerDetails->currency_symbol = optional(optional($sellerDetails->store_info)->country_info)->currency_symbol;
+                $sellerDetails->total_earning = number_format($totalEarned, 3, '.', '');
+                $sellerDetails->last_payout = number_format((float) ($lastPayment->amount ?? 0), 3, '.', '');
+                $sellerDetails->last_payout_date = optional($lastPayment)->updated_at;
+                $sellerDetails->pending_amount = number_format(max(0, $totalEarned - $totalPaid), 3, '.', '');
+
+                return $sellerDetails;
+            });
 
             return [
                 'status' => 'success',
-                'message' => $requests->isEmpty() ? 'No seller withdraw requests found' : 'Seller withdraw requests fetched successfully',
-                'data' => $requests,
+                'message' => $payouts->isEmpty() ? 'No seller payouts found' : 'Seller payouts fetched successfully',
+                'data' => [
+                    'total_payout_pending' => number_format($totalPending, 3, '.', ''),
+                    'sellers' => $payouts,
+                ],
             ];
         } catch (\Throwable $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to fetch seller withdraw requests: ' . $e->getMessage(),
+                'message' => 'Failed to fetch seller payouts: ' . $e->getMessage(),
                 'data' => [],
             ];
         }
