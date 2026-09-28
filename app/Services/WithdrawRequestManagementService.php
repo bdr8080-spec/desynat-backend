@@ -66,9 +66,6 @@ class WithdrawRequestManagementService
             };
 
             $baseQuery = seller::query()
-                ->where('admin_verify', '2')
-                ->where('type', '0')
-                ->whereHas('store_info')
                 ->where(function ($query) {
                     $query->whereHas('order_details', function ($orderQuery) {
                         $orderQuery->where('payment_status', '1')
@@ -80,10 +77,16 @@ class WithdrawRequestManagementService
             $applyFilters($baseQuery);
 
             $sellerIds = (clone $baseQuery)->pluck('id');
+            $perPage = (int) $request_data->limit;
+            $totalSellers = $sellerIds->count();
+            $lastPage = max(1, (int) ceil($totalSellers / $perPage));
+            $requestedPage = max(1, (int) request()->query('page', 1));
+            $page = min($requestedPage, $lastPage);
+
             $payouts = (clone $baseQuery)
                 ->with(['store_info.country_info'])
                 ->orderByDesc('id')
-                ->paginate((int) $request_data->limit);
+                ->paginate($perPage, ['*'], 'page', $page);
 
             $earnings = collect();
             $paidAmounts = collect();
