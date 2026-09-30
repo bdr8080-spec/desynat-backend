@@ -93,6 +93,33 @@ class WithdrawRequestController extends Controller
         }
     }
 
+    public function get_seller_payout_history(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'seller_id' => 'required|integer|exists:sellers,id',
+            'limit' => 'nullable|integer|min:1|max:100',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->WithdrawRequestManagementService->getSellerPayoutHistory(
+                $request->seller_id,
+                $request->limit ?? 20
+            );
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], $data['data'] ?? [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+        } catch (\Throwable $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
     // public function accept_seller(Request $request)
     // {
@@ -177,6 +204,8 @@ class WithdrawRequestController extends Controller
 
         $validate = Validator::make($request->all(), [
             'withdraw_request_id' => 'required|exists:withdraw_requests,id',
+            'amount' => 'required|numeric|min:0.001',
+            'transaction_id' => 'required|string|max:255',
         ]);
 
         if ($validate->fails()) {
@@ -224,6 +253,32 @@ class WithdrawRequestController extends Controller
         );
     }
 }
+
+    public function transfer_seller_withdraw_request(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'seller_id' => 'required|integer|exists:sellers,id',
+            'amount' => ['required', 'numeric', 'min:0.001', 'regex:/^\d+(\.\d{1,3})?$/'],
+            'transaction_id' => 'required|string|max:255',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->WithdrawRequestManagementService->transferSellerWithdrawRequest($request);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], $data['data'] ?? (object) [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'] ?? (object) [], 200);
+        } catch (\Throwable $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
  public function transfer_seller_commission(Request $request)
 {

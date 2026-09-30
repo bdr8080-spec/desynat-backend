@@ -14,67 +14,95 @@ use Illuminate\Support\Facades\DB;
 
 class WithdrawRequestManagementService
 {
+    public function getSellerPayoutHistory($sellerId, $limit = 20)
+    {
+        try {
+            $payouts = WithdrawRequest::query()
+                ->where('type', '3')
+                ->where('user_id', $sellerId)
+                ->where('payment_status', '1')
+                ->orderByDesc('created_at')
+                ->orderByDesc('id')
+                ->paginate((int) $limit, [
+                    'id',
+                    'request_id',
+                    'user_id as seller_id',
+                    'amount',
+                    'transaction_id',
+                    'created_at as payout_date',
+                ]);
+
+            return [
+                'status' => 'success',
+                'message' => $payouts->isEmpty() ? 'No payout history found' : 'Seller payout history fetched successfully',
+                'data' => [
+                    'seller_id' => (int) $sellerId,
+                    'payout_history' => $payouts,
+                ],
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch seller payout history: ' . $e->getMessage(),
+                'data' => [],
+            ];
+        }
+    }
+
     public function getSellerPayouts($request_data)
     {
         try {
-            $applyFilters = function ($query) use ($request_data) {
-                if (!empty($request_data->seller_id)) {
-                    $query->where('id', $request_data->seller_id);
-                }
+            $withdrawalSellerQuery = WithdrawRequest::query()->where('type', '3');
+            if ($request_data->req_type !== null && $request_data->req_type !== '') {
+                $withdrawalSellerQuery->where('admin_verify', $request_data->req_type);
+            }
+            if (!empty($request_data->from_date)) {
+                $withdrawalSellerQuery->whereDate('created_at', '>=', $request_data->from_date);
+            }
+            if (!empty($request_data->to_date)) {
+                $withdrawalSellerQuery->whereDate('created_at', '<=', $request_data->to_date);
+            }
 
-                if (!empty($request_data->countryId)) {
-                    $query->whereHas('store_info', function ($storeQuery) use ($request_data) {
-                        $storeQuery->where('country', $request_data->countryId);
-                    });
-                }
+            $sellerIds = $withdrawalSellerQuery->pluck('user_id');
+            if (($request_data->req_type === null || $request_data->req_type === '')
+                && empty($request_data->from_date)
+                && empty($request_data->to_date)) {
+                $earningSellerIds = orderdetail::query()
+                    ->where('payment_status', '1')
+                    ->where('delivery_status', '3')
+                    ->whereNotNull('seller_id')
+                    ->distinct()
+                    ->pluck('seller_id');
+                $sellerIds = $sellerIds->merge($earningSellerIds)->unique()->values();
+            }
 
-                if (!empty($request_data->search)) {
-                    $search = $request_data->search;
-                    $query->where(function ($q) use ($search) {
-                        $q->where('first_name', 'like', "%{$search}%")
-                            ->orWhere('last_name', 'like', "%{$search}%")
-                            ->orWhere('email', 'like', "%{$search}%")
-                            ->orWhere('mobile', 'like', "%{$search}%")
-                            ->orWhereHas('store_info', function ($storeQuery) use ($search) {
-                                $storeQuery->where('store_name', 'like', "%{$search}%");
-                            })
-                            ->orWhereHas('withdraw_requests', function ($withdrawQuery) use ($search) {
-                                $withdrawQuery->where('type', '3')
-                                    ->where('request_id', 'like', "%{$search}%");
-                            });
-                    });
-                }
+            $baseQuery = seller::withTrashed()->whereIn('id', $sellerIds);
 
-                if (($request_data->req_type !== null && $request_data->req_type !== '')
-                    || !empty($request_data->from_date)
-                    || !empty($request_data->to_date)) {
-                    $query->whereHas('withdraw_requests', function ($withdrawQuery) use ($request_data) {
-                        $withdrawQuery->where('type', '3');
-                        if ($request_data->req_type !== null && $request_data->req_type !== '') {
-                            $withdrawQuery->where('admin_verify', $request_data->req_type);
-                        }
-                        if (!empty($request_data->from_date)) {
-                            $withdrawQuery->whereDate('created_at', '>=', $request_data->from_date);
-                        }
-                        if (!empty($request_data->to_date)) {
-                            $withdrawQuery->whereDate('created_at', '<=', $request_data->to_date);
-                        }
-                    });
-                }
-
-                return $query;
-            };
-
-            $baseQuery = seller::query()
-                ->where(function ($query) {
-                    $query->whereHas('order_details', function ($orderQuery) {
-                        $orderQuery->where('payment_status', '1')
-                            ->where('delivery_status', '3');
-                    })->orWhereHas('withdraw_requests', function ($withdrawQuery) {
-                        $withdrawQuery->where('type', '3');
-                    });
+            if (!empty($request_data->seller_id)) {
+                $baseQuery->where('id', $request_data->seller_id);
+            }
+            if (!empty($request_data->countryId)) {
+                $baseQuery->whereHas('store_info', function ($storeQuery) use ($request_data) {
+                    $storeQuery->where('country', $request_data->countryId);
                 });
-            $applyFilters($baseQuery);
+            }
+            if (!empty($request_data->search)) {
+                $search = $request_data->search;
+                $requestSellerIds = WithdrawRequest::query()
+                    ->where('type', '3')
+                    ->where('request_id', 'like', "%{$search}%")
+                    ->pluck('user_id');
+                $baseQuery->where(function ($query) use ($search, $requestSellerIds) {
+                    $query->where('first_name', 'like', "%{$search}%")
+                        ->orWhere('last_name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('mobile', 'like', "%{$search}%")
+                        ->orWhereIn('id', $requestSellerIds)
+                        ->orWhereHas('store_info', function ($storeQuery) use ($search) {
+                            $storeQuery->where('store_name', 'like', "%{$search}%");
+                        });
+                });
+            }
 
             $sellerIds = (clone $baseQuery)->pluck('id');
             $perPage = (int) $request_data->limit;
@@ -597,6 +625,82 @@ public function transferSellerCommission($request)
 }
 
     
+    public function transferSellerWithdrawRequest($request)
+    {
+        try {
+            DB::beginTransaction();
+            $sellerDetails = seller::withTrashed()
+                ->lockForUpdate()
+                ->find($request->seller_id);
+
+            if (!$sellerDetails) {
+                DB::rollBack();
+                return ['status' => 'error', 'message' => 'Seller not found.'];
+            }
+
+            $bank = $sellerDetails->seller_bank_details;
+            if (!$bank) {
+                DB::rollBack();
+                return ['status' => 'error', 'message' => 'Seller bank details are not available.'];
+            }
+
+            $totalEarnings = (float) orderdetail::query()
+                ->where('seller_id', $sellerDetails->id)
+                ->where('payment_status', '1')
+                ->where('delivery_status', '3')
+                ->selectRaw('COALESCE(SUM(COALESCE(amount, 0) + COALESCE(tax, 0) + COALESCE(shipping_fees, 0)), 0) as total')
+                ->value('total');
+
+            $totalPaid = (float) WithdrawRequest::query()
+                ->where('type', '3')
+                ->where('admin_verify', '1')
+                ->where('user_id', $sellerDetails->id)
+                ->sum('amount');
+
+            $amount = (float) $request->amount;
+            $pendingAmount = max(0, $totalEarnings - $totalPaid);
+            if ($amount > $pendingAmount) {
+                DB::rollBack();
+                return ['status' => 'error', 'message' => 'Payout amount exceeds the seller pending amount.'];
+            }
+
+            $payout = WithdrawRequest::create([
+                'request_id' => (string) \Illuminate\Support\Str::uuid(),
+                'type' => '3',
+                'user_id' => $sellerDetails->id,
+                'bankdetails_id' => $bank->id,
+                'amount' => number_format($amount, 3, '.', ''),
+                'admin_verify' => '1',
+                'payment_status' => '1',
+                'transaction_id' => $request->transaction_id,
+            ]);
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Seller payout added successfully.',
+                'data' => [
+                    'withdraw_request_id' => $payout->id,
+                    'seller_id' => $payout->user_id,
+                    'amount' => $payout->amount,
+                    'transaction_id' => $payout->transaction_id,
+                ],
+            ];
+        } catch (\Throwable $e) {
+            if (DB::transactionLevel() > 0) {
+                DB::rollBack();
+            }
+
+            Log::error('Seller withdraw transfer error', [
+                'message' => $e->getMessage(),
+                'seller_id' => $request->seller_id ?? null,
+            ]);
+
+            return ['status' => 'error', 'message' => 'Failed to transfer seller payout: ' . $e->getMessage()];
+        }
+    }
+
     public function transferWithdrawRequest($request)
 {
     try {
@@ -895,7 +999,7 @@ public function transferSellerCommission($request)
     ];
 }
 
-    private function sendSupplierPayment($withdraw, $supplierCode)
+    private function sendSupplierPayment($withdraw, $supplierCode, $internalNotes = null)
 {
     Log::info('MyFatoorah Environment', [
         'test_mode' => config('myfatoorah.test_mode'),
@@ -916,7 +1020,7 @@ public function transferSellerCommission($request)
 
         "TransferType" => "push",
 
-        "InternalNotes" => "Affiliate Withdraw ".$withdraw->request_id
+        "InternalNotes" => $internalNotes ?? "Affiliate Withdraw ".$withdraw->request_id
 
     ];
 
