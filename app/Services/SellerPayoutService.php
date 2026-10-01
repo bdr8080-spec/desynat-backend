@@ -36,6 +36,19 @@ class SellerPayoutService
             ->where('delivery_status', '3');
     }
 
+    private function revenueSummary($sellerId)
+    {
+        $totals = $this->earningQuery($sellerId)
+            ->selectRaw('COALESCE(SUM(COALESCE(amount, 0) + COALESCE(tax, 0) + COALESCE(shipping_fees, 0)), 0) as total_revenue')
+            ->selectRaw('COALESCE(SUM(COALESCE(admin_commission, 0)), 0) as total_commission')
+            ->first();
+
+        return [
+            'total_revenue' => number_format((float) $totals->total_revenue, 3, '.', ''),
+            'total_commission' => number_format((float) $totals->total_commission, 3, '.', ''),
+        ];
+    }
+
     private function payoutQuery($sellerId)
     {
         return WithdrawRequest::query()
@@ -98,7 +111,7 @@ class SellerPayoutService
             return [
                 'status' => 'success',
                 'message' => $payouts->isEmpty() ? 'No payouts found' : 'Payouts fetched successfully',
-                'data' => array_merge($this->getCurrency($sellerId), [
+                'data' => array_merge($this->getCurrency($sellerId), $this->revenueSummary($sellerId), [
                     'total_earning' => number_format($totalEarned, 3, '.', ''),
                     'total_paid' => number_format($totalPaid, 3, '.', ''),
                     'pending_amount' => number_format(max(0, $totalEarned - $totalPaid), 3, '.', ''),
@@ -124,17 +137,18 @@ class SellerPayoutService
             // Credits: delivered and paid order items
             $credits = DB::table('orderdetails')
                 ->leftJoin('orders', 'orders.id', '=', 'orderdetails.order_id')
+                ->leftJoin('users', 'users.id', '=', 'orderdetails.user_id')
                 ->where('orderdetails.seller_id', $sellerId)
                 ->where('orderdetails.payment_status', '1')
                 ->where('orderdetails.delivery_status', '3')
-                ->selectRaw("orderdetails.id as id, 1 as transaction_type, 'credit' as transaction_label, orders.order_id as reference_id, orderdetails.order_id as order_id, NULL as transaction_id, CAST(COALESCE(orderdetails.amount, 0) + COALESCE(orderdetails.tax, 0) + COALESCE(orderdetails.shipping_fees, 0) AS DECIMAL(12, 3)) as amount, orderdetails.updated_at as transaction_date");
+                ->selectRaw("orderdetails.id as id, 1 as transaction_type, 'credit' as transaction_label, orders.order_id as reference_id, orderdetails.order_id as order_id, users.full_name as customer_name, NULL as transaction_id, CAST(COALESCE(orderdetails.amount, 0) + COALESCE(orderdetails.tax, 0) + COALESCE(orderdetails.shipping_fees, 0) AS DECIMAL(12, 3)) as amount, CAST(COALESCE(orderdetails.admin_commission, 0) AS DECIMAL(12, 3)) as commission, orderdetails.updated_at as transaction_date");
 
             // Debits: payouts transferred by admin
             $debits = DB::table('withdraw_requests')
                 ->where('type', '3')
                 ->where('user_id', $sellerId)
                 ->where('admin_verify', '1')
-                ->selectRaw("id as id, 2 as transaction_type, 'debit' as transaction_label, request_id as reference_id, NULL as order_id, transaction_id as transaction_id, CAST(amount AS DECIMAL(12, 3)) as amount, created_at as transaction_date");
+                ->selectRaw("id as id, 2 as transaction_type, 'debit' as transaction_label, request_id as reference_id, NULL as order_id, NULL as customer_name, transaction_id as transaction_id, CAST(amount AS DECIMAL(12, 3)) as amount, NULL as commission, created_at as transaction_date");
 
             $this->applyDateFilter($credits, 'orderdetails.updated_at', $request_data);
             $this->applyDateFilter($debits, 'created_at', $request_data);
@@ -142,7 +156,8 @@ class SellerPayoutService
             if (!empty($request_data->search)) {
                 $search = $request_data->search;
                 $credits->where(function ($q) use ($search) {
-                    $q->where('orders.order_id', 'like', "%{$search}%");
+                    $q->where('orders.order_id', 'like', "%{$search}%")
+                        ->orWhere('users.full_name', 'like', "%{$search}%");
                 });
                 $debits->where(function ($q) use ($search) {
                     $q->where('request_id', 'like', "%{$search}%")
@@ -167,7 +182,7 @@ class SellerPayoutService
             return [
                 'status' => 'success',
                 'message' => $transactions->isEmpty() ? 'No transactions found' : 'Transactions fetched successfully',
-                'data' => array_merge($this->getCurrency($sellerId), [
+                'data' => array_merge($this->getCurrency($sellerId), $this->revenueSummary($sellerId), [
                     'transactions' => $transactions,
                 ]),
             ];
