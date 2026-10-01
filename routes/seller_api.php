@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Seller\SellerDealManagement;
 use App\Http\Controllers\Api\Seller\SellerLiveRequestController;
 use App\Http\Controllers\Api\Seller\NotificationController;
 use App\Http\Controllers\Api\Seller\SellerStaffManagementController;
+use App\Http\Controllers\Api\Seller\SellerPayoutController;
 
 
 use App\Http\Controllers\CommonController;
@@ -198,6 +199,10 @@ Route::middleware(['auth:sanctum', 'ability:seller','staffStatus'])->group(funct
   Route::get('/dashboard_data', [SellerDashboardController::class,'dashboard_data']);
   Route::post('/update_password', [AuthController::class,'update_password']);
   Route::post('/delete_account', [AuthController::class,'delete_account']);
+
+  // Payouts
+  Route::get('/my_payout_list', [SellerPayoutController::class,'my_payout_list']);
+  Route::get('/get_all_transactions', [SellerPayoutController::class,'get_all_transactions']);
 
 
 });
