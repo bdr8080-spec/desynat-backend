@@ -134,14 +134,12 @@ class SellerPayoutService
                 return $payout;
             });
 
-            // Order-wise earnings with customer name
+            // All seller orders with customer name and commission
             $ordersQuery = DB::table('orderdetails')
                 ->leftJoin('orders', 'orders.id', '=', 'orderdetails.order_id')
                 ->leftJoin('users', 'users.id', '=', 'orderdetails.user_id')
-                ->where('orderdetails.seller_id', $sellerId)
-                ->where('orderdetails.payment_status', '1')
-                ->where('orderdetails.delivery_status', '3');
-            $this->applyDateFilter($ordersQuery, 'orderdetails.updated_at', $request_data);
+                ->where('orderdetails.seller_id', $sellerId);
+            $this->applyDateFilter($ordersQuery, 'orderdetails.created_at', $request_data);
 
             if (!empty($request_data->search)) {
                 $search = $request_data->search;
@@ -152,8 +150,8 @@ class SellerPayoutService
             }
 
             $orders = $ordersQuery
-                ->selectRaw("orderdetails.id as id, orders.order_id as order_number, orderdetails.order_id as order_id, users.full_name as customer_name, CAST(COALESCE(orderdetails.amount, 0) + COALESCE(orderdetails.tax, 0) + COALESCE(orderdetails.shipping_fees, 0) AS DECIMAL(12, 3)) as amount, CAST(COALESCE(orderdetails.admin_commission, 0) AS DECIMAL(12, 3)) as commission, orderdetails.updated_at as order_date")
-                ->orderByDesc('orderdetails.updated_at')
+                ->selectRaw("orderdetails.id as id, orders.order_id as order_number, orderdetails.order_id as order_id, users.full_name as customer_name, CAST(COALESCE(orderdetails.amount, 0) + COALESCE(orderdetails.tax, 0) + COALESCE(orderdetails.shipping_fees, 0) AS DECIMAL(12, 3)) as amount, CAST(COALESCE(orderdetails.admin_commission, 0) AS DECIMAL(12, 3)) as commission, orderdetails.payment_status, orderdetails.delivery_status, orderdetails.created_at as order_date")
+                ->orderByDesc('orderdetails.created_at')
                 ->orderByDesc('orderdetails.id')
                 ->paginate((int) $request_data->limit);
 
