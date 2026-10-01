@@ -17,6 +17,20 @@ class WithdrawRequestManagementService
     public function getSellerPayoutHistory($sellerId, $limit = 20)
     {
         try {
+            $totalEarned = (float) orderdetail::query()
+                ->where('seller_id', $sellerId)
+                ->where('payment_status', '1')
+                ->where('delivery_status', '3')
+                ->selectRaw('COALESCE(SUM(COALESCE(amount, 0) + COALESCE(tax, 0) + COALESCE(shipping_fees, 0)), 0) as total')
+                ->value('total');
+
+            $totalPaid = (float) WithdrawRequest::query()
+                ->where('type', '3')
+                ->where('user_id', $sellerId)
+                ->where('admin_verify', '1')
+                ->selectRaw('COALESCE(SUM(CAST(amount AS DECIMAL(12, 3))), 0) as total')
+                ->value('total');
+
             $payouts = WithdrawRequest::query()
                 ->where('type', '3')
                 ->where('user_id', $sellerId)
@@ -37,6 +51,8 @@ class WithdrawRequestManagementService
                 'message' => $payouts->isEmpty() ? 'No payout history found' : 'Seller payout history fetched successfully',
                 'data' => [
                     'seller_id' => (int) $sellerId,
+                    'total_paid' => number_format($totalPaid, 3, '.', ''),
+                    'pending_amount' => number_format(max(0, $totalEarned - $totalPaid), 3, '.', ''),
                     'payout_history' => $payouts,
                 ],
             ];
