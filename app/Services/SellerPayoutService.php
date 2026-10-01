@@ -106,18 +106,42 @@ class SellerPayoutService
                     'transaction_id',
                     'payment_status',
                     'created_at as payout_date',
-                ]);
+                ], 'history_page');
+
+            // Order-wise earnings with customer name
+            $ordersQuery = DB::table('orderdetails')
+                ->leftJoin('orders', 'orders.id', '=', 'orderdetails.order_id')
+                ->leftJoin('users', 'users.id', '=', 'orderdetails.user_id')
+                ->where('orderdetails.seller_id', $sellerId)
+                ->where('orderdetails.payment_status', '1')
+                ->where('orderdetails.delivery_status', '3');
+            $this->applyDateFilter($ordersQuery, 'orderdetails.updated_at', $request_data);
+
+            if (!empty($request_data->search)) {
+                $search = $request_data->search;
+                $ordersQuery->where(function ($q) use ($search) {
+                    $q->where('orders.order_id', 'like', "%{$search}%")
+                        ->orWhere('users.full_name', 'like', "%{$search}%");
+                });
+            }
+
+            $orders = $ordersQuery
+                ->selectRaw("orderdetails.id as id, orders.order_id as order_number, orderdetails.order_id as order_id, users.full_name as customer_name, CAST(COALESCE(orderdetails.amount, 0) + COALESCE(orderdetails.tax, 0) + COALESCE(orderdetails.shipping_fees, 0) AS DECIMAL(12, 3)) as amount, CAST(COALESCE(orderdetails.admin_commission, 0) AS DECIMAL(12, 3)) as commission, orderdetails.updated_at as order_date")
+                ->orderByDesc('orderdetails.updated_at')
+                ->orderByDesc('orderdetails.id')
+                ->paginate((int) $request_data->limit);
 
             return [
                 'status' => 'success',
-                'message' => $payouts->isEmpty() ? 'No payouts found' : 'Payouts fetched successfully',
+                'message' => $orders->isEmpty() ? 'No payouts found' : 'Payouts fetched successfully',
                 'data' => array_merge($this->getCurrency($sellerId), $this->revenueSummary($sellerId), [
                     'total_earning' => number_format($totalEarned, 3, '.', ''),
                     'total_paid' => number_format($totalPaid, 3, '.', ''),
                     'pending_amount' => number_format(max(0, $totalEarned - $totalPaid), 3, '.', ''),
                     'last_payout' => number_format((float) ($lastPayment->amount ?? 0), 3, '.', ''),
                     'last_payout_date' => optional($lastPayment)->updated_at,
-                    'payouts' => $payouts,
+                    'payouts' => $orders,
+                    'payout_history' => $payouts,
                 ]),
             ];
         } catch (\Throwable $e) {
