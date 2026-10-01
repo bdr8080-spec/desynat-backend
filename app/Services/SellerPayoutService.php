@@ -108,6 +108,32 @@ class SellerPayoutService
                     'created_at as payout_date',
                 ], 'history_page');
 
+            // Each payout covers the period since the previous payout
+            $allPayouts = $this->payoutQuery($sellerId)
+                ->orderBy('created_at')
+                ->orderBy('id')
+                ->get(['id', 'created_at']);
+            $payoutIds = $allPayouts->pluck('id')->all();
+            $payoutDates = $allPayouts->pluck('created_at')->all();
+            $firstOrderDate = $this->earningQuery($sellerId)->min('updated_at');
+
+            $payouts->getCollection()->transform(function ($payout) use ($sellerId, $payoutDates, $payoutIds, $firstOrderDate) {
+                $index = array_search($payout->id, $payoutIds);
+                $fromDate = $index > 0 ? $payoutDates[$index - 1] : $firstOrderDate;
+                $toDate = $payoutDates[$index];
+
+                $commissionQuery = $this->earningQuery($sellerId)->where('updated_at', '<=', $toDate);
+                if ($index > 0) {
+                    $commissionQuery->where('updated_at', '>', $fromDate);
+                }
+
+                $payout->from_date = $fromDate ? \Carbon\Carbon::parse($fromDate)->format('Y-m-d H:i:s') : null;
+                $payout->to_date = \Carbon\Carbon::parse($toDate)->format('Y-m-d H:i:s');
+                $payout->commission = number_format((float) $commissionQuery->sum('admin_commission'), 3, '.', '');
+
+                return $payout;
+            });
+
             // Order-wise earnings with customer name
             $ordersQuery = DB::table('orderdetails')
                 ->leftJoin('orders', 'orders.id', '=', 'orderdetails.order_id')
