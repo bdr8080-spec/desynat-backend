@@ -92,13 +92,28 @@ class SellerPayoutService
                     'amount',
                     'transaction_id',
                     'payment_status',
+                    'payment_receive_date',
                     'created_at as payout_date',
+                    'updated_at',
                 ]);
+
+            $fromDate = $request_data->from_date ?? null;
+            $toDate = $request_data->to_date ?? null;
+
+            $payouts->getCollection()->transform(function ($payout) use ($fromDate, $toDate) {
+                $payout->from_date = $fromDate;
+                $payout->to_date = $toDate;
+                $payout->payment_receive_date = $payout->payment_receive_date ?? $payout->updated_at ?? $payout->payout_date ?? $payout->created_at;
+
+                return $payout;
+            });
 
             return [
                 'status' => 'success',
                 'message' => $payouts->isEmpty() ? 'No payouts found' : 'Payouts fetched successfully',
                 'data' => array_merge($this->getCurrency($sellerId), [
+                    'from_date' => $fromDate,
+                    'to_date' => $toDate,
                     'total_earning' => number_format($totalEarned, 3, '.', ''),
                     'total_paid' => number_format($totalPaid, 3, '.', ''),
                     'pending_amount' => number_format(max(0, $totalEarned - $totalPaid), 3, '.', ''),
