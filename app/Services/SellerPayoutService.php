@@ -114,9 +114,11 @@ class SellerPayoutService
             $toDate = $request_data->to_date ?? null;
 
             $payouts->getCollection()->transform(function ($payout) use ($fromDate, $toDate) {
-                $payout->from_date = $fromDate;
-                $payout->to_date = $toDate;
-                $payout->payment_receive_date = $payout->payment_receive_date ?? $payout->updated_at ?? $payout->payout_date ?? $payout->created_at;
+                $paymentReceiveDate = $payout->payment_receive_date ?? $payout->updated_at ?? $payout->payout_date ?? $payout->created_at;
+
+                $payout->from_date = !empty($fromDate) ? $fromDate : $paymentReceiveDate;
+                $payout->to_date = !empty($toDate) ? $toDate : $paymentReceiveDate;
+                $payout->payment_receive_date = $paymentReceiveDate;
 
                 return $payout;
             });
