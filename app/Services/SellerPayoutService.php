@@ -132,8 +132,7 @@ class SellerPayoutService
                     'pending_amount' => number_format(max(0, $totalEarned - $totalPaid), 3, '.', ''),
                     'last_payout' => number_format((float) ($lastPayment->amount ?? 0), 3, '.', ''),
                     'last_payout_date' => optional($lastPayment)->updated_at,
-                    'payouts' => $orders,
-                    'payout_history' => $payouts,
+                    'payouts' => $payouts,
                 ]),
             ];
         } catch (\Throwable $e) {
