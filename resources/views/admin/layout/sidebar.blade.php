@@ -270,7 +270,7 @@
     @endif
 
      @if(in_array(33, $permissions) || $admin->type == 1)
-    <li class="nav-item {{ Request::routeIs('admin.payouts') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::routeIs('admin.payouts', 'admin.view-seller-payouts') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.payouts') }}">
             <span><img src="{{ asset('admin/image/seller.svg') }}" alt="icon" /></span>
             <span class="asideTitle">Seller Payout Management </span>

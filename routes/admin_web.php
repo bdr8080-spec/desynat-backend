@@ -317,7 +317,8 @@ Route::group(['prefix'=>'admin'], function(){
      Route::get('/export_refund_data_new', [AuthController::class, 'export_refund_data_new'])->name('admin.export_refund_data_new');
 
      Route::get('/seller-payouts', [SellerPayoutController::class, 'payouts'])->name('admin.payouts');
-     Route::get('/view-seller-payouts', [SellerPayoutController::class, 'Sellerpayouts'])->name('admin.view-seller-payouts');   
+     Route::get('/view-seller-payouts', [SellerPayoutController::class, 'Sellerpayouts'])->name('admin.view-seller-payouts');
+     Route::post('/add-seller-payout', [SellerPayoutController::class, 'addSellerPayout'])->name('admin.add-seller-payout');
 
      
         

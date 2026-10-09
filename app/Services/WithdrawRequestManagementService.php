@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class WithdrawRequestManagementService
 {
-    public function getSellerPayoutHistory($sellerId, $limit = 20)
+    public function getSellerPayoutHistory($sellerId, $limit = 20, $fromDate = null, $toDate = null)
     {
         try {
             $totalEarned = (float) orderdetail::query()
@@ -35,6 +35,8 @@ class WithdrawRequestManagementService
                 ->where('type', '3')
                 ->where('user_id', $sellerId)
                 ->where('payment_status', '1')
+                ->when($fromDate, fn ($query) => $query->whereDate('created_at', '>=', $fromDate))
+                ->when($toDate, fn ($query) => $query->whereDate('created_at', '<=', $toDate))
                 ->orderByDesc('created_at')
                 ->orderByDesc('id')
                 ->paginate((int) $limit, [

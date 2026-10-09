@@ -108,7 +108,7 @@ class SellerPayoutService
                     'payment_receive_date',
                     'created_at as payout_date',
                     'updated_at',
-                ]);
+                ], $request_data->page_name ?? 'page');
 
             $fromDate = $request_data->from_date ?? null;
             $toDate = $request_data->to_date ?? null;
@@ -194,7 +194,7 @@ class SellerPayoutService
                 ->fromSub($union, 't')
                 ->orderByDesc('transaction_date')
                 ->orderByDesc('id')
-                ->paginate((int) $request_data->limit);
+                ->paginate((int) $request_data->limit, ['*'], $request_data->page_name ?? 'page');
 
             return [
                 'status' => 'success',

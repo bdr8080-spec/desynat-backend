@@ -255,6 +255,9 @@ Route::group(['prefix' => 'seller'], function () {
     Route::get('/change-password', [WebSellerDashboard::class, 'change_password'])->name('seller.change_password');
     Route::post('/update_password', [WebSellerDashboard::class, 'update_password'])->name('seller.update_password');
 
+    Route::get('/payments', [WebSellerDashboard::class, 'payments'])->name('seller.payments');
+    Route::get('/export_payments_data', [WebSellerDashboard::class, 'export_payments_data'])->name('seller.export_payments_data');
+
     
 
     });
@@ -274,7 +277,6 @@ Route::get('seller/return-policy', [WebSellerDashboard::class, 'returnPolicy'])-
 Route::get('seller/exchange-policy', [WebSellerDashboard::class, 'exchangePolicy'])->name('seller.exchangePolicy');
 Route::get('seller/cancellation-policy', [WebSellerDashboard::class, 'cancellationPolicy'])->name('seller.cancellationPolicy');
 Route::get('seller/faq', [WebSellerDashboard::class, 'faq'])->name('seller.faq');
-Route::get('seller/payments', [WebSellerDashboard::class, 'payments'])->name('seller.payments');
 
 
 

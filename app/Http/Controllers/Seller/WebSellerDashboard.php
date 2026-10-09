@@ -24,6 +24,7 @@ use App\Services\CMSManagementService;
 use App\Services\SellerOrderService;
 use App\Services\SellerNotificationService;
 use App\Services\SellerDashboardService;
+use App\Services\SellerPayoutService;
 
 
 use App\Helpers\ApiResponse;
@@ -35,7 +36,7 @@ use Illuminate\Support\Facades\App;
 class WebSellerDashboard extends Controller
 {
 
-    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService, CMSManagementService $CMSManagementService, SellerOrderService $SellerOrderService, SellerNotificationService $SellerNotificationService, SellerDashboardService $SellerDashboardService){
+    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService,StoryManagementService $StoryManagementService,TicketService $TicketService, CMSManagementService $CMSManagementService, SellerOrderService $SellerOrderService, SellerNotificationService $SellerNotificationService, SellerDashboardService $SellerDashboardService, SellerPayoutService $SellerPayoutService){
         $this->SellerAuthService=$SellerAuthService;
        $this->SellerProductService=$SellerProductService;
        $this->StoryManagementService=$StoryManagementService;
@@ -44,6 +45,7 @@ class WebSellerDashboard extends Controller
        $this->SellerOrderService = $SellerOrderService;
        $this->SellerNotificationService = $SellerNotificationService;
        $this->SellerDashboardService = $SellerDashboardService;
+       $this->SellerPayoutService = $SellerPayoutService;
        
     }
 
@@ -1710,7 +1712,113 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
     }
 
     public function payments(Request $request){
-        return view('dealer.payouts.index');
+        $seller_id = sellerAndStaffId();
+
+        $transactionsData = $this->SellerPayoutService->getAllTransactions((object) [
+            'seller_id' => $seller_id,
+            'transaction_type' => $request->transaction_type ?? '0',
+            'limit' => 12,
+            'from_date' => $request->from_date ?? null,
+            'to_date' => $request->to_date ?? null,
+            'search' => $request->search ?? null,
+            'page_name' => 'page',
+        ]);
+
+        $payoutsData = $this->SellerPayoutService->getMyPayouts((object) [
+            'seller_id' => $seller_id,
+            'limit' => 12,
+            'from_date' => $request->payout_from_date ?? null,
+            'to_date' => $request->payout_to_date ?? null,
+            'search' => $request->payout_search ?? null,
+            'page_name' => 'payout_page',
+        ]);
+
+        if ($transactionsData['status'] === 'error' || $payoutsData['status'] === 'error') {
+            session()->now('error', $transactionsData['status'] === 'error' ? $transactionsData['message'] : $payoutsData['message']);
+        }
+
+        $transactionsData = $transactionsData['data'];
+        $payoutsData = $payoutsData['data'];
+        $activeTab = $request->tab === 'payouts' ? 'payouts' : 'transactions';
+
+        return view('dealer.payouts.index', compact('transactionsData', 'payoutsData', 'activeTab'));
+    }
+
+    public function export_payments_data(Request $request)
+    {
+        $seller_id = sellerAndStaffId();
+        $isPayouts = $request->tab === 'payouts';
+
+        if ($isPayouts) {
+            $response = $this->SellerPayoutService->getMyPayouts((object) [
+                'seller_id' => $seller_id,
+                'limit' => 100000,
+                'from_date' => $request->payout_from_date ?? null,
+                'to_date' => $request->payout_to_date ?? null,
+                'search' => $request->payout_search ?? null,
+            ]);
+            $rows = $response['data']['payouts'] ?? collect();
+        } else {
+            $response = $this->SellerPayoutService->getAllTransactions((object) [
+                'seller_id' => $seller_id,
+                'transaction_type' => $request->transaction_type ?? '0',
+                'limit' => 100000,
+                'from_date' => $request->from_date ?? null,
+                'to_date' => $request->to_date ?? null,
+                'search' => $request->search ?? null,
+            ]);
+            $rows = $response['data']['transactions'] ?? collect();
+        }
+
+        $currency = $response['data']['currency_code'] ?? 'KD';
+        $rows = ($rows instanceof \Illuminate\Pagination\LengthAwarePaginator) ? collect($rows->items()) : collect($rows);
+
+        $fileName = ($isPayouts ? 'seller_payouts_' : 'seller_transactions_') . now()->format('Y_m_d_H_i_s') . '.csv';
+
+        $headers = [
+            "Content-Type" => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+        ];
+
+        return response()->stream(function () use ($rows, $isPayouts, $currency) {
+
+            $file = fopen('php://output', 'w');
+
+            // UTF-8 fix for Excel
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            if ($isPayouts) {
+                fputcsv($file, ['S.No', 'Request ID', 'Transaction ID', 'Payout Received At', 'Amount(' . $currency . ')']);
+
+                foreach ($rows as $index => $item) {
+                    fputcsv($file, [
+                        $index + 1,
+                        $item->request_id,
+                        $item->transaction_id ?? 'N/A',
+                        $item->payment_receive_date ? \Carbon\Carbon::parse($item->payment_receive_date)->format('d/m/Y h:i A') : '-',
+                        $item->amount,
+                    ]);
+                }
+            } else {
+                fputcsv($file, ['S.No', 'Type', 'Reference ID', 'Transaction ID', 'Date & Time', 'Customer Name', 'Amount(' . $currency . ')', 'Commission(' . $currency . ')']);
+
+                foreach ($rows as $index => $item) {
+                    fputcsv($file, [
+                        $index + 1,
+                        ucfirst($item->transaction_label),
+                        $item->reference_id ?? '-',
+                        $item->transaction_id ?? 'N/A',
+                        $item->transaction_date ? \Carbon\Carbon::parse($item->transaction_date)->format('d/m/Y h:i A') : '-',
+                        $item->customer_name ?? '-',
+                        $item->amount,
+                        $item->commission ?? '-',
+                    ]);
+                }
+            }
+
+            fclose($file);
+
+        }, 200, $headers);
     }
 
       
