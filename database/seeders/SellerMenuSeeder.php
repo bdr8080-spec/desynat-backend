@@ -148,12 +148,21 @@ SellerMenus_table::insert([
         'status' => 1
     ],
     [
+        'title' => 'Payments',
+        'title_ar' => 'الإعدادات',
+        'route' => 'seller.payments',
+        'icon' => 'dealer/assets/img/m3-icon/ren-icon.svg',
+        'active_patterns' => json_encode(['seller/payments']),
+        'order_by' => 14,
+        'status' => 1
+    ],
+    [
         'title' => 'Terms & Condition',
         'title_ar' => 'الشروط والأحكام',
         'route' => 'seller.termCondition',
         'icon' => 'dealer/assets/img/all-icons/terms.svg',
         'active_patterns' => json_encode(['seller/terms-conditions']),
-        'order_by' => 14,
+        'order_by' => 15,
         'status' => 1
     ],
     [
@@ -162,7 +171,7 @@ SellerMenus_table::insert([
         'route' => 'seller.returnPolicy',
         'icon' => 'dealer/assets/img/all-icons/return.svg',
         'active_patterns' => json_encode(['seller/return-policy']),
-        'order_by' => 15,
+        'order_by' => 16,
         'status' => 1
     ],
     [
@@ -171,7 +180,7 @@ SellerMenus_table::insert([
         'route' => 'seller.aboutUs',
         'icon' => 'dealer/assets/img/m3-icon/about.svg',
         'active_patterns' => json_encode(['seller/about-us']),
-        'order_by' => 16,
+        'order_by' => 17,
         'status' => 1
     ],
 
@@ -181,7 +190,7 @@ SellerMenus_table::insert([
         'route' => 'seller.faq',
         'icon' => 'dealer/assets/img/all-icons/faqs.svg',
         'active_patterns' => json_encode(['seller/faq']),
-        'order_by' => 17,
+        'order_by' => 18,
         'status' => 1
     ],
     [
@@ -190,7 +199,7 @@ SellerMenus_table::insert([
         'route' => 'seller.cancellationPolicy',
         'icon' => 'dealer/assets/img/all-icons/terms.svg',
         'active_patterns' => json_encode(['seller/cancellation-policy']),
-        'order_by' => 18,
+        'order_by' => 19,
         'status' => 1
     ],
     [
@@ -199,7 +208,7 @@ SellerMenus_table::insert([
         'route' => 'seller.exchangePolicy',
         'icon' => 'dealer/assets/img/all-icons/exchange.svg',
         'active_patterns' => json_encode(['seller/exchange-policy']),
-        'order_by' => 19,
+        'order_by' => 20,
         'status' => 1
     ],
 
@@ -209,9 +218,10 @@ SellerMenus_table::insert([
         'route' => 'seller.setting',
         'icon' => 'dealer/assets/img/m3-icon/setting.svg',
         'active_patterns' => json_encode(['seller/setting']),
-        'order_by' => 20,
+        'order_by' => 21,
         'status' => 1
     ]
+    
 
 ]);
 

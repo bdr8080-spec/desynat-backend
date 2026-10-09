@@ -1709,7 +1709,9 @@ return  redirect()->route('seller.dashboard')->with('success', __('seller_messag
 
     }
 
-      
+    public function payments(Request $request){
+        return view('dealer.payouts.index');
+    }
 
       
 
