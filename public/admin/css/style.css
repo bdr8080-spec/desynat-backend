@@ -104,7 +104,7 @@ li.nav-item.active {
     margin: 0px 10px;
 }
 li.nav-item.active .nav-link{
-    padding: 6px 7px;
+    padding: 3px 7px;
 }
 
 .sidebar-dark .nav-item .nav-link {
@@ -117,7 +117,7 @@ li.nav-item.active .nav-link{
     display: flex;
     align-items: center;
     justify-content: start;
-    margin: 7px 0px;
+    margin: 4px 0px;
 }
 .sidebar .nav-item .nav-link span img {
     width: 24px;
@@ -261,8 +261,8 @@ label.form-label {
 }
 
 .form-switch .form-check-input {
-    width: 44px !important;
-    height: 18px;
+    width: 40px !important;
+    height: 22px;
 }
 
 /* .form-group select.form-control{

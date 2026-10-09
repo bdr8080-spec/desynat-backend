@@ -33,6 +33,7 @@ use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\AdminLiveStreamController;
 use App\Http\Controllers\Admin\AdminLanguageController;
+use App\Http\Controllers\Admin\SellerPayoutController;
 
 
 use App\Http\Controllers\SaveFirebaseToken;
@@ -315,7 +316,8 @@ Route::group(['prefix'=>'admin'], function(){
      //refund export
      Route::get('/export_refund_data_new', [AuthController::class, 'export_refund_data_new'])->name('admin.export_refund_data_new');
 
-        
+     Route::get('/seller-payouts', [SellerPayoutController::class, 'payouts'])->name('admin.payouts');
+     Route::get('/view-seller-payouts', [SellerPayoutController::class, 'Sellerpayouts'])->name('admin.view-seller-payouts');   
 
      
         
