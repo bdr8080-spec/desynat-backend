@@ -80,7 +80,6 @@ class WithdrawRequestManagementService
             if (!empty($request_data->to_date)) {
                 $withdrawalSellerQuery->whereDate('created_at', '<=', $request_data->to_date);
             }
-
             $sellerIds = $withdrawalSellerQuery->pluck('user_id');
             if (($request_data->req_type === null || $request_data->req_type === '')
                 && empty($request_data->from_date)
@@ -174,6 +173,7 @@ class WithdrawRequestManagementService
                 $totalPending += max(0, $earned - $paid);
             }
 
+
             $payouts->getCollection()->transform(function ($sellerDetails) use ($earnings, $paidAmounts, $lastPayments) {
                 $sellerId = $sellerDetails->id;
                 $totalEarned = (float) ($earnings[$sellerId] ?? 0);
@@ -209,6 +209,7 @@ class WithdrawRequestManagementService
         }
     }
 
+    
     public function getWithdrawRequests($request_data)
     {
         try {

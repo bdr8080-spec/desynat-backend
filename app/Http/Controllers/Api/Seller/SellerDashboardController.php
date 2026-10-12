@@ -35,7 +35,6 @@ class SellerDashboardController extends Controller
 
     }
 
-
     public function index(Request $request){
 
         $user_details=$request->user();

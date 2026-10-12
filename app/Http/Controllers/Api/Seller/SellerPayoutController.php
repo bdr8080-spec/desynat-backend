@@ -26,6 +26,7 @@ class SellerPayoutController extends Controller
             'search' => 'nullable|string|max:255',
         ]);
 
+
         if ($validate->fails()) {
             return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
         }
@@ -44,6 +45,7 @@ class SellerPayoutController extends Controller
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], $data['data'] ?? [], 400);
             }
+
 
             return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
         } catch (\Throwable $e) {
@@ -77,6 +79,7 @@ class SellerPayoutController extends Controller
 
             $data = $this->SellerPayoutService->getAllTransactions($request_data);
 
+            
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], $data['data'] ?? [], 400);
             }
