@@ -402,6 +402,11 @@ class MyFatoorahController extends Controller {
                     $msg="Banner Payment Cancelled Successfully";
                     $url="/Seller/show-banner?payment=no";
                 }
+
+                return redirect()->to($url)->with([
+                    'message' => $msg,
+                    'status' => $data->InvoiceStatus == 'Paid' ? 'success' : 'error'
+                ]);
             
             }
             // Buy Story Online 
@@ -482,7 +487,10 @@ class MyFatoorahController extends Controller {
             $exMessage = __('myfatoorah.' . $ex->getMessage());
             $response  = ['IsSuccess' => 'false', 'Message' => $exMessage];
         }
-        return response()->json($response);
+        return response()->json($response ?? [
+            'IsSuccess' => false,
+            'Message' => 'Payment reference was not found.'
+        ], isset($response) ? 200 : 404);
     }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
