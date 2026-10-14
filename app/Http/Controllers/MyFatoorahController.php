@@ -360,6 +360,8 @@ class MyFatoorahController extends Controller {
                     
                     $checkOrderStatus->update(['payment_status'=>'2','transaction_id'=>$onlineReturnTransaction_id,'payment_id'=> $paymentId]);
                     $msg="Order Payment Cancelled Successfully";
+                    // Keep a safe destination even if an order has an unexpected type.
+                    $url = "user/view-cart?payment=no";
                     if ($checkOrderStatus->type == '1') {
                         $url = "user/view-cart?payment=no";
                     } elseif ($checkOrderStatus->type == '2') {
