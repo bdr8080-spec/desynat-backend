@@ -1,5 +1,6 @@
 @extends('admin.layout.app')
 @section('content')
+@php $currency = $currency === 'KWD' ? 'KD' : $currency; @endphp
 
 
 <div id="content-wrapper" class="d-flex flex-column position-relative">
@@ -75,7 +76,10 @@
                         </thead>
                         <tbody>
                             @foreach($sellers as $index => $seller)
-                            @php $sellerCurrency = $seller->currency_code ?? 'KD'; @endphp
+                            @php
+                                $sellerCurrency = $seller->currency_code ?? 'KD';
+                                $sellerCurrency = $sellerCurrency === 'KWD' ? 'KD' : $sellerCurrency;
+                            @endphp
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $seller->seller_name ?: __('admin_messages.na') }}</td>

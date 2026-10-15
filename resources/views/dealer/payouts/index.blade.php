@@ -19,6 +19,7 @@
 
 @php
     $currency = $transactionsData['currency_code'] ?? $payoutsData['currency_code'] ?? 'KD';
+    $currency = $currency === 'KWD' ? 'KD' : $currency;
     $transactions = $transactionsData['transactions'] ?? collect();
     $payouts = $payoutsData['payouts'] ?? collect();
 @endphp

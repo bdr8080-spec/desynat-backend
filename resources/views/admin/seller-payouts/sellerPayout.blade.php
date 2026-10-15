@@ -1,5 +1,6 @@
 @extends('admin.layout.app')
 @section('content')
+@php $currency = $currency === 'KWD' ? 'KD' : $currency; @endphp
 @php
     $admin = auth('admin')->user();
 
