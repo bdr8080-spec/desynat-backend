@@ -57,6 +57,7 @@ class SellerPayoutController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'transaction_type' => 'nullable|in:0,1,2', // 0-all, 1-credit, 2-debit
+            'payment_mode' => 'nullable|in:1,2,3', // 1-online, 2-wallet, 3-cash on delivery
             'limit' => 'nullable|integer|min:1|max:100',
             'from_date' => 'nullable|date',
             'to_date' => 'nullable|date|after_or_equal:from_date',
@@ -71,6 +72,7 @@ class SellerPayoutController extends Controller
             $request_data = (object) [
                 'seller_id' => $this->SellerPayoutService->resolveSellerId($request->user()),
                 'transaction_type' => $request->transaction_type ?? '0',
+                'payment_mode' => $request->payment_mode,
                 'limit' => $request->limit ?? 20,
                 'from_date' => $request->from_date,
                 'to_date' => $request->to_date,
