@@ -158,7 +158,7 @@ class SellerPayoutService
                 ->where('orderdetails.seller_id', $sellerId)
                 ->where('orderdetails.payment_status', '1')
                 ->where('orderdetails.delivery_status', '3')
-                ->selectRaw("orderdetails.id as id, 1 as transaction_type, 'credit' as transaction_label, orders.order_id as reference_id, orderdetails.order_id as order_id, users.full_name as customer_name, orders.payment_method as payment_method, orders.transaction_id as transaction_id, CAST(COALESCE(orderdetails.amount, 0) + COALESCE(orderdetails.tax, 0) + COALESCE(orderdetails.shipping_fees, 0) AS DECIMAL(12, 3)) as amount, CAST(COALESCE(orderdetails.admin_commission, 0) AS DECIMAL(12, 3)) as commission, orderdetails.updated_at as transaction_date");
+                ->selectRaw("orderdetails.id as id, 1 as transaction_type, 'credit' as transaction_label, orders.order_id as reference_id, orderdetails.order_id as order_id, users.full_name as customer_name, orders.payment_method as payment_method, orders.transaction_id as transaction_id, CAST(COALESCE(orderdetails.amount, 0) + COALESCE(orderdetails.tax, 0) + COALESCE(orderdetails.shipping_fees, 0) AS DECIMAL(12, 3)) as amount, CAST(COALESCE(orderdetails.admin_commission, 0) AS DECIMAL(12, 3)) as commission, orders.created_at as transaction_date");
 
             // Debits: payouts transferred by admin
             $debits = DB::table('withdraw_requests')
@@ -167,7 +167,7 @@ class SellerPayoutService
                 ->where('admin_verify', '1')
                 ->selectRaw("id as id, 2 as transaction_type, 'debit' as transaction_label, request_id as reference_id, NULL as order_id, NULL as customer_name, NULL as payment_method, transaction_id as transaction_id, CAST(amount AS DECIMAL(12, 3)) as amount, NULL as commission, created_at as transaction_date");
 
-            $this->applyDateFilter($credits, 'orderdetails.updated_at', $request_data);
+            $this->applyDateFilter($credits, 'orders.created_at', $request_data);
             $this->applyDateFilter($debits, 'created_at', $request_data);
 
             if (!empty($request_data->search)) {
