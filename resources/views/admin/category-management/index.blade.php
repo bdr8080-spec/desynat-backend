@@ -144,6 +144,7 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#editCatModal"
                                 data-id="{{ $category->id }}"
+                                data-name="{{ $category->name }}"
                                 data-image="{{ $category->image }}">
                                   <i class="bi bi-pencil-square"></i>
                               </a>
@@ -203,6 +204,12 @@
                                     <input type="file" id="editFileUpload" name="image" accept="image/*" hidden />
                                 </label>
                                 <div class="text-danger" id="editImageError"></div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-12 mt-3">
+                                <label for="editCategoryName" class="form-label">{{ __('admin_messages.category_name') }}</label>
+                                <input type="text" name="name" id="editCategoryName" class="form-control"
+                                    placeholder="{{ __('admin_messages.category_name') }}" required />
+                                <div class="text-danger" id="editCategoryNameError"></div>
                             </div>
                             <input type="hidden" name="category_id" id="editCategoryId" class="form-control" value="" />
 
@@ -266,6 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const editForm = document.getElementById('editBrandForm');
     const editBrandId = document.getElementById('editBrandId');
     const editPreviewImage = document.getElementById('editPreviewImage');
+    const editCategoryName = document.getElementById('editCategoryName');
 
     // Image preview when selecting a new file
     document.getElementById('editFileUpload').addEventListener('change', function(e) {
@@ -299,6 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
           document.getElementById('editBrandId').value = id;
           document.getElementById('editCategoryId').value = id;
+          editCategoryName.value = this.dataset.name || '';
           editPreviewImage.src = this.getAttribute('data-image');
       });
   });
@@ -308,6 +317,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('editBrandSubmit').addEventListener('click', function() {
         const formData = new FormData(editForm);
         const id = editBrandId.value;
+
+        document.getElementById('editCategoryNameError').innerText = '';
+        if (!editCategoryName.value.trim()) {
+            document.getElementById('editCategoryNameError').innerText = '{{ __('admin_messages.category_name_required') }}';
+            return;
+        }
 
 
         fetch(`/admin/updateCategory/${id}`, {

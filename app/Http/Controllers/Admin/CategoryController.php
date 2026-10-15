@@ -144,9 +144,10 @@ class CategoryController extends Controller
 
     public function updateCategory(Request $request, $id)
     {
-        $scat = Category::findOrFail($id);
+        $category = Category::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
@@ -154,7 +155,7 @@ class CategoryController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $scat->id = $request->category_id;
+        $category->name = $request->name;
 
         if ($request->hasFile('image')) {
             $commonController = app(CommonController::class);
@@ -166,10 +167,10 @@ class CategoryController extends Controller
             }
 
             $imageUrl = $uploadResultArray['data']['url'];
-            $scat->image = $imageUrl;
+            $category->image = $imageUrl;
         }
 
-        $scat->save();
+        $category->save();
 
         return response()->json(['success' => true, 'message' => __('admin_messages.category_updated_successfully')]);
     }

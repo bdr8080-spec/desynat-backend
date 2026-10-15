@@ -212,6 +212,7 @@ return [
 
     //category & sub-category management
     'category_name' => 'Category Name',
+    'category_name_required' => 'Please enter a category name',
     'manage_sub_category' => 'Manage Sub Categories',
     'sub_category_name_english' => 'Sub Category Name(English)',
     'sub_category_name_arabic' => 'Sub Category Name(Arabic)',

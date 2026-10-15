@@ -209,6 +209,7 @@ return [
 
     //category & sub-category management
     'category_name' => 'اسم الفئة',
+    'category_name_required' => 'يرجى إدخال اسم الفئة',
     'manage_sub_category' => 'إدارة الفئات الفرعية',
     'sub_category_name_english' => 'اسم الفئة الفرعية بالإنجليزية',
     'sub_category_name_arabic' => 'اسم الفئة الفرعية بالعربية',
