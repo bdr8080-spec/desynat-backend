@@ -151,13 +151,12 @@ class SellerPayoutService
         try {
             $sellerId = $request_data->seller_id;
 
-            // Credits: delivered and paid order items
+            // Credits: paid order items, independent of whether a payout exists yet
             $credits = DB::table('orderdetails')
                 ->leftJoin('orders', 'orders.id', '=', 'orderdetails.order_id')
                 ->leftJoin('users', 'users.id', '=', 'orderdetails.user_id')
                 ->where('orderdetails.seller_id', $sellerId)
                 ->where('orderdetails.payment_status', '1')
-                ->where('orderdetails.delivery_status', '3')
                 ->selectRaw("orderdetails.id as id, 1 as transaction_type, 'credit' as transaction_label, orders.order_id as reference_id, orderdetails.order_id as order_id, users.full_name as customer_name, orders.payment_method as payment_method, orders.transaction_id as transaction_id, CAST(COALESCE(orderdetails.amount, 0) + COALESCE(orderdetails.tax, 0) + COALESCE(orderdetails.shipping_fees, 0) AS DECIMAL(12, 3)) as amount, CAST(COALESCE(orderdetails.admin_commission, 0) AS DECIMAL(12, 3)) as commission, orders.created_at as transaction_date");
 
             if (!empty($request_data->payment_mode)) {
