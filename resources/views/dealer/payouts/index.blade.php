@@ -109,7 +109,7 @@
                             <div class="card mb-4">
                                 <div class="card-header d-flex justify-content-between">
                                     <div class="ticket">
-                                        <p class="text-muted mb-0">{{ $transaction->transaction_type == 1 ? 'Order ID' : 'Transaction ID' }}</p>
+                                        <p class="text-muted mb-0">{{ $transaction->transaction_type == 1 ? _('Order_ID') : _('Transaction_id') }}</p>
                                         <p class="fst-500 mb-0">
                                             #{{ $transaction->transaction_type == 1 ? $transaction->reference_id : ($transaction->transaction_id ?? $transaction->reference_id) }}
                                         </p>
@@ -124,7 +124,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <p class="text-muted mb-0">{{ __('seller_messages.type') }}</p>
                                         <p class="fst-500 mb-0 {{ $transaction->transaction_type == 1 ? 'text-success' : 'text-danger' }}">
-                                            {{ $transaction->transaction_type == 1 ? 'Credit' : 'Debit (Payout)' }}
+                                            {{ $transaction->transaction_type == 1 ? _('Credit') : _('Debit (Payout)') }}
                                         </p>
                                     </div>
 

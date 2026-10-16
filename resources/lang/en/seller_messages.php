@@ -1585,7 +1585,7 @@ return [
 
     // Payment Summary
     'Payment_Summary' => 'Payment Summary',
-    'Transaction_id' => 'Transaction id',
+    'Transaction_id' => 'Transaction ID',
     'Sub_Total' => 'Sub Total',
     'Coupon_Applied' => 'Coupon Applied',
     'Shipping_Charges' => 'Shipping Charges',
@@ -1790,7 +1790,8 @@ return [
 'payout_rec'=>'Payout received at',
 'payout_amount'=> 'Total Amount received',
 'payout_no' => ' No payouts found',
-
+'Credit' => 'Credit',
+'Debit (Payout)' =>'Debit (Payout)',
 
 
 
