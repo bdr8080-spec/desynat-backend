@@ -273,7 +273,7 @@
     <li class="nav-item {{ Request::routeIs('admin.payouts', 'admin.view-seller-payouts') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.payouts') }}">
             <span><img src="{{ asset('admin/image/seller.svg') }}" alt="icon" /></span>
-            <span class="asideTitle">Seller Payout Management </span>
+            <span class="asideTitle">{{ __('admin_messages.sp_title') }} </span>
         </a>
     </li>
     @endif
