@@ -1019,4 +1019,34 @@ return [
 
 
 
+
+// Seller payouts
+'sp_title' => 'Seller Payouts Management',
+'sp_from' => 'From',
+'sp_to' => 'To',
+'sp_country' => 'Country',
+'sp_total_pending' => 'Total Pending Payout',
+'sp_total_paid' => 'Total Paid',
+'sp_sr_no' => 'Sr.No',
+'sp_seller_name' => 'Seller Name',
+'sp_total_earning' => 'Total Earning',
+'sp_last_payout_date' => 'Last Payout Date',
+'sp_last_payout_amount' => 'Last Payout Amount',
+'sp_total_pending_amount' => 'Total Pending Payout Amount',
+'sp_action' => 'Action',
+'sp_manage_payout' => 'Manage Payout',
+'sp_view_title' => 'View Seller Payouts',
+'sp_add_payout' => 'Add Payout',
+'sp_date' => 'Date',
+'sp_payout_amount' => 'Payout Amount',
+'sp_transaction_id' => 'Transaction ID',
+'sp_amount' => 'Amount',
+'sp_enter_amount' => 'Enter Amount',
+'sp_pending' => 'Pending',
+'sp_enter_transaction_id' => 'Enter Transaction ID',
+'sp_submit' => 'Submit',
+'sp_valid_amount' => 'Please enter a valid amount.',
+'sp_exceeds_pending' => 'Payout amount exceeds the seller pending amount.',
+'sp_enter_txn' => 'Please enter transaction ID.',
+'sp_wrong' => 'Something went wrong.',
 ];

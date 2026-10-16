@@ -990,4 +990,34 @@ return [
 
 
 
+
+// Seller payouts
+'sp_title' => 'إدارة مدفوعات البائعين',
+'sp_from' => 'من',
+'sp_to' => 'إلى',
+'sp_country' => 'الدولة',
+'sp_total_pending' => 'إجمالي المدفوعات المعلقة',
+'sp_total_paid' => 'إجمالي المدفوع',
+'sp_sr_no' => 'الرقم التسلسلي',
+'sp_seller_name' => 'اسم البائع',
+'sp_total_earning' => 'إجمالي الأرباح',
+'sp_last_payout_date' => 'تاريخ آخر دفعة',
+'sp_last_payout_amount' => 'مبلغ آخر دفعة',
+'sp_total_pending_amount' => 'إجمالي مبلغ المدفوعات المعلقة',
+'sp_action' => 'الإجراء',
+'sp_manage_payout' => 'إدارة الدفعات',
+'sp_view_title' => 'عرض مدفوعات البائع',
+'sp_add_payout' => 'إضافة دفعة',
+'sp_date' => 'التاريخ',
+'sp_payout_amount' => 'مبلغ الدفعة',
+'sp_transaction_id' => 'رقم العملية',
+'sp_amount' => 'المبلغ',
+'sp_enter_amount' => 'أدخل المبلغ',
+'sp_pending' => 'المعلق',
+'sp_enter_transaction_id' => 'أدخل رقم العملية',
+'sp_submit' => 'إرسال',
+'sp_valid_amount' => 'يرجى إدخال مبلغ صحيح.',
+'sp_exceeds_pending' => 'مبلغ الدفعة يتجاوز المبلغ المعلق للبائع.',
+'sp_enter_txn' => 'يرجى إدخال رقم العملية.',
+'sp_wrong' => 'حدث خطأ ما.',
 ];

@@ -22,12 +22,11 @@
                             <i class="fas fa-angle-left"></i>
                         </a>
                     </div>
-                    <h2 class="h2 text-start">View Seller Payouts - {{ $sellerName }}</h2>
+                    <h2 class="h2 text-start">{{ __('admin_messages.sp_view_title') }} - {{ $sellerName }}</h2>
                 </div>
 
                 @if(in_array(33, $permissions) || $admin->type == 1)
-                <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#addModal2"> <span>Add
-                        Payout</span></a>
+                <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#addModal2"> <span>{{ __('admin_messages.sp_add_payout') }}</span></a>
                 @endif
             </div>
 
@@ -36,7 +35,7 @@
             <div class="row">
                 <div class="col-lg-2 col-md-3 col-12">
                     <div class="form-group  w-100">
-                        <label for="from_date" class="form-label">From</label>
+                        <label for="from_date" class="form-label">{{ __('admin_messages.sp_from') }}</label>
                         <input type="date" id="from_date" name="from_date" class="form-control datepicker"
                             value="{{ request()->from_date }}"
                             onchange="updateToDate(); document.getElementById('filterForm').submit();" />
@@ -44,7 +43,7 @@
                 </div>
                 <div class="col-lg-2 col-md-3 col-12">
                     <div class="form-group  w-100">
-                        <label for="to_date" class="form-label">To</label>
+                        <label for="to_date" class="form-label">{{ __('admin_messages.sp_to') }}</label>
                         <input type="date" id="to_date" name="to_date" class="form-control datepicker"
                             value="{{ request()->to_date }}"
                             onchange="document.getElementById('filterForm').submit();" />
@@ -58,8 +57,8 @@
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-12 d-flex flex-column justify-content-end">
-                    <h5 class="text-color" style="color:#ac875e;">Total Paid:- {{ $currency }} {{ $totalPaid }}</h5>
-                    <h5 class="text-color" style="color:#ac875e;">Total Pending Payout:- {{ $currency }} {{ $pendingAmount }}</h5>
+                    <h5 class="text-color" style="color:#ac875e;">{{ __('admin_messages.sp_total_paid') }}:- {{ $currency }} {{ $totalPaid }}</h5>
+                    <h5 class="text-color" style="color:#ac875e;">{{ __('admin_messages.sp_total_pending') }}:- {{ $currency }} {{ $pendingAmount }}</h5>
                 </div>
 
             </div>
@@ -70,10 +69,10 @@
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
-                                <th scope="col">Sr.No</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Payout Amount</th>
-                                <th scope="col">Transaction ID</th>
+                                <th scope="col">{{ __('admin_messages.sp_sr_no') }}</th>
+                                <th scope="col">{{ __('admin_messages.sp_date') }}</th>
+                                <th scope="col">{{ __('admin_messages.sp_payout_amount') }}</th>
+                                <th scope="col">{{ __('admin_messages.sp_transaction_id') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,7 +99,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add Payout</h2>
+                <h2 class="h2">{{ __('admin_messages.sp_add_payout') }}</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -111,24 +110,24 @@
                             <!-- Amount -->
                             <div class="col-lg-12 col-md-12 col-12">
                                 <div class="form-group">
-                                    <label class="form-label" for="payoutAmount">Amount ({{ $currency }})</label>
-                                    <input type="text" id="payoutAmount" class="form-control" placeholder="Enter Amount"
+                                    <label class="form-label" for="payoutAmount">{{ __('admin_messages.sp_amount') }} ({{ $currency }})</label>
+                                    <input type="text" id="payoutAmount" class="form-control" placeholder="{{ __('admin_messages.sp_enter_amount') }}"
                                         oninput="this.value = this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1').replace(/(\.\d{3})\d+/,'$1')" />
-                                    <small class="text-muted mt-2">Pending: {{ $currency }} {{ $pendingAmount }}</small>
+                                    <small class="text-muted mt-2">{{ __('admin_messages.sp_pending') }}: {{ $currency }} {{ $pendingAmount }}</small>
                                 </div>
                             </div>
 
                             <!--Transaction  -->
                             <div class="col-lg-12 col-md-12 col-12">
                                 <div class="form-group">
-                                    <label class="form-label" for="payoutTransactionId">Transaction ID </label>
-                                    <input type="text" id="payoutTransactionId" class="form-control" placeholder="Enter Transaction ID" maxlength="255">
+                                    <label class="form-label" for="payoutTransactionId">{{ __('admin_messages.sp_transaction_id') }}</label>
+                                    <input type="text" id="payoutTransactionId" class="form-control" placeholder="{{ __('admin_messages.sp_enter_transaction_id') }}" maxlength="255">
                                 </div>
                             </div>
 
                             <!-- Submit Button -->
                             <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                <button type="button" id="submitPayoutBtn" class="btn btn-dark customBtn mt-3">Submit</button>
+                                <button type="button" id="submitPayoutBtn" class="btn btn-dark customBtn mt-3">{{ __('admin_messages.sp_submit') }}</button>
                             </div>
 
 
@@ -173,15 +172,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const transactionId = document.getElementById('payoutTransactionId').value.trim();
 
         if (amount === '' || isNaN(amount) || parseFloat(amount) <= 0) {
-            toastr.error("Please enter a valid amount.");
+            toastr.error({!! json_encode(__('admin_messages.sp_valid_amount')) !!});
             return;
         }
         if (parseFloat(amount) > pendingAmount) {
-            toastr.error("Payout amount exceeds the seller pending amount.");
+            toastr.error({!! json_encode(__('admin_messages.sp_exceeds_pending')) !!});
             return;
         }
         if (transactionId === '') {
-            toastr.error("Please enter transaction ID.");
+            toastr.error({!! json_encode(__('admin_messages.sp_enter_txn')) !!});
             return;
         }
 
@@ -220,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(() => {
             submitBtn.disabled = false;
-            toastr.error("Something went wrong.");
+            toastr.error({!! json_encode(__('admin_messages.sp_wrong')) !!});
         });
 
     });
