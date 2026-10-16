@@ -26,7 +26,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <div class="title24"> Payments </div>
+        <div class="title24">{{ __('seller_messages.payment_title') }}  </div>
     </div>
     <div class="tabs-panel py-4">
         <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
@@ -36,7 +36,7 @@
                     data-bs-target="#pills-transactions" type="button" role="tab" aria-controls="pills-transactions"
                     aria-selected="{{ $activeTab === 'transactions' ? 'true' : 'false' }}">
 
-                    All Transactions
+                    {{ __('seller_messages.All_Transactions') }} 
                 </button>
             </li>
 
@@ -44,8 +44,8 @@
                 <button class="nav-link {{ $activeTab === 'payouts' ? 'active' : '' }} w-100" id="pills-payouts-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-payouts" type="button" role="tab" aria-controls="pills-payouts"
                     aria-selected="{{ $activeTab === 'payouts' ? 'true' : 'false' }}">
-
-                    My Payouts
+{{ __('seller_messages.my_payout') }} 
+                    
                 </button>
             </li>
         </ul>
@@ -64,11 +64,12 @@
                     <div class="d-flex gap-4 align-items-center mb-3 justify-content-between">
                             <div class="from-group">
                                 <div class="total-refund d-flex gap-3">
-                                    <h6>Total Revenue</h6>
+                                    <h6> {{ __('seller_messages.total_revenue1') }}  </h6>
+
                                     <h3>{{ $transactionsData['total_revenue'] ?? '0.000' }} {{ $currency }}</h3>
                                 </div>
                             </div>
-                            <a href="{{ route('seller.export_payments_data', array_merge(request()->except('page', 'payout_page'), ['tab' => 'transactions'])) }}" class="btn btn-export">Export</a>
+                            <a href="{{ route('seller.export_payments_data', array_merge(request()->except('page', 'payout_page'), ['tab' => 'transactions'])) }}" class="btn btn-export">{{ __('seller_messages.export') }} </a>
                     </div>
 
                     <div class="d-flex justify-content-between mb-4 align-items-center flex-wrap gap-3">
@@ -89,11 +90,11 @@
                                     value="{{ request()->to_date }}">
                             </div>
                             <select name="transaction_type" class="form-select form-control" onchange="this.form.submit()">
-                                <option value="0" {{ request('transaction_type', '0') == '0' ? 'selected' : '' }}>All</option>
-                                <option value="1" {{ request('transaction_type') == '1' ? 'selected' : '' }}>Credit</option>
-                                <option value="2" {{ request('transaction_type') == '2' ? 'selected' : '' }}>Debit</option>
+                                <option value="0" {{ request('transaction_type', '0') == '0' ? 'selected' : '' }}>{{ __('seller_messages.pt_All') }}</option>
+                                <option value="1" {{ request('transaction_type') == '1' ? 'selected' : '' }}>{{ __('seller_messages.pt_credit') }} </option>
+                                <option value="2" {{ request('transaction_type') == '2' ? 'selected' : '' }}>{{ __('seller_messages.pt_debit') }} </option>
                             </select>
-                            <a href="{{ route('seller.payments') }}" class="btn btn-export">Reset</a>
+                            <a href="{{ route('seller.payments') }}" class="btn btn-export">{{ __('seller_messages.pt_reset') }}  </a>
                         </div>
 
                        
@@ -114,14 +115,14 @@
                                         </p>
                                     </div>
                                     <div class="ticket">
-                                        <p class="text-muted mb-0"> Date & Time </p>
+                                        <p class="text-muted mb-0">{{ __('seller_messages.date_time') }}  </p>
                                         <p class="fst-500 mb-0">{{ $transaction->transaction_date ? \Carbon\Carbon::parse($transaction->transaction_date)->format('d/m/Y \a\t h:i A') : '-' }}</p>
                                     </div>
                                 </div>
 
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted mb-0">Type</p>
+                                        <p class="text-muted mb-0">{{ __('seller_messages.type') }}</p>
                                         <p class="fst-500 mb-0 {{ $transaction->transaction_type == 1 ? 'text-success' : 'text-danger' }}">
                                             {{ $transaction->transaction_type == 1 ? 'Credit' : 'Debit (Payout)' }}
                                         </p>
@@ -129,19 +130,19 @@
 
                                     @if($transaction->transaction_type == 1)
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted mb-0"> Customer Name</p>
+                                        <p class="text-muted mb-0"> {{ __('seller_messages.customer_name1') }}  </p>
                                         <p class="fst-500 mb-0">{{ $transaction->customer_name ?? '-' }}</p>
                                     </div>
                                     @endif
 
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted mb-0">Total Amount</p>
+                                        <p class="text-muted mb-0">{{ __('seller_messages.amount_total') }} </p>
                                         <p class="fst-500 mb-0">{{ $transaction->amount }} {{ $currency }}</p>
                                     </div>
 
                                     @if($transaction->transaction_type == 1)
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted mb-0">Total Commission</p>
+                                        <p class="text-muted mb-0">{{ __('seller_messages.comm_total') }} </p>
                                         <p class="fst-500 mb-0">{{ $transaction->commission ?? '0.000' }} {{ $currency }}</p>
                                     </div>
                                     @endif
@@ -150,7 +151,7 @@
                         </div>
                         @empty
                         <div class="col-12">
-                            <p class="text-center text-muted py-5">No transactions found</p>
+                            <p class="text-center text-muted py-5"> {{ __('seller_messages.no_found') }} </p>
                         </div>
                         @endforelse
                     </div>
@@ -177,17 +178,17 @@
                     <div class="d-flex gap-4 align-items-center mb-3">
                             <div class="from-group">
                                 <div class="total-refund d-flex gap-3">
-                                   <h6>Total Payout Received</h6>
+                                   <h6>{{ __('seller_messages.pt_payout') }}</h6>
                                     <h3>{{ $payoutsData['total_paid'] ?? '0.000' }} {{ $currency }}</h3>
                                 </div>
                             </div>
                             <div class="from-group">
                                 <div class="total-refund d-flex gap-3">
-                                   <h6>Pending Payout</h6>
+                                   <h6>{{ __('seller_messages.pt_pending') }} </h6>
                                     <h3>{{ $payoutsData['pending_amount'] ?? '0.000' }} {{ $currency }}</h3>
                                 </div>
                             </div>
-                            <a href="{{ route('seller.export_payments_data', array_merge(request()->except('page', 'payout_page'), ['tab' => 'payouts'])) }}" class="btn btn-export">Export</a>
+                            <a href="{{ route('seller.export_payments_data', array_merge(request()->except('page', 'payout_page'), ['tab' => 'payouts'])) }}" class="btn btn-export">{{ __('seller_messages.export') }}</a>
                         </div>
 
                     <div class="d-flex justify-content-between mb-4 align-items-center flex-wrap gap-3">
@@ -207,7 +208,7 @@
                                 <input type="date" class="form-control datepicker" name="payout_to_date" id="payoutToDate"
                                     value="{{ request()->payout_to_date }}">
                             </div>
-                            <a href="{{ route('seller.payments', ['tab' => 'payouts']) }}" class="btn btn-export">Reset</a>
+                            <a href="{{ route('seller.payments', ['tab' => 'payouts']) }}" class="btn btn-export">{{ __('seller_messages.pt_reset') }}</a>
                         </div>
                         
                     </div>
@@ -220,28 +221,28 @@
                             <div class="card mb-4">
                                 <div class="card-header d-flex justify-content-between">
                                     <div class="ticket">
-                                        <p class="text-muted mb-0"> From</p>
+                                        <p class="text-muted mb-0"> {{ __('seller_messages.From') }}</p>
                                         <p class="fst-500 mb-0">{{ $payout->from_date ? \Carbon\Carbon::parse($payout->from_date)->format('d/m/Y') : '-' }}</p>
                                     </div>
                                     <div class="ticket">
-                                        <p class="text-muted mb-0"> To</p>
+                                        <p class="text-muted mb-0"> {{ __('seller_messages.To') }}</p>
                                         <p class="fst-500 mb-0">{{ $payout->to_date ? \Carbon\Carbon::parse($payout->to_date)->format('d/m/Y') : '-' }}</p>
                                     </div>
                                 </div>
 
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted mb-0"> Transaction ID</p>
+                                        <p class="text-muted mb-0"> {{ __('seller_messages.Transaction_id') }}</p>
                                         <p class="fst-500 mb-0">{{ $payout->transaction_id ? '#' . $payout->transaction_id : 'N/A' }}</p>
                                     </div>
 
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted mb-0">Payout received at</p>
+                                        <p class="text-muted mb-0"> {{ __('seller_messages.payout_rec') }} </p>
                                         <p class="fst-500 mb-0">{{ $payout->payment_receive_date ? \Carbon\Carbon::parse($payout->payment_receive_date)->format('d/m/Y \a\t h:i A') : '-' }}</p>
                                     </div>
 
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <p class="text-muted mb-0">Total Amount received </p>
+                                        <p class="text-muted mb-0"> {{ __('seller_messages.payout_amount') }}  </p>
                                         <p class="fst-500 mb-0">{{ $payout->amount }} {{ $currency }}</p>
                                     </div>
                                 </div>
@@ -249,7 +250,7 @@
                         </div>
                         @empty
                         <div class="col-12">
-                            <p class="text-center text-muted py-5">No payouts found</p>
+                            <p class="text-center text-muted py-5">{{ __('seller_messages.payout_no') }}</p>
                         </div>
                         @endforelse
                     </div>

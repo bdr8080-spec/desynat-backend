@@ -1768,4 +1768,32 @@ return [
 'date_selected' => 'Date Selected',
 'failed' => 'Failed',
 
+// payout
+'payment_title' => 'Payments',
+'All_Transactions' => 'All Transactions',
+'my_payout' => 'My Payouts',
+'total_revenue1' => 'Total Revenue',
+'pt_reset' => 'Reset',
+'pt_All'=> 'All',
+'pt_credit' =>'Credit',
+'pt_debit' =>'Debit',
+'pt_pending' => 'Pending Payout',
+'pt_payout' => 'Total Payout Received',
+
+'date_time' => 'Date & Time',
+'type' =>'Type',
+'customer_name1'=>'Customer Name',
+'amount_total' => 'Total Amount',
+'comm_total' => 'Total Commission',
+
+'no_found' => 'No transactions found',
+'payout_rec'=>'Payout received at',
+'payout_amount'=> 'Total Amount received',
+'payout_no' => ' No payouts found',
+
+
+
+
+
+
 ];
