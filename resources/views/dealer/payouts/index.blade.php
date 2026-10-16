@@ -109,14 +109,19 @@
                             <div class="card mb-4">
                                 <div class="card-header d-flex justify-content-between">
                                     <div class="ticket">
-                                        <p class="text-muted mb-0">{{ $transaction->transaction_type == 1 ? _('Order_ID') : _('Transaction_id') }}</p>
+                                        <p class="text-muted mb-0">{{ $transaction->transaction_type == 1 ? __('seller_messages.order_id') : __('seller_messages.Transaction_id') }}</p>
                                         <p class="fst-500 mb-0">
                                             #{{ $transaction->transaction_type == 1 ? $transaction->reference_id : ($transaction->transaction_id ?? $transaction->reference_id) }}
                                         </p>
                                     </div>
                                     <div class="ticket">
                                         <p class="text-muted mb-0">{{ __('seller_messages.date_time') }}  </p>
-                                        <p class="fst-500 mb-0">{{ $transaction->transaction_date ? \Carbon\Carbon::parse($transaction->transaction_date)->format('d/m/Y \a\t h:i A') : '-' }}</p>
+                                        <p class="fst-500 mb-0">@if($transaction->transaction_date)
+                                            @php $txDate = \Carbon\Carbon::parse($transaction->transaction_date); @endphp
+                                            {{ $txDate->format('d/m/Y') }} {{ __('seller_messages.pt_at') }} {{ $txDate->format('h:i') }} {{ $txDate->format('A') == 'AM' ? __('seller_messages.pt_am') : __('seller_messages.pt_pm') }}
+                                        @else
+                                            -
+                                        @endif</p>
                                     </div>
                                 </div>
 
@@ -124,7 +129,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <p class="text-muted mb-0">{{ __('seller_messages.type') }}</p>
                                         <p class="fst-500 mb-0 {{ $transaction->transaction_type == 1 ? 'text-success' : 'text-danger' }}">
-                                            {{ $transaction->transaction_type == 1 ? _('Credit') : _('Debit (Payout)') }}
+                                            {{ $transaction->transaction_type == 1 ? __('seller_messages.Credit') : __('seller_messages.Debit (Payout)') }}
                                         </p>
                                     </div>
 

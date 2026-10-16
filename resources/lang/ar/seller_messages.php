@@ -1805,6 +1805,9 @@ return [
 
 'Credit' => 'دائن',
 'Debit (Payout)' => 'مدين (دفعة)',
+'pt_at' => 'في',
+'pt_am' => 'ص',
+'pt_pm' => 'م',
 
 
      

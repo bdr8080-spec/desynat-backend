@@ -1792,6 +1792,9 @@ return [
 'payout_no' => ' No payouts found',
 'Credit' => 'Credit',
 'Debit (Payout)' =>'Debit (Payout)',
+'pt_at' => 'at',
+'pt_am' => 'AM',
+'pt_pm' => 'PM',
 
 
 
